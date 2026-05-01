@@ -1,0 +1,146 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0705",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-003856",
+      "source_obligation_ids": [
+        "obl-001803"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003857",
+      "source_obligation_ids": [
+        "obl-001804"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003858",
+      "source_obligation_ids": [
+        "obl-001805"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004077",
+      "source_obligation_ids": [
+        "obl-001897"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0074"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004078",
+      "source_obligation_ids": [
+        "obl-001898"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0074"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004079",
+      "source_obligation_ids": [
+        "obl-001899"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0074"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

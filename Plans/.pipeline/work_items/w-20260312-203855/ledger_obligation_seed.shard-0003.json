@@ -1,145 +1,427 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0003",
-  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003-L000401-L000600.md",
-  "source_line_range": "L000401-L000600",
   "seed_candidates": [
     {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "handoff storage/delivery mapping",
+      "seed_id": "shard-0003-s001",
+      "seed_type": "owner",
       "exact_items": [
-        "pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections",
-        "specify the concrete project-scoped paths or storage domains that own them",
-        "specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model"
+        "Multi-account failover behavior MUST extend the existing usage model in Plans/usage-feature.md \u2014 it must NOT invent a separate 'account pressure' subsystem"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Multi-Account.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Multi-Account Failover",
+        "## Usage Model Extension"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000430-L000460"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "Multi-account control-loop scope applies to ALL provider-using actors: assistant, interviewer, requirements-doc builder, overseers, node workers, delegated workers \u2014 no actor is exempt"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Multi-Account Actor Scope"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000450-L000480"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "Non-Orchestrator conversational actors (assistant, interviewer, requirements-doc builder, PRD builder) share provider/account/usage/runtime identity behavior but are conversational-first, NOT orchestration nodes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Conversational Actor Identity"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000460-L000490"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Requirements-doc-builder flow: collaborative ideation \u2192 structured questioning \u2192 requirements documents; this is a defined workflow with a structured output"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Requirements-Doc-Builder Flow"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000480-L000510"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Interviewer flow: conversational-to-structured pattern that produces documents for the node/contract system"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Interviewer Flow"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000500-L000530"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "Handoff chain must be: requirements-doc-builder \u2192 interview flow \u2192 PRD-builder \u2192 graph-plan inputs \u2192 handoff to Orchestrator; each step has defined output artifacts"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Handoff Chain"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000510-L000545"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "Each failed node attempt must leave a structured receipt/handoff artifact containing: what it did, what changed, why failed, what to try next \u2014 this is mandatory, not optional"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Attempt Handoff Artifact"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000540-L000570"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Attempt handoff artifact must include these 8 fields: what was attempted, what changed/artifacts produced, checks/tests/review outcome, why failed/blocked, contamination/restore state, recommended next action, reusable learnings/patterns, retry budget consumed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Handoff Data Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000555-L000575"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "Canonical handoff/retry memory must be stored as structured runtime records NOT loose markdown; worker-facing handoff = synthesized bounded packet derived from canonical records"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Orchestrator_Page.md"
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Storage/delivery clarification pressure from user",
-        "Current recommended direction after checking docs"
+        "## Handoff Storage Direction"
       ],
-      "stale_tokens": [
-        "optional JSON"
-      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
       "source_shard_id": "shard-0003",
       "source_evidence": [
-        "working_ledger.md:L000503-L000511",
-        "working_ledger.md:L000528-L000536"
+        "working_ledger.md:L000570-L000595"
       ],
-      "notes": [
-        "Canonical stack exists, but the new orchestration artifacts are not yet mapped into it; this is the explicit unresolved seam."
-      ]
+      "notes": []
     },
     {
+      "seed_id": "shard-0003-s010",
       "seed_type": "owner",
-      "canon_label_hint": "requested-vs-effective identity display",
       "exact_items": [
-        "cover agent vs subagent",
-        "cover fresh vs reused retry worker",
-        "cover overseer delegation on/off",
-        "cover delegated-worker provider/model/effort policy",
-        "ensure consistent requested-vs-effective identity display across chat actors and orchestration actors"
+        "Persistence stack ownership: seglog = canonical append-only event source; redb = durable KV state/checkpoints/projections/rollups; Tantivy = search index; JSONL mirror = disposable projector output ONLY"
       ],
       "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/Orchestrator_Page.md"
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "New execution-policy settings requirement",
-        "Clarified execution-policy UI split"
+        "## Persistence Stack"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000580-L000600"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s011",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "Not yet defined: how node retry memory, attempt handoff artifacts, reusable learning records, and worker handoff packets map into the seglog/redb/Tantivy stack \u2014 this gap must be resolved"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Retry Memory Persistence Mapping"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000585-L000600"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "Execution-policy settings must allow the user to choose between fresh and retained-context retry workers; these must be separately configurable settings"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Retry Worker Policy Settings"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000500-L000530"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s013",
+      "seed_type": "owner",
+      "exact_items": [
+        "Worker kind (subagent vs full agent) and retry-context policy (fresh vs retained) are SEPARATE settings \u2014 they must not be combined into a single toggle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Worker Kind vs Retry Context Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000525-L000555"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0003-s014",
+      "seed_type": "owner",
+      "exact_items": [
+        "Preferred terminology: 'overseer-spawned node worker' (not 'delegated worker'); this is the canonical term for the actor that executes a node on behalf of an overseer"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Worker Terminology"
       ],
       "stale_tokens": [
         "delegated worker"
       ],
+      "canonical_replacement_hints": [
+        "Use 'overseer-spawned node worker'"
+      ],
+      "canonical_replacement_status": "known",
       "source_shard_id": "shard-0003",
       "source_evidence": [
-        "working_ledger.md:L000537-L000555",
-        "working_ledger.md:L000556-L000557"
+        "working_ledger.md:L000545-L000565"
       ],
-      "notes": [
-        "Separate worker-kind and retry-context policy; the UI seam must carry the requested/effective model through both chat and orchestration actors."
-      ]
+      "notes": []
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "Orchestrator canonical runtime consumer",
+      "seed_id": "shard-0003-s015",
+      "seed_type": "owner",
       "exact_items": [
-        "Orchestrator must consume canonical runtime fields and event names from shared contracts",
-        "use plan-graph index and node shard files as required execution inputs",
-        "treat runnable graph nodes, DAG readiness, and dispatch from a global ready set as the scheduling model"
+        "Overseer-spawned node worker is the NORMAL/DEFAULT execution path, not an edge case \u2014 documentation must reflect this as the primary worker model"
       ],
       "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Personas.md",
         "Plans/Orchestrator_Page.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Current docs do say Orchestrator consumes the plan/node graph for execution",
-        "Strong current runtime stance"
+        "## Default Worker Model"
       ],
-      "stale_tokens": [
-        "tier system",
-        "single agent"
-      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
       "source_shard_id": "shard-0003",
       "source_evidence": [
-        "working_ledger.md:L000588-L000591",
-        "working_ledger.md:L000593-L000597"
+        "working_ledger.md:L000555-L000580"
       ],
-      "notes": [
-        "This is the consumer carry-through: Orchestrator is the consumer of shared contracts, not the schema owner."
-      ]
+      "notes": []
     },
     {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "graph-canonical control loop",
+      "seed_id": "shard-0003-s016",
+      "seed_type": "owner",
       "exact_items": [
-        "define the governing intelligence/control loop in a graph-canonical system",
-        "resolve whether tiers remain only a derived human-facing lens or retain execution authority"
+        "Plans/usage-feature.md is the strongest owner doc for usage/quota/alerts/analytics \u2014 all other docs must treat it as authoritative and not define usage rules independently"
       ],
       "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/Orchestrator_Page.md"
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Design discussion now has a concrete recommendation direction",
-        "User is now pressure-testing the missing runtime control pattern"
+        "## Usage Doc Ownership"
       ],
-      "stale_tokens": [
-        "hybrid"
-      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
       "source_shard_id": "shard-0003",
       "source_evidence": [
-        "working_ledger.md:L000592-L000598"
+        "working_ledger.md:L000401-L000430"
       ],
-      "notes": [
-        "Explicit unresolved seam: execution authority and control-loop ownership are still not pinned down."
-      ]
+      "notes": []
     }
   ],
-  "noise_items": [
-    {
-      "source_evidence": [
-        "working_ledger.md:L417-L428"
-      ],
-      "reason": "document inventory / overlap summary, not an obligation-grade missing field"
-    },
-    {
-      "source_evidence": [
-        "working_ledger.md:L466-L484"
-      ],
-      "reason": "research summary / reusable-pattern summary, not a concrete blocker"
-    },
-    {
-      "source_evidence": [
-        "working_ledger.md:L564-L569"
-      ],
-      "reason": "status/tension summary, not a specific missing field"
-    }
-  ],
+  "noise_items": [],
   "uncertain_items": [],
-  "covered_shard_id": "shard-0003"
+  "path_quarantine_violations": []
 }

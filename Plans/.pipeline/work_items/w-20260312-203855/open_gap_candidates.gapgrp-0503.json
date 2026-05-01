@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0503",
+  "coverage_row_ids_represented": [
+    "cov-001252",
+    "cov-001257",
+    "cov-001262",
+    "cov-001267",
+    "cov-001272",
+    "cov-001277",
+    "cov-001382",
+    "cov-001384",
+    "cov-001386",
+    "cov-001388"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0503; path=Plans/Run_Graph_View.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## Projection Trust States"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001252",
+        "cov-001257",
+        "cov-001262",
+        "cov-001267",
+        "cov-001272",
+        "cov-001277",
+        "cov-001382",
+        "cov-001384",
+        "cov-001386",
+        "cov-001388"
+      ],
+      "source_obligation_ids": [
+        "obl-000543",
+        "obl-000544",
+        "obl-000545",
+        "obl-000546",
+        "obl-000547",
+        "obl-000548",
+        "obl-000586",
+        "obl-000587",
+        "obl-000588",
+        "obl-000589"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002",
+        "shard-0013-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "projection trust states: current, refreshing, stale, degraded, unavailable",
+        "current: projection is caught up enough for normal use",
+        "refreshing: old committed projection still visible while refresh/rebuild runs",
+        "stale: projection is usable for context but may not reflect current runtime truth",
+        "degraded: projector/scan partially failed or a dependency signal is missing; some fields/sections are less trustworthy",
+        "unavailable: projection cannot currently answer the surface contract",
+        "distinguish active run truth from focused run context",
+        "active_run_id = currently running/paused/interrupted run for the project, if any",
+        "focused_run_id = the run whose data the Orchestrator tabs are currently showing",
+        "focus_mode = live when focused_run_id == active_run_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

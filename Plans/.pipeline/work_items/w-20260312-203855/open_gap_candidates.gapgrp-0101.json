@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0101",
+  "coverage_row_ids_represented": [
+    "cov-003803",
+    "cov-003807",
+    "cov-003811",
+    "cov-003822",
+    "cov-003825",
+    "cov-003828",
+    "cov-003938",
+    "cov-003943",
+    "cov-003948",
+    "cov-003953"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0101; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003803",
+        "cov-003807",
+        "cov-003811",
+        "cov-003822",
+        "cov-003825",
+        "cov-003828",
+        "cov-003938",
+        "cov-003943",
+        "cov-003948",
+        "cov-003953"
+      ],
+      "source_obligation_ids": [
+        "obl-001786",
+        "obl-001787",
+        "obl-001788",
+        "obl-001792",
+        "obl-001793",
+        "obl-001794",
+        "obl-001839",
+        "obl-001840",
+        "obl-001841",
+        "obl-001842"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0040",
+        "seed-WAVE005-0042",
+        "seed-WAVE005-0058"
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Extend wizard/interview handoff payloads so they can carry the upstream subset of canonical runtime identity: project_id, thread_id, wizard_id, requested/effective persona, platform, model, account, execution_role, operational_identity?, permission/runtime snapshot refs",
+        "Add an explicit lineage bridge from wizard/interview artifacts and handoff payloads into the eventual execution run: likely wizard_id -> run_id",
+        "Treat interview-phase tier_id-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys",
+        "human-in-the-loop.md now exposes a sharper self-contradiction: it deprecates allowed_actions[] in favor of allowed_action_ids[], but Contracts_V0.md and storage-plan.md still publish allowed_actions in HITL-adjacent canonical shapes",
+        "Reconcile all approval/recovery schemas onto one key strategy and one field family (allowed_action_ids[], blocked_sequence, explicit mapping for any retained request_id)",
+        "storage-plan.md still registers HITL events as request_id, run_id, tier_id, tier_type, request_kind, message, allowed_actions, which is now behind the newer blocked-projection/action-family model",
+        "blocked_sequence should be owned by the runtime scheduler/executor layer, not by UI/HITL/chat/storage",
+        "blocked_sequence scope: monotonic per {run_id, node_id}, starts at 1, increments only when node transitions from non-blocked to a new blocked episode",
+        "Make Executor_Protocol.md + Contracts_V0.md the joint owners of blocked_sequence minting semantics, blocked-episode lifecycle, and startup-recovery scheduler handshake",
+        "Recast HITL request contracts so request_id is explicitly subordinate to blocked-episode identity"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "wizard_id -> run_id lineage bridge",
+        "canonical runtime identity in handoff payload"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

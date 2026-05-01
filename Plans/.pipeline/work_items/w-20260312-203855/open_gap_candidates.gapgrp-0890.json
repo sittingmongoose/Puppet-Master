@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0890",
+  "coverage_row_ids_represented": [
+    "cov-006542",
+    "cov-006543",
+    "cov-006544",
+    "cov-006545",
+    "cov-006546",
+    "cov-006547",
+    "cov-006548",
+    "cov-006549",
+    "cov-006550",
+    "cov-006551"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0890; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006542",
+        "cov-006543",
+        "cov-006544",
+        "cov-006545",
+        "cov-006546",
+        "cov-006547",
+        "cov-006548",
+        "cov-006549",
+        "cov-006550",
+        "cov-006551"
+      ],
+      "source_obligation_ids": [
+        "obl-003445",
+        "obl-003446",
+        "obl-003447",
+        "obl-003448",
+        "obl-003449",
+        "obl-003450",
+        "obl-003451",
+        "obl-003452",
+        "obl-003453",
+        "obl-003454"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s037",
+        "shard-0081-s125",
+        "shard-0082-s054",
+        "shard-0082-s129",
+        "shard-0083-s010",
+        "shard-0083-s105",
+        "shard-0083-s126",
+        "shard-0084-s090"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`Section15_MVP_Promoted_Features_Spec.md` still points at missing command rows and unresolved shell-surface ownership for project/session browser and attention center.",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "`Architecture_Invariants.md` is now missing invariants that adjacent owner docs already state normatively: safe-point vs restore-point boundaries, graph-lock non-degradation, classification-before-policy, checkpoint-derived projection freshness, and attempt-boundary identity freeze.",
+        "The strongest final-pass pattern is exact structural breakage in owner docs and traceability surfaces:",
+        "`projection_freshness` / `projection_health`",
+        "projection_freshness",
+        "projection_health",
+        "at minimum the owner-boundary decisions that now affect routing, Orchestrator ontology, blocked identity, runtime identity, and projection-trust vocabulary",
+        "blocked/runtime records, not generic paused state, are the persistence surface",
+        "This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep recreating the same storage and command drift."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

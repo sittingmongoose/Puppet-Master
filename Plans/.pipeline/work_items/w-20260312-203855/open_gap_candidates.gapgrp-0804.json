@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0804",
+  "coverage_row_ids_represented": [
+    "cov-001302",
+    "cov-001305",
+    "cov-001356",
+    "cov-001359",
+    "cov-001363",
+    "cov-001367",
+    "cov-001369",
+    "cov-001373",
+    "cov-001377",
+    "cov-001493"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0804; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Lineage Views"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001302",
+        "cov-001305",
+        "cov-001356",
+        "cov-001359",
+        "cov-001363",
+        "cov-001367",
+        "cov-001369",
+        "cov-001373",
+        "cov-001377",
+        "cov-001493"
+      ],
+      "source_obligation_ids": [
+        "obl-000556",
+        "obl-000557",
+        "obl-000579",
+        "obl-000580",
+        "obl-000581",
+        "obl-000582",
+        "obl-000583",
+        "obl-000584",
+        "obl-000585",
+        "obl-000681"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s014",
+        "shard-0012-s009",
+        "shard-0013-s005",
+        "shard-0014-s005",
+        "shard-0034-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0012",
+        "shard-0013",
+        "shard-0014",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "a missing live worktree must render as historical/retired/removed, not disappear",
+        "lineage views must preserve: worktree_id, path snapshot, branch snapshot, compare target/commit-range snapshot, owning package/lane identity when applicable",
+        "Fixed tabs will need their own view-state persistence instead: filters, selection, split positions, inspector state, last-focused object",
+        "Add a shared projection health/trust contract used by: Orchestrator, Usage, Source Control, other projection-backed surfaces",
+        "Define which commands require: current projection, direct runtime confirmation, or are safe from stale views because they operate on durable records only",
+        "Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable",
+        "storage-plan.md says run.started MUST include the full persona/runtime snapshot, but the event table row still enumerates a much thinner field set",
+        "storage-plan.md usage.event row still omits effective auth/account/model identity even though usage-feature.md UsageRecord expects those fields downstream",
+        "Contracts_V0.md forbids _persona_id canonical names while Orchestrator_Page.md still requires them in runtime-facing worker identity fields",
+        "separate time status, replacement status, and validity status for records"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

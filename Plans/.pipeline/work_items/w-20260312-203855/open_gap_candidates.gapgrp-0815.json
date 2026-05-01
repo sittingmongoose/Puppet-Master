@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0815",
+  "coverage_row_ids_represented": [
+    "cov-003208",
+    "cov-003209",
+    "cov-003210",
+    "cov-003211",
+    "cov-003212",
+    "cov-003213",
+    "cov-003214",
+    "cov-003215",
+    "cov-003216",
+    "cov-003217"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0815; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003208",
+        "cov-003209",
+        "cov-003210",
+        "cov-003211",
+        "cov-003212",
+        "cov-003213",
+        "cov-003214",
+        "cov-003215",
+        "cov-003216",
+        "cov-003217"
+      ],
+      "source_obligation_ids": [
+        "obl-001508",
+        "obl-001509",
+        "obl-001510",
+        "obl-001511",
+        "obl-001512",
+        "obl-001513",
+        "obl-001514",
+        "obl-001515",
+        "obl-001516",
+        "obl-001517"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s107",
+        "shard-0089-s014",
+        "shard-0089-s015",
+        "shard-0089-s016",
+        "shard-0089-s017",
+        "shard-0089-s061",
+        "shard-0089-s062",
+        "shard-0089-s063",
+        "shard-0089-s073",
+        "shard-0089-s094"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "Plans/storage-plan.md:1335-1383",
+        "`Plans/storage-plan.md:330-337`",
+        "Plans/storage-plan.md:330-337",
+        "`Plans/storage-plan.md:468-590`",
+        "Plans/storage-plan.md:468-590",
+        "`Plans/storage-plan.md:788-817`",
+        "Plans/storage-plan.md:788-817",
+        "`Plans/storage-plan.md:1330-1391`",
+        "Plans/storage-plan.md:1330-1391",
+        "`historical_lineage_refs[]` is already present in `Plans/storage-plan.md`, so it no longer belongs in `gap-003`'s exact-missing list."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

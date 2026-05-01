@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0248",
+  "coverage_row_ids_represented": [
+    "cov-003718",
+    "cov-003720",
+    "cov-003722",
+    "cov-003724",
+    "cov-004962",
+    "cov-004968",
+    "cov-004974",
+    "cov-004980",
+    "cov-004986",
+    "cov-004992"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0248; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Orchestrator Page"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003718",
+        "cov-003720",
+        "cov-003722",
+        "cov-003724",
+        "cov-004962",
+        "cov-004968",
+        "cov-004974",
+        "cov-004980",
+        "cov-004986",
+        "cov-004992"
+      ],
+      "source_obligation_ids": [
+        "obl-001741",
+        "obl-001742",
+        "obl-001743",
+        "obl-001744",
+        "obl-002244",
+        "obl-002245",
+        "obl-002246",
+        "obl-002247",
+        "obl-002248",
+        "obl-002249"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0029",
+        "seed-WAVE007-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "Add a real Orchestrator section to FinalGUISpec.md, make Progress the only widget canvas, and bind all projection-state UX to projection_freshness + projection_health rather than overloaded trust language",
+        "FinalGUISpec.md still lacks true Orchestrator-page ownership, concern-model UI, historical-run-mode behavior, and stable projection-freshness/health language",
+        "FinalGUISpec.md still has no first-class concern record/lifecycle/projection model",
+        "Add concern-model GUI contract and projection-freshness/health contract to FinalGUISpec.md",
+        "The canonical minimum field set is: `target_kind`; `project_id`; one canonical target selector (`subject_id` OR `object_kind` + `object_id`)",
+        "The narrow scope-restoration fields are: `focused_run_id`; `thread_id`",
+        "The narrow focus-refinement fields are: `tab_id`; `inspector_target`",
+        "Full bounded shape: `target_kind`, `project_id`, `focused_run_id`, `thread_id`, `tab_id`, `subject_id`, `object_kind`, `object_id`, `inspector_target`",
+        "`project_id` is required. Exactly one canonical target selector is required.",
+        "What is NOT a base `route_target` field: `usage_event_ref`, `wizard_id`, `wizard_step`, `message_id`, `artifact_id`, `document_id`, `workflow_run_id`, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, `line`, `range`, per-surface state (`active_subview`, compare target, panel layout, browser tab state, widget layout)"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "projection_freshness",
+        "projection_health"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

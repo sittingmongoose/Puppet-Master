@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0567",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-003761",
+      "source_obligation_ids": [
+        "obl-001770"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "missing_doc_reference",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "missing_doc_reference_resolution",
+      "evidence": [
+        "bounded_window=Plans/UI_Command_Catalog.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003763",
+      "source_obligation_ids": [
+        "obl-001771"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "missing_doc_reference",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "missing_doc_reference_resolution",
+      "evidence": [
+        "bounded_window=Plans/UI_Command_Catalog.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003765",
+      "source_obligation_ids": [
+        "obl-001772"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "missing_doc_reference",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "missing_doc_reference_resolution",
+      "evidence": [
+        "bounded_window=Plans/UI_Command_Catalog.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003841",
+      "source_obligation_ids": [
+        "obl-001799"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "missing_doc_reference",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "missing_doc_reference_resolution",
+      "evidence": [
+        "bounded_window=Plans/UI_Command_Catalog.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003845",
+      "source_obligation_ids": [
+        "obl-001800"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "missing_doc_reference",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "missing_doc_reference_resolution",
+      "evidence": [
+        "bounded_window=Plans/UI_Command_Catalog.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003849",
+      "source_obligation_ids": [
+        "obl-001801"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "missing_doc_reference",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "missing_doc_reference_resolution",
+      "evidence": [
+        "bounded_window=Plans/UI_Command_Catalog.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003853",
+      "source_obligation_ids": [
+        "obl-001802"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path": "Plans/UI_Command_Catalog.md",
+      "row_type": "missing_doc_reference",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "missing_doc_reference_resolution",
+      "evidence": [
+        "bounded_window=Plans/UI_Command_Catalog.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

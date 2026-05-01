@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0833",
+  "coverage_row_ids_represented": [
+    "cov-002959",
+    "cov-002961",
+    "cov-002963",
+    "cov-002965",
+    "cov-002967",
+    "cov-002969",
+    "cov-002971",
+    "cov-002973",
+    "cov-002976",
+    "cov-002978"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0833; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## project_attention_item Projection"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002959",
+        "cov-002961",
+        "cov-002963",
+        "cov-002965",
+        "cov-002967",
+        "cov-002969",
+        "cov-002971",
+        "cov-002973",
+        "cov-002976",
+        "cov-002978"
+      ],
+      "source_obligation_ids": [
+        "obl-001375",
+        "obl-001376",
+        "obl-001377",
+        "obl-001378",
+        "obl-001379",
+        "obl-001380",
+        "obl-001381",
+        "obl-001382",
+        "obl-001383",
+        "obl-001384"
+      ],
+      "source_seed_ids": [
+        "shard-0037-s001",
+        "shard-0038-s001",
+        "shard-0038-s002",
+        "shard-0039-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038",
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Minimum projection shape: attention_item_id, project_id, severity, owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload, secondary_route_payloads[], display_title, display_subtitle, disclosure_visibility",
+        "This record family is absent from storage-plan.md and from Contracts_V0.md",
+        "project_summary.v1:{project_id} must be a dedicated redb projection key, not mixed into projects:v1",
+        "projects:v1 must remain a narrow registry only (id, name, created_at, archived_at, optional display hints)",
+        "project_summary must carry: project health, active run count, last run identity, concern counts by severity, blocked status, last-activity timestamp",
+        "project_attention_item.v1:{project_id}:{attention_item_id} must be a dedicated redb projection key",
+        "project_attention_item family is absent from storage-plan.md",
+        "projection must carry canonical shape defined in the attention center cluster analysis: attention_item_id, project_id, severity, owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload, secondary_route_payloads[], display_title, display_subtitle, disclosure_visibility",
+        "OperationalIdentity block is missing from runtime snapshots in storage-plan.md and Contracts_V0.md",
+        "OperationalIdentity must carry: effective_account_id, effective_runtime_id, effective_persona_key, execution_role, actor_kind, requested_account_binding, any_pressure_flags, any_degradation_flags"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "project_attention_item"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

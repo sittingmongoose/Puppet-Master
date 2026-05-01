@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0184",
+  "coverage_row_ids_represented": [
+    "cov-004410",
+    "cov-004411",
+    "cov-004468",
+    "cov-004470"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "group gapgrp-0184; path=Plans/FileManager.md; row_type=stale_retirement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "## OpenFile"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004410",
+        "cov-004411",
+        "cov-004468",
+        "cov-004470"
+      ],
+      "source_obligation_ids": [
+        "obl-002105",
+        "obl-002106",
+        "obl-002139",
+        "obl-002140"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0071",
+        "seed-WAVE006-0091"
+      ],
+      "source_shard_ids": [
+        "shard-0058",
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "FileManager.md universalizes OpenFile to cover all object-open semantics, including identity-native subject opens that belong to a different contract family",
+        "FileManager.md must be narrowed to workspace-document path operations only; the OpenSubject family belongs in a separate contract",
+        "FileManager.md OpenFile must be narrowed to workspace-document path operations only",
+        "Any OpenFile usage that currently covers identity-native subject/route opens must be split out into the OpenSubject contract family"
+      ],
+      "stale_tokens": [
+        "OpenFile"
+      ],
+      "canonical_replacement_hints": [
+        "OpenFile",
+        "OpenSubject"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0920",
+  "coverage_row_ids_represented": [
+    "cov-006840",
+    "cov-006841",
+    "cov-006842",
+    "cov-006843",
+    "cov-006844",
+    "cov-006845",
+    "cov-006846",
+    "cov-006847",
+    "cov-006848",
+    "cov-006849"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0920; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006840",
+        "cov-006841",
+        "cov-006842",
+        "cov-006843",
+        "cov-006844",
+        "cov-006845",
+        "cov-006846",
+        "cov-006847",
+        "cov-006848",
+        "cov-006849"
+      ],
+      "source_obligation_ids": [
+        "obl-003743",
+        "obl-003744",
+        "obl-003745",
+        "obl-003746",
+        "obl-003747",
+        "obl-003748",
+        "obl-003749",
+        "obl-003750",
+        "obl-003751",
+        "obl-003752"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s051",
+        "shard-0085-s062",
+        "shard-0085-s070",
+        "shard-0085-s077",
+        "shard-0085-s088",
+        "shard-0085-s109"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+        "PuppetMasterEvent::Output",
+        "`Open that tier in the Tiers tab`",
+        "Open that tier in the Tiers tab",
+        "still defines `Dashboard, Usage, Orchestrator widget tabs`",
+        "Dashboard, Usage, Orchestrator widget tabs",
+        "canonical `UsageRecord` still requires `tier_id`",
+        "UsageRecord",
+        "`Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old \u201call Orchestrator tabs are widget canvases\u201d model."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

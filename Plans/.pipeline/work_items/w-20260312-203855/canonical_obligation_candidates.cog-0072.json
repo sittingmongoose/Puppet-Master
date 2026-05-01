@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0072",
+  "represented_seed_ids": [
+    "shard-0007-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0007"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0007-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Glossary.md and Plans/Crosswalk.md have near-zero coverage of: overseer, work package, feature seam, lane, attempt, effective identity \u2014 all terminology is ungrounded",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Plans/Glossary.md and Plans/Crosswalk.md have near-zero coverage of: overseer, work package, feature seam, lane, attempt, effective identity \u2014 all terminology is ungrounded"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Glossary/Crosswalk Coverage Gap"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L001280-L001310"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

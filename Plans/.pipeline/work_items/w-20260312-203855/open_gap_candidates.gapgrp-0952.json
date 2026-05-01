@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0952",
+  "coverage_row_ids_represented": [
+    "cov-005722",
+    "cov-005723",
+    "cov-005724",
+    "cov-005725",
+    "cov-005726",
+    "cov-005727",
+    "cov-005728",
+    "cov-005729",
+    "cov-005730",
+    "cov-005731"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0952; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005722",
+        "cov-005723",
+        "cov-005724",
+        "cov-005725",
+        "cov-005726",
+        "cov-005727",
+        "cov-005728",
+        "cov-005729",
+        "cov-005730",
+        "cov-005731"
+      ],
+      "source_obligation_ids": [
+        "obl-002625",
+        "obl-002626",
+        "obl-002627",
+        "obl-002628",
+        "obl-002629",
+        "obl-002630",
+        "obl-002631",
+        "obl-002632",
+        "obl-002633",
+        "obl-002634"
+      ],
+      "source_seed_ids": [
+        "shard-0079-s003",
+        "shard-0079-s005",
+        "shard-0079-s007",
+        "shard-0079-s008",
+        "shard-0079-s009",
+        "shard-0079-s010",
+        "shard-0079-s011",
+        "shard-0079-s012",
+        "shard-0079-s013",
+        "shard-0079-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "Strong aligned owner:",
+        "or a blocked/runtime episode",
+        "`allowed_action_ids[]` has already won at the runtime-command layer, but approval targeting is still split between `request_id` and `blocked_sequence`.",
+        "Collapse approval identity onto the runtime/blocked model.",
+        "Keep any surviving `request_id` only as lineage or compatibility metadata for historical replay, not as the primary approval action target.",
+        "Reconcile `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` away from `request_id` args and toward runtime-native blocked identity.",
+        "Reconcile HITL restore/state docs so restart behavior restores blocked approval episodes rather than a competing tier-boundary request object.",
+        "This is the cleanest remaining bridge between the old HITL plan and the new blocked/runtime command model.",
+        "`Executor_Protocol.md` is already ahead of `human-in-the-loop.md` on this seam.",
+        "`cmd.graph.approve_hitl`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

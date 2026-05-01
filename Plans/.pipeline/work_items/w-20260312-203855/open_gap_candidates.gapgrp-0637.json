@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0637",
+  "coverage_row_ids_represented": [
+    "cov-004285",
+    "cov-004287",
+    "cov-004289",
+    "cov-004291"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0637; path=Plans/Wiring_Matrix.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004285",
+        "cov-004287",
+        "cov-004289",
+        "cov-004291"
+      ],
+      "source_obligation_ids": [
+        "obl-002040",
+        "obl-002041",
+        "obl-002042",
+        "obl-002043"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Plans/Wiring_Matrix.schema.json currently has no fields for command-kind or normalization metadata.",
+        "The wiring layer is still built around a simple command-binding contract (ui_element_id, ui_command_id, handler_location, expected_event_types) but it does not encode: wrapper normalization; deprecated alias mapping; route/open contract consumption; command classification such as shell_view versus navigation_wrapper.",
+        "Keep normalization metadata owned by the command-definition side, not by wiring rows.",
+        "Extend the wiring/gate model so it can consume catalog metadata for command_kind, normalization kind, canonical target contract."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

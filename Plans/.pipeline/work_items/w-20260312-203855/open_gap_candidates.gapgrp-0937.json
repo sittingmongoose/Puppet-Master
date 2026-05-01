@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0937",
+  "coverage_row_ids_represented": [
+    "cov-005572",
+    "cov-005573",
+    "cov-005574",
+    "cov-005575",
+    "cov-005576",
+    "cov-005577",
+    "cov-005578",
+    "cov-005579",
+    "cov-005580",
+    "cov-005581"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0937; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005572",
+        "cov-005573",
+        "cov-005574",
+        "cov-005575",
+        "cov-005576",
+        "cov-005577",
+        "cov-005578",
+        "cov-005579",
+        "cov-005580",
+        "cov-005581"
+      ],
+      "source_obligation_ids": [
+        "obl-002475",
+        "obl-002476",
+        "obl-002477",
+        "obl-002478",
+        "obl-002479",
+        "obl-002480",
+        "obl-002481",
+        "obl-002482",
+        "obl-002483",
+        "obl-002484"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s037",
+        "shard-0077-s038",
+        "shard-0077-s042",
+        "shard-0077-s043",
+        "shard-0077-s044",
+        "shard-0077-s045",
+        "shard-0077-s047",
+        "shard-0079-s061",
+        "shard-0083-s063",
+        "shard-0085-s097"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0079",
+        "shard-0083",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`thread_blocked_notice` / `wizard_runtime_state` with `resume_url?`",
+        "thread_blocked_notice",
+        "wizard_runtime_state",
+        "resume_url?",
+        "Primary owner doc:",
+        "Treat `storage-plan.md` as a same-file reconciliation problem, not only a cross-doc mismatch.",
+        "canonical event families",
+        "canonical key families",
+        "canonical record families",
+        "This is the storage-side parallel of the `human-in-the-loop.md` supersession problem."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

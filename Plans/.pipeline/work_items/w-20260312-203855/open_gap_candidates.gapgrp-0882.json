@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0882",
+  "coverage_row_ids_represented": [
+    "cov-006462",
+    "cov-006463",
+    "cov-006464",
+    "cov-006465",
+    "cov-006466",
+    "cov-006467",
+    "cov-006468",
+    "cov-006469",
+    "cov-006470",
+    "cov-006471"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0882; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006462",
+        "cov-006463",
+        "cov-006464",
+        "cov-006465",
+        "cov-006466",
+        "cov-006467",
+        "cov-006468",
+        "cov-006469",
+        "cov-006470",
+        "cov-006471"
+      ],
+      "source_obligation_ids": [
+        "obl-003365",
+        "obl-003366",
+        "obl-003367",
+        "obl-003368",
+        "obl-003369",
+        "obl-003370",
+        "obl-003371",
+        "obl-003372",
+        "obl-003373",
+        "obl-003374"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s007",
+        "shard-0077-s010",
+        "shard-0077-s014",
+        "shard-0077-s017",
+        "shard-0077-s031",
+        "shard-0077-s032",
+        "shard-0080-s058",
+        "shard-0080-s067",
+        "shard-0084-s031",
+        "shard-0085-s021",
+        "shard-0085-s064",
+        "shard-0085-s085",
+        "shard-0085-s108",
+        "shard-0085-s117",
+        "shard-0085-s127"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0080",
+        "shard-0084",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "Strong aligned adjacent consumer:",
+        "cross-surface node usage via `tier_id`",
+        "tier_id",
+        "Reconcile usage and evidence families away from tier-first cross-surface correlation.",
+        "Treat any remaining `tier_id` use as derived compatibility metadata or view grouping, not as the primary cross-surface key.",
+        "canonical keys for `blocked_projection`, `attempt_record`, `scheduler_pass_record`",
+        "blocked_projection",
+        "attempt_record",
+        "scheduler_pass_record",
+        "blocked projections and runtime recovery lineage"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

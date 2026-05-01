@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0956",
+  "coverage_row_ids_represented": [
+    "cov-005762",
+    "cov-005763",
+    "cov-005764",
+    "cov-005765",
+    "cov-005766",
+    "cov-005767",
+    "cov-005768",
+    "cov-005769",
+    "cov-005770",
+    "cov-005771"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0956; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005762",
+        "cov-005763",
+        "cov-005764",
+        "cov-005765",
+        "cov-005766",
+        "cov-005767",
+        "cov-005768",
+        "cov-005769",
+        "cov-005770",
+        "cov-005771"
+      ],
+      "source_obligation_ids": [
+        "obl-002665",
+        "obl-002666",
+        "obl-002667",
+        "obl-002668",
+        "obl-002669",
+        "obl-002670",
+        "obl-002671",
+        "obl-002672",
+        "obl-002673",
+        "obl-002674"
+      ],
+      "source_seed_ids": [
+        "shard-0079-s079",
+        "shard-0079-s080",
+        "shard-0079-s081",
+        "shard-0079-s082",
+        "shard-0079-s083",
+        "shard-0079-s092"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "{ node_id: string, rationale: string }",
+        "`cmd.graph.deny_hitl` args = `{ node_id: string, rationale: string }`",
+        "Both are already contradicted by the runtime command consolidation:",
+        "`approve` -> `cmd.runtime.approve` -> `{ run_id, node_id, blocked_sequence, attempt_id? }`",
+        "approve",
+        "cmd.runtime.approve",
+        "{ run_id, node_id, blocked_sequence, attempt_id? }",
+        "`decline` -> `cmd.runtime.decline` -> `{ run_id, node_id, blocked_sequence, attempt_id? }`",
+        "decline",
+        "cmd.runtime.decline"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

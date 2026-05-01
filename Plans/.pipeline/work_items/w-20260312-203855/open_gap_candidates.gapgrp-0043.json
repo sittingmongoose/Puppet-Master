@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0043",
+  "coverage_row_ids_represented": [
+    "cov-000388",
+    "cov-000391",
+    "cov-000393",
+    "cov-000396",
+    "cov-000400",
+    "cov-000402",
+    "cov-000405",
+    "cov-000408",
+    "cov-000411",
+    "cov-000414"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0043; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Canonical Event Families"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000388",
+        "cov-000391",
+        "cov-000393",
+        "cov-000396",
+        "cov-000400",
+        "cov-000402",
+        "cov-000405",
+        "cov-000408",
+        "cov-000411",
+        "cov-000414"
+      ],
+      "source_obligation_ids": [
+        "obl-000170",
+        "obl-000171",
+        "obl-000172",
+        "obl-000173",
+        "obl-000174",
+        "obl-000175",
+        "obl-000176",
+        "obl-000177",
+        "obl-000178",
+        "obl-000179"
+      ],
+      "source_seed_ids": [
+        "shard-0002-s003",
+        "shard-0002-s009",
+        "shard-0002-s011",
+        "shard-0002-s017",
+        "shard-0002-s018",
+        "shard-0004-s013",
+        "shard-0015-s001",
+        "shard-0016-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0002",
+        "shard-0004",
+        "shard-0015",
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Canonical event families must be: seam.*, package.*, node.*, promotion.*, corroboration.*, graph_patch.*, recovery.*, account.* \u2014 no surface-local shadow event language",
+        "Concern creation authority: runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic may mint canonical concerns; workers may NOMINATE but not mint canonical concerns",
+        "Canonical event families must be shared between the runtime and UI projections \u2014 the Orchestrator must NOT invent a shadow event language separate from the runtime event model",
+        "Concern model must be a first-class record with fields: identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history, visibility flags",
+        "Projection freshness model: event-driven updates are primary; each projection must carry one of these health states: current, refreshing, stale, failed",
+        "Projection degradation policy: a stale projection that undermines blocked/promotion/recovery/patch/account-pressure truth must mint a real concern \u2014 degraded projections are not silent",
+        "concern record = canonical durable object with stable identity and lifecycle",
+        "concern source event/ref = review finding, corroboration result, blocked episode, patch result, recovery outcome that supports the concern",
+        "concern projection = surface-specific rendering for Progress / Seams / Evidence / History / Ledger",
+        "review finding: may nominate a concern or attach evidence to an existing concern"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0666",
+  "coverage_row_ids_represented": [
+    "cov-005472"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0666; path=Plans/WorktreeGitImprovement.md; row_type=stale_token_replacement; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005472"
+      ],
+      "source_obligation_ids": [
+        "obl-002383"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0022"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Replace tier-bound worktree identity in SCM/runtime flows with the newer lane/worktree plus execution-context model."
+      ],
+      "stale_tokens": [
+        "get_tier_worktree(tier_id) in WorktreeGitImprovement.md",
+        "worktree paths keyed by tier_id",
+        "tier_id as worktree identity anchor in crew/message examples"
+      ],
+      "canonical_replacement_hints": [
+        "lane/worktree plus execution-context model; canonical worktree object identity via object_kind=worktree"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Residual actionable grouping; route to reconciliation for triage.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

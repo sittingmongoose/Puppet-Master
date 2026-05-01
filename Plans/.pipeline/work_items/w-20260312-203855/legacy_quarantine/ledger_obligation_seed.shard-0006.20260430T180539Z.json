@@ -1,0 +1,202 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0006",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0006-L001001-L001200.md",
+  "source_line_range": "L001001-L001200",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "seam review loop behavior",
+      "exact_items": [
+        "define concrete seam review loop behavior",
+        "include trigger points, checks performed, corroboration thresholds, and emitted artifacts",
+        "candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or graph-patch recommendation, corroboration requirement and outcome when invoked"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "seam review loop",
+        "promotion/review policy",
+        "blocking/HITL/critical-decision events"
+      ],
+      "stale_tokens": [
+        "HITL",
+        "package overseer",
+        "graph-patch"
+      ],
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001015-L001028",
+        "working_ledger.md:L001049-L001053"
+      ],
+      "notes": [
+        "Missing behavioral contract and required emitted artifacts."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "provider/model precedence and delegation policy",
+      "exact_items": [
+        "provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels",
+        "whether seam/package/node provider-model settings are hard constraints, defaults, or hints",
+        "whether an overseer can do direct node work or only delegate/review",
+        "if direct node work is allowed, whether it uses overseer-effective settings or node-effective settings",
+        "how dynamic node personas interact with explicit node overrides and overseer-controlled delegation"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "runtime/model precedence",
+        "delegated worker policy",
+        "effective identity / persona"
+      ],
+      "stale_tokens": [
+        "Overseer",
+        "persona",
+        "effective settings"
+      ],
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001029-L001039",
+        "working_ledger.md:L001146-L001147"
+      ],
+      "notes": [
+        "Missing policy matrix with explicit unresolved fields."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "worktree ownership and lane assignment",
+      "exact_items": [
+        "how are worktrees assigned for parallel nodes within the same package or seam",
+        "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work",
+        "for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result",
+        "preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/FileSafe.md"
+      ],
+      "heading_hints": [
+        "worktree behavior",
+        "parallel mutable worktrees",
+        "dependent-node execution lanes"
+      ],
+      "stale_tokens": [
+        "task/subtask hierarchy",
+        "one worktree per subtask"
+      ],
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001035-L001041",
+        "working_ledger.md:L001172-L001174"
+      ],
+      "notes": [
+        "Lane/worktree allocation rules are unresolved and affect execution correctness."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "projection ownership and source-control partitioning",
+      "exact_items": [
+        "which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
+        "Source Control worktree area likely needs top-level partitioning into Orchestrator Owned and Other",
+        "Orchestrator Owned section likely needs further subdivision by feature seam",
+        "Orchestrator page is a high-density information surface with very large detail volume"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "projection ownership by surface",
+        "Source Control worktree area",
+        "Orchestrator page"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "page layer",
+        "Orchestrator Owned"
+      ],
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001064-L001092",
+        "working_ledger.md:L001176-L001189"
+      ],
+      "notes": [
+        "UI/layout issue because it names required ownership split and missing partitioning."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "multi-account settings structure and auto-switch policy",
+      "exact_items": [
+        "multi-account settings structure across project settings, run snapshot, attempt record",
+        "precedence between provider/account/execution-role rules",
+        "user-configurable threshold that determines when automatic account switching occurs",
+        "multi-account auto-switch should be on by default for every execution role that uses a provider",
+        "thresholding/policy granularity by provider, account, execution role"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "multi-account settings",
+        "provider/account/execution-role precedence",
+        "automatic account switching"
+      ],
+      "stale_tokens": [
+        "multi-account",
+        "auto-switch",
+        "execution role"
+      ],
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001093-L001118"
+      ],
+      "notes": [
+        "Missing config contract with explicit default/on-by-default requirement and precedence fields."
+      ]
+    }
+  ],
+  "noise_items": [
+    {
+      "source_evidence": [
+        "working_ledger.md:L1001-L1013"
+      ],
+      "reason": "Failure-class list only; context but not a specific missing field."
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L1119-L1145"
+      ],
+      "reason": "Packetization/stewardship notes and recovery meta."
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L1156-L1200"
+      ],
+      "reason": "Impact summaries and doc lists; broad summary rather than specific missing fields."
+    }
+  ],
+  "uncertain_items": [
+    {
+      "source_evidence": [
+        "working_ledger.md:L1069-L1074"
+      ],
+      "reason": "Whether Overseer should be retired or retained is framed as open."
+    }
+  ],
+  "covered_shard_id": "shard-0006"
+}

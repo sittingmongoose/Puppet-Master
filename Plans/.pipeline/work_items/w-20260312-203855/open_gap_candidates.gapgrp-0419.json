@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0419",
+  "coverage_row_ids_represented": [
+    "cov-000996",
+    "cov-000999",
+    "cov-001002",
+    "cov-001005",
+    "cov-001224",
+    "cov-001228",
+    "cov-001232",
+    "cov-001236",
+    "cov-001308",
+    "cov-001311"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0419; path=Plans/Orchestrator_Page.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Persona Field Name Drift"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000996",
+        "cov-000999",
+        "cov-001002",
+        "cov-001005",
+        "cov-001224",
+        "cov-001228",
+        "cov-001232",
+        "cov-001236",
+        "cov-001308",
+        "cov-001311"
+      ],
+      "source_obligation_ids": [
+        "obl-000425",
+        "obl-000426",
+        "obl-000427",
+        "obl-000428",
+        "obl-000537",
+        "obl-000538",
+        "obl-000539",
+        "obl-000540",
+        "obl-000558",
+        "obl-000559"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s017",
+        "shard-0011-s011",
+        "shard-0011-s015",
+        "shard-0032-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0008",
+        "shard-0011",
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Field name drift: 'requested_persona_id' is used in some docs while 'requested_persona' is the canonical field name defined in Contracts_V0.md",
+        "some docs still normalize around requested_persona_id / effective_persona_id",
+        "Contracts_V0.md explicitly says those are not canonical persisted names",
+        "Orchestrator_Page.md still requires forbidden requested_persona_id / effective_persona_id names in live-status dependencies",
+        "Orchestrator_Page.md still keeps Tiers and multi-tab widget composition",
+        "Widget_System.md still catalogs tier widgets and weak hostability rules",
+        "usage-feature.md still aggregates around tier_id",
+        "storage-plan.md still splits tier-era event tables from newer attempt-centric records",
+        "WorktreeGitImprovement.md still frames ownership around tier / subtask rather than package lane pools",
+        "Orchestrator_Page.md still references Tiers and per-tier worktree ownership"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id",
+        "Tiers tab",
+        "tier_id aggregation",
+        "tier-era event tables",
+        "TierChanged",
+        "IterationStart",
+        "TierTree",
+        "tier-based worktree ownership",
+        "subtask worktree ownership",
+        "per-tier worktree"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'requested_persona' and 'effective_persona' as canonical field names"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

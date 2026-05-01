@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0599",
+  "coverage_row_ids_represented": [
+    "cov-007979",
+    "cov-007981",
+    "cov-007983",
+    "cov-007985"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "group gapgrp-0599; path=Plans/UI_Command_Catalog.md; row_type=stale_retirement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007979",
+        "cov-007981",
+        "cov-007983",
+        "cov-007985"
+      ],
+      "source_obligation_ids": [
+        "obl-004410",
+        "obl-004411",
+        "obl-004412",
+        "obl-004413"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s023"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
+        "result_id",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected"
+      ],
+      "stale_tokens": [
+        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
+        "Plans/UI_Command_Catalog.md",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected",
+        "gap-002",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0965",
+  "coverage_row_ids_represented": [
+    "cov-005852",
+    "cov-005853",
+    "cov-005854",
+    "cov-005855",
+    "cov-005856",
+    "cov-005857",
+    "cov-005858",
+    "cov-005859",
+    "cov-005860",
+    "cov-005861"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0965; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005852",
+        "cov-005853",
+        "cov-005854",
+        "cov-005855",
+        "cov-005856",
+        "cov-005857",
+        "cov-005858",
+        "cov-005859",
+        "cov-005860",
+        "cov-005861"
+      ],
+      "source_obligation_ids": [
+        "obl-002755",
+        "obl-002756",
+        "obl-002757",
+        "obl-002758",
+        "obl-002759",
+        "obl-002760",
+        "obl-002761",
+        "obl-002762",
+        "obl-002763",
+        "obl-002764"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s040",
+        "shard-0081-s041",
+        "shard-0081-s042",
+        "shard-0081-s081",
+        "shard-0081-s082",
+        "shard-0081-s095",
+        "shard-0081-s120",
+        "shard-0081-s130",
+        "shard-0081-s132",
+        "shard-0081-s133",
+        "shard-0082-s014",
+        "shard-0082-s063"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "`Formatters_System.md` continues to sit outside the central mutation/policy engine and loses attribution under DAE.",
+        "Formatters_System.md",
+        "`Plugins_System.md` still permits read-only mode bypass via mutating plugin tools and env-var mutation, plus namespace/runtime model splits.",
+        "Plugins_System.md",
+        "`Skills_System.md` still has unresolved bundling-off semantics, compaction behavior for bundled skill text, and HTE/DAE reachability rules.",
+        "Skills_System.md",
+        "There are still unresolved architectural edges around DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, and runtime identity provenance.",
+        "Continue the ordered sequence on this same 22-doc tranche into `GPT-5.2`; `GPT-5.4` still produced enough novel signal to justify it.",
+        "GPT-5.2",
+        "After this merge, the remaining partial tail should sit uniformly at `Gemini + Opus + Sonnet + GPT-5.4`."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

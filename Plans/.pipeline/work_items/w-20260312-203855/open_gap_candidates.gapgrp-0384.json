@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0384",
+  "coverage_row_ids_represented": [
+    "cov-000820",
+    "cov-000822",
+    "cov-000824",
+    "cov-000826",
+    "cov-000828",
+    "cov-000830",
+    "cov-000832",
+    "cov-000833",
+    "cov-000837",
+    "cov-000856"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0384; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Projection Trust States"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000820",
+        "cov-000822",
+        "cov-000824",
+        "cov-000826",
+        "cov-000828",
+        "cov-000830",
+        "cov-000832",
+        "cov-000833",
+        "cov-000837",
+        "cov-000856"
+      ],
+      "source_obligation_ids": [
+        "obl-000356",
+        "obl-000357",
+        "obl-000358",
+        "obl-000359",
+        "obl-000360",
+        "obl-000361",
+        "obl-000362",
+        "obl-000363",
+        "obl-000364",
+        "obl-000371"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s015",
+        "shard-0005-s010",
+        "shard-0024-s010",
+        "shard-0025-s001",
+        "shard-0027-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0004",
+        "shard-0005",
+        "shard-0024",
+        "shard-0025",
+        "shard-0027"
+      ],
+      "exact_missing_items": [
+        "degraded",
+        "unavailable",
+        "current: projection up to date for normal read + write interaction",
+        "refreshing: slightly behind but actively catching up; read fine, write may be fine depending on object class",
+        "stale: data old enough that mutation-bearing actions should narrow or require refetch",
+        "degraded: projector or dependency failure; surface may be incomplete or partially wrong",
+        "unavailable: projection cannot support that surface; UI must fall back or disable",
+        "exports derived from stale/degraded projections must either: disclose trust state in the export/manifest, or re-query from canonical/current backing data before export",
+        "Promotion model must be: explicit runtime state transitions, automation-first, with optional HITL that may pause but not replace automation; blocked promotions must surface on Dashboard/Orchestrator/chat",
+        "Orchestrator page ownership boundary: allowed = page layout/controls, view-model/projections, run control intents; NOT ALLOWED = canonical runtime enums, event semantics, scheduler truth"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

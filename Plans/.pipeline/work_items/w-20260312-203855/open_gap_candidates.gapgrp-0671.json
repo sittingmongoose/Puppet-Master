@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0671",
+  "coverage_row_ids_represented": [
+    "cov-002109",
+    "cov-002112",
+    "cov-002115",
+    "cov-004491",
+    "cov-004498",
+    "cov-007784",
+    "cov-007786",
+    "cov-007787",
+    "cov-007788",
+    "cov-007823"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "group gapgrp-0671; path=Plans/assistant-chat-design.md; row_type=consumer; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Shared Blocked Taxonomy for Conversational Actors"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002109",
+        "cov-002112",
+        "cov-002115",
+        "cov-004491",
+        "cov-004498",
+        "cov-007784",
+        "cov-007786",
+        "cov-007787",
+        "cov-007788",
+        "cov-007823"
+      ],
+      "source_obligation_ids": [
+        "obl-001040",
+        "obl-001041",
+        "obl-001042",
+        "obl-002149",
+        "obl-002150",
+        "obl-004342",
+        "obl-004344",
+        "obl-004345",
+        "obl-004346",
+        "obl-004366"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0003",
+        "shard-0027-s004",
+        "shard-0089-s121",
+        "shard-0089-s138",
+        "shard-0090-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0061",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "blocked",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "Cross-owner docs implicated by this seam: Plans/FileManager.md, Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/Runtime_Artifacts_Panel.md",
+        "Cross-owner docs implicated: Plans/storage-plan.md, Plans/UI_Command_Catalog.md, Plans/assistant-chat-design.md, Plans/Orchestrator_Page.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md",
+        "`Plans/assistant-chat-design.md` also contains `### Multi-episode display`, so the blocked-notice flow is not missing wholesale.",
+        "### Multi-episode display",
+        "`Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket \"missing everywhere\" claim.",
+        "tool_use_id",
+        "`Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surfaces under audit."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

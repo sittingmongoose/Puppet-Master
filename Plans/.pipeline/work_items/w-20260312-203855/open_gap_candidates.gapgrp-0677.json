@@ -1,0 +1,85 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0677",
+  "coverage_row_ids_represented": [
+    "cov-003976",
+    "cov-003979",
+    "cov-003982",
+    "cov-007781",
+    "cov-007891",
+    "cov-007898",
+    "cov-007905",
+    "cov-007912"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0677; path=Plans/assistant-chat-design.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003976",
+        "cov-003979",
+        "cov-003982",
+        "cov-007781",
+        "cov-007891",
+        "cov-007898",
+        "cov-007905",
+        "cov-007912"
+      ],
+      "source_obligation_ids": [
+        "obl-001850",
+        "obl-001851",
+        "obl-001852",
+        "obl-004339",
+        "obl-004382",
+        "obl-004383",
+        "obl-004384",
+        "obl-004385"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0061",
+        "shard-0089-s120",
+        "shard-0090-s054"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Commands_System.md contains an internal acceptance-criteria contradiction on reserved slash-command overrides",
+        "assistant-chat-design.md and UI_Command_Catalog.md still state the opposite rule from Commands_System.md and do not even mention override_builtin",
+        "Reconcile reserved slash-command override policy into one canonical rule and register all real cmd.chat.* / cmd.orchestrator.* IDs in the catalog before more UI wiring lands",
+        "`Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked-State Lifecycle`.",
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

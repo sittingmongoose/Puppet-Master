@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0943",
+  "coverage_row_ids_represented": [
+    "cov-005632",
+    "cov-005633",
+    "cov-005634",
+    "cov-005635",
+    "cov-005636",
+    "cov-005637",
+    "cov-005638",
+    "cov-005639",
+    "cov-005640",
+    "cov-005641"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0943; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005632",
+        "cov-005633",
+        "cov-005634",
+        "cov-005635",
+        "cov-005636",
+        "cov-005637",
+        "cov-005638",
+        "cov-005639",
+        "cov-005640",
+        "cov-005641"
+      ],
+      "source_obligation_ids": [
+        "obl-002535",
+        "obl-002536",
+        "obl-002537",
+        "obl-002538",
+        "obl-002539",
+        "obl-002540",
+        "obl-002541",
+        "obl-002542",
+        "obl-002543",
+        "obl-002544"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s009",
+        "shard-0078-s010",
+        "shard-0078-s011",
+        "shard-0078-s012",
+        "shard-0078-s013",
+        "shard-0080-s016",
+        "shard-0080-s017",
+        "shard-0080-s018",
+        "shard-0080-s019",
+        "shard-0085-s065",
+        "shard-0085-s066",
+        "shard-0085-s067",
+        "shard-0085-s068"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Provider / Model`",
+        "Provider / Model",
+        "`worker_provider`",
+        "worker_provider",
+        "`worker_model`",
+        "worker_model",
+        "`verifier_provider`",
+        "verifier_provider",
+        "`verifier_model`",
+        "verifier_model"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0813",
+  "coverage_row_ids_represented": [
+    "cov-003186",
+    "cov-003187",
+    "cov-003188",
+    "cov-003191",
+    "cov-003192",
+    "cov-003193",
+    "cov-003194",
+    "cov-003195",
+    "cov-003196",
+    "cov-003197"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0813; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Receipt Record Contradiction Fix"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003186",
+        "cov-003187",
+        "cov-003188",
+        "cov-003191",
+        "cov-003192",
+        "cov-003193",
+        "cov-003194",
+        "cov-003195",
+        "cov-003196",
+        "cov-003197"
+      ],
+      "source_obligation_ids": [
+        "obl-001486",
+        "obl-001487",
+        "obl-001488",
+        "obl-001491",
+        "obl-001492",
+        "obl-001493",
+        "obl-001494",
+        "obl-001495",
+        "obl-001496",
+        "obl-001497"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s010",
+        "shard-0077-s022",
+        "shard-0078-s078",
+        "shard-0084-s003",
+        "shard-0088-s043",
+        "shard-0088-s060",
+        "shard-0088-s086"
+      ],
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0077",
+        "shard-0078",
+        "shard-0084",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "receipt records (orchestrator.receipt.{run_id}.{attempt_id}) must carry project_id and created_at_utc as required fields to enable cross-surface pivoting",
+        "The early storage-plan receipt value shape that omits these fields must be updated to match the later cross-surface record definition",
+        "This is an internal contradiction within storage-plan.md \u2014 the later definition must win",
+        "`Plans/storage-plan.md` now contains a clear same-file canon split between:",
+        "`Plans/storage-plan.md` still teaches canonical event families such as:",
+        "`Plans/storage-plan.md` still mixes two runtime eras in the same canonical storage owner:",
+        "2. `Plans/storage-plan.md`",
+        "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+        "Plans/storage-plan.md:879-910",
+        "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

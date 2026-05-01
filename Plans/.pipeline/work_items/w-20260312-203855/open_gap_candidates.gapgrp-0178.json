@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0178",
+  "coverage_row_ids_represented": [
+    "cov-002351",
+    "cov-002354",
+    "cov-002357",
+    "cov-004505",
+    "cov-004509",
+    "cov-004513",
+    "cov-004600",
+    "cov-004608",
+    "cov-004616",
+    "cov-004624"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0178; path=Plans/FileManager.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "## Worktree Ownership"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002351",
+        "cov-002354",
+        "cov-002357",
+        "cov-004505",
+        "cov-004509",
+        "cov-004513",
+        "cov-004600",
+        "cov-004608",
+        "cov-004616",
+        "cov-004624"
+      ],
+      "source_obligation_ids": [
+        "obl-001179",
+        "obl-001180",
+        "obl-001181",
+        "obl-002151",
+        "obl-002152",
+        "obl-002153",
+        "obl-002176",
+        "obl-002177",
+        "obl-002178",
+        "obl-002179"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0004",
+        "seed-WAVE007-0015",
+        "shard-0031-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0061",
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "GitHub_Integration.md still frames worktree ownership around run/tier",
+        "FileManager.md already wants identity-based artifact opening, but its open contract is still too path-first",
+        "Runtime_Artifacts_Panel.md is missing attempt_id in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly",
+        "`inspector_target` is still useful, but it should stay for reusable detail-pane or subsection focus, not as a universal dumping ground for all feature-local anchors.",
+        "Sub-selection is handled by one of three mechanisms: `OpenFile` specialization for `line`/`range`; `inspector_target` for reusable detail-surface focus; object-family-specific anchor fields only when the anchor is truly domain-local and not reusable",
+        "Define `inspector_target` narrowly in the contract layer as reusable detail/subsection focus.",
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+        "Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.",
+        "Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.",
+        "Allow the route model to name major destination surfaces/tabs/panels where operationally necessary."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

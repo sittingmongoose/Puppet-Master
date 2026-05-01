@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0451",
+  "represented_seed_ids": [
+    "seed-WAVE006-0096"
+  ],
+  "source_shard_ids": [
+    "shard-0060"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0096"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "FinalGUISpec.md and UI_Command_Catalog.md must both reference the canonical route-target model for: search result activation, CtA activation, artifact Show-in-* actions, and usage pivot actions",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "FinalGUISpec.md and UI_Command_Catalog.md must both reference the canonical route-target model for: search result activation, CtA activation, artifact Show-in-* actions, and usage pivot actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "## Search Activation",
+        "## CTA Activation",
+        "## Usage Pivot",
+        "## Show-in-*"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target",
+        "cmd.nav.open_subject",
+        "cmd.nav.focus_route"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011940-L011960"
+      ],
+      "notes": [
+        "Four surface activation patterns that must converge on route_target + cmd.nav.*: (1) search result click, (2) CtA item activation, (3) artifact Show-in-* actions, (4) usage pivot links. Both FinalGUISpec.md and UI_Command_Catalog.md must explicitly reference the canonical model."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0096"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "All four surface activation patterns must converge on route_target + cmd.nav.* family rather than maintaining separate per-surface implementation conventions",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "All four surface activation patterns must converge on route_target + cmd.nav.* family rather than maintaining separate per-surface implementation conventions"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "## Search Activation",
+        "## CTA Activation",
+        "## Usage Pivot",
+        "## Show-in-*"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target",
+        "cmd.nav.open_subject",
+        "cmd.nav.focus_route"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011940-L011960"
+      ],
+      "notes": [
+        "Four surface activation patterns that must converge on route_target + cmd.nav.*: (1) search result click, (2) CtA item activation, (3) artifact Show-in-* actions, (4) usage pivot links. Both FinalGUISpec.md and UI_Command_Catalog.md must explicitly reference the canonical model."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

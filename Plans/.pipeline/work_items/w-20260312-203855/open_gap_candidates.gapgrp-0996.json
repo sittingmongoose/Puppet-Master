@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0996",
+  "coverage_row_ids_represented": [
+    "cov-006162",
+    "cov-006163",
+    "cov-006164",
+    "cov-006165",
+    "cov-006166",
+    "cov-006167",
+    "cov-006168",
+    "cov-006169",
+    "cov-006170",
+    "cov-006171"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0996; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006162",
+        "cov-006163",
+        "cov-006164",
+        "cov-006165",
+        "cov-006166",
+        "cov-006167",
+        "cov-006168",
+        "cov-006169",
+        "cov-006170",
+        "cov-006171"
+      ],
+      "source_obligation_ids": [
+        "obl-003065",
+        "obl-003066",
+        "obl-003067",
+        "obl-003068",
+        "obl-003069",
+        "obl-003070",
+        "obl-003071",
+        "obl-003072",
+        "obl-003073",
+        "obl-003074"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s112",
+        "shard-0085-s115",
+        "shard-0085-s116",
+        "shard-0085-s118",
+        "shard-0085-s119",
+        "shard-0085-s121",
+        "shard-0085-s123",
+        "shard-0085-s128",
+        "shard-0085-s131"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`usage-feature.md`",
+        "usage-feature.md",
+        "`assistant-chat-design.md`",
+        "assistant-chat-design.md",
+        "`usage-feature.md` needs:",
+        "run/node/attempt identity and `usage_event_ref` elevated",
+        "historical/current usage navigation aligned to canonical route/open primitives",
+        "graph detail and usage pivots aligned to node/attempt/runtime identity",
+        "worker/verifier identity fields aligned to canonical requested/effective runtime disclosure",
+        "`assistant-chat-design.md` needs:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

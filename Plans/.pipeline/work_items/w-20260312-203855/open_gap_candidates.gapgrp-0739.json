@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0739",
+  "coverage_row_ids_represented": [
+    "cov-001689",
+    "cov-001693",
+    "cov-001697",
+    "cov-002080",
+    "cov-002083",
+    "cov-002095",
+    "cov-002098",
+    "cov-002101",
+    "cov-002104",
+    "cov-003831"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0739; path=Plans/interview-subagent-integration.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "## Cross-Surface Persona Consistency"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001689",
+        "cov-001693",
+        "cov-001697",
+        "cov-002080",
+        "cov-002083",
+        "cov-002095",
+        "cov-002098",
+        "cov-002101",
+        "cov-002104",
+        "cov-003831"
+      ],
+      "source_obligation_ids": [
+        "obl-000745",
+        "obl-000746",
+        "obl-000747",
+        "obl-001030",
+        "obl-001031",
+        "obl-001035",
+        "obl-001036",
+        "obl-001037",
+        "obl-001038",
+        "obl-001795"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0043",
+        "shard-0020-s007",
+        "shard-0027-s001",
+        "shard-0027-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0020",
+        "shard-0027",
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "Chat/Interview/Builder/Orchestrator should still share the same effective resolution record and display grammar",
+        "Define a deterministic Orchestrator auto-resolver matrix by: actor type, operation type, scope, stack/domain hints",
+        "Require each auto resolver to emit: ranked candidate set plus explanation metadata",
+        "assistant/interviewer/builders share: requested/effective provider/model/persona/account/auth semantics, selection reason, skipped/honored control disclosure, blocked/retry/remediation/degradation taxonomy, shared activity/event-stream infrastructure",
+        "they do NOT automatically become: Feature Seams, Work Packages, graph Nodes, lane-pool objects, package/seam-governance objects",
+        "assistant conversation turn/run",
+        "interview phase/document/review run",
+        "builder stage/review run",
+        "orchestrator node/attempt/run",
+        "Promote thread_id, project_id, validation/report lineage, and requested/effective account identity into wizard/interview pre-run governance payloads where adjacent canonical docs already require them"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

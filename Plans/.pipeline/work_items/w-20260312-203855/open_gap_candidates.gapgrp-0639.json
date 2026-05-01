@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0639",
+  "coverage_row_ids_represented": [
+    "cov-003760",
+    "cov-003762",
+    "cov-003764",
+    "cov-003840",
+    "cov-003844",
+    "cov-003848",
+    "cov-003852"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "group gapgrp-0639; path=Plans/Wiring_Matrix.md; row_type=missing_doc_reference; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003760",
+        "cov-003762",
+        "cov-003764",
+        "cov-003840",
+        "cov-003844",
+        "cov-003848",
+        "cov-003852"
+      ],
+      "source_obligation_ids": [
+        "obl-001770",
+        "obl-001771",
+        "obl-001772",
+        "obl-001799",
+        "obl-001800",
+        "obl-001801",
+        "obl-001802"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0036",
+        "seed-WAVE005-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "cmd.orchestrator.switch_tab currently appears in the wiring template without existing in the catalog",
+        "Wiring_Matrix.md references cmd.orchestrator.switch_tab, but the canonical command catalog does not define it",
+        "graph-local retry/HITL commands still cannot actually be thin aliases to runtime commands because they omit runtime-minimum anchors like run_id, attempt_id, and blocked_sequence",
+        "Wiring_Matrix.md still references cmd.orchestrator.switch_tab, but UI_Command_Catalog.md does not define it",
+        "Commands_System.md and assistant-chat-design.md still disagree on whether reserved slash commands may be overridden",
+        "UI_Command_Catalog.md still lacks the corresponding cmd.chat.run_user_command owner row",
+        "Reconcile all remaining command/template/example drift so UI_Command_Catalog.md is the sole stable action owner and every referenced command actually exists"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Missing doc reference obligation requires reconciliation or discovery.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

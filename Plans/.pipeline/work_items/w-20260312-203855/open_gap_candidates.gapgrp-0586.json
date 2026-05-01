@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0586",
+  "coverage_row_ids_represented": [
+    "cov-004650",
+    "cov-004654",
+    "cov-004660",
+    "cov-004666",
+    "cov-004672",
+    "cov-004691",
+    "cov-004698",
+    "cov-004705",
+    "cov-004712",
+    "cov-004742"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0586; path=Plans/UI_Command_Catalog.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## Destination Surface Vocabulary"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004650",
+        "cov-004654",
+        "cov-004660",
+        "cov-004666",
+        "cov-004672",
+        "cov-004691",
+        "cov-004698",
+        "cov-004705",
+        "cov-004712",
+        "cov-004742"
+      ],
+      "source_obligation_ids": [
+        "obl-002183",
+        "obl-002184",
+        "obl-002185",
+        "obl-002186",
+        "obl-002187",
+        "obl-002191",
+        "obl-002192",
+        "obl-002193",
+        "obl-002194",
+        "obl-002203"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0016",
+        "seed-WAVE007-0018",
+        "seed-WAVE007-0019",
+        "seed-WAVE007-0027"
+      ],
+      "source_shard_ids": [
+        "shard-0063",
+        "shard-0064",
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "Recommended coarse destination classes: `primary_view` (Dashboard, Projects, Wizard, Interview, Settings, Usage, FileEditor, Orchestrator), `side_panel` (chat, files, source_control, github_actions, docker_manager, artifacts, run_debug), `bottom_panel` (terminal, problems, output, ports, browser, debug), `embedded_surface` (document_pane, agent_activity), `page_tab` (Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger)",
+        "Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.",
+        "Let routes optionally name a destination-local subview only when that is necessary for the task, but treat it as destination refinement, not base identity.",
+        "Reuse persisted project/surface state when the route does not specify a destination-local override.",
+        "The route model should be able to land a user in Source Control without becoming a full serialized `source_control.project_state`.",
+        "route activation overrides remembered state only when required to satisfy the requested destination/object/context; otherwise it should reuse persisted shell state and local destination defaults",
+        "MUST override: target object identity; destination surface when the action explicitly names a different surface; scope required to make the target meaningful (project_id, thread_id, focused_run_id, or an explicitly requested panel/tab)",
+        "MUST NOT reuse persisted state when doing so would: land on the wrong object; hide the requested target behind the wrong tab/subview; silently keep the user on a stale run/thread/project context",
+        "Add a shared route-activation override rule in the contract/GUI owner docs.",
+        "Formalize the three-way command taxonomy: pure shell/view-state commands; route-consuming navigation commands; domain mutation/runtime commands"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

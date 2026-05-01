@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0054",
+  "represented_seed_ids": [
+    "shard-0006-s008"
+  ],
+  "source_shard_ids": [
+    "shard-0006"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0006-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Supersession hotspot docs (highest-risk for canon collapse): Plans/orchestrator-subagent-integration.md, Plans/human-in-the-loop.md, Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/storage-plan.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Supersession hotspot docs (highest-risk for canon collapse): Plans/orchestrator-subagent-integration.md, Plans/human-in-the-loop.md, Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canon Collapse Hotspots"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L001180-L001200"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

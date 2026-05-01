@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0082",
+  "represented_seed_ids": [
+    "shard-0008-s003"
+  ],
+  "source_shard_ids": [
+    "shard-0008"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0008-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Contradiction: automation-first design principle conflicts with 'regular'/HTE-by-default in Run_Modes.md \u2014 Run_Modes.md must be updated to reflect automation-first as the default",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "Contradiction: automation-first design principle conflicts with 'regular'/HTE-by-default in Run_Modes.md \u2014 Run_Modes.md must be updated to reflect automation-first as the default"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Automation-First vs HTE Default Contradiction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_evidence": [
+        "working_ledger.md:L001445-L001470"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0970",
+  "coverage_row_ids_represented": [
+    "cov-005902",
+    "cov-005903",
+    "cov-005904",
+    "cov-005905",
+    "cov-005906",
+    "cov-005907",
+    "cov-005908",
+    "cov-005909",
+    "cov-005910",
+    "cov-005911"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0970; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005902",
+        "cov-005903",
+        "cov-005904",
+        "cov-005905",
+        "cov-005906",
+        "cov-005907",
+        "cov-005908",
+        "cov-005909",
+        "cov-005910",
+        "cov-005911"
+      ],
+      "source_obligation_ids": [
+        "obl-002805",
+        "obl-002806",
+        "obl-002807",
+        "obl-002808",
+        "obl-002809",
+        "obl-002810",
+        "obl-002811",
+        "obl-002812",
+        "obl-002813",
+        "obl-002814"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s062",
+        "shard-0082-s063",
+        "shard-0082-s106",
+        "shard-0082-s108"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "capabilities.get",
+        "`Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/event identity, and plugin/skill introspection or isolation guarantees.",
+        "LSPSupport.md",
+        "traceability / owner-routing integrity (`Crosswalk`, `DRY_Rules`, `Decision_Log`, `Progression_Gates`)",
+        "Crosswalk",
+        "DRY_Rules",
+        "Progression_Gates",
+        "DAE/FileSafe/recovery lineage exactness (`FileSafe`, `MiscPlan`, `Executor_Protocol`, `Run_Modes`)",
+        "FileSafe",
+        "MiscPlan"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1021",
+  "coverage_row_ids_represented": [
+    "cov-006436",
+    "cov-006437",
+    "cov-006438",
+    "cov-006439",
+    "cov-006440",
+    "cov-006441",
+    "cov-006442",
+    "cov-006443",
+    "cov-006444",
+    "cov-006445"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1021; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006436",
+        "cov-006437",
+        "cov-006438",
+        "cov-006439",
+        "cov-006440",
+        "cov-006441",
+        "cov-006442",
+        "cov-006443",
+        "cov-006444",
+        "cov-006445"
+      ],
+      "source_obligation_ids": [
+        "obl-003339",
+        "obl-003340",
+        "obl-003341",
+        "obl-003342",
+        "obl-003343",
+        "obl-003344",
+        "obl-003345",
+        "obl-003346",
+        "obl-003347",
+        "obl-003348"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s017",
+        "shard-0086-s048",
+        "shard-0086-s051",
+        "shard-0087-s002",
+        "shard-0087-s015",
+        "shard-0088-s052",
+        "shard-0088-s056",
+        "shard-0088-s081",
+        "shard-0089-s124",
+        "shard-0089-s152"
+      ],
+      "source_shard_ids": [
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "That still makes it dangerous: once upstream reconciliation happens, these docs can continue to broadcast stale \u201cPASS\u201d status or outdated feature summaries unless they are explicitly rechecked.",
+        "stale primary consumers",
+        "2. Primary stale consumers",
+        "Owner docs must go first, primary stale consumers second, mirrors and checklists after.",
+        "Same-file supersession remains a major source of stale implementation guidance.",
+        "capture any newly visible stale survivors or false-cognate cross-references that the current gap wording was not explicit enough about",
+        "result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text",
+        "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+        "No blocker families resolved; the live defects remain owner-anchor absence, skeletal consumer carry-through, and exact stale contradictory survivors.",
+        "The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-through, and exact stale contradictory survivors."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

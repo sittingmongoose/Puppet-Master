@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0523",
+  "coverage_row_ids_represented": [
+    "cov-004132",
+    "cov-004135",
+    "cov-004138",
+    "cov-004141",
+    "cov-004219",
+    "cov-004221",
+    "cov-004232",
+    "cov-004235",
+    "cov-004238",
+    "cov-004492"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "group gapgrp-0523; path=Plans/Runtime_Artifacts_Panel.md; row_type=consumer; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Worker Identity"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004132",
+        "cov-004135",
+        "cov-004138",
+        "cov-004141",
+        "cov-004219",
+        "cov-004221",
+        "cov-004232",
+        "cov-004235",
+        "cov-004238",
+        "cov-004492"
+      ],
+      "source_obligation_ids": [
+        "obl-001927",
+        "obl-001928",
+        "obl-001929",
+        "obl-001930",
+        "obl-002001",
+        "obl-002002",
+        "obl-002011",
+        "obl-002012",
+        "obl-002013",
+        "obl-002149"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0008",
+        "seed-WAVE006-0025",
+        "seed-WAVE006-0030",
+        "seed-WAVE007-0003"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0053",
+        "shard-0054",
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Update worker/detail surface docs so worker identity shows: execution role, requested/effective runtime identity, operational target context when relevant",
+        "Orchestrator_Page.md still uses a weak worker identity row that does not expose execution_role or operational target context",
+        "usage-feature.md is correctly account-aware, but it still has no place for execution-role disclosure",
+        "Runtime_Artifacts_Panel.md already needs canonical linkage into Source Control / GitHub / Docker / Usage, but it still lacks a normalized operational-identity field family",
+        "Require runtime-artifact envelope support for attempt_id plus bridge refs where applicable",
+        "runtime artifacts that are derived from or emitted during an attempt should carry: attempt_id, provider_attempt_ref?, usage_event_ref?, receipt linkage when they summarize external operations",
+        "FileManager.md needs open-by-identity and generated non-repo drafts",
+        "OpenFile { path: PathBuf } plus root-path validation cannot satisfy it; no OpenArtifact-style contract, no evidence_by_attempt projection, and no artifact-index freshness/degraded fallback exist",
+        "Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model",
+        "Cross-owner docs implicated by this seam: Plans/FileManager.md, Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

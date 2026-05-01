@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0347",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-002244",
+      "source_obligation_ids": [
+        "obl-001129"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:layout_evidence_incomplete"
+      ]
+    },
+    {
+      "coverage_id": "cov-002246",
+      "source_obligation_ids": [
+        "obl-001130"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002248",
+      "source_obligation_ids": [
+        "obl-001131"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002250",
+      "source_obligation_ids": [
+        "obl-001132"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002252",
+      "source_obligation_ids": [
+        "obl-001133"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002254",
+      "source_obligation_ids": [
+        "obl-001134"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002256",
+      "source_obligation_ids": [
+        "obl-001135"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002258",
+      "source_obligation_ids": [
+        "obl-001136"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002260",
+      "source_obligation_ids": [
+        "obl-001137"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002262",
+      "source_obligation_ids": [
+        "obl-001138"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

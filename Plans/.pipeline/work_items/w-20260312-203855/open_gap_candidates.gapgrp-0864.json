@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0864",
+  "coverage_row_ids_represented": [
+    "cov-001273",
+    "cov-001278",
+    "cov-001358",
+    "cov-001362",
+    "cov-001366",
+    "cov-001370",
+    "cov-001374",
+    "cov-001378",
+    "cov-001623",
+    "cov-001627"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0864; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Projection Trust States"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001273",
+        "cov-001278",
+        "cov-001358",
+        "cov-001362",
+        "cov-001366",
+        "cov-001370",
+        "cov-001374",
+        "cov-001378",
+        "cov-001623",
+        "cov-001627"
+      ],
+      "source_obligation_ids": [
+        "obl-000547",
+        "obl-000548",
+        "obl-000580",
+        "obl-000581",
+        "obl-000582",
+        "obl-000583",
+        "obl-000584",
+        "obl-000585",
+        "obl-000719",
+        "obl-000720"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002",
+        "shard-0013-s005",
+        "shard-0019-s004",
+        "shard-0034-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0019",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "degraded: projector/scan partially failed or a dependency signal is missing; some fields/sections are less trustworthy",
+        "unavailable: projection cannot currently answer the surface contract",
+        "Add a shared projection health/trust contract used by: Orchestrator, Usage, Source Control, other projection-backed surfaces",
+        "Define which commands require: current projection, direct runtime confirmation, or are safe from stale views because they operate on durable records only",
+        "Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable",
+        "storage-plan.md says run.started MUST include the full persona/runtime snapshot, but the event table row still enumerates a much thinner field set",
+        "storage-plan.md usage.event row still omits effective auth/account/model identity even though usage-feature.md UsageRecord expects those fields downstream",
+        "Contracts_V0.md forbids _persona_id canonical names while Orchestrator_Page.md still requires them in runtime-facing worker identity fields",
+        "Settings: source-axis heavy, show inheritance and override origin clearly, should answer what will be requested if I run from here",
+        "Orchestrator / Graph inspector / run detail: request/execution-axis heavy, should answer what did this run/attempt request, what actually happened, and why"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

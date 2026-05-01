@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0344",
+  "coverage_row_ids_represented": [
+    "cov-002138",
+    "cov-002139",
+    "cov-002140",
+    "cov-002141",
+    "cov-002142",
+    "cov-002143",
+    "cov-002228",
+    "cov-002232",
+    "cov-002234",
+    "cov-002236"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0344; path=Plans/Orchestrator_Page.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Bundle Export Manifest Fields"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002138",
+        "cov-002139",
+        "cov-002140",
+        "cov-002141",
+        "cov-002142",
+        "cov-002143",
+        "cov-002228",
+        "cov-002232",
+        "cov-002234",
+        "cov-002236"
+      ],
+      "source_obligation_ids": [
+        "obl-001057",
+        "obl-001058",
+        "obl-001059",
+        "obl-001060",
+        "obl-001061",
+        "obl-001062",
+        "obl-001121",
+        "obl-001123",
+        "obl-001124",
+        "obl-001125"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0045",
+        "shard-0027-s007",
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0030",
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "included_artifact_ids[]",
+        "included_file_paths[]?",
+        "lineage_notes?",
+        "trust_state_at_export?",
+        "Orchestrator_Page.md currently advertises a missing UICommand IDs section \u2014 that is a spec-integrity problem, not only a content gap",
+        "Orchestrator_Page.md TOC advertises a missing UICommand IDs section",
+        "concern_id",
+        "run_id?",
+        "scope_type",
+        "scope_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

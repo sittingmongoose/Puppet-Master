@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0747",
+  "coverage_row_ids_represented": [
+    "cov-004393",
+    "cov-004394"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0747; path=Plans/newtools.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/newtools.md",
+          "heading": "## CustomHeadlessTool"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004393",
+        "cov-004394"
+      ],
+      "source_obligation_ids": [
+        "obl-002097",
+        "obl-002098"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0068"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "CustomHeadlessTool in newtools.md conflicts with STATE_FILES.md expectations around tool identity and permission grants",
+        "The conflict is not just an alias/naming issue \u2014 the two docs have different mental models of when CustomHeadlessTool is created, what permissions it holds, and which file owns the registration contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

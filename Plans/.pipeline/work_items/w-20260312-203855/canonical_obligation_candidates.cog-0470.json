@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0470",
+  "represented_seed_ids": [
+    "seed-WAVE007-0022"
+  ],
+  "source_shard_ids": [
+    "shard-0064"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0022"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "`feature-list.md` and `newfeatures.md` still carry tier-era execution framing, old widget inventories, stale shell terminology, and promoted-feature phasing contradictions that would actively mislead implementation readers.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`feature-list.md` and `newfeatures.md` still carry tier-era execution framing, old widget inventories, stale shell terminology, and promoted-feature phasing contradictions that would actively mislead implementation readers."
+      ],
+      "affected_doc_hints": [
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Feature Inventory"
+      ],
+      "stale_residue_to_retire": [
+        "tier-era execution framing",
+        "old widget inventories",
+        "stale shell terminology",
+        "promoted-feature phasing contradictions"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L012747"
+      ],
+      "notes": [
+        "feature-list.md and newfeatures.md are active misleaders for implementation readers. They contain tier-era framing and stale widget/shell assumptions. These docs need comprehensive updates to reflect rewrite model."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

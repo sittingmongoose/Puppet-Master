@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0045",
+  "represented_seed_ids": [
+    "shard-0004-s019"
+  ],
+  "source_shard_ids": [
+    "shard-0004"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0004-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "'lane' object required fields: project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, ownership/display grouping",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "'lane' object required fields: project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, ownership/display grouping"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Lane Object Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000770-L000790"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

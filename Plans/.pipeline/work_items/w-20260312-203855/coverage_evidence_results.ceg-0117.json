@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0117",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-000938",
+      "source_obligation_ids": [
+        "obl-000404"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000948",
+      "source_obligation_ids": [
+        "obl-000407"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000960",
+      "source_obligation_ids": [
+        "obl-000411"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000990",
+      "source_obligation_ids": [
+        "obl-000422"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000992",
+      "source_obligation_ids": [
+        "obl-000423"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000995",
+      "source_obligation_ids": [
+        "obl-000424"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000997",
+      "source_obligation_ids": [
+        "obl-000425"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001000",
+      "source_obligation_ids": [
+        "obl-000426"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001003",
+      "source_obligation_ids": [
+        "obl-000427"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001006",
+      "source_obligation_ids": [
+        "obl-000428"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/Contracts_V0.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

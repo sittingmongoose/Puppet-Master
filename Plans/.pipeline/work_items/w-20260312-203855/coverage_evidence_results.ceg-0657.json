@@ -1,0 +1,202 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0657",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-007107",
+      "source_obligation_ids": [
+        "obl-004010"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s021",
+        "shard-0081-s062",
+        "shard-0081-s116",
+        "shard-0081-s154",
+        "shard-0082-s049",
+        "shard-0082-s083"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007108",
+      "source_obligation_ids": [
+        "obl-004011"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s021",
+        "shard-0081-s062",
+        "shard-0081-s116",
+        "shard-0081-s154",
+        "shard-0082-s049",
+        "shard-0082-s083"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007166",
+      "source_obligation_ids": [
+        "obl-004050"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007171",
+      "source_obligation_ids": [
+        "obl-004051"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007176",
+      "source_obligation_ids": [
+        "obl-004052"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007181",
+      "source_obligation_ids": [
+        "obl-004053"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007186",
+      "source_obligation_ids": [
+        "obl-004054"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007191",
+      "source_obligation_ids": [
+        "obl-004055"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/agent-rules-context.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/agent-rules-context.md:L1-L381:exact_hits=1/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0898",
+  "coverage_row_ids_represented": [
+    "cov-006622",
+    "cov-006623",
+    "cov-006624",
+    "cov-006625",
+    "cov-006626",
+    "cov-006627",
+    "cov-006628",
+    "cov-006629",
+    "cov-006630",
+    "cov-006631"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0898; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006622",
+        "cov-006623",
+        "cov-006624",
+        "cov-006625",
+        "cov-006626",
+        "cov-006627",
+        "cov-006628",
+        "cov-006629",
+        "cov-006630",
+        "cov-006631"
+      ],
+      "source_obligation_ids": [
+        "obl-003525",
+        "obl-003526",
+        "obl-003527",
+        "obl-003528",
+        "obl-003529",
+        "obl-003530",
+        "obl-003531",
+        "obl-003532",
+        "obl-003533",
+        "obl-003534"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s007",
+        "shard-0088-s008",
+        "shard-0088-s028",
+        "shard-0088-s050",
+        "shard-0088-s055"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Effective",
+        "Reason",
+        "Support",
+        "worker-policy display under the same requested/effective grammar",
+        "`execution_role` absent in many key owner/consumer docs",
+        "execution_role",
+        "Then consumer cleanup and same-file supersession collapse.",
+        "this directly conflicts with still-open chat consumer gaps already tracked under `FIDELITY-049` through `FIDELITY-053`",
+        "FIDELITY-049",
+        "FIDELITY-053"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

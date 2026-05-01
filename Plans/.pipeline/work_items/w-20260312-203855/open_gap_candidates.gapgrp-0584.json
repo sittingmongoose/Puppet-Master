@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0584",
+  "coverage_row_ids_represented": [
+    "cov-003624",
+    "cov-004332",
+    "cov-004334",
+    "cov-004336",
+    "cov-004524",
+    "cov-004529",
+    "cov-004534",
+    "cov-004539",
+    "cov-004570",
+    "cov-004576"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0584; path=Plans/UI_Command_Catalog.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003624",
+        "cov-004332",
+        "cov-004334",
+        "cov-004336",
+        "cov-004524",
+        "cov-004529",
+        "cov-004534",
+        "cov-004539",
+        "cov-004570",
+        "cov-004576"
+      ],
+      "source_obligation_ids": [
+        "obl-001709",
+        "obl-002063",
+        "obl-002064",
+        "obl-002065",
+        "obl-002157",
+        "obl-002158",
+        "obl-002159",
+        "obl-002160",
+        "obl-002171",
+        "obl-002172"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0018",
+        "seed-WAVE006-0051",
+        "seed-WAVE007-0006",
+        "seed-WAVE007-0014"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0056",
+        "shard-0062",
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "Glossary.md should own canonical terms, not behavior",
+        "Add an explicit command-catalog pattern for: canonical command, wrapper command, deprecated alias, migration rule",
+        "Reuse the event-side alias discipline from Contracts_V0.md as the template for command deprecation/migration rules rather than inventing a weaker prose-only pattern",
+        "Event contracts already have a recognizable alias/migration pattern, but command contracts do not",
+        "Navigation should follow the same pattern instead of claiming a hard flag day.",
+        "existing user-facing wrapper commands may remain; their payload semantics should normalize through `route_target` / `OpenSubject`; older payload shapes can be accepted during migration; new producers/docs should emit the canonical normalized target model",
+        "new docs/producers MUST prefer canonical route-target forms; consumers MAY accept older wrapper-local payloads during migration; migration aliases MUST NOT become permanent parallel canon",
+        "Reuse the event-alias and recovery-command migration style as the template for navigation normalization.",
+        "Define `resume_url` as a serialized route-target transport in the contract layer once `route_target` exists.",
+        "Keep serialized forms intentionally narrower than the full internal object."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

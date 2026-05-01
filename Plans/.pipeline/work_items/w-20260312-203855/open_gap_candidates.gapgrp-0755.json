@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0755",
+  "coverage_row_ids_represented": [
+    "cov-001694",
+    "cov-001698",
+    "cov-003636",
+    "cov-003638",
+    "cov-003640",
+    "cov-003688",
+    "cov-003692",
+    "cov-003696",
+    "cov-003700",
+    "cov-004035"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0755; path=Plans/orchestrator-subagent-integration.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "## Cross-Surface Persona Consistency"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001694",
+        "cov-001698",
+        "cov-003636",
+        "cov-003638",
+        "cov-003640",
+        "cov-003688",
+        "cov-003692",
+        "cov-003696",
+        "cov-003700",
+        "cov-004035"
+      ],
+      "source_obligation_ids": [
+        "obl-000746",
+        "obl-000747",
+        "obl-001713",
+        "obl-001714",
+        "obl-001715",
+        "obl-001731",
+        "obl-001732",
+        "obl-001733",
+        "obl-001734",
+        "obl-001882"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0020",
+        "seed-WAVE005-0026",
+        "seed-WAVE005-0069",
+        "shard-0020-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0020",
+        "shard-0043",
+        "shard-0044",
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "Define a deterministic Orchestrator auto-resolver matrix by: actor type, operation type, scope, stack/domain hints",
+        "Require each auto resolver to emit: ranked candidate set plus explanation metadata",
+        "Executor_Protocol.md / orchestrator-subagent-integration.md need a consolidation pass as the eventual runtime owner for node-native execution context, package/seam/corroboration/concern-aware execution hooks, lane/worktree-aware scheduling context",
+        "Stop letting consumer docs fill owner gaps with compatibility fields or local terminology when the canonical owner is still undecided",
+        "Treat orchestration-core consolidation as a prerequisite for any final reconciliation of runtime/UI behavior that depends on execution semantics",
+        "Consolidate Executor_Protocol.md addenda and add package/seam/corroboration/concern hooks",
+        "Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking",
+        "Replace or wrap TierContext with a node-native execution context carrying full canonical runtime identity",
+        "Add explicit CUP governance and handoff fields (execution_role, requested/effective account, isolation/worktree mode) to wizard docs",
+        "Prompt_Pipeline.md should remain the owner of the effective-resolution field family and which requested/effective runtime identity fields exist and what they mean"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

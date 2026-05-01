@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0817",
+  "coverage_row_ids_represented": [
+    "cov-003228",
+    "cov-003229",
+    "cov-003230",
+    "cov-003231",
+    "cov-003232",
+    "cov-003233",
+    "cov-003234",
+    "cov-003235",
+    "cov-003236",
+    "cov-003237"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0817; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003228",
+        "cov-003229",
+        "cov-003230",
+        "cov-003231",
+        "cov-003232",
+        "cov-003233",
+        "cov-003234",
+        "cov-003235",
+        "cov-003236",
+        "cov-003237"
+      ],
+      "source_obligation_ids": [
+        "obl-001528",
+        "obl-001529",
+        "obl-001530",
+        "obl-001531",
+        "obl-001532",
+        "obl-001533",
+        "obl-001534",
+        "obl-001535",
+        "obl-001536",
+        "obl-001537"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s088",
+        "shard-0090-s090",
+        "shard-0090-s107",
+        "shard-0090-s108"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md` already includes `run_id` in the runtime receipt minimum-fields list, so `gap-004` must no longer treat that field as unresolved.",
+        "run_id",
+        "gap-004",
+        "`Plans/storage-plan.md` already carries the broader `project_summary.v1:{project_id}` record family, but the exact `orchestrator.project_state.{project_id}` key family still is not present as named canon.",
+        "project_summary.v1:{project_id}",
+        "orchestrator.project_state.{project_id}",
+        "`Plans/storage-plan.md:324-337`",
+        "Plans/storage-plan.md:324-337",
+        "`Plans/storage-plan.md:541-590`",
+        "Plans/storage-plan.md:541-590"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0403",
+  "coverage_row_ids_represented": [
+    "cov-001953",
+    "cov-001955",
+    "cov-001957",
+    "cov-001959",
+    "cov-001960",
+    "cov-001962",
+    "cov-001964",
+    "cov-001967",
+    "cov-001969",
+    "cov-001971"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0403; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Concern vs Adjacent Object Boundaries"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001953",
+        "cov-001955",
+        "cov-001957",
+        "cov-001959",
+        "cov-001960",
+        "cov-001962",
+        "cov-001964",
+        "cov-001967",
+        "cov-001969",
+        "cov-001971"
+      ],
+      "source_obligation_ids": [
+        "obl-000926",
+        "obl-000927",
+        "obl-000928",
+        "obl-000929",
+        "obl-000930",
+        "obl-000931",
+        "obl-000932",
+        "obl-000933",
+        "obl-000934",
+        "obl-000935"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s007",
+        "shard-0030-s009",
+        "shard-0031-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0030",
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "review finding: produced by review/corroboration/validation flow",
+        "concern: durable tracked issue/observation that may aggregate, outlive, or be updated by multiple findings/events",
+        "blocked episode: runtime execution stop with canonical recovery metadata",
+        "annotation: document-review instruction/comment object with anchoring lifecycle",
+        "acknowledged and dismissed are operator/user presentation/governance actions",
+        "resolved must carry exact resolution semantics",
+        "active remains the default live state even if the same concern has been seen multiple times",
+        "review findings may nominate or update concerns, but the review record remains distinct",
+        "corroboration can: validate a concern, downgrade it to advisory/minor, leave an unresolved minority concern",
+        "graph patch can: resolve concern, obsolete concern, split concern into more precise post-patch concerns"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

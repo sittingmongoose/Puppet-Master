@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0022",
+  "represented_seed_ids": [
+    "shard-0003-s002"
+  ],
+  "source_shard_ids": [
+    "shard-0003"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0003-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Multi-account control-loop scope applies to ALL provider-using actors: assistant, interviewer, requirements-doc builder, overseers, node workers, delegated workers \u2014 no actor is exempt",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Multi-account control-loop scope applies to ALL provider-using actors: assistant, interviewer, requirements-doc builder, overseers, node workers, delegated workers \u2014 no actor is exempt"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Multi-Account Actor Scope"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000450-L000480"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

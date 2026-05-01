@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0802",
+  "coverage_row_ids_represented": [
+    "cov-000901",
+    "cov-000957",
+    "cov-000989",
+    "cov-001110",
+    "cov-001112",
+    "cov-001115",
+    "cov-001117",
+    "cov-001119",
+    "cov-001126",
+    "cov-001179"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0802; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Cleanup Priority List"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000901",
+        "cov-000957",
+        "cov-000989",
+        "cov-001110",
+        "cov-001112",
+        "cov-001115",
+        "cov-001117",
+        "cov-001119",
+        "cov-001126",
+        "cov-001179"
+      ],
+      "source_obligation_ids": [
+        "obl-000387",
+        "obl-000410",
+        "obl-000421",
+        "obl-000468",
+        "obl-000469",
+        "obl-000470",
+        "obl-000471",
+        "obl-000472",
+        "obl-000475",
+        "obl-000499"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s004",
+        "shard-0008-s012",
+        "shard-0009-s012",
+        "shard-0010-s006",
+        "shard-0010-s007",
+        "shard-0010-s011",
+        "shard-0011-s006",
+        "shard-0038-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0008",
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "Consolidated cleanup priorities P1-P3: P1 = Orchestrator_Page.md, Executor_Protocol.md, Contracts_V0.md, storage-plan.md, human-in-the-loop.md, plan_graph.schema.json, project_plan_node.schema.json; P2 = FinalGUISpec.md, Run_Graph_View.md, WorktreeGitImprovement.md, GitHub_Integration.md, Widget_System.md, UI_Command_Catalog.md; P3 = 00-plans-index.md, Crosswalk.md, Glossary.md, feature-list.md, OpenCode_Coverage_Matrix.md, usage-feature.md",
+        "Sonnet cleanup priorities: P1 = lock runtime schema anchors (add package/seam/lane/worktree/account identity + contamination/safe-point linkage); P2 = extend Glossary/Crosswalk/Decision_Policy; P3 = rebuild UI contracts around packages/seams/lanes; P4 = consolidate addenda",
+        "Cleanup and restore semantics must be lane-aware; contamination scope and safe-point prerequisites are underspecified and must be resolved",
+        "orchestrator.receipt.{run_id}.{attempt_id} already carries: repo_id, worktree_id, branch, commit-range, workflow refs \u2014 this existing data contract must be formally documented and extended",
+        "source_control.project_state.{project_id} already has selected_worktree_id \u2014 this existing field must be formally documented and extended to support lane linkage",
+        "do-not-forget: selected_repo_id already exists in storage planning; gap is now in UI contract adoption",
+        "GitHub_Integration.md must adopt selected_repo_id from storage-plan.md rather than treating it as a future undefined key",
+        "Deferred GitHub Recovery Binding must be wired to the canonical blocked-episode / concern record path, not to a UI-local heuristic",
+        "Follow-up research items (6 canonical): (1) define package/seam/lane/promotion object family canonically; (2) extend requested/effective runtime identity to include account and overseer role; (3) choose one HITL model and one action family; (4) separate plan structure from mutable runtime state; (5) specify package-based worktree lane pools end-to-end; (6) normalize recovery vocabulary (safe point, restore point, rollback, contamination, retry)",
+        "Multi-Account.md still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

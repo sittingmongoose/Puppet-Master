@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0274",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-001330",
+      "source_obligation_ids": [
+        "obl-000565"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001332",
+      "source_obligation_ids": [
+        "obl-000566"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001334",
+      "source_obligation_ids": [
+        "obl-000567"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001336",
+      "source_obligation_ids": [
+        "obl-000568"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001338",
+      "source_obligation_ids": [
+        "obl-000569"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002327",
+      "source_obligation_ids": [
+        "obl-001170"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002332",
+      "source_obligation_ids": [
+        "obl-001171"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002337",
+      "source_obligation_ids": [
+        "obl-001172"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002350",
+      "source_obligation_ids": [
+        "obl-001179"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002353",
+      "source_obligation_ids": [
+        "obl-001180"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/GitHub_Integration.md:L1-L268:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

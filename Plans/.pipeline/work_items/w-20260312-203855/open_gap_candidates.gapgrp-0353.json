@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0353",
+  "coverage_row_ids_represented": [
+    "cov-008047",
+    "cov-008049",
+    "cov-008123",
+    "cov-008127",
+    "cov-008131",
+    "cov-008135",
+    "cov-008139",
+    "cov-008147",
+    "cov-008151",
+    "cov-008155"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0353; path=Plans/Orchestrator_Page.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-008047",
+        "cov-008049",
+        "cov-008123",
+        "cov-008127",
+        "cov-008131",
+        "cov-008135",
+        "cov-008139",
+        "cov-008147",
+        "cov-008151",
+        "cov-008155"
+      ],
+      "source_obligation_ids": [
+        "obl-004437",
+        "obl-004438",
+        "obl-004476",
+        "obl-004477",
+        "obl-004478",
+        "obl-004479",
+        "obl-004480",
+        "obl-004482",
+        "obl-004483",
+        "obl-004484"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s057",
+        "shard-0092-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0091",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md#Canonical records",
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

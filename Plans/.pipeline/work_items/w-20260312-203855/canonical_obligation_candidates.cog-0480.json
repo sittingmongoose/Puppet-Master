@@ -1,0 +1,169 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0480",
+  "represented_seed_ids": [
+    "seed-WAVE007-0032"
+  ],
+  "source_shard_ids": [
+    "shard-0066"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`Crosswalk.md` still lacks a primitive entry for route-target / identity-native open behavior.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Crosswalk.md` still lacks a primitive entry for route-target / identity-native open behavior."
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013129-L013133"
+      ],
+      "notes": [
+        "These four docs have gaps that confirm route_target/OpenSubject contracts must be written in Contracts_V0 urgently. FileManager.md's treatment of OpenFile as universal primitive is misleading downstream readers."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE007-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`Contracts_V0.md` still has no `route_target` or `OpenSubject` contract even though several downstream docs are already depending on that concept.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Contracts_V0.md` still has no `route_target` or `OpenSubject` contract even though several downstream docs are already depending on that concept."
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013129-L013133"
+      ],
+      "notes": [
+        "These four docs have gaps that confirm route_target/OpenSubject contracts must be written in Contracts_V0 urgently. FileManager.md's treatment of OpenFile as universal primitive is misleading downstream readers."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE007-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`storage-plan.md` currently carries `resume_url` fields in persisted records, which is correct for persistence, but there is still no owner doc that defines what `resume_url` serializes.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`storage-plan.md` currently carries `resume_url` fields in persisted records, which is correct for persistence, but there is still no owner doc that defines what `resume_url` serializes."
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013129-L013133"
+      ],
+      "notes": [
+        "These four docs have gaps that confirm route_target/OpenSubject contracts must be written in Contracts_V0 urgently. FileManager.md's treatment of OpenFile as universal primitive is misleading downstream readers."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE007-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "`FileManager.md` still reads as if path-based `OpenFile` is the universal open/navigation primitive.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`FileManager.md` still reads as if path-based `OpenFile` is the universal open/navigation primitive."
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013129-L013133"
+      ],
+      "notes": [
+        "These four docs have gaps that confirm route_target/OpenSubject contracts must be written in Contracts_V0 urgently. FileManager.md's treatment of OpenFile as universal primitive is misleading downstream readers."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

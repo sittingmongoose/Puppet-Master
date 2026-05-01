@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0809",
+  "coverage_row_ids_represented": [
+    "cov-002495",
+    "cov-002608",
+    "cov-002611",
+    "cov-002614",
+    "cov-002617",
+    "cov-002620",
+    "cov-002623",
+    "cov-002626",
+    "cov-002629",
+    "cov-002734"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0809; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002495",
+        "cov-002608",
+        "cov-002611",
+        "cov-002614",
+        "cov-002617",
+        "cov-002620",
+        "cov-002623",
+        "cov-002626",
+        "cov-002629",
+        "cov-002734"
+      ],
+      "source_obligation_ids": [
+        "obl-001220",
+        "obl-001262",
+        "obl-001263",
+        "obl-001264",
+        "obl-001265",
+        "obl-001266",
+        "obl-001267",
+        "obl-001268",
+        "obl-001269",
+        "obl-001305"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s011",
+        "shard-0034-s005",
+        "shard-0034-s007",
+        "shard-0035-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0034",
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Reclassify Orchestrator surfaces so only Progress is widget-composed and move non-Progress tabs onto native view-state contracts",
+        "widget layout keys are page-global (widget_layout:v1:orchestrator:progress)",
+        "FinalGUISpec.md already has project-scoped state containers like project_state:v1:{project_id}",
+        "unresolved question about whether Orchestrator Progress layout is app-global, project-scoped, or layered",
+        "Reconcile widget persistence scope: dashboard layout can stay app-global; orchestrator:progress likely needs project-scoped persistence, or a layered model of app-default plus project override; usage may need explicit app-wide vs project-scoped mode",
+        "Resolve the dashboard_layout:v1 migration contradiction in one place and cross-reference it from FinalGUISpec.md",
+        "widget trust/freshness chrome should come from the same projection-trust model used elsewhere; individual widgets should not invent their own stale-state language",
+        "historical-run mode will feel broken if some Progress widgets silently follow live events while others honor the focused historical run",
+        "widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions",
+        "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1024",
+  "coverage_row_ids_represented": [
+    "cov-007088",
+    "cov-007089",
+    "cov-007113",
+    "cov-007114",
+    "cov-007115",
+    "cov-007116",
+    "cov-007117",
+    "cov-007153",
+    "cov-007154",
+    "cov-007155"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1024; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-007088",
+        "cov-007089",
+        "cov-007113",
+        "cov-007114",
+        "cov-007115",
+        "cov-007116",
+        "cov-007117",
+        "cov-007153",
+        "cov-007154",
+        "cov-007155"
+      ],
+      "source_obligation_ids": [
+        "obl-003991",
+        "obl-003992",
+        "obl-004016",
+        "obl-004017",
+        "obl-004018",
+        "obl-004019",
+        "obl-004020",
+        "obl-004041",
+        "obl-004042",
+        "obl-004043"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s086",
+        "shard-0081-s027",
+        "shard-0081-s028",
+        "shard-0081-s123",
+        "shard-0086-s024"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0081",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "widget.tier_tree",
+        "Seams",
+        "`GUI_Rebuild_Requirements_Checklist.md` is not just stale; its own command-coverage block is self-invalidating because it cites phantom or superseded IDs and points at the wrong catalog section ranges.",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "`GUI_Rebuild_Requirements_Checklist.md` can create false confidence if stale upstream PASS conditions remain unchallenged.",
+        "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "OpenCode_Coverage_Matrix.md",
+        "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `feature-list.md`, and `newfeatures.md` still contain exact phantom/superseded/missing command IDs, stale shell-surface assumptions, and persistence-identity contradictions against `UI_Command_Catalog.md`, `FinalGUISpec.md`, and promoted-shell canon.",
+        "Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [
+        "Seams",
+        "widget.tier_tree",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "OpenCode_Coverage_Matrix.md",
+        "FinalGUISpec.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "UI_Command_Catalog.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

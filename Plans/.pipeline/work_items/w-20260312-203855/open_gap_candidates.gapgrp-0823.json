@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0823",
+  "coverage_row_ids_represented": [
+    "cov-004045",
+    "cov-004432",
+    "cov-004436",
+    "cov-004567",
+    "cov-004573",
+    "cov-004579",
+    "cov-004585",
+    "cov-004591",
+    "cov-004596",
+    "cov-004604"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0823; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004045",
+        "cov-004432",
+        "cov-004436",
+        "cov-004567",
+        "cov-004573",
+        "cov-004579",
+        "cov-004585",
+        "cov-004591",
+        "cov-004596",
+        "cov-004604"
+      ],
+      "source_obligation_ids": [
+        "obl-001885",
+        "obl-002117",
+        "obl-002118",
+        "obl-002171",
+        "obl-002172",
+        "obl-002173",
+        "obl-002174",
+        "obl-002175",
+        "obl-002176",
+        "obl-002177"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0069",
+        "seed-WAVE006-0082",
+        "seed-WAVE007-0014",
+        "seed-WAVE007-0015"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0059",
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "orchestrator-subagent-integration.md should stop owning a canonical mixed runtime object; it should consume canonical execution/runtime context by reference",
+        "Export flows across storage-plan.md, usage-feature.md, Runtime_Artifacts_Panel.md, and FinalGUISpec.md all lack a shared identity-preserving manifest discipline",
+        "Exported bundles must carry identity-preserving manifests that reference canonical IDs (project_id, attempt_id, run_id, thread_id) rather than reconstructed or opaque identifiers",
+        "Define `resume_url` as a serialized route-target transport in the contract layer once `route_target` exists.",
+        "Keep serialized forms intentionally narrower than the full internal object.",
+        "Let object families define only the extra anchor material truly needed for recovery or exact resume.",
+        "Decode all supported deep-link forms into the same internal routing path rather than handling URL activation as a separate system.",
+        "The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.",
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+        "Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

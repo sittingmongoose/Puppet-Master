@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0636",
+  "coverage_row_ids_represented": [
+    "cov-004268",
+    "cov-004270",
+    "cov-004272",
+    "cov-004274",
+    "cov-004276",
+    "cov-004280",
+    "cov-004282"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0636; path=Plans/Wiring_Matrix.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## Recovery Actions"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004268",
+        "cov-004270",
+        "cov-004272",
+        "cov-004274",
+        "cov-004276",
+        "cov-004280",
+        "cov-004282"
+      ],
+      "source_obligation_ids": [
+        "obl-002032",
+        "obl-002033",
+        "obl-002034",
+        "obl-002035",
+        "obl-002036",
+        "obl-002038",
+        "obl-002039"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0037",
+        "seed-WAVE006-0046",
+        "seed-WAVE006-0057"
+      ],
+      "source_shard_ids": [
+        "shard-0055",
+        "shard-0056",
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Wiring_Matrix.md still has no hard reverse-coverage boundary, so ghost IDs survive simultaneously in Final GUI, Wiring Matrix, and command-owner docs",
+        "canonical cmd.runtime.* recovery commands are still absent from real matrix rows even where page/docs require the corresponding CTAs",
+        "Wiring_Matrix.schema.json still cannot represent the normative recovery producer/consumer rows or wildcard command-family requirements now described in the doc",
+        "The addenda in Wiring_Matrix.md increasingly ask the matrix to cover runtime producers, blocked/recovery actions, and projection consumers, but the actual schema still models only UI element rows",
+        "The prose is now expecting more than Wiring_Matrix.schema.json can encode",
+        "The matrix already uses JSON filenames (cmd.*.json) as fragment identifiers that could be extracted programmatically, but extraction is fragile without a schema commitment",
+        "add a schema-level filename-derivation rule that is explicit about the JSON filename for a command-family row so tooling can safely extract, validate, and round-trip between catalog and matrix"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,25 +1,30 @@
 {
+  "schema_id": "pm.work_item_meta.v2",
   "work_id": "w-20260312-203855",
   "mode": "migrated",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 35,
-  "status": "blocked",
-  "run_id": "r-20260312-203855-run-034",
+  "status": "active",
+  "run_id": null,
   "ledger_shards": {
     "status": "generated_current",
     "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
     "source_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
     "shard_line_size": 200
   },
-  "next_required_stage": "Canonical Obligations Builder",
+  "target_document_existence": {
+    "status": "not_checked",
+    "report_path": null
+  },
+  "next_required_stage": "Coverage Row Inventory Builder",
   "ledger_obligation_seed_summary": {
-    "seed_items_total": 10425,
-    "owner_seed_items": 7350,
-    "consumer_seed_items": 985,
-    "stale_retirement_seed_items": 320,
-    "layout_blocker_seed_items": 1770,
-    "docs_affected": 106,
+    "seed_items_total": 2912,
+    "owner_seed_items": 1944,
+    "consumer_seed_items": 227,
+    "stale_retirement_seed_items": 179,
+    "layout_blocker_seed_items": 482,
+    "docs_affected": 66,
     "source_shards_total": 92,
     "source_shards_covered": 92,
     "source_line_ranges_covered": 92,
@@ -27,92 +32,156 @@
     "material_findings_deferred": 0
   },
   "canonical_obligations_summary": {
-    "obligations_total": 6775,
-    "owner_obligations": 4433,
-    "consumer_obligations": 786,
-    "stale_retirement_obligations": 301,
-    "layout_blocker_obligations": 1255,
-    "docs_affected": 106,
-    "seed_items_represented": 10425,
+    "obligations_total": 4510,
+    "owner_obligations": 2774,
+    "consumer_obligations": 310,
+    "stale_retirement_obligations": 383,
+    "layout_blocker_obligations": 884,
+    "missing_doc_reference_obligations": 55,
+    "stale_token_replacement_obligations": 104,
+    "docs_affected": 66,
+    "seed_items_represented": 2912,
     "seed_items_deferred": 0,
     "seed_items_noise": 0,
     "source_shards_represented": 92
   },
   "canonical_obligations_source_coverage_summary": {
     "status": "pass",
-    "seed_items_total": 10425,
-    "seed_items_represented": 10425,
+    "seed_items_total": 2912,
+    "seed_items_represented": 2912,
     "seed_items_deferred": 0,
     "seed_items_noise": 0,
     "source_shards_total": 92,
     "source_shards_represented": 92
   },
   "doc_discovery_resolution_summary": {
-    "rows_needing_resolution": 6278,
-    "rows_resolved": 6278,
-    "rows_unresolved": 0,
-    "planning_blockers_before": 0,
-    "planning_blockers_after": 0,
-    "docs_assigned": 61
+    "rows_considered": 1518,
+    "rows_resolved_to_existing_docs": 750,
+    "rows_unresolved_need_audit": 768,
+    "path_quarantine_violations": 0,
+    "source_seed_ids_preserved": 1057,
+    "source_shard_ids_preserved": 16
+  },
+  "doc_discovery_resolver_summary": {
+    "schema_id": "pm.doc_discovery_resolution.v2",
+    "resolver_wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "explore_wave_attestation_agent": "2dba947f-dfdb-4bf9-89a4-9e8a12decbdc",
+      "explore_plan_scan_attestation_agent": "2dba947f-dfdb-4bf9-89a4-9e8a12decbdc",
+      "explore_schema_attestation_agent": "2dba947f-dfdb-4bf9-89a4-9e8a12decbdc"
+    },
+    "next_required_stage": "Coverage Row Inventory Builder",
+    "rows_considered": 1518,
+    "rows_resolved_to_existing_docs": 750,
+    "rows_unresolved_need_audit": 768
+  },
+  "coverage_evidence_classifier_summary": {
+    "schema_id": "pm.coverage_evidence_classifier_worklist.v2",
+    "evidence_groups_total": 1027,
+    "inventory_rows_total": 8266,
+    "status_present": 1043,
+    "status_partial": 8,
+    "status_missing": 7215,
+    "path_field_blocked_rows_inventory_paths": 7,
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "explore_wave_attestation_agent": "5a34a169-3ecd-4283-a402-870cf80b7faf",
+      "explore_plan_scan_attestation_agent": "5a34a169-3ecd-4283-a402-870cf80b7faf",
+      "explore_schema_attestation_agent": "5a34a169-3ecd-4283-a402-870cf80b7faf"
+    },
+    "artifacts": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.wave-001.json … wave-012.json",
+      "results": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_results.ceg-####.json (1027 files)"
+    },
+    "next_required_stage": "Coverage Matrix Reducer / Source Gate"
   },
   "transfer_coverage_summary": {
-    "obligations_total": 6775,
-    "coverage_rows_total": 7221,
-    "obligations_with_rows": 6775,
+    "obligations_total": 4510,
+    "coverage_rows_total": 8266,
+    "obligations_with_rows": 4510,
     "obligations_without_rows": 0,
-    "rows_present": 2086,
-    "rows_partial": 4554,
-    "rows_missing": 581,
-    "owner_rows_missing": 318,
-    "consumer_rows_missing": 92,
-    "stale_retirement_rows_missing": 89,
-    "layout_blocker_rows": 1368,
-    "docs_affected": 104,
-    "coverage_rows_deferred": 0
+    "rows_present": 1043,
+    "rows_partial": 8,
+    "rows_missing": 7215,
+    "doc_discovery_rows": 1518,
+    "known_target_files_missing": 0,
+    "path_quarantine_violations": 0,
+    "coverage_rows_deferred": 0,
+    "source_seed_ids_preserved": 2912,
+    "source_shard_ids_preserved": 92
   },
   "transfer_coverage_source_coverage_summary": {
     "status": "pass",
-    "obligations_total": 6775,
-    "obligations_with_rows": 6775,
+    "obligations_total": 4510,
+    "obligations_with_rows": 4510,
     "obligations_without_rows": 0,
-    "missing_obligation_ids": 0,
-    "missing_source_seed_ids": 0,
-    "missing_source_shard_ids": 0,
-    "missing_affected_doc_paths": 0,
-    "present_rows_without_evidence": 0,
-    "invalid_rows": 0,
-    "required_action_mismatches": 0,
-    "deferred_status": "absent"
+    "path_quarantine_status": "pass"
+  },
+  "open_gaps_worklist_builder_summary": {
+    "schema_id": "pm.open_gaps_worklist.v2",
+    "actionable_rows_total": 7647,
+    "row_groups_total": 1035,
+    "doc_discovery_rows": 1518,
+    "known_target_files_missing": 0,
+    "stale_token_replacement_unknown_rows": 15,
+    "path_quarantine_violations": 0,
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "explore_wave_attestation_agent": "cc6bac2b-08de-4fd1-81eb-ff9e1165cf90",
+      "explore_plan_scan_attestation_agent": "cc6bac2b-08de-4fd1-81eb-ff9e1165cf90",
+      "explore_schema_attestation_agent": "cc6bac2b-08de-4fd1-81eb-ff9e1165cf90"
+    },
+    "artifacts": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Open Gaps Classifier"
+  },
+  "open_gaps_classifier_summary": {
+    "schema_id": "pm.open_gaps_classifier_summary.v2",
+    "candidate_groups_total": 1035,
+    "coverage_rows_represented": 7647,
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "explore_wave_attestation_agent": "0a6c0384-7fef-4fae-ae47-eaf057ba63a8",
+      "explore_plan_scan_attestation_agent": "0a6c0384-7fef-4fae-ae47-eaf057ba63a8",
+      "explore_schema_attestation_agent": "0a6c0384-7fef-4fae-ae47-eaf057ba63a8"
+    },
+    "artifacts": {
+      "candidate_groups": "Plans/.pipeline/work_items/w-20260312-203855/open_gap_candidates.gapgrp-####.json (1035 files)",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.wave-001.json … wave-012.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.noise-001.json … noise-012.json"
+    },
+    "next_required_stage": "Open Gaps Reducer / Ready-Routing Gate"
   },
   "open_gaps_summary": {
-    "planning_blockers": 0,
-    "fix_backlog_items": 5610,
-    "total_gaps": 5610,
-    "docs_affected": 103,
-    "canon_items_affected": 5237,
-    "source_seed_ids_affected": 6747,
-    "source_shard_ids_affected": 92,
-    "top_pressure_docs": [
-      "Plans/Contracts_V0.md",
-      "Plans/FinalGUISpec.md",
-      "Plans/storage-plan.md",
-      "Plans/Run_Graph_View.md",
-      "Plans/Orchestrator_Page.md",
-      "Plans/Architecture_Invariants.md",
-      "Plans/UI_Command_Catalog.md",
-      "Plans/WorktreeGitImprovement.md",
-      "Plans/Decision_Policy.md",
-      "Plans/Crosswalk.md"
-    ],
-    "dominant_gap_classes": [
-      "stubbed_owner_section",
-      "missing_data_shape",
-      "packetizable_layout_defect",
-      "stubbed_consumer_propagation",
-      "stale_contradictory_survivor",
-      "missing_structural_heading"
-    ],
-    "underlying_gap_evidence_count": 5610
+    "planning_blockers": 395,
+    "fix_backlog_items": 640,
+    "total_gaps": 1035,
+    "docs_affected": 62,
+    "coverage_rows_represented": 7647,
+    "source_seed_ids_represented": 2338,
+    "source_shard_ids_represented": 92,
+    "path_quarantine_violations": 0,
+    "missing_doc_reference_items": 30,
+    "missing_target_files_observed": 0,
+    "doc_discovery_required_items": 154,
+    "stale_token_replacement_unknown_items": 12,
+    "packetizable_layout_defects": 229
   },
   "reconciliation_plan_summary": {
     "targets_total": 705,
@@ -144,5 +213,99 @@
     "span_conflicts_resolved": 0,
     "unresolved_span_conflicts": 0,
     "next_required_stage": "Scribe"
+  },
+  "transfer_coverage_matrix_reducer_summary": {
+    "coverage_rows_total": 8266,
+    "path_quarantine_violations": 0,
+    "non_concrete_paths_normalized_to_doc_discovery": 7
+  },
+  "open_gaps_reducer_summary": {
+    "schema_id": "pm.open_gaps_reducer_summary.v2",
+    "candidate_groups_input": 1035,
+    "open_gaps_emitted": 1035,
+    "actionable_rows_total": 7647,
+    "noise_rows_total": 0,
+    "dedup_mode": "conservative_signature",
+    "total_gaps": 1035,
+    "planning_blockers": 395,
+    "fix_backlog_items": 640,
+    "next_route": "Doc Discovery Worklist Builder",
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "explore_wave_attestation_agent": "24c072da-c53a-4ea7-88ba-2d010af19b79",
+      "explore_plan_scan_attestation_agent": "24c072da-c53a-4ea7-88ba-2d010af19b79",
+      "explore_schema_attestation_agent": "24c072da-c53a-4ea7-88ba-2d010af19b79"
+    }
+  },
+  "doc_discovery_worklist_builder_summary": {
+    "schema_id": "pm.doc_discovery_worklist.v2",
+    "unresolved_groups_total": 305,
+    "coverage_rows_total": 1518,
+    "doc_discovery_rows": 1518,
+    "owner_unknown_rows": 0,
+    "candidate_docs_total": 60,
+    "path_quarantine_violations": 0,
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "explore_wave_attestation_agent": "b9350a43-4818-4381-9f8b-51c955647592",
+      "explore_plan_scan_attestation_agent": "b9350a43-4818-4381-9f8b-51c955647592",
+      "explore_schema_attestation_agent": "b9350a43-4818-4381-9f8b-51c955647592"
+    },
+    "artifacts": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_worklist_builder.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Doc Discovery Resolver"
+  },
+  "coverage_row_inventory_builder_summary": {
+    "schema_id": "pm.transfer_coverage_row_inventory.v2",
+    "rows_total": 8266,
+    "obligations_total": 4510,
+    "doc_discovery_rows": 1511,
+    "known_target_files_missing": 7,
+    "path_quarantine_violations": 0,
+    "wave_files": 12,
+    "source_sha256": "5af3d717781ce43bd0b79acfb694ad980bc1213af5811b4c8195f56c5b00efbb",
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "explore_wave_attestation_agent": "a1e10b3b-c515-4583-a08d-843d3cdf4377",
+      "explore_plan_scan_attestation_agent": "a1e10b3b-c515-4583-a08d-843d3cdf4377",
+      "explore_schema_attestation_agent": "a1e10b3b-c515-4583-a08d-843d3cdf4377"
+    },
+    "artifacts": {
+      "row_inventory": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Coverage Evidence Classifier"
+  },
+  "transfer_coverage_matrix_reducer_source_gate_summary": {
+    "schema_id": "pm.transfer_coverage_source_coverage_report.v2",
+    "coverage_rows_total": 8266,
+    "source_coverage_report_status": "pass",
+    "path_quarantine_violations": 0,
+    "doc_discovery_rows": 1518,
+    "missing_obligation_ids_sample": [],
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "explore_wave_attestation_agent": "6b09ff23-5fd1-49d1-ba12-b491ac46cfe3",
+      "explore_plan_scan_attestation_agent": "6b09ff23-5fd1-49d1-ba12-b491ac46cfe3",
+      "explore_schema_attestation_agent": "6b09ff23-5fd1-49d1-ba12-b491ac46cfe3"
+    },
+    "artifacts": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.wave-001.json … wave-012.json",
+      "transfer_coverage": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "source_coverage_report": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_coverage_report.json"
+    },
+    "next_required_stage": "Open Gaps Worklist Builder"
   }
 }

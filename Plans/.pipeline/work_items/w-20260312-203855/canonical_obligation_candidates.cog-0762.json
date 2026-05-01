@@ -1,0 +1,363 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0762",
+  "represented_seed_ids": [
+    "shard-0091-s118"
+  ],
+  "source_shard_ids": [
+    "shard-0091"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-fi",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-001",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "gap-001"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-002",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "gap-002"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-005",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "gap-005"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "5.1B",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "5.1B"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "execution_unit_context",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "execution_unit_context"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "detached_window",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "detached_window"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "result_id",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "result_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "blocked_notice",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "blocked_notice"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018155"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, c"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0891",
+  "coverage_row_ids_represented": [
+    "cov-006552",
+    "cov-006553",
+    "cov-006554",
+    "cov-006555",
+    "cov-006556",
+    "cov-006557",
+    "cov-006558",
+    "cov-006559",
+    "cov-006560",
+    "cov-006561"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0891; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006552",
+        "cov-006553",
+        "cov-006554",
+        "cov-006555",
+        "cov-006556",
+        "cov-006557",
+        "cov-006558",
+        "cov-006559",
+        "cov-006560",
+        "cov-006561"
+      ],
+      "source_obligation_ids": [
+        "obl-003455",
+        "obl-003456",
+        "obl-003457",
+        "obl-003458",
+        "obl-003459",
+        "obl-003460",
+        "obl-003461",
+        "obl-003462",
+        "obl-003463",
+        "obl-003464"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s127",
+        "shard-0084-s004",
+        "shard-0084-s007",
+        "shard-0084-s016",
+        "shard-0084-s040"
+      ],
+      "source_shard_ids": [
+        "shard-0083",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "The action-label cleanup depends on this file, because it still legitimizes `Reject` / `Cancel Run` / `Skip` as if they were canonical action names rather than surface labels over runtime action families.",
+        "Reject",
+        "Cancel Run",
+        "Skip",
+        "`blocked_projection.{run_id}.{node_id}.{blocked_sequence}`",
+        "blocked_projection.{run_id}.{node_id}.{blocked_sequence}",
+        "`preview_subject_id = doc:<document_id> | artifact:<artifact_id>`",
+        "preview_subject_id = doc:<document_id> | artifact:<artifact_id>",
+        "`preview_subject_id` gives a strong subject-first restore identity",
+        "preview_subject_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

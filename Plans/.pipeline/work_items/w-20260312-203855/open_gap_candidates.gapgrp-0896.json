@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0896",
+  "coverage_row_ids_represented": [
+    "cov-006602",
+    "cov-006603",
+    "cov-006604",
+    "cov-006605",
+    "cov-006606",
+    "cov-006607",
+    "cov-006608",
+    "cov-006609",
+    "cov-006610",
+    "cov-006611"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0896; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006602",
+        "cov-006603",
+        "cov-006604",
+        "cov-006605",
+        "cov-006606",
+        "cov-006607",
+        "cov-006608",
+        "cov-006609",
+        "cov-006610",
+        "cov-006611"
+      ],
+      "source_obligation_ids": [
+        "obl-003505",
+        "obl-003506",
+        "obl-003507",
+        "obl-003508",
+        "obl-003509",
+        "obl-003510",
+        "obl-003511",
+        "obl-003512",
+        "obl-003513",
+        "obl-003514"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s144",
+        "shard-0085-s145",
+        "shard-0085-s146",
+        "shard-0086-s023",
+        "shard-0087-s009",
+        "shard-0087-s014",
+        "shard-0087-s023",
+        "shard-0087-s084",
+        "shard-0087-s094",
+        "shard-0087-s100"
+      ],
+      "source_shard_ids": [
+        "shard-0085",
+        "shard-0086",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`widget.tier_tree`",
+        "`widget.progress_bars` as phase/task/subtask bars",
+        "`widget.current_task` as active tier",
+        "These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts.",
+        "settings / requested-vs-effective / identity display grammar",
+        "Owner docs were updated, but **consumer docs were not canon-collapsed**.",
+        "Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure, and action-surface / shortcut / context-menu policy.",
+        "Primary consumer cleanup docs:",
+        "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs.",
+        "This rerun was requested specifically to re-check the transfer audit with **smaller chunked subauditors**, because several owner/consumer docs are too large for one subauditor to read cleanly end-to-end."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

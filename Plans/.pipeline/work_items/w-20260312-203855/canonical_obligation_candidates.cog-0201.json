@@ -1,0 +1,117 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0201",
+  "represented_seed_ids": [
+    "shard-0027-s006"
+  ],
+  "source_shard_ids": [
+    "shard-0027"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0027-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "record export: exact canonical record(s) with stable ids/refs and schema-aware payloads",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "record export: exact canonical record(s) with stable ids/refs and schema-aware payloads"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Taxonomy",
+        "## Orchestrator Export Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0027-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "bundle export: portable package containing multiple records/artifacts plus manifest",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "bundle export: portable package containing multiple records/artifacts plus manifest"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Taxonomy",
+        "## Orchestrator Export Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0027-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "view export: user-facing filtered table/render output such as CSV, JSON summary, rendered image, or currently filtered list",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "view export: user-facing filtered table/render output such as CSV, JSON summary, rendered image, or currently filtered list"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Taxonomy",
+        "## Orchestrator Export Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

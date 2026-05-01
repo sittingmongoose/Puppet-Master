@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0031",
+  "coverage_row_ids_represented": [
+    "cov-004421",
+    "cov-004423",
+    "cov-005386",
+    "cov-005387",
+    "cov-005388",
+    "cov-005389",
+    "cov-005390",
+    "cov-005391",
+    "cov-005392",
+    "cov-005393"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0031; path=Plans/Contracts_V0.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Subject-First"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004421",
+        "cov-004423",
+        "cov-005386",
+        "cov-005387",
+        "cov-005388",
+        "cov-005389",
+        "cov-005390",
+        "cov-005391",
+        "cov-005392",
+        "cov-005393"
+      ],
+      "source_obligation_ids": [
+        "obl-002111",
+        "obl-002112",
+        "obl-002333",
+        "obl-002334",
+        "obl-002335",
+        "obl-002336",
+        "obl-002337",
+        "obl-002338",
+        "obl-002339",
+        "obl-002340"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0075",
+        "shard-0091-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0058",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Project_Output_Artifacts.md draft lineage is described in a subject-first model but there is no link from the draft lineage to a route-target contract",
+        "Connect the draft lineage model to the route-target contract so draft artifacts can be opened, referenced, and routed through the canonical navigation model",
+        "`gap-001` sharpened: the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `Plans/Contracts_V0.md` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though the surrounding canon expects requested/effective identity carry-through.",
+        "gap-001",
+        "### 5.1B Persona/Runtime Snapshot Payload Contract",
+        "execution_unit_context",
+        "Plans/Contracts_V0.md",
+        "requested_account_binding",
+        "requested_account_policy",
+        "operational_identity"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

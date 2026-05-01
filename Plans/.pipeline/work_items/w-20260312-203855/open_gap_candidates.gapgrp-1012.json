@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1012",
+  "coverage_row_ids_represented": [
+    "cov-006322",
+    "cov-006323",
+    "cov-006324",
+    "cov-006325",
+    "cov-006326",
+    "cov-006327",
+    "cov-006328",
+    "cov-006329",
+    "cov-006330",
+    "cov-006331"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1012; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006322",
+        "cov-006323",
+        "cov-006324",
+        "cov-006325",
+        "cov-006326",
+        "cov-006327",
+        "cov-006328",
+        "cov-006329",
+        "cov-006330",
+        "cov-006331"
+      ],
+      "source_obligation_ids": [
+        "obl-003225",
+        "obl-003226",
+        "obl-003227",
+        "obl-003228",
+        "obl-003229",
+        "obl-003230",
+        "obl-003231",
+        "obl-003232",
+        "obl-003233",
+        "obl-003234"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s064",
+        "shard-0088-s066",
+        "shard-0088-s067",
+        "shard-0088-s070",
+        "shard-0088-s071",
+        "shard-0088-s074",
+        "shard-0088-s077",
+        "shard-0089-s057",
+        "shard-0091-s054",
+        "shard-0091-s084",
+        "shard-0091-s115"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep",
+        "`meta.json` now uses `pm.work_item_meta.v2`.",
+        "pm.work_item_meta.v2",
+        "`current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.",
+        "current_state.md",
+        "canon_inventory.json",
+        "open_gaps.json",
+        "`Plans/.pipeline/work_items/w-20260312-203855/meta.json`",
+        "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+        "`Plans/.pipeline/work_items/w-20260312-203855/current_state.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

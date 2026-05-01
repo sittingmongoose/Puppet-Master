@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0099",
+  "coverage_row_ids_represented": [
+    "cov-003460",
+    "cov-003466",
+    "cov-003557",
+    "cov-003564",
+    "cov-003571",
+    "cov-003578",
+    "cov-003585",
+    "cov-003668",
+    "cov-003672",
+    "cov-003676"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0099; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003460",
+        "cov-003466",
+        "cov-003557",
+        "cov-003564",
+        "cov-003571",
+        "cov-003578",
+        "cov-003585",
+        "cov-003668",
+        "cov-003672",
+        "cov-003676"
+      ],
+      "source_obligation_ids": [
+        "obl-001629",
+        "obl-001630",
+        "obl-001699",
+        "obl-001700",
+        "obl-001701",
+        "obl-001702",
+        "obl-001703",
+        "obl-001726",
+        "obl-001727",
+        "obl-001728"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0007",
+        "seed-WAVE005-0017",
+        "seed-WAVE005-0025"
+      ],
+      "source_shard_ids": [
+        "shard-0041",
+        "shard-0043",
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "account_pressure_episode fields: episode_id, project_id, provider_id, account_id, execution_role?, source_kind, signal_confidence, pressure_kind, projected_remaining?, reset_at?, started_at_utc, updated_at_utc, ended_at_utc?, status",
+        "account_switch_event fields: switch_event_id, project_id, provider_id, execution_role?, requested_account_id?, from_account_id?, to_account_id?, switch_reason, decision_kind, source_episode_id?, run_id?, attempt_id?, thread_id?, ts",
+        "Use projection_freshness as the canonical recency field and projection_health as the canonical reliability/usability field",
+        "Reserve trust_tier for preview/browser semantics only unless those docs are later explicitly renamed too",
+        "Make Glossary.md own the canonical term meanings for projection freshness and projection health",
+        "Let surface docs consume those terms instead of inventing local stale/degraded wording",
+        "Keep action gating rules tied to both axes: stale-but-healthy may allow read-only use with warning; degraded or unavailable should gate mutating actions much more aggressively",
+        "HITL now contains two contract eras: older request-local (HITLRequest with tier_id, tier_type, allowed_actions[]) and newer runtime-facing (waiting_approval as blocked overlay, allowed_action_ids[], cmd.runtime.*)",
+        "Move approval anchoring onto canonical runtime identity: run_id, node_id, blocked_sequence, attempt_id?, plus execution-unit context refs",
+        "Add an explicit approval-scope field or object, likely approval_scope_key, so reusable approvals and one-off blocked-episode approvals cannot bleed together"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "account_pressure_episode",
+        "account_switch_event"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

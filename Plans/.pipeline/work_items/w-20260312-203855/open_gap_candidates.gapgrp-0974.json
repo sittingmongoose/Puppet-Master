@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0974",
+  "coverage_row_ids_represented": [
+    "cov-005942",
+    "cov-005943",
+    "cov-005944",
+    "cov-005945",
+    "cov-005946",
+    "cov-005947",
+    "cov-005948",
+    "cov-005949",
+    "cov-005950",
+    "cov-005951"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0974; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005942",
+        "cov-005943",
+        "cov-005944",
+        "cov-005945",
+        "cov-005946",
+        "cov-005947",
+        "cov-005948",
+        "cov-005949",
+        "cov-005950",
+        "cov-005951"
+      ],
+      "source_obligation_ids": [
+        "obl-002845",
+        "obl-002846",
+        "obl-002847",
+        "obl-002848",
+        "obl-002849",
+        "obl-002850",
+        "obl-002851",
+        "obl-002852",
+        "obl-002853",
+        "obl-002854"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s140",
+        "shard-0082-s141",
+        "shard-0082-s146",
+        "shard-0082-s152",
+        "shard-0082-s154",
+        "shard-0082-s155",
+        "shard-0082-s156",
+        "shard-0083-s002",
+        "shard-0083-s007",
+        "shard-0083-s008",
+        "shard-0083-s039",
+        "shard-0083-s043",
+        "shard-0083-s050"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "3.14",
+        "`3.15` appears twice",
+        "3.15",
+        "Adjacent owners implicated by this seam:",
+        "The owner-routing stack is not internally closed:",
+        "`DRY_Rules.md` demands precise `ContractRef` discipline while containing its own format inconsistency",
+        "DRY_Rules.md",
+        "ContractRef",
+        "`Decision_Log.md` is presented as the place for final plan decisions, but it does not record the rewrite decisions that now govern multiple owner docs",
+        "`Decision_Log.md` and `Crosswalk.md` are now both missing the same high-impact rewrite decisions, which means reconciliation has no single owner-traceability path for them."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

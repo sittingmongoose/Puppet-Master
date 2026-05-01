@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0281",
+  "coverage_row_ids_represented": [
+    "cov-007354",
+    "cov-007357",
+    "cov-007360",
+    "cov-007439",
+    "cov-007444",
+    "cov-007449",
+    "cov-007454",
+    "cov-007459",
+    "cov-007464",
+    "cov-007669"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0281; path=Plans/Glossary.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007354",
+        "cov-007357",
+        "cov-007360",
+        "cov-007439",
+        "cov-007444",
+        "cov-007449",
+        "cov-007454",
+        "cov-007459",
+        "cov-007464",
+        "cov-007669"
+      ],
+      "source_obligation_ids": [
+        "obl-004190",
+        "obl-004191",
+        "obl-004192",
+        "obl-004206",
+        "obl-004207",
+        "obl-004208",
+        "obl-004209",
+        "obl-004210",
+        "obl-004211",
+        "obl-004260"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s107",
+        "shard-0088-s010",
+        "shard-0088-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

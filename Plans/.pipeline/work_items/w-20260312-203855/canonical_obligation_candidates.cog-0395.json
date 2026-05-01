@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0395",
+  "represented_seed_ids": [
+    "seed-WAVE006-0017"
+  ],
+  "source_shard_ids": [
+    "shard-0052"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Run_Modes.md still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the yolo step-1 vs step-7 guard ambiguity, external_publish_side_effect behavior inside DAE, or mid-run account-switc",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Run_Modes.md still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the yolo step-1 vs step-7 guard ambiguity, external_publish_side_effect behavior inside DAE, or mid-run account-switch invalidation of committed strategy"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Contribute (PR) Mode",
+        "## DAE Mode",
+        "## Strategy Selection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010292-L010293"
+      ],
+      "notes": [
+        "Run_Modes.md has five unresolved conflicts: Contribute(PR) vs DAE isolation, DAE-jail durability, yolo guard ambiguity, external_publish_side_effect, mid-run account-switch"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Contribute (PR) Mode",
+        "## DAE Mode",
+        "## Strategy Selection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010292-L010293"
+      ],
+      "notes": [
+        "Run_Modes.md has five unresolved conflicts: Contribute(PR) vs DAE isolation, DAE-jail durability, yolo guard ambiguity, external_publish_side_effect, mid-run account-switch"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

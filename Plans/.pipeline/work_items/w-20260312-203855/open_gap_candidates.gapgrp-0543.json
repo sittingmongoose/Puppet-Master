@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0543",
+  "coverage_row_ids_represented": [
+    "cov-007306",
+    "cov-007307"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "group gapgrp-0543; path=Plans/Section15_MVP_Promoted_Features_Spec.md; row_type=stale_retirement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007306",
+        "cov-007307"
+      ],
+      "source_obligation_ids": [
+        "obl-004170",
+        "obl-004171"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md` remains verification-only unless upstream reconciliation reveals direct stale references that require edits.",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "stale_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

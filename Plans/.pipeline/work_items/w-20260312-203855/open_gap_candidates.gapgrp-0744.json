@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0744",
+  "coverage_row_ids_represented": [
+    "cov-000918"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "stale_token_replacement_unknown",
+      "description": "group gapgrp-0744; path=Plans/newfeatures.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/newfeatures.md",
+          "heading": "## Memory Contradiction"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000918"
+      ],
+      "source_obligation_ids": [
+        "obl-000394"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Contradiction: assistant-memory-subsystem.md forbids orchestrator memory while newfeatures.md implies a system-prompt loop with state \u2014 these must be reconciled"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Canonical replacement unknown; live replacement wording must be decided in audit.",
+      "next_resolution_stage": "Audit Mode"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

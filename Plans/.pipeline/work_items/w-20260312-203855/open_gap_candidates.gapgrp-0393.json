@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0393",
+  "coverage_row_ids_represented": [
+    "cov-001430",
+    "cov-001431",
+    "cov-001432",
+    "cov-001433",
+    "cov-001434",
+    "cov-001435",
+    "cov-001436",
+    "cov-001437",
+    "cov-001438",
+    "cov-001439"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0393; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Run Relationship Types"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001430",
+        "cov-001431",
+        "cov-001432",
+        "cov-001433",
+        "cov-001434",
+        "cov-001435",
+        "cov-001436",
+        "cov-001437",
+        "cov-001438",
+        "cov-001439"
+      ],
+      "source_obligation_ids": [
+        "obl-000618",
+        "obl-000619",
+        "obl-000620",
+        "obl-000621",
+        "obl-000622",
+        "obl-000623",
+        "obl-000624",
+        "obl-000625",
+        "obl-000626",
+        "obl-000627"
+      ],
+      "source_seed_ids": [
+        "shard-0014-s009",
+        "shard-0023-s006",
+        "shard-0023-s007",
+        "shard-0023-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0014",
+        "shard-0023"
+      ],
+      "exact_missing_items": [
+        "Distinguish: historical run (any non-active/non-focused run), related run (explicitly linked by user/system relationship metadata), derived run (intentionally spawned from or based on another run's outputs)",
+        "History should default to chronological project run history, not lineage history",
+        "If explicit relationships are introduced later, the UI may add: derived from run..., retry of run..., continuation of run..., shares feature seam with run... -- but those must be explicit metadata, not inferred by heuristics",
+        "progressive disclosure rather than fully expanded seam/package/node trees",
+        "top-level seam rows should load compact rollups first",
+        "package lists and node problem lists should expand lazily",
+        "evidence records and artifacts need independent virtualization/paging",
+        "heavy artifacts should stay metadata-first until opened",
+        "artifact previews should be demand-loaded, not pre-rendered for long lists",
+        "exact, but exact does not mean fully materialized at once"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

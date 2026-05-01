@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0741",
+  "coverage_row_ids_represented": [
+    "cov-003536",
+    "cov-003537",
+    "cov-003538"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0741; path=Plans/interview-subagent-integration.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003536",
+        "cov-003537",
+        "cov-003538"
+      ],
+      "source_obligation_ids": [
+        "obl-001688",
+        "obl-001689",
+        "obl-001690"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0014"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "interview-subagent-integration.md still needs canonical persona naming, account visibility, stage-to-role mapping, and less stale tier vocabulary",
+        "interview runtime contracts still stop at persona/platform/model-level identity and still omit auth/account/switch identity",
+        "Conversational docs promise or imply requested/effective runtime truth but still omit account/auth details in their concrete sections"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

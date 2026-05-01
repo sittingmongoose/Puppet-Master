@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0776",
+  "coverage_row_ids_represented": [
+    "cov-000685",
+    "cov-000908",
+    "cov-000945",
+    "cov-000963",
+    "cov-000965",
+    "cov-000966",
+    "cov-000972",
+    "cov-000975",
+    "cov-001148"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0776; path=Plans/storage-plan.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Retry Memory Persistence Mapping"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000685",
+        "cov-000908",
+        "cov-000945",
+        "cov-000963",
+        "cov-000965",
+        "cov-000966",
+        "cov-000972",
+        "cov-000975",
+        "cov-001148"
+      ],
+      "source_obligation_ids": [
+        "obl-000299",
+        "obl-000390",
+        "obl-000406",
+        "obl-000412",
+        "obl-000413",
+        "obl-000414",
+        "obl-000416",
+        "obl-000417",
+        "obl-000481"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s011",
+        "shard-0007-s003",
+        "shard-0007-s018",
+        "shard-0008-s006",
+        "shard-0008-s007",
+        "shard-0008-s009",
+        "shard-0009-s002",
+        "shard-0009-s003",
+        "shard-0010-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0007",
+        "shard-0008",
+        "shard-0009",
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "Not yet defined: how node retry memory, attempt handoff artifacts, reusable learning records, and worker handoff packets map into the seglog/redb/Tantivy stack \u2014 this gap must be resolved",
+        "Plans/Multi-Account.md is missing 'Effective Identity' coverage for storage and evidence \u2014 the effective account identity must be stored and tracked with run artifacts",
+        "Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics",
+        "Base provider envelope/spec schemas omit node/attempt/safe-point fields \u2014 these must be added to make provider envelopes node-aware",
+        "Acceptance/evidence/coverage schemas cannot express work-package/seam/promotion/account/lane identity \u2014 these schema families must be extended",
+        "Storage/event keys still lack: project_id, attempt_id, package_id, seam_id, lane_id, worktree_id, safe_point_id, promotion_class, requested/effective account fields \u2014 all must be added",
+        "package, seam, and work-package are 'schema ghosts' \u2014 they are assumed conceptually but absent from core schemas/receipts/event families; they must be made concrete",
+        "Schemas stop at node-level modeling \u2014 acceptance/evidence/coverage/GUI automation/test schemas cannot represent work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity; these must all be added",
+        "GPT-5.3-Codex: contamination policy is a vocabulary gap \u2014 safe-point language exists in newer addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

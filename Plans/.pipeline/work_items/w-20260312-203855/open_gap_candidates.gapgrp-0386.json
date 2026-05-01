@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0386",
+  "coverage_row_ids_represented": [
+    "cov-001086",
+    "cov-001088",
+    "cov-001090",
+    "cov-001092",
+    "cov-001094",
+    "cov-001096",
+    "cov-001098",
+    "cov-001100",
+    "cov-001102",
+    "cov-001104"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0386; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Lane State Definitions"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001086",
+        "cov-001088",
+        "cov-001090",
+        "cov-001092",
+        "cov-001094",
+        "cov-001096",
+        "cov-001098",
+        "cov-001100",
+        "cov-001102",
+        "cov-001104"
+      ],
+      "source_obligation_ids": [
+        "obl-000456",
+        "obl-000457",
+        "obl-000458",
+        "obl-000459",
+        "obl-000460",
+        "obl-000461",
+        "obl-000462",
+        "obl-000463",
+        "obl-000464",
+        "obl-000465"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s001",
+        "shard-0026-s003",
+        "shard-0026-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "retained: intentionally kept after completion/failure for inspection, compare, or delayed cleanup",
+        "cleanup_eligible: no longer needed for live execution and may be archived/removed under policy",
+        "archived: historical object retained in the model, but not an active live lane",
+        "removed: live backing removed; only historical identity and lineage remain",
+        "historical: user-facing historical posture rather than dispatchable live posture",
+        "recover: attempt to restore or reconcile a suspect/orphaned/conflicted worktree into a safe known state",
+        "archive: retire from active use while preserving enough identity/metadata/lineage for historical browsing",
+        "prune: cleanup-oriented for policy-eligible stale/orphaned/live-no-longer-needed worktrees; narrower than generic remove",
+        "remove: explicit destructive removal of live worktree backing after confirmation and eligibility checks",
+        "live cleanup must never erase run/lane/worktree lineage from History, Ledger, or graph-linked inspection"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

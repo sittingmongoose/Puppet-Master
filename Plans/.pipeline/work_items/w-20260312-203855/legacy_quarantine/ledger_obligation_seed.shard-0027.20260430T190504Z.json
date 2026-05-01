@@ -1,0 +1,314 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0027",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0027-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "assistant/interviewer/builders share: requested/effective provider/model/persona/account/auth semantics, selection reason, skipped/honored control disclosure, blocked/retry/remediation/degradation taxonomy, shared activity/event-stream infrastructure",
+        "they do NOT automatically become: Feature Seams, Work Packages, graph Nodes, lane-pool objects, package/seam-governance objects"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Runtime vs Execution Ontology Boundary",
+        "## Conversational Actor Runtime Identity Boundary"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5226-L5239"
+      ],
+      "notes": [
+        "Explicit boundary statement: same provider/account/model/runtime machinery; different object families, lifecycle semantics, and UI surfaces"
+      ]
+    },
+    {
+      "seed_id": "shard-0027-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "conversation identity: thread_id",
+        "wizard/builder identity: wizard_id, builder stage/run ids, bundle/review ids",
+        "orchestration identity: run_id, package/seam/node ids, attempt ids"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Identity Model Families",
+        "## Actor Identity Namespaces"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5242-L5253"
+      ],
+      "notes": [
+        "These can be linked but must not be collapsed; thread_id/wizard_id/bundle-review ids/orchestration run_id/attempt ids remain linkable but distinct"
+      ]
+    },
+    {
+      "seed_id": "shard-0027-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "assistant conversation turn/run",
+        "interview phase/document/review run",
+        "builder stage/review run",
+        "orchestrator node/attempt/run"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Actor/Run Kind Vocabulary"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5296-L5301"
+      ],
+      "notes": [
+        "Distinct actor/run kinds needed for search, record, and routing contracts; cross-surface search possible without treating all as graph nodes"
+      ]
+    },
+    {
+      "seed_id": "shard-0027-s004",
+      "seed_type": "consumer",
+      "exact_items": [
+        "attention_required",
+        "blocked",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "resume_url"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Blocked Taxonomy for Conversational Actors"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5269-L5275"
+      ],
+      "notes": [
+        "Blocked taxonomy already crosses chat/interview/wizard/orchestrator; reconciliation must not accidentally rename all blocked semantics as Orchestrator-only"
+      ]
+    },
+    {
+      "seed_id": "shard-0027-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared-Runtime Surface Parity Rule"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5259-L5264"
+      ],
+      "notes": [
+        "Existing examples: Interview chat surface and Interview activity pane share same active run state; Builder and Interview reuse shared agent activity pane"
+      ]
+    },
+    {
+      "seed_id": "shard-0027-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "record export: exact canonical record(s) with stable ids/refs and schema-aware payloads",
+        "bundle export: portable package containing multiple records/artifacts plus manifest",
+        "view export: user-facing filtered table/render output such as CSV, JSON summary, rendered image, or currently filtered list"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Taxonomy",
+        "## Orchestrator Export Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5354-L5366"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0027-s007",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "export_id",
+        "export_kind",
+        "schema_version",
+        "project_id",
+        "focused_run_id?",
+        "source_surface",
+        "generated_at_utc",
+        "filter_summary?",
+        "included_record_ids[]",
+        "included_artifact_ids[]",
+        "included_file_paths[]?",
+        "lineage_notes?",
+        "trust_state_at_export?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5391-L5403"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "seed_id": "shard-0027-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "record export: concern, promotion, corroboration result, graph patch request/result, recovery record, exact ledger slice",
+        "bundle export: run evidence bundle, selected-object bundle, historical run package with manifest",
+        "view export: filtered ledger CSV/JSON, filtered concerns table, search results export, graph image/render"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Export Candidates by Class"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5369-L5385"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0027-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "exports derived from stale/degraded projections must either: disclose trust state in the export/manifest, or re-query from canonical/current backing data before export"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Trust-State Disclosure Rule"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5424-L5432"
+      ],
+      "notes": [
+        "Especially for: ledger, concerns, promotion state, graph generation summaries"
+      ]
+    },
+    {
+      "seed_id": "shard-0027-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "filtered CSV is a view export, not canonical history",
+        "JSON summary export is not equivalent to canonical record export unless it preserves the exact record envelope",
+        "monolithic plan-graph export remains derived, never canonical",
+        "JSONL mirror export is still projection-derived, not a replacement for seglog ownership"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical vs Derived Export Rule"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0027",
+      "source_evidence": [
+        "working_ledger.md:L5406-L5413"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L5200-L5209 (Research Progress header + Targeted docs read \u2014 research metadata)",
+    "working_ledger.md:L5211-L5222 (key findings narrative about shared provider-runtime contract \u2014 partially redundant with earlier shards)",
+    "working_ledger.md:L5303-L5309 (contradictions/gaps narrative)",
+    "working_ledger.md:L5324-L5332 (Research Progress header + Targeted docs read \u2014 research metadata)",
+    "working_ledger.md:L5442-L5453 (contradictions/gaps narrative about export language being spread)"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

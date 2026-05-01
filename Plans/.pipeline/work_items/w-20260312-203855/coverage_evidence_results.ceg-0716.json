@@ -1,0 +1,265 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0716",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-002107",
+      "source_obligation_ids": [
+        "obl-001039"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002110",
+      "source_obligation_ids": [
+        "obl-001040"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:insufficient_evidence_signal"
+      ]
+    },
+    {
+      "coverage_id": "cov-002113",
+      "source_obligation_ids": [
+        "obl-001041"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002116",
+      "source_obligation_ids": [
+        "obl-001042"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002119",
+      "source_obligation_ids": [
+        "obl-001043"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007286",
+      "source_obligation_ids": [
+        "obl-004150"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s091",
+        "shard-0086-s132",
+        "shard-0089-s005",
+        "shard-0089-s092",
+        "shard-0089-s141",
+        "shard-0090-s028",
+        "shard-0090-s042",
+        "shard-0090-s064",
+        "shard-0090-s106",
+        "shard-0090-s141",
+        "shard-0091-s133"
+      ],
+      "source_shard_ids": [
+        "shard-0086",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007287",
+      "source_obligation_ids": [
+        "obl-004151"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s091",
+        "shard-0086-s132",
+        "shard-0088-s122",
+        "shard-0089-s005",
+        "shard-0089-s092",
+        "shard-0089-s141",
+        "shard-0090-s024",
+        "shard-0090-s028",
+        "shard-0090-s042",
+        "shard-0090-s064",
+        "shard-0090-s106",
+        "shard-0090-s141",
+        "shard-0091-s133"
+      ],
+      "source_shard_ids": [
+        "shard-0086",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007288",
+      "source_obligation_ids": [
+        "obl-004152"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s122"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007289",
+      "source_obligation_ids": [
+        "obl-004153"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s122",
+        "shard-0090-s024"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0090"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007290",
+      "source_obligation_ids": [
+        "obl-004154"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/interview-subagent-integration.md:L1-L111:exact_hits=1/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

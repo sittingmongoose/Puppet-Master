@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0336",
+  "coverage_row_ids_represented": [
+    "cov-004501",
+    "cov-007344",
+    "cov-007346"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "group gapgrp-0336; path=Plans/Orchestrator_Page.md; row_type=consumer; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Impacted docs"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004501",
+        "cov-007344",
+        "cov-007346"
+      ],
+      "source_obligation_ids": [
+        "obl-002150",
+        "obl-004186",
+        "obl-004187"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0003",
+        "shard-0087-s104"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Cross-owner docs implicated: Plans/storage-plan.md, Plans/UI_Command_Catalog.md, Plans/assistant-chat-design.md, Plans/Orchestrator_Page.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md",
+        "`Plans/Orchestrator_Page.md` / `Plans/Widget_System.md`",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

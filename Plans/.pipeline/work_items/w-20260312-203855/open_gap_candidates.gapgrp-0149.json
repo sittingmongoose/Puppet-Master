@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0149",
+  "coverage_row_ids_represented": [
+    "cov-002422",
+    "cov-002427",
+    "cov-002432",
+    "cov-003957",
+    "cov-003959",
+    "cov-003961"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0149; path=Plans/Decision_Policy.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002422",
+        "cov-002427",
+        "cov-002432",
+        "cov-003957",
+        "cov-003959",
+        "cov-003961"
+      ],
+      "source_obligation_ids": [
+        "obl-001200",
+        "obl-001201",
+        "obl-001202",
+        "obl-001843",
+        "obl-001844",
+        "obl-001845"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0059",
+        "shard-0032-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Require requested/effective identity fields in decision/permission records, not just runtime event records",
+        "Add architecture invariants for: canonical runtime object families, lane scheduler integrity, mutation-safe-point enforcement",
+        "Re-anchor blocked/HITL/policy flows on canonical node/attempt identifiers where appropriate",
+        "Add a deterministic rule for same blocked episode vs new blocked episode to Decision_Policy.md or Executor_Protocol.md",
+        "Decision_Policy.md does not currently own the minting rule or the same blocked episode vs new blocked episode distinction, even though that is exactly a deterministic policy boundary",
+        "Decision_Policy.md still missing the deterministic policies that executor/storage/runtime surfaces now assume exist: blocked_sequence minting, startup recovery sequencing, retry/remediation counter bindings, runtime blocked escalation, ready_since_utc restart policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

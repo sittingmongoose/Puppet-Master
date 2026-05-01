@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1005",
+  "coverage_row_ids_represented": [
+    "cov-006252",
+    "cov-006253",
+    "cov-006254",
+    "cov-006255",
+    "cov-006256",
+    "cov-006257",
+    "cov-006258",
+    "cov-006259",
+    "cov-006260",
+    "cov-006261"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1005; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006252",
+        "cov-006253",
+        "cov-006254",
+        "cov-006255",
+        "cov-006256",
+        "cov-006257",
+        "cov-006258",
+        "cov-006259",
+        "cov-006260",
+        "cov-006261"
+      ],
+      "source_obligation_ids": [
+        "obl-003155",
+        "obl-003156",
+        "obl-003157",
+        "obl-003158",
+        "obl-003159",
+        "obl-003160",
+        "obl-003161",
+        "obl-003162",
+        "obl-003163",
+        "obl-003164"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s071",
+        "shard-0087-s073",
+        "shard-0087-s074",
+        "shard-0087-s075",
+        "shard-0087-s092",
+        "shard-0087-s093",
+        "shard-0087-s096",
+        "shard-0087-s097",
+        "shard-0087-s098"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "account_pressure_episode",
+        "account_switch_event",
+        "Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.",
+        "Impacted docs and likely owner order",
+        "Primary owner docs for reconciliation:",
+        "Verification / mirror followers should remain downstream of owner reconciliation.",
+        "1. Reconcile owner contracts and schemas first.",
+        "Missing field schemas will cause different implementation agents to invent incompatible shapes.",
+        "Missing route/ref-family boundaries will invite shadow routing and ad hoc payloads that gates cannot verify.",
+        "Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

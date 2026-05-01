@@ -1,0 +1,88 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0316",
+  "coverage_row_ids_represented": [
+    "cov-003407",
+    "cov-003412",
+    "cov-003417",
+    "cov-003422",
+    "cov-007280",
+    "cov-007281",
+    "cov-008214",
+    "cov-008249",
+    "cov-008256"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0316; path=Plans/Models_System.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## Wave-004 Identity Closure Checklist"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003407",
+        "cov-003412",
+        "cov-003417",
+        "cov-003422",
+        "cov-007280",
+        "cov-007281",
+        "cov-008214",
+        "cov-008249",
+        "cov-008256"
+      ],
+      "source_obligation_ids": [
+        "obl-001614",
+        "obl-001615",
+        "obl-001616",
+        "obl-001617",
+        "obl-004144",
+        "obl-004145",
+        "obl-004503",
+        "obl-004508",
+        "obl-004509"
+      ],
+      "source_seed_ids": [
+        "shard-0040-s012",
+        "shard-0092-s030",
+        "shard-0092-s038"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "7. transport_host_id vs upstream_provider_id separation in Models_System.md",
+        "8. OperationalIdentity block present in run.started, receipts, usage events, concern records",
+        "9. UsageRecord account_switch_reason? + switch_event_ref? in usage-feature.md",
+        "10. blocked/degraded reason field pairs in Contracts_V0.md effective-resolution record",
+        "`Plans/Models_System.md:58-80`",
+        "Plans/Models_System.md:58-80",
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

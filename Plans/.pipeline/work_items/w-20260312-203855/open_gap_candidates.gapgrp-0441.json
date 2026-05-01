@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0441",
+  "coverage_row_ids_represented": [
+    "cov-001671",
+    "cov-001673",
+    "cov-001675",
+    "cov-001677",
+    "cov-001679",
+    "cov-001681",
+    "cov-001684",
+    "cov-001686",
+    "cov-001687",
+    "cov-001691"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0441; path=Plans/Personas.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "## Persona Fallback Rules"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001671",
+        "cov-001673",
+        "cov-001675",
+        "cov-001677",
+        "cov-001679",
+        "cov-001681",
+        "cov-001684",
+        "cov-001686",
+        "cov-001687",
+        "cov-001691"
+      ],
+      "source_obligation_ids": [
+        "obl-000737",
+        "obl-000738",
+        "obl-000739",
+        "obl-000740",
+        "obl-000741",
+        "obl-000742",
+        "obl-000743",
+        "obl-000744",
+        "obl-000745",
+        "obl-000746"
+      ],
+      "source_seed_ids": [
+        "shard-0020-s003",
+        "shard-0020-s004",
+        "shard-0020-s005",
+        "shard-0020-s007",
+        "shard-0021-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0020",
+        "shard-0021"
+      ],
+      "exact_missing_items": [
+        "record: requested Persona, effective Persona, selection reason, skipped Persona controls where relevant",
+        "if two same-tier candidates remain and system cannot choose deterministically, ask for clarification rather than speculating",
+        "Orchestrator actor type Persona defaults: package overseer -> execution/governance persona biased toward package-local delivery and readiness truth; seam overseer -> integration/governance persona biased toward cross-package integration truth; node worker -> implementation persona biased by language/framework/work type; verifier/reviewer -> review persona distinct from drafting/implementation persona; corroborator -> review/challenge persona distinct from original claimer; recovery actor -> troubleshooting/recovery persona; graph patch planner -> planning/architecture persona",
+        "auto resolver should emit concise but structured reason text",
+        "Good explanation patterns: Package overseer default, Seam integration default, Node implementation match: Rust + backend, Review pass default, Recovery actor default, Provider fallback from preferred persona model",
+        "one short primary reason for compact UI; optional expanded explanation listing the strongest contributing hints; the UI should not expose a noisy scored all candidates explanation by default",
+        "expert and ELI5 variants should share the same concept skeleton",
+        "differ in phrasing density and assumptions, not in substance",
+        "Chat/Interview/Builder/Orchestrator should still share the same effective resolution record and display grammar",
+        "Define a deterministic Orchestrator auto-resolver matrix by: actor type, operation type, scope, stack/domain hints"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

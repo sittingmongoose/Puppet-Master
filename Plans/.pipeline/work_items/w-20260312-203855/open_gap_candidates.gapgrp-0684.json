@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0684",
+  "coverage_row_ids_represented": [
+    "cov-003503",
+    "cov-003504",
+    "cov-003505",
+    "cov-003506",
+    "cov-003507",
+    "cov-003508",
+    "cov-003509",
+    "cov-003510",
+    "cov-003511",
+    "cov-003512"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0684; path=Plans/assistant-chat-design.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003503",
+        "cov-003504",
+        "cov-003505",
+        "cov-003506",
+        "cov-003507",
+        "cov-003508",
+        "cov-003509",
+        "cov-003510",
+        "cov-003511",
+        "cov-003512"
+      ],
+      "source_obligation_ids": [
+        "obl-001664",
+        "obl-001665",
+        "obl-001666",
+        "obl-001667",
+        "obl-001668",
+        "obl-001669",
+        "obl-001670",
+        "obl-001671",
+        "obl-001672",
+        "obl-001673"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s147",
+        "shard-0090-s091",
+        "shard-0090-s115",
+        "shard-0091-s004",
+        "shard-0091-s041",
+        "shard-0091-s043",
+        "shard-0091-s076",
+        "shard-0091-s078",
+        "shard-0091-s112"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Plans/assistant-chat-design.md:1112-1120",
+        "`Plans/assistant-chat-design.md` still defines `blocked_notice` with only `blocked_family` and `allowed_action_ids[]`, so `blocked_sequence` and `approval_scope_key` remain missing specifically from the live blocked-notice payload.",
+        "blocked_notice",
+        "blocked_family",
+        "allowed_action_ids[]",
+        "`Plans/assistant-chat-design.md:808-818`",
+        "Plans/assistant-chat-design.md:808-818",
+        "`Plans/assistant-chat-design.md:2218-2242`",
+        "Plans/assistant-chat-design.md:2218-2242",
+        "`Plans/assistant-chat-design.md:2233-2240`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

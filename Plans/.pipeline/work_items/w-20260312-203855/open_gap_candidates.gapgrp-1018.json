@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1018",
+  "coverage_row_ids_represented": [
+    "cov-006406",
+    "cov-006407",
+    "cov-006408",
+    "cov-006409",
+    "cov-006410",
+    "cov-006411",
+    "cov-006412",
+    "cov-006413",
+    "cov-006414",
+    "cov-006415"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1018; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006406",
+        "cov-006407",
+        "cov-006408",
+        "cov-006409",
+        "cov-006410",
+        "cov-006411",
+        "cov-006412",
+        "cov-006413",
+        "cov-006414",
+        "cov-006415"
+      ],
+      "source_obligation_ids": [
+        "obl-003309",
+        "obl-003310",
+        "obl-003311",
+        "obl-003312",
+        "obl-003313",
+        "obl-003314",
+        "obl-003315",
+        "obl-003316",
+        "obl-003317",
+        "obl-003318"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s077",
+        "shard-0079-s001",
+        "shard-0079-s065",
+        "shard-0079-s070",
+        "shard-0079-s071",
+        "shard-0079-s074",
+        "shard-0079-s084",
+        "shard-0079-s093",
+        "shard-0079-s123",
+        "shard-0080-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0079",
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "The event-family layer is still one of the last upstream carriers of stale execution semantics.",
+        "Strong stale consumer:",
+        "Treat the earlier request-centric text as retired or compatibility-only rather than leaving it as live canonical base prose.",
+        "Reconciliation must retire or rewrite the earlier sections, not merely append another addendum.",
+        "Research Progress - 2026-03-17 - Graph approval command shapes are now internally inconsistent as well as stale",
+        "they are stale against the canonical runtime command model",
+        "Primary stale/inconsistent consumers:",
+        "It is one of the clearest examples where the stale approval model is now breaking exact command contracts.",
+        "Both consumer docs already consume some of the newer runtime lineage concepts in later sections, which makes the early event-source tables internally stale rather than merely incomplete.",
+        "The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

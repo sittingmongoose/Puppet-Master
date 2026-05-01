@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0474",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-001674",
+      "source_obligation_ids": [
+        "obl-000738"
+      ],
+      "source_seed_ids": [
+        "shard-0020-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001688",
+      "source_obligation_ids": [
+        "obl-000745"
+      ],
+      "source_seed_ids": [
+        "shard-0020-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001692",
+      "source_obligation_ids": [
+        "obl-000746"
+      ],
+      "source_seed_ids": [
+        "shard-0020-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001696",
+      "source_obligation_ids": [
+        "obl-000747"
+      ],
+      "source_seed_ids": [
+        "shard-0020-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002745",
+      "source_obligation_ids": [
+        "obl-001308"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002751",
+      "source_obligation_ids": [
+        "obl-001309"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002757",
+      "source_obligation_ids": [
+        "obl-001310"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002763",
+      "source_obligation_ids": [
+        "obl-001311"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002769",
+      "source_obligation_ids": [
+        "obl-001312"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003098",
+      "source_obligation_ids": [
+        "obl-001440"
+      ],
+      "source_seed_ids": [
+        "shard-0037-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Prompt_Pipeline.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

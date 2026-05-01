@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0122",
+  "coverage_row_ids_represented": [
+    "cov-003987",
+    "cov-003989",
+    "cov-003991",
+    "cov-004170",
+    "cov-004171",
+    "cov-004172",
+    "cov-004173",
+    "cov-007469",
+    "cov-008184",
+    "cov-008187"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0122; path=Plans/Crosswalk.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003987",
+        "cov-003989",
+        "cov-003991",
+        "cov-004170",
+        "cov-004171",
+        "cov-004172",
+        "cov-004173",
+        "cov-007469",
+        "cov-008184",
+        "cov-008187"
+      ],
+      "source_obligation_ids": [
+        "obl-001856",
+        "obl-001857",
+        "obl-001858",
+        "obl-001955",
+        "obl-001956",
+        "obl-001957",
+        "obl-001958",
+        "obl-004212",
+        "obl-004494",
+        "obl-004495"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0063",
+        "seed-WAVE006-0015",
+        "seed-WAVE006-0063",
+        "shard-0088-s018",
+        "shard-0092-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0052",
+        "shard-0057",
+        "shard-0088",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "Crosswalk.md is structurally broken: duplicate section numbering, orphaned addenda, wrong ContractRef",
+        "Crosswalk.md still does not route major rewrite-era owners such as orchestrator-subagent-integration.md, runtime scheduler ownership, or worktree lifecycle ownership",
+        "Repair Crosswalk/Progression Gates structural issues and add rewrite-era runtime/governance primitives/gates rather than leaving them in prose addenda",
+        "Crosswalk.md still has duplicate section numbering, a wrong Primitive: ContractRef, missing \u00a72 index entries for appended primitives, and orphaned source-control/GitHub-actions/docker surfaces outside the normal routing structure",
+        "repair Crosswalk numbering/index/primitive routing",
+        "Crosswalk.md section 2 is drifting from its stated append-after-references model in shard-0052 and beyond, creating structural and lookup inconsistencies",
+        "The most critical routing additions (Seglog, ArtifactStore, PR/issues surface, capability-gating) still have no Crosswalk routing entries",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "`cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.",
+        "cov-526"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0868",
+  "coverage_row_ids_represented": [
+    "cov-002905",
+    "cov-002911",
+    "cov-002917",
+    "cov-002923",
+    "cov-002929",
+    "cov-002935",
+    "cov-002941",
+    "cov-002947",
+    "cov-003123",
+    "cov-003127"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0868; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002905",
+        "cov-002911",
+        "cov-002917",
+        "cov-002923",
+        "cov-002929",
+        "cov-002935",
+        "cov-002941",
+        "cov-002947",
+        "cov-003123",
+        "cov-003127"
+      ],
+      "source_obligation_ids": [
+        "obl-001363",
+        "obl-001364",
+        "obl-001365",
+        "obl-001366",
+        "obl-001367",
+        "obl-001368",
+        "obl-001369",
+        "obl-001370",
+        "obl-001454",
+        "obl-001455"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s015",
+        "shard-0037-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0035",
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Publish a single superseding canonical payload block in Contracts_V0.md for scheduler/safe-point/remediation records and explicitly demote older variants",
+        "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry",
+        "Normalize cross-surface receipt records so project_id, actor refs, created_at_utc, and usage_event_ref are required whenever a surface may pivot historically or across projects",
+        "Define usage_event_ref once as a locator-grade canonical reference and reuse it everywhere rather than inventing a new opaque ID family",
+        "Normalize Run Graph onto canonical cmd.runtime.* / cmd.orchestrator.open_in_* command bindings, add the missing action envelope, and add trust-state gating rules",
+        "Allow short-term concern rendering to piggyback on finding_refs[], but define a minimal non-remediation node_concerns[] projection next",
+        "Pre-attempt blocked episodes still need blocked_sequence handling without fabricating attempt_id",
+        "usage_event_ref should be a structured locator, not just a display string",
+        "Identity actor envelope now has a minimal agreed shape: project_id + actor_kind + sparse actor refs + requested/effective identity block",
+        "The canonical actor envelope must be anchored in Contracts_V0.md and referenced by name from storage-plan.md, usage-feature.md, Provider_Stream_Mapping_External_Reference_A2A.md, and all runtime record schemas"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

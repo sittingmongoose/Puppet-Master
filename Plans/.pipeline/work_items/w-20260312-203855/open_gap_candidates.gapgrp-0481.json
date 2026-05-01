@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0481",
+  "coverage_row_ids_represented": [
+    "cov-002513",
+    "cov-002516",
+    "cov-002661",
+    "cov-002663",
+    "cov-002665",
+    "cov-002667",
+    "cov-003304",
+    "cov-003306",
+    "cov-003308",
+    "cov-003434"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0481; path=Plans/Prompt_Pipeline.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## Requested Account Identity"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002513",
+        "cov-002516",
+        "cov-002661",
+        "cov-002663",
+        "cov-002665",
+        "cov-002667",
+        "cov-003304",
+        "cov-003306",
+        "cov-003308",
+        "cov-003434"
+      ],
+      "source_obligation_ids": [
+        "obl-001224",
+        "obl-001225",
+        "obl-001280",
+        "obl-001281",
+        "obl-001282",
+        "obl-001283",
+        "obl-001579",
+        "obl-001580",
+        "obl-001581",
+        "obl-001624"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0006",
+        "shard-0032-s013",
+        "shard-0034-s013",
+        "shard-0039-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0034",
+        "shard-0039",
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "canonical contracts have requested_account_policy but not an equally canonical requested_account_id",
+        "several downstream docs therefore cannot represent a user-selected concrete account on the requested side without collapsing it into policy text",
+        "plan_or_tier_default is still a persisted enum value in Prompt_Pipeline.md",
+        "persona_override_owner_id still allows tier_id",
+        "Prompt_Pipeline.md still contains a normative MUST against creating execution layers beyond Phase / Task / Subtask / Iteration",
+        "Personas.md still references select_for_tier() and still violates canonical persona field naming inside its own SSOT section",
+        "Persona resolution chain must use the canonical requested/effective identity fields (requested_persona_key, effective_persona_key) throughout Personas.md and Prompt_Pipeline.md",
+        "Persona documents still have internal references to select_for_tier() and legacy persona_override_owner_id semantics that must be replaced",
+        "Persona SSOT section in Personas.md must not violate its own canonical field naming",
+        "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "requested_account_id"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

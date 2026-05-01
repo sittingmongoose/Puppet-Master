@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0151",
+  "coverage_row_ids_represented": [
+    "cov-007660",
+    "cov-007662",
+    "cov-007664",
+    "cov-007666"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0151; path=Plans/Executor_Protocol.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007660",
+        "cov-007662",
+        "cov-007664",
+        "cov-007666"
+      ],
+      "source_obligation_ids": [
+        "obl-004254",
+        "obl-004255",
+        "obl-004256",
+        "obl-004257"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s084"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Plans/Executor_Protocol.md",
+        "execution_unit_context",
+        "Plans/Contracts_V0.md",
+        "### 5.1B Persona/Runtime Snapshot Payload Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

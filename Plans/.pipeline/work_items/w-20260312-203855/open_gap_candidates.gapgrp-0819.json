@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0819",
+  "coverage_row_ids_represented": [
+    "cov-003248",
+    "cov-003249",
+    "cov-003250",
+    "cov-003251",
+    "cov-003252",
+    "cov-003253",
+    "cov-003370",
+    "cov-003375",
+    "cov-003380",
+    "cov-003385"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0819; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003248",
+        "cov-003249",
+        "cov-003250",
+        "cov-003251",
+        "cov-003252",
+        "cov-003253",
+        "cov-003370",
+        "cov-003375",
+        "cov-003380",
+        "cov-003385"
+      ],
+      "source_obligation_ids": [
+        "obl-001548",
+        "obl-001549",
+        "obl-001550",
+        "obl-001551",
+        "obl-001552",
+        "obl-001553",
+        "obl-001607",
+        "obl-001608",
+        "obl-001609",
+        "obl-001610"
+      ],
+      "source_seed_ids": [
+        "shard-0040-s012",
+        "shard-0091-s140",
+        "shard-0091-s141",
+        "shard-0092-s026"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:323-337`",
+        "Plans/storage-plan.md:323-337",
+        "`Plans/storage-plan.md:941-954`",
+        "Plans/storage-plan.md:941-954",
+        "`Plans/storage-plan.md:294`",
+        "Plans/storage-plan.md:294",
+        "Wave-004 identity closure checklist \u2014 each item must be tracked to a doc owner:",
+        "1. operational_identity block anchored in Contracts_V0.md",
+        "2. requested_account_binding (none/preferred/required) defined in Contracts_V0.md + Multi-Account.md",
+        "3. manual_preferred_account_id vs requested_account_id distinction in Multi-Account.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

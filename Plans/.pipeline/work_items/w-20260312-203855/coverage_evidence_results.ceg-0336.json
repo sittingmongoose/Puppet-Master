@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0336",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-007060",
+      "source_obligation_ids": [
+        "obl-003963"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s109",
+        "shard-0081-s016",
+        "shard-0081-s057",
+        "shard-0081-s087",
+        "shard-0081-s111",
+        "shard-0081-s149",
+        "shard-0082-s021",
+        "shard-0082-s044",
+        "shard-0082-s078"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/OpenCode_Coverage_Matrix.md:L1-L302:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007061",
+      "source_obligation_ids": [
+        "obl-003964"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s109",
+        "shard-0081-s016",
+        "shard-0081-s057",
+        "shard-0081-s087",
+        "shard-0081-s111",
+        "shard-0081-s149",
+        "shard-0082-s021",
+        "shard-0082-s044",
+        "shard-0082-s078"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/OpenCode_Coverage_Matrix.md:L1-L302:exact_hits=1/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

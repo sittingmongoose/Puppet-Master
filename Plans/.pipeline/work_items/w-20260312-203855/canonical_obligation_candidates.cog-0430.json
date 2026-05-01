@@ -1,0 +1,169 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0430",
+  "represented_seed_ids": [
+    "seed-WAVE006-0066",
+    "seed-WAVE006-0078"
+  ],
+  "source_shard_ids": [
+    "shard-0057",
+    "shard-0058"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0066"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "pm.evidence.schema.v1 only supports a binary pass/fail result but gate results now require at least three states: pass, fail, and skipped/inapplicable",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "pm.evidence.schema.v1 only supports a binary pass/fail result but gate results now require at least three states: pass, fail, and skipped/inapplicable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## pm.evidence.schema.v1",
+        "## Gate Verdict"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "pass",
+        "fail",
+        "skipped"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011201"
+      ],
+      "notes": [
+        "pm.evidence.schema.v1 binary pass/fail must be extended to tri-state: pass/fail/skipped. GATE-012 cannot correctly represent inapplicable results without this."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0066"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "The schema must be extended to support tri-state verdicts so GATE-012 (and others) can correctly represent 'not applicable' results",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The schema must be extended to support tri-state verdicts so GATE-012 (and others) can correctly represent 'not applicable' results"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## pm.evidence.schema.v1",
+        "## Gate Verdict"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "pass",
+        "fail",
+        "skipped"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011201"
+      ],
+      "notes": [
+        "pm.evidence.schema.v1 binary pass/fail must be extended to tri-state: pass/fail/skipped. GATE-012 cannot correctly represent inapplicable results without this."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE006-0078"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "pm.evidence.schema.v1 binary pass/fail gap is confirmed a third time in GPT-5.3-Codex synthesis",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "pm.evidence.schema.v1 binary pass/fail gap is confirmed a third time in GPT-5.3-Codex synthesis"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## pm.evidence.schema.v1"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "pass",
+        "fail",
+        "skipped"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011563-L011572"
+      ],
+      "notes": [
+        "Third independent finding: pm.evidence.schema.v1 binary verdicts are blocking. Tri-state extension is required before gate verification tooling can be built. Priority: high."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE006-0078"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "The tri-state extension (pass/fail/skipped) to pm.evidence.schema.v1 is a blocking deficiency for multiple gates",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The tri-state extension (pass/fail/skipped) to pm.evidence.schema.v1 is a blocking deficiency for multiple gates"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## pm.evidence.schema.v1"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "pass",
+        "fail",
+        "skipped"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011563-L011572"
+      ],
+      "notes": [
+        "Third independent finding: pm.evidence.schema.v1 binary verdicts are blocking. Tri-state extension is required before gate verification tooling can be built. Priority: high."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

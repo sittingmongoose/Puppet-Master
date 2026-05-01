@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0288",
+  "coverage_row_ids_represented": [
+    "cov-000373",
+    "cov-000376",
+    "cov-000379",
+    "cov-000381",
+    "cov-000429",
+    "cov-000708",
+    "cov-000711",
+    "cov-000714",
+    "cov-000912",
+    "cov-000958"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0288; path=Plans/Glossary.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Alert State Semantics"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000373",
+        "cov-000376",
+        "cov-000379",
+        "cov-000381",
+        "cov-000429",
+        "cov-000708",
+        "cov-000711",
+        "cov-000714",
+        "cov-000912",
+        "cov-000958"
+      ],
+      "source_obligation_ids": [
+        "obl-000165",
+        "obl-000166",
+        "obl-000167",
+        "obl-000168",
+        "obl-000184",
+        "obl-000306",
+        "obl-000307",
+        "obl-000308",
+        "obl-000391",
+        "obl-000410"
+      ],
+      "source_seed_ids": [
+        "shard-0002-s007",
+        "shard-0002-s008",
+        "shard-0002-s010",
+        "shard-0002-s023",
+        "shard-0004-s001",
+        "shard-0004-s012",
+        "shard-0004-s014",
+        "shard-0006-s007",
+        "shard-0007-s004",
+        "shard-0008-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0002",
+        "shard-0004",
+        "shard-0006",
+        "shard-0007",
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "These three states are not synonyms and must not be conflated in any doc",
+        "Acknowledgement model: 'acknowledged' \u2260 'resolved' \u2260 'dismissed'; acknowledgement is for advisory/non-blocking concerns only; blockers are not acknowledgeable",
+        "Settings groupings must be: Providers & Models, Execution Identity, Governance, Workers, Recovery, HITL \u2014 these are the canonical top-level settings categories",
+        "GUI help/tooltip generation requires: stable canonical terminology, clear object vs state vs action distinctions, and enough 'why this exists' language to support Simple/Expert/ELI5 derivation",
+        "Concern lifecycle states must be: active, acknowledged, resolved, dismissed \u2014 in that sequence with defined allowed transitions",
+        "Governance model must define 4 execution scopes: run = full canonical graph under deterministic runtime; work package = coherent precomputed subgraph with local overseer; feature seam = cross-package oversight scope; node = smallest executable unit",
+        "Each entity type must have its own lifecycle model \u2014 there is no single universal status enum: node lifecycle, work package lifecycle, feature seam lifecycle, promotion lifecycle, worktree lane lifecycle are all distinct",
+        "Three canonical promotion classes must be defined: lane_to_package (lane result \u2192 package baseline), package_to_seam_available (package \u2192 trusted seam contribution), seam_complete (seam marked complete)",
+        "Plans/Personas.md must define overseer personas (Package Overseer, Seam Overseer) and their relation to lanes \u2014 current Personas.md only covers worker personas",
+        "Sonnet cleanup priorities: P1 = lock runtime schema anchors (add package/seam/lane/worktree/account identity + contamination/safe-point linkage); P2 = extend Glossary/Crosswalk/Decision_Policy; P3 = rebuild UI contracts around packages/seams/lanes; P4 = consolidate addenda"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

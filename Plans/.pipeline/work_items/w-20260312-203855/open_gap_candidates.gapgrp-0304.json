@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0304",
+  "coverage_row_ids_represented": [
+    "cov-004553",
+    "cov-004557",
+    "cov-004561"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0304; path=Plans/LSPSupport.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "heading": "## tool.invoked Event Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004553",
+        "cov-004557",
+        "cov-004561"
+      ],
+      "source_obligation_ids": [
+        "obl-002168",
+        "obl-002169",
+        "obl-002170"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0013"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+        "plan-mode tooling policy still denies `lsp` even though LSP context is assumed for planning/interview features.",
+        "mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

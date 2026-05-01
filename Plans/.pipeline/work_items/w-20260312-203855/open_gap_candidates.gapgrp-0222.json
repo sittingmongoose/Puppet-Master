@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0222",
+  "coverage_row_ids_represented": [
+    "cov-000246",
+    "cov-000249",
+    "cov-000252",
+    "cov-000255",
+    "cov-000258",
+    "cov-000261",
+    "cov-000304",
+    "cov-000307",
+    "cov-000310",
+    "cov-000313"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0222; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Widget Trust State"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000246",
+        "cov-000249",
+        "cov-000252",
+        "cov-000255",
+        "cov-000258",
+        "cov-000261",
+        "cov-000304",
+        "cov-000307",
+        "cov-000310",
+        "cov-000313"
+      ],
+      "source_obligation_ids": [
+        "obl-000116",
+        "obl-000117",
+        "obl-000118",
+        "obl-000119",
+        "obl-000120",
+        "obl-000121",
+        "obl-000142",
+        "obl-000143",
+        "obl-000144",
+        "obl-000145"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s008",
+        "shard-0013-s004",
+        "shard-0032-s015",
+        "shard-0034-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0013",
+        "shard-0032",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Add explicit trust/idle/historical rendering contracts to widget/page specs, including a chrome-level trust indicator and no-active-run states for Dashboard-hosted push widgets",
+        "Narrow the widget-hostable Orchestrator surface to Progress only",
+        "Seams, Node Graph, Evidence, History, and Ledger become native surfaces with their own state contracts",
+        "Define explicit filter/scope ownership layers: router/page scope (project_id, focused_run_id, historical/live mode, deep-link target), tab scope (tab-native filters and object pivots), widget config (presentation settings and safe subfilters only)",
+        "Add a hard anti-drift rule for Orchestrator widgets: widgets may consume stable projections and canonical records; widgets may not invent independent semantic scope",
+        "Recommended default for Orchestrator Progress widgets: inherit focused_run_id and page trust state automatically; allow only local presentational config",
+        "Node Graph tab must show a graph canvas with a right-side detail inspector",
+        "The inspector must expose: provider/model/effort/persona/account, usage/token/cost, worker policy, retry/review/promotion state, lane/worktree/snapshot, linked evidence",
+        "Every projection-backed operational surface should expose at least: trust state, last updated time, degraded/stale reason when not current, whether actions are partially gated",
+        "Progress: show run-level trust banner or chip when projections are stale/degraded"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0698",
+  "coverage_row_ids_represented": [
+    "cov-004312",
+    "cov-004315",
+    "cov-004318",
+    "cov-004321",
+    "cov-004324"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0698; path=Plans/assistant-memory-subsystem.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "heading": "## live.* Events"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004312",
+        "cov-004315",
+        "cov-004318",
+        "cov-004321",
+        "cov-004324"
+      ],
+      "source_obligation_ids": [
+        "obl-002055",
+        "obl-002056",
+        "obl-002057",
+        "obl-002058",
+        "obl-002059"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0045"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "preview/build/open-artifact orchestrator command IDs are still exact uncataloged gaps",
+        "doctor-check naming drift is now clearly multi-way, not a single alias mismatch",
+        "CustomHeadlessTool still lacks stable tool identity, registration timing, permission semantics, and consistent config-file ownership",
+        "live.* and memory auto-trigger/handoff event families still have no canonical contracts/storage registration",
+        "handoff naming and thread collision behavior remain unowned across Assistant, HITL, and project-switch flows"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

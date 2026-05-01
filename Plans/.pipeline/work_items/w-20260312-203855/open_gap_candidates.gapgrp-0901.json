@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0901",
+  "coverage_row_ids_represented": [
+    "cov-006650",
+    "cov-006651",
+    "cov-006652",
+    "cov-006653",
+    "cov-006654",
+    "cov-006655",
+    "cov-006656",
+    "cov-006657",
+    "cov-006658",
+    "cov-006659"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0901; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006650",
+        "cov-006651",
+        "cov-006652",
+        "cov-006653",
+        "cov-006654",
+        "cov-006655",
+        "cov-006656",
+        "cov-006657",
+        "cov-006658",
+        "cov-006659"
+      ],
+      "source_obligation_ids": [
+        "obl-003553",
+        "obl-003554",
+        "obl-003555",
+        "obl-003556",
+        "obl-003557",
+        "obl-003558",
+        "obl-003559",
+        "obl-003560",
+        "obl-003561",
+        "obl-003562"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s011",
+        "shard-0077-s019",
+        "shard-0077-s041",
+        "shard-0077-s082",
+        "shard-0077-s092",
+        "shard-0078-s140",
+        "shard-0079-s048",
+        "shard-0080-s081",
+        "shard-0080-s083",
+        "shard-0080-s107",
+        "shard-0080-s108",
+        "shard-0083-s047",
+        "shard-0083-s049",
+        "shard-0084-s124",
+        "shard-0084-s125",
+        "shard-0084-s129",
+        "shard-0084-s132",
+        "shard-0084-s137",
+        "shard-0085-s109"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "That leaves `usage_record` and evidence/summary families in an unstable middle state:",
+        "usage_record",
+        "`Runtime_Artifacts_Panel.md` is now ahead of the main Usage and graph docs on identity rigor.",
+        "Runtime_Artifacts_Panel.md",
+        "That makes the doc hard to reconcile mechanically because early tables, migration addenda, and canonical-record sections are not all pointing in the same direction.",
+        "`FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers",
+        "FinalGUISpec.md",
+        "UI_Command_Catalog.md",
+        "Widget_System.md",
+        "2. command / shell / widget / GUI drift amplifiers"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

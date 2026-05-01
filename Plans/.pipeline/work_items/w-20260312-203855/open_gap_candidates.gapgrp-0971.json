@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0971",
+  "coverage_row_ids_represented": [
+    "cov-005912",
+    "cov-005913",
+    "cov-005914",
+    "cov-005915",
+    "cov-005916",
+    "cov-005917",
+    "cov-005918",
+    "cov-005919",
+    "cov-005920",
+    "cov-005921"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0971; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005912",
+        "cov-005913",
+        "cov-005914",
+        "cov-005915",
+        "cov-005916",
+        "cov-005917",
+        "cov-005918",
+        "cov-005919",
+        "cov-005920",
+        "cov-005921"
+      ],
+      "source_obligation_ids": [
+        "obl-002815",
+        "obl-002816",
+        "obl-002817",
+        "obl-002818",
+        "obl-002819",
+        "obl-002820",
+        "obl-002821",
+        "obl-002822",
+        "obl-002823",
+        "obl-002824"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s108",
+        "shard-0082-s109",
+        "shard-0082-s110",
+        "shard-0082-s111",
+        "shard-0082-s113",
+        "shard-0082-s114",
+        "shard-0082-s118",
+        "shard-0082-s123",
+        "shard-0084-s087"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "Executor_Protocol",
+        "Run_Modes",
+        "OpenCode provider-native identity and event correlation contracts (`OpenCode_*`, provider bridge docs)",
+        "OpenCode_*",
+        "The authored sweep itself is complete and should now hand off to reconciliation rather than additional model passes.",
+        "Future reconciliation should prioritize:",
+        "promoted-shell command-family completeness and persistence-scope normalization second",
+        "OpenCode provider-native identity / SSE correlation / requested-effective disclosure cleanup fourth",
+        "Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk",
+        "graph-owned `Feature Seam` / `Work Package`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

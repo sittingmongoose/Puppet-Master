@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0228",
+  "coverage_row_ids_represented": [
+    "cov-001339",
+    "cov-001345",
+    "cov-001347",
+    "cov-001349",
+    "cov-001351",
+    "cov-001353",
+    "cov-001598",
+    "cov-001602",
+    "cov-001606",
+    "cov-001610"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0228; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Panel Constraints"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001339",
+        "cov-001345",
+        "cov-001347",
+        "cov-001349",
+        "cov-001351",
+        "cov-001353",
+        "cov-001598",
+        "cov-001602",
+        "cov-001606",
+        "cov-001610"
+      ],
+      "source_obligation_ids": [
+        "obl-000569",
+        "obl-000574",
+        "obl-000575",
+        "obl-000576",
+        "obl-000577",
+        "obl-000578",
+        "obl-000712",
+        "obl-000713",
+        "obl-000714",
+        "obl-000715"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s003",
+        "shard-0012-s008",
+        "shard-0019-s001",
+        "shard-0019-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Prefer: one strong primary line, compact status chips/icons, expandable row/detail affordances, deep-link out to wider surfaces when context gets too large",
+        "Dashboard can host a curated subset of Progress widgets and some Usage widgets",
+        "Progress hosts orchestrator operational summary widgets",
+        "deep inspection surfaces remain non-hostable native tabs",
+        "many Progress widgets may also be hostable on Dashboard",
+        "non-Orchestrator widgets should not be hostable on the Orchestrator page",
+        "treat as three separate axes: source axis (where configured value came from), request axis (what the run/attempt actually asked for at execution start), execution/result axis (what provider/runtime actually used and whether controls were honored/skipped/clamped)",
+        "Canonical display groups for settings: Inherited from, Overridden by, Requested, Effective, Reason, Support",
+        "Source layers needing explicit labeling: app default, project override, surface default, role policy, seam/package/node mapping, manual override, turn/session/run/task/subagent scoped override",
+        "UI should show the winning source, not force the user to reconstruct precedence from docs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

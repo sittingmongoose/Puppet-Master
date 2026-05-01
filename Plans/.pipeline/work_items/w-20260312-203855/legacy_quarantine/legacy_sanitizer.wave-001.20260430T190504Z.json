@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.legacy_sanitizer_wave.v2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "legacy_sanitizer.wave-001",
+  "status": "complete",
+  "subagent_tasks": [
+    {
+      "task_id": "quarantine-mover",
+      "description": "Move all 2670 quarantine candidate files from work item root to legacy_quarantine/ with timestamped names",
+      "timestamp": "20260430T180539Z"
+    }
+  ],
+  "assigned_input_boundaries": {
+    "artifact_families": [
+      "canonical_obligations",
+      "canonical_obligations_source_coverage_report",
+      "contractref_repair_report",
+      "doc_discovery_resolution",
+      "ledger_obligation_seed",
+      "ledger_seed_completeness_report",
+      "legacy_quarantine_manifest",
+      "open_gaps",
+      "packet_builder",
+      "reconciliation_plan",
+      "scribe_apply_report",
+      "transfer_coverage",
+      "transfer_coverage_source_coverage_report"
+    ],
+    "files_assigned": 2670,
+    "worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.worklist.json"
+  },
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "files_assigned": 2670,
+  "files_completed": 2670,
+  "artifact_families_assigned": 13,
+  "artifact_families_completed": 13
+}

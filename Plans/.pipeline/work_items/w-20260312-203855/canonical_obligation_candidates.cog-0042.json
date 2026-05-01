@@ -1,0 +1,1423 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0042",
+  "represented_seed_ids": [
+    "shard-0004-s011",
+    "shard-0016-s003",
+    "shard-0017-s008",
+    "shard-0018-s001",
+    "shard-0018-s002",
+    "shard-0018-s003",
+    "shard-0018-s004",
+    "shard-0018-s005",
+    "shard-0022-s003",
+    "shard-0023-s012",
+    "shard-0024-s010",
+    "shard-0025-s001",
+    "shard-0027-s009"
+  ],
+  "source_shard_ids": [
+    "shard-0004",
+    "shard-0016",
+    "shard-0017",
+    "shard-0018",
+    "shard-0022",
+    "shard-0023",
+    "shard-0024",
+    "shard-0025",
+    "shard-0027"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0004-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Multiple projects can run Orchestrator concurrently; data and storage must be strictly per-project with no cross-project leakage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Multiple projects can run Orchestrator concurrently; data and storage must be strictly per-project with no cross-project leakage"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Multi-Project Concurrency"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000765-L000785"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0016-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "same issue persists with more evidence: update existing concern, append sources/evidence, allow severity/attention escalation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "same issue persists with more evidence: update existing concern, append sources/evidence, allow severity/attention escalation"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Merge/Split/Supersession Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003094-L003107"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0016-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "one concern was too broad: split into child concerns with lineage links",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "one concern was too broad: split into child concerns with lineage links"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Merge/Split/Supersession Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003094-L003107"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0016-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "two concerns are actually the same issue: merge into one retained concern id; close/redirect the merged-away ids explicitly",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "two concerns are actually the same issue: merge into one retained concern id; close/redirect the merged-away ids explicitly"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Merge/Split/Supersession Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003094-L003107"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0016-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "older framing replaced by better/newer concern: mark older concern as resolved with resolution_kind = superseded or use explicit supersession linkage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "older framing replaced by better/newer concern: mark older concern as resolved with resolution_kind = superseded or use explicit supersession linkage"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Merge/Split/Supersession Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003094-L003107"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0017-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "keep records and artifacts separate",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "keep records and artifacts separate"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Artifact vs Record Distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0017-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "record = canonical structured object in Ledger/export/search/routing",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "record = canonical structured object in Ledger/export/search/routing"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Artifact vs Record Distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0017-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "artifact = file/blob/renderable output linked from the record",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "artifact = file/blob/renderable output linked from the record"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Artifact vs Record Distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0017-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "review markdown summary = artifact; review record = structured ledger object",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "review markdown summary = artifact; review record = structured ledger object"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Artifact vs Record Distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0017-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "corroboration packet JSON/markdown = artifact; corroboration result record = structured object",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "corroboration packet JSON/markdown = artifact; corroboration result record = structured object"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Artifact vs Record Distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0018-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Export contracts: distinguish record export (exact structured objects, canonical ids, references, metadata), bundle export (manifest + records + attached artifacts/blobs/files), view export (user-facing convenience representation of current",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Export contracts: distinguish record export (exact structured objects, canonical ids, references, metadata), bundle export (manifest + records + attached artifacts/blobs/files), view export (user-facing convenience representation of current filtered table/list/chart)"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Contracts",
+        "## Export Types"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003561-L003573"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0018-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Orchestrator export families needed: Evidence export, Artifact export, Ledger export, Run export, Record export for single exact records",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Orchestrator export families needed: Evidence export, Artifact export, Ledger export, Run export, Record export for single exact records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Export Families",
+        "## Run Export"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003575-L003589"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0018-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Ledger export should be record-shaped first, CSV/JSON second",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Ledger export should be record-shaped first, CSV/JSON second"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Export Families",
+        "## Run Export"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003575-L003589"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0018-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Evidence export should preserve evidence/artifact distinction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Evidence export should preserve evidence/artifact distinction"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Export Families",
+        "## Run Export"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003575-L003589"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0018-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Run export should include a manifest: run metadata, exact records, linked artifacts/evidence, historical/superseded status flags",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Run export should include a manifest: run metadata, exact records, linked artifacts/evidence, historical/superseded status flags"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Export Families",
+        "## Run Export"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003575-L003589"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0018-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "every non-trivial Orchestrator export should include a manifest",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "every non-trivial Orchestrator export should include a manifest"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Manifest",
+        "## Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003591-L003600"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0018-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Manifest fields: export_id, export_kind, project_id, run_id?, focused_run_id?, generated_at_utc, source_surface, filter_summary, record_counts, artifact_counts, included_record_ids[], included_artifact_ids[], status_notes, schema_version",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Manifest fields: export_id, export_kind, project_id, run_id?, focused_run_id?, generated_at_utc, source_surface, filter_summary, record_counts, artifact_counts, included_record_ids[], included_artifact_ids[], status_notes, schema_version"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Manifest",
+        "## Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003591-L003600"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0018-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "exact-record surfaces should export canonical records, not UI-specific transformed rows",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "exact-record surfaces should export canonical records, not UI-specific transformed rows"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record-Shaped Export Rule",
+        "## Evidence/Artifact Export"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-019",
+      "source_seed_ids": [
+        "shard-0018-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Ledger export should preserve canonical ids and structured fields; CSV is fine as a convenience projection; JSON/JSONL should remain close to canonical record structure",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Ledger export should preserve canonical ids and structured fields; CSV is fine as a convenience projection; JSON/JSONL should remain close to canonical record structure"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record-Shaped Export Rule",
+        "## Evidence/Artifact Export"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-020",
+      "source_seed_ids": [
+        "shard-0018-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record-Shaped Export Rule",
+        "## Evidence/Artifact Export"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-021",
+      "source_seed_ids": [
+        "shard-0018-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "Exports must preserve historical truth even when live backing objects no longer exist",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Exports must preserve historical truth even when live backing objects no longer exist"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Historical Export Semantics",
+        "## Archival Export Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-022",
+      "source_seed_ids": [
+        "shard-0018-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "removed worktree or retired graph path still exports as record metadata with historical status",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "removed worktree or retired graph path still exports as record metadata with historical status"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Historical Export Semantics",
+        "## Archival Export Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-023",
+      "source_seed_ids": [
+        "shard-0018-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "absence of a live backing file/worktree should not corrupt the exported record bundle",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "absence of a live backing file/worktree should not corrupt the exported record bundle"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Historical Export Semantics",
+        "## Archival Export Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-024",
+      "source_seed_ids": [
+        "shard-0018-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0018"
+      ],
+      "canon_label": "view export is still useful, but should be clearly labeled as a convenience format; CSV/table exports are not canonical archival formats",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "view export is still useful, but should be clearly labeled as a convenience format; CSV/table exports are not canonical archival formats"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Historical Export Semantics",
+        "## Archival Export Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-025",
+      "source_seed_ids": [
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "project-summary projection",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "project-summary projection"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-026",
+      "source_seed_ids": [
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "activity state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "activity state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-027",
+      "source_seed_ids": [
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "attention state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attention state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-028",
+      "source_seed_ids": [
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "health state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "health state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-029",
+      "source_seed_ids": [
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "primary blocked/attention owner",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "primary blocked/attention owner"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-030",
+      "source_seed_ids": [
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "primary reason",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "primary reason"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-031",
+      "source_seed_ids": [
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "pressure summary",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "pressure summary"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-032",
+      "source_seed_ids": [
+        "shard-0023-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "when projections are stale or degraded: large surfaces should degrade toward smaller, record-backed slices instead of trying to fake full live fidelity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "when projections are stale or degraded: large surfaces should degrade toward smaller, record-backed slices instead of trying to fake full live fidelity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Degraded Projection Fallback Strategy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004401"
+      ],
+      "notes": [
+        "Stale graph projection still supports focused inspection; stale ledger/history slices remain usable as closer to canonical records"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-033",
+      "source_seed_ids": [
+        "shard-0024-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "current",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "current"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Operational projection trust state model required across all Orchestrator tabs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-034",
+      "source_seed_ids": [
+        "shard-0024-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "refreshing",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "refreshing"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Operational projection trust state model required across all Orchestrator tabs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-035",
+      "source_seed_ids": [
+        "shard-0024-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "stale",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Operational projection trust state model required across all Orchestrator tabs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-036",
+      "source_seed_ids": [
+        "shard-0024-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "degraded",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "degraded"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Operational projection trust state model required across all Orchestrator tabs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-037",
+      "source_seed_ids": [
+        "shard-0024-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "canon_label": "unavailable",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "unavailable"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Operational projection trust state model required across all Orchestrator tabs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-038",
+      "source_seed_ids": [
+        "shard-0025-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "current: projection up to date for normal read + write interaction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "current: projection up to date for normal read + write interaction"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust State Definitions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-039",
+      "source_seed_ids": [
+        "shard-0025-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "refreshing: slightly behind but actively catching up; read fine, write may be fine depending on object class",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "refreshing: slightly behind but actively catching up; read fine, write may be fine depending on object class"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust State Definitions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-040",
+      "source_seed_ids": [
+        "shard-0025-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "stale: data old enough that mutation-bearing actions should narrow or require refetch",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale: data old enough that mutation-bearing actions should narrow or require refetch"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust State Definitions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-041",
+      "source_seed_ids": [
+        "shard-0025-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "degraded: projector or dependency failure; surface may be incomplete or partially wrong",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "degraded: projector or dependency failure; surface may be incomplete or partially wrong"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust State Definitions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-042",
+      "source_seed_ids": [
+        "shard-0025-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "unavailable: projection cannot support that surface; UI must fall back or disable",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "unavailable: projection cannot support that surface; UI must fall back or disable"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust State Definitions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-043",
+      "source_seed_ids": [
+        "shard-0027-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "exports derived from stale/degraded projections must either: disclose trust state in the export/manifest, or re-query from canonical/current backing data before export",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "exports derived from stale/degraded projections must either: disclose trust state in the export/manifest, or re-query from canonical/current backing data before export"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Trust-State Disclosure Rule"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "Especially for: ledger, concerns, promotion state, graph generation summaries"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

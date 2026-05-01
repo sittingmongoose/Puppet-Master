@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0887",
+  "coverage_row_ids_represented": [
+    "cov-006512",
+    "cov-006513",
+    "cov-006514",
+    "cov-006515",
+    "cov-006516",
+    "cov-006517",
+    "cov-006518",
+    "cov-006519",
+    "cov-006520",
+    "cov-006521"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0887; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006512",
+        "cov-006513",
+        "cov-006514",
+        "cov-006515",
+        "cov-006516",
+        "cov-006517",
+        "cov-006518",
+        "cov-006519",
+        "cov-006520",
+        "cov-006521"
+      ],
+      "source_obligation_ids": [
+        "obl-003415",
+        "obl-003416",
+        "obl-003417",
+        "obl-003418",
+        "obl-003419",
+        "obl-003420",
+        "obl-003421",
+        "obl-003422",
+        "obl-003423",
+        "obl-003424"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s040",
+        "shard-0080-s043",
+        "shard-0080-s044",
+        "shard-0080-s045",
+        "shard-0080-s046",
+        "shard-0080-s050",
+        "shard-0080-s054",
+        "shard-0080-s064",
+        "shard-0080-s065",
+        "shard-0080-s067",
+        "shard-0080-s068",
+        "shard-0085-s019",
+        "shard-0085-s020",
+        "shard-0085-s145",
+        "shard-0085-s146"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "Orchestrator_Page.md",
+        "`widget.current_task` = active tier title/objective/platform/model",
+        "widget.current_task",
+        "`widget.progress_bars` = phase/task/subtask completion bars",
+        "widget.progress_bars",
+        "`widget.agent_terminal` = current worker output",
+        "widget.agent_terminal",
+        "`widget.completed_prose` = completed tier summaries",
+        "widget.completed_prose",
+        "evidence summaries as record-backed surfaces"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

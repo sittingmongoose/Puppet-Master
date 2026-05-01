@@ -1,0 +1,216 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0331",
+  "represented_seed_ids": [
+    "seed-WAVE005-0025"
+  ],
+  "source_shard_ids": [
+    "shard-0044"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE005-0025"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "HITL now contains two contract eras: older request-local (HITLRequest with tier_id, tier_type, allowed_actions[]) and newer runtime-facing (waiting_approval as blocked overlay, allowed_action_ids[], cmd.runtime.*)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "HITL now contains two contract eras: older request-local (HITLRequest with tier_id, tier_type, allowed_actions[]) and newer runtime-facing (waiting_approval as blocked overlay, allowed_action_ids[], cmd.runtime.*)"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "blocked_reason_code = waiting_approval",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "cmd.runtime.*"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008782-L008800"
+      ],
+      "notes": [
+        "Contracts_V0.md still publishes HITLRequest with legacy allowed_actions[] while addenda say deprecated field names must not appear in new canonical schemas",
+        "UI_Command_Catalog.md still has graph-local cmd.graph.approve_hitl / cmd.graph.deny_hitl even though same file establishes cmd.runtime.* as canonical"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE005-0025"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "Move approval anchoring onto canonical runtime identity: run_id, node_id, blocked_sequence, attempt_id?, plus execution-unit context refs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Move approval anchoring onto canonical runtime identity: run_id, node_id, blocked_sequence, attempt_id?, plus execution-unit context refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "blocked_reason_code = waiting_approval",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "cmd.runtime.*"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008782-L008800"
+      ],
+      "notes": [
+        "Contracts_V0.md still publishes HITLRequest with legacy allowed_actions[] while addenda say deprecated field names must not appear in new canonical schemas",
+        "UI_Command_Catalog.md still has graph-local cmd.graph.approve_hitl / cmd.graph.deny_hitl even though same file establishes cmd.runtime.* as canonical"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE005-0025"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "Add an explicit approval-scope field or object, likely approval_scope_key, so reusable approvals and one-off blocked-episode approvals cannot bleed together",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add an explicit approval-scope field or object, likely approval_scope_key, so reusable approvals and one-off blocked-episode approvals cannot bleed together"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "blocked_reason_code = waiting_approval",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "cmd.runtime.*"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008782-L008800"
+      ],
+      "notes": [
+        "Contracts_V0.md still publishes HITLRequest with legacy allowed_actions[] while addenda say deprecated field names must not appear in new canonical schemas",
+        "UI_Command_Catalog.md still has graph-local cmd.graph.approve_hitl / cmd.graph.deny_hitl even though same file establishes cmd.runtime.* as canonical"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE005-0025"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "Add durable approver identity fields to approval/rejection records/events so audit/history can explain who approved or declined",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add durable approver identity fields to approval/rejection records/events so audit/history can explain who approved or declined"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "blocked_reason_code = waiting_approval",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "cmd.runtime.*"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008782-L008800"
+      ],
+      "notes": [
+        "Contracts_V0.md still publishes HITLRequest with legacy allowed_actions[] while addenda say deprecated field names must not appear in new canonical schemas",
+        "UI_Command_Catalog.md still has graph-local cmd.graph.approve_hitl / cmd.graph.deny_hitl even though same file establishes cmd.runtime.* as canonical"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "seed-WAVE005-0025"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "Deprecated allowed_actions[] is compatibility-only and MUST NOT appear in new canonical schemas",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Deprecated allowed_actions[] is compatibility-only and MUST NOT appear in new canonical schemas"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "blocked_reason_code = waiting_approval",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "cmd.runtime.*"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008782-L008800"
+      ],
+      "notes": [
+        "Contracts_V0.md still publishes HITLRequest with legacy allowed_actions[] while addenda say deprecated field names must not appear in new canonical schemas",
+        "UI_Command_Catalog.md still has graph-local cmd.graph.approve_hitl / cmd.graph.deny_hitl even though same file establishes cmd.runtime.* as canonical"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

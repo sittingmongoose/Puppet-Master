@@ -1,0 +1,240 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0484",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-001168",
+      "source_obligation_ids": [
+        "obl-000493"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001169",
+      "source_obligation_ids": [
+        "obl-000494"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001170",
+      "source_obligation_ids": [
+        "obl-000495"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s107",
+        "shard-0082-s009",
+        "shard-0082-s100"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0082"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001171",
+      "source_obligation_ids": [
+        "obl-000496"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s107",
+        "shard-0082-s009",
+        "shard-0082-s100"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0082"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002705",
+      "source_obligation_ids": [
+        "obl-001296"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002708",
+      "source_obligation_ids": [
+        "obl-001297"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002711",
+      "source_obligation_ids": [
+        "obl-001298"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002714",
+      "source_obligation_ids": [
+        "obl-001299"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002717",
+      "source_obligation_ids": [
+        "obl-001300"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002721",
+      "source_obligation_ids": [
+        "obl-001301"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path": "Plans/Provider_OpenCode.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Provider_OpenCode.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

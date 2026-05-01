@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0172",
+  "coverage_row_ids_represented": [
+    "cov-000927",
+    "cov-000937",
+    "cov-000949",
+    "cov-000961",
+    "cov-001035",
+    "cov-001039"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0172; path=Plans/Executor_Protocol.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## Single vs Multiple Overseers Contradiction"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000927",
+        "cov-000937",
+        "cov-000949",
+        "cov-000961",
+        "cov-001035",
+        "cov-001039"
+      ],
+      "source_obligation_ids": [
+        "obl-000400",
+        "obl-000403",
+        "obl-000407",
+        "obl-000411",
+        "obl-000438",
+        "obl-000440"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s013",
+        "shard-0007-s015",
+        "shard-0008-s001",
+        "shard-0008-s005",
+        "shard-0009-s013",
+        "shard-0009-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0007",
+        "shard-0008",
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Contradiction: docs describe a single Overseer while the target model requires package overseers and seam overseers \u2014 the singular Overseer language must be retired",
+        "Contradiction: plan_graph.schema.json has selection_rule = 'lexicographic_node_id' hard-coded while runtime scheduler addenda define a scored tuple \u2014 these must be reconciled",
+        "Blocked payload normalization: 'reason_code' / 'recovery_options[]' vs 'blocked_reason_code' / 'allowed_action_ids[]' are both active in docs \u2014 one canonical form must be chosen",
+        "GPT-5.2: old tier-era contracts AND newer node/safe-point addenda are both marked canonical simultaneously \u2014 only the node/safe-point model is canonical; tier-era content must be superseded",
+        "Contradiction: lexicographic node selection hard-coded in plan_graph.schema.json and project_plan_graph_index.schema.json vs scored ready-set scheduler in Executor_Protocol.md addenda \u2014 must choose scored scheduler",
+        "Contradiction: single Overseer in Executor_Protocol.md, Orchestrator_Page.md, Personas.md, Provider_Stream_Mapping_External_Reference_A2A.md vs package+seam overseer target \u2014 singular Overseer must be retired"
+      ],
+      "stale_tokens": [
+        "single Overseer",
+        "selection_rule = \"lexicographic_node_id\"",
+        "reason_code",
+        "recovery_options[]",
+        "tier_runtime_record",
+        "tier_id"
+      ],
+      "canonical_replacement_hints": [
+        "Replace with Package Overseer and Seam Overseer as distinct actors"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0090",
+  "coverage_row_ids_represented": [
+    "cov-001172",
+    "cov-001175",
+    "cov-002511",
+    "cov-002514",
+    "cov-002631",
+    "cov-002635",
+    "cov-002639",
+    "cov-002643",
+    "cov-002647",
+    "cov-002671"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0090; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Account Identity Fields"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001172",
+        "cov-001175",
+        "cov-002511",
+        "cov-002514",
+        "cov-002631",
+        "cov-002635",
+        "cov-002639",
+        "cov-002643",
+        "cov-002647",
+        "cov-002671"
+      ],
+      "source_obligation_ids": [
+        "obl-000497",
+        "obl-000498",
+        "obl-001224",
+        "obl-001225",
+        "obl-001270",
+        "obl-001271",
+        "obl-001272",
+        "obl-001273",
+        "obl-001274",
+        "obl-001284"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s005",
+        "shard-0032-s013",
+        "shard-0034-s009",
+        "shard-0034-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0032",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Add a governance rule for provider_account_id: either retire it or explicitly define it as provider-native metadata subordinate to stable internal effective_account_id",
+        "provider_account_id is being normalized in usage/storage-facing docs without a governing rule, so it risks becoming a second shadow routing identity",
+        "canonical contracts have requested_account_policy but not an equally canonical requested_account_id",
+        "several downstream docs therefore cannot represent a user-selected concrete account on the requested side without collapsing it into policy text",
+        "account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family",
+        "account_switch_reason appears on attempt/runtime identity records",
+        "recent_switch_reason appears in account health state",
+        "no append-only account.switched / threshold / exhaustion event family exists yet for History, Ledger, Usage, or Orchestrator",
+        "Add a canonical account-switch history family: event or record based, carrying old/new effective account identity, reason, scope, and timeline semantics",
+        "Multi-Account.md still has no durable account.switched / switch-episode family"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "effective_account_id is the stable internal identity; provider_account_id should be explicitly subordinate provider-native metadata"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

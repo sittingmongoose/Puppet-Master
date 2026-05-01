@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0872",
+  "coverage_row_ids_represented": [
+    "cov-005346",
+    "cov-005351",
+    "cov-005356",
+    "cov-005361",
+    "cov-006364",
+    "cov-006379",
+    "cov-006384",
+    "cov-006385",
+    "cov-006386",
+    "cov-006387"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0872; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## High-Pressure User Flow Routes"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005346",
+        "cov-005351",
+        "cov-005356",
+        "cov-005361",
+        "cov-006364",
+        "cov-006379",
+        "cov-006384",
+        "cov-006385",
+        "cov-006386",
+        "cov-006387"
+      ],
+      "source_obligation_ids": [
+        "obl-002311",
+        "obl-002312",
+        "obl-002313",
+        "obl-002314",
+        "obl-003267",
+        "obl-003282",
+        "obl-003287",
+        "obl-003288",
+        "obl-003289",
+        "obl-003290"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0053",
+        "shard-0085-s086",
+        "shard-0090-s023",
+        "shard-0090-s038"
+      ],
+      "source_shard_ids": [
+        "shard-0070",
+        "shard-0085",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "cost usage -> Show in Ledger: `target_kind=primary_view`, `project_id=<id>`, `object_kind=usage_event`, `object_id=<id>`, `thread_id=<id>` when thread-scoped, `tab_id=ledger`",
+        "wizard resume: `target_kind=primary_view`, `project_id=<id>`, `object_kind=wizard`, `object_id=<wizard_id>`, `thread_id=<id>` when thread must be restored; serialized `resume_url` carries narrow step anchor detail",
+        "chat search hit: `target_kind=side_panel`, `project_id=<id>`, `thread_id=<id>`, `object_kind=message`, `object_id=<message_id>`",
+        "node detail pivot: `target_kind=page_tab`, `project_id=<id>`, `focused_run_id=<run_id>`, `object_kind=node`, `object_id=<node_id>`, `tab_id=node_graph`, `inspector_target=details|evidence|usage|history`",
+        "`Plans/usage-feature.md` is still one of the main correlation drifts:",
+        "`Plans/usage-feature.md` already carries canonical `account_id` attribution in both the billing-identity tuple and the unified `UsageRecord` schema.",
+        "`gap-001` now points at `Plans/usage-feature.md` \u2014 `### Unified \\`UsageRecord\\` schema expectations` as the actual usage-side partial-transfer section.",
+        "gap-001",
+        "### Unified \\",
+        " schema expectations"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0123",
+  "represented_seed_ids": [
+    "shard-0010-s016"
+  ],
+  "source_shard_ids": [
+    "shard-0010"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0010-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Multi-account behavior exists in slices (provider/auth panels) but is not threaded through repo/project/worktree execution contracts \u2014 account identity must be end-to-end in all execution contracts",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Multi-account behavior exists in slices (provider/auth panels) but is not threaded through repo/project/worktree execution contracts \u2014 account identity must be end-to-end in all execution contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Multi-Account End-to-End Wiring"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L001801-L001835"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

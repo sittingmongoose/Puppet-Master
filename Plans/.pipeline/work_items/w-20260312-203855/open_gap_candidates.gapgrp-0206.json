@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0206",
+  "coverage_row_ids_represented": [
+    "cov-004240",
+    "cov-004241",
+    "cov-004242",
+    "cov-004243",
+    "cov-004244",
+    "cov-004245",
+    "cov-004246",
+    "cov-004440",
+    "cov-004442"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0206; path=Plans/FinalGUISpec.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## OpenFile"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004240",
+        "cov-004241",
+        "cov-004242",
+        "cov-004243",
+        "cov-004244",
+        "cov-004245",
+        "cov-004246",
+        "cov-004440",
+        "cov-004442"
+      ],
+      "source_obligation_ids": [
+        "obl-002014",
+        "obl-002015",
+        "obl-002016",
+        "obl-002017",
+        "obl-002018",
+        "obl-002019",
+        "obl-002020",
+        "obl-002119",
+        "obl-002120"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0031",
+        "seed-WAVE006-0079",
+        "seed-WAVE006-0083",
+        "seed-WAVE006-0093"
+      ],
+      "source_shard_ids": [
+        "shard-0054",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "FinalGUISpec.md still states one unified OpenFile { path... } contract for all file-open actions across the app",
+        "FinalGUISpec.md still overstates the scope of OpenFile by claiming all file-open actions across the app use that one contract, even though the app now needs identity-native subject opens",
+        "Update FinalGUISpec.md so OpenFile remains true for workspace files, while identity-native opens route through OpenSubject under the same higher-level routing model",
+        "FinalGUISpec.md describes thread search result clicks routing locally to a panel scroll, not through a canonical route payload",
+        "Search result activation must route through the canonical route-target model so cross-surface search works identically regardless of which surface the user is on",
+        "FinalGUISpec.md must be updated to reference both: the workspace file open contract (OpenFile via cmd.nav.open_file), and the identity-native subject/route open contract (OpenSubject via cmd.nav.open_subject)",
+        "The current spec conflates both operations under a single 'open' affordance that maps to workspace file semantics only",
+        "FinalGUISpec.md and assistant-chat-design.md CTA and attention surfaces use local field conventions rather than the shared route-target model",
+        "CtA items and attention-required notifications must carry route_target payloads so they can be activated through the canonical navigation model"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "OpenSubject"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

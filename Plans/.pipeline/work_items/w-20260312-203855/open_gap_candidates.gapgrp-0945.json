@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0945",
+  "coverage_row_ids_represented": [
+    "cov-005652",
+    "cov-005653",
+    "cov-005654",
+    "cov-005655",
+    "cov-005656",
+    "cov-005657",
+    "cov-005658",
+    "cov-005659",
+    "cov-005660",
+    "cov-005661"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0945; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005652",
+        "cov-005653",
+        "cov-005654",
+        "cov-005655",
+        "cov-005656",
+        "cov-005657",
+        "cov-005658",
+        "cov-005659",
+        "cov-005660",
+        "cov-005661"
+      ],
+      "source_obligation_ids": [
+        "obl-002555",
+        "obl-002556",
+        "obl-002557",
+        "obl-002558",
+        "obl-002559",
+        "obl-002560",
+        "obl-002561",
+        "obl-002562",
+        "obl-002563",
+        "obl-002564"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s044",
+        "shard-0078-s045",
+        "shard-0078-s046",
+        "shard-0078-s049",
+        "shard-0078-s050",
+        "shard-0078-s051",
+        "shard-0078-s054",
+        "shard-0078-s056",
+        "shard-0078-s082",
+        "shard-0078-s096",
+        "shard-0078-s143"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "assembly stages still say `tier/mode/platform/model`",
+        "tier/mode/platform/model",
+        "orchestration rules still say the prompt flow must not create new execution tiers",
+        "Persona resolver text still refers to stage/tier/task context",
+        "it correctly locks canonical requested/effective runtime field names",
+        "it still names `run.tier_started` / `run.tier_completed` and `run.persona_stage_changed`",
+        "run.persona_stage_changed",
+        "its examples still include `tier_id` / `tier_type`",
+        "`tier_runtime_record` is still named as canonical",
+        "Primary owner docs:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

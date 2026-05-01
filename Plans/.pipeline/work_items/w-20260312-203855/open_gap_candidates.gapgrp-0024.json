@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0024",
+  "coverage_row_ids_represented": [
+    "cov-004871",
+    "cov-004875",
+    "cov-004879",
+    "cov-004883"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "group gapgrp-0024; path=Plans/Contracts_V0.md; row_type=consumer; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Contradictions / gaps surfaced"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004871",
+        "cov-004875",
+        "cov-004879",
+        "cov-004883"
+      ],
+      "source_obligation_ids": [
+        "obl-002227",
+        "obl-002228",
+        "obl-002229",
+        "obl-002230"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "`Crosswalk.md` still lacks a primitive entry for route-target / identity-native open behavior.",
+        "`Contracts_V0.md` still has no `route_target` or `OpenSubject` contract even though several downstream docs are already depending on that concept.",
+        "`storage-plan.md` currently carries `resume_url` fields in persisted records, which is correct for persistence, but there is still no owner doc that defines what `resume_url` serializes.",
+        "`FileManager.md` still reads as if path-based `OpenFile` is the universal open/navigation primitive."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

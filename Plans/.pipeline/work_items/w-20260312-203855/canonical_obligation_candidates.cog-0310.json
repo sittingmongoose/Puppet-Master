@@ -1,0 +1,169 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0310",
+  "represented_seed_ids": [
+    "seed-WAVE005-0006"
+  ],
+  "source_shard_ids": [
+    "shard-0041"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE005-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "execution_role",
+        "operational_identity (kind/requested_ref/effective_ref/selection_reason/partial_capability)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008053-L008200"
+      ],
+      "notes": [
+        "execution_role is not the same as run_kind; operational identity is not the same as provider account identity"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE005-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "execution_role",
+        "operational_identity (kind/requested_ref/effective_ref/selection_reason/partial_capability)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008053-L008200"
+      ],
+      "notes": [
+        "execution_role is not the same as run_kind; operational identity is not the same as provider account identity"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE005-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Operational identity kinds: github_api_account, registry_namespace, kubernetes_context",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Operational identity kinds: github_api_account, registry_namespace, kubernetes_context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "execution_role",
+        "operational_identity (kind/requested_ref/effective_ref/selection_reason/partial_capability)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008053-L008200"
+      ],
+      "notes": [
+        "execution_role is not the same as run_kind; operational identity is not the same as provider account identity"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE005-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Ensure GUI inspectors can show requested/effective provider/account identity, requested/effective operational identity, execution role, and selection/switch reason",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Ensure GUI inspectors can show requested/effective provider/account identity, requested/effective operational identity, execution role, and selection/switch reason"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "execution_role",
+        "operational_identity (kind/requested_ref/effective_ref/selection_reason/partial_capability)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L008053-L008200"
+      ],
+      "notes": [
+        "execution_role is not the same as run_kind; operational identity is not the same as provider account identity"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

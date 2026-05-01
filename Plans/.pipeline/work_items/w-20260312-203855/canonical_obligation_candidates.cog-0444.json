@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0444",
+  "represented_seed_ids": [
+    "seed-WAVE006-0086"
+  ],
+  "source_shard_ids": [
+    "shard-0059"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0086"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "All attention/CtA/search-result/usage-pivot activation surfaces in FinalGUISpec.md, UI_Command_Catalog.md, and Orchestrator_Page.md should route through the canonical route-target model, but currently each surface has its own activation sem",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "All attention/CtA/search-result/usage-pivot activation surfaces in FinalGUISpec.md, UI_Command_Catalog.md, and Orchestrator_Page.md should route through the canonical route-target model, but currently each surface has its own activation semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "## Cross-Surface Activation Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011675-L011690"
+      ],
+      "notes": [
+        "Cross-surface activation contract is needed: attention, CtA, search, usage-pivot, artifact Show-in-* all activate through route_target. Contracts_V0.md should own the canonical shape; FinalGUISpec.md / UI_Command_Catalog.md / Orchestrator_Page.md should reference it."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0086"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Create a cross-surface activation contract so all surfaces implement the same canonical route-target model for navigation and object focus",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Create a cross-surface activation contract so all surfaces implement the same canonical route-target model for navigation and object focus"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "## Cross-Surface Activation Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011675-L011690"
+      ],
+      "notes": [
+        "Cross-surface activation contract is needed: attention, CtA, search, usage-pivot, artifact Show-in-* all activate through route_target. Contracts_V0.md should own the canonical shape; FinalGUISpec.md / UI_Command_Catalog.md / Orchestrator_Page.md should reference it."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

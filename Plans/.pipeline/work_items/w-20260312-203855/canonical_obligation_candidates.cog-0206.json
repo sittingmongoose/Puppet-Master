@@ -1,0 +1,831 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0206",
+  "represented_seed_ids": [
+    "shard-0029-s002",
+    "seed-WAVE006-0013",
+    "seed-WAVE006-0038",
+    "shard-0083-s035"
+  ],
+  "source_shard_ids": [
+    "shard-0029",
+    "shard-0052",
+    "shard-0055",
+    "shard-0083"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "project_id",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "project_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "actor_run_kind?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "actor_run_kind?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "focused_run_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "focused_run_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "thread_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "thread_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "wizard_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "wizard_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "destination_surface",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "destination_surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "destination_tab?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "destination_tab?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "object_kind?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "object_kind?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "object_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "object_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "record_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "record_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "artifact_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "artifact_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "attempt_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "attempt_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "lane_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "lane_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "worktree_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "worktree_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "usage_event_ref?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "usage_event_ref?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "filter_payload?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "filter_payload?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "inspector_target?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "inspector_target?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "scroll_target?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "scroll_target?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-019",
+      "source_seed_ids": [
+        "shard-0029-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "canon_label": "focus_behavior?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "focus_behavior?"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Routing Payload Field Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005601"
+      ],
+      "notes": [
+        "Not every route uses every field; contract makes these composable rather than reinvented per surface"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-020",
+      "source_seed_ids": [
+        "seed-WAVE006-0013"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "UI_Wiring_Rules.md still lacks reverse coverage, stale/superseded ID states, dispatcher precondition fields, and projection-freshness/mutation gating hooks",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "UI_Wiring_Rules.md still lacks reverse coverage, stale/superseded ID states, dispatcher precondition fields, and projection-freshness/mutation gating hooks"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dispatcher Obligations",
+        "## Coverage Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010276-L010333"
+      ],
+      "notes": [
+        "Four missing structural elements: reverse coverage, stale/superseded ID states, dispatcher precondition fields, projection-freshness/mutation gating hooks"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-021",
+      "source_seed_ids": [
+        "seed-WAVE006-0013"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dispatcher Obligations",
+        "## Coverage Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010276-L010333"
+      ],
+      "notes": [
+        "Four missing structural elements: reverse coverage, stale/superseded ID states, dispatcher precondition fields, projection-freshness/mutation gating hooks"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-022",
+      "source_seed_ids": [
+        "seed-WAVE006-0038"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "UI_Wiring_Rules.md still lacks dispatcher-level obligations for allowed_action_ids[], stale-projection revalidation, and correlation_id trace-through",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "UI_Wiring_Rules.md still lacks dispatcher-level obligations for allowed_action_ids[], stale-projection revalidation, and correlation_id trace-through"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dispatcher Obligations",
+        "## Stale Projection Policy",
+        "## correlation_id"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010987-L010988"
+      ],
+      "notes": [
+        "UI_Wiring_Rules.md is missing three dispatcher-level obligations: (1) allowed_action_ids[] enforcement, (2) stale-projection revalidation handshake, (3) correlation_id trace-through into persisted dispatch/domain events"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-023",
+      "source_seed_ids": [
+        "seed-WAVE006-0038"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "deprecated-vs-canonical command-family status still cannot be represented in the catalog/matrix/gate contracts",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "deprecated-vs-canonical command-family status still cannot be represented in the catalog/matrix/gate contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dispatcher Obligations",
+        "## Stale Projection Policy",
+        "## correlation_id"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010987-L010988"
+      ],
+      "notes": [
+        "UI_Wiring_Rules.md is missing three dispatcher-level obligations: (1) allowed_action_ids[] enforcement, (2) stale-projection revalidation handshake, (3) correlation_id trace-through into persisted dispatch/domain events"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-024",
+      "source_seed_ids": [
+        "shard-0083-s035"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "`Plans/UI_Wiring_Rules.md`",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/UI_Wiring_Rules.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016455"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/UI_Wiring_Rules.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-025",
+      "source_seed_ids": [
+        "shard-0083-s035"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "Plans/UI_Wiring_Rules.md",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016455"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/UI_Wiring_Rules.md`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

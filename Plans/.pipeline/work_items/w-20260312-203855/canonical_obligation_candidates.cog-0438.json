@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0438",
+  "represented_seed_ids": [
+    "seed-WAVE006-0076"
+  ],
+  "source_shard_ids": [
+    "shard-0058"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0076"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "workflow_run_id vs run_id lineage conflict in Project_Output_Artifacts.md is confirmed again in the GPT-5.3-Codex synthesis",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "workflow_run_id vs run_id lineage conflict in Project_Output_Artifacts.md is confirmed again in the GPT-5.3-Codex synthesis"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## workflow_run_id",
+        "## run_id"
+      ],
+      "stale_residue_to_retire": [
+        "workflow_run_id"
+      ],
+      "canonical_replacement_hints": [
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011541-L011545"
+      ],
+      "notes": [
+        "GPT-5.3-Codex synthesis confirms workflow_run_id/run_id conflict. run_id is the canonical form (aligned with attempt_id/run/storage conventions); workflow_run_id should be tombstoned."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0076"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "This is a blocking naming conflict that must be resolved before any automated tooling can safely emit or consume these records",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "This is a blocking naming conflict that must be resolved before any automated tooling can safely emit or consume these records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## workflow_run_id",
+        "## run_id"
+      ],
+      "stale_residue_to_retire": [
+        "workflow_run_id"
+      ],
+      "canonical_replacement_hints": [
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011541-L011545"
+      ],
+      "notes": [
+        "GPT-5.3-Codex synthesis confirms workflow_run_id/run_id conflict. run_id is the canonical form (aligned with attempt_id/run/storage conventions); workflow_run_id should be tombstoned."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

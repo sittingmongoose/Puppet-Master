@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1004",
+  "coverage_row_ids_represented": [
+    "cov-006242",
+    "cov-006243",
+    "cov-006244",
+    "cov-006245",
+    "cov-006246",
+    "cov-006247",
+    "cov-006248",
+    "cov-006249",
+    "cov-006250",
+    "cov-006251"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1004; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006242",
+        "cov-006243",
+        "cov-006244",
+        "cov-006245",
+        "cov-006246",
+        "cov-006247",
+        "cov-006248",
+        "cov-006249",
+        "cov-006250",
+        "cov-006251"
+      ],
+      "source_obligation_ids": [
+        "obl-003145",
+        "obl-003146",
+        "obl-003147",
+        "obl-003148",
+        "obl-003149",
+        "obl-003150",
+        "obl-003151",
+        "obl-003152",
+        "obl-003153",
+        "obl-003154"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s064",
+        "shard-0087-s065",
+        "shard-0087-s066",
+        "shard-0087-s067",
+        "shard-0087-s068",
+        "shard-0087-s070",
+        "shard-0087-s071",
+        "shard-0088-s029",
+        "shard-0088-s030"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)",
+        "evidence/gate schemas that cannot yet structurally prove the richer routing/normalization behavior",
+        "cases where a doc implies a stronger shared contract should exist but does not clearly own it",
+        "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above.",
+        "Do **not** treat these as missing transfer:",
+        "`requested_account_id`, `requested_account_binding`, and `operational_identity` are not wholly absent from the current plan set.",
+        "requested_account_id",
+        "requested_account_binding",
+        "operational_identity",
+        "`account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missing transfer is the schema/detail layer."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1019",
+  "coverage_row_ids_represented": [
+    "cov-006416",
+    "cov-006417",
+    "cov-006418",
+    "cov-006419",
+    "cov-006420",
+    "cov-006421",
+    "cov-006422",
+    "cov-006423",
+    "cov-006424",
+    "cov-006425"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1019; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006416",
+        "cov-006417",
+        "cov-006418",
+        "cov-006419",
+        "cov-006420",
+        "cov-006421",
+        "cov-006422",
+        "cov-006423",
+        "cov-006424",
+        "cov-006425"
+      ],
+      "source_obligation_ids": [
+        "obl-003319",
+        "obl-003320",
+        "obl-003321",
+        "obl-003322",
+        "obl-003323",
+        "obl-003324",
+        "obl-003325",
+        "obl-003326",
+        "obl-003327",
+        "obl-003328"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s030",
+        "shard-0080-s051",
+        "shard-0080-s079",
+        "shard-0080-s082",
+        "shard-0080-s088",
+        "shard-0080-s097",
+        "shard-0080-s105",
+        "shard-0080-s106",
+        "shard-0082-s012",
+        "shard-0082-s105",
+        "shard-0083-s106"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0082",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "Primary stale consumer:",
+        "Primary stale owner/consumer hybrid:",
+        "Because this document is cross-cutting, its stale hostability rules can easily reintroduce drift into:",
+        "Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon.",
+        "after migration, the legacy key is deleted",
+        "preserve legacy backup",
+        "delete legacy key",
+        "Several docs now expose exact canon-breaking defects: missing anchors, unresolved command IDs, stale section references, naming-rule claims without backing canon, and storage/packaging authority splits.",
+        "The final pass confirms the broader second sweep reached diminishing returns only after the sixth model: the remaining signal is mostly exact structural canon breakage, stale owner-routing, and field/command/schema mismatches rather than broad new conceptual seams.",
+        "The middle of the file still preserves stale execution ontology:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

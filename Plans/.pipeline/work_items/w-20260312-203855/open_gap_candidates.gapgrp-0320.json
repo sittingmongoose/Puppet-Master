@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0320",
+  "coverage_row_ids_represented": [
+    "cov-005261",
+    "cov-007384",
+    "cov-007391",
+    "cov-007398",
+    "cov-007405",
+    "cov-007412",
+    "cov-007419",
+    "cov-007426",
+    "cov-007433"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0320; path=Plans/Multi-Account.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## SSE Concurrent-Client Contamination"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005261",
+        "cov-007384",
+        "cov-007391",
+        "cov-007398",
+        "cov-007405",
+        "cov-007412",
+        "cov-007419",
+        "cov-007426",
+        "cov-007433"
+      ],
+      "source_obligation_ids": [
+        "obl-002299",
+        "obl-004198",
+        "obl-004199",
+        "obl-004200",
+        "obl-004201",
+        "obl-004202",
+        "obl-004203",
+        "obl-004204",
+        "obl-004205"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0049",
+        "shard-0088-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0070",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

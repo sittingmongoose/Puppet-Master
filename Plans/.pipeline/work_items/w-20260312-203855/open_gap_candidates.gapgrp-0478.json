@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0478",
+  "coverage_row_ids_represented": [
+    "cov-003099",
+    "cov-003100",
+    "cov-003101",
+    "cov-003102",
+    "cov-003103",
+    "cov-003106",
+    "cov-003107",
+    "cov-003108",
+    "cov-003592",
+    "cov-003598"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0478; path=Plans/Prompt_Pipeline.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## Prompt Pipeline SSOT Fracture"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003099",
+        "cov-003100",
+        "cov-003101",
+        "cov-003102",
+        "cov-003103",
+        "cov-003106",
+        "cov-003107",
+        "cov-003108",
+        "cov-003592",
+        "cov-003598"
+      ],
+      "source_obligation_ids": [
+        "obl-001441",
+        "obl-001442",
+        "obl-001443",
+        "obl-001444",
+        "obl-001445",
+        "obl-001448",
+        "obl-001449",
+        "obl-001450",
+        "obl-001704",
+        "obl-001705"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0018",
+        "shard-0037-s004",
+        "shard-0037-s011",
+        "shard-0078-s042",
+        "shard-0084-s043",
+        "shard-0088-s044"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0043",
+        "shard-0078",
+        "shard-0084",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "later handoff sections then collapse the same record into a few ad-hoc summarization fields and do not reference the canonical record",
+        "this means the durable prompt-pipeline trace record loses fidelity on the handoff path where corroboration, resume, and audit most need it",
+        "Fix \u00a76.5 SSOT fracture in Prompt_Pipeline.md: handoff sections must normalize to the rich runtime record rather than collapsing it to ad-hoc summary fields",
+        "Add a normative rule: the durable prompt-pipeline trace record used in handoffs MUST include all fields from the pre-execution identity and runtime context snapshot",
+        "Remove or supersede any handoff summary fields that cause information loss",
+        "`Plans/Prompt_Pipeline.md` still uses tier-era scope in owner-level text:",
+        "`Plans/Prompt_Pipeline.md` already uses the stronger canonical runtime field names:",
+        "3. `Plans/Prompt_Pipeline.md`",
+        "Make storage-plan.md the owner of generic projection freshness/health projection fields",
+        "Contracts_V0.md should own cross-cutting persisted-envelope field families and stable event names"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

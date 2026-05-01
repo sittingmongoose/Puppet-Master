@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0397",
+  "coverage_row_ids_represented": [
+    "cov-001470",
+    "cov-001471",
+    "cov-001472",
+    "cov-001473",
+    "cov-001474",
+    "cov-001475",
+    "cov-001476",
+    "cov-001477",
+    "cov-001478",
+    "cov-001479"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0397; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001470",
+        "cov-001471",
+        "cov-001472",
+        "cov-001473",
+        "cov-001474",
+        "cov-001475",
+        "cov-001476",
+        "cov-001477",
+        "cov-001478",
+        "cov-001479"
+      ],
+      "source_obligation_ids": [
+        "obl-000658",
+        "obl-000659",
+        "obl-000660",
+        "obl-000661",
+        "obl-000662",
+        "obl-000663",
+        "obl-000664",
+        "obl-000665",
+        "obl-000666",
+        "obl-000667"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s015",
+        "shard-0090-s121",
+        "shard-0091-s052",
+        "shard-0091-s070",
+        "shard-0091-s071",
+        "shard-0091-s103",
+        "shard-0091-s104"
+      ],
+      "source_shard_ids": [
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Orchestrator_Page.md:439-446`",
+        "Plans/Orchestrator_Page.md:439-446",
+        "`Plans/Orchestrator_Page.md:200-209`",
+        "Plans/Orchestrator_Page.md:200-209",
+        "`Plans/Orchestrator_Page.md:1-150`",
+        "Plans/Orchestrator_Page.md:1-150",
+        "`Plans/Orchestrator_Page.md:171-171`",
+        "Plans/Orchestrator_Page.md:171-171",
+        "`Plans/Orchestrator_Page.md:209-209`",
+        "Plans/Orchestrator_Page.md:209-209"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

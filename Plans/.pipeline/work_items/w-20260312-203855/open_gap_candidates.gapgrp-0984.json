@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0984",
+  "coverage_row_ids_represented": [
+    "cov-006042",
+    "cov-006043",
+    "cov-006044",
+    "cov-006045",
+    "cov-006046",
+    "cov-006047",
+    "cov-006048",
+    "cov-006049",
+    "cov-006050",
+    "cov-006051"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0984; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006042",
+        "cov-006043",
+        "cov-006044",
+        "cov-006045",
+        "cov-006046",
+        "cov-006047",
+        "cov-006048",
+        "cov-006049",
+        "cov-006050",
+        "cov-006051"
+      ],
+      "source_obligation_ids": [
+        "obl-002945",
+        "obl-002946",
+        "obl-002947",
+        "obl-002948",
+        "obl-002949",
+        "obl-002950",
+        "obl-002951",
+        "obl-002952",
+        "obl-002953",
+        "obl-002954"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s006",
+        "shard-0084-s011",
+        "shard-0084-s013",
+        "shard-0084-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "`scheduler_pass_record`",
+        "scheduler_pass_record",
+        "`hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, `hitl.cancelled` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`",
+        "hitl.approved",
+        "hitl.rejected",
+        "hitl.cancelled",
+        "`usage_record` keyed by `run_id`, `tier_id`, `attempt_id?`, `usage_sequence`",
+        "usage_sequence",
+        "`evidence_record` keyed by `run_id`, `tier_id`, `evidence_id`",
+        "evidence_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0182",
+  "coverage_row_ids_represented": [
+    "cov-004228",
+    "cov-004229",
+    "cov-004230",
+    "cov-004296",
+    "cov-004299",
+    "cov-005183",
+    "cov-005190",
+    "cov-005197",
+    "cov-005204",
+    "cov-005211"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0182; path=Plans/FileManager.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "## Open Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004228",
+        "cov-004229",
+        "cov-004230",
+        "cov-004296",
+        "cov-004299",
+        "cov-005183",
+        "cov-005190",
+        "cov-005197",
+        "cov-005204",
+        "cov-005211"
+      ],
+      "source_obligation_ids": [
+        "obl-002008",
+        "obl-002009",
+        "obl-002010",
+        "obl-002046",
+        "obl-002047",
+        "obl-002285",
+        "obl-002286",
+        "obl-002287",
+        "obl-002288",
+        "obl-002289"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0029",
+        "seed-WAVE006-0040",
+        "seed-WAVE007-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0054",
+        "shard-0055",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "FileManager.md still states one canonical open contract: OpenFile { path: PathBuf, line?, range?, target_group? } \u2014 but its later addenda already require a second category of opens",
+        "Split FileManager's canonical open contract into: workspace path open, identity-native subject open",
+        "Reuse the preview subject identity pattern (doc: / artifact:) as the base instead of inventing a separate parallel scheme",
+        "project_id is no longer just a nice-to-have lineage field; its omission now clearly blocks deterministic projector partitioning, replay, and per-project artifact/search indexing",
+        "Promote project_id, attempt_id, generated/runtime identity routing, and artifact/evidence join fields to first-class owners in the artifact/file/storage docs",
+        "Use `subject_id` only when the target is canonical renderable/openable content.",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects.",
+        "The canonical `subject_id` families remain: `doc:<document_id>`; `artifact:<artifact_id>`",
+        "Everything else routes through `object_kind` + `object_id`.",
+        "Put the classification rule directly in `Contracts_V0.md`."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "OpenSubject { subject_id, target_group?, open_mode?, location? }"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

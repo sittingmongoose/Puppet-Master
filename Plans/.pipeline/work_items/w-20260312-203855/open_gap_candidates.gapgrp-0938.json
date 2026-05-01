@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0938",
+  "coverage_row_ids_represented": [
+    "cov-005582",
+    "cov-005583",
+    "cov-005584",
+    "cov-005585",
+    "cov-005586",
+    "cov-005587",
+    "cov-005588",
+    "cov-005589",
+    "cov-005590",
+    "cov-005591"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0938; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005582",
+        "cov-005583",
+        "cov-005584",
+        "cov-005585",
+        "cov-005586",
+        "cov-005587",
+        "cov-005588",
+        "cov-005589",
+        "cov-005590",
+        "cov-005591"
+      ],
+      "source_obligation_ids": [
+        "obl-002485",
+        "obl-002486",
+        "obl-002487",
+        "obl-002488",
+        "obl-002489",
+        "obl-002490",
+        "obl-002491",
+        "obl-002492",
+        "obl-002493",
+        "obl-002494"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s047",
+        "shard-0077-s048",
+        "shard-0077-s049",
+        "shard-0077-s050",
+        "shard-0077-s053",
+        "shard-0077-s066",
+        "shard-0077-s067",
+        "shard-0077-s068",
+        "shard-0077-s070",
+        "shard-0077-s071",
+        "shard-0078-s119",
+        "shard-0078-s134",
+        "shard-0078-s141",
+        "shard-0079-s013",
+        "shard-0079-s049"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079"
+      ],
+      "exact_missing_items": [
+        "human-in-the-loop.md",
+        "Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass",
+        "The remaining work on this research branch is now dominated by cleanup of overlapping canon, not missing concepts.",
+        "owner docs already contain stronger rewrite-era addenda",
+        "Highest-priority owner cleanup set",
+        "owner-doc supersession cleanup",
+        "route/open contracts missing by name",
+        "HITL request-era and blocked/runtime-era canon still coexisting",
+        "graph and Orchestrator command payloads",
+        "tier-keyed usage/evidence correlation"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

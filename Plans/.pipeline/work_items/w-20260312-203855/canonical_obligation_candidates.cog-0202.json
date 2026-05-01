@@ -1,0 +1,499 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0202",
+  "represented_seed_ids": [
+    "shard-0027-s007",
+    "seed-WAVE005-0045"
+  ],
+  "source_shard_ids": [
+    "shard-0027",
+    "shard-0047"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "export_id",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "export_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "export_kind",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "export_kind"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "schema_version",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "schema_version"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "project_id",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "project_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "focused_run_id?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "focused_run_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "source_surface",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "source_surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "generated_at_utc",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "generated_at_utc"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "filter_summary?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "filter_summary?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "included_record_ids[]",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "included_record_ids[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "included_artifact_ids[]",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "included_artifact_ids[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "included_file_paths[]?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "included_file_paths[]?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "lineage_notes?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "lineage_notes?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0027-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "canon_label": "trust_state_at_export?",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "trust_state_at_export?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bundle Export Manifest Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005201"
+      ],
+      "notes": [
+        "trust_state_at_export is important because stale/degraded projections may affect export accuracy"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "seed-WAVE005-0045"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Orchestrator_Page.md currently advertises a missing UICommand IDs section \u2014 that is a spec-integrity problem, not only a content gap",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Orchestrator_Page.md currently advertises a missing UICommand IDs section \u2014 that is a spec-integrity problem, not only a content gap"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## UICommand IDs"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L009248-L009400"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "seed-WAVE005-0045"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Orchestrator_Page.md TOC advertises a missing UICommand IDs section",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Orchestrator_Page.md TOC advertises a missing UICommand IDs section"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## UICommand IDs"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L009248-L009400"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

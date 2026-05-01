@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0988",
+  "coverage_row_ids_represented": [
+    "cov-006082",
+    "cov-006083",
+    "cov-006084",
+    "cov-006085",
+    "cov-006086",
+    "cov-006087",
+    "cov-006088",
+    "cov-006089",
+    "cov-006090",
+    "cov-006091"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0988; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006082",
+        "cov-006083",
+        "cov-006084",
+        "cov-006085",
+        "cov-006086",
+        "cov-006087",
+        "cov-006088",
+        "cov-006089",
+        "cov-006090",
+        "cov-006091"
+      ],
+      "source_obligation_ids": [
+        "obl-002985",
+        "obl-002986",
+        "obl-002987",
+        "obl-002988",
+        "obl-002989",
+        "obl-002990",
+        "obl-002991",
+        "obl-002992",
+        "obl-002993",
+        "obl-002994"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s057",
+        "shard-0084-s058",
+        "shard-0084-s059",
+        "shard-0084-s060",
+        "shard-0084-s061",
+        "shard-0084-s062",
+        "shard-0084-s071",
+        "shard-0084-s072",
+        "shard-0084-s074"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "operational identity / side-effect target identity",
+        "requested concrete account binding fields",
+        "The addenda already move toward attempt-native handoff identity:",
+        "`run_id`, `node_id`, `attempt_id`",
+        "`scheduler_pass_id`",
+        "scheduler_pass_id",
+        "That means the main owner gap is no longer field names first. It is scope and owner identity.",
+        "The handoff addenda already assume attempt-native execution identity, but the core narrative still teaches tier-centric scope resolution.",
+        "The runtime identity model across the rewrite now needs more than Persona/model/account disclosure. It also needs execution-role and operational-identity disclosure, and this owner doc has not caught up yet.",
+        "demote `tier` wording to compatibility or derived decomposition context"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

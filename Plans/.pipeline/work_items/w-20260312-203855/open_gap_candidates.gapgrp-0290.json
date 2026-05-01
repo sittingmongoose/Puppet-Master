@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0290",
+  "coverage_row_ids_represented": [
+    "cov-001516",
+    "cov-001520",
+    "cov-001524",
+    "cov-001551",
+    "cov-001554",
+    "cov-001557",
+    "cov-001560",
+    "cov-001561",
+    "cov-001564",
+    "cov-001567"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0290; path=Plans/Glossary.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Record Semantic Vocabulary"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001516",
+        "cov-001520",
+        "cov-001524",
+        "cov-001551",
+        "cov-001554",
+        "cov-001557",
+        "cov-001560",
+        "cov-001561",
+        "cov-001564",
+        "cov-001567"
+      ],
+      "source_obligation_ids": [
+        "obl-000686",
+        "obl-000687",
+        "obl-000688",
+        "obl-000697",
+        "obl-000698",
+        "obl-000699",
+        "obl-000700",
+        "obl-000701",
+        "obl-000702",
+        "obl-000703"
+      ],
+      "source_seed_ids": [
+        "shard-0014-s005",
+        "shard-0014-s007",
+        "shard-0029-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0014",
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "reopened: an object previously treated as settled/completed became active again",
+        "archived: hidden from default operational surfaces but retained and queryable",
+        "removed: live backing object is gone, but history may remain",
+        "Define a shared record-semantic vocabulary applied across: attempts, promotions, concerns, graph patches, recovery records, lane/worktree objects",
+        "Add explicit successor/predecessor links where superseded is possible",
+        "Keep visibility policy (archived, hidden from default lists) separate from semantic state (historical, revoked, superseded)",
+        "Ensure exact-record surfaces expose why a record is no longer current rather than simply dimming it",
+        "historical: queryable past object/state that is no longer the currently active focus",
+        "stale_historical: historical and explicitly not resumable/reusable for live execution",
+        "superseded: replaced by a newer canonical successor in the same lineage"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0049",
+  "coverage_row_ids_represented": [
+    "cov-000554",
+    "cov-000556",
+    "cov-000558",
+    "cov-000560",
+    "cov-000562",
+    "cov-000564",
+    "cov-000566",
+    "cov-000568",
+    "cov-000570",
+    "cov-000572"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0049; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Concern Fields"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000554",
+        "cov-000556",
+        "cov-000558",
+        "cov-000560",
+        "cov-000562",
+        "cov-000564",
+        "cov-000566",
+        "cov-000568",
+        "cov-000570",
+        "cov-000572"
+      ],
+      "source_obligation_ids": [
+        "obl-000233",
+        "obl-000234",
+        "obl-000235",
+        "obl-000236",
+        "obl-000237",
+        "obl-000238",
+        "obl-000239",
+        "obl-000240",
+        "obl-000241",
+        "obl-000242"
+      ],
+      "source_seed_ids": [
+        "shard-0015-s002",
+        "shard-0016-s001",
+        "shard-0016-s002",
+        "shard-0016-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Attention fields: visibility_level, attention_level, chatworthy, blocking_effect?",
+        "Concern categories: wiring, workflow, state_contract, gui_alignment, design_architecture, quality, evidence_gap, corroboration, recovery, account_usage_pressure, projection_trust",
+        "severity should stay independent from blocking semantics: severity answers how bad is it; blocking_effect answers what does it prevent",
+        "Concern lifecycle: active, acknowledged, resolved, dismissed",
+        "acknowledged: user/operator has seen and accepted the concern as still real but not requiring immediate noise",
+        "dismissed: concern presentation was intentionally hidden/rejected; should require rationale when it disagrees with corroborated/high-severity evidence",
+        "resolved: underlying truth changed; should record resolution_kind",
+        "resolution_kind values: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery",
+        "Add a canonical concern record family and corresponding projection contract",
+        "Add explicit concern lineage fields for merge/split/supersession"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0433",
+  "coverage_row_ids_represented": [
+    "cov-003519",
+    "cov-003521",
+    "cov-003523",
+    "cov-003525"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0433; path=Plans/Permissions_System.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003519",
+        "cov-003521",
+        "cov-003523",
+        "cov-003525"
+      ],
+      "source_obligation_ids": [
+        "obl-001679",
+        "obl-001680",
+        "obl-001681",
+        "obl-001682"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "exact_missing_items": [
+        "human-in-the-loop.md still needs actor/lane/account identity, approval provenance, and concurrency-safe queue/scope rules",
+        "HITL requests/resolutions still carry no actor/lane/account identity strong enough to answer who asked, who approved, and under which effective runtime identity",
+        "Add actor/lane/account identity and approver provenance to HITL request/resolution events",
+        "Define an Approval Scope Key and use it consistently across permissions, HITL, doom-loop, and session approval caching"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Approval Scope Key"
+      ],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0277",
+  "coverage_row_ids_represented": [
+    "cov-001309",
+    "cov-001312",
+    "cov-001315",
+    "cov-002518",
+    "cov-002520",
+    "cov-002522",
+    "cov-002524",
+    "cov-002526",
+    "cov-002528"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0277; path=Plans/GitHub_Integration.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Worktree Ownership"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001309",
+        "cov-001312",
+        "cov-001315",
+        "cov-002518",
+        "cov-002520",
+        "cov-002522",
+        "cov-002524",
+        "cov-002526",
+        "cov-002528"
+      ],
+      "source_obligation_ids": [
+        "obl-000558",
+        "obl-000559",
+        "obl-000560",
+        "obl-001226",
+        "obl-001227",
+        "obl-001228",
+        "obl-001229",
+        "obl-001230",
+        "obl-001231"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s015",
+        "shard-0032-s014",
+        "shard-0034-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0032",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "WorktreeGitImprovement.md still frames ownership around tier / subtask rather than package lane pools",
+        "Orchestrator_Page.md still references Tiers and per-tier worktree ownership",
+        "GitHub_Integration.md Worktrees subview still centers raw worktree rows rather than lane-backed operational identity",
+        "GitHub auth still keys by login",
+        "canonical contracts want stable internal account_id",
+        "username rename risk is now a concrete contract inconsistency, not just a theoretical identity concern",
+        "GitHub_API_Auth_and_Flows.md still keys credential identity by mutable login",
+        "GitHub_Integration.md still lacks effective-account / switch-reason display and requested-vs-effective admin-capability UX",
+        "Repair GitHub account identity handling end-to-end: replace login-keyed durable identity with stable internal account_id; add effective-account / switch-reason display; define requested-vs-effective admin capability UI and blocked-state behavior"
+      ],
+      "stale_tokens": [
+        "tier-based worktree ownership",
+        "subtask worktree ownership",
+        "per-tier worktree",
+        "login"
+      ],
+      "canonical_replacement_hints": [
+        "owner run/package/lane",
+        "lane-backed operational identity"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

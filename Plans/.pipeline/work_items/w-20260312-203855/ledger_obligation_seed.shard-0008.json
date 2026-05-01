@@ -1,210 +1,508 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0008",
-  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0008-L001401-L001600.md",
-  "source_line_range": "L001401-L001600",
   "seed_candidates": [
     {
-      "seed_type": "owner",
-      "canon_label_hint": "runtime schema anchors",
+      "seed_id": "shard-0008-s001",
+      "seed_type": "stale_token_replacement",
       "exact_items": [
-        "Relax or replace stale graph-schema constants `selection_rule` and tier-rooted breadcrumbs.",
-        "Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.",
-        "Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts."
+        "Blocked payload normalization: 'reason_code' / 'recovery_options[]' vs 'blocked_reason_code' / 'allowed_action_ids[]' are both active in docs \u2014 one canonical form must be chosen"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/plan_graph.schema.json",
-        "Plans/project_plan_node.schema.json",
-        "Plans/project_plan_graph_index.schema.json"
+        "Plans/UI_Command_Catalog.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
       "heading_hints": [
-        "Cleanup Priorities",
-        "Contradictions To Resolve",
-        "Runtime / Storage / Contract Impacts"
+        "## Blocked Payload Normalization"
       ],
       "stale_tokens": [
-        "selection_rule",
-        "tier-rooted breadcrumbs",
         "reason_code",
-        "recovery_options[]",
-        "single Overseer",
-        "one worktree"
+        "recovery_options[]"
       ],
+      "canonical_replacement_hints": [
+        "Use 'blocked_reason_code' and 'allowed_action_ids[]' as canonical field names"
+      ],
+      "canonical_replacement_status": "known",
       "source_shard_id": "shard-0008",
       "source_evidence": [
-        "working_ledger.md:L001404-L001410",
-        "working_ledger.md:L001424-L001429",
-        "working_ledger.md:L001483-L001490"
+        "working_ledger.md:L001401-L001430"
       ],
-      "notes": [
-        "Schema drift: missing canonical fields, legacy blocked-payload names, and explicit safe-point/contamination linkage required."
-      ]
+      "notes": []
     },
     {
+      "seed_id": "shard-0008-s002",
       "seed_type": "owner",
-      "canon_label_hint": "ownership glossary/crosswalk",
       "exact_items": [
-        "Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
-        "Clarify which docs own execution truth vs projections vs UI-only overlays."
+        "Docker auth is the best existing example of a requested/effective auth pattern \u2014 this pattern should be extracted and generalized as the canonical requested/effective auth model"
       ],
       "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Requested/Effective Auth Pattern"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001425-L001450"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s003",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Contradiction: automation-first design principle conflicts with 'regular'/HTE-by-default in Run_Modes.md \u2014 Run_Modes.md must be updated to reflect automation-first as the default"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Automation-First vs HTE Default Contradiction"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001445-L001470"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Sonnet cleanup priorities: P1 = lock runtime schema anchors (add package/seam/lane/worktree/account identity + contamination/safe-point linkage); P2 = extend Glossary/Crosswalk/Decision_Policy; P3 = rebuild UI contracts around packages/seams/lanes; P4 = consolidate addenda"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
         "Plans/Glossary.md",
-        "Plans/Crosswalk.md",
-        "Plans/Decision_Policy.md",
-        "Plans/00-plans-index.md"
+        "Plans/Decision_Policy.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Cleanup Priorities",
-        "Settings / Provider / Persona / Account Impacts"
+        "## Schema Anchor Cleanup Priorities"
       ],
-      "stale_tokens": [
-        "tier-centric ownership",
-        "projection-only overlay",
-        "execution truth vs projections"
-      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
       "source_shard_id": "shard-0008",
       "source_evidence": [
-        "working_ledger.md:L001410-L001412",
-        "working_ledger.md:L001494-L001498"
+        "working_ledger.md:L001460-L001490"
       ],
-      "notes": [
-        "Docs need explicit SSOT boundaries and first-class owners for new concepts."
-      ]
+      "notes": []
     },
     {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "graph-native attention routing",
+      "seed_id": "shard-0008-s005",
+      "seed_type": "stale_token_replacement",
       "exact_items": [
-        "Replace or demote tiers-first widgets and layouts.",
-        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
-        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+        "GPT-5.2: old tier-era contracts AND newer node/safe-point addenda are both marked canonical simultaneously \u2014 only the node/safe-point model is canonical; tier-era content must be superseded"
       ],
       "affected_doc_hints": [
-        "Plans/Run_Graph_View.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/Widget_System.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Orchestrator_Page.md"
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
       "heading_hints": [
-        "Cleanup Priorities",
-        "GUI / UX Impacts",
-        "Suggested Research Follow-Ups"
+        "## Tier-Era vs Node/Safe-Point Contradiction"
       ],
       "stale_tokens": [
-        "tiers-first",
-        "phase-grouped layouts",
-        "single current task",
-        "single worktree",
-        "prose-only references"
+        "tier_runtime_record",
+        "tier_id"
       ],
+      "canonical_replacement_hints": [
+        "Remove tier-era canonical markers; elevate node/safe-point model"
+      ],
+      "canonical_replacement_status": "known",
       "source_shard_id": "shard-0008",
       "source_evidence": [
-        "working_ledger.md:L001413-L001417",
-        "working_ledger.md:L001475-L001479",
-        "working_ledger.md:L001531-L001534"
+        "working_ledger.md:L001480-L001510"
       ],
-      "notes": [
-        "UI contracts still encode tier hierarchy and singular context instead of canonical runtime objects."
-      ]
+      "notes": []
     },
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "blocked-state normalization",
+      "seed_id": "shard-0008-s006",
+      "seed_type": "layout_blocker",
       "exact_items": [
-        "Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
-        "Normalize safe-point / restore-point / rollback / contamination terminology into one authoritative mapping and event taxonomy."
+        "Base provider envelope/spec schemas omit node/attempt/safe-point fields \u2014 these must be added to make provider envelopes node-aware"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Provider Envelope Node Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001500-L001525"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s007",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "Acceptance/evidence/coverage schemas cannot express work-package/seam/promotion/account/lane identity \u2014 these schema families must be extended"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Acceptance/Evidence Schema Extensions"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001515-L001540"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s008",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "Runtime identity snapshots stop too early \u2014 requested/effective persona/platform/model exist but requested/effective account and execution identity do not; these must be added"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Runtime Identity Snapshot Completeness"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001530-L001555"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s009",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "package, seam, and work-package are 'schema ghosts' \u2014 they are assumed conceptually but absent from core schemas/receipts/event families; they must be made concrete"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/plan_graph.schema.json"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Package/Seam Schema Ghost Problem"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001545-L001570"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s010",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "Plans/newtools.md, FileSafe.md, WorktreeGitImprovement.md, and MiscPlan.md all use per-subtask worktrees, project-root artifact paths, visible-mode-first, and weak contamination language \u2014 all must be updated"
       ],
       "affected_doc_hints": [
         "Plans/newtools.md",
         "Plans/FileSafe.md",
         "Plans/WorktreeGitImprovement.md",
-        "Plans/MiscPlan.md",
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
+        "Plans/MiscPlan.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Cleanup Priorities",
-        "Runtime / Storage / Contract Impacts",
-        "Worktree / SCM / Parallelism Impacts"
+        "## Multi-Doc Stale Worktree Language"
       ],
       "stale_tokens": [
-        "reason_code",
-        "recovery_options[]",
-        "safe-point",
-        "restore-point",
-        "rollback",
-        "contamination",
-        "older singular worktree assumptions"
+        "per-subtask worktrees",
+        "Phase/Task/Subtask/Iteration"
       ],
+      "canonical_replacement_hints": [
+        "Replace with package-based lane pool model; strengthen contamination language"
+      ],
+      "canonical_replacement_status": "known",
       "source_shard_id": "shard-0008",
       "source_evidence": [
-        "working_ledger.md:L001418-L001420",
-        "working_ledger.md:L001487-L001490",
-        "working_ledger.md:L001502-L001506"
+        "working_ledger.md:L001560-L001585"
       ],
-      "notes": [
-        "Requires retirement mapping plus explicit blocked-state contract alignment across storage/runtime/policy/UI."
-      ]
+      "notes": []
     },
     {
-      "seed_type": "owner",
-      "canon_label_hint": "package/seam/lane object model",
+      "seed_id": "shard-0008-s011",
+      "seed_type": "layout_blocker",
       "exact_items": [
-        "Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.",
-        "Unify requested vs effective execution identity to include account, lane/worktree, and overseer class.",
-        "Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility."
+        "PM-owned SCM state is not fully visible: managed template repos, active git operations, live-run artifact roots, and worktree recovery state need Orchestrator/SCM registration"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## PM-Owned SCM State Visibility"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001575-L001595"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "Cleanup and restore semantics must be lane-aware; contamination scope and safe-point prerequisites are underspecified and must be resolved"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Lane-Aware Restore Semantics"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001585-L001600"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s013",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "AttemptJournal and handoff payloads remain subtask/iteration-shaped \u2014 must be updated to attempt record shape with package/seam/lane fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## AttemptJournal Shape Update"
+      ],
+      "stale_tokens": [
+        "AttemptJournal"
+      ],
+      "canonical_replacement_hints": [
+        "Replace subtask/iteration shape with attempt record containing package_id/seam_id/lane_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001401-L001430"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s014",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Field name drift: allowed_actions vs allowed_action_ids[] / blocked_reason vs blocked_reason_code \u2014 these must be normalized to blocked_reason_code / allowed_action_ids[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Blocked Payload Field Normalization"
+      ],
+      "stale_tokens": [
+        "allowed_actions",
+        "blocked_reason"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'blocked_reason_code' and 'allowed_action_ids[]' canonically"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001425-L001455"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s015",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "tier_runtime_record and tier_id-based usage rollups are still present in storage schema \u2014 must be replaced with attempt/package/seam records"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
-        "Plans/plan_graph.schema.json",
-        "Plans/project_plan_node.schema.json",
-        "Plans/project_plan_graph_index.schema.json",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Multi-Account.md"
+        "Plans/Contracts_V0.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Suggested Research Follow-Ups",
-        "Highest-Impact Docs",
-        "Worktree / SCM / Parallelism Impacts"
+        "## tier_runtime_record Retirement"
       ],
       "stale_tokens": [
-        "requested/effective persona/model only",
-        "one active worktree",
-        "branch-per-run",
-        "subtask-per-worktree"
+        "tier_runtime_record",
+        "tier_id"
       ],
+      "canonical_replacement_hints": [
+        "Replace with attempt_record, package_record, seam_record; use package_id/seam_id for rollups"
+      ],
+      "canonical_replacement_status": "known",
       "source_shard_id": "shard-0008",
       "source_evidence": [
-        "working_ledger.md:L001433-L001437",
-        "working_ledger.md:L001502-L001506",
-        "working_ledger.md:L001537-L001543"
+        "working_ledger.md:L001445-L001470"
       ],
-      "notes": [
-        "Need canonical persisted-vs-projection split and carry-through of ownership/identity into SCM lane pools."
-      ]
-    }
-  ],
-  "noise_items": [
+      "notes": []
+    },
     {
-      "source_evidence": [
-        "working_ledger.md:L1401-L1600"
+      "seed_id": "shard-0008-s016",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "plan-node shards and project-local JSON sidecars still act as mutable runtime sources \u2014 plan structure and mutable runtime state must be separated"
       ],
-      "reason": "High-level sweep framing, pure impact-count/priority language, and repeated contradiction-map restatements."
-    }
-  ],
-  "uncertain_items": [
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Plan vs Runtime State Separation"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001460-L001490"
+      ],
+      "notes": []
+    },
     {
-      "source_evidence": [
-        "working_ledger.md:L1401-L1600"
+      "seed_id": "shard-0008-s017",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Field name drift: 'requested_persona_id' is used in some docs while 'requested_persona' is the canonical field name defined in Contracts_V0.md"
       ],
-      "reason": "Exact file-line mapping for downstream docs and whether selection_rule is the only stale graph constant remain implied."
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Persona Field Name Drift"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'requested_persona' and 'effective_persona' as canonical field names"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001490-L001515"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0008-s018",
+      "seed_type": "owner",
+      "exact_items": [
+        "Restore language is dangerously overloaded across docs: 'rollback', 'checkpoint', 'revert', 'safe-point-aware retry', and 'start fresh attempt' are used interchangeably \u2014 one canonical vocabulary must be chosen"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Restore/Rollback Vocabulary Overload"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001530-L001560"
+      ],
+      "notes": []
     }
   ],
-  "covered_shard_id": "shard-0008"
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
 }

@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0066",
+  "coverage_row_ids_represented": [
+    "cov-002036",
+    "cov-002039",
+    "cov-002040",
+    "cov-002041",
+    "cov-002042",
+    "cov-002043",
+    "cov-002044",
+    "cov-002045",
+    "cov-002046",
+    "cov-002047"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0066; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002036",
+        "cov-002039",
+        "cov-002040",
+        "cov-002041",
+        "cov-002042",
+        "cov-002043",
+        "cov-002044",
+        "cov-002045",
+        "cov-002046",
+        "cov-002047"
+      ],
+      "source_obligation_ids": [
+        "obl-000995",
+        "obl-000998",
+        "obl-000999",
+        "obl-001000",
+        "obl-001001",
+        "obl-001002",
+        "obl-001003",
+        "obl-001004",
+        "obl-001005",
+        "obl-001006"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s069",
+        "shard-0088-s042",
+        "shard-0088-s085",
+        "shard-0088-s101",
+        "shard-0089-s037",
+        "shard-0089-s058",
+        "shard-0089-s101",
+        "shard-0090-s001",
+        "shard-0090-s012",
+        "shard-0090-s013",
+        "shard-0090-s069"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "target_kind",
+        "1. `Plans/Contracts_V0.md`",
+        "`Plans/Contracts_V0.md:778-806`",
+        "Plans/Contracts_V0.md:778-806",
+        "`Plans/Contracts_V0.md` already carries `report_ref` in the blocked-episode contract.",
+        "report_ref",
+        "`Plans/Contracts_V0.md:684-692`",
+        "Plans/Contracts_V0.md:684-692",
+        "`Plans/Contracts_V0.md:1218-1229`",
+        "Plans/Contracts_V0.md:1218-1229"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

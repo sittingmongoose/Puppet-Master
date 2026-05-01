@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0883",
+  "coverage_row_ids_represented": [
+    "cov-006472",
+    "cov-006473",
+    "cov-006474",
+    "cov-006475",
+    "cov-006476",
+    "cov-006477",
+    "cov-006478",
+    "cov-006479",
+    "cov-006480",
+    "cov-006481"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0883; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006472",
+        "cov-006473",
+        "cov-006474",
+        "cov-006475",
+        "cov-006476",
+        "cov-006477",
+        "cov-006478",
+        "cov-006479",
+        "cov-006480",
+        "cov-006481"
+      ],
+      "source_obligation_ids": [
+        "obl-003375",
+        "obl-003376",
+        "obl-003377",
+        "obl-003378",
+        "obl-003379",
+        "obl-003380",
+        "obl-003381",
+        "obl-003382",
+        "obl-003383",
+        "obl-003384"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s052",
+        "shard-0077-s113",
+        "shard-0077-s114",
+        "shard-0077-s116",
+        "shard-0078-s027",
+        "shard-0078-s028",
+        "shard-0078-s030",
+        "shard-0078-s031"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078"
+      ],
+      "exact_missing_items": [
+        "consumer docs mirror whichever era they happened to read first",
+        "This means the branch is past the point where isolated consumer cleanup would be reliable.",
+        "Keep the current research thread focused on owner cleanup and exact consumer drift that directly depends on those owners.",
+        "Research Progress - 2026-03-17 - Runtime identity field names still drift in worker and verifier consumers",
+        "Consumer docs are still asking for provider/model shorthand where the rewrite now expects requested/effective identity disclosure.",
+        "`requested_persona_id` and `effective_persona_id` are still being named in consumer docs even though the owner contract already disallows them as canonical fields.",
+        "requested_persona_id",
+        "effective_persona_id",
+        "Reconcile worker/verifier identity consumers to the canonical requested/effective field set.",
+        "Keep any graph-local display structs derived from the canonical runtime snapshot rather than naming parallel canonical fields."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

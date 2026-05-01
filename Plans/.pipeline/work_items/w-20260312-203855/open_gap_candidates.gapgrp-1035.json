@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1035",
+  "coverage_row_ids_represented": [
+    "cov-008117",
+    "cov-008118",
+    "cov-008119",
+    "cov-008120"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1035; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-008117",
+        "cov-008118",
+        "cov-008119",
+        "cov-008120"
+      ],
+      "source_obligation_ids": [
+        "obl-004472",
+        "obl-004473",
+        "obl-004474",
+        "obl-004475"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "execution_unit_context",
+        "detached_window",
+        "result_id",
+        "blocked_notice"
+      ],
+      "stale_tokens": [
+        "5.1B",
+        "blocked_notice",
+        "detached_window",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "result_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

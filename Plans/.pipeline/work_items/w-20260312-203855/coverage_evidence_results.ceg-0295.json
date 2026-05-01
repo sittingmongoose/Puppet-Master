@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0295",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-001769",
+      "source_obligation_ids": [
+        "obl-000790"
+      ],
+      "source_seed_ids": [
+        "shard-0021-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001770",
+      "source_obligation_ids": [
+        "obl-000791"
+      ],
+      "source_seed_ids": [
+        "shard-0021-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001771",
+      "source_obligation_ids": [
+        "obl-000792"
+      ],
+      "source_seed_ids": [
+        "shard-0021-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001772",
+      "source_obligation_ids": [
+        "obl-000793"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:insufficient_evidence_signal"
+      ]
+    },
+    {
+      "coverage_id": "cov-001773",
+      "source_obligation_ids": [
+        "obl-000794"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001774",
+      "source_obligation_ids": [
+        "obl-000795"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:insufficient_evidence_signal"
+      ]
+    },
+    {
+      "coverage_id": "cov-001775",
+      "source_obligation_ids": [
+        "obl-000796"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:insufficient_evidence_signal"
+      ]
+    },
+    {
+      "coverage_id": "cov-001776",
+      "source_obligation_ids": [
+        "obl-000797"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001777",
+      "source_obligation_ids": [
+        "obl-000798"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001778",
+      "source_obligation_ids": [
+        "obl-000799"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Glossary.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

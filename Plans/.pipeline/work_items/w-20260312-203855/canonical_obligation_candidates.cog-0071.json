@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0071",
+  "represented_seed_ids": [
+    "shard-0007-s010"
+  ],
+  "source_shard_ids": [
+    "shard-0007"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0007-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Widget_System.md: widget.tier_tree and widget.progress_bars are load-bearing but have no package/seam/lane-aware equivalents \u2014 these must be designed",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Plans/Widget_System.md: widget.tier_tree and widget.progress_bars are load-bearing but have no package/seam/lane-aware equivalents \u2014 these must be designed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Widget System Package/Seam Updates"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "Design package/seam/lane-aware widget equivalents"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001260-L001290"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

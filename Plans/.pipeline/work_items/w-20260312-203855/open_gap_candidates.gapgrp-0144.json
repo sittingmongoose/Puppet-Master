@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0144",
+  "coverage_row_ids_represented": [
+    "cov-004180",
+    "cov-004384",
+    "cov-004386",
+    "cov-004388"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0144; path=Plans/Decision_Policy.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## Startup Recovery"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004180",
+        "cov-004384",
+        "cov-004386",
+        "cov-004388"
+      ],
+      "source_obligation_ids": [
+        "obl-001965",
+        "obl-002090",
+        "obl-002091",
+        "obl-002092"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0016",
+        "seed-WAVE006-0065"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Decision_Policy.md still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned",
+        "Run_Modes.md does not fully own DAE jail lifecycle entry/exit and transition rules \u2014 those are still scattered across executor, command, and policy docs",
+        "Run_Modes.md overpromises yolo capabilities relative to what other docs actually constrain",
+        "external_publish_side_effect semantics still lack a canonical owner"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

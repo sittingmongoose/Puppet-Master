@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0902",
+  "coverage_row_ids_represented": [
+    "cov-006660",
+    "cov-006661",
+    "cov-006662",
+    "cov-006663",
+    "cov-006664",
+    "cov-006665",
+    "cov-006666",
+    "cov-006667",
+    "cov-006668",
+    "cov-006669"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0902; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006660",
+        "cov-006661",
+        "cov-006662",
+        "cov-006663",
+        "cov-006664",
+        "cov-006665",
+        "cov-006666",
+        "cov-006667",
+        "cov-006668",
+        "cov-006669"
+      ],
+      "source_obligation_ids": [
+        "obl-003563",
+        "obl-003564",
+        "obl-003565",
+        "obl-003566",
+        "obl-003567",
+        "obl-003568",
+        "obl-003569",
+        "obl-003570",
+        "obl-003571",
+        "obl-003572"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s111",
+        "shard-0078-s032",
+        "shard-0078-s053",
+        "shard-0078-s067",
+        "shard-0078-s113",
+        "shard-0080-s022",
+        "shard-0080-s035",
+        "shard-0081-s026",
+        "shard-0081-s122",
+        "shard-0082-s055",
+        "shard-0082-s112",
+        "shard-0083-s012",
+        "shard-0084-s009",
+        "shard-0084-s076",
+        "shard-0085-s062",
+        "shard-0085-s088",
+        "shard-0089-s043"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0080",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "duplicate numbering and `ContractRef` failures in owner docs",
+        "ContractRef",
+        "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+        "requested_persona_id",
+        "effective_persona_id",
+        "early canonical event table still centers `tier_id`",
+        "tier_id",
+        "Reconcile event-family names and examples that still teach `tier_id` / `tier_type` as canonical scope anchors.",
+        "tier_type",
+        "Keep any surviving HITL request identifiers as family-local compatibility handles or UI-facing lineage fields, not as the stronger approval identity."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

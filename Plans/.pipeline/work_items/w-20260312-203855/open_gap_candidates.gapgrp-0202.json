@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0202",
+  "coverage_row_ids_represented": [
+    "cov-007396",
+    "cov-007403",
+    "cov-007438",
+    "cov-007443",
+    "cov-007458",
+    "cov-007634",
+    "cov-007636",
+    "cov-007638",
+    "cov-007843",
+    "cov-007848"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0202; path=Plans/FinalGUISpec.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007396",
+        "cov-007403",
+        "cov-007438",
+        "cov-007443",
+        "cov-007458",
+        "cov-007634",
+        "cov-007636",
+        "cov-007638",
+        "cov-007843",
+        "cov-007848"
+      ],
+      "source_obligation_ids": [
+        "obl-004200",
+        "obl-004201",
+        "obl-004206",
+        "obl-004207",
+        "obl-004210",
+        "obl-004234",
+        "obl-004235",
+        "obl-004236",
+        "obl-004373",
+        "obl-004374"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s002",
+        "shard-0088-s010",
+        "shard-0088-s057",
+        "shard-0090-s053"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "`Plans/FinalGUISpec.md:2092` still references `restore points` through `Plans/newfeatures.md`",
+        "Plans/FinalGUISpec.md:2092",
+        "restore points",
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

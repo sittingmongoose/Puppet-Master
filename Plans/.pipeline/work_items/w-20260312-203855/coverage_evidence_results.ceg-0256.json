@@ -1,0 +1,190 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0256",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-001012",
+      "source_obligation_ids": [
+        "obl-000430"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001052",
+      "source_obligation_ids": [
+        "obl-000443"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001053",
+      "source_obligation_ids": [
+        "obl-000444"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001132",
+      "source_obligation_ids": [
+        "obl-000476"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005494",
+      "source_obligation_ids": [
+        "obl-002405"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0035"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005495",
+      "source_obligation_ids": [
+        "obl-002406"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0035"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005508",
+      "source_obligation_ids": [
+        "obl-002414"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0038"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005509",
+      "source_obligation_ids": [
+        "obl-002415"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0038"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_token_replacement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

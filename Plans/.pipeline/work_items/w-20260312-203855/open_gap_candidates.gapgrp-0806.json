@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0806",
+  "coverage_row_ids_represented": [
+    "cov-001534",
+    "cov-001537",
+    "cov-001540",
+    "cov-001543",
+    "cov-001546",
+    "cov-001549",
+    "cov-001552",
+    "cov-001555",
+    "cov-001558",
+    "cov-001563"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0806; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Record Semantic Application"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001534",
+        "cov-001537",
+        "cov-001540",
+        "cov-001543",
+        "cov-001546",
+        "cov-001549",
+        "cov-001552",
+        "cov-001555",
+        "cov-001558",
+        "cov-001563"
+      ],
+      "source_obligation_ids": [
+        "obl-000692",
+        "obl-000693",
+        "obl-000694",
+        "obl-000695",
+        "obl-000696",
+        "obl-000697",
+        "obl-000698",
+        "obl-000699",
+        "obl-000700",
+        "obl-000701"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0075",
+        "shard-0014-s006",
+        "shard-0014-s007",
+        "shard-0029-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0014",
+        "shard-0029",
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "graph patches: old path/generation is historical; invalidated prior path may be superseded",
+        "recovery records: failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth",
+        "lane/worktree records: backing worktree may be removed; lane may still be historical; archival policy should be separate from semantic validity",
+        "tier_runtime_record compatibility boundary: it should answer current visible progress state for tier-shaped UI grouping, latest active attempt or blocked episode pointer for this grouping, what progress tree / compact terminal / high-level tab badges should display",
+        "tier_runtime_record should NOT be treated as canonical source for execution identity, retry lineage, approval/recovery targeting, or usage truth",
+        "Define a shared record-semantic vocabulary applied across: attempts, promotions, concerns, graph patches, recovery records, lane/worktree objects",
+        "Add explicit successor/predecessor links where superseded is possible",
+        "Keep visibility policy (archived, hidden from default lists) separate from semantic state (historical, revoked, superseded)",
+        "Ensure exact-record surfaces expose why a record is no longer current rather than simply dimming it",
+        "historical: queryable past object/state that is no longer the currently active focus"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

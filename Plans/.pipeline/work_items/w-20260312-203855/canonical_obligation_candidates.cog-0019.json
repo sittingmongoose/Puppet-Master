@@ -1,0 +1,621 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0019",
+  "represented_seed_ids": [
+    "shard-0002-s012",
+    "shard-0002-s021",
+    "shard-0031-s006",
+    "shard-0033-s002",
+    "shard-0033-s005"
+  ],
+  "source_shard_ids": [
+    "shard-0002",
+    "shard-0031",
+    "shard-0033"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0002-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "The same concern model must be projected per surface: Progress=operational, Seams=integration/governance, Evidence=proof-backed, History=lifecycle timeline, Ledger=structured record; no surface invents its own concern shape",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The same concern model must be projected per surface: Progress=operational, Seams=integration/governance, Evidence=proof-backed, History=lifecycle timeline, Ledger=structured record; no surface invents its own concern shape"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Projection Rule"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000335-L000360"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0002-s021"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Direct-record views (promotion record, graph patch record + state transition report, recovery/restore record, concern record) must each show: currentness, generation match, superseded flag, actionable state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Direct-record views (promotion record, graph patch record + state transition report, recovery/restore record, concern record) must each show: currentness, generation match, superseded flag, actionable state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Direct-Record Actionability"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000360-L000385"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0031-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "acknowledged may reduce reminder noise",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "acknowledged may reduce reminder noise"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with notifications and blocked routing"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "blocked_owner and concern_owner must be separate fields in both the concern record schema and the blocked-episode schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0031-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "active + execution impact may escalate",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "active + execution impact may escalate"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with notifications and blocked routing"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "blocked_owner and concern_owner must be separate fields in both the concern record schema and the blocked-episode schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0031-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "dismissed should suppress concern presentation but not canonical blocked episodes if those remain active",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "dismissed should suppress concern presentation but not canonical blocked episodes if those remain active"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with notifications and blocked routing"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "blocked_owner and concern_owner must be separate fields in both the concern record schema and the blocked-episode schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0031-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "concern owner = who is responsible for the concern",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern owner = who is responsible for the concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with notifications and blocked routing"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "blocked_owner and concern_owner must be separate fields in both the concern record schema and the blocked-episode schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0031-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "blocked owner = who/what is currently blocking progress",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked owner = who/what is currently blocking progress"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with notifications and blocked routing"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "blocked_owner and concern_owner must be separate fields in both the concern record schema and the blocked-episode schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0031-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "blocked owner and concern owner are related but not the same field",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked owner and concern owner are related but not the same field"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with notifications and blocked routing"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "blocked_owner and concern_owner must be separate fields in both the concern record schema and the blocked-episode schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0033-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "acknowledge is closest to noise-control / ownership-signaling",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "acknowledge is closest to noise-control / ownership-signaling"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Concern action split",
+        "## Concern Lifecycle Actions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0033-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "dismiss is a durable semantic judgment and must not look like closing a toast",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "dismiss is a durable semantic judgment and must not look like closing a toast"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Concern action split",
+        "## Concern Lifecycle Actions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0033-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "resolve is not one generic operation; it needs resolution_kind",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "resolve is not one generic operation; it needs resolution_kind"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Concern action split",
+        "## Concern Lifecycle Actions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0033-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "merge / split / supersede are structural lineage edits, not ordinary state toggles",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "merge / split / supersede are structural lineage edits, not ordinary state toggles"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Concern action split",
+        "## Concern Lifecycle Actions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0033-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "concern actions never hard-delete canonical concern history in normal operation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern actions never hard-delete canonical concern history in normal operation"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Concern action split",
+        "## Concern Lifecycle Actions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0033-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "concern undo should generally be implemented as compensating follow-up records (reopened, reverse-merge lineage, successor concern, etc.), not history erasure",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern undo should generally be implemented as compensating follow-up records (reopened, reverse-merge lineage, successor concern, etc.), not history erasure"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Concern action split",
+        "## Concern Lifecycle Actions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0033-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Treat quiet or temporary suppression as UI-notification behavior, not concern dismissal",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Treat quiet or temporary suppression as UI-notification behavior, not concern dismissal"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Noise vs Dismissal"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0033-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "concern dismissal changes concern meaning/state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern dismissal changes concern meaning/state"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Noise vs Dismissal"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0033-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "quieting only changes resurfacing behavior",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "quieting only changes resurfacing behavior"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Noise vs Dismissal"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0033-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "canon_label": "Treat acknowledged as escalation/noise control and ownership visibility, not semantic closure and not blocker removal by itself",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Treat acknowledged as escalation/noise control and ownership visibility, not semantic closure and not blocker removal by itself"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Noise vs Dismissal"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006401"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

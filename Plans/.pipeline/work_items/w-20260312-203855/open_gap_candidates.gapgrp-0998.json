@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0998",
+  "coverage_row_ids_represented": [
+    "cov-006182",
+    "cov-006183",
+    "cov-006184",
+    "cov-006185",
+    "cov-006186",
+    "cov-006187",
+    "cov-006188",
+    "cov-006189",
+    "cov-006190",
+    "cov-006191"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0998; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006182",
+        "cov-006183",
+        "cov-006184",
+        "cov-006185",
+        "cov-006186",
+        "cov-006187",
+        "cov-006188",
+        "cov-006189",
+        "cov-006190",
+        "cov-006191"
+      ],
+      "source_obligation_ids": [
+        "obl-003085",
+        "obl-003086",
+        "obl-003087",
+        "obl-003088",
+        "obl-003089",
+        "obl-003090",
+        "obl-003091",
+        "obl-003092",
+        "obl-003093",
+        "obl-003094"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s021",
+        "shard-0086-s022",
+        "shard-0086-s025",
+        "shard-0086-s026",
+        "shard-0086-s047",
+        "shard-0086-s049",
+        "shard-0086-s050"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`feature-list.md` and `newfeatures.md` third as summary cleanup",
+        "feature-list.md",
+        "newfeatures.md",
+        "`Section15_MVP_Promoted_Features_Spec.md` last as a verification pass against the corrected upstream owners",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "`feature-list.md` and `newfeatures.md` are broad drift amplifiers because they condense many features into short summaries that users and implementers often read first.",
+        "Owner stack:",
+        "mixed-canon owner docs",
+        "mirror/checklist docs that will need revalidation after owner reconciliation",
+        "1. Owner docs and rewrite-root routing"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

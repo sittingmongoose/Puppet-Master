@@ -1,0 +1,240 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0708",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-006955",
+      "source_obligation_ids": [
+        "obl-003858"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s087"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006956",
+      "source_obligation_ids": [
+        "obl-003859"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s087"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006957",
+      "source_obligation_ids": [
+        "obl-003860"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s087"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006958",
+      "source_obligation_ids": [
+        "obl-003861"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s108"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006959",
+      "source_obligation_ids": [
+        "obl-003862"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s108"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006960",
+      "source_obligation_ids": [
+        "obl-003863"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s109"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006961",
+      "source_obligation_ids": [
+        "obl-003864"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s109"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006962",
+      "source_obligation_ids": [
+        "obl-003865"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s115",
+        "shard-0089-s132",
+        "shard-0091-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0091"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-006963",
+      "source_obligation_ids": [
+        "obl-003866"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s115",
+        "shard-0089-s132",
+        "shard-0091-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0091"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007549",
+      "source_obligation_ids": [
+        "obl-004223"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/human-in-the-loop.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/human-in-the-loop.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

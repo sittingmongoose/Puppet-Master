@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0610",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-000244",
+      "source_obligation_ids": [
+        "obl-000116"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000247",
+      "source_obligation_ids": [
+        "obl-000117"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000250",
+      "source_obligation_ids": [
+        "obl-000118"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000253",
+      "source_obligation_ids": [
+        "obl-000119"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000256",
+      "source_obligation_ids": [
+        "obl-000120"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000259",
+      "source_obligation_ids": [
+        "obl-000121"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000263",
+      "source_obligation_ids": [
+        "obl-000122"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000265",
+      "source_obligation_ids": [
+        "obl-000123"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000267",
+      "source_obligation_ids": [
+        "obl-000124"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000268",
+      "source_obligation_ids": [
+        "obl-000125"
+      ],
+      "source_seed_ids": [
+        "shard-0002-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "path": "Plans/Widget_System.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Widget_System.md:L1-L340:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

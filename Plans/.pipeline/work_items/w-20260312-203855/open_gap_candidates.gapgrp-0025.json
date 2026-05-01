@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0025",
+  "coverage_row_ids_represented": [
+    "cov-002227",
+    "cov-002229",
+    "cov-002233",
+    "cov-002235",
+    "cov-002245",
+    "cov-002247",
+    "cov-002249",
+    "cov-002251",
+    "cov-002253",
+    "cov-002255"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0025; path=Plans/Contracts_V0.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Concern Record Minimum Shape"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002227",
+        "cov-002229",
+        "cov-002233",
+        "cov-002235",
+        "cov-002245",
+        "cov-002247",
+        "cov-002249",
+        "cov-002251",
+        "cov-002253",
+        "cov-002255"
+      ],
+      "source_obligation_ids": [
+        "obl-001121",
+        "obl-001122",
+        "obl-001124",
+        "obl-001125",
+        "obl-001130",
+        "obl-001131",
+        "obl-001132",
+        "obl-001133",
+        "obl-001134",
+        "obl-001135"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "exact_missing_items": [
+        "concern_id",
+        "project_id",
+        "scope_type",
+        "scope_id",
+        "description?",
+        "owner_kind?",
+        "origin_kind",
+        "created_at_utc",
+        "updated_at_utc",
+        "first_observed_at_utc"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

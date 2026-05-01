@@ -1,0 +1,221 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0498",
+  "represented_seed_ids": [
+    "seed-WAVE007-0051"
+  ],
+  "source_shard_ids": [
+    "shard-0070"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0051"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`OpenCode_Coverage_Matrix.md` itself is now behind the rewrite: it omits A2A/stream-owner coverage, runtime-correlation records, OpenCode dual-auth-realm ownership, several Multi-Account GUI surfaces, and even some fixes that are already co",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`OpenCode_Coverage_Matrix.md` itself is now behind the rewrite: it omits A2A/stream-owner coverage, runtime-correlation records, OpenCode dual-auth-realm ownership, several Multi-Account GUI surfaces, and even some fixes that are already complete."
+      ],
+      "affected_doc_hints": [
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/LSPSupport.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Coverage Matrix Currency",
+        "## Checklist Command ID Currency",
+        "## LSP MVP Gating",
+        "## Section 15 Surface Ownership"
+      ],
+      "stale_residue_to_retire": [
+        "phantom command IDs in GUI_Rebuild_Requirements_Checklist",
+        "superseded chat usage commands in Checklist",
+        "OpenCode_Coverage_Matrix missing A2A coverage",
+        "ungated promoted-feature command families in Section15"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013871",
+        "working_ledger.md:L013874-L013876"
+      ],
+      "notes": [
+        "These four docs have distinct stale patterns confirmed under Sonnet continuation: (1) OpenCode_Coverage_Matrix omits A2A/stream-owner and dual-auth-realm, (2) GUI_Rebuild_Requirements_Checklist omits cmd.runtime.* family entirely and has phantom IDs, (3) LSPSupport has unresolved MVP gating and missing rename approval events, (4) Section15 has stale Final GUI body text and ungated command families."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE007-0051"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md` still claims phantom command IDs, keeps superseded chat usage commands, omits the `cmd.runtime.*` family entirely, and does not track degraded/projection-trust runtime surfaces.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`GUI_Rebuild_Requirements_Checklist.md` still claims phantom command IDs, keeps superseded chat usage commands, omits the `cmd.runtime.*` family entirely, and does not track degraded/projection-trust runtime surfaces."
+      ],
+      "affected_doc_hints": [
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/LSPSupport.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Coverage Matrix Currency",
+        "## Checklist Command ID Currency",
+        "## LSP MVP Gating",
+        "## Section 15 Surface Ownership"
+      ],
+      "stale_residue_to_retire": [
+        "phantom command IDs in GUI_Rebuild_Requirements_Checklist",
+        "superseded chat usage commands in Checklist",
+        "OpenCode_Coverage_Matrix missing A2A coverage",
+        "ungated promoted-feature command families in Section15"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013871",
+        "working_ledger.md:L013874-L013876"
+      ],
+      "notes": [
+        "These four docs have distinct stale patterns confirmed under Sonnet continuation: (1) OpenCode_Coverage_Matrix omits A2A/stream-owner and dual-auth-realm, (2) GUI_Rebuild_Requirements_Checklist omits cmd.runtime.* family entirely and has phantom IDs, (3) LSPSupport has unresolved MVP gating and missing rename approval events, (4) Section15 has stale Final GUI body text and ungated command families."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE007-0051"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`LSPSupport.md` still has unresolved MVP/gating contradictions, missing rename approval command/event families, no clear plan-mode rule for mutating LSP operations, and no multi-project-tab routing contract.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`LSPSupport.md` still has unresolved MVP/gating contradictions, missing rename approval command/event families, no clear plan-mode rule for mutating LSP operations, and no multi-project-tab routing contract."
+      ],
+      "affected_doc_hints": [
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/LSPSupport.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Coverage Matrix Currency",
+        "## Checklist Command ID Currency",
+        "## LSP MVP Gating",
+        "## Section 15 Surface Ownership"
+      ],
+      "stale_residue_to_retire": [
+        "phantom command IDs in GUI_Rebuild_Requirements_Checklist",
+        "superseded chat usage commands in Checklist",
+        "OpenCode_Coverage_Matrix missing A2A coverage",
+        "ungated promoted-feature command families in Section15"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013871",
+        "working_ledger.md:L013874-L013876"
+      ],
+      "notes": [
+        "These four docs have distinct stale patterns confirmed under Sonnet continuation: (1) OpenCode_Coverage_Matrix omits A2A/stream-owner and dual-auth-realm, (2) GUI_Rebuild_Requirements_Checklist omits cmd.runtime.* family entirely and has phantom IDs, (3) LSPSupport has unresolved MVP gating and missing rename approval events, (4) Section15 has stale Final GUI body text and ungated command families."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE007-0051"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "`Section15_MVP_Promoted_Features_Spec.md` still points at stale Final GUI body text, missing project/session browser and attention-center surface ownership, and ungated promoted-feature command families.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Section15_MVP_Promoted_Features_Spec.md` still points at stale Final GUI body text, missing project/session browser and attention-center surface ownership, and ungated promoted-feature command families."
+      ],
+      "affected_doc_hints": [
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/LSPSupport.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Coverage Matrix Currency",
+        "## Checklist Command ID Currency",
+        "## LSP MVP Gating",
+        "## Section 15 Surface Ownership"
+      ],
+      "stale_residue_to_retire": [
+        "phantom command IDs in GUI_Rebuild_Requirements_Checklist",
+        "superseded chat usage commands in Checklist",
+        "OpenCode_Coverage_Matrix missing A2A coverage",
+        "ungated promoted-feature command families in Section15"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013871",
+        "working_ledger.md:L013874-L013876"
+      ],
+      "notes": [
+        "These four docs have distinct stale patterns confirmed under Sonnet continuation: (1) OpenCode_Coverage_Matrix omits A2A/stream-owner and dual-auth-realm, (2) GUI_Rebuild_Requirements_Checklist omits cmd.runtime.* family entirely and has phantom IDs, (3) LSPSupport has unresolved MVP gating and missing rename approval events, (4) Section15 has stale Final GUI body text and ungated command families."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

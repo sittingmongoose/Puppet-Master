@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0648",
+  "coverage_row_ids_represented": [
+    "cov-000850",
+    "cov-000947",
+    "cov-000983",
+    "cov-000984",
+    "cov-001028",
+    "cov-001147"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0648; path=Plans/WorktreeGitImprovement.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## Package-Based Worktree Gap"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000850",
+        "cov-000947",
+        "cov-000983",
+        "cov-000984",
+        "cov-001028",
+        "cov-001147"
+      ],
+      "source_obligation_ids": [
+        "obl-000369",
+        "obl-000406",
+        "obl-000419",
+        "obl-000420",
+        "obl-000436",
+        "obl-000481"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s008",
+        "shard-0007-s018",
+        "shard-0008-s011",
+        "shard-0009-s009",
+        "shard-0009-s010",
+        "shard-0010-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0007",
+        "shard-0008",
+        "shard-0009",
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "Gap: package-based worktrees are not yet defined as a canonical concept; per-node worktrees are the current model but are the wrong shape for scale",
+        "Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics",
+        "PM-owned SCM state is not fully visible: managed template repos, active git operations, live-run artifact roots, and worktree recovery state need Orchestrator/SCM registration",
+        "Worktree visibility is only partially wired between Source Control and Orchestrator \u2014 the interface contract between these two surfaces must be fully defined",
+        "Package-based lane pools are still missing as a canonical concept in SCM docs \u2014 WorktreeGitImprovement.md and GitHub_Integration.md must define this",
+        "GPT-5.3-Codex: contamination policy is a vocabulary gap \u2014 safe-point language exists in newer addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

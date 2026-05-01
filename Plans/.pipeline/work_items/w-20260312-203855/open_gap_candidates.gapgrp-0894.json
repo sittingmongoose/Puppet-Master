@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0894",
+  "coverage_row_ids_represented": [
+    "cov-006582",
+    "cov-006583",
+    "cov-006584",
+    "cov-006585",
+    "cov-006586",
+    "cov-006587",
+    "cov-006588",
+    "cov-006589",
+    "cov-006590",
+    "cov-006591"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0894; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006582",
+        "cov-006583",
+        "cov-006584",
+        "cov-006585",
+        "cov-006586",
+        "cov-006587",
+        "cov-006588",
+        "cov-006589",
+        "cov-006590",
+        "cov-006591"
+      ],
+      "source_obligation_ids": [
+        "obl-003485",
+        "obl-003486",
+        "obl-003487",
+        "obl-003488",
+        "obl-003489",
+        "obl-003490",
+        "obl-003491",
+        "obl-003492",
+        "obl-003493",
+        "obl-003494"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s032",
+        "shard-0085-s050",
+        "shard-0085-s064",
+        "shard-0085-s071",
+        "shard-0085-s078",
+        "shard-0085-s085",
+        "shard-0085-s091"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "lane/worktree, receipt, and cross-surface lineage concepts are present",
+        "only `Progress` kept widget-composed",
+        "`View in Usage` still filters by `tier_id`",
+        "View in Usage",
+        "`View in Tiers`",
+        "View in Tiers",
+        "still includes `widget.tier_tree` for `Orch/Tiers`",
+        "data sources still rely on `PuppetMasterEvent::TierChanged`, `tier_id`, and phase/task/subtask framing for multiple Orchestrator widgets",
+        "PuppetMasterEvent::TierChanged",
+        "canonical Usage surfaces"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

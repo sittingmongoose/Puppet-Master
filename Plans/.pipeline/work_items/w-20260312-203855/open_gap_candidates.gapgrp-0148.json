@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0148",
+  "coverage_row_ids_represented": [
+    "cov-002306",
+    "cov-002308",
+    "cov-002310",
+    "cov-002312",
+    "cov-002392",
+    "cov-002395",
+    "cov-002398",
+    "cov-002401",
+    "cov-002403",
+    "cov-002417"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0148; path=Plans/Decision_Policy.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "heading": "## Concern Action Policy Table"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002306",
+        "cov-002308",
+        "cov-002310",
+        "cov-002312",
+        "cov-002392",
+        "cov-002395",
+        "cov-002398",
+        "cov-002401",
+        "cov-002403",
+        "cov-002417"
+      ],
+      "source_obligation_ids": [
+        "obl-001160",
+        "obl-001161",
+        "obl-001162",
+        "obl-001163",
+        "obl-001189",
+        "obl-001190",
+        "obl-001191",
+        "obl-001192",
+        "obl-001193",
+        "obl-001199"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s001",
+        "shard-0032-s002",
+        "shard-0032-s005",
+        "shard-0033-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "dismiss: confirmation strong; rationale required; reversibility compensating_action_only via explicit reopened",
+        "reopen: confirmation none or light; rationale optional but recommended when reopening a dismissed concern; reversibility compensating_action_only",
+        "merge / split / supersede: confirmation strong; rationale required; reversibility compensating_action_only through new lineage records, never silent history rewrite",
+        "Reserve hard_gate for: admin repair, privacy/redaction paths, cross-run or cross-scope lineage rewrites that could materially change audit interpretation",
+        "Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "Permissions_System.md does not yet integrate the stricter requested/effective identity model that Contracts_V0.md now makes canonical",
+        "Architecture_Invariants.md needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "policy docs still assume a stronger single Puppet Master authority center",
+        "the rewrite now needs seam/package overseer scopes, blocked-owner attribution, and clearer separation between runtime/system/user authority",
+        "Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1030",
+  "coverage_row_ids_represented": [
+    "cov-007644",
+    "cov-007645",
+    "cov-007646",
+    "cov-007647",
+    "cov-007648",
+    "cov-007649",
+    "cov-007650",
+    "cov-007651",
+    "cov-007687",
+    "cov-007688"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1030; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-007644",
+        "cov-007645",
+        "cov-007646",
+        "cov-007647",
+        "cov-007648",
+        "cov-007649",
+        "cov-007650",
+        "cov-007651",
+        "cov-007687",
+        "cov-007688"
+      ],
+      "source_obligation_ids": [
+        "obl-004240",
+        "obl-004241",
+        "obl-004242",
+        "obl-004243",
+        "obl-004244",
+        "obl-004245",
+        "obl-004246",
+        "obl-004247",
+        "obl-004269",
+        "obl-004270"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s069",
+        "shard-0088-s089",
+        "shard-0089-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "tier_id",
+        "detached_window",
+        "result_id",
+        "artifact_kind",
+        "task_id",
+        "{ tool_name, invocation_summary, options }",
+        "No remaining gaps",
+        "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+        "Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`."
+      ],
+      "stale_tokens": [
+        "No remaining gaps",
+        "TierContext",
+        "artifact_kind",
+        "detached_window",
+        "restore points",
+        "result_id",
+        "task_id",
+        "tier_id",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

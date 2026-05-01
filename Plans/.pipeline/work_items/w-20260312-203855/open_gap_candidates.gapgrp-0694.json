@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0694",
+  "coverage_row_ids_represented": [
+    "cov-007754",
+    "cov-007757",
+    "cov-007760",
+    "cov-007763",
+    "cov-007766",
+    "cov-007769",
+    "cov-007772",
+    "cov-007958",
+    "cov-007960",
+    "cov-007962"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "group gapgrp-0694; path=Plans/assistant-chat-design.md; row_type=stale_retirement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007754",
+        "cov-007757",
+        "cov-007760",
+        "cov-007763",
+        "cov-007766",
+        "cov-007769",
+        "cov-007772",
+        "cov-007958",
+        "cov-007960",
+        "cov-007962"
+      ],
+      "source_obligation_ids": [
+        "obl-004328",
+        "obl-004329",
+        "obl-004330",
+        "obl-004331",
+        "obl-004332",
+        "obl-004333",
+        "obl-004334",
+        "obl-004397",
+        "obl-004398",
+        "obl-004399"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s079",
+        "shard-0090-s093"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction.",
+        "Plans/Tools.md",
+        "{ tool_name, invocation_summary, options }",
+        "Plans/assistant-chat-design.md",
+        "No remaining gaps",
+        "Plans/FinalGUISpec.md",
+        "restore points",
+        "`Plans/Tools.md` still carries the stale ask tuple `{ tool_name, invocation_summary, options }`, and `Plans/assistant-chat-design.md` still carries the stale self-verdict `No remaining gaps`."
+      ],
+      "stale_tokens": [
+        "No remaining gaps",
+        "Plans/FinalGUISpec.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "restore points",
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

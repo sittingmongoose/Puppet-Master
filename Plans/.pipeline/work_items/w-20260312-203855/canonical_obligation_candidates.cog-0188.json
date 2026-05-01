@@ -1,0 +1,743 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0188",
+  "represented_seed_ids": [
+    "shard-0025-s005",
+    "shard-0030-s001",
+    "shard-0030-s007",
+    "shard-0030-s009",
+    "shard-0031-s004",
+    "shard-0037-s002"
+  ],
+  "source_shard_ids": [
+    "shard-0025",
+    "shard-0030",
+    "shard-0031",
+    "shard-0037"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0025-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "stale visibility is not the same as action authority",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale visibility is not the same as action authority"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## allowed_action_ids Validity and Projection Trust"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0025-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "GUI must not guess that a previously visible allowed_action_ids[] set is still valid if the blocked projection is stale",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "GUI must not guess that a previously visible allowed_action_ids[] set is still valid if the blocked projection is stale"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## allowed_action_ids Validity and Projection Trust"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0030-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "annotation lifecycle: open -> addressed -> resolved",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "annotation lifecycle: open -> addressed -> resolved"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Family-Local Lifecycle Terms",
+        "## Object-Specific Lifecycle States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "Family-local workflow states must not be forced into the cross-family semantic core; they can allow cross-family historical overlays where relevant"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0030-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "concern lifecycle: active -> acknowledged -> resolved -> dismissed",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern lifecycle: active -> acknowledged -> resolved -> dismissed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Family-Local Lifecycle Terms",
+        "## Object-Specific Lifecycle States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "Family-local workflow states must not be forced into the cross-family semantic core; they can allow cross-family historical overlays where relevant"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0030-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "wizard status: attention_required vs blocked",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "wizard status: attention_required vs blocked"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Family-Local Lifecycle Terms",
+        "## Object-Specific Lifecycle States"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "Family-local workflow states must not be forced into the cross-family semantic core; they can allow cross-family historical overlays where relevant"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0030-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "concern must remain distinct from: review finding, annotation, blocked episode, graph patch request, recovery record",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern must remain distinct from: review finding, annotation, blocked episode, graph patch request, recovery record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern vs Adjacent Object Boundaries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete/resolve a concern \u2014 but these remain different record families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0030-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "review finding: produced by review/corroboration/validation flow",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "review finding: produced by review/corroboration/validation flow"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern vs Adjacent Object Boundaries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete/resolve a concern \u2014 but these remain different record families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0030-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "concern: durable tracked issue/observation that may aggregate, outlive, or be updated by multiple findings/events",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern: durable tracked issue/observation that may aggregate, outlive, or be updated by multiple findings/events"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern vs Adjacent Object Boundaries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete/resolve a concern \u2014 but these remain different record families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0030-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "blocked episode: runtime execution stop with canonical recovery metadata",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked episode: runtime execution stop with canonical recovery metadata"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern vs Adjacent Object Boundaries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete/resolve a concern \u2014 but these remain different record families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0030-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "annotation: document-review instruction/comment object with anchoring lifecycle",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "annotation: document-review instruction/comment object with anchoring lifecycle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern vs Adjacent Object Boundaries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": [
+        "A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete/resolve a concern \u2014 but these remain different record families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0030-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "concern lifecycle: active -> acknowledged -> resolved -> dismissed",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern lifecycle: active -> acknowledged -> resolved -> dismissed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Lifecycle Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0030-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "acknowledged and dismissed are operator/user presentation/governance actions",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "acknowledged and dismissed are operator/user presentation/governance actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Lifecycle Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0030-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "resolved must carry exact resolution semantics",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "resolved must carry exact resolution semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Lifecycle Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0030-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "canon_label": "active remains the default live state even if the same concern has been seen multiple times",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "active remains the default live state even if the same concern has been seen multiple times"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Lifecycle Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0031-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "review findings may nominate or update concerns, but the review record remains distinct",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "review findings may nominate or update concerns, but the review record remains distinct"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with other families"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "these cross-family interaction rules must be formalized in the concern contract and referenced from review/corroboration/patch/recovery docs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0031-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "corroboration can: validate a concern, downgrade it to advisory/minor, leave an unresolved minority concern",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "corroboration can: validate a concern, downgrade it to advisory/minor, leave an unresolved minority concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with other families"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "these cross-family interaction rules must be formalized in the concern contract and referenced from review/corroboration/patch/recovery docs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0031-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "graph patch can: resolve concern, obsolete concern, split concern into more precise post-patch concerns",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "graph patch can: resolve concern, obsolete concern, split concern into more precise post-patch concerns"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with other families"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "these cross-family interaction rules must be formalized in the concern contract and referenced from review/corroboration/patch/recovery docs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0031-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "recovery can: resolve concern, create follow-on concern if recovery exposes a new issue",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "recovery can: resolve concern, create follow-on concern if recovery exposes a new issue"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with other families"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "these cross-family interaction rules must be formalized in the concern contract and referenced from review/corroboration/patch/recovery docs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-019",
+      "source_seed_ids": [
+        "shard-0031-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "blocked episodes can: reference concern when a concern becomes execution-blocking, but should not be replaced by the concern record",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked episodes can: reference concern when a concern becomes execution-blocking, but should not be replaced by the concern record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Interaction with other families"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "these cross-family interaction rules must be formalized in the concern contract and referenced from review/corroboration/patch/recovery docs"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-020",
+      "source_seed_ids": [
+        "shard-0037-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "Attention item rollup rules must be specified: when can N concern records collapse into one attention item, what is the severity-merge strategy, when must distinct items remain separate",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Attention item rollup rules must be specified: when can N concern records collapse into one attention item, what is the severity-merge strategy, when must distinct items remain separate"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Attention Item Rollup Rules",
+        "## Attention Item Disclosure Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-021",
+      "source_seed_ids": [
+        "shard-0037-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "Attention item disclosure rules must be specified: which items are shown inline on surfaces vs surfaced only on click vs hidden until the user navigates to the attention center",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Attention item disclosure rules must be specified: which items are shown inline on surfaces vs surfaced only on click vs hidden until the user navigates to the attention center"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Attention Item Rollup Rules",
+        "## Attention Item Disclosure Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-022",
+      "source_seed_ids": [
+        "shard-0037-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "Routing rules from attention item to primary/secondary action surfaces must be specified",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Routing rules from attention item to primary/secondary action surfaces must be specified"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Attention Item Rollup Rules",
+        "## Attention Item Disclosure Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007201"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

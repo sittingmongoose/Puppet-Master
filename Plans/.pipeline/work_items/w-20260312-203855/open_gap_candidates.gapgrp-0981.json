@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0981",
+  "coverage_row_ids_represented": [
+    "cov-006012",
+    "cov-006013",
+    "cov-006014",
+    "cov-006015",
+    "cov-006016",
+    "cov-006017",
+    "cov-006018",
+    "cov-006019",
+    "cov-006020",
+    "cov-006021"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0981; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006012",
+        "cov-006013",
+        "cov-006014",
+        "cov-006015",
+        "cov-006016",
+        "cov-006017",
+        "cov-006018",
+        "cov-006019",
+        "cov-006020",
+        "cov-006021"
+      ],
+      "source_obligation_ids": [
+        "obl-002915",
+        "obl-002916",
+        "obl-002917",
+        "obl-002918",
+        "obl-002919",
+        "obl-002920",
+        "obl-002921",
+        "obl-002922",
+        "obl-002923",
+        "obl-002924"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s081",
+        "shard-0083-s082",
+        "shard-0083-s083",
+        "shard-0083-s084",
+        "shard-0083-s085",
+        "shard-0083-s086",
+        "shard-0083-s090",
+        "shard-0083-s091",
+        "shard-0083-s092",
+        "shard-0083-s093"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream drift across Orchestrator, Graph, HITL, storage, and command docs.",
+        "Reconciliation should treat `Contracts_V0.md` as the primary collapse point for:",
+        "blocked identity over request-centric HITL identity",
+        "`allowed_action_ids[]` over `allowed_actions[]` as shared runtime canon",
+        "route/open primitive ownership through named `route_target` and `OpenSubject`",
+        "Owner adoption order from this seam:",
+        "reconcile `wizard.blocked` and `remediation.resolved` to one field contract each",
+        "This is the owner doc where the route/open cleanup, blocked-identity cleanup, and tier-era runtime cleanup meet. Reconciliation elsewhere will keep bouncing until this file is normalized.",
+        "`resume_url` cannot stay a shadow primitive if `route_target` is adopted here.",
+        "`request_id` can survive as compatibility lineage. It cannot remain the primary approval identity."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

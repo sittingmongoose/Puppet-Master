@@ -1,0 +1,294 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0042",
+  "seed_candidates": [
+    {
+      "seed_id": "seed-WAVE005-0008",
+      "seed_type": "owner",
+      "exact_items": [
+        "FinalGUISpec.md: Dashboard and Appendix C still center tier/task/subtask widgets and vocabulary; Tiers still survives as a first-class tab where the rewrite now wants seam/package/node surfaces",
+        "The 12-widget rewrite-era Progress set still has no concrete home in FinalGUISpec.md",
+        "No first-class concern record/lifecycle/projection model appears in FinalGUISpec.md",
+        "Replace tier-era Dashboard/Orchestrator widget vocabulary with the rewrite-era Progress/Seams set",
+        "Add a concern-model GUI contract and projection-health / degraded-trust contract to FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dashboard",
+        "## Orchestrator Page",
+        "## Appendix C"
+      ],
+      "stale_tokens": [
+        "Tiers (as first-class run-group tab)",
+        "tier/task/subtask widget vocabulary"
+      ],
+      "canonical_replacement_hints": [
+        "seam/package/node surface vocabulary",
+        "Progress/Seams rewrite-era widget set"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008259-L008400"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE005-0009",
+      "seed_type": "owner",
+      "exact_items": [
+        "UI_Command_Catalog.md still lacks a projection-freshness gating rule for mutating/recovery commands",
+        "Cross-surface route/open commands still do not carry the identity/trust context the ledger now recommends",
+        "Add projection-freshness gating and typed route payloads to UI_Command_Catalog.md",
+        "Normalize GUI consumers onto canonical persona/account/role naming and stop allowing stale local variants"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "projection_freshness + projection_health gating"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008259-L008400"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE005-0010",
+      "seed_type": "owner",
+      "exact_items": [
+        "Runtime_Artifacts_Panel.md still needs producer identity, trust/provenance, and stronger cross-surface linkage contracts",
+        "Artifact envelopes still have no producer identity, role, account, or switch lineage",
+        "cost_usage still does not require a durable usage/switch join key strongly enough to back the promised Usage/Ledger deep links",
+        "Extend runtime-artifact envelopes and cost_usage linkage with canonical identity/trust/switch fields or refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008259-L008400"
+      ],
+      "notes": [
+        "Artifact provenance/trust needs to work even when the live worktree or provider session is gone"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE005-0011",
+      "seed_type": "owner",
+      "exact_items": [
+        "assistant-chat-design.md promises requested/effective auth/account visibility but still does not actually specify the disclosure surface",
+        "Add explicit auth/account/role disclosure sections to assistant and interview runtime contracts",
+        "Add thread-level switch/concern/trust surfacing paths rather than leaving those only to Orchestrator pages"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008318-L008400"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE005-0012",
+      "seed_type": "owner",
+      "exact_items": [
+        "human-in-the-loop.md still needs actor/lane/account identity, approval provenance, and concurrency-safe queue/scope rules",
+        "HITL requests/resolutions still carry no actor/lane/account identity strong enough to answer who asked, who approved, and under which effective runtime identity",
+        "Add actor/lane/account identity and approver provenance to HITL request/resolution events",
+        "Define an Approval Scope Key and use it consistently across permissions, HITL, doom-loop, and session approval caching"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Approval Scope Key"
+      ],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008318-L008400"
+      ],
+      "notes": [
+        "Approve for session is now a correctness bug if not scoped properly"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE005-0013",
+      "seed_type": "owner",
+      "exact_items": [
+        "Tools.md still needs richer event payloads, reconciled outcome taxonomy, and DAE tool-event reconstruction",
+        "tool.invoked / tool.denied still omit node/attempt/actor/account context",
+        "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy",
+        "mutation_capable is declared as authoritative but still barely integrated into schema/event/policy surfaces",
+        "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008318-L008400"
+      ],
+      "notes": [
+        "DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drift immediately"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE005-0014",
+      "seed_type": "owner",
+      "exact_items": [
+        "interview-subagent-integration.md still needs canonical persona naming, account visibility, stage-to-role mapping, and less stale tier vocabulary",
+        "interview runtime contracts still stop at persona/platform/model-level identity and still omit auth/account/switch identity",
+        "Conversational docs promise or imply requested/effective runtime truth but still omit account/auth details in their concrete sections"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier_id (in interview stage-to-role mapping)"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008318-L008400"
+      ],
+      "notes": [
+        "Persona display is not a substitute for actor/role identity"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE005-0015",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "orchestrator-subagent-integration.md still dispatches, tracks agents, and remediates via tier_id-keyed constructs even though it already ingests node-sharded plans",
+        "WorktreeGitImprovement.md is still deeply tier-keyed and still has zero lane awareness even though scheduler and worktree isolation now need to interact directly",
+        "Executor_Protocol.md still assumes singular Overseer / Builder / Verifier semantics and lacks package/seam/corroboration/concern hooks",
+        "Executor_Protocol.md has no concern model, no corroboration lifecycle, no wake reasons for concern/promotion/governance boundaries"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "tier_id (as execution ownership key in orchestrator/worktree)",
+        "TierContext",
+        "TierType",
+        "tier crews",
+        "Overseer/Builder/Verifier singular semantics"
+      ],
+      "canonical_replacement_hints": [
+        "node-native execution context",
+        "lane/worktree binding",
+        "package/seam/corroboration/concern hooks"
+      ],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008377-L008400"
+      ],
+      "notes": [
+        "scheduler_lane is already mandatory in some addenda but structurally homeless in older orchestration body"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE005-0016",
+      "seed_type": "owner",
+      "exact_items": [
+        "chain-wizard-flexibility.md still needs CUP governance, handoff identity completeness, and explicit isolation/worktree policy fields",
+        "Contract Unification Pass still lacks concrete provider/model/persona governance",
+        "downstream wizard handoff still lacks requested/effective account, actor/role, and explicit isolation/worktree mode",
+        "stale 'no change to tier/subtask execution' language still appears in summary tables where it can mislead implementers"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "no change to tier/subtask execution (in summary tables)"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0042",
+      "source_evidence": [
+        "working_ledger.md:L008377-L008400"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "line_ref": "L008231-L008238",
+      "reason": "Impacted docs list for account switch/pressure cluster \u2014 enumerative meta, obligations covered by seeds"
+    },
+    {
+      "line_ref": "L008261-L008268",
+      "reason": "Targeted docs read list \u2014 process context only"
+    },
+    {
+      "line_ref": "L008320-L008327",
+      "reason": "Targeted docs read list \u2014 process context only"
+    },
+    {
+      "line_ref": "L008379-L008386",
+      "reason": "Targeted docs read list \u2014 process context only"
+    }
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

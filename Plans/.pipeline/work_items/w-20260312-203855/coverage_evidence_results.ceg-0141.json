@@ -1,0 +1,80 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0141",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-007204",
+      "source_obligation_ids": [
+        "obl-004068"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s122"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/Decision_Log.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Decision_Log.md:L1-L158:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007205",
+      "source_obligation_ids": [
+        "obl-004069"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s122"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/Decision_Log.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Decision_Log.md:L1-L158:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007206",
+      "source_obligation_ids": [
+        "obl-004070"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s122"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/Decision_Log.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Decision_Log.md:L1-L158:exact_hits=1/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

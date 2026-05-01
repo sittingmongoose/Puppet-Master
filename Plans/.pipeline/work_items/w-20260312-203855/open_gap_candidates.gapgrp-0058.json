@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0058",
+  "coverage_row_ids_represented": [
+    "cov-001550",
+    "cov-001553",
+    "cov-001556",
+    "cov-001559",
+    "cov-001562",
+    "cov-001565",
+    "cov-001568",
+    "cov-001571",
+    "cov-001574",
+    "cov-001577"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0058; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Successor/Predecessor Links"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001550",
+        "cov-001553",
+        "cov-001556",
+        "cov-001559",
+        "cov-001562",
+        "cov-001565",
+        "cov-001568",
+        "cov-001571",
+        "cov-001574",
+        "cov-001577"
+      ],
+      "source_obligation_ids": [
+        "obl-000697",
+        "obl-000698",
+        "obl-000699",
+        "obl-000700",
+        "obl-000701",
+        "obl-000702",
+        "obl-000703",
+        "obl-000704",
+        "obl-000705",
+        "obl-000706"
+      ],
+      "source_seed_ids": [
+        "shard-0014-s007",
+        "shard-0029-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0014",
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "Define a shared record-semantic vocabulary applied across: attempts, promotions, concerns, graph patches, recovery records, lane/worktree objects",
+        "Add explicit successor/predecessor links where superseded is possible",
+        "Keep visibility policy (archived, hidden from default lists) separate from semantic state (historical, revoked, superseded)",
+        "Ensure exact-record surfaces expose why a record is no longer current rather than simply dimming it",
+        "historical: queryable past object/state that is no longer the currently active focus",
+        "stale_historical: historical and explicitly not resumable/reusable for live execution",
+        "superseded: replaced by a newer canonical successor in the same lineage",
+        "revoked: previously accepted/promoted/active decision or state explicitly withdrawn",
+        "reopened: previously closed/accepted path returned to active question or work",
+        "archived: intentionally retained but removed from default active presentation"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

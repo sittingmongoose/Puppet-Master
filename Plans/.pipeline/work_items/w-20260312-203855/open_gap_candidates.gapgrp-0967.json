@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0967",
+  "coverage_row_ids_represented": [
+    "cov-005872",
+    "cov-005873",
+    "cov-005874",
+    "cov-005875",
+    "cov-005876",
+    "cov-005877",
+    "cov-005878",
+    "cov-005879",
+    "cov-005880",
+    "cov-005881"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0967; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005872",
+        "cov-005873",
+        "cov-005874",
+        "cov-005875",
+        "cov-005876",
+        "cov-005877",
+        "cov-005878",
+        "cov-005879",
+        "cov-005880",
+        "cov-005881"
+      ],
+      "source_obligation_ids": [
+        "obl-002775",
+        "obl-002776",
+        "obl-002777",
+        "obl-002778",
+        "obl-002779",
+        "obl-002780",
+        "obl-002781",
+        "obl-002782",
+        "obl-002783",
+        "obl-002784"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s124",
+        "shard-0081-s126",
+        "shard-0081-s128",
+        "shard-0081-s129",
+        "shard-0082-s057"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Document_Packaging_Policy.md",
+        "Project_Output_Artifacts.md",
+        "evidence/",
+        "`FileSafe.md` still has a concrete DAE enforcement seam: post-approval arg mutation, `context_files` widening write scope, fail-open initialization paths, and `recovery_options[]` vs `allowed_action_ids[]` schema drift.",
+        "context_files",
+        "recovery_options[]",
+        "Provider/runtime identity findings are still active:",
+        "`BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.",
+        "BinaryLocator_Spec.md",
+        "Spec_Lock"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0483",
+  "coverage_row_ids_represented": [
+    "cov-004061",
+    "cov-004066",
+    "cov-004071",
+    "cov-004121",
+    "cov-004125",
+    "cov-004129"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0483; path=Plans/Prompt_Pipeline.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004061",
+        "cov-004066",
+        "cov-004071",
+        "cov-004121",
+        "cov-004125",
+        "cov-004129"
+      ],
+      "source_obligation_ids": [
+        "obl-001892",
+        "obl-001893",
+        "obl-001894",
+        "obl-001924",
+        "obl-001925",
+        "obl-001926"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0072",
+        "seed-WAVE006-0007"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "Introduce execution_unit_context as the canonical runtime-facing context object and make TierContext explicitly derived or compatibility-only",
+        "Canonical execution_unit_context minimum shape: project_id, run_id, thread_id?, feature_seam_id?, work_package_id?, node_id, attempt_id?, blocked_sequence?, replan_generation, execution_role, scheduler_lane, manual_priority?, safe_point_id?, remediation lineage refs, lane_id?, worktree_id?, workspace_ref, snapshot_ref?, requested/effective runtime identity, runtime state hooks",
+        "Refactor orchestrator-subagent-integration.md so selector and hook APIs consume: canonical execution-unit refs for truth and a smaller derived selection/decomposition object for heuristics",
+        "Make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md",
+        "Define operational_identity as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records",
+        "execution_role and operational_identity solve different problems and should not be merged"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "execution_unit_context"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

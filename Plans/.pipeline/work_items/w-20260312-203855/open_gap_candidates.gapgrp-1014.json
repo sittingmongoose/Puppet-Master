@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1014",
+  "coverage_row_ids_represented": [
+    "cov-006342",
+    "cov-006343",
+    "cov-006344",
+    "cov-006345",
+    "cov-006346",
+    "cov-006347",
+    "cov-006348",
+    "cov-006349",
+    "cov-006350",
+    "cov-006351"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1014; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006342",
+        "cov-006343",
+        "cov-006344",
+        "cov-006345",
+        "cov-006346",
+        "cov-006347",
+        "cov-006348",
+        "cov-006349",
+        "cov-006350",
+        "cov-006351"
+      ],
+      "source_obligation_ids": [
+        "obl-003245",
+        "obl-003246",
+        "obl-003247",
+        "obl-003248",
+        "obl-003249",
+        "obl-003250",
+        "obl-003251",
+        "obl-003252",
+        "obl-003253",
+        "obl-003254"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s019",
+        "shard-0091-s054",
+        "shard-0091-s084",
+        "shard-0091-s115",
+        "shard-0092-s017",
+        "shard-0092-s018",
+        "shard-0092-s019",
+        "shard-0092-s020"
+      ],
+      "source_shard_ids": [
+        "shard-0091",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "The next useful stage is `Ledger Condenser`, not another immediate audit wave.",
+        "`canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+        "`working_ledger.md:L806`",
+        "working_ledger.md:L806",
+        "`working_ledger.md:L1030`",
+        "working_ledger.md:L1030",
+        "`working_ledger.md:L1035-L1036`",
+        "working_ledger.md:L1035-L1036",
+        "`working_ledger.md:L1283-L1290`",
+        "working_ledger.md:L1283-L1290"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0201",
+  "coverage_row_ids_represented": [
+    "cov-007329",
+    "cov-007333",
+    "cov-007337",
+    "cov-007350",
+    "cov-007356",
+    "cov-007364",
+    "cov-007368",
+    "cov-007372",
+    "cov-007380",
+    "cov-007382"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0201; path=Plans/FinalGUISpec.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007329",
+        "cov-007333",
+        "cov-007337",
+        "cov-007350",
+        "cov-007356",
+        "cov-007364",
+        "cov-007368",
+        "cov-007372",
+        "cov-007380",
+        "cov-007382"
+      ],
+      "source_obligation_ids": [
+        "obl-004182",
+        "obl-004183",
+        "obl-004184",
+        "obl-004189",
+        "obl-004191",
+        "obl-004193",
+        "obl-004194",
+        "obl-004195",
+        "obl-004197",
+        "obl-004198"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s063",
+        "shard-0087-s107",
+        "shard-0087-s113",
+        "shard-0088-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`",
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

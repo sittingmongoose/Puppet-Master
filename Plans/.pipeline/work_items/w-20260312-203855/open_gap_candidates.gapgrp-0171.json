@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0171",
+  "coverage_row_ids_represented": [
+    "cov-000892",
+    "cov-000939",
+    "cov-000991",
+    "cov-001134",
+    "cov-003626",
+    "cov-003629",
+    "cov-003632",
+    "cov-003644",
+    "cov-003649",
+    "cov-003654"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0171; path=Plans/Executor_Protocol.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## active-agents.json Retirement"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000892",
+        "cov-000939",
+        "cov-000991",
+        "cov-001134",
+        "cov-003626",
+        "cov-003629",
+        "cov-003632",
+        "cov-003644",
+        "cov-003649",
+        "cov-003654"
+      ],
+      "source_obligation_ids": [
+        "obl-000385",
+        "obl-000404",
+        "obl-000422",
+        "obl-000477",
+        "obl-001710",
+        "obl-001711",
+        "obl-001712",
+        "obl-001719",
+        "obl-001720",
+        "obl-001721"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0019",
+        "seed-WAVE005-0023",
+        "shard-0006-s014",
+        "shard-0007-s016",
+        "shard-0008-s013",
+        "shard-0010-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0006",
+        "shard-0007",
+        "shard-0008",
+        "shard-0010",
+        "shard-0043",
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "Contradiction: active-agents.json (flat file) vs seglog/redb (event-sourced) = split-brain risk; active-agents.json must be retired and replaced with seglog/redb canonical state",
+        "HandoffMessage and graph breadcrumbs still use phase_id/task_id where node/package/seam identity is required",
+        "AttemptJournal and handoff payloads remain subtask/iteration-shaped \u2014 must be updated to attempt record shape with package/seam/lane fields",
+        "<phase>/<task>/<subtask> canonical path patterns must be retired and replaced with <package_id>/<node_id> or <seam_id>/<package_id>/<node_id>",
+        "Execution identity is spread across incompatible keys: node-native pieces (run_id, thread_id, node_id, attempt_id, replan_generation, scheduler_lane) vs stale tier-native pieces (tier_id, TierType, TierContext, tier-level crews, tier worktree ownership)",
+        "Executor_Protocol.md and orchestrator-subagent-integration.md still behave like older tier-era execution owners but the rewrite has already pushed canonical semantics upward into graph/package/seam/lane/runtime-record language",
+        "Consolidate execution-core docs around a single node-native execution context object that replaces or wraps TierContext",
+        "Define one canonical execution_unit_context owner doc, likely shared between Executor_Protocol.md and Prompt_Pipeline.md, then have storage/event/docs consume it by reference instead of cloning partial field sets",
+        "Keep any replacement for TierContext as a compatibility wrapper at most: legacy_decomposition_context plus canonical execution_unit_context \u2014 never the other way around",
+        "Migrate coordination and crew models from tier_id anchoring to canonical execution refs plus secondary labels (run_id, node_id, attempt_id, lane_id?, work_package_id?, feature_seam_id?)"
+      ],
+      "stale_tokens": [
+        "active-agents.json",
+        "phase_id",
+        "task_id",
+        "AttemptJournal",
+        "<phase>/<task>/<subtask>",
+        "subtask_id",
+        "tier_id (as execution ownership key)",
+        "TierContext",
+        "TierType",
+        "tier-level crews",
+        "tier worktree ownership",
+        "tier_id (as canonical orchestrator ownership key in coordination)"
+      ],
+      "canonical_replacement_hints": [
+        "Use seglog/redb for canonical agent/run state"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

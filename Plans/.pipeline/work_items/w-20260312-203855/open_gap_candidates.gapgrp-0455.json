@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0455",
+  "coverage_row_ids_represented": [
+    "cov-004195",
+    "cov-004196",
+    "cov-004197"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0455; path=Plans/Progression_Gates.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Progression_Gates.md",
+          "heading": "## GATE-010"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004195",
+        "cov-004196",
+        "cov-004197"
+      ],
+      "source_obligation_ids": [
+        "obl-001980",
+        "obl-001981",
+        "obl-001982"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0032"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Plans/evidence.schema.json is too generic to express route/wrapper verification cleanly: checks[] only gives name, result, details, and contract_refs; there is no structured place for wrapper target, alias target, route-payload validation result, or canonical-contract normalization evidence.",
+        "Plans/Progression_Gates.md and UI_Wiring_Rules.md still assume command verification is: schema validation; command coverage; handler resolution; expected event emission; unknown-command rejection.",
+        "Extend evidence checks enough to record structured normalization verification instead of only free-form details text."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

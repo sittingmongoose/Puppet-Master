@@ -1,0 +1,85 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0731",
+  "coverage_row_ids_represented": [
+    "cov-001014",
+    "cov-001129",
+    "cov-001141",
+    "cov-004082",
+    "cov-004087",
+    "cov-004092"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0731; path=Plans/human-in-the-loop.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## HITL Automation-First Framing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001014",
+        "cov-001129",
+        "cov-001141",
+        "cov-004082",
+        "cov-004087",
+        "cov-004092"
+      ],
+      "source_obligation_ids": [
+        "obl-000430",
+        "obl-000476",
+        "obl-000479",
+        "obl-001900",
+        "obl-001901",
+        "obl-001902"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0001",
+        "shard-0009-s001",
+        "shard-0010-s012",
+        "shard-0010-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4: phase-complete approvals, manual review steps, and modal confirmations are still not framed as optional HITL boundaries \u2014 automation-first remains undermined",
+        "tier_boundary_approval must be retired everywhere and replaced with optional HITL at node/package/seam promotion boundaries",
+        "approve_continue must be retired and replaced with its canonical cmd.runtime.* equivalent",
+        "tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+        "Tier-shaped surfaces may still display and group by tier_id, but they should resolve through pointers to canonical execution objects rather than using tier_id as if it were the durable execution key",
+        "Retarget Run Graph and Usage links toward node_id / attempt_id semantics, with tier_id surviving only as a display/grouping label where needed"
+      ],
+      "stale_tokens": [
+        "phase-complete approvals",
+        "tier_boundary_approval",
+        "approve_continue",
+        "tier_id"
+      ],
+      "canonical_replacement_hints": [
+        "Reframe as optional HITL at node/package/seam promotion boundaries"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

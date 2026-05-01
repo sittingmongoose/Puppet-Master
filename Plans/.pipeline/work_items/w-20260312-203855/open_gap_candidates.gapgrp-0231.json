@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0231",
+  "coverage_row_ids_represented": [
+    "cov-001714",
+    "cov-001716",
+    "cov-001718",
+    "cov-001720",
+    "cov-001722",
+    "cov-001724",
+    "cov-001726",
+    "cov-001728",
+    "cov-001730",
+    "cov-001732"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0231; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Help System Concept Links"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001714",
+        "cov-001716",
+        "cov-001718",
+        "cov-001720",
+        "cov-001722",
+        "cov-001724",
+        "cov-001726",
+        "cov-001728",
+        "cov-001730",
+        "cov-001732"
+      ],
+      "source_obligation_ids": [
+        "obl-000755",
+        "obl-000756",
+        "obl-000757",
+        "obl-000758",
+        "obl-000759",
+        "obl-000760",
+        "obl-000761",
+        "obl-000762",
+        "obl-000763",
+        "obl-000764"
+      ],
+      "source_seed_ids": [
+        "shard-0021-s003",
+        "shard-0026-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Lane <-> Worktree <-> Cleanup Eligible <-> Archived/Removed",
+        "Requested <-> Effective <-> Skipped/Clamped",
+        "lane vs worktree",
+        "record vs artifact",
+        "history vs ledger",
+        "requested vs effective",
+        "override vs requested",
+        "current vs historical",
+        "historical vs superseded",
+        "resolved vs dismissed vs acknowledged"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}
