@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0340",
+  "coverage_row_ids_represented": [
+    "cov-00103",
+    "cov-00108",
+    "cov-00109",
+    "cov-00158"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0340",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "`Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surface\u2026 | `Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket \"missing everywhere\" claim. | `Plans/assistant-chat-design.md` also contains `### Multi-episode display`, so the blocked-notice flow is not missing wholesale. | attention_required",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Shared Blocked Taxonomy for Conversational Actors"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00103",
+        "cov-00108",
+        "cov-00109",
+        "cov-00158"
+      ],
+      "source_obligation_ids": [
+        "obl-0075",
+        "obl-0079",
+        "obl-0080",
+        "obl-0128"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s004",
+        "shard-0089-s138",
+        "shard-0089-s121",
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surfaces under audit.",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "report_ref",
+        "startup_recovered",
+        "escalation_level",
+        "`Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket \"missing everywhere\" claim.",
+        "tool_use_id",
+        "`Plans/assistant-chat-design.md` also contains `### Multi-episode display`, so the blocked-notice flow is not missing wholesale.",
+        "### Multi-episode display",
+        "attention_required",
+        "blocked",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "resume_url"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

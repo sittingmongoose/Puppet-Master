@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0458",
+  "coverage_row_ids_represented": [
+    "cov-00359",
+    "cov-00360",
+    "cov-00361",
+    "cov-00362",
+    "cov-00370",
+    "cov-00371",
+    "cov-00372",
+    "cov-00373",
+    "cov-00374",
+    "cov-00375"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0458",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence. | The owner doc says runtime identity is canonical, while still anchoring key override and selection concepts to `tier`. | The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change. | The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog. | The rewrite-root memo already locks provider/runtime architecture, but it does not yet record the newer Orchestrator/routing/projection decisions that downstream GUI docs now need.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00359",
+        "cov-00360",
+        "cov-00361",
+        "cov-00362",
+        "cov-00370",
+        "cov-00371",
+        "cov-00372",
+        "cov-00373",
+        "cov-00374",
+        "cov-00375"
+      ],
+      "source_obligation_ids": [
+        "obl-0270",
+        "obl-0271",
+        "obl-0272",
+        "obl-0273",
+        "obl-0275",
+        "obl-0276",
+        "obl-0277",
+        "obl-0278",
+        "obl-0279",
+        "obl-0280"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s117",
+        "shard-0084-s070",
+        "shard-0092-s037",
+        "shard-0091-s154",
+        "shard-0084-s119",
+        "shard-0083-s049",
+        "shard-0081-s121",
+        "shard-0088-s078",
+        "shard-0088-s079",
+        "shard-0080-s093"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0081",
+        "shard-0083",
+        "shard-0084",
+        "shard-0088",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence.",
+        "The owner doc says runtime identity is canonical, while still anchoring key override and selection concepts to `tier`.",
+        "tier",
+        "The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change.",
+        "The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.",
+        "planning",
+        "The rewrite-root memo already locks provider/runtime architecture, but it does not yet record the newer Orchestrator/routing/projection decisions that downstream GUI docs now need.",
+        "The routing cleanup will stay weak if `Progression_Gates.md` remains flat-command-only while `Contracts_V0.md` and `UI_Command_Catalog.md` move to route/open primitives.",
+        "Progression_Gates.md",
+        "Contracts_V0.md",
+        "UI_Command_Catalog.md",
+        "The strongest `GPT-5.2` pattern is that multiple specs now fail at exact field, anchor, or command-registration boundaries rather than only at conceptual alignment:",
+        "GPT-5.2",
+        "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+        "canon_inventory.json",
+        "The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+        "open_gaps.json",
+        "The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

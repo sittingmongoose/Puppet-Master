@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0388",
+  "coverage_row_ids_represented": [
+    "cov-03178"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0388",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "GPT-5.4: phase-complete approvals, manual review steps, and modal confirmations are still not framed as optional HITL boundaries \u2014 automation-first remains undermined",
+      "affected_targets": [
+        {
+          "path": "Plans/newtools.md",
+          "heading": "## HITL Automation-First Framing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03178"
+      ],
+      "source_obligation_ids": [
+        "obl-2043"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4: phase-complete approvals, manual review steps, and modal confirmations are still not framed as optional HITL boundaries \u2014 automation-first remains undermined"
+      ],
+      "stale_tokens": [
+        "phase-complete approvals",
+        "tier_boundary_approval"
+      ],
+      "canonical_replacement_hints": [
+        "Reframe as optional HITL at node/package/seam promotion boundaries"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

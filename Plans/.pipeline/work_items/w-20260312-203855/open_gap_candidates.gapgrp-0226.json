@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0226",
+  "coverage_row_ids_represented": [
+    "cov-01803"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0226",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "UI_Wiring_Rules.md still lacks dispatcher-level obligations for: allowed_action_ids[] filter enforcement, correlation_id trace-through into persisted dispatch/domain events, stale-projection revalidat\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "heading": "## Dispatcher Obligations"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01803"
+      ],
+      "source_obligation_ids": [
+        "obl-1053"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0059"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "UI_Wiring_Rules.md still lacks dispatcher-level obligations for: allowed_action_ids[] filter enforcement, correlation_id trace-through into persisted dispatch/domain events, stale-projection revalidation sequence before mutation",
+        "validation_pass_report.auto_fixes_applied[] is still absent; 'fixes applied' as a first-class field in the report structure matters for audit trail completeness"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "auto_fixes_applied"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

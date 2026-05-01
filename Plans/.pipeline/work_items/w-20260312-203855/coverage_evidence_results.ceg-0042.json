@@ -1,0 +1,233 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0042",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01360",
+      "source_obligation_ids": [
+        "obl-0800"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01550",
+      "source_obligation_ids": [
+        "obl-0892"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0013"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 3/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01702",
+      "source_obligation_ids": [
+        "obl-0984"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 4/6 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01810",
+      "source_obligation_ids": [
+        "obl-1057"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 6/7 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01863",
+      "source_obligation_ids": [
+        "obl-1083"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 6/6 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01939",
+      "source_obligation_ids": [
+        "obl-1154"
+      ],
+      "source_seed_ids": [
+        "shard-0092-s034"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01940",
+      "source_obligation_ids": [
+        "obl-1155"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s055",
+        "shard-0077-s086",
+        "shard-0081-s067",
+        "shard-0081-s159",
+        "shard-0082-s087",
+        "shard-0082-s121",
+        "shard-0082-s145",
+        "shard-0083-s018",
+        "shard-0083-s034",
+        "shard-0083-s070",
+        "shard-0084-s114",
+        "shard-0086-s028",
+        "shard-0086-s056",
+        "shard-0086-s095",
+        "shard-0092-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0086",
+        "shard-0092"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02726",
+      "source_obligation_ids": [
+        "obl-1752"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0019"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Crosswalk.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-03010",
+      "source_obligation_ids": [
+        "obl-1948"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s135"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/Crosswalk.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md: first-400-line window scan for stale_retirement",
+        "stale token still appears in live-use context in window"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

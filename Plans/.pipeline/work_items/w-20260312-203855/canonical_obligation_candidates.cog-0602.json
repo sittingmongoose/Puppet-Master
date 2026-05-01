@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0602",
+  "represented_seed_ids": [
+    "shard-0040-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0040"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0040-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "do-not-forget: run.started MUST field list in storage-plan.md must agree with the operational_identity block definition \u2014 the event row must include the full operational_identity snapshot inline or by\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "do-not-forget: run.started MUST field list in storage-plan.md must agree with the operational_identity block definition \u2014 the event row must include the full operational_identity snapshot inline or by normative reference",
+        "do-not-forget: provider_accounts.run_snapshot policy_hash must become policy_version_ref to support downstream policy-validity queries",
+        "do-not-forget: usage_event_ref as structured locator must be defined before any surface ships Show in Usage or Show in Ledger pivots"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Do-not-forget details (wave-004 closure)"
+      ],
+      "stale_residue_to_retire": [
+        "policy_hash"
+      ],
+      "canonical_replacement_hints": [
+        "policy_version_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

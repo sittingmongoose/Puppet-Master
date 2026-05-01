@@ -1,0 +1,111 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0046",
+  "coverage_row_ids_represented": [
+    "cov-02696",
+    "cov-02705",
+    "cov-02716",
+    "cov-02751",
+    "cov-02753",
+    "cov-02767",
+    "cov-02770",
+    "cov-02784"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0046",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "repeated sightings of the same underlying issue should usually update an existing concern rather than minting endless duplicates | resolution_kind values: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery | review findings may nominate or update concerns, but the review record remains distinct | seglog is canonical; redb/Tantivy/JSONL are disposable projections; replay/rebuild targets a deterministic target_seq; UI freshness notifications should derive from committed projection state, not ad-\u2026 | separate time status, replacement status, and validity status for records",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Source update rule"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-02696",
+        "cov-02705",
+        "cov-02716",
+        "cov-02751",
+        "cov-02753",
+        "cov-02767",
+        "cov-02770",
+        "cov-02784"
+      ],
+      "source_obligation_ids": [
+        "obl-1738",
+        "obl-1745",
+        "obl-1750",
+        "obl-1771",
+        "obl-1772",
+        "obl-1779",
+        "obl-1781",
+        "obl-1788"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s003",
+        "shard-0031-s001",
+        "shard-0031-s004",
+        "shard-0013-s001",
+        "shard-0014-s005",
+        "shard-0025-s005",
+        "shard-0017-s007",
+        "shard-0034-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0014",
+        "shard-0017",
+        "shard-0025",
+        "shard-0031",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "repeated sightings of the same underlying issue should usually update an existing concern rather than minting endless duplicates",
+        "do not merge automatically just because summaries look similar",
+        "use source/scope/category/lineage-aware heuristics or explicit governance action",
+        "resolution_kind values: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery",
+        "dismissed is not a substitute for resolved",
+        "accepted_risk is a resolution, not a dismissal",
+        "review findings may nominate or update concerns, but the review record remains distinct",
+        "corroboration can: validate a concern, downgrade it to advisory/minor, leave an unresolved minority concern",
+        "graph patch can: resolve concern, obsolete concern, split concern into more precise post-patch concerns",
+        "recovery can: resolve concern, create follow-on concern if recovery exposes a new issue",
+        "blocked episodes can: reference concern when a concern becomes execution-blocking, but should not be replaced by the concern record",
+        "seglog is canonical; redb/Tantivy/JSONL are disposable projections; replay/rebuild targets a deterministic target_seq; UI freshness notifications should derive from committed projection state, not ad-hoc polling",
+        "separate time status, replacement status, and validity status for records",
+        "historical: no longer current/live, but still part of valid history",
+        "stale_historical: historical and specifically not resumable/reusable as live execution state",
+        "superseded: replaced by a newer canonical successor for the same semantic slot",
+        "revoked: previously accepted/active decision or state was explicitly withdrawn",
+        "reopened: an object previously treated as settled/completed became active again",
+        "archived: hidden from default operational surfaces but retained and queryable",
+        "removed: live backing object is gone, but history may remain",
+        "stale visibility is not the same as action authority",
+        "GUI must not guess that a previously visible allowed_action_ids[] set is still valid if the blocked projection is stale",
+        "state transition report: from state, to state, target object, actor/source, why transition occurred, prerequisite evidence / review / corroboration refs, resulting downstream obligations",
+        "This may help avoid every major object family inventing bespoke decision summary fields",
+        "storage-plan.md says run.started MUST include the full persona/runtime snapshot, but the event table row still enumerates a much thinner field set",
+        "storage-plan.md usage.event row still omits effective auth/account/model identity even though usage-feature.md UsageRecord expects those fields downstream",
+        "Contracts_V0.md forbids _persona_id canonical names while Orchestrator_Page.md still requires them in runtime-facing worker identity fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

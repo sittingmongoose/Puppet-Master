@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0451",
+  "coverage_row_ids_represented": [
+    "cov-00168",
+    "cov-00169",
+    "cov-00170",
+    "cov-00171",
+    "cov-00172",
+    "cov-00173",
+    "cov-00174",
+    "cov-00175",
+    "cov-00176",
+    "cov-00177"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0451",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "cross-surface node usage via `tier_id` | data sources still rely on `PuppetMasterEvent::TierChanged`, `tier_id`, and phase/task/subtask framing for multiple Orchestrator widgets | evidence summaries as record-backed surfaces | graph/orchestrator live-status bindings that bypass canonical blocked projections | it explicitly says it is not the storage, command, permission, or widget SSOT",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00168",
+        "cov-00169",
+        "cov-00170",
+        "cov-00171",
+        "cov-00172",
+        "cov-00173",
+        "cov-00174",
+        "cov-00175",
+        "cov-00176",
+        "cov-00177"
+      ],
+      "source_obligation_ids": [
+        "obl-0136",
+        "obl-0137",
+        "obl-0138",
+        "obl-0139",
+        "obl-0140",
+        "obl-0141",
+        "obl-0142",
+        "obl-0143",
+        "obl-0144",
+        "obl-0145"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s010",
+        "shard-0085-s085",
+        "shard-0080-s050",
+        "shard-0080-s005",
+        "shard-0085-s138",
+        "shard-0085-s032",
+        "shard-0079-s028",
+        "shard-0088-s007",
+        "shard-0079-s099",
+        "shard-0084-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0079",
+        "shard-0080",
+        "shard-0084",
+        "shard-0085",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "cross-surface node usage via `tier_id`",
+        "tier_id",
+        "data sources still rely on `PuppetMasterEvent::TierChanged`, `tier_id`, and phase/task/subtask framing for multiple Orchestrator widgets",
+        "PuppetMasterEvent::TierChanged",
+        "evidence summaries as record-backed surfaces",
+        "graph/orchestrator live-status bindings that bypass canonical blocked projections",
+        "it explicitly says it is not the storage, command, permission, or widget SSOT",
+        "lane/worktree, receipt, and cross-surface lineage concepts are present",
+        "later addenda already align blocked views on `blocked_sequence` and `allowed_action_ids[]`",
+        "blocked_sequence",
+        "allowed_action_ids[]",
+        "named display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, `Support`)",
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support",
+        "newer canonical runtime records and projections",
+        "no named `route_target` / `OpenSubject` contract tie even though subject-first preview identity already exists",
+        "route_target",
+        "OpenSubject"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

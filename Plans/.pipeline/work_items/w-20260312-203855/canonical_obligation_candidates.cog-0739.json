@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0739",
+  "represented_seed_ids": [
+    "shard-0007-s015"
+  ],
+  "source_shard_ids": [
+    "shard-0007"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0007-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Contradiction: plan_graph.schema.json has selection_rule = 'lexicographic_node_id' hard-coded while runtime scheduler addenda define a scored tuple \u2014 these must be reconciled",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "Contradiction: plan_graph.schema.json has selection_rule = 'lexicographic_node_id' hard-coded while runtime scheduler addenda define a scored tuple \u2014 these must be reconciled"
+      ],
+      "affected_doc_hints": [
+        "Plans/plan_graph.schema.json",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Lexicographic vs Scored Scheduler Contradiction"
+      ],
+      "stale_residue_to_retire": [
+        "selection_rule = \"lexicographic_node_id\""
+      ],
+      "canonical_replacement_hints": [
+        "Replace lexicographic rule with scored ready-set scheduler selection"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001360-L001385"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

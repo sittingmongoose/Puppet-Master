@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0430",
+  "coverage_row_ids_represented": [
+    "cov-03165",
+    "cov-03194",
+    "cov-03224",
+    "cov-03232",
+    "cov-03242"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0430",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Define one canonical execution_unit_context owner doc, likely shared between Executor_Protocol.md and Prompt_Pipeline.md, then have storage/event/docs consume it by reference instead of cloning partia\u2026 | Orchestrator_Page.md still keeps Tiers and multi-tab widget composition | execution_role and actor_role are used interchangeably across shard content \u2014 need one canonical name | storage-plan.md still leans on tier_id / run.tier_* | tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Tiers"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03165",
+        "cov-03194",
+        "cov-03224",
+        "cov-03232",
+        "cov-03242"
+      ],
+      "source_obligation_ids": [
+        "obl-2038",
+        "obl-2049",
+        "obl-2068",
+        "obl-2071",
+        "obl-2074"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0023",
+        "shard-0011-s011",
+        "shard-0039-s003",
+        "shard-0031-s009",
+        "seed-WAVE006-0001"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0031",
+        "shard-0039",
+        "shard-0044",
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "Define one canonical execution_unit_context owner doc, likely shared between Executor_Protocol.md and Prompt_Pipeline.md, then have storage/event/docs consume it by reference instead of cloning partial field sets",
+        "Keep any replacement for TierContext as a compatibility wrapper at most: legacy_decomposition_context plus canonical execution_unit_context \u2014 never the other way around",
+        "Migrate coordination and crew models from tier_id anchoring to canonical execution refs plus secondary labels (run_id, node_id, attempt_id, lane_id?, work_package_id?, feature_seam_id?)",
+        "Orchestrator_Page.md still keeps Tiers and multi-tab widget composition",
+        "Widget_System.md still catalogs tier widgets and weak hostability rules",
+        "usage-feature.md still aggregates around tier_id",
+        "storage-plan.md still splits tier-era event tables from newer attempt-centric records",
+        "execution_role and actor_role are used interchangeably across shard content \u2014 need one canonical name",
+        "execution_role is the preferred canonical name: it distinguishes the role the actor plays during this execution (not their long-lived identity role)",
+        "actor_role must be retired; all docs that reference actor_role must be updated to execution_role",
+        "storage-plan.md still leans on tier_id / run.tier_*",
+        "usage-feature.md still treats tier_id as a core attribution dimension and does not yet pivot to seam_id / package_id / lane_id",
+        "tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+        "Tier-shaped surfaces may still display and group by tier_id, but they should resolve through pointers to canonical execution objects rather than using tier_id as if it were the durable execution key",
+        "Retarget Run Graph and Usage links toward node_id / attempt_id semantics, with tier_id surviving only as a display/grouping label where needed"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id (as canonical orchestrator ownership key in coordination)",
+        "Tiers tab",
+        "tier_id aggregation",
+        "tier-era event tables",
+        "TierChanged",
+        "IterationStart",
+        "TierTree",
+        "actor_role",
+        "tier_id",
+        "run.tier_*"
+      ],
+      "canonical_replacement_hints": [
+        "execution_unit_context",
+        "legacy_decomposition_context (compatibility wrapper only)",
+        "attempt/node/lane/package/seam-aware attribution; tier terms only as compatibility aliases if needed",
+        "execution_role",
+        "seam_id",
+        "package_id",
+        "lane_id",
+        "node_id",
+        "attempt_id",
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,456 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0036",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0036-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "actor-envelope definition must be carried forward into Contracts_V0.md",
+        "needed minimum is project_id + actor_kind + sparse actor-ref set + requested/effective identity block",
+        "this envelope is the common payload element for receipts, usage events, HITL artefacts, concern records, attention items, and route payloads"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Actor Envelope Definition",
+        "## Canonical Actor Envelope"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "actor_kind",
+        "sparse actor-ref set",
+        "requested/effective identity block"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "cmd.graph.approve_hitl / deny_hitl arguments must be normalized to match UI_Command_Catalog.md canonical args (request_id-based pattern)",
+        "cmd.graph cross-surface open commands must be explicitly bound (cmd.runtime.open_in_*, etc.)",
+        "projection-trust gating must be added: actions against stale graph nodes must surface clear affordances or be disabled until freshness is confirmed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Run Graph Command Normalization",
+        "## cmd.graph Args Fix"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": [
+        "cmd.graph.approve_hitl/deny_hitl arg mismatch is a concrete regression risk"
+      ]
+    },
+    {
+      "seed_id": "shard-0036-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "cmd.github.connect is effectively argument-free in GitHub_Integration.md but should carry context args (project scope target, desired capability tier, optional recovery-request context)",
+        "GitHub Integration command table diverges from UI_Command_Catalog.md (different command names and different arg shapes for overlapping commands)",
+        "These are now the only place where requested/effective admin capability is surfaced"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## cmd.github.connect Args",
+        "## GitHub Command Table Divergence"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "GitHub_API_Auth_and_Flows.md still uses GitHub login as the durable identity key",
+        "GitHub OAuth scopes are still derived from token inspection rather than being declared as a discrete identity sub-capability set",
+        "no account-health / degraded-capability model exists in GitHub_API_Auth_and_Flows.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## GitHub Durable Identity",
+        "## GitHub Capability Declaration"
+      ],
+      "stale_tokens": [
+        "login"
+      ],
+      "canonical_replacement_hints": [
+        "stable internal account_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": [
+        "OAuth scopes must be declared, not inferred \u2014 this is an audit and trust-safety requirement"
+      ]
+    },
+    {
+      "seed_id": "shard-0036-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "GitHub_Integration.md now needs: effective-account display on all account-context views, account-switch-reason / degraded-capability UI, and account-blocked-recovery-request integration with canonical concern records",
+        "concern integration requires GitHub Integration to be a concern owner/consumer, not just a passive display surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## GitHub Integration Account UI",
+        "## Concern Owner Registration"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "terminal widget identity is split between widget.terminal_output and widget.agent_terminal \u2014 these should be one canonical ID with capability bits",
+        "Orchestrator Progress widget layout must be resolved: app-default with project override (layered) is the recommended model",
+        "Widget_System.md still groups Orch/Tiers, Orch/Evidence, Orch/History, Orch/Ledger as widget-hostable; only Progress is widget-composed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Terminal Widget Normalization",
+        "## Widget Hostability Reduction"
+      ],
+      "stale_tokens": [
+        "widget.terminal_output",
+        "widget.agent_terminal",
+        "Orch/Tiers",
+        "Orch/Evidence",
+        "Orch/History",
+        "Orch/Ledger"
+      ],
+      "canonical_replacement_hints": [
+        "widget.terminal (canonical with capability bits)",
+        "Progress only for widget composition"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "governance_boundary needs a versioned stream schema in the A2A adapter layer with a clean migration strategy",
+        "attempt_id needs to be added to reserved diagnostic schemas as a normatively required field for audit, HITL, handoff, and blocked-episode events",
+        "actor_kind / execution_role fields need to enter the per-stream actor envelope so downstream projections and audit trails have full actor attribution"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Stream Schema Fixes Across Docs",
+        "## governance_boundary Migration"
+      ],
+      "stale_tokens": [
+        "tier_boundary"
+      ],
+      "canonical_replacement_hints": [
+        "governance_boundary"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add capability declarations for bridged providers to CLI_Bridged_Providers.md (matching language of direct providers): CAPABILITY_MULTI_ACCOUNT, CAPABILITY_SWITCH_NOTIFICATION, CAPABILITY_LANE_ATTRIBUTION, etc.",
+        "Bridge envelope must carry effective account identity and switch-reason when capabilities are declared",
+        "Permission reject-cascade and session-cache scope must be limited to actor/lane-aware boundaries, not whole session",
+        "Extend OpenCode SSE contract to filter events per actor/lane context"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridged Provider Capability Declarations",
+        "## Permission Lane Scope"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "concern projection / concern_counts / node_concerns[] fields are missing from Run_Graph_View.md and from the candidate runtime projection contracts in Contracts_V0.md",
+        "blocked-owner vs concern-owner distinction must be added to the node-state model so UI can render correct triage options",
+        "concern records must be queryable from Run Graph node-click context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## node_concerns Projection Gap",
+        "## Concern-Aware Node State"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "node_concerns[]"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": [
+        "node_concerns[] is the minimum concern projection needed to unblock concern-aware triage from Run Graph"
+      ]
+    },
+    {
+      "seed_id": "shard-0036-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "pre-attempt-blocked episodes require scheduled_run record + blocked_sequence tracking but still need a way to fire concern/attention records without an attempt_id",
+        "account-switch history still requires a first-class canonical event family, not just state hints",
+        "usage_event_ref should be structured with at minimum: project_id, run_id, attempt_id?, node_id, lane_id?, created_at_utc \u2014 not a bare string"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Do-not-forget details",
+        "## Pre-Attempt Blocked Handling"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "Orchestrator Progress widget layout decision: app-default with project override \u2014 this must be the single authoritative decision documented in Widget_System.md and cross-referenced from Orchestrator_Page.md",
+        "do-not-forget: run.started MUST field list in storage-plan.md still disagrees with the surrounding prose about how much identity to include",
+        "do-not-forget: provider_accounts.run_snapshot policy_hash should be a policy_version_ref for downstream policy-validity queries"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "policy_hash"
+      ],
+      "canonical_replacement_hints": [
+        "policy_version_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "Reconcile GitHub command table with UI_Command_Catalog.md: align arg shapes for cmd.github.connect, cmd.github.disconnect, and any overlapping command definitions",
+        "Add a declared-capability mechanism to CLI_Bridged_Providers.md so bridged providers can announce multi-account, switch-notification, and attribution capabilities the same way direct providers do",
+        "Bind GitHub_API_Auth_and_Flows.md to stable account_id instead of mutable login and add account-health / degraded-capability model",
+        "Rewrite GitHub_Integration.md account UX to include: effective-account display, account-switch-reason display, requested-vs-effective admin-capability contrast, blocked-recovery-request trigger linking to canonical concern record"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "login"
+      ],
+      "canonical_replacement_hints": [
+        "stable internal account_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s013",
+      "seed_type": "owner",
+      "exact_items": [
+        "Rename or replace widget.terminal_output and widget.agent_terminal with one canonical identity in Widget_System.md",
+        "Add explicit capability bits for agent-terminal-stream vs plain output to the single canonical widget",
+        "Expose Orchestrator-owned worktree grouping in Source Control: either as a label/filter field on existing worktree records or as a named partition descriptor"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward",
+        "## Terminal Widget Canonical ID"
+      ],
+      "stale_tokens": [
+        "widget.terminal_output",
+        "widget.agent_terminal"
+      ],
+      "canonical_replacement_hints": [
+        "widget.terminal"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0036-s014",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add a node_concerns[] / concern_count projection to the Run Graph node state model so concern details are surfaced at node click",
+        "Bind concern-rendering to canonical concern record via concern_id, not ad-hoc blocked strings",
+        "Align Run Graph command bindings with UI_Command_Catalog.md canonical cmd.runtime.*, cmd.orchestrator.open_in_* variants"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward",
+        "## node_concerns Projection"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "node_concerns[]",
+        "concern_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0036",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L7025-L7036: section header and targeted-docs-read list only",
+    "L7063-L7078: section header and targeted-docs-read list only",
+    "L7122-L7138: highest-risk impacted docs list \u2014 seeds extracted from content"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

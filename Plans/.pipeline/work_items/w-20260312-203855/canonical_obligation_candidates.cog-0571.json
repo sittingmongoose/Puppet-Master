@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0571",
+  "represented_seed_ids": [
+    "shard-0004-s008"
+  ],
+  "source_shard_ids": [
+    "shard-0004"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0004-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "The system must be fully automated by default; HITL is OFF by default and must be explicitly configured to enable",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The system must be fully automated by default; HITL is OFF by default and must be explicitly configured to enable"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Run_Modes.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Automation-First Default",
+        "## HITL Off By Default"
+      ],
+      "stale_residue_to_retire": [
+        "tier_boundary_approval"
+      ],
+      "canonical_replacement_hints": [
+        "HITL is optional at node/package/seam promotion boundaries, not tier boundaries"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L000720-L000745"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

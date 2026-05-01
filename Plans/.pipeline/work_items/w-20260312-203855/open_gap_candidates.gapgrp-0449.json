@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0449",
+  "coverage_row_ids_represented": [
+    "cov-00143",
+    "cov-00144",
+    "cov-00145",
+    "cov-00146",
+    "cov-00147",
+    "cov-00148",
+    "cov-00149",
+    "cov-00150",
+    "cov-00151",
+    "cov-00152"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0449",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`widget.completed_prose` = completed tier summaries | `widget.completed_prose` = finished phases/tasks | `widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces. | `widget.current_task` | `widget.current_task` = active tier title/objective/elapsed",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00143",
+        "cov-00144",
+        "cov-00145",
+        "cov-00146",
+        "cov-00147",
+        "cov-00148",
+        "cov-00149",
+        "cov-00150",
+        "cov-00151",
+        "cov-00152"
+      ],
+      "source_obligation_ids": [
+        "obl-0114",
+        "obl-0115",
+        "obl-0116",
+        "obl-0117",
+        "obl-0118",
+        "obl-0119",
+        "obl-0120",
+        "obl-0121",
+        "obl-0122",
+        "obl-0123"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s046",
+        "shard-0080-s068",
+        "shard-0080-s054",
+        "shard-0085-s019",
+        "shard-0080-s064",
+        "shard-0080-s043",
+        "shard-0085-s146",
+        "shard-0085-s020",
+        "shard-0080-s044",
+        "shard-0080-s065",
+        "shard-0085-s145"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` = completed tier summaries",
+        "widget.completed_prose",
+        "`widget.completed_prose` = finished phases/tasks",
+        "`widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+        "`widget.current_task`",
+        "widget.current_task",
+        "`widget.current_task` = active tier title/objective/elapsed",
+        "`widget.current_task` = active tier title/objective/platform/model",
+        "`widget.current_task` as active tier",
+        "`widget.progress_bars`",
+        "widget.progress_bars",
+        "`widget.progress_bars` = phase/task/subtask completion bars",
+        "`widget.progress_bars` as phase/task/subtask bars"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

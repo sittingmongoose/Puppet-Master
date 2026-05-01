@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0348",
+  "coverage_row_ids_represented": [
+    "cov-01040",
+    "cov-01189",
+    "cov-01717",
+    "cov-02053",
+    "cov-02054",
+    "cov-02724"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0348",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent` | Formalize the three-way command taxonomy: pure shell/view-state commands; route-consuming navigation commands; domain mutation/runtime commands | The contract now has enough shape to define concrete route normalization for the most common user-facing flows. | `Plans/assistant-chat-design.md` still defines `blocked_notice` with only `blocked_family` and `allowed_action_ids[]`, so `blocked_sequence` and `approval_scope_key` remain missing specifically from t\u2026 | `Plans/assistant-chat-design.md` still does not carry the exact blocked packet fields `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, or `escalation_le\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## OpenSubject Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01040",
+        "cov-01189",
+        "cov-01717",
+        "cov-02053",
+        "cov-02054",
+        "cov-02724"
+      ],
+      "source_obligation_ids": [
+        "obl-0666",
+        "obl-0717",
+        "obl-0988",
+        "obl-1258",
+        "obl-1259",
+        "obl-1752"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0035",
+        "seed-WAVE007-0027",
+        "seed-WAVE007-0053",
+        "shard-0090-s091",
+        "shard-0089-s122",
+        "seed-WAVE007-0019"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0065",
+        "shard-0067",
+        "shard-0070",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`",
+        "Keep the intent vocabulary controlled and small: `open_source`; `open_preview`; `open_review`",
+        "Keep resolver-support metadata out of the contract.",
+        "State the resolution rule directly: `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists; otherwise it resolves to transient `generated://<artifact_id>` source opening",
+        "`OpenSubject` does not carry: `project_id`, `thread_id`, `run_id`, `tab_id`, `panel_id`, `inspector_target`, `origin_surface`, `source_kind`, `backing_document_id`, `last_saved_path`, `generated://<artifact_id>`, preview persistence state, transport mode",
+        "Formalize the three-way command taxonomy: pure shell/view-state commands; route-consuming navigation commands; domain mutation/runtime commands",
+        "Keep `cmd.panel.switch` and `cmd.source_control.switch_subview` as pure shell/view-state commands with controlled destination vocabularies.",
+        "Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.",
+        "Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cmd.artifacts.show_in_*`, and cross-surface Orchestrator pivots as wrapper navigation commands over canonical route targeting rather than as generic layout toggles.",
+        "The contract now has enough shape to define concrete route normalization for the most common user-facing flows.",
+        "cost usage -> Show in Usage: `target_kind=primary_view`, `project_id=<id>`, `object_kind=usage_event`, `object_id=<canonical usage event id>`, `thread_id=<id>` when thread-scoped, `inspector_target=usage`",
+        "cost usage -> Show in Ledger: `target_kind=primary_view`, `project_id=<id>`, `object_kind=usage_event`, `object_id=<id>`, `thread_id=<id>` when thread-scoped, `tab_id=ledger`",
+        "wizard resume: `target_kind=primary_view`, `project_id=<id>`, `object_kind=wizard`, `object_id=<wizard_id>`, `thread_id=<id>` when thread must be restored; serialized `resume_url` carries narrow step anchor detail",
+        "chat search hit: `target_kind=side_panel`, `project_id=<id>`, `thread_id=<id>`, `object_kind=message`, `object_id=<message_id>`",
+        "node detail pivot: `target_kind=page_tab`, `project_id=<id>`, `focused_run_id=<run_id>`, `object_kind=node`, `object_id=<node_id>`, `tab_id=node_graph`, `inspector_target=details|evidence|usage|history`",
+        "`Plans/assistant-chat-design.md` still defines `blocked_notice` with only `blocked_family` and `allowed_action_ids[]`, so `blocked_sequence` and `approval_scope_key` remain missing specifically from the live blocked-notice payload.",
+        "Plans/assistant-chat-design.md",
+        "blocked_notice",
+        "blocked_family",
+        "allowed_action_ids[]",
+        "blocked_sequence",
+        "approval_scope_key",
+        "`Plans/assistant-chat-design.md` still does not carry the exact blocked packet fields `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, or `escalation_level`.",
+        "report_ref",
+        "startup_recovered",
+        "action_available",
+        "escalation_level",
+        "route activation overrides remembered state only when required to satisfy the requested destination/object/context; otherwise it should reuse persisted shell state and local destination defaults",
+        "MUST override: target object identity; destination surface when the action explicitly names a different surface; scope required to make the target meaningful (project_id, thread_id, focused_run_id, or an explicitly requested panel/tab)",
+        "MUST NOT reuse persisted state when doing so would: land on the wrong object; hide the requested target behind the wrong tab/subview; silently keep the user on a stale run/thread/project context",
+        "Add a shared route-activation override rule in the contract/GUI owner docs."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

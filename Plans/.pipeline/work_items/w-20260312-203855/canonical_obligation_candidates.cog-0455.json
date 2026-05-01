@@ -1,0 +1,215 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0455",
+  "represented_seed_ids": [
+    "seed-WAVE005-0004",
+    "shard-0011-s008",
+    "shard-0038-s007",
+    "shard-0039-s010",
+    "shard-0081-s077",
+    "shard-0082-s004",
+    "shard-0082-s098",
+    "shard-0086-s087",
+    "shard-0086-s123"
+  ],
+  "source_shard_ids": [
+    "shard-0011",
+    "shard-0038",
+    "shard-0039",
+    "shard-0041",
+    "shard-0081",
+    "shard-0082",
+    "shard-0086"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE005-0004"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "canon_label": "Plans/Permissions_System.md needs scope-keyed approval semantics and richer permission snapshots",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Permissions_System.md needs scope-keyed approval semantics and richer permission snapshots",
+        "Permission approval caching and reject-cascade still lack actor/lane/account scope",
+        "Permission snapshots still do not project requested/effective identity richly enough for blocked/approval truth",
+        "Upgrade permission snapshots to carry requested/effective values, downgrade reasons, and identity context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L008001-L008200"
+      ],
+      "notes": [
+        "ask/plan -> deny still conflicts with external_publish_side_effect non-bypassable approval path"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0011-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "canon_label": "Permissions_System.md resolves by tool/context/mode but not by invoking runtime entity, lane, or account",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permissions_System.md resolves by tool/context/mode but not by invoking runtime entity, lane, or account",
+        "session approval carryover and reject-cascade semantics are still effectively single-session/single-lane even though the rewrite requires parallel actors sharing provider runtime",
+        "Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover/cascade rules"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Permission Resolution",
+        "## Approval Scope",
+        "## Multi-Lane Permission"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002026-L002027",
+        "working_ledger.md:L002046",
+        "working_ledger.md:L002055"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0038-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "trust / permission decisions cluster: Permissions_System.md session cache and reject-cascade must be re-scoped to actor/lane-aware boundaries",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "trust / permission decisions cluster: Permissions_System.md session cache and reject-cascade must be re-scoped to actor/lane-aware boundaries",
+        "Permission snapshot invalidation on account switch must be defined: when account changes, which cached permission decisions are stale",
+        "Always-approval and never-approval decisions must be scoped to (actor_kind, tool, scope_context) not to (session-global, tool)",
+        "Multi-actor permission snapshot isolation must be normative and testable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Permission Scope Redesign",
+        "## Permission Snapshot Invalidation"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007401"
+      ],
+      "notes": [
+        "Session-global always/never approvals under multi-lane/multi-actor creates permission contamination risk \u2014 this is a correctness issue, not just style"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0039-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Permissions_System.md permission snapshot invalidation on account switch must be defined explicitly",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permissions_System.md permission snapshot invalidation on account switch must be defined explicitly",
+        "Rule: when effective_account_id changes for an actor/lane, all always/never approvals scoped to that (actor, tool, scope_context) where scope_context includes account-sensitive tools must be invalidated",
+        "Account-neutral tool approvals (e.g., read-only filesystem reads) may survive account switches if explicitly exempted in the approval scope definition"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Permission Snapshot Invalidation on Account Switch"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007601"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0081-s077",
+        "shard-0082-s004",
+        "shard-0082-s098",
+        "shard-0086-s087",
+        "shard-0086-s123"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082",
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Permissions_System.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Permissions_System.md`",
+        "Plans/Permissions_System.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016090",
+        "working_ledger.md:L016204",
+        "working_ledger.md:L016318",
+        "working_ledger.md:L017127",
+        "working_ledger.md:L017169"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Permissions_System.md`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0077",
+  "coverage_row_ids_represented": [
+    "cov-00235",
+    "cov-00236",
+    "cov-00463"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0077",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Executor_Protocol.md contains byte-identical duplicated canonical scheduler sections | Executor_Protocol.md has a broken Glossary forward reference | `OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, se\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## OpenCode Hard Architecture Limits"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00235",
+        "cov-00236",
+        "cov-00463"
+      ],
+      "source_obligation_ids": [
+        "obl-0189",
+        "obl-0190",
+        "obl-0333"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0048",
+        "seed-WAVE005-0034",
+        "seed-WAVE007-0049"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0047",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "Executor_Protocol.md contains byte-identical duplicated canonical scheduler sections",
+        "Executor_Protocol.md still leaves blocked_sequence minting, startup recovery handshake, execution_role ownership, and reviewer/corroboration lifecycle unowned",
+        "Collapse duplicated executor canon and explicitly assign owners for blocked_sequence, startup_recovered handshake, execution_role, and reviewer/corroboration lifecycle",
+        "Executor_Protocol.md has a broken Glossary forward reference",
+        "Executor_Protocol.md has an incomplete wake-reason set, no real blocked_reason_code table, no blocked_sequence integration, and no actor/lifecycle model for reviewer/corroboration flows",
+        "Executor_Protocol.md still has duplicated canonical scheduler sections",
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "These should not be collapsed back into generic summary language during reconciliation."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

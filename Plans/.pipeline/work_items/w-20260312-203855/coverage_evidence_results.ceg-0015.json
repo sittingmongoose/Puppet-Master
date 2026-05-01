@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0015",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00782",
+      "source_obligation_ids": [
+        "obl-0549"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00785",
+      "source_obligation_ids": [
+        "obl-0550"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00787",
+      "source_obligation_ids": [
+        "obl-0551"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s020"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00789",
+      "source_obligation_ids": [
+        "obl-0552"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00792",
+      "source_obligation_ids": [
+        "obl-0553"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00794",
+      "source_obligation_ids": [
+        "obl-0554"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00798",
+      "source_obligation_ids": [
+        "obl-0556"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00805",
+      "source_obligation_ids": [
+        "obl-0560"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s042"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00814",
+      "source_obligation_ids": [
+        "obl-0569"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00830",
+      "source_obligation_ids": [
+        "obl-0575"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0007"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "path": "Plans/Contracts_V0.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Contracts_V0.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

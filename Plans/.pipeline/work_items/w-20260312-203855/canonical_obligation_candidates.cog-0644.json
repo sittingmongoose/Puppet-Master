@@ -1,0 +1,74 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0644",
+  "represented_seed_ids": [
+    "shard-0092-s004"
+  ],
+  "source_shard_ids": [
+    "shard-0092"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0092-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "`cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent lev\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `Plans/Models_System.md:58-80` defines run/persona/surface/default priority only, `Plans/Executor_Protocol.md:134-178` defines `DispatchContext.provider_id` / `model_id` without precedence rules, and `Plans/WorktreeGitImprovement.md:78-161` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `working_ledger.md:L1030`, `working_ledger.md:L1035-L1036`, and `working_ledger.md:L1283-L1290`.",
+        "cov-511",
+        "obl-215",
+        "Plans/Models_System.md:58-80",
+        "Plans/Executor_Protocol.md:134-178",
+        "DispatchContext.provider_id",
+        "model_id",
+        "Plans/WorktreeGitImprovement.md:78-161",
+        "working_ledger.md:L1030"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Models_System.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "DispatchContext.provider_id",
+        "Plans/Executor_Protocol.md:134-178",
+        "Plans/Models_System.md:58-80",
+        "Plans/WorktreeGitImprovement.md:78-161",
+        "cov-511",
+        "model_id",
+        "obl-215",
+        "working_ledger.md:L1030",
+        "working_ledger.md:L1035-L1036",
+        "working_ledger.md:L1283-L1290"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L018205"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner se"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

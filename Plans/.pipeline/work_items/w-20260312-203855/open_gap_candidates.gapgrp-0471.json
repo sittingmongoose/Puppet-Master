@@ -1,0 +1,77 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0471",
+  "coverage_row_ids_represented": [
+    "cov-00727",
+    "cov-00731",
+    "cov-00732",
+    "cov-00737",
+    "cov-00738"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0471",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting | widget commands still say `Orchestrator widget tabs`, which conflicts with the rewrite direction that only `Progress` remains widget-composed in Orchestrator | widget layout takes precedence | worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id` | wrapper metadata in `UI_Command_Catalog.md`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00727",
+        "cov-00731",
+        "cov-00732",
+        "cov-00737",
+        "cov-00738"
+      ],
+      "source_obligation_ids": [
+        "obl-0519",
+        "obl-0522",
+        "obl-0523",
+        "obl-0525",
+        "obl-0526"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s142",
+        "shard-0084-s102",
+        "shard-0080-s101",
+        "shard-0085-s062",
+        "shard-0083-s047"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting",
+        "## References",
+        "widget commands still say `Orchestrator widget tabs`, which conflicts with the rewrite direction that only `Progress` remains widget-composed in Orchestrator",
+        "Orchestrator widget tabs",
+        "Progress",
+        "widget layout takes precedence",
+        "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+        "PuppetMasterEvent::Output",
+        "tier_id",
+        "wrapper metadata in `UI_Command_Catalog.md`",
+        "UI_Command_Catalog.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

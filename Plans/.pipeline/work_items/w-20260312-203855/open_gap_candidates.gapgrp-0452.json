@@ -1,0 +1,104 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0452",
+  "coverage_row_ids_represented": [
+    "cov-00178",
+    "cov-00179",
+    "cov-00180",
+    "cov-00183",
+    "cov-00186",
+    "cov-00187",
+    "cov-00188",
+    "cov-00189",
+    "cov-00190",
+    "cov-00191"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0452",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "only `Progress` kept widget-composed | only `Progress` remains widget-composed | per-thread usage is already one canonical detail surface | provider-account policy and requested/effective identity fields are closer to the rewrite direction than several consumer docs | section `7.7 Tiers` still exists as a primary content surface",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00178",
+        "cov-00179",
+        "cov-00180",
+        "cov-00183",
+        "cov-00186",
+        "cov-00187",
+        "cov-00188",
+        "cov-00189",
+        "cov-00190",
+        "cov-00191"
+      ],
+      "source_obligation_ids": [
+        "obl-0146",
+        "obl-0147",
+        "obl-0148",
+        "obl-0150",
+        "obl-0152",
+        "obl-0153",
+        "obl-0154",
+        "obl-0155",
+        "obl-0156",
+        "obl-0157"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s050",
+        "shard-0080-s074",
+        "shard-0085-s095",
+        "shard-0084-s018",
+        "shard-0084-s107",
+        "shard-0087-s009",
+        "shard-0085-s078",
+        "shard-0085-s021",
+        "shard-0084-s086",
+        "shard-0090-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0084",
+        "shard-0085",
+        "shard-0087",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "only `Progress` kept widget-composed",
+        "Progress",
+        "only `Progress` remains widget-composed",
+        "per-thread usage is already one canonical detail surface",
+        "provider-account policy and requested/effective identity fields are closer to the rewrite direction than several consumer docs",
+        "section `7.7 Tiers` still exists as a primary content surface",
+        "7.7 Tiers",
+        "settings / requested-vs-effective / identity display grammar",
+        "still includes `widget.tier_tree` for `Orch/Tiers`",
+        "widget.tier_tree",
+        "Orch/Tiers",
+        "still keys multiple surfaces and filters to `tier_id`",
+        "tier_id",
+        "subject-first preview identity is already present through `doc:<document_id>` and `artifact:<artifact_id>`",
+        "doc:<document_id>",
+        "artifact:<artifact_id>",
+        "summary: Ran a narrow identity-carrythrough pass and found one more overstated exact-missing item in gap-008: Usage already preserves canonical `account_id`, so the unresolved usage-side account-history gap is now the remaining requested/effective identity and runtime-role carry-through rather than account identity wholesale.",
+        "account_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

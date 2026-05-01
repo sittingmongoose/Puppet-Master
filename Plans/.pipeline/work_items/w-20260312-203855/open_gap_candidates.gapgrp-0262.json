@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0262",
+  "coverage_row_ids_represented": [
+    "cov-01041",
+    "cov-01098",
+    "cov-01526",
+    "cov-02484",
+    "cov-02833"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0262",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent` | Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters | Publish a single superseding canonical payload block in Contracts_V0.md for scheduler/safe-point/remediation records and explicitly demote older variants | effective_provider_identity / display labels are audit/display fields, not routing keys | usage_event_ref? is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## OpenSubject Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01041",
+        "cov-01098",
+        "cov-01526",
+        "cov-02484",
+        "cov-02833"
+      ],
+      "source_obligation_ids": [
+        "obl-0666",
+        "obl-0680",
+        "obl-0879",
+        "obl-1603",
+        "obl-1822"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0035",
+        "shard-0035-s006",
+        "shard-0035-s015",
+        "shard-0031-s014",
+        "shard-0035-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0035",
+        "shard-0067"
+      ],
+      "exact_missing_items": [
+        "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`",
+        "Keep the intent vocabulary controlled and small: `open_source`; `open_preview`; `open_review`",
+        "Keep resolver-support metadata out of the contract.",
+        "State the resolution rule directly: `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists; otherwise it resolves to transient `generated://<artifact_id>` source opening",
+        "`OpenSubject` does not carry: `project_id`, `thread_id`, `run_id`, `tab_id`, `panel_id`, `inspector_target`, `origin_surface`, `source_kind`, `backing_document_id`, `last_saved_path`, `generated://<artifact_id>`, preview persistence state, transport mode",
+        "Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters",
+        "Add a shared projection-health / trust-state record family built from committed projection state, checkpoints, and last-updated metadata",
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control",
+        "Bind GitHub Integration to project-scoped selected_repo_id and provider_accounts.* state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths",
+        "selected_repo_id already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary",
+        "Publish a single superseding canonical payload block in Contracts_V0.md for scheduler/safe-point/remediation records and explicitly demote older variants",
+        "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry",
+        "Normalize cross-surface receipt records so project_id, actor refs, created_at_utc, and usage_event_ref are required whenever a surface may pivot historically or across projects",
+        "Define usage_event_ref once as a locator-grade canonical reference and reuse it everywhere rather than inventing a new opaque ID family",
+        "Normalize Run Graph onto canonical cmd.runtime.* / cmd.orchestrator.open_in_* command bindings, add the missing action envelope, and add trust-state gating rules",
+        "Allow short-term concern rendering to piggyback on finding_refs[], but define a minimal non-remediation node_concerns[] projection next",
+        "Pre-attempt blocked episodes still need blocked_sequence handling without fabricating attempt_id",
+        "usage_event_ref should be a structured locator, not just a display string",
+        "effective_provider_identity / display labels are audit/display fields, not routing keys",
+        "Source-qualified usage wording still matters for Gemini and other estimate-only providers",
+        "attempt_id is increasingly looking like a cross-surface anchor, not an optional artifact detail",
+        "usage_event_ref? is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is",
+        "Runtime_Artifacts_Panel.md assumes concrete runtime-artifact schema enforcement that is not currently present in the repo",
+        "Orchestrator_Page.md TOC sections 13-17 are genuinely missing, not relocated"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

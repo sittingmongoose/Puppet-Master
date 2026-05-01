@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0320",
+  "coverage_row_ids_represented": [
+    "cov-00850",
+    "cov-01361"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0320",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add a minimal command-classification / normalization contract to the command-definition layer: `command_kind` (shell_view | navigation_wrapper | domain_action); optional `normalization` with `kind` (w\u2026 | Navigation should follow the same pattern instead of claiming a hard flag day.",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## Command Normalization Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00850",
+        "cov-01361"
+      ],
+      "source_obligation_ids": [
+        "obl-0581",
+        "obl-0800"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0030",
+        "seed-WAVE007-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "Add a minimal command-classification / normalization contract to the command-definition layer: `command_kind` (shell_view | navigation_wrapper | domain_action); optional `normalization` with `kind` (wrapper | deprecated_alias) and exactly one target field: `normalizes_to_contract` for wrappers OR `alias_of_command_id` for deprecated aliases",
+        "Keep wrapper metadata contract-level and narrow: point to the canonical primitive family; do not restate route payload structure there",
+        "Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have.",
+        "Extend `GATE-010` to verify: wrapper commands marked as normalizing to the same primitive do not diverge in handler semantics unexpectedly; deprecated aliases resolve to real canonical command IDs; normalization metadata is internally consistent with the command kind",
+        "Navigation should follow the same pattern instead of claiming a hard flag day.",
+        "existing user-facing wrapper commands may remain; their payload semantics should normalize through `route_target` / `OpenSubject`; older payload shapes can be accepted during migration; new producers/docs should emit the canonical normalized target model",
+        "new docs/producers MUST prefer canonical route-target forms; consumers MAY accept older wrapper-local payloads during migration; migration aliases MUST NOT become permanent parallel canon",
+        "Reuse the event-alias and recovery-command migration style as the template for navigation normalization."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

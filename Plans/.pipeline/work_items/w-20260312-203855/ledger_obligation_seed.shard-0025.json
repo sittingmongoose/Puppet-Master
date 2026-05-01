@@ -1,0 +1,344 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0025",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0025-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "current: projection up to date for normal read + write interaction",
+        "refreshing: slightly behind but actively catching up; read fine, write may be fine depending on object class",
+        "stale: data old enough that mutation-bearing actions should narrow or require refetch",
+        "degraded: projector or dependency failure; surface may be incomplete or partially wrong",
+        "unavailable: projection cannot support that surface; UI must fall back or disable"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust State Definitions"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0025-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "freshness_state",
+        "last_updated_at",
+        "data_source_kind",
+        "degraded_reason?",
+        "action_gate_reason?"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## UX Trust Disclosure Fields",
+        "## Projection Health UI Grammar"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0025-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "View may be stale",
+        "Projection degraded",
+        "Live actions unavailable until refresh",
+        "Showing canonical history slice"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Trust Disclosure Copy Patterns"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Canonical copy style for trust-state disclosure in UI"
+      ]
+    },
+    {
+      "seed_id": "shard-0025-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "widget summary -> native tab",
+        "rollup tab -> filtered record list",
+        "projection-derived inspector -> Ledger / History / exact record view via detail_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Fallback Ladder"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "When trust drops, degrade toward exact record-backed inspection, not toward empty ambiguity"
+      ]
+    },
+    {
+      "seed_id": "shard-0025-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "stale visibility is not the same as action authority",
+        "GUI must not guess that a previously visible allowed_action_ids[] set is still valid if the blocked projection is stale"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## allowed_action_ids Validity and Projection Trust"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0025-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "record_id",
+        "record_kind",
+        "schema_version",
+        "project_id",
+        "run_id?",
+        "scope_type",
+        "scope_id",
+        "status",
+        "created_at_utc",
+        "updated_at_utc?",
+        "summary",
+        "summary_kind?",
+        "detail_ref?",
+        "source_refs[]",
+        "artifact_refs[]",
+        "related_record_refs[]",
+        "lineage_refs[]",
+        "actor_ref?",
+        "requested_effective_snapshot_refs?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "seed_id": "shard-0025-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "record = structured canonical object used by projections, search, history, and ledger",
+        "artifact = blob/file/renderable output linked from a record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record vs Artifact Distinction"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Exact structured record vs human-readable rendered summary vs attached artifact(s) must remain distinct"
+      ]
+    },
+    {
+      "seed_id": "shard-0025-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "concern payload: severity, category, owner, lifecycle, resolution_kind",
+        "promotion payload: promotion_class, source_scope, target_scope, canonical verdict, revoked/reopened lineage",
+        "corroboration payload: claim refs, corroborator refs, 2-of-3 outcome, unresolved minority concerns",
+        "graph patch payload: patch point, target generation, resulting generation, requested reason, applied outcome",
+        "recovery payload: blocked episode ref, action id, preconditions, result, safe-point refs",
+        "review payload: review scope, findings counts, unresolved findings, verdict, canonical findings summary ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Family-Specific Record Payload Blocks"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0025-s009",
+      "seed_type": "consumer",
+      "exact_items": [
+        "attempt_record",
+        "tier_runtime_record",
+        "blocked_projection",
+        "usage_record",
+        "evidence_record",
+        "thread_blocked_notice",
+        "wizard_runtime_state",
+        "cross-surface runtime receipt record"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Existing Canonical Record Families"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "These already exist and must be compatible with the new shared envelope pattern"
+      ]
+    },
+    {
+      "seed_id": "shard-0025-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "detail_ref and *_ref conventions already exist and should be expanded, not replaced"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Reference Convention Rule"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0025-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical vs Summary Artifact Rule"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0025",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L4793-L4801 (Research Progress header + Targeted docs read \u2014 research metadata)",
+    "working_ledger.md:L4803-L4812 (key findings narrative about storage/runtime baseline \u2014 partially redundant)",
+    "working_ledger.md:L4902-L4905 (contradictions/gaps narrative)",
+    "working_ledger.md:L4918-L4925 (Research Progress header + Targeted docs read \u2014 research metadata)",
+    "working_ledger.md:L4927-L4936 (key findings repeating existing blocked/annotation/review patterns)"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

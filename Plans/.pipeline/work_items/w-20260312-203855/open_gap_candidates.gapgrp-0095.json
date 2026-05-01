@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0095",
+  "coverage_row_ids_represented": [
+    "cov-02887",
+    "cov-02889"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0095",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "FileManager.md OpenFile must be narrowed to workspace-document path operations only | FileManager.md universalizes OpenFile to cover all object-open semantics, including identity-native subject opens that belong to a different contract family",
+      "affected_targets": [
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "## OpenFile"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-02887",
+        "cov-02889"
+      ],
+      "source_obligation_ids": [
+        "obl-1856",
+        "obl-1857"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0091",
+        "seed-WAVE006-0071"
+      ],
+      "source_shard_ids": [
+        "shard-0058",
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "FileManager.md OpenFile must be narrowed to workspace-document path operations only",
+        "Any OpenFile usage that currently covers identity-native subject/route opens must be split out into the OpenSubject contract family",
+        "FileManager.md universalizes OpenFile to cover all object-open semantics, including identity-native subject opens that belong to a different contract family",
+        "FileManager.md must be narrowed to workspace-document path operations only; the OpenSubject family belongs in a separate contract"
+      ],
+      "stale_tokens": [
+        "OpenFile"
+      ],
+      "canonical_replacement_hints": [
+        "OpenFile",
+        "OpenSubject"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

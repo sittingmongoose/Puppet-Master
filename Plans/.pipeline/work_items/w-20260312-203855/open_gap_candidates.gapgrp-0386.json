@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0386",
+  "coverage_row_ids_represented": [
+    "cov-00683"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0386",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "preview/build/open-artifact orchestrator command IDs are still exact uncataloged gaps",
+      "affected_targets": [
+        {
+          "path": "Plans/newtools.md",
+          "heading": "## CustomHeadlessTool"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00683"
+      ],
+      "source_obligation_ids": [
+        "obl-0484"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0045"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "exact_missing_items": [
+        "preview/build/open-artifact orchestrator command IDs are still exact uncataloged gaps",
+        "doctor-check naming drift is now clearly multi-way, not a single alias mismatch",
+        "CustomHeadlessTool still lacks stable tool identity, registration timing, permission semantics, and consistent config-file ownership",
+        "live.* and memory auto-trigger/handoff event families still have no canonical contracts/storage registration",
+        "handoff naming and thread collision behavior remain unowned across Assistant, HITL, and project-switch flows"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

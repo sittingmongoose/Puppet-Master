@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0493",
+  "coverage_row_ids_represented": [
+    "cov-01880",
+    "cov-01881",
+    "cov-01882",
+    "cov-01883",
+    "cov-01884",
+    "cov-01885",
+    "cov-01886",
+    "cov-01887",
+    "cov-01888",
+    "cov-01889"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0493",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`Decision_Log.md` needs: | `Decision_Log.md` third | `Document_Packaging_Policy.md` now has a sharper canonicality split with `Project_Output_Artifacts.md`: docset-directory-as-canon, gate-enforcement claims, and `evidence/` namespace assumptions do not\u2026 | `EvidenceStored` | `Execution contract (recommended)`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01880",
+        "cov-01881",
+        "cov-01882",
+        "cov-01883",
+        "cov-01884",
+        "cov-01885",
+        "cov-01886",
+        "cov-01887",
+        "cov-01888",
+        "cov-01889"
+      ],
+      "source_obligation_ids": [
+        "obl-1096",
+        "obl-1097",
+        "obl-1098",
+        "obl-1099",
+        "obl-1100",
+        "obl-1101",
+        "obl-1102",
+        "obl-1103",
+        "obl-1104",
+        "obl-1105"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s009",
+        "shard-0083-s003",
+        "shard-0081-s124",
+        "shard-0079-s113",
+        "shard-0083-s028",
+        "shard-0079-s013",
+        "shard-0085-s054",
+        "shard-0085-s045",
+        "shard-0085-s042",
+        "shard-0082-s059"
+      ],
+      "source_shard_ids": [
+        "shard-0079",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` needs:",
+        "Decision_Log.md",
+        "`Decision_Log.md` third",
+        "`Document_Packaging_Policy.md` now has a sharper canonicality split with `Project_Output_Artifacts.md`: docset-directory-as-canon, gate-enforcement claims, and `evidence/` namespace assumptions do not line up with seglog-first artifact ownership or actual verifier coverage.",
+        "Document_Packaging_Policy.md",
+        "Project_Output_Artifacts.md",
+        "evidence/",
+        "`EvidenceStored`",
+        "EvidenceStored",
+        "`Execution contract (recommended)`",
+        "Execution contract (recommended)",
+        "`Executor_Protocol.md` is already ahead of `human-in-the-loop.md` on this seam.",
+        "Executor_Protocol.md",
+        "human-in-the-loop.md",
+        "`Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much larger multiplier.",
+        "Orchestrator_Page.md",
+        "`Executor_Protocol.md` needs:",
+        "`Executor_Protocol.md` still names only the older `Overseer` execution role at the top even though governance has split into package and seam overseers elsewhere.",
+        "Overseer",
+        "`Executor_Protocol.md`, `FileSafe.md`, and `MiscPlan.md` now have direct conflicting wording around attempt reuse, DAE/FileSafe authority, cleanup-vs-safe-point validity, and blocked-recovery payload fields.",
+        "FileSafe.md",
+        "MiscPlan.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

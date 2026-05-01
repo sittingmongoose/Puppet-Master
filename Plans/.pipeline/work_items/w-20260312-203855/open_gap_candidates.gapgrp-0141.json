@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0141",
+  "coverage_row_ids_represented": [
+    "cov-00237",
+    "cov-00394",
+    "cov-00398",
+    "cov-00502",
+    "cov-00511",
+    "cov-00512",
+    "cov-00513",
+    "cov-00518",
+    "cov-00612",
+    "cov-00613"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0141",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Executor_Protocol.md has a broken Glossary forward reference | Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Gloss\u2026 | Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.m\u2026 | `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md` | `Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00237",
+        "cov-00394",
+        "cov-00398",
+        "cov-00502",
+        "cov-00511",
+        "cov-00512",
+        "cov-00513",
+        "cov-00518",
+        "cov-00612",
+        "cov-00613"
+      ],
+      "source_obligation_ids": [
+        "obl-0190",
+        "obl-0298",
+        "obl-0299",
+        "obl-0355",
+        "obl-0360",
+        "obl-0361",
+        "obl-0362",
+        "obl-0364",
+        "obl-0425",
+        "obl-0426"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0034",
+        "shard-0091-s120",
+        "shard-0090-s053",
+        "shard-0088-s010",
+        "shard-0088-s124",
+        "shard-0090-s094",
+        "shard-0088-s088",
+        "shard-0087-s107",
+        "shard-0091-s025",
+        "shard-0091-s058"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0087",
+        "shard-0088",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Executor_Protocol.md has a broken Glossary forward reference",
+        "Executor_Protocol.md has an incomplete wake-reason set, no real blocked_reason_code table, no blocked_sequence integration, and no actor/lifecycle model for reviewer/corroboration flows",
+        "Executor_Protocol.md still has duplicated canonical scheduler sections",
+        "Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.",
+        "gap-006",
+        "gap-007",
+        "Plans/Glossary.md#Orchestrator rewrite terms",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "`Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.",
+        "why it matters",
+        "what it is not",
+        "related concepts",
+        "`Plans/Glossary.md` already carries the required help-entry field template and labels, but still does not have the named `### Orchestrator rewrite terms` / `### Runtime and routing terms` sections or populated help-entry rows.",
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+        "`gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`).",
+        "Term | Definition",
+        "canonical_name",
+        "short_definition",
+        "why_it_matters",
+        "`gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

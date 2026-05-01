@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0361",
+  "represented_seed_ids": [
+    "seed-WAVE007-0015"
+  ],
+  "source_shard_ids": [
+    "shard-0063"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0015"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+        "Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.",
+        "Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.",
+        "Allow the route model to name major destination surfaces/tabs/panels where operationally necessary.",
+        "This seam prevents the route model from swallowing the whole shell. The right question for routing is 'where should the user land,' not 'how should every panel be laid out when they get there.'"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Crosswalk.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/feature-list.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shell/Workspace State Boundary",
+        "## Route vs Shell State Separation"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L012474-L012542"
+      ],
+      "notes": [
+        "FinalGUISpec.md and storage-plan.md own the shell/workspace state model. Route model should only carry destination intent (what object, which broad surface, which project/run/thread context). Shell state (panel docking, workspace tab, per-project layout) is a separate concern.",
+        "cmd.panel.switch and similar commands are shell commands \u2014 they must not accumulate canonical object identity."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

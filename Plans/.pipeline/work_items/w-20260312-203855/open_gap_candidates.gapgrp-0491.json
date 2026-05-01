@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0491",
+  "coverage_row_ids_represented": [
+    "cov-01853",
+    "cov-01854",
+    "cov-01855",
+    "cov-01856",
+    "cov-01857",
+    "cov-01858",
+    "cov-01860",
+    "cov-01861",
+    "cov-01868",
+    "cov-01869"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0491",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`3.13` appears twice | `3.14` appears twice | `3.15` appears twice | `Active mode and tier` | `BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01853",
+        "cov-01854",
+        "cov-01855",
+        "cov-01856",
+        "cov-01857",
+        "cov-01858",
+        "cov-01860",
+        "cov-01861",
+        "cov-01868",
+        "cov-01869"
+      ],
+      "source_obligation_ids": [
+        "obl-1074",
+        "obl-1075",
+        "obl-1076",
+        "obl-1077",
+        "obl-1078",
+        "obl-1079",
+        "obl-1081",
+        "obl-1082",
+        "obl-1084",
+        "obl-1085"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s139",
+        "shard-0082-s140",
+        "shard-0082-s141",
+        "shard-0084-s050",
+        "shard-0081-s129",
+        "shard-0082-s057",
+        "shard-0083-s079",
+        "shard-0083-s077",
+        "shard-0085-s072",
+        "shard-0077-s079"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`3.13` appears twice",
+        "3.13",
+        "`3.14` appears twice",
+        "3.14",
+        "`3.15` appears twice",
+        "3.15",
+        "`Active mode and tier`",
+        "Active mode and tier",
+        "`BinaryLocator_Spec.md` now has a sharper ownership gap around OpenCode launcher discovery and an explicitly dangling `Spec_Lock` naming-rule claim.",
+        "BinaryLocator_Spec.md",
+        "Spec_Lock",
+        "`BinaryLocator_Spec.md`, `Document_Packaging_Policy.md`, and `Containers_Registry_and_Unraid.md` still show split ownership between behavior SSOTs and adjacent command/storage/runtime owners, now with exact command ID, artifact-type, and launcher-ownership mismatches.",
+        "Document_Packaging_Policy.md",
+        "Containers_Registry_and_Unraid.md",
+        "`Contracts_V0.md` is also carrying two parallel navigation/open stories:",
+        "Contracts_V0.md",
+        "`Contracts_V0.md` is now carrying two parallel approval ontologies:",
+        "`Copy tier_id`",
+        "Copy tier_id",
+        "`Crosswalk.md` and `Contracts_V0.md` owner-routing integrity",
+        "Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

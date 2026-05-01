@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0349",
+  "coverage_row_ids_represented": [
+    "cov-03058"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0349",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "assistant-chat-design.md and storage-plan.md must both explicitly state that resume_url is a serialized transport form only \u2014 not the canonical route contract",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## resume_url"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03058"
+      ],
+      "source_obligation_ids": [
+        "obl-1983"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0094"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "assistant-chat-design.md and storage-plan.md must both explicitly state that resume_url is a serialized transport form only \u2014 not the canonical route contract",
+        "resume_url must reference the canonical route_target contract as the primary model, with resume_url noted as a URL-serialized projection of that model"
+      ],
+      "stale_tokens": [
+        "resume_url"
+      ],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

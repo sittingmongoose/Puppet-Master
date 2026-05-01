@@ -1,0 +1,324 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0024",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0024-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "Ctrl+K / Ctrl+P command palette",
+        "command registry",
+        "shortcut registry",
+        "canonical cmd.runtime.* recovery command family"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Command Infrastructure",
+        "## Command Registry"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "blocked-state actions must map from allowed_action_ids[] to canonical runtime commands, not surface-local variants"
+      ]
+    },
+    {
+      "seed_id": "shard-0024-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "palette-friendly: open/focus tab, jump to run/seam/package/node/lane/concern/review/patch/recovery, open inspector, run search routes, low-risk view and filter commands",
+        "palette-allowed but guarded: recover/retry/approve/decline/replan/restore/cleanup with canonical runtime semantics and confirmation rules",
+        "palette-discouraged or hidden by default: broad destructive bulk mutations with ambiguous target sets"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Command Palette Action Classification"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0024-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "bulk actions should default to navigation, triage, and low-risk state updates",
+        "live execution mutations should stay narrow unless the runtime has an explicit safe batch semantic for that exact action"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bulk Action Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Good: navigate to nodes/concerns, open in History/Evidence/Ledger, acknowledge advisory concerns, archive/remove historical where policy allows. Bad: retry many nodes, batch graph patch, multi-HITL approve, blind lane/worktree cleanup"
+      ]
+    },
+    {
+      "seed_id": "shard-0024-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Keyboard Shortcut Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Good Orchestrator shortcut candidates: focus global search, next/previous tab, open/close right-side inspector, jump between attention items, fit graph/focus selected node/toggle generation overlay"
+      ]
+    },
+    {
+      "seed_id": "shard-0024-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Context Menu Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Objects needing context menus: node, concern, promotion, graph patch, lane/worktree, recovery record"
+      ]
+    },
+    {
+      "seed_id": "shard-0024-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "project_id",
+        "focused_run_id",
+        "destination tab/surface",
+        "selected object id and type",
+        "optional inspector target",
+        "optional filter payload"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Routing Payload Fields",
+        "## Command/Search Routing Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Palette actions, deep links, keyboard shortcuts, widgets, and search must route through the same destination payload model"
+      ]
+    },
+    {
+      "seed_id": "shard-0024-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "command discoverability does not weaken confirmation requirements",
+        "strong/hard_gate/non_reversible/compensating_action_only actions must still honor same gating and preview requirements via palette and shortcut surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Confirmation Safety for Command Surfaces"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0024-s008",
+      "seed_type": "missing_doc_reference",
+      "exact_items": [
+        "Orchestrator action-surface policy",
+        "classify actions by: navigation vs mutation, single-target vs multi-target, shortcut eligibility, palette visibility, confirmation/reversibility class"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Action-Surface Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Currently missing in Orchestrator_Page.md; which actions are palette-visible, shortcut-worthy, context-menu only, bulk-safe, bulk-forbidden"
+      ]
+    },
+    {
+      "seed_id": "shard-0024-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "Source Control should lean on context menus and focused commands rather than dense inline action bars",
+        "bulk worktree cleanup/archive/remove should remain preview-heavy and explicit"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Source Control Action Model"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0024-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "current",
+        "refreshing",
+        "stale",
+        "degraded",
+        "unavailable"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust States"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": [
+        "Operational projection trust state model required across all Orchestrator tabs"
+      ]
+    },
+    {
+      "seed_id": "shard-0024-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "low-risk read-only inspection: allowed on refreshing, often stale, sometimes degraded",
+        "precise navigation/deep-linking: usually allowed if target object identity still valid",
+        "live mutation/approval/recovery/retry/cleanup: require current or direct canonical-runtime validation path"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Action Gating by Projection Trust Level"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0024",
+      "source_evidence": [
+        "working_ledger.md:L004601"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L4601-L4606 (good shortcut candidate list \u2014 already captured in s004)",
+    "working_ledger.md:L4648-L4656 (contradictions/gaps narrative)",
+    "working_ledger.md:L4674-L4682 (Research Progress header + Targeted docs read \u2014 research metadata)",
+    "working_ledger.md:L4683-L4691 (key findings narrative restating storage architecture \u2014 no new obligation beyond s010/s011)",
+    "working_ledger.md:L4669-L4672 (do-not-forget restatements already captured)"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

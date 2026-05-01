@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0233",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00473",
+      "source_obligation_ids": [
+        "obl-0336"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s063"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 3/5 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00481",
+      "source_obligation_ids": [
+        "obl-0337"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 8/9 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00504",
+      "source_obligation_ids": [
+        "obl-0355"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 4/6 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00526",
+      "source_obligation_ids": [
+        "obl-0365"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 6/8 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00556",
+      "source_obligation_ids": [
+        "obl-0392"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s075"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 6/6 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00596",
+      "source_obligation_ids": [
+        "obl-0413"
+      ],
+      "source_seed_ids": [
+        "shard-0092-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 9/9 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00605",
+      "source_obligation_ids": [
+        "obl-0419"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s057"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 6/8 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00608",
+      "source_obligation_ids": [
+        "obl-0421"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00616",
+      "source_obligation_ids": [
+        "obl-0427"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s089"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 3/5 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00621",
+      "source_obligation_ids": [
+        "obl-0428"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s026"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md: exact_items matched 4/8 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

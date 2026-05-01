@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0436",
+  "coverage_row_ids_represented": [
+    "cov-00831",
+    "cov-00845",
+    "cov-00875",
+    "cov-01706",
+    "cov-01711",
+    "cov-01814",
+    "cov-02478",
+    "cov-02829"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0436",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add a canonical append-only event/record family for account-pressure and switching: account_pressure_episode and account_switch_event | Add a governance rule for provider_account_id: either retire it or explicitly define it as provider-native metadata subordinate to stable internal effective_account_id | Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record | The canonical minimum field set is: `target_kind`; `project_id`; one canonical target selector (`subject_id` OR `object_kind` + `object_id`) | The canonical selector rule is: exactly one primary selector is present: `subject_id` OR `object_kind` + `object_id`",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Account Identity Fields"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00831",
+        "cov-00845",
+        "cov-00875",
+        "cov-01706",
+        "cov-01711",
+        "cov-01814",
+        "cov-02478",
+        "cov-02829"
+      ],
+      "source_obligation_ids": [
+        "obl-0575",
+        "obl-0580",
+        "obl-0589",
+        "obl-0984",
+        "obl-0986",
+        "obl-1057",
+        "obl-1600",
+        "obl-1821"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0007",
+        "shard-0011-s005",
+        "seed-WAVE005-0006",
+        "seed-WAVE007-0037",
+        "seed-WAVE007-0039",
+        "seed-WAVE007-0044",
+        "shard-0040-s011",
+        "shard-0038-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0038",
+        "shard-0040",
+        "shard-0041",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "Add a canonical append-only event/record family for account-pressure and switching: account_pressure_episode and account_switch_event",
+        "account_pressure_episode fields: episode_id, project_id, provider_id, account_id, execution_role?, source_kind, signal_confidence, pressure_kind, projected_remaining?, reset_at?, started_at_utc, updated_at_utc, ended_at_utc?, status",
+        "account_switch_event fields: switch_event_id, project_id, provider_id, execution_role?, requested_account_id?, from_account_id?, to_account_id?, switch_reason, decision_kind, source_episode_id?, run_id?, attempt_id?, thread_id?, ts",
+        "Add a governance rule for provider_account_id: either retire it or explicitly define it as provider-native metadata subordinate to stable internal effective_account_id",
+        "provider_account_id is being normalized in usage/storage-facing docs without a governing rule, so it risks becoming a second shadow routing identity",
+        "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record",
+        "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter",
+        "Operational identity kinds: github_api_account, registry_namespace, kubernetes_context",
+        "Ensure GUI inspectors can show requested/effective provider/account identity, requested/effective operational identity, execution role, and selection/switch reason",
+        "The canonical minimum field set is: `target_kind`; `project_id`; one canonical target selector (`subject_id` OR `object_kind` + `object_id`)",
+        "The narrow scope-restoration fields are: `focused_run_id`; `thread_id`",
+        "The narrow focus-refinement fields are: `tab_id`; `inspector_target`",
+        "Full bounded shape: `target_kind`, `project_id`, `focused_run_id`, `thread_id`, `tab_id`, `subject_id`, `object_kind`, `object_id`, `inspector_target`",
+        "`project_id` is required. Exactly one canonical target selector is required.",
+        "What is NOT a base `route_target` field: `usage_event_ref`, `wizard_id`, `wizard_step`, `message_id`, `artifact_id`, `document_id`, `workflow_run_id`, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, `line`, `range`, per-surface state (`active_subview`, compare target, panel layout, browser tab state, widget layout)",
+        "The canonical selector rule is: exactly one primary selector is present: `subject_id` OR `object_kind` + `object_id`",
+        "`subject_id` wins for openable/renderable content subjects.",
+        "`object_kind` + `object_id` wins for domain/runtime/governance objects.",
+        "`tab_id`, `focused_run_id`, `thread_id`, and `inspector_target` never replace primary selector identity.",
+        "`project_id` is required scope, not selector identity.",
+        "Resolution order: (1) restore project_id, (2) restore route scope (focused_run_id, thread_id), (3) restore destination class from target_kind, (4) resolve primary selector (subject_id OR object_kind+object_id), (5) apply narrow focus refinement (tab_id, inspector_target)",
+        "Reject multi-selector route payloads as non-canonical. Normalize all special-case ids into `subject_id` or `object_kind` + `object_id` before they enter the canonical route layer.",
+        "Use `subject_id` only when the target is canonical renderable/openable content.",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects.",
+        "The canonical `subject_id` families remain: `doc:<document_id>`; `artifact:<artifact_id>`",
+        "Everything else routes through `object_kind` + `object_id`.",
+        "Put the classification rule directly in `Contracts_V0.md`.",
+        "Keep `subject_id` frozen to the two canonical families until a new cross-surface content identity proves necessary.",
+        "`subject_id` is not a second generic object taxonomy. If `subject_id` expands carelessly, the whole routing model becomes muddy again.",
+        "do-not-forget: run.started MUST field list in storage-plan.md must agree with the operational_identity block definition \u2014 the event row must include the full operational_identity snapshot inline or by normative reference",
+        "do-not-forget: provider_accounts.run_snapshot policy_hash must become policy_version_ref to support downstream policy-validity queries",
+        "do-not-forget: usage_event_ref as structured locator must be defined before any surface ships Show in Usage or Show in Ledger pivots",
+        "usage_event_ref schema must be defined once as a structured locator object",
+        "Minimum fields: project_id, run_id, attempt_id?, node_id, lane_id?, created_at_utc",
+        "All surface pivots (Show in Usage, Show in Ledger, pivot from receipt) must use this structured locator \u2014 not a bare opaque string ID",
+        "usage_event_id as bare opaque ID must be retired in favor of usage_event_ref"
+      ],
+      "stale_tokens": [
+        "account_switch_reason (as sole current+historical field)",
+        "provider_account_id",
+        "usage_event_ref as top-level route field",
+        "wizard_id as top-level route field",
+        "artifact_id as top-level route field",
+        "document_id as top-level route field",
+        "wizard_step as primary selector",
+        "usage_event_ref as primary selector field",
+        "multi-selector route payloads",
+        "usage_event_ref as direct route field",
+        "document_id as direct navigation field",
+        "artifact_id as direct navigation field",
+        "policy_hash",
+        "usage_event_id"
+      ],
+      "canonical_replacement_hints": [
+        "account_pressure_episode",
+        "account_switch_event",
+        "effective_account_id is the stable internal identity; provider_account_id should be explicitly subordinate provider-native metadata",
+        "execution_role",
+        "operational_identity (kind/requested_ref/effective_ref/selection_reason/partial_capability)",
+        "subject_id = doc:<document_id> | artifact:<artifact_id>",
+        "object_kind + object_id for wizard_id, message_id, usage_event, scheduler_pass_id, safe_point_id, remediation_root_id",
+        "object_kind + object_id for all listed special-case IDs",
+        "object_kind=usage_event + object_id for usage_event_ref",
+        "policy_version_ref",
+        "usage_event_ref (structured locator)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

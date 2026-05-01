@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0247",
+  "coverage_row_ids_represented": [
+    "cov-01090",
+    "cov-01536",
+    "cov-02458",
+    "cov-02470",
+    "cov-02693",
+    "cov-02838"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0247",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Define the closed `inspector_target` enum in `Contracts_V0.md`. | Recommended dedicated help-entry set for the rewrite: Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Concern, Graph Patch, Graph Generation, L\u2026 | current generation emphasized | distinguish active run truth from focused run context | render target: 500 nodes, stretch 1000",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## inspector_target Closed Enum"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01090",
+        "cov-01536",
+        "cov-02458",
+        "cov-02470",
+        "cov-02693",
+        "cov-02838"
+      ],
+      "source_obligation_ids": [
+        "obl-0679",
+        "obl-0882",
+        "obl-1587",
+        "obl-1597",
+        "obl-1736",
+        "obl-1825"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0043",
+        "shard-0033-s010",
+        "shard-0023-s011",
+        "shard-0013-s006",
+        "shard-0023-s002",
+        "shard-0023-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0023",
+        "shard-0033",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`.",
+        "The canonical vocabulary is: `summary`; `evidence`; `artifacts`; `history`; `reviews`; `usage`; `lineage`; `details`",
+        "`inspector_target` is not object identity. `inspector_target` is not a per-surface arbitrary bag. `inspector_target` does not replace `tab_id`.",
+        "`wizard_step`, `message_id`, `line`, `range`, and compare-target state are not `inspector_target` values.",
+        "Use `inspector_target` only after primary selector identity is already established.",
+        "Use `inspector_target = lineage` for scheduler/remediation/safe-point/patch lineage drill-ins.",
+        "Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.",
+        "Keep all message-step-line-range style anchors out of `inspector_target`.",
+        "Recommended dedicated help-entry set for the rewrite: Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Concern, Graph Patch, Graph Generation, Lane, requested vs effective, History vs Ledger, historical vs superseded vs revoked vs reopened",
+        "Recommended contextual-help-only set: individual graph badges, narrow panel chips, trust-state chrome, widget-specific filter fields, per-surface action gating messages",
+        "current generation emphasized",
+        "superseded branches visually muted",
+        "branch/rejoin overlays available on demand",
+        "minimap/search/focus-to-object remain generation-aware",
+        "distinguish active run truth from focused run context",
+        "active_run_id = currently running/paused/interrupted run for the project, if any",
+        "focused_run_id = the run whose data the Orchestrator tabs are currently showing",
+        "focus_mode = live when focused_run_id == active_run_id",
+        "focus_mode = historical when the user is inspecting any non-active run",
+        "render target: 500 nodes, stretch 1000",
+        "60 fps pan/zoom",
+        "layout under 500ms at 500 nodes",
+        "initial load under 1s at 500 nodes",
+        "viewport culling with overscan",
+        "table virtualization",
+        "per-generation layout caching",
+        "incremental row/item updates instead of full replacement",
+        "burst throttling at frame cadence",
+        "optional canvas-style fallback if rectangle-based rendering drops below target performance"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

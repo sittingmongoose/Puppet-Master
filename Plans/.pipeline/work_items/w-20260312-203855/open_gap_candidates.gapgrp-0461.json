@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0461",
+  "coverage_row_ids_represented": [
+    "cov-00439",
+    "cov-00440",
+    "cov-00441",
+    "cov-00442",
+    "cov-00447",
+    "cov-00452",
+    "cov-00453",
+    "cov-00454",
+    "cov-00455",
+    "cov-00459"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0461",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`FinalGUISpec.md` aligns with only one of those outcomes. | `FinalGUISpec.md` needs: | `FinalGUISpec.md` third for visible shell/view cleanup | `FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers | `GUI_Rebuild_Requirements_Checklist.md` second as status repair",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-00439",
+        "cov-00440",
+        "cov-00441",
+        "cov-00442",
+        "cov-00447",
+        "cov-00452",
+        "cov-00453",
+        "cov-00454",
+        "cov-00455",
+        "cov-00459"
+      ],
+      "source_obligation_ids": [
+        "obl-0320",
+        "obl-0321",
+        "obl-0322",
+        "obl-0323",
+        "obl-0325",
+        "obl-0327",
+        "obl-0328",
+        "obl-0329",
+        "obl-0330",
+        "obl-0332"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s107",
+        "shard-0084-s132",
+        "shard-0084-s125",
+        "shard-0077-s082",
+        "shard-0086-s020",
+        "shard-0081-s043",
+        "shard-0081-s134",
+        "shard-0086-s136",
+        "shard-0081-s127",
+        "shard-0085-s070"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0080",
+        "shard-0081",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`FinalGUISpec.md` aligns with only one of those outcomes.",
+        "FinalGUISpec.md",
+        "`FinalGUISpec.md` needs:",
+        "`FinalGUISpec.md` third for visible shell/view cleanup",
+        "`FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers",
+        "UI_Command_Catalog.md",
+        "Widget_System.md",
+        "`GUI_Rebuild_Requirements_Checklist.md` second as status repair",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "`LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-only tool, and mutation-capable LSP actions, especially in multi-project-tab routing.",
+        "LSPSupport.md",
+        "`LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-session LSP interactions, and mutation-capable apply-edit paths in multi-project/workspace-tab routing.",
+        "tool.*",
+        "`MUST VERIFY` docs stay out of the packet unless final reconciliation inspection shows that they also require edits.",
+        "MUST VERIFY",
+        "`MiscPlan.md` now has a tighter cleanup contradiction: best-effort prepare/cleanup can still invalidate safe-point prerequisites and mtime-based evidence pruning can cut across attempt-lineage retention requirements.",
+        "MiscPlan.md",
+        "`Open that tier in the Tiers tab`",
+        "Open that tier in the Tiers tab"
+      ],
+      "stale_tokens": [
+        "MiscPlan.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

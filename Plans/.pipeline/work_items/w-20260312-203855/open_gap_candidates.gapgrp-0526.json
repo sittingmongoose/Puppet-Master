@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0526",
+  "coverage_row_ids_represented": [
+    "cov-02773",
+    "cov-02774",
+    "cov-02789",
+    "cov-02790",
+    "cov-02791",
+    "cov-02794",
+    "cov-02795",
+    "cov-02798",
+    "cov-02799",
+    "cov-02800"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0526",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "still treats HITL requests as keyed by `request_id` | storage-plan still lacks the practical join model from attempt \u2192 provider \u2192 usage \u2192 receipt | stronger `wizard.blocked` fields | subject-first restore identity | terminal instances can be pinned to a specific `tier_id`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02773",
+        "cov-02774",
+        "cov-02789",
+        "cov-02790",
+        "cov-02791",
+        "cov-02794",
+        "cov-02795",
+        "cov-02798",
+        "cov-02799",
+        "cov-02800"
+      ],
+      "source_obligation_ids": [
+        "obl-1784",
+        "obl-1785",
+        "obl-1790",
+        "obl-1791",
+        "obl-1792",
+        "obl-1794",
+        "obl-1795",
+        "obl-1797",
+        "obl-1798",
+        "obl-1799"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s027",
+        "shard-0088-s020",
+        "shard-0083-s060",
+        "shard-0084-s034",
+        "shard-0080-s047",
+        "shard-0080-s032",
+        "shard-0085-s013",
+        "shard-0082-s134",
+        "shard-0088-s064",
+        "shard-0080-s033"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "still treats HITL requests as keyed by `request_id`",
+        "request_id",
+        "storage-plan still lacks the practical join model from attempt \u2192 provider \u2192 usage \u2192 receipt",
+        "stronger `wizard.blocked` fields",
+        "wizard.blocked",
+        "subject-first restore identity",
+        "terminal instances can be pinned to a specific `tier_id`",
+        "tier_id",
+        "the base structs and callbacks still teach tier/request-era identity",
+        "the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract",
+        "TierContext",
+        "the file is self-referential in its compliance line and therefore cannot serve as an independent example of owner-routing discipline",
+        "the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep",
+        "the later addenda teach attempt/block/runtime-lineage identity"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

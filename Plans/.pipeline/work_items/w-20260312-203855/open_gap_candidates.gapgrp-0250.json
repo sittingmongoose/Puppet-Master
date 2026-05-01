@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0250",
+  "coverage_row_ids_represented": [
+    "cov-00324",
+    "cov-00326",
+    "cov-00421"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0250",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Run_Modes.md does not fully own DAE jail lifecycle entry/exit and transition rules \u2014 those are still scattered across executor, command, and policy docs | Run_Modes.md still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the yolo step-1 vs step-7 guard ambiguity, external_publish_side_effect behav\u2026 | `Architecture_Invariants.md` still lacks concrete invariant ownership for execution-role identity, run-scoped requested/effective snapshots, graph-lock degradation boundaries, projection freshness, bl\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Modes.md",
+          "heading": "## DAE Jail"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00324",
+        "cov-00326",
+        "cov-00421"
+      ],
+      "source_obligation_ids": [
+        "obl-0245",
+        "obl-0246",
+        "obl-0308"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0065",
+        "seed-WAVE006-0017",
+        "seed-WAVE007-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0057",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "Run_Modes.md does not fully own DAE jail lifecycle entry/exit and transition rules \u2014 those are still scattered across executor, command, and policy docs",
+        "Run_Modes.md overpromises yolo capabilities relative to what other docs actually constrain",
+        "external_publish_side_effect semantics still lack a canonical owner",
+        "Run_Modes.md still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the yolo step-1 vs step-7 guard ambiguity, external_publish_side_effect behavior inside DAE, or mid-run account-switch invalidation of committed strategy",
+        "strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering",
+        "`Architecture_Invariants.md` still lacks concrete invariant ownership for execution-role identity, run-scoped requested/effective snapshots, graph-lock degradation boundaries, projection freshness, blocked/failure classification, role-scoped account-pool contamination, and safe-point vs restore-point immutability rules."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

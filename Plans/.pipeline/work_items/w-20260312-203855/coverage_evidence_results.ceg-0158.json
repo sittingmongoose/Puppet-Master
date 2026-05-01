@@ -1,0 +1,235 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0158",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00817",
+      "source_obligation_ids": [
+        "obl-0570"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00818",
+      "source_obligation_ids": [
+        "obl-0571"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01256",
+      "source_obligation_ids": [
+        "obl-0749"
+      ],
+      "source_seed_ids": [
+        "shard-0037-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 1/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01271",
+      "source_obligation_ids": [
+        "obl-0758"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 4/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01413",
+      "source_obligation_ids": [
+        "obl-0824"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01414",
+      "source_obligation_ids": [
+        "obl-0825"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01449",
+      "source_obligation_ids": [
+        "obl-0846"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0003"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02020",
+      "source_obligation_ids": [
+        "obl-1226"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s010",
+        "shard-0082-s102"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02325",
+      "source_obligation_ids": [
+        "obl-1504"
+      ],
+      "source_seed_ids": [
+        "shard-0037-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02512",
+      "source_obligation_ids": [
+        "obl-1625"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

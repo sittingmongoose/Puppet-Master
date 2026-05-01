@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0156",
+  "coverage_row_ids_represented": [
+    "cov-00843"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0156",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add a formal distinction between: lane lifecycle state, worktree filesystem state, runtime blocked/recovery state",
+      "affected_targets": [
+        {
+          "path": "Plans/MiscPlan.md",
+          "heading": "## Lane Lifecycle State"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00843"
+      ],
+      "source_obligation_ids": [
+        "obl-0579"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_missing_items": [
+        "Add a formal distinction between: lane lifecycle state, worktree filesystem state, runtime blocked/recovery state",
+        "dirty_worktree and worktree_conflict are canonical blocked reasons and must remain visible in both surfaces without becoming generic SCM errors",
+        "Make Source Control the execution surface for Git-native mutations, while Orchestrator remains the operational surface for why those actions matter"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

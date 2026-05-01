@@ -1,0 +1,236 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0136",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-02797",
+      "source_obligation_ids": [
+        "obl-1796"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02814",
+      "source_obligation_ids": [
+        "obl-1811"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0075"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02834",
+      "source_obligation_ids": [
+        "obl-1822"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02843",
+      "source_obligation_ids": [
+        "obl-1829"
+      ],
+      "source_seed_ids": [
+        "shard-0023-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02848",
+      "source_obligation_ids": [
+        "obl-1831"
+      ],
+      "source_seed_ids": [
+        "shard-0025-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02851",
+      "source_obligation_ids": [
+        "obl-1832"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02853",
+      "source_obligation_ids": [
+        "obl-1833"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02854",
+      "source_obligation_ids": [
+        "obl-1834"
+      ],
+      "source_seed_ids": [
+        "shard-0023-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02871",
+      "source_obligation_ids": [
+        "obl-1845"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: first-400-line window scan for stale_retirement",
+        "stale tokens absent or only in retirement/compatibility context in window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02874",
+      "source_obligation_ids": [
+        "obl-1846"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md: first-400-line window scan for stale_retirement",
+        "stale token still appears in live-use context in window"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

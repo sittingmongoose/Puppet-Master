@@ -1,0 +1,149 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0018",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0018-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "Export contracts: distinguish record export (exact structured objects, canonical ids, references, metadata), bundle export (manifest + records + attached artifacts/blobs/files), view export (user-facing convenience representation of current filtered table/list/chart)"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Contracts",
+        "## Export Types"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0018",
+      "source_evidence": [
+        "working_ledger.md:L003561-L003573"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0018-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "Orchestrator export families needed: Evidence export, Artifact export, Ledger export, Run export, Record export for single exact records",
+        "Ledger export should be record-shaped first, CSV/JSON second",
+        "Evidence export should preserve evidence/artifact distinction",
+        "Run export should include a manifest: run metadata, exact records, linked artifacts/evidence, historical/superseded status flags"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Export Families",
+        "## Run Export"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0018",
+      "source_evidence": [
+        "working_ledger.md:L003575-L003589"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0018-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "every non-trivial Orchestrator export should include a manifest",
+        "Manifest fields: export_id, export_kind, project_id, run_id?, focused_run_id?, generated_at_utc, source_surface, filter_summary, record_counts, artifact_counts, included_record_ids[], included_artifact_ids[], status_notes, schema_version"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Export Manifest",
+        "## Manifest Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0018",
+      "source_evidence": [
+        "working_ledger.md:L003591-L003600"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0018-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "exact-record surfaces should export canonical records, not UI-specific transformed rows",
+        "Ledger export should preserve canonical ids and structured fields; CSV is fine as a convenience projection; JSON/JSONL should remain close to canonical record structure",
+        "exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record-Shaped Export Rule",
+        "## Evidence/Artifact Export"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0018",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0018-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Exports must preserve historical truth even when live backing objects no longer exist",
+        "removed worktree or retired graph path still exports as record metadata with historical status",
+        "absence of a live backing file/worktree should not corrupt the exported record bundle",
+        "view export is still useful, but should be clearly labeled as a convenience format; CSV/table exports are not canonical archival formats"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Historical Export Semantics",
+        "## Archival Export Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0018",
+      "source_evidence": [
+        "working_ledger.md:L003401"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

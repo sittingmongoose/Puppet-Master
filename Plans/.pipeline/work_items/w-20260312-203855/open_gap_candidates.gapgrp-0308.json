@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0308",
+  "coverage_row_ids_represented": [
+    "cov-00302"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0308",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Plans/Widget_System.md: widget.tier_tree and widget.progress_bars are load-bearing but have no package/seam/lane-aware equivalents \u2014 these must be designed",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## Widget System Package/Seam Updates"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00302"
+      ],
+      "source_obligation_ids": [
+        "obl-0228"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "exact_missing_items": [
+        "Plans/Widget_System.md: widget.tier_tree and widget.progress_bars are load-bearing but have no package/seam/lane-aware equivalents \u2014 these must be designed"
+      ],
+      "stale_tokens": [
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "canonical_replacement_hints": [
+        "Design package/seam/lane-aware widget equivalents"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

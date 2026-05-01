@@ -1,0 +1,216 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0250",
+  "represented_seed_ids": [
+    "seed-WAVE006-0003",
+    "seed-WAVE006-0073",
+    "seed-WAVE006-0089",
+    "seed-WAVE006-0090",
+    "shard-0037-s010"
+  ],
+  "source_shard_ids": [
+    "shard-0037",
+    "shard-0051",
+    "shard-0058",
+    "shard-0060"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0003"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Add execution_role to the canonical runtime attempt packet in Contracts_V0.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add execution_role to the canonical runtime attempt packet in Contracts_V0.md",
+        "Contracts_V0.md already has a fairly strong attempt.started packet, but it still does not name execution_role, which is now needed to separate provider/account identity from what the actor was doing"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## attempt.started",
+        "## Runtime Event Packets"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "execution_role"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L010141-L010157"
+      ],
+      "notes": [
+        "execution_role is the most important missing field in the current runtime packet set per research findings"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0073"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "Contracts_V0.md has no route-target contract \u2014 the canonical shape that all navigation/subject-open commands and surface pivots must conform to",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Contracts_V0.md has no route-target contract \u2014 the canonical shape that all navigation/subject-open commands and surface pivots must conform to",
+        "Add a concrete route_target contract to Contracts_V0.md with minimum required fields and a normalization rule for surface-specific IDs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [
+        "## route_target",
+        "## Navigation Contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011420-L011430"
+      ],
+      "notes": [
+        "Contracts_V0.md needs a canonical route_target contract shape. This is the foundational contract for all navigation/pivot/subject-open operations across the app."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE006-0089"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "Contracts_V0.md must define the concrete route_target shape with: target_kind (required), project_id?, focused_run_id?, thread_id?, tab_id?, subject_id?, object_kind?+object_id?, inspector_target?",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Contracts_V0.md must define the concrete route_target shape with: target_kind (required), project_id?, focused_run_id?, thread_id?, tab_id?, subject_id?, object_kind?+object_id?, inspector_target?",
+        "The route_target shape must NOT directly carry artifact_id, document_id, usage_event_ref, wizard_id, wizard_step, message_id, workflow_run_id, scheduler_pass_id, safe_point_id, remediation_root_id, line, or range \u2014 these normalize into subject_id or object_kind+object_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [
+        "## route_target"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "target_kind",
+        "project_id",
+        "focused_run_id",
+        "thread_id",
+        "tab_id",
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "inspector_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011815-L011840"
+      ],
+      "notes": [
+        "Canonical route_target minimum field set: target_kind (required); project_id?, focused_run_id?, thread_id?, tab_id?; subject_id? OR object_kind?+object_id?; inspector_target?. Surface-specific IDs (artifact_id, document_id, etc.) normalize into subject_id or object_kind+object_id and must NOT be base fields."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE006-0090"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "canon_label": "Contracts_V0.md must define the concrete OpenSubject shape \u2014 the contract for identity-native object opens that are distinct from workspace-file path operations",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Contracts_V0.md must define the concrete OpenSubject shape \u2014 the contract for identity-native object opens that are distinct from workspace-file path operations",
+        "UICommand.args for navigation commands must reference the canonical route_target shape rather than ad hoc per-command field lists"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [
+        "## OpenSubject",
+        "## UICommand.args"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "OpenSubject"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011840-L011860"
+      ],
+      "notes": [
+        "OpenSubject concrete shape in Contracts_V0.md must cover: subject_kind (required), subject_id (required), optional context fields (project_id, focused_run_id, thread_id). UICommand.args for nav commands must reference route_target by contract ref."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0037-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "Define actor_kind enum and execution_role enum in Contracts_V0.md with initial values to unblock persona resolution, permission scoping, and role-by-provider account overrides",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define actor_kind enum and execution_role enum in Contracts_V0.md with initial values to unblock persona resolution, permission scoping, and role-by-provider account overrides",
+        "Add both fields to the canonical actor envelope",
+        "Use actor_kind in stream events to distinguish overseer, executor, reviewer, corroborator, and observer roles"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward",
+        "## actor_kind Enum Initial Values"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "actor_kind",
+        "execution_role"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007201"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

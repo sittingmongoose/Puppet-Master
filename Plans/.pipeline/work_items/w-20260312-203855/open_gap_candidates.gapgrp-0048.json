@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0048",
+  "coverage_row_ids_represented": [
+    "cov-01435"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0048",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Plans/Contracts_V0.md and Plans/storage-plan.md are likely owners for canonical blocked/approval identity linkage and pressure/switch projection families",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01435"
+      ],
+      "source_obligation_ids": [
+        "obl-0838"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0005"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Plans/Contracts_V0.md and Plans/storage-plan.md are likely owners for canonical blocked/approval identity linkage and pressure/switch projection families",
+        "Reconcile ask/plan and external_publish_side_effect semantics in one canonical algorithm",
+        "Define an Approval Scope Key spanning actor/lane/run/account context"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

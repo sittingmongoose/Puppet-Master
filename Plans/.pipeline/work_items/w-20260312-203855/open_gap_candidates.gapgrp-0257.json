@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0257",
+  "coverage_row_ids_represented": [
+    "cov-00330",
+    "cov-00729"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0257",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Runtime_Artifacts_Panel.md calls artifact_id, run_id, thread_id, task_id, linked_artifact_id, and logical_artifact_id the canonical ID set, but that set is still missing the attempt-native/runtime att\u2026 | usage-feature.md and Runtime_Artifacts_Panel.md implement 'Show in *' as view-specific deep links rather than as activations of the canonical route-target model",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Canonical Artifact ID Set"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00330",
+        "cov-00729"
+      ],
+      "source_obligation_ids": [
+        "obl-0248",
+        "obl-0520"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0027",
+        "seed-WAVE006-0080"
+      ],
+      "source_shard_ids": [
+        "shard-0054",
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Runtime_Artifacts_Panel.md calls artifact_id, run_id, thread_id, task_id, linked_artifact_id, and logical_artifact_id the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields the rest of the rewrite now depends on",
+        "the docs still use task_id language in the artifact packet even though wider execution identity is moving toward node/package/seam/lane-native structures",
+        "Treat task_id as legacy/compatibility display metadata where necessary, not the main execution anchor",
+        "usage-feature.md and Runtime_Artifacts_Panel.md implement 'Show in *' as view-specific deep links rather than as activations of the canonical route-target model",
+        "All 'Show in Panel', 'Show in Usage', 'Show in Artifacts' surface actions must be modeled as route-target activations with the appropriate target_kind and identifiers"
+      ],
+      "stale_tokens": [
+        "task_id",
+        "Show in Panel",
+        "Show in Usage",
+        "Show in Artifacts"
+      ],
+      "canonical_replacement_hints": [
+        "attempt_id",
+        "node_id",
+        "execution_role",
+        "provider_attempt_ref",
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

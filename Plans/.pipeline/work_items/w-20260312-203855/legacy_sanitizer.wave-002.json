@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.legacy_sanitizer_wave.v2.1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-002",
+  "subagent_tasks": [
+    {
+      "task_id": "verify-root-allowlist-no-quarantine-run",
+      "description": "Read-only immediate root listing; confirm allowlist-only files and v2.1 schema headers for resolve + prior sanitizer report.",
+      "attestation_agent_id": "5db03651-911d-40d8-8413-00fc2462c5d2"
+    }
+  ],
+  "assigned_input_boundaries": {
+    "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855/",
+    "sweep_timestamp_utc": "20260501T191159Z",
+    "root_files_at_sweep": 8,
+    "quarantine_moves_this_wave": 0,
+    "prior_batch_quarantine_reference": "20260501T190511Z"
+  },
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "files_assigned": 8,
+  "files_completed": 8,
+  "artifact_families_assigned": 3,
+  "artifact_families_completed": 3
+}

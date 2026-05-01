@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0181",
+  "coverage_row_ids_represented": [
+    "cov-00810",
+    "cov-00820",
+    "cov-00827",
+    "cov-00898",
+    "cov-00970",
+    "cov-00997",
+    "cov-01059",
+    "cov-01091",
+    "cov-01138",
+    "cov-01240"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0181",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "4. `Plans/Orchestrator_Page.md` | Acknowledgement model: 'acknowledged' \u2260 'resolved' \u2260 'dismissed'; acknowledgement is for advisory/non-blocking concerns only; blockers are not acknowledgeable | Activity: idle | running | paused | queued | background_active | Alert levels must be exactly: Info, Warning, Attention, Action Required \u2014 this is a closed four-level taxonomy | Completion state progression must follow: Locally Complete \u2192 Available to Seam \u2192 Seam Complete; each transition has defined gates",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Acknowledgement Model"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00810",
+        "cov-00820",
+        "cov-00827",
+        "cov-00898",
+        "cov-00970",
+        "cov-00997",
+        "cov-01059",
+        "cov-01091",
+        "cov-01138",
+        "cov-01240"
+      ],
+      "source_obligation_ids": [
+        "obl-0565",
+        "obl-0572",
+        "obl-0574",
+        "obl-0602",
+        "obl-0636",
+        "obl-0646",
+        "obl-0669",
+        "obl-0679",
+        "obl-0697",
+        "obl-0742"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s045",
+        "shard-0002-s008",
+        "shard-0021-s011",
+        "shard-0002-s001",
+        "shard-0001-s016",
+        "shard-0009-s012",
+        "seed-WAVE007-0016",
+        "seed-WAVE007-0043",
+        "seed-WAVE007-0015",
+        "shard-0092-s038"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0009",
+        "shard-0021",
+        "shard-0063",
+        "shard-0069",
+        "shard-0088",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "4. `Plans/Orchestrator_Page.md`",
+        "Plans/Orchestrator_Page.md",
+        "Acknowledgement model: 'acknowledged' \u2260 'resolved' \u2260 'dismissed'; acknowledgement is for advisory/non-blocking concerns only; blockers are not acknowledgeable",
+        "Activity: idle | running | paused | queued | background_active",
+        "Alert levels must be exactly: Info, Warning, Attention, Action Required \u2014 this is a closed four-level taxonomy",
+        "Completion state progression must follow: Locally Complete \u2192 Available to Seam \u2192 Seam Complete; each transition has defined gates",
+        "Consolidated cleanup priorities P1-P3: P1 = Orchestrator_Page.md, Executor_Protocol.md, Contracts_V0.md, storage-plan.md, human-in-the-loop.md, plan_graph.schema.json, project_plan_node.schema.json; P2 = FinalGUISpec.md, Run_Graph_View.md, WorktreeGitImprovement.md, GitHub_Integration.md, Widget_System.md, UI_Command_Catalog.md; P3 = 00-plans-index.md, Crosswalk.md, Glossary.md, feature-list.md, OpenCode_Coverage_Matrix.md, usage-feature.md",
+        "Define a controlled coarse destination enum/family in the route contract layer.",
+        "Let object identity and scope pick the thing to show; let destination pick the major surface class; let shell state handle the rest.",
+        "Recommended coarse destination classes: `primary_view` (Dashboard, Projects, Wizard, Interview, Settings, Usage, FileEditor, Orchestrator), `side_panel` (chat, files, source_control, github_actions, docker_manager, artifacts, run_debug), `bottom_panel` (terminal, problems, output, ports, browser, debug), `embedded_surface` (document_pane, agent_activity), `page_tab` (Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger)",
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`.",
+        "The canonical vocabulary is: `summary`; `evidence`; `artifacts`; `history`; `reviews`; `usage`; `lineage`; `details`",
+        "`inspector_target` is not object identity. `inspector_target` is not a per-surface arbitrary bag. `inspector_target` does not replace `tab_id`.",
+        "`wizard_step`, `message_id`, `line`, `range`, and compare-target state are not `inspector_target` values.",
+        "Use `inspector_target` only after primary selector identity is already established.",
+        "Use `inspector_target = lineage` for scheduler/remediation/safe-point/patch lineage drill-ins.",
+        "Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.",
+        "Keep all message-step-line-range style anchors out of `inspector_target`.",
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+        "Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.",
+        "Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.",
+        "Allow the route model to name major destination surfaces/tabs/panels where operationally necessary.",
+        "This seam prevents the route model from swallowing the whole shell. The right question for routing is 'where should the user land,' not 'how should every panel be laid out when they get there.'",
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Crosswalk.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

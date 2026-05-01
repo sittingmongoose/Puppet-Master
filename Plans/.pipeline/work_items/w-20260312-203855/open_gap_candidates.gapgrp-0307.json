@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0307",
+  "coverage_row_ids_represented": [
+    "cov-00409"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0307",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Widget_System.md is still written for the earlier world where multiple Orchestrator tabs are widget pages",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## Widget Hostability Catalog"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00409"
+      ],
+      "source_obligation_ids": [
+        "obl-0302"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "Widget_System.md is still written for the earlier world where multiple Orchestrator tabs are widget pages",
+        "its hostability, layout keys, widget caps, and catalog all still include Orch/Tiers, Orch/Evidence, Orch/History, and Orch/Ledger",
+        "that no longer fits the current rewrite direction where only Progress is widget-composed and the other Orchestrator tabs are native surfaces"
+      ],
+      "stale_tokens": [
+        "Orch/Tiers",
+        "Orch/Evidence",
+        "Orch/History",
+        "Orch/Ledger"
+      ],
+      "canonical_replacement_hints": [
+        "Progress only for widget composition; Seams/Node Graph/Evidence/History/Ledger as native surfaces"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0328",
+  "represented_seed_ids": [
+    "shard-0004-s001",
+    "shard-0004-s012",
+    "shard-0004-s014"
+  ],
+  "source_shard_ids": [
+    "shard-0004"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0004-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Governance model must define 4 execution scopes: run = full canonical graph under deterministic runtime; work package = coherent precomputed subgraph with local overseer; feature seam = cross-package \u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Governance model must define 4 execution scopes: run = full canonical graph under deterministic runtime; work package = coherent precomputed subgraph with local overseer; feature seam = cross-package oversight scope; node = smallest executable unit"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Governance Model",
+        "## Execution Scopes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000601-L000640"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0004-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Each entity type must have its own lifecycle model \u2014 there is no single universal status enum: node lifecycle, work package lifecycle, feature seam lifecycle, promotion lifecycle, worktree lane lifecy\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Each entity type must have its own lifecycle model \u2014 there is no single universal status enum: node lifecycle, work package lifecycle, feature seam lifecycle, promotion lifecycle, worktree lane lifecycle are all distinct"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Per-Entity Lifecycle Models"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000780-L000800"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0004-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Three canonical promotion classes must be defined: lane_to_package (lane result \u2192 package baseline), package_to_seam_available (package \u2192 trusted seam contribution), seam_complete (seam marked complet\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Three canonical promotion classes must be defined: lane_to_package (lane result \u2192 package baseline), package_to_seam_available (package \u2192 trusted seam contribution), seam_complete (seam marked complete)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Promotion Classes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000650-L000670"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

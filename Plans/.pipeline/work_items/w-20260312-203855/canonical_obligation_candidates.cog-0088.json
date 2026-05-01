@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0088",
+  "represented_seed_ids": [
+    "seed-WAVE007-0012"
+  ],
+  "source_shard_ids": [
+    "shard-0062"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement."
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "## DAE-Side Write-Scope Contract",
+        "## Bypass / Degradation Paths"
+      ],
+      "stale_residue_to_retire": [
+        "HTE-only enforcement assumptions"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_evidence": [
+        "working_ledger.md:L012328"
+      ],
+      "notes": [
+        "FileSafe.md needs: (1) explicit DAE-side write-scope contract, (2) remote side-effect enforcement rules, (3) owned bypass/degradation paths. HTE-only enforcement is a stale assumption."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

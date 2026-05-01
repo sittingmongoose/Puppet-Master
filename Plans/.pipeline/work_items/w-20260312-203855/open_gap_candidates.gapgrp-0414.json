@@ -1,0 +1,151 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0414",
+  "coverage_row_ids_represented": [
+    "cov-00829",
+    "cov-00862",
+    "cov-00874",
+    "cov-00877",
+    "cov-00883",
+    "cov-00925",
+    "cov-01079",
+    "cov-01259",
+    "cov-01299",
+    "cov-01311"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0414",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add a canonical append-only event/record family for account-pressure and switching: account_pressure_episode and account_switch_event | Add account_switch_event and account_pressure_episode families to storage-plan.md and Contracts_V0.md | Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record | Add explicit first-class storage families for durable worktree/lane lifecycle: worktree_record, lane_record, worktree_projection, lane_projection | Add project_attention_item projection family to storage-plan.md with canonical shape and projection freshness / trust-state contract",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00829",
+        "cov-00862",
+        "cov-00874",
+        "cov-00877",
+        "cov-00883",
+        "cov-00925",
+        "cov-01079",
+        "cov-01259",
+        "cov-01299",
+        "cov-01311"
+      ],
+      "source_obligation_ids": [
+        "obl-0575",
+        "obl-0585",
+        "obl-0589",
+        "obl-0591",
+        "obl-0594",
+        "obl-0614",
+        "obl-0677",
+        "obl-0750",
+        "obl-0770",
+        "obl-0777"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0007",
+        "shard-0037-s012",
+        "seed-WAVE005-0006",
+        "seed-WAVE005-0054",
+        "shard-0037-s009",
+        "shard-0040-s006",
+        "seed-WAVE007-0041",
+        "shard-0039-s009",
+        "seed-WAVE006-0005",
+        "seed-WAVE006-0007"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0048",
+        "shard-0051",
+        "shard-0052",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "Add a canonical append-only event/record family for account-pressure and switching: account_pressure_episode and account_switch_event",
+        "account_pressure_episode fields: episode_id, project_id, provider_id, account_id, execution_role?, source_kind, signal_confidence, pressure_kind, projected_remaining?, reset_at?, started_at_utc, updated_at_utc, ended_at_utc?, status",
+        "account_switch_event fields: switch_event_id, project_id, provider_id, execution_role?, requested_account_id?, from_account_id?, to_account_id?, switch_reason, decision_kind, source_episode_id?, run_id?, attempt_id?, thread_id?, ts",
+        "Add account_switch_event and account_pressure_episode families to storage-plan.md and Contracts_V0.md",
+        "Define the canonical switch-event schema with required fields (old/new effective account, switch_reason, scope, pressure levels, timeline)",
+        "Define pressure-episode schema and bind it to History/Ledger/Usage Pressure projections",
+        "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record",
+        "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter",
+        "Operational identity kinds: github_api_account, registry_namespace, kubernetes_context",
+        "Ensure GUI inspectors can show requested/effective provider/account identity, requested/effective operational identity, execution role, and selection/switch reason",
+        "Add explicit first-class storage families for durable worktree/lane lifecycle: worktree_record, lane_record, worktree_projection, lane_projection",
+        "WorktreeGitImprovement.md now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs but storage-plan.md currently has only adjacent state",
+        "Proposed: worktree_record.v1:{project_id}:{worktree_id}, lane_record.v1:{project_id}:{lane_id}, worktree_projection.v1:{project_id}:{worktree_id}, lane_projection.v1:{project_id}:{lane_id}",
+        "Add project_attention_item projection family to storage-plan.md with canonical shape and projection freshness / trust-state contract",
+        "Add rollup rules (severity-merge, collapse criteria, forced-split criteria) to the attention item family definition",
+        "Add disclosure-visibility rules: inline surface, click-to-expand, navigate-to-attention-center",
+        "Bind attention center widget in FinalGUISpec.md to the projection family, not to live polling",
+        "Blocked/degraded reason fields in the effective-resolution record must be normative and explicit",
+        "blocked_reason_code is the canonical machine-readable reason; blocked_reason_detail is optional human-readable context",
+        "degraded_reason_code and degraded_reason_detail follow the same pattern",
+        "Both pairs must appear on the effective-resolution record, not scattered as ad-hoc strings in concern records, HITL events, or attention items",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`.",
+        "The canonical `object_kind` set: conversational/upstream: `thread`, `message`, `wizard`, `usage_event`; runtime/execution: `run`, `node`, `attempt`, `scheduler_pass`, `blocked_episode`, `safe_point`, `remediation`; orchestration rewrite: `feature_seam`, `work_package`, `lane`, `worktree`, `concern`, `promotion`, `graph_patch`, `graph_generation`",
+        "`object_id` must use existing canonical ids: `thread_id`, `message_id`, `wizard_id`, `run_id`, `attempt_id`, `scheduler_pass_id`, `blocked_sequence` in `{ run_id, node_id }` scope, `safe_point_id`, `remediation_root_id`, `lane_id`, `worktree_id`, concern/promotion/graph-patch/graph-generation ids when defined",
+        "`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+        "If new object families appear, they must be added deliberately, not ad hoc in surface docs.",
+        "Identity semantics across docs must converge on OperationalIdentity block as the canonical snapshot",
+        "requested_account_id must always be accompanied by requested_account_binding (none / preferred / required) to clarify what failure mode applies when the requested account is unavailable",
+        "effective_account_id must always be present (may equal the default) and never absent from any record that involves a provider/model call",
+        "Keep tier_runtime_record only as a compatibility/overlay projection and say that explicitly in storage-plan.md",
+        "storage-plan.md keeps tier_runtime_record alive next to attempt_record, which increases the risk that consumers keep binding to the looser tier-shaped projection instead of the stricter attempt-shaped context",
+        "Make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md",
+        "Define operational_identity as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records",
+        "execution_role and operational_identity solve different problems and should not be merged"
+      ],
+      "stale_tokens": [
+        "account_switch_reason (as sole current+historical field)",
+        "tier_id in navigation docs",
+        "raw widget ids as object_kind values",
+        "tier_runtime_record"
+      ],
+      "canonical_replacement_hints": [
+        "account_pressure_episode",
+        "account_switch_event",
+        "execution_role",
+        "operational_identity (kind/requested_ref/effective_ref/selection_reason/partial_capability)",
+        "worktree_record.v1:{project_id}:{worktree_id}",
+        "lane_record.v1:{project_id}:{lane_id}",
+        "worktree_projection.v1:{project_id}:{worktree_id}",
+        "lane_projection.v1:{project_id}:{lane_id}",
+        "project_attention_item.v1:{project_id}:{attention_item_id}",
+        "blocked_reason_code",
+        "blocked_reason_detail",
+        "degraded_reason_code",
+        "degraded_reason_detail",
+        "object_kind = node | attempt | scheduler_pass | blocked_episode for tier-era pivots",
+        "requested_account_binding: none | preferred | required",
+        "attempt_record",
+        "operational_identity"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

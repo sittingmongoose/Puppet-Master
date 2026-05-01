@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0493",
+  "represented_seed_ids": [
+    "shard-0036-s014"
+  ],
+  "source_shard_ids": [
+    "shard-0036"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0036-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Add a node_concerns[] / concern_count projection to the Run Graph node state model so concern details are surfaced at node click",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add a node_concerns[] / concern_count projection to the Run Graph node state model so concern details are surfaced at node click",
+        "Bind concern-rendering to canonical concern record via concern_id, not ad-hoc blocked strings",
+        "Align Run Graph command bindings with UI_Command_Catalog.md canonical cmd.runtime.*, cmd.orchestrator.open_in_* variants"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward",
+        "## node_concerns Projection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "node_concerns[]",
+        "concern_id"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

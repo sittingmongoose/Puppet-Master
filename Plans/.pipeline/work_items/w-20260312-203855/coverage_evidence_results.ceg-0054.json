@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0054",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01506",
+      "source_obligation_ids": [
+        "obl-0871"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0069"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01511",
+      "source_obligation_ids": [
+        "obl-0873"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01514",
+      "source_obligation_ids": [
+        "obl-0874"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01569",
+      "source_obligation_ids": [
+        "obl-0906"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01594",
+      "source_obligation_ids": [
+        "obl-0925"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 0/1 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01602",
+      "source_obligation_ids": [
+        "obl-0927"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 0/1 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01621",
+      "source_obligation_ids": [
+        "obl-0939"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01623",
+      "source_obligation_ids": [
+        "obl-0940"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 0/1 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01625",
+      "source_obligation_ids": [
+        "obl-0941"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 0/1 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01628",
+      "source_obligation_ids": [
+        "obl-0942"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

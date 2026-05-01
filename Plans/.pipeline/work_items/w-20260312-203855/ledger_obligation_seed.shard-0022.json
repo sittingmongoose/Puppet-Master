@@ -1,0 +1,297 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0022",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0022-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Blocked-Owner Kinds",
+        "## Project Card Blocked-Owner Model"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "These are the canonical blocked/attention owner kinds; project card shows dominant current owner answering 'who/what is the project waiting on?'"
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "primary attention reason",
+        "primary blocked reason",
+        "optional count badge for additional issues"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Primary Attention Reason Display"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Show one singular primary reason, not every problem; count badge for additional issues; examples: Waiting on user approval, Seam integration blocked, Graph patch required, Recovery in progress, Provider/account pressure, Projection trust degraded"
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "project-summary projection",
+        "activity state",
+        "attention state",
+        "health state",
+        "primary blocked/attention owner",
+        "primary reason",
+        "pressure summary"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Summary Projection",
+        "## Project-Level Rollup Projection"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Project card must summarize from a canonical project-level projection; compact and singular with deep links for detail"
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "provider/account pressure present",
+        "quota pressure severity",
+        "signal confidence"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Pressure Summary Fields",
+        "## Project Card Pressure Signals"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Compact pressure summary: Gemini pressure: high, Account switch active, Quota signal: heuristic; deep-link to Usage/Authentication/Orchestrator for detail"
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "info",
+        "warning",
+        "attention_required",
+        "blocked",
+        "system_notification"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Escalation Ladder",
+        "## Shared Notification Escalation Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "One shared progression: info=local context/history; warning=in-app banner not action-blocking; attention_required=user input helpful/needed; blocked=cannot continue until action/precondition changes; system_notification=out-of-app signal"
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "History receives everything chronologically",
+        "Progress/Dashboard shows active warnings/attention/blocked",
+        "badges show compressed counts/severity markers",
+        "chat/thread only for genuine user decision/input",
+        "system notifications reserved for high-value sparse events"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Escalation Surface Mapping",
+        "## Notification Surface Ladder"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Each escalation level maps to specific surfaces; cross-surface contract needed"
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "immediate show on first activation",
+        "suppress duplicate noise while unchanged",
+        "resurface only when: severity increases, owner changes, blocked duration crosses threshold, new action becomes available, user returns focus after time away"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Resurfacing / Aging Rules",
+        "## Notification Resurfacing Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Resurfacing based on change/persistence thresholds, not every heartbeat"
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "`dismissed` is presentation state, not semantic resolution",
+        "active blockers must not be dismissible into fake health",
+        "advisory warnings may respect quiet/dismiss windows",
+        "real blocked states should remain represented until underlying truth changes"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Persistent Blocker Rule",
+        "## Dismiss Semantics Constraint"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0022-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "HITL approval required",
+        "run complete",
+        "major failure requiring attention",
+        "severe rate-limit/pressure event when it materially stops progress"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## System Notification Candidates",
+        "## Tray Notification Policy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0022",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Poor candidates: routine warnings, every blocked node in large run, repeated unresolved reminders without new information"
+      ]
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L4201-L4204 (continuation of project card field list \u2014 already captured in shard-0021)",
+    "working_ledger.md:L4251-L4257 (active vs historical project posture \u2014 narrative framing, no new concrete action)",
+    "working_ledger.md:L4278-L4281 (contradictions/gaps narrative)",
+    "working_ledger.md:L4299-L4305 (Research Progress header + Targeted docs read \u2014 research metadata)",
+    "working_ledger.md:L4387-L4399 (usage/account-pressure pattern restatement \u2014 pattern already captured by escalation ladder seed)"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

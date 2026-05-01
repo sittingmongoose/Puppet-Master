@@ -1,0 +1,132 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0037",
+  "coverage_row_ids_represented": [
+    "cov-00974",
+    "cov-00982",
+    "cov-00987",
+    "cov-01006",
+    "cov-01036",
+    "cov-01042",
+    "cov-01048",
+    "cov-01055",
+    "cov-01061",
+    "cov-01063"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0037",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Concern categories: wiring, workflow, state_contract, gui_alignment, design_architecture, quality, evidence_gap, corroboration, recovery, account_usage_pressure, projection_trust | Concern lifecycle: active, acknowledged, resolved, dismissed | Concern record minimum fields: concern_id, project_id, run_id?, seam_id?, package_id?, node_id?, attempt_id?, lane_id?, worktree_id?, category, severity, status, summary, detail_ref?, owner_kind, owne\u2026 | Contracts_V0.md is strong on canonical effective identity and envelope normalization | Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Concern Categories"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00974",
+        "cov-00982",
+        "cov-00987",
+        "cov-01006",
+        "cov-01036",
+        "cov-01042",
+        "cov-01048",
+        "cov-01055",
+        "cov-01061",
+        "cov-01063"
+      ],
+      "source_obligation_ids": [
+        "obl-0637",
+        "obl-0640",
+        "obl-0642",
+        "obl-0651",
+        "obl-0666",
+        "obl-0667",
+        "obl-0668",
+        "obl-0669",
+        "obl-0670",
+        "obl-0671"
+      ],
+      "source_seed_ids": [
+        "shard-0016-s001",
+        "shard-0016-s002",
+        "shard-0015-s002",
+        "shard-0031-s008",
+        "seed-WAVE007-0035",
+        "seed-WAVE007-0014",
+        "seed-WAVE007-0034",
+        "seed-WAVE007-0016",
+        "seed-WAVE008-0044",
+        "shard-0014-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0014",
+        "shard-0015",
+        "shard-0016",
+        "shard-0031",
+        "shard-0063",
+        "shard-0067",
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "Concern categories: wiring, workflow, state_contract, gui_alignment, design_architecture, quality, evidence_gap, corroboration, recovery, account_usage_pressure, projection_trust",
+        "severity should stay independent from blocking semantics: severity answers how bad is it; blocking_effect answers what does it prevent",
+        "Concern lifecycle: active, acknowledged, resolved, dismissed",
+        "acknowledged: user/operator has seen and accepted the concern as still real but not requiring immediate noise",
+        "dismissed: concern presentation was intentionally hidden/rejected; should require rationale when it disagrees with corroborated/high-severity evidence",
+        "resolved: underlying truth changed; should record resolution_kind",
+        "resolution_kind values: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery",
+        "Concern record minimum fields: concern_id, project_id, run_id?, seam_id?, package_id?, node_id?, attempt_id?, lane_id?, worktree_id?, category, severity, status, summary, detail_ref?, owner_kind, owner_ref?, created_by_kind, created_by_ref?, first_seen_at_utc, last_seen_at_utc, resolved_at_utc?, dismissed_at_utc?, acknowledged_at_utc?",
+        "Evidence/source refs: source_refs[], evidence_refs[], artifact_refs[], review_refs[], corroboration_refs[], graph_patch_refs[], recovery_refs[]",
+        "Lineage refs: parent_concern_id?, superseded_by_concern_id?, merged_into_concern_id?, split_from_concern_id?",
+        "Attention fields: visibility_level, attention_level, chatworthy, blocking_effect?",
+        "Contracts_V0.md is strong on canonical effective identity and envelope normalization",
+        "downstream docs still do not consistently model requested identity alongside verified/effective identity",
+        "this is especially visible in GitHub_API_Auth_and_Flows.md, GitHub_Integration.md, Run_Graph_View.md, and Runtime_Artifacts_Panel.md",
+        "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`",
+        "Keep the intent vocabulary controlled and small: `open_source`; `open_preview`; `open_review`",
+        "Keep resolver-support metadata out of the contract.",
+        "State the resolution rule directly: `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists; otherwise it resolves to transient `generated://<artifact_id>` source opening",
+        "`OpenSubject` does not carry: `project_id`, `thread_id`, `run_id`, `tab_id`, `panel_id`, `inspector_target`, `origin_surface`, `source_kind`, `backing_document_id`, `last_saved_path`, `generated://<artifact_id>`, preview persistence state, transport mode",
+        "Define `resume_url` as a serialized route-target transport in the contract layer once `route_target` exists.",
+        "Keep serialized forms intentionally narrower than the full internal object.",
+        "Let object families define only the extra anchor material truly needed for recovery or exact resume.",
+        "Decode all supported deep-link forms into the same internal routing path rather than handling URL activation as a separate system.",
+        "The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.",
+        "Define `route_target` as the canonical navigation-and-focus contract.",
+        "Define `OpenSubject` as the canonical identity-native source-open contract.",
+        "Keep `OpenFile` as the path-based editor contract only.",
+        "State the resolution chain directly: `route_target` may land on a surface that then invokes `OpenSubject`; `OpenSubject` may resolve to `OpenFile`; `OpenSubject` may resolve to a transient `generated://<artifact_id>` source buffer",
+        "The three contracts are now distinct: `route_target` = navigation; `OpenSubject` = identity-native source open; `OpenFile` = path-based editor open",
+        "Define a controlled coarse destination enum/family in the route contract layer.",
+        "Let object identity and scope pick the thing to show; let destination pick the major surface class; let shell state handle the rest.",
+        "Recommended coarse destination classes: `primary_view` (Dashboard, Projects, Wizard, Interview, Settings, Usage, FileEditor, Orchestrator), `side_panel` (chat, files, source_control, github_actions, docker_manager, artifacts, run_debug), `bottom_panel` (terminal, problems, output, ports, browser, debug), `embedded_surface` (document_pane, agent_activity), `page_tab` (Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger)",
+        "Define a cross-family blocked minimum for canonical blocked objects: blocked reason; ordered allowed actions where applicable; preserved-work / local-state disclosure where applicable; stable blocked-episode identity or family-local equivalent; detail/report inspection refs.",
+        "Keep family-local additions separate: node-blocked keeps blocked_sequence, attempt_id, failure_class; wizard-blocked keeps wizard-specific clarification/report fields; thread blocked notices stay as rendered/persisted consumer state, not canonical blocked ownership.",
+        "assistant-chat-design.md is already stronger than the owner docs in how it treats blocked thread actions.",
+        "Define a shared record-semantic vocabulary applied across: attempts, promotions, concerns, graph patches, recovery records, lane/worktree objects",
+        "Add explicit successor/predecessor links where superseded is possible",
+        "Keep visibility policy (archived, hidden from default lists) separate from semantic state (historical, revoked, superseded)",
+        "Ensure exact-record surfaces expose why a record is no longer current rather than simply dimming it"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

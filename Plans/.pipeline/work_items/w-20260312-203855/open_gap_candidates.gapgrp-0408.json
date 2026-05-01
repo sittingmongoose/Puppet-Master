@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0408",
+  "coverage_row_ids_represented": [
+    "cov-00677"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0408",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "package, seam, and work-package are 'schema ghosts' \u2014 they are assumed conceptually but absent from core schemas/receipts/event families; they must be made concrete",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Package/Seam Schema Ghost Problem"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00677"
+      ],
+      "source_obligation_ids": [
+        "obl-0479"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "package, seam, and work-package are 'schema ghosts' \u2014 they are assumed conceptually but absent from core schemas/receipts/event families; they must be made concrete"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

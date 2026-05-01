@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0352",
+  "coverage_row_ids_represented": [
+    "cov-03109"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0352",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "/compact is absent from the reserved-name lists even though cmd.chat.compact_context already exists",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Reserved Slash Commands"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03109"
+      ],
+      "source_obligation_ids": [
+        "obl-2019"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0010"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "exact_missing_items": [
+        "/compact is absent from the reserved-name lists even though cmd.chat.compact_context already exists",
+        "reconcile /compact, /mode, override_builtin semantics, and stale/superseded command-state handling across command-system, chat, catalog, and wiring docs"
+      ],
+      "stale_tokens": [
+        "/compact"
+      ],
+      "canonical_replacement_hints": [
+        "cmd.chat.compact_context"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

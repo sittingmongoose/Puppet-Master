@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0021",
+  "coverage_row_ids_represented": [
+    "cov-00210",
+    "cov-00216",
+    "cov-00223",
+    "cov-00300",
+    "cov-00327",
+    "cov-00341"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0021",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Acceptance/evidence/coverage schemas cannot express work-package/seam/promotion/account/lane identity \u2014 these schema families must be extended | Base provider envelope/spec schemas omit node/attempt/safe-point fields \u2014 these must be added to make provider envelopes node-aware | Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics | Plans/Multi-Account.md is missing 'Effective Identity' coverage for storage and evidence \u2014 the effective account identity must be stored and tracked with run artifacts | Runtime identity snapshots stop too early \u2014 requested/effective persona/platform/model exist but requested/effective account and execution identity do not; these must be added",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Acceptance/Evidence Schema Extensions"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00210",
+        "cov-00216",
+        "cov-00223",
+        "cov-00300",
+        "cov-00327",
+        "cov-00341"
+      ],
+      "source_obligation_ids": [
+        "obl-0174",
+        "obl-0177",
+        "obl-0181",
+        "obl-0226",
+        "obl-0247",
+        "obl-0254"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s007",
+        "shard-0008-s006",
+        "shard-0007-s018",
+        "shard-0007-s003",
+        "shard-0008-s008",
+        "shard-0009-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0007",
+        "shard-0008",
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Acceptance/evidence/coverage schemas cannot express work-package/seam/promotion/account/lane identity \u2014 these schema families must be extended",
+        "Base provider envelope/spec schemas omit node/attempt/safe-point fields \u2014 these must be added to make provider envelopes node-aware",
+        "Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics",
+        "Plans/Multi-Account.md is missing 'Effective Identity' coverage for storage and evidence \u2014 the effective account identity must be stored and tracked with run artifacts",
+        "Runtime identity snapshots stop too early \u2014 requested/effective persona/platform/model exist but requested/effective account and execution identity do not; these must be added",
+        "Storage/event keys still lack: project_id, attempt_id, package_id, seam_id, lane_id, worktree_id, safe_point_id, promotion_class, requested/effective account fields \u2014 all must be added"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

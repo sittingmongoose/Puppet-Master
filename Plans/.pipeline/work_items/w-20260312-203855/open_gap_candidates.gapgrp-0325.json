@@ -1,0 +1,86 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0325",
+  "coverage_row_ids_represented": [
+    "cov-00226",
+    "cov-00250",
+    "cov-00257",
+    "cov-00288",
+    "cov-00289",
+    "cov-00414",
+    "cov-00696"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0325",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics | GPT-5.3-Codex: contamination policy is a vocabulary gap \u2014 safe-point language exists in newer addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly a\u2026 | Gap: package-based worktrees are not yet defined as a canonical concept; per-node worktrees are the current model but are the wrong shape for scale | PM-owned SCM state is not fully visible: managed template repos, active git operations, live-run artifact roots, and worktree recovery state need Orchestrator/SCM registration | Package-based lane pools are still missing as a canonical concept in SCM docs \u2014 WorktreeGitImprovement.md and GitHub_Integration.md must define this",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## Contamination Model Gap"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00226",
+        "cov-00250",
+        "cov-00257",
+        "cov-00288",
+        "cov-00289",
+        "cov-00414",
+        "cov-00696"
+      ],
+      "source_obligation_ids": [
+        "obl-0181",
+        "obl-0199",
+        "obl-0202",
+        "obl-0219",
+        "obl-0220",
+        "obl-0305",
+        "obl-0491"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s018",
+        "shard-0010-s017",
+        "shard-0005-s008",
+        "shard-0008-s011",
+        "shard-0009-s009",
+        "shard-0009-s010",
+        "shard-0007-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0007",
+        "shard-0008",
+        "shard-0009",
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "Contamination is a major gap: there is no shared event family, state object, or vocabulary for contamination classification, restore-before-reuse, or lane quarantine semantics",
+        "GPT-5.3-Codex: contamination policy is a vocabulary gap \u2014 safe-point language exists in newer addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent",
+        "Gap: package-based worktrees are not yet defined as a canonical concept; per-node worktrees are the current model but are the wrong shape for scale",
+        "PM-owned SCM state is not fully visible: managed template repos, active git operations, live-run artifact roots, and worktree recovery state need Orchestrator/SCM registration",
+        "Package-based lane pools are still missing as a canonical concept in SCM docs \u2014 WorktreeGitImprovement.md and GitHub_Integration.md must define this",
+        "Worktree visibility is only partially wired between Source Control and Orchestrator \u2014 the interface contract between these two surfaces must be fully defined",
+        "safe-point vs restore-point vs rollback vocabulary is NOT normalized across runtime, policy, interview, and worktree docs \u2014 one canonical vocabulary must be chosen"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

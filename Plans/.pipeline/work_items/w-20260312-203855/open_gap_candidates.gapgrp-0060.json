@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0060",
+  "coverage_row_ids_represented": [
+    "cov-00739"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0060",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "Crosswalk.md \u00a72 routing table is missing Primitive:RouteTarget and Primitive:OpenSubject",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "## \u00a72 Routing Table"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00739"
+      ],
+      "source_obligation_ids": [
+        "obl-0527"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0085"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "Crosswalk.md \u00a72 routing table is missing Primitive:RouteTarget and Primitive:OpenSubject",
+        "Without routing entries for RouteTarget and OpenSubject, adjacent docs that reference these primitives have no canonical resolution path through Crosswalk"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Primitive:RouteTarget",
+        "Primitive:OpenSubject"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Missing or incomplete doc reference vs obligation (concrete path known).",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

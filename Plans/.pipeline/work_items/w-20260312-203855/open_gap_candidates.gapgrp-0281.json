@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0281",
+  "coverage_row_ids_represented": [
+    "cov-00542",
+    "cov-00543",
+    "cov-00545",
+    "cov-00547"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0281",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "`Plans/UI_Command_Catalog.md:617-623` | `Plans/UI_Command_Catalog.md:67-91` | `Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`. | `Plans/UI_Command_Catalog.md` says:",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00542",
+        "cov-00543",
+        "cov-00545",
+        "cov-00547"
+      ],
+      "source_obligation_ids": [
+        "obl-0379",
+        "obl-0380",
+        "obl-0382",
+        "obl-0384"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s124",
+        "shard-0091-s012",
+        "shard-0091-s040",
+        "shard-0091-s081",
+        "shard-0091-s111",
+        "shard-0091-s149",
+        "shard-0088-s098",
+        "shard-0088-s082",
+        "shard-0079-s075"
+      ],
+      "source_shard_ids": [
+        "shard-0079",
+        "shard-0088",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`",
+        "Plans/UI_Command_Catalog.md:617-623",
+        "`Plans/UI_Command_Catalog.md:67-91`",
+        "Plans/UI_Command_Catalog.md:67-91",
+        "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.",
+        "Plans/UI_Command_Catalog.md",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected",
+        "result_id",
+        "`Plans/UI_Command_Catalog.md` says:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

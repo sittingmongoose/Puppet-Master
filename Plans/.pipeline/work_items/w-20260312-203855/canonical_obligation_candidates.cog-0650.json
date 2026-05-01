@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0650",
+  "represented_seed_ids": [
+    "seed-WAVE008-0030",
+    "shard-0007-s009"
+  ],
+  "source_shard_ids": [
+    "shard-0007",
+    "shard-0075"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE008-0030"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md still treats: resume_url as a strong standalone deep-link mechanism; Tiers as a primary page/tab concept; Orchestrator widget tabs broadly enough to conflict with the newer Progr\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Plans/FinalGUISpec.md still treats: resume_url as a strong standalone deep-link mechanism; Tiers as a primary page/tab concept; Orchestrator widget tabs broadly enough to conflict with the newer Progress-only widget composition rule.",
+        "consume route_target semantics instead of letting resume_url stand as a stronger ad hoc primitive.",
+        "replace stale Tiers primary-surface language with the rewrite Orchestrator tab model.",
+        "narrow widget-composition language so only Progress is widget-composed inside Orchestrator.",
+        "FinalGUISpec.md is still a major drift amplifier because it combines shell, page taxonomy, widget, and deep-link language in one doc."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "resume_url as stronger ad hoc navigation primitive in FinalGUISpec.md",
+        "Tiers as primary page/tab concept in FinalGUISpec.md",
+        "non-Progress Orchestrator tabs as widget canvases in FinalGUISpec.md"
+      ],
+      "canonical_replacement_hints": [
+        "route_target semantics; Seams as rewrite tab; only Progress widget-composed"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L014801-L014835"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0007-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md has 22 unreconciled addenda; Tiers tab + phase/task/subtask progress bars + widget.tier_tree as primary Orchestrator surface have never been updated",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Plans/FinalGUISpec.md has 22 unreconciled addenda; Tiers tab + phase/task/subtask progress bars + widget.tier_tree as primary Orchestrator surface have never been updated"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## FinalGUISpec.md Addenda Reconciliation"
+      ],
+      "stale_residue_to_retire": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "canonical_replacement_hints": [
+        "Reconcile 22 addenda; replace tier_tree with seam/package/lane-aware widgets"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001245-L001275"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

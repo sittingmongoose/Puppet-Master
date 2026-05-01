@@ -1,0 +1,86 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0397",
+  "coverage_row_ids_represented": [
+    "cov-03113",
+    "cov-03122",
+    "cov-03168"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0397",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "<phase>/<task>/<subtask> canonical path patterns must be retired and replaced with <package_id>/<node_id> or <seam_id>/<package_id>/<node_id> | Contradiction: active-agents.json (flat file) vs seglog/redb (event-sourced) = split-brain risk; active-agents.json must be retired and replaced with seglog/redb canonical state | Execution identity is spread across incompatible keys: node-native pieces (run_id, thread_id, node_id, attempt_id, replan_generation, scheduler_lane) vs stale tier-native pieces (tier_id, TierType, Ti\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "## Canonical Path Pattern Update"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03113",
+        "cov-03122",
+        "cov-03168"
+      ],
+      "source_obligation_ids": [
+        "obl-2020",
+        "obl-2024",
+        "obl-2039"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s013",
+        "shard-0006-s014",
+        "seed-WAVE005-0019"
+      ],
+      "source_shard_ids": [
+        "shard-0006",
+        "shard-0010",
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "<phase>/<task>/<subtask> canonical path patterns must be retired and replaced with <package_id>/<node_id> or <seam_id>/<package_id>/<node_id>",
+        "Contradiction: active-agents.json (flat file) vs seglog/redb (event-sourced) = split-brain risk; active-agents.json must be retired and replaced with seglog/redb canonical state",
+        "Execution identity is spread across incompatible keys: node-native pieces (run_id, thread_id, node_id, attempt_id, replan_generation, scheduler_lane) vs stale tier-native pieces (tier_id, TierType, TierContext, tier-level crews, tier worktree ownership)",
+        "Executor_Protocol.md and orchestrator-subagent-integration.md still behave like older tier-era execution owners but the rewrite has already pushed canonical semantics upward into graph/package/seam/lane/runtime-record language",
+        "Consolidate execution-core docs around a single node-native execution context object that replaces or wraps TierContext"
+      ],
+      "stale_tokens": [
+        "<phase>/<task>/<subtask>",
+        "phase_id",
+        "task_id",
+        "subtask_id",
+        "active-agents.json",
+        "tier_id (as execution ownership key)",
+        "TierContext",
+        "TierType",
+        "tier-level crews",
+        "tier worktree ownership"
+      ],
+      "canonical_replacement_hints": [
+        "Use <package_id>/<node_id> or <seam_id>/<package_id>/<node_id>",
+        "Use seglog/redb for canonical agent/run state",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "scheduler_lane",
+        "lane_id",
+        "execution_unit_context"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

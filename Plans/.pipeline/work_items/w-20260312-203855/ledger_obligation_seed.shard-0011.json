@@ -1,0 +1,520 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0011",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0011-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "no canonical requested concrete-account anchor exists when a user pins a specific account",
+        "Add one canonical requested-side concrete-account field to the requested/effective runtime identity bundle, while retaining requested_account_policy as the routing rule rather than the selected account"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Requested/Effective Identity",
+        "## Account Identity"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002011-L002013",
+        "working_ledger.md:L002049-L002052"
+      ],
+      "notes": [
+        "Blocks durable historical requested-vs-effective analysis"
+      ]
+    },
+    {
+      "seed_id": "shard-0011-s002",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Personas.md still uses requested_persona_id / effective_persona_id in a runtime-facing section even though Contracts_V0.md explicitly prohibits those names as canonical fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Persona Identity Fields"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "canonical_replacement_hints": [
+        "Use Contracts_V0.md canonical field names"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002042"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "CLI_Bridged_Providers.md request and persistence envelopes still omit requested/effective auth/account fields",
+        "Unify bridged-provider request/persistence envelopes around the same auth/account fields already used by Contracts_V0.md and Prompt_Pipeline.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Request Envelope",
+        "## Persistence Envelope",
+        "## Auth/Account Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002018-L002021",
+        "working_ledger.md:L002044",
+        "working_ledger.md:L002053"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Provider_OpenCode.md never explains how PM obtains upstream account identity from behind the server bridge",
+        "OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not say whether this is capturable, opaque-but-accepted, or a hard gap"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Upstream Account Identity",
+        "## Bridge Account Disclosure"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002020",
+        "working_ledger.md:L002045",
+        "working_ledger.md:L002060"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add a governance rule for provider_account_id: either retire it or explicitly define it as provider-native metadata subordinate to stable internal effective_account_id",
+        "provider_account_id is being normalized in usage/storage-facing docs without a governing rule, so it risks becoming a second shadow routing identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Account Identity Fields",
+        "## provider_account_id"
+      ],
+      "stale_tokens": [
+        "provider_account_id"
+      ],
+      "canonical_replacement_hints": [
+        "effective_account_id is the stable internal identity; provider_account_id should be explicitly subordinate provider-native metadata"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002017",
+        "working_ledger.md:L002050-L002052",
+        "working_ledger.md:L002059"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "Multi-Account.md still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields",
+        "the docs have not been rewritten around node/package/seam/lane-aware execution identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Switch History",
+        "## Durable Switch Storage",
+        "## Account Switch Pressure Episode"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002024",
+        "working_ledger.md:L002031"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s007",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Replace tier-bound identity/override wording in Prompt_Pipeline.md, Models_System.md, and Personas.md with node/package/seam/lane-aware ownership",
+        "Models_System.md, Personas.md, and bridged-provider docs still behave as if provider/model/persona are the full identity envelope"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Models_System.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Execution Identity",
+        "## Override Ownership"
+      ],
+      "stale_tokens": [
+        "tier-bound identity",
+        "tier ownership",
+        "tier mapping"
+      ],
+      "canonical_replacement_hints": [
+        "node/package/seam/lane-aware ownership"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002013",
+        "working_ledger.md:L002022-L002024",
+        "working_ledger.md:L002054"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Permissions_System.md resolves by tool/context/mode but not by invoking runtime entity, lane, or account",
+        "session approval carryover and reject-cascade semantics are still effectively single-session/single-lane even though the rewrite requires parallel actors sharing provider runtime",
+        "Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover/cascade rules"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Permission Resolution",
+        "## Approval Scope",
+        "## Multi-Lane Permission"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002026-L002027",
+        "working_ledger.md:L002046",
+        "working_ledger.md:L002055"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "GitHub_API_Auth_and_Flows.md still keys storage/routing on mutable login",
+        "Replace GitHub login as a stable key with internal account_id, while keeping login as provider-native disclosure metadata"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Account Identity",
+        "## GitHub Login vs account_id"
+      ],
+      "stale_tokens": [
+        "login (as stable routing key)"
+      ],
+      "canonical_replacement_hints": [
+        "internal account_id as stable key; login as provider-native disclosure metadata only"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002093-L002094",
+        "working_ledger.md:L002113-L002114",
+        "working_ledger.md:L002123"
+      ],
+      "notes": [
+        "Must preserve strict separation between github_api and copilot_github realms"
+      ]
+    },
+    {
+      "seed_id": "shard-0011-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "Run_Graph_View.md still lacks the full requested/effective identity and governance-object model the current rewrite expects",
+        "Run_Graph_View.md now needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Node Identity",
+        "## Requested/Effective Identity",
+        "## Governance Object Model"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002084",
+        "working_ledger.md:L002101-L002103"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s011",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Orchestrator_Page.md still keeps Tiers and multi-tab widget composition",
+        "Widget_System.md still catalogs tier widgets and weak hostability rules",
+        "usage-feature.md still aggregates around tier_id",
+        "storage-plan.md still splits tier-era event tables from newer attempt-centric records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Tiers",
+        "## Widget Catalog",
+        "## Usage Aggregation"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "tier_id aggregation",
+        "tier-era event tables",
+        "TierChanged",
+        "IterationStart",
+        "TierTree"
+      ],
+      "canonical_replacement_hints": [
+        "attempt/node/lane/package/seam-aware attribution; tier terms only as compatibility aliases if needed"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002082-L002088",
+        "working_ledger.md:L002117"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "Introduce one shared projection-health / trust-state record family and require Orchestrator, widgets, and Run Graph surfaces to use it for action gating and fallback",
+        "no shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Health",
+        "## Trust State",
+        "## Freshness Contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002089-L002091",
+        "working_ledger.md:L002118"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s013",
+      "seed_type": "owner",
+      "exact_items": [
+        "Recast Orchestrator tab ownership explicitly: Progress as the widget-hosting operational tab; native deep-inspection tabs for seams/graph/evidence/history/ledger; Source Control as the Git/worktree inventory/manipulation surface",
+        "Orchestrator-owned initiation: inspect lane, inspect weak integration, request restore, request graph patch, request reopen/revocation, open lane in Source Control",
+        "Source-Control-owned execution surface: open worktree, compare against baseline/target, inspect changed files/history/graph, recover orphaned worktree, archive lane worktree, prune/remove worktree, cleanup current/all eligible worktrees"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Tabs",
+        "## Tab Ownership",
+        "## Action Ownership Split"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002119-L002151"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s014",
+      "seed_type": "owner",
+      "exact_items": [
+        "historical run/package/node/lane references MUST survive after live worktree cleanup",
+        "a missing live worktree must render as historical/retired/removed, not disappear",
+        "lineage views must preserve: worktree_id, path snapshot, branch snapshot, compare target/commit-range snapshot, owning package/lane identity when applicable"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Worktree Historical Reference",
+        "## Lineage Views",
+        "## Worktree Lifecycle"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002153-L002167"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s015",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "WorktreeGitImprovement.md still frames ownership around tier / subtask rather than package lane pools",
+        "Orchestrator_Page.md still references Tiers and per-tier worktree ownership",
+        "GitHub_Integration.md Worktrees subview still centers raw worktree rows rather than lane-backed operational identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Worktree Ownership"
+      ],
+      "stale_tokens": [
+        "tier-based worktree ownership",
+        "subtask worktree ownership",
+        "per-tier worktree"
+      ],
+      "canonical_replacement_hints": [
+        "owner run/package/lane",
+        "lane-backed operational identity"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002170-L002181"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0011-s016",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add a formal distinction between: lane lifecycle state, worktree filesystem state, runtime blocked/recovery state",
+        "dirty_worktree and worktree_conflict are canonical blocked reasons and must remain visible in both surfaces without becoming generic SCM errors",
+        "Make Source Control the execution surface for Git-native mutations, while Orchestrator remains the operational surface for why those actions matter"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/MiscPlan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Lane Lifecycle State",
+        "## Worktree Filesystem State",
+        "## Blocked Reasons"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0011",
+      "source_evidence": [
+        "working_ledger.md:L002183-L002198"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

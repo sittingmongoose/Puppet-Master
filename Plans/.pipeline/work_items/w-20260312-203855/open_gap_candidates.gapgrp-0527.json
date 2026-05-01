@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0527",
+  "coverage_row_ids_represented": [
+    "cov-02801",
+    "cov-02802",
+    "cov-02803",
+    "cov-02804",
+    "cov-02805",
+    "cov-02806",
+    "cov-02807",
+    "cov-02808",
+    "cov-02809",
+    "cov-02810"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0527",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "the opening sections still teach node completion semantics without the newer `Package Overseer` / `Seam Overseer` governance split | the primitive list still lacks named ownership for `route_target` and `OpenSubject` | the same file later defines canonical `cmd.runtime.*` recovery commands keyed by `run_id`, `node_id`, and `blocked_sequence` | this weakens the deterministic posture expected from an owner gate doc | thread blocked-state addenda already align to blocked/runtime actions",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02801",
+        "cov-02802",
+        "cov-02803",
+        "cov-02804",
+        "cov-02805",
+        "cov-02806",
+        "cov-02807",
+        "cov-02808",
+        "cov-02809",
+        "cov-02810"
+      ],
+      "source_obligation_ids": [
+        "obl-1800",
+        "obl-1801",
+        "obl-1802",
+        "obl-1803",
+        "obl-1804",
+        "obl-1805",
+        "obl-1806",
+        "obl-1807",
+        "obl-1808",
+        "obl-1809"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s012",
+        "shard-0082-s138",
+        "shard-0084-s094",
+        "shard-0083-s030",
+        "shard-0085-s094",
+        "shard-0088-s006",
+        "shard-0077-s036",
+        "shard-0077-s035",
+        "shard-0077-s071",
+        "shard-0077-s029"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "the opening sections still teach node completion semantics without the newer `Package Overseer` / `Seam Overseer` governance split",
+        "Package Overseer",
+        "Seam Overseer",
+        "the primitive list still lacks named ownership for `route_target` and `OpenSubject`",
+        "route_target",
+        "OpenSubject",
+        "the same file later defines canonical `cmd.runtime.*` recovery commands keyed by `run_id`, `node_id`, and `blocked_sequence`",
+        "cmd.runtime.*",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "this weakens the deterministic posture expected from an owner gate doc",
+        "thread blocked-state addenda already align to blocked/runtime actions",
+        "three-axis settings model (`source` / `request` / `execution`)",
+        "source",
+        "request",
+        "execution",
+        "tier-adjacent `evidence_record`",
+        "evidence_record",
+        "tier-keyed `usage_record`",
+        "usage_record",
+        "tier-keyed usage/evidence correlation",
+        "tier-start validation/persona/QA events"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

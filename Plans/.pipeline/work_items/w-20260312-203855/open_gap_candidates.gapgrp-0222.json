@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0222",
+  "coverage_row_ids_represented": [
+    "cov-00851",
+    "cov-01472"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0222",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add a minimal command-classification / normalization contract to the command-definition layer: `command_kind` (shell_view | navigation_wrapper | domain_action); optional `normalization` with `kind` (w\u2026 | Progression_Gates.md remains heavily planning-artifact-centric, with duplicated addenda and zero formal gate coverage for concern/corroboration/promotion/runtime blocked/governance flows",
+      "affected_targets": [
+        {
+          "path": "Plans/Progression_Gates.md",
+          "heading": "## Command Normalization Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00851",
+        "cov-01472"
+      ],
+      "source_obligation_ids": [
+        "obl-0581",
+        "obl-0857"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0030",
+        "seed-WAVE005-0064"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0066"
+      ],
+      "exact_missing_items": [
+        "Add a minimal command-classification / normalization contract to the command-definition layer: `command_kind` (shell_view | navigation_wrapper | domain_action); optional `normalization` with `kind` (wrapper | deprecated_alias) and exactly one target field: `normalizes_to_contract` for wrappers OR `alias_of_command_id` for deprecated aliases",
+        "Keep wrapper metadata contract-level and narrow: point to the canonical primitive family; do not restate route payload structure there",
+        "Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have.",
+        "Extend `GATE-010` to verify: wrapper commands marked as normalizing to the same primitive do not diverge in handler semantics unexpectedly; deprecated aliases resolve to real canonical command IDs; normalization metadata is internally consistent with the command kind",
+        "Progression_Gates.md remains heavily planning-artifact-centric, with duplicated addenda and zero formal gate coverage for concern/corroboration/promotion/runtime blocked/governance flows",
+        "Add concern/corroboration/promotion/runtime blocked/governance gate coverage to Progression_Gates.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

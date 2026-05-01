@@ -1,0 +1,271 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0076",
+  "seed_candidates": [
+    {
+      "seed_id": "seed-WAVE008-0040",
+      "seed_type": "owner",
+      "exact_items": [
+        "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity.",
+        "Keep detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, kubernetes_refs as record/provenance families, not route payload surrogates.",
+        "Keep resume_url only as serialized transport derived from canonical route identity.",
+        "This split will make the owner-doc rewrite much easier because most refs do not need replacement. The real conflict sits almost entirely on resume_url, not on the broader *_ref family."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Ref Families",
+        "## Route Contracts"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015001-L015052"
+      ],
+      "notes": [
+        "The ref-family distinction is needed so consumer docs stop treating detail_ref, report_ref, and resume_url as interchangeable open-this-thing fields."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE008-0041",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "Plans/storage-plan.md is still carrying two execution models at once inside its canonical-record section. The stale pieces are still structural, not incidental: tier_runtime_record keyed by run_id, tier_id; usage_record keyed by run_id, tier_id, attempt_id?, usage_sequence; evidence_record keyed by run_id, tier_id, evidence_id.",
+        "Reconcile storage-plan.md so: blocked/runtime families stay node-native; stale tier_runtime_record framing is reduced to derived compatibility state or replaced by rewrite-era execution-context projections; usage and evidence families stop using tier_id as their primary cross-surface key."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canonical Records"
+      ],
+      "stale_tokens": [
+        "tier_runtime_record as canonical in storage-plan.md",
+        "tier_id in usage_record primary key (run_id+tier_id+attempt_id?+usage_sequence)",
+        "tier_id in evidence_record primary key (run_id+tier_id+evidence_id)"
+      ],
+      "canonical_replacement_hints": [
+        "blocked_projection keyed by run_id+node_id+blocked_sequence; attempt_record with scheduler/safe-point/remediation/runtime identity fields; canonical usage-event identity"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015053-L015108"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0042",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "thread_blocked_notice and wizard_runtime_state are also still mixed: they correctly carry blocked/wizard state; but they still carry resume_url?, which keeps navigation transport inside persisted state as if it were canonical identity.",
+        "Keep thread/wizard blocked state on canonical blocked/wizard identity and derived route/object identity, not on stored resume_url as if it were primary."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## thread_blocked_notice",
+        "## wizard_runtime_state"
+      ],
+      "stale_tokens": [
+        "resume_url? in thread_blocked_notice (storage-plan.md)",
+        "resume_url? in wizard_runtime_state (storage-plan.md)"
+      ],
+      "canonical_replacement_hints": [
+        "canonical blocked/wizard identity fields; route/object identity derived, not stored as resume_url"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015073-L015107"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0043",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "wizard.blocked is still the weakest member of the family in the owner docs: earlier definition is only wizard_id, thread_id?, round_count, report_ref, resume_url, ts; later addendum strengthens it substantially, but the document still carries both shapes.",
+        "The docs do not yet say clearly which blocked fields are cross-family minimums versus family-local additions.",
+        "Reconcile the early thin wizard.blocked definition out of Contracts_V0.md."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## wizard.blocked"
+      ],
+      "stale_tokens": [
+        "early thin wizard.blocked: {wizard_id, thread_id?, round_count, report_ref, resume_url, ts} as canonical minimum"
+      ],
+      "canonical_replacement_hints": [
+        "wizard.blocked aligned to the stronger blocked taxonomy: blocked reason, ordered allowed actions where applicable, preserved-work disclosure, stable blocked-episode identity or family-local equivalent, detail/report inspection refs"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015109-L015166"
+      ],
+      "notes": [
+        "This makes wizard-blocked behavior look like a special deep-link flow instead of a peer member of the canonical blocked family."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE008-0044",
+      "seed_type": "owner",
+      "exact_items": [
+        "Define a cross-family blocked minimum for canonical blocked objects: blocked reason; ordered allowed actions where applicable; preserved-work / local-state disclosure where applicable; stable blocked-episode identity or family-local equivalent; detail/report inspection refs.",
+        "Keep family-local additions separate: node-blocked keeps blocked_sequence, attempt_id, failure_class; wizard-blocked keeps wizard-specific clarification/report fields; thread blocked notices stay as rendered/persisted consumer state, not canonical blocked ownership.",
+        "assistant-chat-design.md is already stronger than the owner docs in how it treats blocked thread actions."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "## Blocked Family Contracts",
+        "## Cross-Family Blocked Minimum"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015109-L015170"
+      ],
+      "notes": [
+        "This is a family-contract mismatch, not a request for one giant shared blocked payload."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE008-0045",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "Plans/usage-feature.md still says: Run Graph and Orchestrator aggregate by tier_id and attempt_id?; usage.jsonl aggregation is tier-based.",
+        "Reconcile usage and evidence families away from tier-first cross-surface correlation.",
+        "Keep canonical usage-event identity primary for Usage/Ledger navigation.",
+        "Keep node/attempt identity primary for runtime and graph inspectors.",
+        "Treat any remaining tier_id use as derived compatibility metadata or view grouping, not as the primary cross-surface key."
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "Run Graph/Orchestrator aggregate by tier_id in usage-feature.md",
+        "usage.jsonl tier-based aggregation in usage-feature.md"
+      ],
+      "canonical_replacement_hints": [
+        "canonical usage-event identity for Usage/Ledger; node/attempt identity for runtime/graph inspectors; tier_id as derived compatibility metadata only"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015171-L015200"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0046",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Plans/Run_Graph_View.md still routes Usage by node-through-tier: 'View in Usage' filters by tier_id; usage correlation is explicitly by tier_id.",
+        "Replace graph/detail uses of tier_id as navigation identity with object-first routing."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "'View in Usage' filters by tier_id in Run_Graph_View.md",
+        "usage correlation by tier_id in Run_Graph_View.md"
+      ],
+      "canonical_replacement_hints": [
+        "object_kind=usage_event with canonical usage event id; object-first routing"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015188-L015199"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0047",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Plans/Orchestrator_Page.md still uses: run_id, tier_id, attempt_id? for per-node model/token tracking; evidence tables and filters by tier_id; worker output filtered by active tier_id.",
+        "Replace graph/detail uses of tier_id as navigation identity with object-first routing to node, attempt, blocked_episode, scheduler_pass, safe_point, remediation."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "per-node model/token tracking by run_id+tier_id+attempt_id? in Orchestrator_Page.md",
+        "evidence tables filtered by tier_id in Orchestrator_Page.md",
+        "worker output filtered by active tier_id in Orchestrator_Page.md"
+      ],
+      "canonical_replacement_hints": [
+        "node/attempt/runtime-lineage identity; canonical usage-event identity for usage correlation"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0076",
+      "source_evidence": [
+        "working_ledger.md:L015192-L015200"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L015001: blank line \u2014 structural",
+    "L015002: '### Key findings' \u2014 section header within research entry",
+    "L015009-L015016: ref-family enumeration bullets \u2014 supporting evidence for seed-WAVE008-0040",
+    "L015020-L015027: '### Impacted docs' \u2014 metadata",
+    "L015049-L015052: '### Do-not-forget details' \u2014 restatement",
+    "L015053: '## Research Progress - 2026-03-17 - Blocked/thread/wizard storage families still straddle two execution eras' \u2014 ledger section header",
+    "L015054-L015061: '### Targeted docs read' \u2014 process metadata",
+    "L015062: blank line",
+    "L015064-L015067: newer aligned pieces listing \u2014 supporting evidence",
+    "L015081-L015090: '### Impacted docs' \u2014 metadata",
+    "L015105-L015108: '### Do-not-forget details' \u2014 restatement",
+    "L015109: '## Research Progress - 2026-03-17 - Blocked-family contracts are still uneven...' \u2014 ledger section header",
+    "L015110-L015116: '### Targeted docs read' \u2014 process metadata",
+    "L015142-L015148: '### Impacted docs' \u2014 metadata",
+    "L015167-L015170: '### Do-not-forget details' \u2014 restatement",
+    "L015171: '## Research Progress - 2026-03-17 - Usage and evidence families still use tier-era correlation' \u2014 ledger section header",
+    "L015172-L015179: '### Targeted docs read' \u2014 process metadata",
+    "L015196-L015200: '### Impacted docs' \u2014 metadata begins"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

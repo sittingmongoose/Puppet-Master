@@ -1,0 +1,242 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0149",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00699",
+      "source_obligation_ids": [
+        "obl-0493"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s133"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00851",
+      "source_obligation_ids": [
+        "obl-0581"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0030"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 3/4 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00972",
+      "source_obligation_ids": [
+        "obl-0636"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01423",
+      "source_obligation_ids": [
+        "obl-0830"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01446",
+      "source_obligation_ids": [
+        "obl-0844"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01472",
+      "source_obligation_ids": [
+        "obl-0857"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0064"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 1/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01495",
+      "source_obligation_ids": [
+        "obl-0868"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01622",
+      "source_obligation_ids": [
+        "obl-0939"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02000",
+      "source_obligation_ids": [
+        "obl-1215"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s148",
+        "shard-0083-s015",
+        "shard-0083-s031",
+        "shard-0086-s035",
+        "shard-0086-s063",
+        "shard-0086-s102",
+        "shard-0086-s147"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0083",
+        "shard-0086"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02001",
+      "source_obligation_ids": [
+        "obl-1216"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "path": "Plans/Progression_Gates.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/Progression_Gates.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

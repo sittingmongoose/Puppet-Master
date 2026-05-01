@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0204",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00005",
+      "source_obligation_ids": [
+        "obl-0002"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0042"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00016",
+      "source_obligation_ids": [
+        "obl-0008"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0003"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00041",
+      "source_obligation_ids": [
+        "obl-0026"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 6/6 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00103",
+      "source_obligation_ids": [
+        "obl-0075"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 4/7 in first-400-line window"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00108",
+      "source_obligation_ids": [
+        "obl-0079"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s138"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00109",
+      "source_obligation_ids": [
+        "obl-0080"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s121"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00158",
+      "source_obligation_ids": [
+        "obl-0128"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 3/5 in first-400-line window"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00202",
+      "source_obligation_ids": [
+        "obl-0167"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00204",
+      "source_obligation_ids": [
+        "obl-0168"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0055"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00221",
+      "source_obligation_ids": [
+        "obl-0180"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0061"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/assistant-chat-design.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

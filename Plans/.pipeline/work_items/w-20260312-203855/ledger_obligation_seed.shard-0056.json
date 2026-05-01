@@ -1,0 +1,288 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0056",
+  "seed_candidates": [
+    {
+      "seed_id": "seed-WAVE006-0046",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "The addenda in Wiring_Matrix.md increasingly ask the matrix to cover runtime producers, blocked/recovery actions, and projection consumers, but the actual schema still models only UI element rows",
+        "The prose is now expecting more than Wiring_Matrix.schema.json can encode",
+        "Decide whether the matrix remains strictly UI-element wiring plus a separate producer/consumer matrix, or whether the schema is intentionally widened to cover both"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Wiring Matrix Schema",
+        "## Producer/Consumer Rows"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011194-L011200"
+      ],
+      "notes": [
+        "Matrix/schema mismatch: prose expects runtime-producer/consumer/recovery rows but Wiring_Matrix.schema.json only models interactive-element dispatch rows. Must choose: separate producer/consumer matrix OR intentionally widen schema."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0047",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "UI_Wiring_Rules.md already treats correlation_id as part of the command envelope, but the matrix/schema pair has no way to declare or verify passthrough obligations for route payloads, subject IDs, or correlation continuity into downstream events",
+        "Tighten UI_Wiring_Rules.md so reusable navigation commands and subject-open commands are treated as first-class wiring shapes rather than smuggled through generic args",
+        "There is still no schema-level place to express argument-contract requirements for subject-open or route-payload commands"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## correlation_id Passthrough",
+        "## Route-Aware Wiring"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "command_arg_contract_ref",
+        "route_target_kind",
+        "subject_kind",
+        "deprecated_alias_for",
+        "preconditions",
+        "arg_passthrough_requirements",
+        "correlation_passthrough"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011001"
+      ],
+      "notes": [
+        "Wiring schema needs extension with route-aware fields: command_arg_contract_ref?, route_target_kind?, subject_kind?, deprecated_alias_for?, preconditions?, arg_passthrough_requirements?, correlation_passthrough?"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0048",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "GATE-010 has no explicit notion of: subject-open commands, wrapper commands over a canonical navigation primitive, route-payload completeness, alias/deprecation handling, blocked-action admissibility tied to allowed_action_ids[], stale/degraded projection revalidation requirements before mutation",
+        "Expand GATE-010 so route-aware verification is first-class if cmd.nav.* / OpenSubject becomes canonical"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## GATE-010"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011001"
+      ],
+      "notes": [
+        "GATE-010 must be extended with: subject/route arg completeness checks, wrapper-to-canonical navigation consistency, deprecated alias coverage, correlation/route payload passthrough, blocked-action admissibility and projection-trust preconditions"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0049",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "Plans/evidence.schema.json only gives a generic checks[] array with name, result, details, and optional contract_refs. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text",
+        "Either extend Plans/evidence.schema.json with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results",
+        "Align GATE-010 with the machine-readable-detail pattern already used by GATE-011 / GATE-012 instead of relying on text-heavy details"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Evidence Schema",
+        "## GATE-010 Evidence"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011001"
+      ],
+      "notes": [
+        "evidence.schema.json checks[] array is too generic for route-aware verification. GATE-010 relies on freeform 'details' while GATE-011/GATE-012 use machine-readable arrays \u2013 this inconsistency must be resolved."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0050",
+      "seed_type": "missing_doc_reference",
+      "exact_items": [
+        "UI_Command_Catalog.md currently has many specific pivots but those are still surface-specific commands, not a generalized subject-open family",
+        "There is still no canonical command family for subject-open or generalized route focus, so cross-surface pivots keep accreting as one-off commands",
+        "The catalog gap is now structural, not just a few missing IDs"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [
+        "## cmd.nav"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "cmd.nav.open_subject",
+        "cmd.nav.focus_route",
+        "cmd.nav.open_usage_subject"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011001"
+      ],
+      "notes": [
+        "UI_Command_Catalog.md needs a canonical cmd.nav.* family. Without it, every new surface adds another cmd.*.open_* variant with different args, causing ongoing structural drift."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0051",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add an explicit command-catalog pattern for: canonical command, wrapper command, deprecated alias, migration rule",
+        "Reuse the event-side alias discipline from Contracts_V0.md as the template for command deprecation/migration rules rather than inventing a weaker prose-only pattern",
+        "Event contracts already have a recognizable alias/migration pattern, but command contracts do not"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Command Deprecation",
+        "## Command Migration Rules",
+        "## Canonical vs Wrapper Commands"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011001"
+      ],
+      "notes": [
+        "Event aliasing discipline already exists in Contracts_V0.md; copy that pattern for command catalog: canonical command, wrapper command, deprecated alias, migration rule. Without this, navigation semantics drift into prose notes."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0052",
+      "seed_type": "consumer",
+      "exact_items": [
+        "Navigation-related commands are described as layout/UI-state only, but the docs still lack a shared rule for when those commands must carry project_id, focused_run_id, thread_id, or other context needed to restore scope correctly",
+        "Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Navigation Command Args",
+        "## Shared Context Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011001"
+      ],
+      "notes": [
+        "Navigation commands must explicitly declare which context fields they require (project_id, focused_run_id, thread_id, etc.) at catalog level; per-command notes are insufficient"
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE006-0053",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "Wiring_Matrix.md still contains stale example drift that matters mechanically, not just editorially",
+        "Clean stale/ghost command examples out of Wiring_Matrix.md before relying on it for automated extraction or coverage",
+        "the example row for cmd.orchestrator.switch_tab reinforces an older command shape even though the broader research already flagged that command family as a ghost/stale-ID risk"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.orchestrator.switch_tab"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_shard_id": "shard-0056",
+      "source_evidence": [
+        "working_ledger.md:L011001"
+      ],
+      "notes": [
+        "cmd.orchestrator.switch_tab example row in Wiring_Matrix.md reinforces stale command shape; must be updated or removed before matrix is used for automated extraction/coverage"
+      ]
+    }
+  ],
+  "noise_items": [
+    "L011001-L011003: continuation of GPT-5.4 owner-doc tranche runtime-governance findings (captured in shard-0055 seeds)",
+    "L011016: ### Impacted docs (structural ledger section header)",
+    "L011042: ### Contradictions / gaps surfaced (structural ledger section header)",
+    "L011049: ### Candidate fixes to carry forward (structural ledger section header)",
+    "L011065: ### Do-not-forget details (structural ledger section header)",
+    "L011081: ## Research Progress - 2026-03-16 - GPT-5.2 owner-doc tranche synthesis (structural ledger section header)",
+    "L011083: ### Targeted docs read (structural ledger section header)",
+    "L011097: ### Key findings (structural ledger section header)",
+    "L011139: ### Impacted docs (structural ledger section header)",
+    "L011166: ### Contradictions / gaps surfaced (structural ledger section header)",
+    "L011173: ### Candidate fixes to carry forward (structural ledger section header)",
+    "L011181: ### Do-not-forget details (structural ledger section header)",
+    "L011186: ## Research Progress - 2026-03-16 - Wiring matrix route/subject contract limits (structural ledger section header)",
+    "L011188: ### Targeted docs read (structural ledger section header)",
+    "L011194: ### Key findings (structural ledger section header)",
+    "L011207: ### Impacted docs (structural ledger section header)",
+    "L011220: ### Contradictions / gaps surfaced (structural ledger section header)",
+    "L011227: ### Candidate fixes to carry forward (structural ledger section header)",
+    "L011240: ### Do-not-forget details (structural ledger section header)",
+    "L011245: ## Research Progress - 2026-03-16 - GATE-010 and evidence limits for route-aware wiring (structural ledger section header)",
+    "L011247: ### Targeted docs read (structural ledger section header)",
+    "L011253: ### Key findings (structural ledger section header)",
+    "L011267: ### Impacted docs (structural ledger section header)",
+    "L011280: ### Contradictions / gaps surfaced (structural ledger section header)",
+    "L011286: ### Candidate fixes to carry forward (structural ledger section header)",
+    "L011297: ### Do-not-forget details (structural ledger section header)",
+    "L011302: ## Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation (structural ledger section header)",
+    "L011304: ### Targeted docs read (structural ledger section header)",
+    "L011309: ### Key findings (structural ledger section header)",
+    "L011327: ### Impacted docs (structural ledger section header)",
+    "L011338: ### Contradictions / gaps surfaced (structural ledger section header)",
+    "L011344: ### Candidate fixes to carry forward (structural ledger section header)",
+    "L011354: ### Do-not-forget details (structural ledger section header)"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

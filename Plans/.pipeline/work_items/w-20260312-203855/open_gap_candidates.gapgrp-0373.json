@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0373",
+  "coverage_row_ids_represented": [
+    "cov-03179",
+    "cov-03219",
+    "cov-03235",
+    "cov-03241"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0373",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "GPT-5.4: phase-complete approvals, manual review steps, and modal confirmations are still not framed as optional HITL boundaries \u2014 automation-first remains undermined | approve_continue must be retired and replaced with its canonical cmd.runtime.* equivalent | tier_boundary_approval must be retired everywhere and replaced with optional HITL at node/package/seam promotion boundaries | tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## HITL Automation-First Framing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03179",
+        "cov-03219",
+        "cov-03235",
+        "cov-03241"
+      ],
+      "source_obligation_ids": [
+        "obl-2043",
+        "obl-2065",
+        "obl-2073",
+        "obl-2074"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s001",
+        "shard-0010-s015",
+        "shard-0010-s012",
+        "seed-WAVE006-0001"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "GPT-5.4: phase-complete approvals, manual review steps, and modal confirmations are still not framed as optional HITL boundaries \u2014 automation-first remains undermined",
+        "approve_continue must be retired and replaced with its canonical cmd.runtime.* equivalent",
+        "tier_boundary_approval must be retired everywhere and replaced with optional HITL at node/package/seam promotion boundaries",
+        "tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+        "Tier-shaped surfaces may still display and group by tier_id, but they should resolve through pointers to canonical execution objects rather than using tier_id as if it were the durable execution key",
+        "Retarget Run Graph and Usage links toward node_id / attempt_id semantics, with tier_id surviving only as a display/grouping label where needed"
+      ],
+      "stale_tokens": [
+        "phase-complete approvals",
+        "tier_boundary_approval",
+        "approve_continue",
+        "tier_id"
+      ],
+      "canonical_replacement_hints": [
+        "Reframe as optional HITL at node/package/seam promotion boundaries",
+        "Map approve_continue to canonical cmd.runtime.* action family",
+        "Use 'optional HITL at node/package/seam promotion boundaries'",
+        "node_id",
+        "attempt_id",
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,235 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0006",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00868",
+      "source_obligation_ids": [
+        "obl-0588"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00889",
+      "source_obligation_ids": [
+        "obl-0595"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 5/5 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00927",
+      "source_obligation_ids": [
+        "obl-0616"
+      ],
+      "source_seed_ids": [
+        "shard-0039-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00932",
+      "source_obligation_ids": [
+        "obl-0620"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00936",
+      "source_obligation_ids": [
+        "obl-0621"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01272",
+      "source_obligation_ids": [
+        "obl-0758"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 2/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01434",
+      "source_obligation_ids": [
+        "obl-0837"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0002"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01520",
+      "source_obligation_ids": [
+        "obl-0878"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 4/5 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01540",
+      "source_obligation_ids": [
+        "obl-0883"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01918",
+      "source_obligation_ids": [
+        "obl-1134"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s008",
+        "shard-0082-s101"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/CLI_Bridged_Providers.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

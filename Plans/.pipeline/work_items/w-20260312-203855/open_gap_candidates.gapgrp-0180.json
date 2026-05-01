@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0180",
+  "coverage_row_ids_represented": [
+    "cov-01390",
+    "cov-01823",
+    "cov-02474"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0180",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Orchestrator Progress widget layout decision: app-default with project override \u2014 this must be the single authoritative decision documented in Widget_System.md and cross-referenced from Orchestrator_P\u2026 | Use projection_freshness as the canonical recency field and projection_health as the canonical reliability/usability field | do not over-promise undo when the system really only supports compensating actions",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Do-not-forget details"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01390",
+        "cov-01823",
+        "cov-02474"
+      ],
+      "source_obligation_ids": [
+        "obl-0813",
+        "obl-1059",
+        "obl-1599"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s011",
+        "seed-WAVE005-0017",
+        "shard-0016-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0036",
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Orchestrator Progress widget layout decision: app-default with project override \u2014 this must be the single authoritative decision documented in Widget_System.md and cross-referenced from Orchestrator_Page.md",
+        "do-not-forget: run.started MUST field list in storage-plan.md still disagrees with the surrounding prose about how much identity to include",
+        "do-not-forget: provider_accounts.run_snapshot policy_hash should be a policy_version_ref for downstream policy-validity queries",
+        "Use projection_freshness as the canonical recency field and projection_health as the canonical reliability/usability field",
+        "Reserve trust_tier for preview/browser semantics only unless those docs are later explicitly renamed too",
+        "Make Glossary.md own the canonical term meanings for projection freshness and projection health",
+        "Let surface docs consume those terms instead of inventing local stale/degraded wording",
+        "Keep action gating rules tied to both axes: stale-but-healthy may allow read-only use with warning; degraded or unavailable should gate mutating actions much more aggressively",
+        "do not over-promise undo when the system really only supports compensating actions",
+        "Undo only when true immediate undo exists; Reopen, Restore, Retry from Safe Point, Create New Lane, Re-request Promotion, Reapply for distinct compensating cases",
+        "strong confirmations should show: action name, target object(s), concrete consequence summary, whether local work/artifacts/history remain, reversibility class",
+        "hard_gate should show: runtime-defined allowed actions, why the gate exists, exact consequence of each allowed action, no hidden alternative path"
+      ],
+      "stale_tokens": [
+        "policy_hash",
+        "trust_tier (as generic projection-state term)",
+        "projection trust (working language)",
+        "Undo (overused)",
+        "revert (ambiguous cross-domain)"
+      ],
+      "canonical_replacement_hints": [
+        "policy_version_ref",
+        "projection_freshness",
+        "projection_health",
+        "last_projected_at_utc",
+        "degraded_reason_code?",
+        "refresh_in_progress?",
+        "Undo / Reopen / Restore / Retry from Safe Point / Create New Lane / Re-request Promotion / Reapply"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

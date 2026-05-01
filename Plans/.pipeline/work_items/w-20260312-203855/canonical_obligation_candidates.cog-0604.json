@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0604",
+  "represented_seed_ids": [
+    "shard-0014-s006"
+  ],
+  "source_shard_ids": [
+    "shard-0014"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "attempts should also expose when an attempt is superseded by later remediation/graph generation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempts should also expose when an attempt is superseded by later remediation/graph generation",
+        "promotions need explicit distinction between: current accepted promotion, historical prior promotion, revoked promotion, superseded promotion",
+        "concerns: merged/split/superseded concern records, resolved-but-historical concern lineage",
+        "graph patches: old path/generation is historical; invalidated prior path may be superseded",
+        "recovery records: failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth",
+        "lane/worktree records: backing worktree may be removed; lane may still be historical; archival policy should be separate from semantic validity"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Semantic Application",
+        "## Object-Specific History Semantics"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002601"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0418",
+  "coverage_row_ids_represented": [
+    "cov-00808",
+    "cov-00934",
+    "cov-00973",
+    "cov-00981",
+    "cov-00986",
+    "cov-01014",
+    "cov-01037",
+    "cov-01044",
+    "cov-01052",
+    "cov-01060"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0418",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "2. `Plans/storage-plan.md` | CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission | Concern categories: wiring, workflow, state_contract, gui_alignment, design_architecture, quality, evidence_gap, corroboration, recovery, account_usage_pressure, projection_trust | Concern lifecycle: active, acknowledged, resolved, dismissed | Concern record minimum fields: concern_id, project_id, run_id?, seam_id?, package_id?, node_id?, attempt_id?, lane_id?, worktree_id?, category, severity, status, summary, detail_ref?, owner_kind, owne\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Bridged Provider Capability Parity"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00808",
+        "cov-00934",
+        "cov-00973",
+        "cov-00981",
+        "cov-00986",
+        "cov-01014",
+        "cov-01037",
+        "cov-01044",
+        "cov-01052",
+        "cov-01060"
+      ],
+      "source_obligation_ids": [
+        "obl-0563",
+        "obl-0620",
+        "obl-0637",
+        "obl-0640",
+        "obl-0642",
+        "obl-0654",
+        "obl-0666",
+        "obl-0667",
+        "obl-0668",
+        "obl-0669"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s043",
+        "shard-0035-s001",
+        "shard-0016-s001",
+        "shard-0016-s002",
+        "shard-0015-s002",
+        "shard-0035-s012",
+        "seed-WAVE007-0035",
+        "seed-WAVE007-0014",
+        "seed-WAVE007-0034",
+        "seed-WAVE007-0016"
+      ],
+      "source_shard_ids": [
+        "shard-0015",
+        "shard-0016",
+        "shard-0035",
+        "shard-0063",
+        "shard-0067",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "2. `Plans/storage-plan.md`",
+        "Plans/storage-plan.md",
+        "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission",
+        "Multi-Account.md requires switch notifications/history semantics that storage-plan.md, Prompt_Pipeline.md, and bridged-provider stream contracts still cannot represent durably",
+        "Permissions_System.md still treats session cache and reject-cascade as globally session-scoped, which directly conflicts with multi-lane isolation and shared-runtime actor separation",
+        "Concern categories: wiring, workflow, state_contract, gui_alignment, design_architecture, quality, evidence_gap, corroboration, recovery, account_usage_pressure, projection_trust",
+        "severity should stay independent from blocking semantics: severity answers how bad is it; blocking_effect answers what does it prevent",
+        "Concern lifecycle: active, acknowledged, resolved, dismissed",
+        "acknowledged: user/operator has seen and accepted the concern as still real but not requiring immediate noise",
+        "dismissed: concern presentation was intentionally hidden/rejected; should require rationale when it disagrees with corroborated/high-severity evidence",
+        "resolved: underlying truth changed; should record resolution_kind",
+        "resolution_kind values: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery",
+        "Concern record minimum fields: concern_id, project_id, run_id?, seam_id?, package_id?, node_id?, attempt_id?, lane_id?, worktree_id?, category, severity, status, summary, detail_ref?, owner_kind, owner_ref?, created_by_kind, created_by_ref?, first_seen_at_utc, last_seen_at_utc, resolved_at_utc?, dismissed_at_utc?, acknowledged_at_utc?",
+        "Evidence/source refs: source_refs[], evidence_refs[], artifact_refs[], review_refs[], corroboration_refs[], graph_patch_refs[], recovery_refs[]",
+        "Lineage refs: parent_concern_id?, superseded_by_concern_id?, merged_into_concern_id?, split_from_concern_id?",
+        "Attention fields: visibility_level, attention_level, chatworthy, blocking_effect?",
+        "Contracts_V0.md still conflicts with itself on remediation resolution enums and on safe-point / scheduler payload shapes",
+        "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage",
+        "the rewrite now clearly needs an actor envelope broader than run_id: missing minimum envelope is project_id + actor_kind + sparse actor refs (run_id?, attempt_id?, thread_id?, wizard_id?, interview_id?) plus requested/effective runtime/account fields",
+        "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`",
+        "Keep the intent vocabulary controlled and small: `open_source`; `open_preview`; `open_review`",
+        "Keep resolver-support metadata out of the contract.",
+        "State the resolution rule directly: `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists; otherwise it resolves to transient `generated://<artifact_id>` source opening",
+        "`OpenSubject` does not carry: `project_id`, `thread_id`, `run_id`, `tab_id`, `panel_id`, `inspector_target`, `origin_surface`, `source_kind`, `backing_document_id`, `last_saved_path`, `generated://<artifact_id>`, preview persistence state, transport mode",
+        "Define `resume_url` as a serialized route-target transport in the contract layer once `route_target` exists.",
+        "Keep serialized forms intentionally narrower than the full internal object.",
+        "Let object families define only the extra anchor material truly needed for recovery or exact resume.",
+        "Decode all supported deep-link forms into the same internal routing path rather than handling URL activation as a separate system.",
+        "The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.",
+        "Define `route_target` as the canonical navigation-and-focus contract.",
+        "Define `OpenSubject` as the canonical identity-native source-open contract.",
+        "Keep `OpenFile` as the path-based editor contract only.",
+        "State the resolution chain directly: `route_target` may land on a surface that then invokes `OpenSubject`; `OpenSubject` may resolve to `OpenFile`; `OpenSubject` may resolve to a transient `generated://<artifact_id>` source buffer",
+        "The three contracts are now distinct: `route_target` = navigation; `OpenSubject` = identity-native source open; `OpenFile` = path-based editor open",
+        "Define a controlled coarse destination enum/family in the route contract layer.",
+        "Let object identity and scope pick the thing to show; let destination pick the major surface class; let shell state handle the rest.",
+        "Recommended coarse destination classes: `primary_view` (Dashboard, Projects, Wizard, Interview, Settings, Usage, FileEditor, Orchestrator), `side_panel` (chat, files, source_control, github_actions, docker_manager, artifacts, run_debug), `bottom_panel` (terminal, problems, output, ports, browser, debug), `embedded_surface` (document_pane, agent_activity), `page_tab` (Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger)"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

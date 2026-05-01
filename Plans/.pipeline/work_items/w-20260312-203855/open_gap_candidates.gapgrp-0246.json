@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0246",
+  "coverage_row_ids_represented": [
+    "cov-00853",
+    "cov-01824",
+    "cov-02443"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0246",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add a node_concerns[] / concern_count projection to the Run Graph node state model so concern details are surfaced at node click | Use projection_freshness as the canonical recency field and projection_health as the canonical reliability/usability field | concern projection / concern_counts / node_concerns[] fields are missing from Run_Graph_View.md and from the candidate runtime projection contracts in Contracts_V0.md",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00853",
+        "cov-01824",
+        "cov-02443"
+      ],
+      "source_obligation_ids": [
+        "obl-0582",
+        "obl-1059",
+        "obl-1580"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s014",
+        "seed-WAVE005-0017",
+        "shard-0036-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "Add a node_concerns[] / concern_count projection to the Run Graph node state model so concern details are surfaced at node click",
+        "Bind concern-rendering to canonical concern record via concern_id, not ad-hoc blocked strings",
+        "Align Run Graph command bindings with UI_Command_Catalog.md canonical cmd.runtime.*, cmd.orchestrator.open_in_* variants",
+        "Use projection_freshness as the canonical recency field and projection_health as the canonical reliability/usability field",
+        "Reserve trust_tier for preview/browser semantics only unless those docs are later explicitly renamed too",
+        "Make Glossary.md own the canonical term meanings for projection freshness and projection health",
+        "Let surface docs consume those terms instead of inventing local stale/degraded wording",
+        "Keep action gating rules tied to both axes: stale-but-healthy may allow read-only use with warning; degraded or unavailable should gate mutating actions much more aggressively",
+        "concern projection / concern_counts / node_concerns[] fields are missing from Run_Graph_View.md and from the candidate runtime projection contracts in Contracts_V0.md",
+        "blocked-owner vs concern-owner distinction must be added to the node-state model so UI can render correct triage options",
+        "concern records must be queryable from Run Graph node-click context"
+      ],
+      "stale_tokens": [
+        "trust_tier (as generic projection-state term)",
+        "projection trust (working language)"
+      ],
+      "canonical_replacement_hints": [
+        "node_concerns[]",
+        "concern_id",
+        "projection_freshness",
+        "projection_health",
+        "last_projected_at_utc",
+        "degraded_reason_code?",
+        "refresh_in_progress?"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,568 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0351",
+  "represented_seed_ids": [
+    "shard-0002-s025",
+    "shard-0014-s004",
+    "shard-0016-s006",
+    "shard-0016-s007",
+    "shard-0021-s009",
+    "shard-0021-s011",
+    "shard-0021-s012",
+    "shard-0022-s005",
+    "shard-0022-s006",
+    "shard-0022-s007",
+    "shard-0022-s008",
+    "shard-0023-s001",
+    "shard-0025-s002",
+    "shard-0028-s005",
+    "shard-0028-s007"
+  ],
+  "source_shard_ids": [
+    "shard-0002",
+    "shard-0014",
+    "shard-0016",
+    "shard-0021",
+    "shard-0022",
+    "shard-0023",
+    "shard-0025",
+    "shard-0028"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0002-s025"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Override display rule: all settings pages must show Inherited, Overridden, and Effective values inline without requiring a separate modal",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Override display rule: all settings pages must show Inherited, Overridden, and Effective values inline without requiring a separate modal"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Override Display"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000390-L000400"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0014-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "command palette can expose Orchestrator object results, not just commands/pages",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "command palette can expose Orchestrator object results, not just commands/pages",
+        "selecting an object result should route through the same deep-link contract as Orchestrator search",
+        "Reuse the same routing contract for: search results, command palette results, cross-tab deep links, Show in ... actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Command Palette",
+        "## Unified Routing Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002725-L002730",
+        "working_ledger.md:L002772-L002776"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0016-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "classify actions by both confirmation level and reversibility",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "classify actions by both confirmation level and reversibility",
+        "Confirmation levels: none, light, strong, hard_gate",
+        "Reversibility classes: immediate_undo, compensating_action_only, non_reversible",
+        "hard_gate: actions that must go through a canonical approval/blocked flow and cannot be bypassed by generic UI confirmation"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Action Confirmation Policy",
+        "## Confirmation Levels",
+        "## Reversibility Classes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0016-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "none: safe navigation/focus actions, low-risk presentation, no user-data or live-runtime mutation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "none: safe navigation/focus actions, low-risk presentation, no user-data or live-runtime mutation",
+        "light: moderate-impact actions where accidental activation is plausible; short confirm or inline affordance",
+        "strong: actions that may discard local state, remove artifacts/worktrees, revoke accepted state, or materially change live execution; should show scope and consequence clearly",
+        "hard_gate: examples include HITL approvals, graph patch application when it changes canonical graph generation, remote-side-effect actions with explicit non-bypassable policy"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Action Family Mapping",
+        "## Confirmation Level Definitions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0021-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "project health",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "project health",
+        "project activity",
+        "project attention"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projects Page Status Model",
+        "## Project Card Status Split"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "health=setup/integrity/config viability; activity=runs active/paused/queued/background; attention=whether user/operator action needed"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0021-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Activity: idle | running | paused | queued | background_active",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Activity: idle | running | paused | queued | background_active"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Activity Status Values"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0021-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Attention: none | attention_required | blocked | degraded",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Attention: none | attention_required | blocked | degraded"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Attention Status Values"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0022-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "info",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "info",
+        "warning",
+        "attention_required",
+        "blocked",
+        "system_notification"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Escalation Ladder",
+        "## Shared Notification Escalation Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "One shared progression: info=local context/history; warning=in-app banner not action-blocking; attention_required=user input helpful/needed; blocked=cannot continue until action/precondition changes; system_notification=out-of-app signal"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0022-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "History receives everything chronologically",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "History receives everything chronologically",
+        "Progress/Dashboard shows active warnings/attention/blocked",
+        "badges show compressed counts/severity markers",
+        "chat/thread only for genuine user decision/input",
+        "system notifications reserved for high-value sparse events"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Escalation Surface Mapping",
+        "## Notification Surface Ladder"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Each escalation level maps to specific surfaces; cross-surface contract needed"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0022-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "immediate show on first activation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "immediate show on first activation",
+        "suppress duplicate noise while unchanged",
+        "resurface only when: severity increases, owner changes, blocked duration crosses threshold, new action becomes available, user returns focus after time away"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Resurfacing / Aging Rules",
+        "## Notification Resurfacing Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "Resurfacing based on change/persistence thresholds, not every heartbeat"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0022-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "`dismissed` is presentation state, not semantic resolution",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`dismissed` is presentation state, not semantic resolution",
+        "active blockers must not be dismissible into fake health",
+        "advisory warnings may respect quiet/dismiss windows",
+        "real blocked states should remain represented until underlying truth changes"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Persistent Blocker Rule",
+        "## Dismiss Semantics Constraint"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0023-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "concern severity + blocking effect + owner + persistence decide escalation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern severity + blocking effect + owner + persistence decide escalation"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Escalation Rule",
+        "## Notification Escalation Interaction with Concerns"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004401"
+      ],
+      "notes": [
+        "Minor advisory concern -> local/in-app only; seam-blocking weak integration with no progress for hours -> blocked surfaces + possible system notification"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0025-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "freshness_state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "freshness_state",
+        "last_updated_at",
+        "data_source_kind",
+        "degraded_reason?",
+        "action_gate_reason?"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## UX Trust Disclosure Fields",
+        "## Projection Health UI Grammar"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0028-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "stale projection: local in-app indicators may show but wording must disclose possible staleness",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale projection: local in-app indicators may show but wording must disclose possible staleness",
+        "degraded projection: avoid strong notification claims relying on incomplete projections; prefer canonical event/blocked record-rooted notifications"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust Interaction with Notifications"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005401"
+      ],
+      "notes": [
+        "degraded concern rollup should not emit 'N new concerns' system notification unless canonical records support it"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0028-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "canon_label": "severity increase",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "severity increase",
+        "blocked owner change",
+        "concern changes from advisory to execution-impacting",
+        "blocked duration threshold crossed",
+        "trust state improves enough that previously suppressed actions become available",
+        "trust state degrades enough that prior assumptions are no longer safe"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Resurfacing Triggers",
+        "## Notification Resurfacing Events"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005401"
+      ],
+      "notes": [
+        "Trust state changes in both directions are valid resurfacing triggers"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

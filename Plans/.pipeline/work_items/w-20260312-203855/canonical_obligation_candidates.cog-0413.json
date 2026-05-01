@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0413",
+  "represented_seed_ids": [
+    "shard-0005-s013"
+  ],
+  "source_shard_ids": [
+    "shard-0005"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0005-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Multi-account settings: user-configurable threshold for auto-switch; ON by default for all provider-using actors; granularity by provider, account, execution role; same-provider accounts with differen\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Multi-account settings: user-configurable threshold for auto-switch; ON by default for all provider-using actors; granularity by provider, account, execution role; same-provider accounts with different quotas are NOT fungible"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/usage-feature.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Multi-Account Settings Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000985-L001000"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

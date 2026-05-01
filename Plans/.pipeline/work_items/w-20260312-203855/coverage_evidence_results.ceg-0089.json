@@ -1,0 +1,252 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0089",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01651",
+      "source_obligation_ids": [
+        "obl-0951"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01654",
+      "source_obligation_ids": [
+        "obl-0953"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01657",
+      "source_obligation_ids": [
+        "obl-0954"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01660",
+      "source_obligation_ids": [
+        "obl-0955"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01688",
+      "source_obligation_ids": [
+        "obl-0973"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01957",
+      "source_obligation_ids": [
+        "obl-1172"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s111",
+        "shard-0090-s073",
+        "shard-0090-s122",
+        "shard-0091-s015",
+        "shard-0091-s047"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01958",
+      "source_obligation_ids": [
+        "obl-1173"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s151"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01959",
+      "source_obligation_ids": [
+        "obl-1174"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s083",
+        "shard-0086-s119",
+        "shard-0089-s090",
+        "shard-0090-s059",
+        "shard-0090-s103",
+        "shard-0090-s148",
+        "shard-0091-s035",
+        "shard-0091-s136",
+        "shard-0092-s016"
+      ],
+      "source_shard_ids": [
+        "shard-0086",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02426",
+      "source_obligation_ids": [
+        "obl-1570"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02479",
+      "source_obligation_ids": [
+        "obl-1601"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/GitHub_Integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/GitHub_Integration.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

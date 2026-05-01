@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0359",
+  "coverage_row_ids_represented": [
+    "cov-00996",
+    "cov-01153",
+    "cov-01157",
+    "cov-02385"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0359",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Consolidate Executor_Protocol.md addenda and add package/seam/corroboration/concern hooks | Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states | Extend validation_pass_report identity so it carries the planning/governance lineage needed for audit and routing: wizard_id, project_id, thread_id?, phase_plan_ref?, input/output artifact-bundle refs\u2026 | blocked_reason_code should remain the SSOT instead of ad hoc blocked strings",
+      "affected_targets": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00996",
+        "cov-01153",
+        "cov-01157",
+        "cov-02385"
+      ],
+      "source_obligation_ids": [
+        "obl-0645",
+        "obl-0702",
+        "obl-0704",
+        "obl-1544"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0026",
+        "shard-0032-s005",
+        "seed-WAVE005-0052",
+        "shard-0032-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0044",
+        "shard-0047"
+      ],
+      "exact_missing_items": [
+        "Consolidate Executor_Protocol.md addenda and add package/seam/corroboration/concern hooks",
+        "Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking",
+        "Replace or wrap TierContext with a node-native execution context carrying full canonical runtime identity",
+        "Add explicit CUP governance and handoff fields (execution_role, requested/effective account, isolation/worktree mode) to wizard docs",
+        "Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states",
+        "Require requested/effective identity fields in decision/permission records, not just runtime event records",
+        "Add architecture invariants for: canonical runtime object families, lane scheduler integrity, mutation-safe-point enforcement",
+        "Re-anchor blocked/HITL/policy flows on canonical node/attempt identifiers where appropriate",
+        "Define intent-specific orchestration/worktree modes explicitly, including single-branch exceptions and contract-unification conflict policy",
+        "Extend validation_pass_report identity so it carries the planning/governance lineage needed for audit and routing: wizard_id, project_id, thread_id?, phase_plan_ref?, input/output artifact-bundle refs, requirements_quality_report_ref? when applicable",
+        "Add the upstream subset of canonical runtime identity to pass reports when a provider/model actually executed the pass: requested/effective persona/platform/model snapshot refs, requested_account_policy?, effective_account_id?, execution_role",
+        "Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref",
+        "workflow_run_id links the three passes together, but it is not enough by itself to relate the sweep to wizard_id, staged requirements state, or the later launched run",
+        "blocked_reason_code should remain the SSOT instead of ad hoc blocked strings",
+        "attempt_id must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+        "acknowledged concerns must reduce noise without suppressing true blockers",
+        "recovery snapshots in wizard-driven flows need enough intent/wizard-step state to avoid restoring into the wrong execution mode"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

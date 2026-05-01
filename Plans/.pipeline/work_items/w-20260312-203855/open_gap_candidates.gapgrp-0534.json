@@ -1,0 +1,106 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0534",
+  "coverage_row_ids_represented": [
+    "cov-02958",
+    "cov-02959",
+    "cov-02960",
+    "cov-02961",
+    "cov-02962",
+    "cov-02964",
+    "cov-02965",
+    "cov-02966",
+    "cov-02967",
+    "cov-02968"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0534",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "The base `GraphNode` struct still preserves stale fields as if they were core model state: | The event-family layer is still one of the last upstream carriers of stale execution semantics. | The final pass confirms the broader second sweep reached diminishing returns only after the sixth model: the remaining signal is mostly exact structural canon breakage, stale owner-routing, and field/\u2026 | The middle of the file still preserves stale execution ontology: | The owner docs now have a split between modern canonical field names and stale canonical scope language.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02958",
+        "cov-02959",
+        "cov-02960",
+        "cov-02961",
+        "cov-02962",
+        "cov-02964",
+        "cov-02965",
+        "cov-02966",
+        "cov-02967",
+        "cov-02968"
+      ],
+      "source_obligation_ids": [
+        "obl-1912",
+        "obl-1913",
+        "obl-1914",
+        "obl-1915",
+        "obl-1916",
+        "obl-1918",
+        "obl-1919",
+        "obl-1920",
+        "obl-1921",
+        "obl-1922"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s014",
+        "shard-0078-s077",
+        "shard-0082-s105",
+        "shard-0083-s106",
+        "shard-0078-s041",
+        "shard-0080-s001",
+        "shard-0089-s152",
+        "shard-0077-s040",
+        "shard-0089-s039",
+        "shard-0083-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0080",
+        "shard-0082",
+        "shard-0083",
+        "shard-0089"
+      ],
+      "exact_missing_items": [
+        "The base `GraphNode` struct still preserves stale fields as if they were core model state:",
+        "GraphNode",
+        "The event-family layer is still one of the last upstream carriers of stale execution semantics.",
+        "The final pass confirms the broader second sweep reached diminishing returns only after the sixth model: the remaining signal is mostly exact structural canon breakage, stale owner-routing, and field/command/schema mismatches rather than broad new conceptual seams.",
+        "The middle of the file still preserves stale execution ontology:",
+        "The owner docs now have a split between modern canonical field names and stale canonical scope language.",
+        "The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another.",
+        "The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-through, and exact stale contradictory survivors.",
+        "This is no longer only \u201cstorage is stale in places.\u201d The document now carries multiple overlapping canonicality layers from different rewrite stages.",
+        "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "8",
+        "This seam is owner-level, not consumer-level. Fixing `Orchestrator_Page.md` or `FinalGUISpec.md` first would still leave stale routing at the top of the precedence stack.",
+        "Orchestrator_Page.md",
+        "FinalGUISpec.md"
+      ],
+      "stale_tokens": [
+        "GraphNode",
+        "8",
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

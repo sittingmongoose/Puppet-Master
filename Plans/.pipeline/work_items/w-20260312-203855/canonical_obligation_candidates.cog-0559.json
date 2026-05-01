@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0559",
+  "represented_seed_ids": [
+    "seed-WAVE005-0052"
+  ],
+  "source_shard_ids": [
+    "shard-0047"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE005-0052"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "Extend validation_pass_report identity so it carries the planning/governance lineage needed for audit and routing: wizard_id, project_id, thread_id?, phase_plan_ref?, input/output artifact-bundle refs\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Extend validation_pass_report identity so it carries the planning/governance lineage needed for audit and routing: wizard_id, project_id, thread_id?, phase_plan_ref?, input/output artifact-bundle refs, requirements_quality_report_ref? when applicable",
+        "Add the upstream subset of canonical runtime identity to pass reports when a provider/model actually executed the pass: requested/effective persona/platform/model snapshot refs, requested_account_policy?, effective_account_id?, execution_role",
+        "Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref",
+        "workflow_run_id links the three passes together, but it is not enough by itself to relate the sweep to wizard_id, staged requirements state, or the later launched run"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L009323-L009400"
+      ],
+      "notes": [
+        "These reports should bridge into execution; they should not be mistaken for execution",
+        "validation-pass reports are one of the few upstream artifacts already treated as hard-gating canon, so weak identity here will propagate confusion downstream"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

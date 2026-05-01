@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0308",
+  "represented_seed_ids": [
+    "shard-0035-s015"
+  ],
+  "source_shard_ids": [
+    "shard-0035"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0035-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Publish a single superseding canonical payload block in Contracts_V0.md for scheduler/safe-point/remediation records and explicitly demote older variants",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Publish a single superseding canonical payload block in Contracts_V0.md for scheduler/safe-point/remediation records and explicitly demote older variants",
+        "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry",
+        "Normalize cross-surface receipt records so project_id, actor refs, created_at_utc, and usage_event_ref are required whenever a surface may pivot historically or across projects",
+        "Define usage_event_ref once as a locator-grade canonical reference and reuse it everywhere rather than inventing a new opaque ID family",
+        "Normalize Run Graph onto canonical cmd.runtime.* / cmd.orchestrator.open_in_* command bindings, add the missing action envelope, and add trust-state gating rules",
+        "Allow short-term concern rendering to piggyback on finding_refs[], but define a minimal non-remediation node_concerns[] projection next",
+        "Pre-attempt blocked episodes still need blocked_sequence handling without fabricating attempt_id",
+        "usage_event_ref should be a structured locator, not just a display string"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

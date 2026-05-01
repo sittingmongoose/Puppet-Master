@@ -1,0 +1,512 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0628",
+  "represented_seed_ids": [
+    "shard-0080-s079",
+    "shard-0080-s082",
+    "shard-0080-s086",
+    "shard-0080-s088",
+    "shard-0080-s089",
+    "shard-0080-s097",
+    "shard-0080-s105",
+    "shard-0080-s106",
+    "shard-0081-s027",
+    "shard-0081-s028",
+    "shard-0081-s123",
+    "shard-0082-s012",
+    "shard-0082-s056",
+    "shard-0082-s105",
+    "shard-0082-s153"
+  ],
+  "source_shard_ids": [
+    "shard-0080",
+    "shard-0081",
+    "shard-0082"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0080-s079"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Primary stale owner/consumer hybrid:",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Primary stale owner/consumer hybrid:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015943"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Primary stale owner/consumer hybrid:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0080-s082"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Because this document is cross-cutting, its stale hostability rules can easily reintroduce drift into:",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Because this document is cross-cutting, its stale hostability rules can easily reintroduce drift into:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015949"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Because this document is cross-cutting, its stale hostability rules can easily reintroduce"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0080-s086"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+        "widget.tier_tree",
+        "Seams"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Seams",
+        "widget.tier_tree"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015956"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0080-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015958"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0080-s089"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "`Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled early.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled early.",
+        "Widget_System.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Widget_System.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015962"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled ea"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0080-s097"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "after migration, the legacy key is deleted",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "after migration, the legacy key is deleted"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015976"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: after migration, the legacy key is deleted"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0080-s105"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "preserve legacy backup",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "preserve legacy backup"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015989"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: preserve legacy backup"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0080-s106"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "delete legacy key",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "delete legacy key"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015990"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: delete legacy key"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0081-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md` is not just stale; its own command-coverage block is self-invalidating because it cites phantom or superseded IDs and points at the wrong catalog section ranges\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`GUI_Rebuild_Requirements_Checklist.md` is not just stale; its own command-coverage block is self-invalidating because it cites phantom or superseded IDs and points at the wrong catalog section ranges.",
+        "GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016035"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `GUI_Rebuild_Requirements_Checklist.md` is not just stale; its own command-coverage block "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0081-s028"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current Open\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "OpenCode_Coverage_Matrix.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "OpenCode_Coverage_Matrix.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016036"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing aud"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0081-s123"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `feature-list.md`, and `newfeatures.md` still contain exact phantom/superseded/missing command IDs, stale shell-surf\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `feature-list.md`, and `newfeatures.md` still contain exact phantom/superseded/missing command IDs, stale shell-surface assumptions, and persistence-identity contradictions against `UI_Command_Catalog.md`, `FinalGUISpec.md`, and promoted-shell canon.",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md",
+        "UI_Command_Catalog.md",
+        "FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "FinalGUISpec.md",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "UI_Command_Catalog.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016151"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `featu"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0082-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Several docs now expose exact canon-breaking defects: missing anchors, unresolved command IDs, stale section references, naming-rule claims without backing canon, and storage/packaging authority split\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Several docs now expose exact canon-breaking defects: missing anchors, unresolved command IDs, stale section references, naming-rule claims without backing canon, and storage/packaging authority splits."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016214"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Several docs now expose exact canon-breaking defects: missing anchors, unresolved command "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0082-s056"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `feature-list.md`, and `newfeatures.md` still expose phantom or missing command rows, stale panel/tab/title-bar assu\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `feature-list.md`, and `newfeatures.md` still expose phantom or missing command rows, stale panel/tab/title-bar assumptions, and workspace-tab persistence identity contradictions against promoted-shell canon.",
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "GUI_Rebuild_Requirements_Checklist.md",
+        "Section15_MVP_Promoted_Features_Spec.md",
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016270"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `GUI_Rebuild_Requirements_Checklist.md`, `Section15_MVP_Promoted_Features_Spec.md`, `featu"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0082-s105"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "The final pass confirms the broader second sweep reached diminishing returns only after the sixth model: the remaining signal is mostly exact structural canon breakage, stale owner-routing, and field/\u2026",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "The final pass confirms the broader second sweep reached diminishing returns only after the sixth model: the remaining signal is mostly exact structural canon breakage, stale owner-routing, and field/command/schema mismatches rather than broad new conceptual seams."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016327"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: The final pass confirms the broader second sweep reached diminishing returns only after th"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0082-s153"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Crosswalk.md` still routes readers into stale Orchestrator and widget canon",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Crosswalk.md` still routes readers into stale Orchestrator and widget canon",
+        "Crosswalk.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Crosswalk.md"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016393"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Crosswalk.md` still routes readers into stale Orchestrator and widget canon"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

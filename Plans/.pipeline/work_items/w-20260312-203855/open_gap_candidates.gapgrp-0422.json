@@ -1,0 +1,122 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0422",
+  "coverage_row_ids_represented": [
+    "cov-02093",
+    "cov-02094",
+    "cov-02095",
+    "cov-02096",
+    "cov-02097",
+    "cov-02098",
+    "cov-02100",
+    "cov-02101",
+    "cov-02182",
+    "cov-02349"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0422",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "`Plans/storage-plan.md:541-590` | `Plans/storage-plan.md:788-817` | `Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon: | `Plans/storage-plan.md:894-897` | `Plans/storage-plan.md:941-954`",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Record Semantic Application"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-02093",
+        "cov-02094",
+        "cov-02095",
+        "cov-02096",
+        "cov-02097",
+        "cov-02098",
+        "cov-02100",
+        "cov-02101",
+        "cov-02182",
+        "cov-02349"
+      ],
+      "source_obligation_ids": [
+        "obl-1297",
+        "obl-1298",
+        "obl-1299",
+        "obl-1300",
+        "obl-1301",
+        "obl-1302",
+        "obl-1304",
+        "obl-1305",
+        "obl-1385",
+        "obl-1517"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s108",
+        "shard-0089-s016",
+        "shard-0088-s060",
+        "shard-0088-s106",
+        "shard-0091-s141",
+        "shard-0090-s049",
+        "shard-0088-s086",
+        "shard-0090-s090",
+        "shard-0089-s073",
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/storage-plan.md:541-590`",
+        "Plans/storage-plan.md:541-590",
+        "`Plans/storage-plan.md:788-817`",
+        "Plans/storage-plan.md:788-817",
+        "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+        "Plans/storage-plan.md:879-910",
+        "`Plans/storage-plan.md:894-897`",
+        "Plans/storage-plan.md:894-897",
+        "`Plans/storage-plan.md:941-954`",
+        "Plans/storage-plan.md:941-954",
+        "`Plans/storage-plan.md:941-956`",
+        "Plans/storage-plan.md:941-956",
+        "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block.",
+        "Plans/storage-plan.md",
+        "artifacts_index.v1:{project_id}:{artifact_id}",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "workflow_run_id",
+        "validation lineage",
+        "`Plans/storage-plan.md` already carries the broader `project_summary.v1:{project_id}` record family, but the exact `orchestrator.project_state.{project_id}` key family still is not present as named canon.",
+        "project_summary.v1:{project_id}",
+        "orchestrator.project_state.{project_id}",
+        "`historical_lineage_refs[]` is already present in `Plans/storage-plan.md`, so it no longer belongs in `gap-003`'s exact-missing list.",
+        "historical_lineage_refs[]",
+        "gap-003",
+        "attempts should also expose when an attempt is superseded by later remediation/graph generation",
+        "promotions need explicit distinction between: current accepted promotion, historical prior promotion, revoked promotion, superseded promotion",
+        "concerns: merged/split/superseded concern records, resolved-but-historical concern lineage",
+        "graph patches: old path/generation is historical; invalidated prior path may be superseded",
+        "recovery records: failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth",
+        "lane/worktree records: backing worktree may be removed; lane may still be historical; archival policy should be separate from semantic validity"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

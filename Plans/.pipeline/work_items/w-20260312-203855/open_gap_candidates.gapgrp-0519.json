@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0519",
+  "coverage_row_ids_represented": [
+    "cov-02518",
+    "cov-02529",
+    "cov-02550",
+    "cov-02551",
+    "cov-02552",
+    "cov-02553",
+    "cov-02561",
+    "cov-02562",
+    "cov-02563",
+    "cov-02564"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0519",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "graph-owned `Feature Seam` / `Work Package` | historical/current usage navigation aligned to canonical route/open primitives | it also lists command families that now need revalidation against the newer runtime recovery and route/open model | it correctly locks canonical requested/effective runtime field names | it still names `run.tier_started` / `run.tier_completed` and `run.persona_stage_changed`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02518",
+        "cov-02529",
+        "cov-02550",
+        "cov-02551",
+        "cov-02552",
+        "cov-02553",
+        "cov-02561",
+        "cov-02562",
+        "cov-02563",
+        "cov-02564"
+      ],
+      "source_obligation_ids": [
+        "obl-1630",
+        "obl-1635",
+        "obl-1645",
+        "obl-1646",
+        "obl-1647",
+        "obl-1648",
+        "obl-1652",
+        "obl-1653",
+        "obl-1654",
+        "obl-1655"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s123",
+        "shard-0084-s087",
+        "shard-0085-s119",
+        "shard-0086-s005",
+        "shard-0078-s049",
+        "shard-0078-s050",
+        "shard-0078-s051",
+        "shard-0084-s037",
+        "shard-0087-s011",
+        "shard-0080-s057",
+        "shard-0078-s142"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0082",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "graph-owned `Feature Seam` / `Work Package`",
+        "Feature Seam",
+        "Work Package",
+        "historical/current usage navigation aligned to canonical route/open primitives",
+        "it also lists command families that now need revalidation against the newer runtime recovery and route/open model",
+        "it correctly locks canonical requested/effective runtime field names",
+        "it still names `run.tier_started` / `run.tier_completed` and `run.persona_stage_changed`",
+        "run.tier_started",
+        "run.tier_completed",
+        "run.persona_stage_changed",
+        "its examples still include `tier_id` / `tier_type`",
+        "tier_id",
+        "tier_type",
+        "lane/worktree lifecycle",
+        "lane/worktree lifecycle and cleanup semantics",
+        "lane/worktree state",
+        "later addenda: `waiting_approval` as blocked/runtime overlay, `blocked_sequence`, ordered `allowed_action_ids[]`, and canonical runtime commands",
+        "waiting_approval",
+        "blocked_sequence",
+        "allowed_action_ids[]"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

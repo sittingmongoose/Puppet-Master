@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0234",
+  "coverage_row_ids_represented": [
+    "cov-00809",
+    "cov-02008",
+    "cov-02013",
+    "cov-02534",
+    "cov-02555"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0234",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "3. `Plans/Prompt_Pipeline.md` | `Plans/Prompt_Pipeline.md` still uses tier-era scope in owner-level text: | `Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Ru\u2026 | honored/skipped/clamped is a third concept distinct from requested/effective difference | keep one global Persona precedence chain",
+      "affected_targets": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## Provider Gap Disclosure"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00809",
+        "cov-02008",
+        "cov-02013",
+        "cov-02534",
+        "cov-02555"
+      ],
+      "source_obligation_ids": [
+        "obl-0564",
+        "obl-1223",
+        "obl-1224",
+        "obl-1637",
+        "obl-1649"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s044",
+        "shard-0078-s042",
+        "shard-0088-s027",
+        "shard-0019-s003",
+        "shard-0020-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0020",
+        "shard-0078",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "3. `Plans/Prompt_Pipeline.md`",
+        "Plans/Prompt_Pipeline.md",
+        "`Plans/Prompt_Pipeline.md` still uses tier-era scope in owner-level text:",
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md",
+        "honored/skipped/clamped is a third concept distinct from requested/effective difference",
+        "use explicit support chips or rows for runtime controls: Reasoning effort: High -> Skipped, Temperature: 0.2 -> Honored, Top-p: 1.0 -> Clamped to 0.9",
+        "if requested == effective and nothing was skipped/clamped, compact display is fine; if they differ, the UI must expand/disclose the difference visibly",
+        "keep one global Persona precedence chain",
+        "require each surface auto resolver to emit a deterministic ranked candidate set plus explanation metadata",
+        "Orchestrator auto resolver inputs: actor type (package overseer, seam overseer, node worker, verifier/reviewer, corroborator, graph patch planner, recovery actor), work type/operation type (implementation, review, integration, corroboration, recovery, planning/patching), scope level (seam, package, node, attempt), project hints (language(s), framework(s), repo/domain traits)"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

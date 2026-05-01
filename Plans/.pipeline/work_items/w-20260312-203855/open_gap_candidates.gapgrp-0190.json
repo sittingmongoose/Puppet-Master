@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0190",
+  "coverage_row_ids_represented": [
+    "cov-03202",
+    "cov-03216"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0190",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Plans/Orchestrator_Page.md still uses: run_id, tier_id, attempt_id? for per-node model/token tracking; evidence tables and filters by tier_id; worker output filtered by active tier_id. | WorktreeGitImprovement.md still frames ownership around tier / subtask rather than package lane pools",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Worktree Ownership"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03202",
+        "cov-03216"
+      ],
+      "source_obligation_ids": [
+        "obl-2055",
+        "obl-2064"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0047",
+        "shard-0011-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "Plans/Orchestrator_Page.md still uses: run_id, tier_id, attempt_id? for per-node model/token tracking; evidence tables and filters by tier_id; worker output filtered by active tier_id.",
+        "Replace graph/detail uses of tier_id as navigation identity with object-first routing to node, attempt, blocked_episode, scheduler_pass, safe_point, remediation.",
+        "WorktreeGitImprovement.md still frames ownership around tier / subtask rather than package lane pools",
+        "Orchestrator_Page.md still references Tiers and per-tier worktree ownership",
+        "GitHub_Integration.md Worktrees subview still centers raw worktree rows rather than lane-backed operational identity"
+      ],
+      "stale_tokens": [
+        "per-node model/token tracking by run_id+tier_id+attempt_id? in Orchestrator_Page.md",
+        "evidence tables filtered by tier_id in Orchestrator_Page.md",
+        "worker output filtered by active tier_id in Orchestrator_Page.md",
+        "tier-based worktree ownership",
+        "subtask worktree ownership",
+        "per-tier worktree"
+      ],
+      "canonical_replacement_hints": [
+        "node/attempt/runtime-lineage identity; canonical usage-event identity for usage correlation",
+        "owner run/package/lane",
+        "lane-backed operational identity"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

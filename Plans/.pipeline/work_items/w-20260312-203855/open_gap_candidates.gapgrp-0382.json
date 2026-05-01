@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0382",
+  "coverage_row_ids_represented": [
+    "cov-00489"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0382",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "`Plans/FinalGUISpec.md:2092` still references `restore points` through `Plans/newfeatures.md`",
+      "affected_targets": [
+        {
+          "path": "Plans/newfeatures.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00489"
+      ],
+      "source_obligation_ids": [
+        "obl-0343"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s057"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`Plans/FinalGUISpec.md:2092` still references `restore points` through `Plans/newfeatures.md`",
+        "Plans/FinalGUISpec.md:2092",
+        "restore points",
+        "Plans/newfeatures.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

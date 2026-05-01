@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0199",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01575",
+      "source_obligation_ids": [
+        "obl-0910"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01595",
+      "source_obligation_ids": [
+        "obl-0925"
+      ],
+      "source_seed_ids": [
+        "shard-0008-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 0/1 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01650",
+      "source_obligation_ids": [
+        "obl-0951"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01653",
+      "source_obligation_ids": [
+        "obl-0952"
+      ],
+      "source_seed_ids": [
+        "shard-0024-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01659",
+      "source_obligation_ids": [
+        "obl-0955"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01662",
+      "source_obligation_ids": [
+        "obl-0956"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-01844",
+      "source_obligation_ids": [
+        "obl-1068"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 1/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02035",
+      "source_obligation_ids": [
+        "obl-1240"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s108"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02036",
+      "source_obligation_ids": [
+        "obl-1241"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s150"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02037",
+      "source_obligation_ids": [
+        "obl-1242"
+      ],
+      "source_seed_ids": [
+        "shard-0092-s032"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0427",
+  "coverage_row_ids_represented": [
+    "cov-03059",
+    "cov-03095"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0427",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "assistant-chat-design.md and storage-plan.md must both explicitly state that resume_url is a serialized transport form only \u2014 not the canonical route contract | storage-plan.md uses resume_url as a semi-canonical route reference, but this special-casing reinforces the architecture inversion already flagged in shard-0058",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## resume_url"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-03059",
+        "cov-03095"
+      ],
+      "source_obligation_ids": [
+        "obl-1983",
+        "obl-2010"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0094",
+        "seed-WAVE006-0084"
+      ],
+      "source_shard_ids": [
+        "shard-0059",
+        "shard-0060"
+      ],
+      "exact_missing_items": [
+        "assistant-chat-design.md and storage-plan.md must both explicitly state that resume_url is a serialized transport form only \u2014 not the canonical route contract",
+        "resume_url must reference the canonical route_target contract as the primary model, with resume_url noted as a URL-serialized projection of that model",
+        "storage-plan.md uses resume_url as a semi-canonical route reference, but this special-casing reinforces the architecture inversion already flagged in shard-0058",
+        "storage-plan.md must be updated to treat resume_url as a serialized transport form only, never as the canonical route model"
+      ],
+      "stale_tokens": [
+        "resume_url"
+      ],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

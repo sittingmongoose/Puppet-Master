@@ -1,0 +1,146 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0033",
+  "coverage_row_ids_represented": [
+    "cov-02382",
+    "cov-02387",
+    "cov-02396",
+    "cov-02419",
+    "cov-02444",
+    "cov-02537",
+    "cov-02579",
+    "cov-02581",
+    "cov-02607",
+    "cov-02648"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0033",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "blocked_owner is absent from the blocked projection record, making it impossible to determine which system component is responsible for unblocking an attempt | blocked_sequence should be owned by the runtime scheduler/executor layer, not by UI/HITL/chat/storage | canonical contracts have requested_account_policy but not an equally canonical requested_account_id | chain-wizard-flexibility.md still leaves wizard normalized payloads too thin to satisfy adjacent contracts that already require thread_id, project_id, and validation lineage for reproducible pre-run q\u2026 | concern projection / concern_counts / node_concerns[] fields are missing from Run_Graph_View.md and from the candidate runtime projection contracts in Contracts_V0.md",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Blocked Projection"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-02382",
+        "cov-02387",
+        "cov-02396",
+        "cov-02419",
+        "cov-02444",
+        "cov-02537",
+        "cov-02579",
+        "cov-02581",
+        "cov-02607",
+        "cov-02648"
+      ],
+      "source_obligation_ids": [
+        "obl-1543",
+        "obl-1545",
+        "obl-1550",
+        "obl-1565",
+        "obl-1580",
+        "obl-1638",
+        "obl-1667",
+        "obl-1668",
+        "obl-1683",
+        "obl-1711"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0064",
+        "seed-WAVE005-0058",
+        "shard-0032-s013",
+        "seed-WAVE005-0040",
+        "shard-0036-s009",
+        "seed-WAVE005-0042",
+        "shard-0040-s003",
+        "seed-WAVE006-0069",
+        "shard-0040-s004",
+        "shard-0038-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0036",
+        "shard-0038",
+        "shard-0040",
+        "shard-0046",
+        "shard-0049",
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "blocked_owner is absent from the blocked projection record, making it impossible to determine which system component is responsible for unblocking an attempt",
+        "storage-plan.md and Contracts_V0.md must add blocked_owner (the identity of the component/role that caused the block) to the blocked projection record",
+        "blocked_sequence should be owned by the runtime scheduler/executor layer, not by UI/HITL/chat/storage",
+        "blocked_sequence scope: monotonic per {run_id, node_id}, starts at 1, increments only when node transitions from non-blocked to a new blocked episode",
+        "Make Executor_Protocol.md + Contracts_V0.md the joint owners of blocked_sequence minting semantics, blocked-episode lifecycle, and startup-recovery scheduler handshake",
+        "Recast HITL request contracts so request_id is explicitly subordinate to blocked-episode identity",
+        "canonical contracts have requested_account_policy but not an equally canonical requested_account_id",
+        "several downstream docs therefore cannot represent a user-selected concrete account on the requested side without collapsing it into policy text",
+        "chain-wizard-flexibility.md still leaves wizard normalized payloads too thin to satisfy adjacent contracts that already require thread_id, project_id, and validation lineage for reproducible pre-run quality governance",
+        "Extend wizard/interview handoff payloads so they can carry the upstream subset of canonical runtime identity: project_id, thread_id, wizard_id, requested/effective persona, platform, model, account, execution_role, operational_identity?, permission/runtime snapshot refs",
+        "Add an explicit lineage bridge from wizard/interview artifacts and handoff payloads into the eventual execution run: likely wizard_id -> run_id",
+        "Treat interview-phase tier_id-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys",
+        "concern projection / concern_counts / node_concerns[] fields are missing from Run_Graph_View.md and from the candidate runtime projection contracts in Contracts_V0.md",
+        "blocked-owner vs concern-owner distinction must be added to the node-state model so UI can render correct triage options",
+        "concern records must be queryable from Run Graph node-click context",
+        "human-in-the-loop.md now exposes a sharper self-contradiction: it deprecates allowed_actions[] in favor of allowed_action_ids[], but Contracts_V0.md and storage-plan.md still publish allowed_actions in HITL-adjacent canonical shapes",
+        "Reconcile all approval/recovery schemas onto one key strategy and one field family (allowed_action_ids[], blocked_sequence, explicit mapping for any retained request_id)",
+        "storage-plan.md still registers HITL events as request_id, run_id, tier_id, tier_type, request_kind, message, allowed_actions, which is now behind the newer blocked-projection/action-family model",
+        "manual_preferred_account_id (set by user in settings) is distinct from requested_account_id (set per-run by the caller/dispatcher)",
+        "manual_preferred_account_id is a persistent user preference that provides a default requested account for runs that do not specify one",
+        "requested_account_id takes precedence over manual_preferred_account_id when both are present",
+        "This distinction must be clearly defined in Multi-Account.md and in the account-identity resolution chain",
+        "memory.gist.* event family is used in assistant-memory-subsystem.md but has no canonical owner in Contracts_V0.md and no storage registration in storage-plan.md",
+        "AutoMilestone trigger semantics are described in the memory subsystem but have no event contract or durable storage anchor",
+        "project-switch handoff does not have a canonical transition sequence or event contract",
+        "operational_identity block must be present in all runtime snapshots: run.started events, attempt records, receipt records, usage events, concern records, and attention items",
+        "The block must be a stable named inline object (not spread fields) so it can be referenced by name in storage and consumption contracts",
+        "Fields: effective_account_id, effective_runtime_id, effective_persona_key, execution_role, actor_kind, requested_account_binding, pressure_flags, degradation_flags",
+        "project_attention_item.v1:{project_id}:{attention_item_id} must be a dedicated redb projection key",
+        "project_attention_item family is absent from storage-plan.md",
+        "projection must carry canonical shape defined in the attention center cluster analysis: attention_item_id, project_id, severity, owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload, secondary_route_payloads[], display_title, display_subtitle, disclosure_visibility"
+      ],
+      "stale_tokens": [
+        "request_id (as primary HITL approval anchor)",
+        "tier_id (in interview/wizard coordination keys)",
+        "allowed_actions (in HITL/storage canonical shapes)",
+        "tier_id/tier_type (in HITL storage events)"
+      ],
+      "canonical_replacement_hints": [
+        "blocked_owner",
+        "blocked_sequence (canonical per {run_id, node_id})",
+        "request_id (lookup metadata only, not canonical recovery target)",
+        "requested_account_id",
+        "wizard_id -> run_id lineage bridge",
+        "canonical runtime identity in handoff payload",
+        "node_concerns[]",
+        "allowed_action_ids[]",
+        "blocked_sequence",
+        "manual_preferred_account_id (settings-level)",
+        "requested_account_id (per-run)",
+        "memory.gist.created",
+        "memory.gist.updated",
+        "memory.automilestone.triggered",
+        "operational_identity block",
+        "project_attention_item.v1:{project_id}:{attention_item_id}"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

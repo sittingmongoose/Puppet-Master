@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0026",
+  "coverage_row_ids_represented": [
+    "cov-00741",
+    "cov-00749"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0026",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "Many current commands and deep-link descriptions still expose raw local IDs directly because there is no normalized target object yet. | Runtime_Artifacts_Panel.md still mandates a concrete envelope plus 19 per-type JSON schema files that do not exist, making its validation contract unimplementable as written",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Contradictions / gaps surfaced"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00741",
+        "cov-00749"
+      ],
+      "source_obligation_ids": [
+        "obl-0529",
+        "obl-0533"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0005",
+        "seed-WAVE005-0057"
+      ],
+      "source_shard_ids": [
+        "shard-0048",
+        "shard-0061"
+      ],
+      "exact_missing_items": [
+        "Many current commands and deep-link descriptions still expose raw local IDs directly because there is no normalized target object yet.",
+        "Some existing payloads probably carry both context and target in a way that should be split once `route_target` exists.",
+        "Primary owners: Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md, Plans/Crosswalk.md",
+        "Runtime_Artifacts_Panel.md still mandates a concrete envelope plus 19 per-type JSON schema files that do not exist, making its validation contract unimplementable as written",
+        "Runtime_Artifacts_Panel.md three-way ownership contradiction with Contracts_V0.md and storage-plan.md over payload schema authority; still points at missing schema files",
+        "Resolve the payload-owner triangle for runtime artifacts and either add the missing schema family/registration or soften the mandate explicitly"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Missing or incomplete doc reference vs obligation (concrete path known).",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

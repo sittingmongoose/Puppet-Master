@@ -1,0 +1,190 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0071",
+  "seed_candidates": [
+    {
+      "seed_id": "seed-WAVE008-0001",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add these lineage examples to the route contract owner docs.",
+        "Keep blocked-episode identity explicit: blocked_sequence is the canonical id; run and node scope remain required resolver context",
+        "Keep scheduler/safe-point/remediation/patch lineage under inspector_target = lineage when the object is already selected."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## 7. UICommand",
+        "## Route Contracts"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0071",
+      "source_evidence": [
+        "working_ledger.md:L014032-L014119"
+      ],
+      "notes": [
+        "Contracts_V0.md must add canonical route recipes for runtime lineage objects: blocked_episode (object_id=blocked_sequence, tab_id=node_graph|history, inspector_target=details|history), scheduler_pass (tab_id=history, inspector_target=lineage|details), safe_point (tab_id=history, inspector_target=lineage|history), remediation (tab_id=history, inspector_target=lineage), graph_generation (tab_id=node_graph, inspector_target=lineage), graph_patch (tab_id=history, inspector_target=lineage|details)."
+      ]
+    },
+    {
+      "seed_id": "seed-WAVE008-0002",
+      "seed_type": "consumer",
+      "exact_items": [
+        "Plans/Run_Graph_View.md \u2014 normalize scheduler/blocking/safe-point/remediation/attempt pivots through object-first route recipes",
+        "Older docs still assume history pivots can be attempt-only, which is insufficient for scheduler, blocked, and remediation lineage."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "attempt-only history pivots in Run_Graph_View.md"
+      ],
+      "canonical_replacement_hints": [
+        "object_kind=blocked_episode, scheduler_pass, safe_point, remediation with focused_run_id scope"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0071",
+      "source_evidence": [
+        "working_ledger.md:L014095-L014119"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0003",
+      "seed_type": "consumer",
+      "exact_items": [
+        "Plans/Orchestrator_Page.md \u2014 normalize seam/package/lane/worktree/concern/promotion/graph lineage pivots through object-first route recipes",
+        "Lane, seam, package, concern, and promotion routes are still mostly implied by UI prose instead of declared as canonical navigation identities."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "filter-shaped payloads for lane/seam/package/concern/promotion in Orchestrator_Page.md"
+      ],
+      "canonical_replacement_hints": [
+        "object_kind=lane|feature_seam|work_package|concern|promotion|worktree with object_id routes"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0071",
+      "source_evidence": [
+        "working_ledger.md:L014120-L014200"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0004",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "cmd.source_control.select_worktree is still described like a local selection command even though it is now clearly an object-targeting route action."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "cmd.source_control.select_worktree as 'layout/UI state only'"
+      ],
+      "canonical_replacement_hints": [
+        "cmd.source_control.select_worktree reclassified as navigation_wrapper for object_kind=worktree"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0071",
+      "source_evidence": [
+        "working_ledger.md:L014186-L014200"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0005",
+      "seed_type": "consumer",
+      "exact_items": [
+        "Plans/WorktreeGitImprovement.md \u2014 consume worktree object routing rather than inventing a separate SCM-local navigation identity",
+        "Normalize Source Control worktree selection through object_kind = worktree.",
+        "Keep Source Control worktree-first."
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "object_kind=worktree with object_id=worktree_id; side_panel target_kind"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0071",
+      "source_evidence": [
+        "working_ledger.md:L014186-L014200"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-WAVE008-0006",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "node_id remains object scope within the run and must not be dropped by the resolver",
+        "Runtime lineage is now object-first, not attempt-first.",
+        "That change is necessary for blocked episodes, scheduler passes, and graph generations to remain intelligible."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "attempt_id-only history pivot identity",
+        "tier_id-only pivot identity in runtime lineage"
+      ],
+      "canonical_replacement_hints": [
+        "object-first route identity: object_kind + object_id + focused_run_id as resolver scope"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0071",
+      "source_evidence": [
+        "working_ledger.md:L014042-L014054",
+        "working_ledger.md:L014116-L014119"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L014001-L014031: Continuation of route-normalization canonical examples list \u2014 supporting ledger detail (attempt route example field-by-field spec), not a new obligation.",
+    "L014007: blank separator line \u2014 structural",
+    "L014032: '## Research Progress - 2026-03-17 - Concrete route normalization for runtime lineage objects' \u2014 ledger section header",
+    "L014033: blank line",
+    "L014034-L014039: '### Targeted docs read' section listing Plans docs and pipeline path \u2014 process metadata",
+    "L014040: blank line",
+    "L014044-L014093: '### Canonical route examples' \u2014 field-by-field route listing; supporting evidence consumed by seed-WAVE008-0001",
+    "L014095-L014102: '### Impacted docs' section \u2014 doc-list metadata, consumed by affected_doc_hints",
+    "L014116-L014119: '### Do-not-forget details' \u2014 restatement of principles captured in seeds",
+    "L014120: '## Research Progress - 2026-03-17 - Concrete route normalization for Source Control and orchestration work objects' \u2014 ledger section header",
+    "L014131-L014176: '### Canonical route examples' for Source Control/orchestration \u2014 supporting evidence",
+    "L014178-L014186: '### Impacted docs' section \u2014 metadata",
+    "L014197-L014200: '### Do-not-forget details' \u2014 principle restatement"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

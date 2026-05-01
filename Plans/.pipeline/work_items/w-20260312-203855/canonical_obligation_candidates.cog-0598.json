@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0598",
+  "represented_seed_ids": [
+    "shard-0037-s009",
+    "shard-0039-s005"
+  ],
+  "source_shard_ids": [
+    "shard-0037",
+    "shard-0039"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0037-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "canon_label": "Add project_attention_item projection family to storage-plan.md with canonical shape and projection freshness / trust-state contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add project_attention_item projection family to storage-plan.md with canonical shape and projection freshness / trust-state contract",
+        "Add rollup rules (severity-merge, collapse criteria, forced-split criteria) to the attention item family definition",
+        "Add disclosure-visibility rules: inline surface, click-to-expand, navigate-to-attention-center",
+        "Bind attention center widget in FinalGUISpec.md to the projection family, not to live polling"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "project_attention_item.v1:{project_id}:{attention_item_id}"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0039-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "canon_label": "Projection-freshness trust vocabulary must be distinct from Preview trust_tier \u2014 trust_tier is already occupied in that namespace",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Projection-freshness trust vocabulary must be distinct from Preview trust_tier \u2014 trust_tier is already occupied in that namespace",
+        "Projection trust vocabulary must use a different name such as projection_freshness, data_freshness, or staleness_state",
+        "Using trust_tier for both preview capability trust and projection freshness would create a naming collision across surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Freshness Vocabulary",
+        "## trust_tier Namespace Collision"
+      ],
+      "stale_residue_to_retire": [
+        "trust_tier (overloaded)"
+      ],
+      "canonical_replacement_hints": [
+        "projection_freshness",
+        "staleness_state"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007601"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

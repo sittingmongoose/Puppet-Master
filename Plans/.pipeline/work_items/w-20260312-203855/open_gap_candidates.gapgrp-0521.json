@@ -1,0 +1,104 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0521",
+  "coverage_row_ids_represented": [
+    "cov-02597",
+    "cov-02602",
+    "cov-02603",
+    "cov-02606",
+    "cov-02609",
+    "cov-02610",
+    "cov-02614",
+    "cov-02615",
+    "cov-02616",
+    "cov-02617"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0521",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "no first-class `worktree_record` / `lane_record` family even though Orchestrator and Source Control now depend on durable lane/worktree lifecycle | older `PuppetMasterEvent::*` streams from the tier-era orchestrator model | one deterministic `ContractRef` shape for `ContractName` | operational identity / side-effect target identity | or a blocked/runtime episode",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02597",
+        "cov-02602",
+        "cov-02603",
+        "cov-02606",
+        "cov-02609",
+        "cov-02610",
+        "cov-02614",
+        "cov-02615",
+        "cov-02616",
+        "cov-02617"
+      ],
+      "source_obligation_ids": [
+        "obl-1676",
+        "obl-1679",
+        "obl-1680",
+        "obl-1682",
+        "obl-1684",
+        "obl-1685",
+        "obl-1687",
+        "obl-1688",
+        "obl-1689",
+        "obl-1690"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s020",
+        "shard-0079-s100",
+        "shard-0083-s008",
+        "shard-0084-s057",
+        "shard-0079-s005",
+        "shard-0078-s045",
+        "shard-0078-s107",
+        "shard-0083-s101",
+        "shard-0077-s050",
+        "shard-0087-s064",
+        "shard-0077-s076"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0083",
+        "shard-0084",
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "no first-class `worktree_record` / `lane_record` family even though Orchestrator and Source Control now depend on durable lane/worktree lifecycle",
+        "worktree_record",
+        "lane_record",
+        "older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+        "PuppetMasterEvent::*",
+        "one deterministic `ContractRef` shape for `ContractName`",
+        "ContractRef",
+        "ContractName",
+        "operational identity / side-effect target identity",
+        "or a blocked/runtime episode",
+        "orchestration rules still say the prompt flow must not create new execution tiers",
+        "ordered `allowed_action_ids[]`",
+        "allowed_action_ids[]",
+        "owner docs already contain stronger rewrite-era addenda",
+        "owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)",
+        "owner-doc supersession and traceability failures are now the dominant risk"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

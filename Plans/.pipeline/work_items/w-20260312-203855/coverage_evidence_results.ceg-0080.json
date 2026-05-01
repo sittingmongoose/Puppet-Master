@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0080",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-02657",
+      "source_obligation_ids": [
+        "obl-1715"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02676",
+      "source_obligation_ids": [
+        "obl-1724"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 3/6 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02708",
+      "source_obligation_ids": [
+        "obl-1747"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 1/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02710",
+      "source_obligation_ids": [
+        "obl-1748"
+      ],
+      "source_seed_ids": [
+        "shard-0037-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02721",
+      "source_obligation_ids": [
+        "obl-1752"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0019"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 4/4 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02741",
+      "source_obligation_ids": [
+        "obl-1764"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02743",
+      "source_obligation_ids": [
+        "obl-1765"
+      ],
+      "source_seed_ids": [
+        "shard-0029-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02746",
+      "source_obligation_ids": [
+        "obl-1767"
+      ],
+      "source_seed_ids": [
+        "shard-0034-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 2/3 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02756",
+      "source_obligation_ids": [
+        "obl-1773"
+      ],
+      "source_seed_ids": [
+        "shard-0028-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 2/6 in first-400-line window"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-02760",
+      "source_obligation_ids": [
+        "obl-1775"
+      ],
+      "source_seed_ids": [
+        "shard-0024-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 1/1 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

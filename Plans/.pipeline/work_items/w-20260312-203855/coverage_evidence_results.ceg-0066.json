@@ -1,0 +1,284 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0066",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00490",
+      "source_obligation_ids": [
+        "obl-0344"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s110"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00491",
+      "source_obligation_ids": [
+        "obl-0345"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s116",
+        "shard-0089-s020",
+        "shard-0089-s068",
+        "shard-0089-s113",
+        "shard-0090-s075",
+        "shard-0091-s017",
+        "shard-0091-s051"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00492",
+      "source_obligation_ids": [
+        "obl-0346"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s058"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 1/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00493",
+      "source_obligation_ids": [
+        "obl-0347"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s021"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00494",
+      "source_obligation_ids": [
+        "obl-0348"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s082"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00495",
+      "source_obligation_ids": [
+        "obl-0349"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s130"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00496",
+      "source_obligation_ids": [
+        "obl-0350"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s064",
+        "shard-0077-s094",
+        "shard-0080-s092",
+        "shard-0080-s103",
+        "shard-0080-s110",
+        "shard-0081-s070",
+        "shard-0081-s162",
+        "shard-0082-s091",
+        "shard-0082-s151",
+        "shard-0083-s076",
+        "shard-0084-s082",
+        "shard-0084-s112",
+        "shard-0085-s038",
+        "shard-0085-s105",
+        "shard-0086-s010",
+        "shard-0086-s038",
+        "shard-0086-s067",
+        "shard-0086-s106",
+        "shard-0086-s143",
+        "shard-0087-s022",
+        "shard-0087-s080",
+        "shard-0088-s097",
+        "shard-0089-s004",
+        "shard-0089-s052",
+        "shard-0089-s091",
+        "shard-0089-s126",
+        "shard-0090-s060",
+        "shard-0090-s149",
+        "shard-0091-s068",
+        "shard-0091-s097"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0080",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 0/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00497",
+      "source_obligation_ids": [
+        "obl-0351"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s058"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 1/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00498",
+      "source_obligation_ids": [
+        "obl-0352"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s121"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 5/6 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00499",
+      "source_obligation_ids": [
+        "obl-0353"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s098"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/FinalGUISpec.md: exact_items matched 1/2 in first-400-line window"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

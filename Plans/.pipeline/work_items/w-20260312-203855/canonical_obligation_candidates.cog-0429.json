@@ -1,0 +1,527 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0429",
+  "represented_seed_ids": [
+    "shard-0001-s003",
+    "shard-0001-s007",
+    "shard-0001-s009",
+    "shard-0001-s010",
+    "shard-0001-s011",
+    "shard-0001-s015",
+    "shard-0002-s004",
+    "shard-0002-s005",
+    "shard-0002-s006",
+    "shard-0002-s020",
+    "shard-0002-s022",
+    "shard-0002-s024",
+    "shard-0005-s011",
+    "shard-0013-s003",
+    "shard-0022-s001"
+  ],
+  "source_shard_ids": [
+    "shard-0001",
+    "shard-0002",
+    "shard-0005",
+    "shard-0013",
+    "shard-0022"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0001-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Orchestrator must remain tab-first (not widget-first) and expose exactly 6 canonical tabs: Progress, Seams, Node Graph, Evidence, History, Ledger",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Orchestrator must remain tab-first (not widget-first) and expose exactly 6 canonical tabs: Progress, Seams, Node Graph, Evidence, History, Ledger"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Page Layout",
+        "## Tab Navigation"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000028-L000060"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0001-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Seams tab must show Feature Seams at the top level, Work Packages at the second level, and individual nodes on drill-in",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Seams tab must show Feature Seams at the top level, Work Packages at the second level, and individual nodes on drill-in"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Seams Tab Layout"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000070-L000090"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0001-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Evidence tab must have two distinct panes: an Evidence pane (verdicts/receipts) and an Artifacts pane (screenshots/recordings/diffs)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Evidence tab must have two distinct panes: an Evidence pane (verdicts/receipts) and an Artifacts pane (screenshots/recordings/diffs)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Evidence Tab",
+        "## Evidence Pane",
+        "## Artifacts Pane"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000110-L000130"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0001-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "History tab = chronological story view; Ledger tab = structured durable record inspection; these are distinct purposes and must not be merged",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "History tab = chronological story view; Ledger tab = structured durable record inspection; these are distinct purposes and must not be merged"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## History Tab",
+        "## Ledger Tab"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000120-L000140"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0001-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Side inspectors must remain summary/action-light; dense objects (attempt handoff, review records, graph patch requests, etc.) must open full-record views, not be inlined in inspectors",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Side inspectors must remain summary/action-light; dense objects (attempt handoff, review records, graph patch requests, etc.) must open full-record views, not be inlined in inspectors"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Inspector Pattern",
+        "## Full-Record View"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000130-L000150"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0001-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Weak Integration must not be merely a badge; it must show grouped concerns under specific headings: Wiring, Workflow, State, GUI, Design",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Weak Integration must not be merely a badge; it must show grouped concerns under specific headings: Wiring, Workflow, State, GUI, Design"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Weak Integration Display"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000090-L000110"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0002-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Operator event visibility must be tiered: history-only / badge-worthy / attention-card-worthy / chat-thread action-required \u2014 each event family must declare its tier",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Operator event visibility must be tiered: history-only / badge-worthy / attention-card-worthy / chat-thread action-required \u2014 each event family must declare its tier"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Event Visibility Tiers"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000240-L000260"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0002-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Tab badges must be sparse and purposeful; the Progress tab badge must count only meaningful attention/action-required items, not routine events",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Tab badges must be sparse and purposeful; the Progress tab badge must count only meaningful attention/action-required items, not routine events"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Tab Badge Rules"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000255-L000270"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0002-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Condition-aging defaults: normal resolved conditions clear in ~15 minutes; major resolved conditions persist until dismissed or up to 24 hours",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Condition-aging defaults: normal resolved conditions clear in ~15 minutes; major resolved conditions persist until dismissed or up to 24 hours"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Condition Aging"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000265-L000280"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0002-s020"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Under degraded projections, the UI must fall back to Ledger and direct record views; fallback path must be defined and surfaced to the user",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Under degraded projections, the UI must fall back to Ledger and direct record views; fallback path must be defined and surfaced to the user"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Degraded Projection Fallback"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000345-L000365"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0002-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Each Orchestrator tab needs role-appropriate filters; Orchestrator must support saved views scoped per project; sort defaults: Seams=most operationally problematic first, History=newest first, Ledger=\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Each Orchestrator tab needs role-appropriate filters; Orchestrator must support saved views scoped per project; sort defaults: Seams=most operationally problematic first, History=newest first, Ledger=newest first"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Filters and Saved Views",
+        "## Sort Defaults"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000385-L000400"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0002-s024"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Settings scope hierarchy must flow: App/Global \u2192 Project \u2192 Seam \u2192 Package \u2192 Node \u2192 Actor/Role \u2192 Runtime only; each scope must support override visibility",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Settings scope hierarchy must flow: App/Global \u2192 Project \u2192 Seam \u2192 Package \u2192 Node \u2192 Actor/Role \u2192 Runtime only; each scope must support override visibility"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Settings Scope Hierarchy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000375-L000400"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0005-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Projection ownership by surface: Project = multi-project status; Dashboard = summary/urgency/entry; Orchestrator = operational depth; Source Control = repo/worktree execution/inspection; chat = HITL r\u2026",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Projection ownership by surface: Project = multi-project status; Dashboard = summary/urgency/entry; Orchestrator = operational depth; Source Control = repo/worktree execution/inspection; chat = HITL resolution"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Surface Ownership"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000965-L000985"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0013-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "read-only navigation may continue on stale and some degraded projections if the UI says so clearly",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "read-only navigation may continue on stale and some degraded projections if the UI says so clearly",
+        "live mutating / decision-bearing actions must tighten on trust state",
+        "stale: allow inspection and historical navigation; require refresh or direct runtime revalidation before sensitive live actions",
+        "degraded: restrict to safe inspection and canonical recovery paths; do not allow ambiguous live actions",
+        "unavailable: route to record-backed fallback views or explicit recovery/refresh actions",
+        "page state must not silently stand in for runtime state when freshness/trust is insufficient"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Action Gating by Trust State",
+        "## Trust-Gated Actions"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002429-L002439"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0022-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Runtime",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Blocked-Owner Kinds",
+        "## Project Card Blocked-Owner Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004201"
+      ],
+      "notes": [
+        "These are the canonical blocked/attention owner kinds; project card shows dominant current owner answering 'who/what is the project waiting on?'"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

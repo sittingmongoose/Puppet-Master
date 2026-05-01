@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0127",
+  "coverage_row_ids_represented": [
+    "cov-00506",
+    "cov-00507",
+    "cov-00508",
+    "cov-00594",
+    "cov-00733"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0127",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "`Plans/GUI_Rebuild_Requirements_Checklist.md:31` | `Plans/GUI_Rebuild_Requirements_Checklist.md` | `Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source: | `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resoluti\u2026 | with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00506",
+        "cov-00507",
+        "cov-00508",
+        "cov-00594",
+        "cov-00733"
+      ],
+      "source_obligation_ids": [
+        "obl-0356",
+        "obl-0357",
+        "obl-0358",
+        "obl-0413",
+        "obl-0524"
+      ],
+      "source_seed_ids": [
+        "shard-0092-s029",
+        "shard-0077-s099",
+        "shard-0081-s012",
+        "shard-0081-s053",
+        "shard-0081-s107",
+        "shard-0081-s145",
+        "shard-0082-s023",
+        "shard-0082-s040",
+        "shard-0082-s074",
+        "shard-0085-s136",
+        "shard-0086-s009",
+        "shard-0086-s045",
+        "shard-0086-s077",
+        "shard-0086-s127",
+        "shard-0092-s009",
+        "shard-0086-s002",
+        "shard-0092-s003",
+        "shard-0081-s094"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md:31`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:31",
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:",
+        "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.",
+        "cov-034",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk",
+        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

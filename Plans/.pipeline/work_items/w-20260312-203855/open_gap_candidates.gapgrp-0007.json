@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0007",
+  "coverage_row_ids_represented": [
+    "cov-01016",
+    "cov-01033",
+    "cov-01150",
+    "cov-01916",
+    "cov-02009",
+    "cov-02384"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0007",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "ContributePr explicitly disables tier worktrees and forces single-branch execution | Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules | Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states | `Plans/Architecture_Invariants.md` | `Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Ru\u2026",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "### Intent-specific orchestration modes"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-01016",
+        "cov-01033",
+        "cov-01150",
+        "cov-01916",
+        "cov-02009",
+        "cov-02384"
+      ],
+      "source_obligation_ids": [
+        "obl-0655",
+        "obl-0664",
+        "obl-0702",
+        "obl-1132",
+        "obl-1224",
+        "obl-1544"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s003",
+        "shard-0032-s001",
+        "shard-0032-s005",
+        "shard-0077-s104",
+        "shard-0081-s004",
+        "shard-0081-s045",
+        "shard-0081-s083",
+        "shard-0081-s099",
+        "shard-0081-s137",
+        "shard-0082-s015",
+        "shard-0082-s032",
+        "shard-0082-s066",
+        "shard-0088-s027",
+        "shard-0032-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "ContributePr explicitly disables tier worktrees and forces single-branch execution",
+        "chain-wizard-flexibility.md introduces intent-specific execution modes",
+        "adaptive phase planning and contract unification create a broader orchestration-mode matrix than older docs assume",
+        "Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "Permissions_System.md does not yet integrate the stricter requested/effective identity model that Contracts_V0.md now makes canonical",
+        "Architecture_Invariants.md needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states",
+        "Require requested/effective identity fields in decision/permission records, not just runtime event records",
+        "Add architecture invariants for: canonical runtime object families, lane scheduler integrity, mutation-safe-point enforcement",
+        "Re-anchor blocked/HITL/policy flows on canonical node/attempt identifiers where appropriate",
+        "Define intent-specific orchestration/worktree modes explicitly, including single-branch exceptions and contract-unification conflict policy",
+        "`Plans/Architecture_Invariants.md`",
+        "Plans/Architecture_Invariants.md",
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md",
+        "blocked_reason_code should remain the SSOT instead of ad hoc blocked strings",
+        "attempt_id must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+        "acknowledged concerns must reduce noise without suppressing true blockers",
+        "recovery snapshots in wizard-driven flows need enough intent/wizard-step state to avoid restoring into the wrong execution mode"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

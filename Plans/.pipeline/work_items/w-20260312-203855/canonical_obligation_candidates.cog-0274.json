@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0274",
+  "represented_seed_ids": [
+    "seed-WAVE007-0019"
+  ],
+  "source_shard_ids": [
+    "shard-0064"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0019"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "route activation overrides remembered state only when required to satisfy the requested destination/object/context; otherwise it should reuse persisted shell state and local destination defaults",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "route activation overrides remembered state only when required to satisfy the requested destination/object/context; otherwise it should reuse persisted shell state and local destination defaults",
+        "MUST override: target object identity; destination surface when the action explicitly names a different surface; scope required to make the target meaningful (project_id, thread_id, focused_run_id, or an explicitly requested panel/tab)",
+        "MUST NOT reuse persisted state when doing so would: land on the wrong object; hide the requested target behind the wrong tab/subview; silently keep the user on a stale run/thread/project context",
+        "Add a shared route-activation override rule in the contract/GUI owner docs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Crosswalk.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Activation Override Rule"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L012654-L012726"
+      ],
+      "notes": [
+        "No general override rule exists across routing consumers. Without this rule, implementers could legitimately choose either 'always restore old shell state' or 'always hard-reset the destination.' The override rule must be added to Contracts_V0 and FinalGUISpec."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

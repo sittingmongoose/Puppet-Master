@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0203",
+  "coverage_row_ids_represented": [
+    "cov-00870",
+    "cov-01032",
+    "cov-01152",
+    "cov-01427",
+    "cov-02627",
+    "cov-02823"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0203",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Add capability declarations for bridged providers to CLI_Bridged_Providers.md (matching language of direct providers): CAPABILITY_MULTI_ACCOUNT, CAPABILITY_SWITCH_NOTIFICATION, CAPABILITY_LANE_ATTRIBU\u2026 | Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules | Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states | Permissions_System.md permission snapshot invalidation on account switch must be defined explicitly | policy docs still assume a stronger single Puppet Master authority center",
+      "affected_targets": [
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## Bridged Provider Capability Declarations"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00870",
+        "cov-01032",
+        "cov-01152",
+        "cov-01427",
+        "cov-02627",
+        "cov-02823"
+      ],
+      "source_obligation_ids": [
+        "obl-0588",
+        "obl-0664",
+        "obl-0702",
+        "obl-0832",
+        "obl-1697",
+        "obl-1816"
+      ],
+      "source_seed_ids": [
+        "shard-0036-s008",
+        "shard-0032-s001",
+        "shard-0032-s005",
+        "shard-0039-s010",
+        "shard-0032-s002",
+        "shard-0038-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0036",
+        "shard-0038",
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Add capability declarations for bridged providers to CLI_Bridged_Providers.md (matching language of direct providers): CAPABILITY_MULTI_ACCOUNT, CAPABILITY_SWITCH_NOTIFICATION, CAPABILITY_LANE_ATTRIBUTION, etc.",
+        "Bridge envelope must carry effective account identity and switch-reason when capabilities are declared",
+        "Permission reject-cascade and session-cache scope must be limited to actor/lane-aware boundaries, not whole session",
+        "Extend OpenCode SSE contract to filter events per actor/lane context",
+        "Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "Permissions_System.md does not yet integrate the stricter requested/effective identity model that Contracts_V0.md now makes canonical",
+        "Architecture_Invariants.md needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states",
+        "Require requested/effective identity fields in decision/permission records, not just runtime event records",
+        "Add architecture invariants for: canonical runtime object families, lane scheduler integrity, mutation-safe-point enforcement",
+        "Re-anchor blocked/HITL/policy flows on canonical node/attempt identifiers where appropriate",
+        "Define intent-specific orchestration/worktree modes explicitly, including single-branch exceptions and contract-unification conflict policy",
+        "Permissions_System.md permission snapshot invalidation on account switch must be defined explicitly",
+        "Rule: when effective_account_id changes for an actor/lane, all always/never approvals scoped to that (actor, tool, scope_context) where scope_context includes account-sensitive tools must be invalidated",
+        "Account-neutral tool approvals (e.g., read-only filesystem reads) may survive account switches if explicitly exempted in the approval scope definition",
+        "policy docs still assume a stronger single Puppet Master authority center",
+        "the rewrite now needs seam/package overseer scopes, blocked-owner attribution, and clearer separation between runtime/system/user authority",
+        "trust / permission decisions cluster: Permissions_System.md session cache and reject-cascade must be re-scoped to actor/lane-aware boundaries",
+        "Permission snapshot invalidation on account switch must be defined: when account changes, which cached permission decisions are stale",
+        "Always-approval and never-approval decisions must be scoped to (actor_kind, tool, scope_context) not to (session-global, tool)",
+        "Multi-actor permission snapshot isolation must be normative and testable"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Concrete Plans/** document requires content reconciliation vs transfer obligation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0489",
+  "coverage_row_ids_represented": [
+    "cov-01765",
+    "cov-01767",
+    "cov-01768",
+    "cov-01769",
+    "cov-01770",
+    "cov-01771",
+    "cov-01772",
+    "cov-01773",
+    "cov-01774",
+    "cov-01775"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0489",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above. | This is a hard persistence-contract contradiction. | This is now a document-structure problem as much as a design problem: the later correction needs clear precedence over the earlier sections. | This is the cleanest remaining bridge between the old HITL plan and the new blocked/runtime command model. | This is the owner doc where the route/open cleanup, blocked-identity cleanup, and tier-era runtime cleanup meet. Reconciliation elsewhere will keep bouncing until this file is normalized.",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-01765",
+        "cov-01767",
+        "cov-01768",
+        "cov-01769",
+        "cov-01770",
+        "cov-01771",
+        "cov-01772",
+        "cov-01773",
+        "cov-01774",
+        "cov-01775"
+      ],
+      "source_obligation_ids": [
+        "obl-1028",
+        "obl-1030",
+        "obl-1031",
+        "obl-1032",
+        "obl-1033",
+        "obl-1034",
+        "obl-1035",
+        "obl-1036",
+        "obl-1037",
+        "obl-1038"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s067",
+        "shard-0081-s001",
+        "shard-0079-s064",
+        "shard-0079-s012",
+        "shard-0083-s091",
+        "shard-0077-s047",
+        "shard-0087-s001",
+        "shard-0090-s033",
+        "shard-0088-s040",
+        "shard-0084-s078"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0079",
+        "shard-0081",
+        "shard-0083",
+        "shard-0084",
+        "shard-0087",
+        "shard-0088",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above.",
+        "This is a hard persistence-contract contradiction.",
+        "This is now a document-structure problem as much as a design problem: the later correction needs clear precedence over the earlier sections.",
+        "This is the cleanest remaining bridge between the old HITL plan and the new blocked/runtime command model.",
+        "This is the owner doc where the route/open cleanup, blocked-identity cleanup, and tier-era runtime cleanup meet. Reconciliation elsewhere will keep bouncing until this file is normalized.",
+        "This is the storage-side parallel of the `human-in-the-loop.md` supersession problem.",
+        "human-in-the-loop.md",
+        "This packet must be a canon-collapse pass, not a light additive pass.",
+        "This pass removed only one overstated exact-missing item from gap-008 and further sharpened the identity-carrythrough wording.",
+        "This rerun adds confidence that reconciliation should proceed as a **canon-collapse and owner-schema completion pass**, not as a generic polish pass.",
+        "This seam is about ownership and scope, not renaming `requested_persona` back into older field families. The field names are already mostly right.",
+        "requested_persona"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

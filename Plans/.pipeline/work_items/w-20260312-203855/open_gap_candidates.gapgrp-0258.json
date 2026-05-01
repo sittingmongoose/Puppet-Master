@@ -1,0 +1,119 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0258",
+  "coverage_row_ids_represented": [
+    "cov-00403",
+    "cov-00529",
+    "cov-00532",
+    "cov-00533",
+    "cov-00534",
+    "cov-00535",
+    "cov-00607"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0258",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/\u2026 | `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewe\u2026 | `Plans/Runtime_Artifacts_Panel.md:57-65` | `Plans/Runtime_Artifacts_Panel.md:61-93` | `Plans/Runtime_Artifacts_Panel.md:63-93`",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": null
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00403",
+        "cov-00529",
+        "cov-00532",
+        "cov-00533",
+        "cov-00534",
+        "cov-00535",
+        "cov-00607"
+      ],
+      "source_obligation_ids": [
+        "obl-0301",
+        "obl-0367",
+        "obl-0369",
+        "obl-0370",
+        "obl-0371",
+        "obl-0372",
+        "obl-0421"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s054",
+        "shard-0089-s140",
+        "shard-0091-s102",
+        "shard-0091-s143",
+        "shard-0091-s001",
+        "shard-0089-s150",
+        "shard-0090-s079",
+        "shard-0090-s111",
+        "shard-0077-s008",
+        "shard-0084-s026",
+        "shard-0085-s107",
+        "shard-0086-s084",
+        "shard-0086-s120",
+        "shard-0087-s028",
+        "shard-0087-s089",
+        "shard-0089-s145",
+        "shard-0090-s063",
+        "shard-0090-s097",
+        "shard-0090-s136",
+        "shard-0091-s093",
+        "shard-0091-s131",
+        "shard-0091-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md",
+        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+        "validation artifact lineage",
+        "bridge-field viewer",
+        "validation/report section",
+        "`Plans/Runtime_Artifacts_Panel.md:57-65`",
+        "Plans/Runtime_Artifacts_Panel.md:57-65",
+        "`Plans/Runtime_Artifacts_Panel.md:61-93`",
+        "Plans/Runtime_Artifacts_Panel.md:61-93",
+        "`Plans/Runtime_Artifacts_Panel.md:63-93`",
+        "Plans/Runtime_Artifacts_Panel.md:63-93",
+        "`Plans/Runtime_Artifacts_Panel.md`",
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+        "Plans/storage-plan.md#Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

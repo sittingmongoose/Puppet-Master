@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0722",
+  "represented_seed_ids": [
+    "seed-WAVE008-0046"
+  ],
+  "source_shard_ids": [
+    "shard-0076"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE008-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md still routes Usage by node-through-tier: 'View in Usage' filters by tier_id; usage correlation is explicitly by tier_id.",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "Plans/Run_Graph_View.md still routes Usage by node-through-tier: 'View in Usage' filters by tier_id; usage correlation is explicitly by tier_id.",
+        "Replace graph/detail uses of tier_id as navigation identity with object-first routing."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "'View in Usage' filters by tier_id in Run_Graph_View.md",
+        "usage correlation by tier_id in Run_Graph_View.md"
+      ],
+      "canonical_replacement_hints": [
+        "object_kind=usage_event with canonical usage event id; object-first routing"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L015188-L015199"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

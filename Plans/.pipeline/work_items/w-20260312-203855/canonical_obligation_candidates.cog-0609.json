@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0609",
+  "represented_seed_ids": [
+    "seed-WAVE007-0018"
+  ],
+  "source_shard_ids": [
+    "shard-0064"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0018"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.",
+        "Let routes optionally name a destination-local subview only when that is necessary for the task, but treat it as destination refinement, not base identity.",
+        "Reuse persisted project/surface state when the route does not specify a destination-local override.",
+        "The route model should be able to land a user in Source Control without becoming a full serialized `source_control.project_state`."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Subviews and Panel-Local State",
+        "## active_subview Ownership"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L012609-L012652"
+      ],
+      "notes": [
+        "storage-plan.md owns active_subview and panel-local state. These must NOT enter route_target. Route activation can specify destination-local subview only as an override when strictly necessary."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

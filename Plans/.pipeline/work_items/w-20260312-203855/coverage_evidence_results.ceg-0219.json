@@ -1,0 +1,256 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0219",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00111",
+      "source_obligation_ids": [
+        "obl-0082"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s146",
+        "shard-0090-s046",
+        "shard-0090-s080",
+        "shard-0090-s126",
+        "shard-0091-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00112",
+      "source_obligation_ids": [
+        "obl-0083"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s023",
+        "shard-0089-s114",
+        "shard-0090-s031"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00113",
+      "source_obligation_ids": [
+        "obl-0084"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s024"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00114",
+      "source_obligation_ids": [
+        "obl-0085"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00115",
+      "source_obligation_ids": [
+        "obl-0086"
+      ],
+      "source_seed_ids": [
+        "shard-0086-s091",
+        "shard-0086-s132",
+        "shard-0089-s005",
+        "shard-0089-s092",
+        "shard-0089-s141",
+        "shard-0090-s028",
+        "shard-0090-s042",
+        "shard-0090-s064",
+        "shard-0090-s106",
+        "shard-0090-s141",
+        "shard-0091-s133"
+      ],
+      "source_shard_ids": [
+        "shard-0086",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 2/2 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00116",
+      "source_obligation_ids": [
+        "obl-0087"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s122"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 3/3 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00117",
+      "source_obligation_ids": [
+        "obl-0088"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s024"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 6/6 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00159",
+      "source_obligation_ids": [
+        "obl-0128"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0027"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "partial",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 1/5 in first-400-line window"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00406",
+      "source_obligation_ids": [
+        "obl-0301"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s054"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 9/9 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    },
+    {
+      "coverage_id": "cov-00530",
+      "source_obligation_ids": [
+        "obl-0367"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s140"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "status": "present",
+      "evidence": [
+        "Plans/interview-subagent-integration.md: exact_items matched 7/7 in first-400-line window"
+      ],
+      "required_action": "none",
+      "unresolved_reason": null
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion": "parent_mechanical_bounded_window"
+  }
+}

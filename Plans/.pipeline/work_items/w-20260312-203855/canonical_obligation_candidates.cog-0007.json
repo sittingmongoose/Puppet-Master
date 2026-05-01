@@ -1,0 +1,482 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0007",
+  "represented_seed_ids": [
+    "shard-0085-s114",
+    "shard-0085-s117",
+    "shard-0085-s120",
+    "shard-0085-s124",
+    "shard-0085-s127",
+    "shard-0085-s138",
+    "shard-0085-s144",
+    "shard-0085-s145",
+    "shard-0085-s146",
+    "shard-0086-s023",
+    "shard-0087-s009",
+    "shard-0087-s014",
+    "shard-0087-s023",
+    "shard-0087-s084",
+    "shard-0087-s094"
+  ],
+  "source_shard_ids": [
+    "shard-0085",
+    "shard-0086",
+    "shard-0087"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0085-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Widget_System.md`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Widget_System.md`",
+        "Widget_System.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016953"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Widget_System.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0085-s117"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "usage correlation moved off `tier_id` as primary cross-surface key",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "usage correlation moved off `tier_id` as primary cross-surface key",
+        "tier_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016956"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: usage correlation moved off `tier_id` as primary cross-surface key"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0085-s120"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Run_Graph_View.md` needs:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Run_Graph_View.md` needs:",
+        "Run_Graph_View.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016959"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Run_Graph_View.md` needs:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0085-s124"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Widget_System.md` needs:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Widget_System.md` needs:",
+        "Widget_System.md"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016963"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Widget_System.md` needs:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0085-s127"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "widget data-source language updated away from `TierChanged` / `tier_id` assumptions",
+        "TierChanged",
+        "tier_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016966"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: widget data-source language updated away from `TierChanged` / `tier_id` assumptions"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0085-s138"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "it explicitly says it is not the storage, command, permission, or widget SSOT",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "it explicitly says it is not the storage, command, permission, or widget SSOT"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016986"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: it explicitly says it is not the storage, command, permission, or widget SSOT"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0085-s144"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.tier_tree`",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`widget.tier_tree`",
+        "widget.tier_tree"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016992"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `widget.tier_tree`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0085-s145"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.progress_bars` as phase/task/subtask bars",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`widget.progress_bars` as phase/task/subtask bars",
+        "widget.progress_bars"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016993"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `widget.progress_bars` as phase/task/subtask bars"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0085-s146"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`widget.current_task` as active tier",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`widget.current_task` as active tier",
+        "widget.current_task"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016994"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `widget.current_task` as active tier"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0086-s023"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017032"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: These docs should be treated as mirrors and summaries, not as places to re-own runtime or "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0087-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "settings / requested-vs-effective / identity display grammar",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "settings / requested-vs-effective / identity display grammar"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017225"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: settings / requested-vs-effective / identity display grammar"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0087-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Owner docs were updated, but **consumer docs were not canon-collapsed**.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Owner docs were updated, but **consumer docs were not canon-collapsed**."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017237"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Owner docs were updated, but **consumer docs were not canon-collapsed**."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0087-s023"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure\u2026",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure, and action-surface / shortcut / context-menu policy."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017251"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Missing shared escalation ladder semantics, system-notification narrowing rules, project-c"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0087-s084"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Primary consumer cleanup docs:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Primary consumer cleanup docs:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017331"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Primary consumer cleanup docs:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0087-s094"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017344"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: 3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + cons"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "conversion_mode": "parent_mechanical_batch"
+  }
+}

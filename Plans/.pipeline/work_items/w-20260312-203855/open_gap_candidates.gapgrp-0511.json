@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0511",
+  "coverage_row_ids_represented": [
+    "cov-02281",
+    "cov-02282",
+    "cov-02283",
+    "cov-02284",
+    "cov-02285",
+    "cov-02286",
+    "cov-02287",
+    "cov-02288",
+    "cov-02289",
+    "cov-02290"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0511",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "`worker_model` | `worker_provider` | `working_ledger.md:L1030` | `working_ledger.md:L1035-L1036` | `working_ledger.md:L1283-L1290`",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_checked",
+      "coverage_row_ids": [
+        "cov-02281",
+        "cov-02282",
+        "cov-02283",
+        "cov-02284",
+        "cov-02285",
+        "cov-02286",
+        "cov-02287",
+        "cov-02288",
+        "cov-02289",
+        "cov-02290"
+      ],
+      "source_obligation_ids": [
+        "obl-1478",
+        "obl-1479",
+        "obl-1480",
+        "obl-1481",
+        "obl-1482",
+        "obl-1483",
+        "obl-1484",
+        "obl-1485",
+        "obl-1486",
+        "obl-1487"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s011",
+        "shard-0080-s017",
+        "shard-0085-s066",
+        "shard-0078-s010",
+        "shard-0080-s016",
+        "shard-0085-s065",
+        "shard-0092-s018",
+        "shard-0092-s019",
+        "shard-0092-s020",
+        "shard-0092-s021",
+        "shard-0092-s022",
+        "shard-0092-s023",
+        "shard-0092-s024",
+        "shard-0092-s025"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0080",
+        "shard-0085",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`worker_model`",
+        "worker_model",
+        "`worker_provider`",
+        "worker_provider",
+        "`working_ledger.md:L1030`",
+        "working_ledger.md:L1030",
+        "`working_ledger.md:L1035-L1036`",
+        "working_ledger.md:L1035-L1036",
+        "`working_ledger.md:L1283-L1290`",
+        "working_ledger.md:L1283-L1290",
+        "`working_ledger.md:L1539`",
+        "working_ledger.md:L1539",
+        "`working_ledger.md:L3070-L3092`",
+        "working_ledger.md:L3070-L3092",
+        "`working_ledger.md:L3170-L3182`",
+        "working_ledger.md:L3170-L3182",
+        "`working_ledger.md:L5990-L6015`",
+        "working_ledger.md:L5990-L6015",
+        "`working_ledger.md:L6442-L6490`",
+        "working_ledger.md:L6442-L6490"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "No concrete Plans/** target yet; doc discovery required before reconciliation.",
+      "next_resolution_stage": "Doc Discovery Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

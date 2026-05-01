@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2.1",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0272",
+  "coverage_row_ids_represented": [
+    "cov-00582"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-0272",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "`Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## DAE Skill Delivery"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00582"
+      ],
+      "source_obligation_ids": [
+        "obl-0402"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0025"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "`Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills."
+      ],
+      "stale_tokens": [
+        "HTE-style tool reachability assumption"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout structure impedes faithful packetization.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}
