@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0888",
+  "coverage_row_ids_represented": [
+    "cov-006522",
+    "cov-006523",
+    "cov-006524",
+    "cov-006525",
+    "cov-006526",
+    "cov-006527",
+    "cov-006528",
+    "cov-006529",
+    "cov-006530",
+    "cov-006531"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0888; path=__DOC_DISCOVERY_REQUIRED__; row_type=consumer; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006522",
+        "cov-006523",
+        "cov-006524",
+        "cov-006525",
+        "cov-006526",
+        "cov-006527",
+        "cov-006528",
+        "cov-006529",
+        "cov-006530",
+        "cov-006531"
+      ],
+      "source_obligation_ids": [
+        "obl-003425",
+        "obl-003426",
+        "obl-003427",
+        "obl-003428",
+        "obl-003429",
+        "obl-003430",
+        "obl-003431",
+        "obl-003432",
+        "obl-003433",
+        "obl-003434"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s054",
+        "shard-0080-s055",
+        "shard-0080-s058",
+        "shard-0080-s064",
+        "shard-0080-s067",
+        "shard-0080-s068",
+        "shard-0080-s073",
+        "shard-0080-s074",
+        "shard-0085-s078",
+        "shard-0085-s144"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+        "Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:",
+        "Reconcile terminal widgets so targeting uses runtime/worker identity rather than `tier_id` as the primary selector.",
+        "`widget.current_task` = active tier title/objective/elapsed",
+        "`widget.agent_terminal` filtered by `tier_id`",
+        "`widget.completed_prose` = finished phases/tasks",
+        "`widget.tier_tree` hosted on `Orch/Tiers`",
+        "widget.tier_tree",
+        "Orch/Tiers",
+        "only `Progress` remains widget-composed"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

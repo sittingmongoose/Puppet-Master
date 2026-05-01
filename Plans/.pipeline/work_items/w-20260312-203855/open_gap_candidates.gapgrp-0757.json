@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0757",
+  "coverage_row_ids_represented": [
+    "cov-007240",
+    "cov-007241",
+    "cov-007242",
+    "cov-007244",
+    "cov-007245",
+    "cov-007246",
+    "cov-007247",
+    "cov-007550",
+    "cov-007590",
+    "cov-007610"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0757; path=Plans/orchestrator-subagent-integration.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007240",
+        "cov-007241",
+        "cov-007242",
+        "cov-007244",
+        "cov-007245",
+        "cov-007246",
+        "cov-007247",
+        "cov-007550",
+        "cov-007590",
+        "cov-007610"
+      ],
+      "source_obligation_ids": [
+        "obl-004104",
+        "obl-004105",
+        "obl-004106",
+        "obl-004108",
+        "obl-004109",
+        "obl-004110",
+        "obl-004111",
+        "obl-004223",
+        "obl-004227",
+        "obl-004229"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s027",
+        "shard-0090-s032",
+        "shard-0090-s039",
+        "shard-0090-s045",
+        "shard-0090-s125",
+        "shard-0091-s010",
+        "shard-0092-s035"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "Plans/orchestrator-subagent-integration.md:379-391",
+        "`gap-001` now points at `Plans/orchestrator-subagent-integration.md` \u2014 `### Subagent Selector`, which is the real containing section for the narrower `execution_unit_context` packet.",
+        "gap-001",
+        "`Plans/orchestrator-subagent-integration.md:374-391`",
+        "Plans/orchestrator-subagent-integration.md:374-391",
+        "`Plans/orchestrator-subagent-integration.md:28-41`",
+        "Plans/orchestrator-subagent-integration.md:28-41",
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

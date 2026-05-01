@@ -1,202 +1,424 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0006",
-  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0006-L001001-L001200.md",
-  "source_line_range": "L001001-L001200",
   "seed_candidates": [
     {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "seam review loop behavior",
+      "seed_id": "shard-0006-s001",
+      "seed_type": "owner",
       "exact_items": [
-        "define concrete seam review loop behavior",
-        "include trigger points, checks performed, corroboration thresholds, and emitted artifacts",
-        "candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or graph-patch recommendation, corroboration requirement and outcome when invoked"
+        "Seam-level acceptance dimensions (5): operability, state coherence, workflow completeness, UX coherence, architectural coherence"
       ],
       "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/human-in-the-loop.md"
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "seam review loop",
-        "promotion/review policy",
-        "blocking/HITL/critical-decision events"
+        "## Seam-Level Acceptance Dimensions"
       ],
-      "stale_tokens": [
-        "HITL",
-        "package overseer",
-        "graph-patch"
-      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
       "source_shard_id": "shard-0006",
       "source_evidence": [
-        "working_ledger.md:L001015-L001028",
-        "working_ledger.md:L001049-L001053"
+        "working_ledger.md:L001001-L001025"
       ],
-      "notes": [
-        "Missing behavioral contract and required emitted artifacts."
-      ]
+      "notes": []
     },
     {
+      "seed_id": "shard-0006-s002",
       "seed_type": "owner",
-      "canon_label_hint": "provider/model precedence and delegation policy",
       "exact_items": [
-        "provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels",
-        "whether seam/package/node provider-model settings are hard constraints, defaults, or hints",
-        "whether an overseer can do direct node work or only delegate/review",
-        "if direct node work is allowed, whether it uses overseer-effective settings or node-effective settings",
-        "how dynamic node personas interact with explicit node overrides and overseer-controlled delegation"
+        "Seam-level failure classes (10, formalized): GUI/runtime mismatch, incomplete end-to-end flow, cross-package state mismatch, contract drift, technically-wired-but-operationally-unusable, local-pass/global-fail composition, missing degraded/recovery behavior, inconsistent UX semantics, cross-seam architecture drift, invisible governance/missing operator affordances"
       ],
       "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Seam Failure Classes"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001020-L001055"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "Seam review loop must trigger at: package-completion boundaries, integration-edge/cross-package boundary crossings, before seam completion, and when package overseer raises a high-impact challenge"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Seam Review Triggers"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001050-L001080"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Seam review outputs must include: verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendation, corroboration requirement and outcome"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Seam Review Outputs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001075-L001100"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Issue classes requiring corroboration (5): missing wiring, implementation quality concerns, unmet intent despite passing tests, missing spec/hidden dependency, graph structure insufficiency"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Corroboration-Required Issue Classes"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001095-L001120"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "Multi-account settings structure must cover all 4 layers: project settings, run snapshot, attempt record, and precedence between provider/account/execution-role rules"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
         "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md"
+        "Plans/storage-plan.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "runtime/model precedence",
-        "delegated worker policy",
-        "effective identity / persona"
+        "## Multi-Account Settings Structure"
       ],
-      "stale_tokens": [
-        "Overseer",
-        "persona",
-        "effective settings"
-      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
       "source_shard_id": "shard-0006",
       "source_evidence": [
-        "working_ledger.md:L001029-L001039",
-        "working_ledger.md:L001146-L001147"
+        "working_ledger.md:L001100-L001120"
       ],
-      "notes": [
-        "Missing policy matrix with explicit unresolved fields."
-      ]
+      "notes": []
     },
     {
+      "seed_id": "shard-0006-s007",
       "seed_type": "owner",
-      "canon_label_hint": "worktree ownership and lane assignment",
       "exact_items": [
-        "how are worktrees assigned for parallel nodes within the same package or seam",
-        "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work",
-        "for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result",
-        "preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism"
-      ],
-      "affected_doc_hints": [
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/FileSafe.md"
-      ],
-      "heading_hints": [
-        "worktree behavior",
-        "parallel mutable worktrees",
-        "dependent-node execution lanes"
-      ],
-      "stale_tokens": [
-        "task/subtask hierarchy",
-        "one worktree per subtask"
-      ],
-      "source_shard_id": "shard-0006",
-      "source_evidence": [
-        "working_ledger.md:L001035-L001041",
-        "working_ledger.md:L001172-L001174"
-      ],
-      "notes": [
-        "Lane/worktree allocation rules are unresolved and affect execution correctness."
-      ]
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "projection ownership and source-control partitioning",
-      "exact_items": [
-        "which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
-        "Source Control worktree area likely needs top-level partitioning into Orchestrator Owned and Other",
-        "Orchestrator Owned section likely needs further subdivision by feature seam",
-        "Orchestrator page is a high-density information surface with very large detail volume"
+        "GUI help/tooltip generation requires: stable canonical terminology, clear object vs state vs action distinctions, and enough 'why this exists' language to support Simple/Expert/ELI5 derivation"
       ],
       "affected_doc_hints": [
         "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/assistant-chat-design.md"
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "projection ownership by surface",
-        "Source Control worktree area",
-        "Orchestrator page"
+        "## GUI Help Generation Requirements"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001155-L001180"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Supersession hotspot docs (highest-risk for canon collapse): Plans/orchestrator-subagent-integration.md, Plans/human-in-the-loop.md, Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/storage-plan.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Canon Collapse Hotspots"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001180-L001200"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s009",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "Plans/orchestrator-subagent-integration.md: TierContext, TierType, select_for_tier, tier_id must all be replaced with dynamic package/seam/node vocabulary and seglog/redb storage"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Glossary.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Tier Token Retirement"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id"
+      ],
+      "canonical_replacement_hints": [
+        "Replace with package/seam/node identity vocabulary; use seglog/redb for state"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001055-L001080"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s010",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "Plans/FinalGUISpec.md: Tiers tab, linear phase progress bars, and rigid navigation structure are obsolete; must be replaced with parallel lanes/package boundaries/seams/effective identity visualization"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## FinalGUISpec Stale Structures"
       ],
       "stale_tokens": [
         "Tiers tab",
-        "page layer",
-        "Orchestrator Owned"
+        "widget.tier_tree",
+        "widget.progress_bars"
       ],
+      "canonical_replacement_hints": [
+        "Replace Tiers tab with Seams tab; replace tier_tree widget with package/seam/lane-aware equivalents"
+      ],
+      "canonical_replacement_status": "known",
       "source_shard_id": "shard-0006",
       "source_evidence": [
-        "working_ledger.md:L001064-L001092",
-        "working_ledger.md:L001176-L001189"
+        "working_ledger.md:L001060-L001090"
       ],
-      "notes": [
-        "UI/layout issue because it names required ownership split and missing partitioning."
-      ]
+      "notes": []
     },
     {
-      "seed_type": "owner",
-      "canon_label_hint": "multi-account settings structure and auto-switch policy",
+      "seed_id": "shard-0006-s011",
+      "seed_type": "stale_retirement",
       "exact_items": [
-        "multi-account settings structure across project settings, run snapshot, attempt record",
-        "precedence between provider/account/execution-role rules",
-        "user-configurable threshold that determines when automatic account switching occurs",
-        "multi-account auto-switch should be on by default for every execution role that uses a provider",
-        "thresholding/policy granularity by provider, account, execution role"
+        "Plans/FileSafe.md: Phase/Task/Subtask/Iteration hierarchy must support Seam/Pack-based scopes and concurrent active contexts \u2014 the monolithic phase model is stale"
       ],
       "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md",
-        "Plans/Permissions_System.md"
+        "Plans/FileSafe.md"
       ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "multi-account settings",
-        "provider/account/execution-role precedence",
-        "automatic account switching"
+        "## FileSafe Scope Extension"
       ],
       "stale_tokens": [
-        "multi-account",
-        "auto-switch",
-        "execution role"
+        "Phase/Task/Subtask/Iteration"
       ],
+      "canonical_replacement_hints": [
+        "Extend to support seam/package-based write scopes with concurrent access"
+      ],
+      "canonical_replacement_status": "known",
       "source_shard_id": "shard-0006",
       "source_evidence": [
-        "working_ledger.md:L001093-L001118"
+        "working_ledger.md:L001065-L001090"
       ],
-      "notes": [
-        "Missing config contract with explicit default/on-by-default requirement and precedence fields."
-      ]
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s012",
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "Plans/WorktreeGitImprovement.md: per-subtask and tier-based branch naming is obsolete; needs package-based lane pools"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Worktree Branch Naming Update"
+      ],
+      "stale_tokens": [
+        "per-subtask worktrees",
+        "tier-based branch naming"
+      ],
+      "canonical_replacement_hints": [
+        "Replace with package-based lane pool model"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001070-L001095"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s013",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "Gemini: chat is still single-threaded with no multi-lane overseer routing \u2014 the design must define how multiple overseer lanes communicate via chat"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_sweep",
+      "heading_hints": [
+        "## Multi-Lane Chat Routing"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001090-L001120"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s014",
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "Contradiction: active-agents.json (flat file) vs seglog/redb (event-sourced) = split-brain risk; active-agents.json must be retired and replaced with seglog/redb canonical state"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## active-agents.json Retirement"
+      ],
+      "stale_tokens": [
+        "active-agents.json"
+      ],
+      "canonical_replacement_hints": [
+        "Use seglog/redb for canonical agent/run state"
+      ],
+      "canonical_replacement_status": "known",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001080-L001120"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0006-s015",
+      "seed_type": "owner",
+      "exact_items": [
+        "Priority-1 docs requiring canon cleanup: Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/human-in-the-loop.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Priority-1 Cleanup Docs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0006",
+      "source_evidence": [
+        "working_ledger.md:L001155-L001200"
+      ],
+      "notes": []
     }
   ],
   "noise_items": [
-    {
-      "source_evidence": [
-        "working_ledger.md:L1001-L1013"
-      ],
-      "reason": "Failure-class list only; context but not a specific missing field."
-    },
-    {
-      "source_evidence": [
-        "working_ledger.md:L1119-L1145"
-      ],
-      "reason": "Packetization/stewardship notes and recovery meta."
-    },
-    {
-      "source_evidence": [
-        "working_ledger.md:L1156-L1200"
-      ],
-      "reason": "Impact summaries and doc lists; broad summary rather than specific missing fields."
-    }
+    "working_ledger.md:L001119-L001155 (packetization process notes \u2014 pipeline process metadata, not planning obligations)"
   ],
-  "uncertain_items": [
-    {
-      "source_evidence": [
-        "working_ledger.md:L1069-L1074"
-      ],
-      "reason": "Whether Overseer should be retired or retained is framed as open."
-    }
-  ],
-  "covered_shard_id": "shard-0006"
+  "uncertain_items": [],
+  "path_quarantine_violations": []
 }

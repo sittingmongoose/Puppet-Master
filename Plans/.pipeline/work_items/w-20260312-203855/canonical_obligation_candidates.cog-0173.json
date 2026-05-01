@@ -1,0 +1,2133 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0173",
+  "represented_seed_ids": [
+    "shard-0021-s005",
+    "shard-0021-s006",
+    "shard-0026-s008",
+    "seed-WAVE005-0022",
+    "shard-0081-s068",
+    "shard-0081-s160",
+    "shard-0082-s089",
+    "shard-0086-s073",
+    "shard-0086-s113",
+    "shard-0087-s056",
+    "shard-0087-s082",
+    "shard-0088-s048",
+    "shard-0088-s094",
+    "shard-0088-s110",
+    "shard-0088-s111"
+  ],
+  "source_shard_ids": [
+    "shard-0021",
+    "shard-0026",
+    "shard-0043",
+    "shard-0081",
+    "shard-0082",
+    "shard-0086",
+    "shard-0087",
+    "shard-0088"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Feature Seam",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Feature Seam"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Work Package",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Work Package"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Package Overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Package Overseer"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Seam Overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Seam Overseer"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Weak Integration",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Weak Integration"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Promotion",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Promotion"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Corroboration",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Corroboration"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Graph Patch",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Graph Patch"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Reopened",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reopened"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Revoked",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Revoked"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "requested vs effective runtime identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested vs effective runtime identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "safe point vs restore point",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "safe point vs restore point"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "lane vs worktree",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "lane vs worktree"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0021-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "concern lifecycle",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern lifecycle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0021-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Plans/Glossary.md is the canonical concept inventory backbone",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md is the canonical concept inventory backbone"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Role",
+        "## Glossary Split with Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Glossary is the canonical short-definition inventory; help entries add fuller explanations and related links"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0021-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Glossary = canonical short definitions",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Glossary = canonical short definitions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Role",
+        "## Glossary Split with Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Glossary is the canonical short-definition inventory; help entries add fuller explanations and related links"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0021-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "Help entries = fuller explanations with examples and related links",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Help entries = fuller explanations with examples and related links"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Role",
+        "## Glossary Split with Help Entries"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Glossary is the canonical short-definition inventory; help entries add fuller explanations and related links"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Feature Seam",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Feature Seam"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-019",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Work Package",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Work Package"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-020",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Node",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Node"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-021",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Package Overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Package Overseer"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-022",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Seam Overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Seam Overseer"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-023",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Weak Integration",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Weak Integration"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-024",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Promotion",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Promotion"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-025",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Corroboration",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Corroboration"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-026",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Graph Patch",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Graph Patch"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-027",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Graph Generation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Graph Generation"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-028",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Concern",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-029",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Lane",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Lane"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-030",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Lane Pool",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Lane Pool"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-031",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Worktree (as distinct concrete object)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Worktree (as distinct concrete object)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-032",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Historical Run",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Historical Run"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-033",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Reopened",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reopened"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-034",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Revoked",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Revoked"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-035",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "Superseded",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Superseded"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-036",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "stale_historical",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale_historical"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-037",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "current (projection trust)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "current (projection trust)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-038",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "refreshing (projection trust)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "refreshing (projection trust)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-039",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "stale (projection trust)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale (projection trust)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-040",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "degraded (projection trust)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "degraded (projection trust)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-041",
+      "source_seed_ids": [
+        "shard-0026-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "canon_label": "unavailable (projection trust)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "unavailable (projection trust)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Entries Required for Rewrite",
+        "## New Glossary Terms"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L005001"
+      ],
+      "notes": [
+        "Glossary.md is materially behind rewrite vocabulary; these terms need canonical glossary ownership urgently"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-042",
+      "source_seed_ids": [
+        "seed-WAVE005-0022"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "Glossary.md should own final canonical term definitions for: projection freshness, projection health, project summary, attention item, operational identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Glossary.md should own final canonical term definitions for: projection freshness, projection health, project summary, attention item, operational identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L008506-L008600"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-043",
+      "source_seed_ids": [
+        "seed-WAVE005-0022"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "canon_label": "Glossary.md currently missing the canonical rewrite vocabulary that later passes repeatedly depend on",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Glossary.md currently missing the canonical rewrite vocabulary that later passes repeatedly depend on"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L008506-L008600"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-044",
+      "source_seed_ids": [
+        "shard-0081-s068"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016081"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-045",
+      "source_seed_ids": [
+        "shard-0081-s068"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016081"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-046",
+      "source_seed_ids": [
+        "shard-0081-s160"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016195"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-047",
+      "source_seed_ids": [
+        "shard-0081-s160"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016195"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-048",
+      "source_seed_ids": [
+        "shard-0082-s089"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016309"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-049",
+      "source_seed_ids": [
+        "shard-0082-s089"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016309"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-050",
+      "source_seed_ids": [
+        "shard-0086-s073"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017111"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-051",
+      "source_seed_ids": [
+        "shard-0086-s073"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017111"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-052",
+      "source_seed_ids": [
+        "shard-0086-s113"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017159"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-053",
+      "source_seed_ids": [
+        "shard-0086-s113"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017159"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-054",
+      "source_seed_ids": [
+        "shard-0087-s056"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017293"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-055",
+      "source_seed_ids": [
+        "shard-0087-s056"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017293"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-056",
+      "source_seed_ids": [
+        "shard-0087-s082"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017329"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-057",
+      "source_seed_ids": [
+        "shard-0087-s082"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017329"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-058",
+      "source_seed_ids": [
+        "shard-0088-s048"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "7. `Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "7. `Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017493"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: 7. `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-059",
+      "source_seed_ids": [
+        "shard-0088-s048"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017493"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: 7. `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-060",
+      "source_seed_ids": [
+        "shard-0088-s094"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Glossary.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017560"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-061",
+      "source_seed_ids": [
+        "shard-0088-s094"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017560"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-062",
+      "source_seed_ids": [
+        "shard-0088-s110"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Glossary.md:34-67`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md:34-67`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017577"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md:34-67`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-063",
+      "source_seed_ids": [
+        "shard-0088-s110"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md:34-67",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md:34-67"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017577"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md:34-67`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-064",
+      "source_seed_ids": [
+        "shard-0088-s111"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "`Plans/Glossary.md:102-126`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Glossary.md:102-126`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017578"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md:102-126`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-065",
+      "source_seed_ids": [
+        "shard-0088-s111"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md:102-126",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Glossary.md:102-126"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017578"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Glossary.md:102-126`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

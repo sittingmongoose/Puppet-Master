@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0572",
+  "coverage_row_ids_represented": [
+    "cov-003735",
+    "cov-003736",
+    "cov-003737"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "group gapgrp-0572; path=Plans/UI_Command_Catalog.md; row_type=missing_doc_reference; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## Command Families"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003735",
+        "cov-003736",
+        "cov-003737"
+      ],
+      "source_obligation_ids": [
+        "obl-001748",
+        "obl-001749",
+        "obl-001750"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "UI_Command_Catalog.md still lacks canonical mappings/families for HITL, account management, concern flows, promotion flows, and freshness-gated mutation commands",
+        "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries",
+        "Define canonical command families for account operations, concern operations, and promotion operations, and explicitly map HITL allowed_action_ids into stable cmd.* handlers"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "cmd.account.*",
+        "cmd.concern.*",
+        "cmd.promotion.*"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Missing doc reference obligation requires reconciliation or discovery.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

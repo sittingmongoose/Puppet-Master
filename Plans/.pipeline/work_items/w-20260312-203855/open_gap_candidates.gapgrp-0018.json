@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0018",
+  "coverage_row_ids_represented": [
+    "cov-004366",
+    "cov-004368"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "group gapgrp-0018; path=Plans/Commands_System.md; row_type=missing_doc_reference; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Commands_System.md",
+          "heading": "## Platform Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004366",
+        "cov-004368"
+      ],
+      "source_obligation_ids": [
+        "obl-002080",
+        "obl-002081"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0058"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "The Unraid side-panel layout is referenced in the design context but has no named contract or layout spec in FinalGUISpec.md",
+        "FinalGUISpec.md still does not address Unraid-specific side panel layout differences; the gap exists at both the spec level (no section) and the wiring level (no corresponding matrix rows)"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Missing doc reference obligation requires reconciliation or discovery.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

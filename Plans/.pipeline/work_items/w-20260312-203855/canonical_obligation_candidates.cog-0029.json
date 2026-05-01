@@ -1,0 +1,1681 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0029",
+  "represented_seed_ids": [
+    "shard-0017-s003",
+    "shard-0017-s004",
+    "shard-0017-s005",
+    "shard-0017-s006",
+    "shard-0017-s007",
+    "shard-0025-s006",
+    "shard-0025-s007",
+    "shard-0031-s002",
+    "shard-0035-s012",
+    "seed-WAVE006-0023",
+    "seed-WAVE006-0033",
+    "seed-WAVE008-0040"
+  ],
+  "source_shard_ids": [
+    "shard-0017",
+    "shard-0025",
+    "shard-0031",
+    "shard-0035",
+    "shard-0053",
+    "shard-0054",
+    "shard-0076"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0017-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "corroboration_request packet: claim/issue under test, target scope, why corroboration was triggered, evidence set/source refs, required quorum model, participating actor refs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "corroboration_request packet: claim/issue under test, target scope, why corroboration was triggered, evidence set/source refs, required quorum model, participating actor refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Corroboration Record Schema",
+        "## Corroboration Request",
+        "## Corroboration Result"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0017-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "corroboration_result: participant outputs, quorum result, accepted/not-accepted/advisory-only result, resulting concern/promotion/patch implications",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "corroboration_result: participant outputs, quorum result, accepted/not-accepted/advisory-only result, resulting concern/promotion/patch implications"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Corroboration Record Schema",
+        "## Corroboration Request",
+        "## Corroboration Result"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0017-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "graph_patch_request: patch point, triggering issue/concern refs, requested structural change summary, affected generation, requester identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "graph_patch_request: patch point, triggering issue/concern refs, requested structural change summary, affected generation, requester identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Graph Patch Record Schema",
+        "## graph_patch_request",
+        "## graph_patch_result"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0017-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "graph_patch_result: old generation, new generation, invalidated path refs, new path refs, surviving/rejoined path refs, resulting concern/promotion/recovery implications",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "graph_patch_result: old generation, new generation, invalidated path refs, new path refs, surviving/rejoined path refs, resulting concern/promotion/recovery implications"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Graph Patch Record Schema",
+        "## graph_patch_request",
+        "## graph_patch_result"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0017-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "promotion record: promotion class (lane_to_package, package_to_seam, seam_completion), source scope and target scope refs, eligibility state at decision time, blocking refs / concern refs, review/corroboration refs, decision outcome, revoca",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "promotion record: promotion class (lane_to_package, package_to_seam, seam_completion), source scope and target scope refs, eligibility state at decision time, blocking refs / concern refs, review/corroboration refs, decision outcome, revocation/reopen lineage if it later changes"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Promotion Record Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0017-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "recovery record: recovery kind (safe-point restore, restart reconciliation, blocked prerequisite resolution, lane/worktree restore), target scope refs, trigger reason, preconditions, result, resulting attempt/run linkage, affected concern r",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "recovery record: recovery kind (safe-point restore, restart reconciliation, blocked prerequisite resolution, lane/worktree restore), target scope refs, trigger reason, preconditions, result, resulting attempt/run linkage, affected concern refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Recovery Record Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0017-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "state transition report: from state, to state, target object, actor/source, why transition occurred, prerequisite evidence / review / corroboration refs, resulting downstream obligations",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "state transition report: from state, to state, target object, actor/source, why transition occurred, prerequisite evidence / review / corroboration refs, resulting downstream obligations"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## State Transition Report Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0017-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0017"
+      ],
+      "canon_label": "This may help avoid every major object family inventing bespoke decision summary fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "This may help avoid every major object family inventing bespoke decision summary fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## State Transition Report Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003201"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "record_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "record_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "record_kind",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "record_kind"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "schema_version",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "schema_version"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "project_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "project_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "run_id?",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "scope_type",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "scope_type"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "scope_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "scope_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "status",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "status"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "created_at_utc",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "created_at_utc"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "updated_at_utc?",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "updated_at_utc?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-019",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "summary",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "summary"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-020",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "summary_kind?",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "summary_kind?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-021",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "detail_ref?",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "detail_ref?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-022",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "source_refs[]",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "source_refs[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-023",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "artifact_refs[]",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "artifact_refs[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-024",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "related_record_refs[]",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "related_record_refs[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-025",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "lineage_refs[]",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "lineage_refs[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-026",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "actor_ref?",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "actor_ref?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-027",
+      "source_seed_ids": [
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "requested_effective_snapshot_refs?",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested_effective_snapshot_refs?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Governance/Runtime Record Envelope",
+        "## Record Envelope Base Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Shared envelope pattern for governance/runtime record families; each family adds its own payload block under this envelope"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-028",
+      "source_seed_ids": [
+        "shard-0025-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "record = structured canonical object used by projections, search, history, and ledger",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "record = structured canonical object used by projections, search, history, and ledger"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record vs Artifact Distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Exact structured record vs human-readable rendered summary vs attached artifact(s) must remain distinct"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-029",
+      "source_seed_ids": [
+        "shard-0025-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "canon_label": "artifact = blob/file/renderable output linked from a record",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "artifact = blob/file/renderable output linked from a record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record vs Artifact Distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004801"
+      ],
+      "notes": [
+        "Exact structured record vs human-readable rendered summary vs attached artifact(s) must remain distinct"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-030",
+      "source_seed_ids": [
+        "shard-0031-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "merge: several concern records collapse into a surviving concern with lineage refs from the old ones",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "merge: several concern records collapse into a surviving concern with lineage refs from the old ones"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Merge / split / supersession direction",
+        "## Concern Lineage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "lineage fields for merge/split/supersession must be explicit in the concern record schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-031",
+      "source_seed_ids": [
+        "shard-0031-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "split: one concern is reframed into multiple more precise concerns; original resolves with resolution_kind = split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "split: one concern is reframed into multiple more precise concerns; original resolves with resolution_kind = split"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Merge / split / supersession direction",
+        "## Concern Lineage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "lineage fields for merge/split/supersession must be explicit in the concern record schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-032",
+      "source_seed_ids": [
+        "shard-0031-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "superseded: concern replaced by a newer concern or broader canonical object framing",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "superseded: concern replaced by a newer concern or broader canonical object framing"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Merge / split / supersession direction",
+        "## Concern Lineage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "lineage fields for merge/split/supersession must be explicit in the concern record schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-033",
+      "source_seed_ids": [
+        "shard-0031-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "old concern ids remain queryable in Ledger/History after merge/split/supersession",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "old concern ids remain queryable in Ledger/History after merge/split/supersession"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Merge / split / supersession direction",
+        "## Concern Lineage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "lineage fields for merge/split/supersession must be explicit in the concern record schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-034",
+      "source_seed_ids": [
+        "shard-0031-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "newer concern should carry lineage back to prior ids",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "newer concern should carry lineage back to prior ids"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Merge / split / supersession direction",
+        "## Concern Lineage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006001"
+      ],
+      "notes": [
+        "lineage fields for merge/split/supersession must be explicit in the concern record schema"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-035",
+      "source_seed_ids": [
+        "shard-0035-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Contracts_V0.md still conflicts with itself on remediation resolution enums and on safe-point / scheduler payload shapes",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Contracts_V0.md still conflicts with itself on remediation resolution enums and on safe-point / scheduler payload shapes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Actor Envelope",
+        "## Canonical Payload Consolidation"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": [
+        "The actor envelope is the canonical minimum needed for all actor-aware projections"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-036",
+      "source_seed_ids": [
+        "shard-0035-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Actor Envelope",
+        "## Canonical Payload Consolidation"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": [
+        "The actor envelope is the canonical minimum needed for all actor-aware projections"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-037",
+      "source_seed_ids": [
+        "shard-0035-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "the rewrite now clearly needs an actor envelope broader than run_id: missing minimum envelope is project_id + actor_kind + sparse actor refs (run_id?, attempt_id?, thread_id?, wizard_id?, interview_id?) plus requested/effective runtime/acco",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "the rewrite now clearly needs an actor envelope broader than run_id: missing minimum envelope is project_id + actor_kind + sparse actor refs (run_id?, attempt_id?, thread_id?, wizard_id?, interview_id?) plus requested/effective runtime/account fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Actor Envelope",
+        "## Canonical Payload Consolidation"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": [
+        "The actor envelope is the canonical minimum needed for all actor-aware projections"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-038",
+      "source_seed_ids": [
+        "seed-WAVE006-0023"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "attempt_id remains the canonical local runtime execution anchor",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempt_id remains the canonical local runtime execution anchor"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridge Field Precedence"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010505-L010553"
+      ],
+      "notes": [
+        "Bridge-field precedence rule: local runtime anchor = attempt_id; provider/runtime bridge = provider_attempt_ref; usage bridge = usage_event_ref; external side-effect bridge = receipt refs. Timestamp/thread fallback routing is compatibility-only."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-039",
+      "source_seed_ids": [
+        "seed-WAVE006-0023"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "provider_attempt_ref is the canonical bridge to provider/runtime execution details for that attempt",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "provider_attempt_ref is the canonical bridge to provider/runtime execution details for that attempt"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridge Field Precedence"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010505-L010553"
+      ],
+      "notes": [
+        "Bridge-field precedence rule: local runtime anchor = attempt_id; provider/runtime bridge = provider_attempt_ref; usage bridge = usage_event_ref; external side-effect bridge = receipt refs. Timestamp/thread fallback routing is compatibility-only."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-040",
+      "source_seed_ids": [
+        "seed-WAVE006-0023"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "usage_event_ref is the canonical bridge to cost/usage history for that attempt or artifact",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "usage_event_ref is the canonical bridge to cost/usage history for that attempt or artifact"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridge Field Precedence"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010505-L010553"
+      ],
+      "notes": [
+        "Bridge-field precedence rule: local runtime anchor = attempt_id; provider/runtime bridge = provider_attempt_ref; usage bridge = usage_event_ref; external side-effect bridge = receipt refs. Timestamp/thread fallback routing is compatibility-only."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-041",
+      "source_seed_ids": [
+        "seed-WAVE006-0023"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "receipt records are the canonical bridge to external side-effect lineage for that attempt",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "receipt records are the canonical bridge to external side-effect lineage for that attempt"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridge Field Precedence"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010505-L010553"
+      ],
+      "notes": [
+        "Bridge-field precedence rule: local runtime anchor = attempt_id; provider/runtime bridge = provider_attempt_ref; usage bridge = usage_event_ref; external side-effect bridge = receipt refs. Timestamp/thread fallback routing is compatibility-only."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-042",
+      "source_seed_ids": [
+        "seed-WAVE006-0023"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Add a bridge-field precedence note to the canonical runtime/storage owner docs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add a bridge-field precedence note to the canonical runtime/storage owner docs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridge Field Precedence"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010505-L010553"
+      ],
+      "notes": [
+        "Bridge-field precedence rule: local runtime anchor = attempt_id; provider/runtime bridge = provider_attempt_ref; usage bridge = usage_event_ref; external side-effect bridge = receipt refs. Timestamp/thread fallback routing is compatibility-only."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-043",
+      "source_seed_ids": [
+        "seed-WAVE006-0033"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "Add a canonical route payload / target model owner section, likely in Contracts_V0.md or an equivalent routing owner doc",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add a canonical route payload / target model owner section, likely in Contracts_V0.md or an equivalent routing owner doc"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Target Payload",
+        "## Navigation Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010794-L010800"
+      ],
+      "notes": [
+        "Contracts_V0.md or equivalent routing owner doc must own a canonical route target payload used by command palette, search, artifact deep-links, blocked notices, FileManager/Editor opens"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-044",
+      "source_seed_ids": [
+        "seed-WAVE006-0033"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "define one canonical internal route/target payload for navigation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "define one canonical internal route/target payload for navigation"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Target Payload",
+        "## Navigation Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010794-L010800"
+      ],
+      "notes": [
+        "Contracts_V0.md or equivalent routing owner doc must own a canonical route target payload used by command palette, search, artifact deep-links, blocked notices, FileManager/Editor opens"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-045",
+      "source_seed_ids": [
+        "seed-WAVE006-0033"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "resume_url should be one serialized transport form of that payload",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "resume_url should be one serialized transport form of that payload"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Route Target Payload",
+        "## Navigation Contract"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010794-L010800"
+      ],
+      "notes": [
+        "Contracts_V0.md or equivalent routing owner doc must own a canonical route target payload used by command palette, search, artifact deep-links, blocked notices, FileManager/Editor opens"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-046",
+      "source_seed_ids": [
+        "seed-WAVE008-0040"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Ref Families",
+        "## Route Contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015001-L015052"
+      ],
+      "notes": [
+        "The ref-family distinction is needed so consumer docs stop treating detail_ref, report_ref, and resume_url as interchangeable open-this-thing fields."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-047",
+      "source_seed_ids": [
+        "seed-WAVE008-0040"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Keep detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, kubernetes_refs as record/provenance families, not route payload surrogates.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, kubernetes_refs as record/provenance families, not route payload surrogates."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Ref Families",
+        "## Route Contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015001-L015052"
+      ],
+      "notes": [
+        "The ref-family distinction is needed so consumer docs stop treating detail_ref, report_ref, and resume_url as interchangeable open-this-thing fields."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-048",
+      "source_seed_ids": [
+        "seed-WAVE008-0040"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Keep resume_url only as serialized transport derived from canonical route identity.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep resume_url only as serialized transport derived from canonical route identity."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Ref Families",
+        "## Route Contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015001-L015052"
+      ],
+      "notes": [
+        "The ref-family distinction is needed so consumer docs stop treating detail_ref, report_ref, and resume_url as interchangeable open-this-thing fields."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-049",
+      "source_seed_ids": [
+        "seed-WAVE008-0040"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "This split will make the owner-doc rewrite much easier because most refs do not need replacement. The real conflict sits almost entirely on resume_url, not on the broader *_ref family.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "This split will make the owner-doc rewrite much easier because most refs do not need replacement. The real conflict sits almost entirely on resume_url, not on the broader *_ref family."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Ref Families",
+        "## Route Contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015001-L015052"
+      ],
+      "notes": [
+        "The ref-family distinction is needed so consumer docs stop treating detail_ref, report_ref, and resume_url as interchangeable open-this-thing fields."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

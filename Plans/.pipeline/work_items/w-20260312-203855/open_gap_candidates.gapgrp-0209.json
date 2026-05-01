@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0209",
+  "coverage_row_ids_represented": [
+    "cov-005446",
+    "cov-005447"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0209; path=Plans/FinalGUISpec.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## 7.7 Tiers"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005446",
+        "cov-005447"
+      ],
+      "source_obligation_ids": [
+        "obl-002357",
+        "obl-002358"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0016"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "exact_missing_items": [
+        "Plans/FinalGUISpec.md still preserves Tiers as a primary page-level surface and still embeds older standalone-surface assumptions that conflict with the tab-first Orchestrator rewrite.",
+        "FinalGUISpec.md will keep reintroducing stale page assumptions until the owner docs are reconciled first."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Seams tab in the rewrite Orchestrator tab model"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

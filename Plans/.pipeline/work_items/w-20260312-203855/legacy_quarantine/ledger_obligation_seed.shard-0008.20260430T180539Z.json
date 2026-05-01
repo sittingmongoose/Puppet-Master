@@ -1,0 +1,210 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0008",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0008-L001401-L001600.md",
+  "source_line_range": "L001401-L001600",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "runtime schema anchors",
+      "exact_items": [
+        "Relax or replace stale graph-schema constants `selection_rule` and tier-rooted breadcrumbs.",
+        "Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.",
+        "Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/project_plan_graph_index.schema.json"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities",
+        "Contradictions To Resolve",
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_tokens": [
+        "selection_rule",
+        "tier-rooted breadcrumbs",
+        "reason_code",
+        "recovery_options[]",
+        "single Overseer",
+        "one worktree"
+      ],
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001404-L001410",
+        "working_ledger.md:L001424-L001429",
+        "working_ledger.md:L001483-L001490"
+      ],
+      "notes": [
+        "Schema drift: missing canonical fields, legacy blocked-payload names, and explicit safe-point/contamination linkage required."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "ownership glossary/crosswalk",
+      "exact_items": [
+        "Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Clarify which docs own execution truth vs projections vs UI-only overlays."
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/00-plans-index.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities",
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_tokens": [
+        "tier-centric ownership",
+        "projection-only overlay",
+        "execution truth vs projections"
+      ],
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001410-L001412",
+        "working_ledger.md:L001494-L001498"
+      ],
+      "notes": [
+        "Docs need explicit SSOT boundaries and first-class owners for new concepts."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "graph-native attention routing",
+      "exact_items": [
+        "Replace or demote tiers-first widgets and layouts.",
+        "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Widget_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities",
+        "GUI / UX Impacts",
+        "Suggested Research Follow-Ups"
+      ],
+      "stale_tokens": [
+        "tiers-first",
+        "phase-grouped layouts",
+        "single current task",
+        "single worktree",
+        "prose-only references"
+      ],
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001413-L001417",
+        "working_ledger.md:L001475-L001479",
+        "working_ledger.md:L001531-L001534"
+      ],
+      "notes": [
+        "UI contracts still encode tier hierarchy and singular context instead of canonical runtime objects."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "blocked-state normalization",
+      "exact_items": [
+        "Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology into one authoritative mapping and event taxonomy."
+      ],
+      "affected_doc_hints": [
+        "Plans/newtools.md",
+        "Plans/FileSafe.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities",
+        "Runtime / Storage / Contract Impacts",
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "safe-point",
+        "restore-point",
+        "rollback",
+        "contamination",
+        "older singular worktree assumptions"
+      ],
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001418-L001420",
+        "working_ledger.md:L001487-L001490",
+        "working_ledger.md:L001502-L001506"
+      ],
+      "notes": [
+        "Requires retirement mapping plus explicit blocked-state contract alignment across storage/runtime/policy/UI."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "package/seam/lane object model",
+      "exact_items": [
+        "Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.",
+        "Unify requested vs effective execution identity to include account, lane/worktree, and overseer class.",
+        "Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "Suggested Research Follow-Ups",
+        "Highest-Impact Docs",
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_tokens": [
+        "requested/effective persona/model only",
+        "one active worktree",
+        "branch-per-run",
+        "subtask-per-worktree"
+      ],
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L001433-L001437",
+        "working_ledger.md:L001502-L001506",
+        "working_ledger.md:L001537-L001543"
+      ],
+      "notes": [
+        "Need canonical persisted-vs-projection split and carry-through of ownership/identity into SCM lane pools."
+      ]
+    }
+  ],
+  "noise_items": [
+    {
+      "source_evidence": [
+        "working_ledger.md:L1401-L1600"
+      ],
+      "reason": "High-level sweep framing, pure impact-count/priority language, and repeated contradiction-map restatements."
+    }
+  ],
+  "uncertain_items": [
+    {
+      "source_evidence": [
+        "working_ledger.md:L1401-L1600"
+      ],
+      "reason": "Exact file-line mapping for downstream docs and whether selection_rule is the only stale graph constant remain implied."
+    }
+  ],
+  "covered_shard_id": "shard-0008"
+}

@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0036",
+  "coverage_row_ids_represented": [
+    "cov-004726",
+    "cov-004775",
+    "cov-004777",
+    "cov-004778",
+    "cov-004780",
+    "cov-004782",
+    "cov-004784",
+    "cov-005379",
+    "cov-005380",
+    "cov-005381"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0036; path=Plans/Contracts_V0.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## LSP Formatting vs Formatters_System Ownership"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004726",
+        "cov-004775",
+        "cov-004777",
+        "cov-004778",
+        "cov-004780",
+        "cov-004782",
+        "cov-004784",
+        "cov-005379",
+        "cov-005380",
+        "cov-005381"
+      ],
+      "source_obligation_ids": [
+        "obl-002198",
+        "obl-002207",
+        "obl-002208",
+        "obl-002209",
+        "obl-002210",
+        "obl-002211",
+        "obl-002212",
+        "obl-002326",
+        "obl-002327",
+        "obl-002328"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0023",
+        "seed-WAVE007-0028",
+        "seed-WAVE008-0008",
+        "seed-WAVE008-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0065",
+        "shard-0072",
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "`Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, and unregistered `format.*` events.",
+        "`Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.",
+        "Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and canonical navigation is explicit.",
+        "Plans/Contracts_V0.md still has resume_url, detail_ref, and event-local linkage fields, but it still does not own a named route_target or OpenSubject contract.",
+        "Structural gaps still live: Contracts_V0.md still lacks the named canonical contracts for route_target and OpenSubject.",
+        "Plans/Crosswalk.md still lacks the matching primitive-boundary declaration for route-target and subject-open navigation.",
+        "This is now a clear owner-doc gap, not a vague alignment issue. storage-plan.md is ahead of Contracts_V0.md and Crosswalk.md on this seam.",
+        "Current docs define plenty of positive rules, but almost no explicit invalid-combination rules.",
+        "Without rejection rules, route producers will keep slipping local payload habits into the base contract.",
+        "A bounded contract needs rejection rules. Otherwise every bad payload becomes a precedent."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

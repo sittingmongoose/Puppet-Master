@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0010",
+  "coverage_row_ids_represented": [
+    "cov-001161",
+    "cov-001162",
+    "cov-001163",
+    "cov-001164",
+    "cov-001165",
+    "cov-002707",
+    "cov-002710",
+    "cov-002713",
+    "cov-002716",
+    "cov-002719"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0010; path=Plans/CLI_Bridged_Providers.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "## Request Envelope"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001161",
+        "cov-001162",
+        "cov-001163",
+        "cov-001164",
+        "cov-001165",
+        "cov-002707",
+        "cov-002710",
+        "cov-002713",
+        "cov-002716",
+        "cov-002719"
+      ],
+      "source_obligation_ids": [
+        "obl-000486",
+        "obl-000487",
+        "obl-000488",
+        "obl-000489",
+        "obl-000490",
+        "obl-001296",
+        "obl-001297",
+        "obl-001298",
+        "obl-001299",
+        "obl-001300"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0002",
+        "shard-0011-s003",
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0034",
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "CLI_Bridged_Providers.md request and persistence envelopes still omit requested/effective auth/account fields",
+        "Unify bridged-provider request/persistence envelopes around the same auth/account fields already used by Contracts_V0.md and Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md needs a versioned correlation/context block and account-health semantics stronger than auth lifecycle alone",
+        "Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata",
+        "Bridged contracts still cannot legally carry all correlation/account/trust metadata their addenda already imply",
+        "Provider_OpenCode.md still leaves effective account identity opaque behind the bridge, uses a server-global SSE bus with no explicit contamination filter contract, and relies on a fixed server working directory",
+        "Permissions_System.md still scopes always approvals and reject-cascades to the whole session, which is unsafe for multi-lane/multi-actor execution",
+        "permission snapshots still have no account-switch invalidation rule even though account changes can affect effective tool availability",
+        "bridged-provider usage events still omit effective account and pressure/switch fields",
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

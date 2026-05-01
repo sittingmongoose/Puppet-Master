@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0023",
+  "coverage_row_ids_represented": [
+    "cov-002067",
+    "cov-002069",
+    "cov-002077",
+    "cov-002108",
+    "cov-002111",
+    "cov-002114",
+    "cov-002117",
+    "cov-002120",
+    "cov-004111",
+    "cov-004113"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "group gapgrp-0023; path=Plans/Contracts_V0.md; row_type=consumer; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Existing Canonical Record Families"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002067",
+        "cov-002069",
+        "cov-002077",
+        "cov-002108",
+        "cov-002111",
+        "cov-002114",
+        "cov-002117",
+        "cov-002120",
+        "cov-004111",
+        "cov-004113"
+      ],
+      "source_obligation_ids": [
+        "obl-001023",
+        "obl-001024",
+        "obl-001028",
+        "obl-001039",
+        "obl-001040",
+        "obl-001041",
+        "obl-001042",
+        "obl-001043",
+        "obl-001918",
+        "obl-001919"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0004",
+        "shard-0025-s009",
+        "shard-0027-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0027",
+        "shard-0051"
+      ],
+      "exact_missing_items": [
+        "blocked_projection",
+        "usage_record",
+        "cross-surface runtime receipt record",
+        "attention_required",
+        "blocked",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "resume_url",
+        "Align the immutable prompt handoff bundle with the attempt.started packet so they differ only by storage/event framing, not by identity content",
+        "Prompt_Pipeline.md captures the immutable handoff bundle, but its later packet omits some fields that executor/runtime surfaces now want to inspect, such as blocked/recovery anchors when a resumed flow launches"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

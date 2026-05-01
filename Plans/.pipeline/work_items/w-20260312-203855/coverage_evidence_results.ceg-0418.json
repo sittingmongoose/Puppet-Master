@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0418",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-000002",
+      "source_obligation_ids": [
+        "obl-000001"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-000006",
+      "source_obligation_ids": [
+        "obl-000002"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-000884",
+      "source_obligation_ids": [
+        "obl-000381"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-002344",
+      "source_obligation_ids": [
+        "obl-001175"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-002345",
+      "source_obligation_ids": [
+        "obl-001176"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-004055",
+      "source_obligation_ids": [
+        "obl-001889"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0071"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004057",
+      "source_obligation_ids": [
+        "obl-001890"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0071"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004059",
+      "source_obligation_ids": [
+        "obl-001891"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0071"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004547",
+      "source_obligation_ids": [
+        "obl-002163"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0008"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004719",
+      "source_obligation_ids": [
+        "obl-002196"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0021"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0568",
+  "coverage_row_ids_represented": [
+    "cov-007473",
+    "cov-007513",
+    "cov-007847",
+    "cov-007852",
+    "cov-007857",
+    "cov-007862"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0568; path=Plans/UI_Command_Catalog.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007473",
+        "cov-007513",
+        "cov-007847",
+        "cov-007852",
+        "cov-007857",
+        "cov-007862"
+      ],
+      "source_obligation_ids": [
+        "obl-004212",
+        "obl-004217",
+        "obl-004373",
+        "obl-004374",
+        "obl-004375",
+        "obl-004376"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s018",
+        "shard-0090-s053"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+        "Plans/Wiring_Matrix.md",
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.",
+        "gap-002",
+        "gap-006",
+        "gap-007"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

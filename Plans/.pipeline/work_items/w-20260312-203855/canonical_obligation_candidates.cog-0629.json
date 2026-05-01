@@ -1,0 +1,969 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0629",
+  "represented_seed_ids": [
+    "shard-0077-s096",
+    "shard-0081-s019",
+    "shard-0081-s060",
+    "shard-0081-s088",
+    "shard-0081-s114",
+    "shard-0081-s152",
+    "shard-0082-s022",
+    "shard-0082-s047",
+    "shard-0082-s081",
+    "shard-0085-s133",
+    "shard-0085-s137",
+    "shard-0086-s006",
+    "shard-0086-s046",
+    "shard-0086-s078",
+    "shard-0086-s129"
+  ],
+  "source_shard_ids": [
+    "shard-0077",
+    "shard-0081",
+    "shard-0082",
+    "shard-0085",
+    "shard-0086"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0077-s096"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015351"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0077-s096"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L015351"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0081-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016024"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0081-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016024"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0081-s060"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016072"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0081-s060"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016072"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0081-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016107"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0081-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016107"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0081-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016140"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0081-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016140"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0081-s152"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016186"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0081-s152"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016186"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0082-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016227"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0082-s022"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016227"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0082-s047"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016259"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0082-s047"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016259"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0082-s081"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016300"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0082-s081"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016300"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-019",
+      "source_seed_ids": [
+        "shard-0085-s133"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016979"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-020",
+      "source_seed_ids": [
+        "shard-0085-s133"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016979"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-021",
+      "source_seed_ids": [
+        "shard-0085-s137"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016985"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-022",
+      "source_seed_ids": [
+        "shard-0085-s137"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L016985"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-023",
+      "source_seed_ids": [
+        "shard-0086-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017010"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-024",
+      "source_seed_ids": [
+        "shard-0086-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017010"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-025",
+      "source_seed_ids": [
+        "shard-0086-s046"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017063"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-026",
+      "source_seed_ids": [
+        "shard-0086-s046"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017063"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-027",
+      "source_seed_ids": [
+        "shard-0086-s078"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017116"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-028",
+      "source_seed_ids": [
+        "shard-0086-s078"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017116"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-029",
+      "source_seed_ids": [
+        "shard-0086-s129"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "`Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017176"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-030",
+      "source_seed_ids": [
+        "shard-0086-s129"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017176"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Plans/Section15_MVP_Promoted_Features_Spec.md`"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

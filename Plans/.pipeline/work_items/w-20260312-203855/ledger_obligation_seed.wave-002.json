@@ -1,20 +1,83 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_wave.v1",
+  "schema_id": "pm.ledger_obligation_seed_wave.v2",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-002",
-  "shard_ids": [
-    "shard-0005",
-    "shard-0006",
-    "shard-0007",
-    "shard-0008"
+  "subagent_tasks": [
+    {
+      "task_id": "extract-shard-0009",
+      "shard_id": "shard-0009",
+      "description": "Lineage-clamp extraction output for shard-0009"
+    },
+    {
+      "task_id": "extract-shard-0010",
+      "shard_id": "shard-0010",
+      "description": "Lineage-clamp extraction output for shard-0010"
+    },
+    {
+      "task_id": "extract-shard-0011",
+      "shard_id": "shard-0011",
+      "description": "Lineage-clamp extraction output for shard-0011"
+    },
+    {
+      "task_id": "extract-shard-0012",
+      "shard_id": "shard-0012",
+      "description": "Lineage-clamp extraction output for shard-0012"
+    },
+    {
+      "task_id": "extract-shard-0013",
+      "shard_id": "shard-0013",
+      "description": "Lineage-clamp extraction output for shard-0013"
+    },
+    {
+      "task_id": "extract-shard-0014",
+      "shard_id": "shard-0014",
+      "description": "Lineage-clamp extraction output for shard-0014"
+    },
+    {
+      "task_id": "extract-shard-0015",
+      "shard_id": "shard-0015",
+      "description": "Lineage-clamp extraction output for shard-0015"
+    },
+    {
+      "task_id": "extract-shard-0016",
+      "shard_id": "shard-0016",
+      "description": "Lineage-clamp extraction output for shard-0016"
+    }
   ],
-  "shard_result_files": [
-    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0005.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0006.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0007.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0008.json"
+  "assigned_input_boundaries": {
+    "shard_ids": [
+      "shard-0009",
+      "shard-0010",
+      "shard-0011",
+      "shard-0012",
+      "shard-0013",
+      "shard-0014",
+      "shard-0015",
+      "shard-0016"
+    ],
+    "manifest": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json"
+  },
+  "subagent_result_status": "complete",
+  "completed_task_count": 8,
+  "failed_task_count": 0,
+  "shard_ids_assigned": [
+    "shard-0009",
+    "shard-0010",
+    "shard-0011",
+    "shard-0012",
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0016"
   ],
-  "seed_candidates_total": 17,
-  "noise_items_total": 7,
-  "uncertain_items_total": 3
+  "shard_ids_completed": [
+    "shard-0009",
+    "shard-0010",
+    "shard-0011",
+    "shard-0012",
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0016"
+  ]
 }

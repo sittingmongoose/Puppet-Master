@@ -1,0 +1,259 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0172",
+  "represented_seed_ids": [
+    "shard-0021-s002"
+  ],
+  "source_shard_ids": [
+    "shard-0021"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0021-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "canonical name",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "canonical name"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0021-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "short definition",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "short definition"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0021-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "why it matters",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "why it matters"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0021-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "what it is not",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "what it is not"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0021-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "common related states/actions",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "common related states/actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0021-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "related concepts",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "related concepts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0021-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "canon_label": "surface examples / where you see it",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "surface examples / where you see it"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L004001"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0489",
+  "coverage_row_ids_represented": [
+    "cov-003288",
+    "cov-003289",
+    "cov-003290"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0489; path=Plans/Provider_OpenCode.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "heading": "## OpenCode thread_id Contract Bug"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003288",
+        "cov-003289",
+        "cov-003290"
+      ],
+      "source_obligation_ids": [
+        "obl-001570",
+        "obl-001571",
+        "obl-001572"
+      ],
+      "source_seed_ids": [
+        "shard-0039-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Provider_OpenCode.md maps canonical thread_id to OpenCode session ID \u2014 this is a contract bug",
+        "thread_id is a canonical conversation thread identity; OpenCode session ID is a transport artifact tied to a single process instance",
+        "These must be separate fields: canonical thread_id remains stable across reconnects; opencode_session_id is a per-connection transport artifact"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "thread_id (canonical, stable), opencode_session_id (per-connection transport)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0977",
+  "coverage_row_ids_represented": [
+    "cov-005972",
+    "cov-005973",
+    "cov-005974",
+    "cov-005975",
+    "cov-005976",
+    "cov-005977",
+    "cov-005978",
+    "cov-005979",
+    "cov-005980",
+    "cov-005981"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0977; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005972",
+        "cov-005973",
+        "cov-005974",
+        "cov-005975",
+        "cov-005976",
+        "cov-005977",
+        "cov-005978",
+        "cov-005979",
+        "cov-005980",
+        "cov-005981"
+      ],
+      "source_obligation_ids": [
+        "obl-002875",
+        "obl-002876",
+        "obl-002877",
+        "obl-002878",
+        "obl-002879",
+        "obl-002880",
+        "obl-002881",
+        "obl-002882",
+        "obl-002883",
+        "obl-002884"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s027",
+        "shard-0083-s028",
+        "shard-0083-s029",
+        "shard-0083-s030",
+        "shard-0083-s039",
+        "shard-0083-s040",
+        "shard-0083-s042"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "The doc still uses non-deterministic phrasing in owner-level gate text:",
+        "`Execution contract (recommended)`",
+        "Execution contract (recommended)",
+        "`targeted for future enforcement`",
+        "targeted for future enforcement",
+        "this weakens the deterministic posture expected from an owner gate doc",
+        "The gate doc enforces `ContractRef` rigor while violating the same `ContractRef` taxonomy in its own canonical text.",
+        "The routing and command-normalization model now depends on checks that `GATE-010` cannot express, which means the gate layer is behind the owner contract layer.",
+        "Reconciliation should normalize `Progression_Gates.md` as an owner doc, not just tidy examples:",
+        "Progression_Gates.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

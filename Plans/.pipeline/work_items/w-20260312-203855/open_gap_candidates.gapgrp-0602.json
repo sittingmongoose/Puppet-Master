@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0602",
+  "coverage_row_ids_represented": [
+    "cov-005487",
+    "cov-005488"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0602; path=Plans/UI_Command_Catalog.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005487",
+        "cov-005488"
+      ],
+      "source_obligation_ids": [
+        "obl-002398",
+        "obl-002399"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "reclassify worktree selection and thread Usage focus/open as navigation wrappers.",
+        "keep cmd.panel.switch pure shell-facing and move object targeting through routed wrappers or normalized route args."
+      ],
+      "stale_tokens": [
+        "cmd.source_control.select_worktree classified as layout/UI state only",
+        "cmd.chat.open_thread_usage classified as layout state only",
+        "cmd.chat.focus_thread_usage classified as layout state only"
+      ],
+      "canonical_replacement_hints": [
+        "command classification: shell_view, navigation_wrapper, or domain_action; worktree selection and thread usage focus as navigation_wrapper"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

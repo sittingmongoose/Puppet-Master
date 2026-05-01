@@ -1,0 +1,77 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0454",
+  "coverage_row_ids_represented": [
+    "cov-004190",
+    "cov-004191",
+    "cov-004192",
+    "cov-004193",
+    "cov-004194",
+    "cov-004199"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0454; path=Plans/Progression_Gates.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Progression_Gates.md",
+          "heading": "## Evidence Schema"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004190",
+        "cov-004191",
+        "cov-004192",
+        "cov-004193",
+        "cov-004194",
+        "cov-004199"
+      ],
+      "source_obligation_ids": [
+        "obl-001975",
+        "obl-001976",
+        "obl-001977",
+        "obl-001978",
+        "obl-001979",
+        "obl-001984"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0049",
+        "seed-WAVE006-0077",
+        "shard-0082-s133"
+      ],
+      "source_shard_ids": [
+        "shard-0056",
+        "shard-0058",
+        "shard-0082"
+      ],
+      "exact_missing_items": [
+        "Plans/evidence.schema.json only gives a generic checks[] array with name, result, details, and optional contract_refs. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text",
+        "Either extend Plans/evidence.schema.json with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results",
+        "Align GATE-010 with the machine-readable-detail pattern already used by GATE-011 / GATE-012 instead of relying on text-heavy details",
+        "run-gates script has no numbered gate mapping \u2014 it cannot associate a gate label (GATE-001 through GATE-015) with an executable check",
+        "The gate registry in Progression_Gates.md must export a machine-readable numbered mapping that run-gates can import",
+        "7"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0394",
+  "coverage_row_ids_represented": [
+    "cov-001440",
+    "cov-001441",
+    "cov-001442",
+    "cov-001443",
+    "cov-001444",
+    "cov-001445",
+    "cov-001446",
+    "cov-001447",
+    "cov-001448",
+    "cov-001449"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0394; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Ledger Tab Scale Policy"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001440",
+        "cov-001441",
+        "cov-001442",
+        "cov-001443",
+        "cov-001444",
+        "cov-001445",
+        "cov-001446",
+        "cov-001447",
+        "cov-001448",
+        "cov-001449"
+      ],
+      "source_obligation_ids": [
+        "obl-000628",
+        "obl-000629",
+        "obl-000630",
+        "obl-000631",
+        "obl-000632",
+        "obl-000633",
+        "obl-000634",
+        "obl-000635",
+        "obl-000636",
+        "obl-000637"
+      ],
+      "source_seed_ids": [
+        "shard-0023-s009",
+        "shard-0024-s011",
+        "shard-0027-s008",
+        "shard-0028-s006",
+        "shard-0029-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0023",
+        "shard-0024",
+        "shard-0027",
+        "shard-0028",
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "filtered query + paging + stable sort are required",
+        "export can retrieve more than the viewport, but normal browsing should stay slice-based",
+        "low-risk read-only inspection: allowed on refreshing, often stale, sometimes degraded",
+        "precise navigation/deep-linking: usually allowed if target object identity still valid",
+        "live mutation/approval/recovery/retry/cleanup: require current or direct canonical-runtime validation path",
+        "record export: concern, promotion, corroboration result, graph patch request/result, recovery record, exact ledger slice",
+        "bundle export: run evidence bundle, selected-object bundle, historical run package with manifest",
+        "view export: filtered ledger CSV/JSON, filtered concerns table, search results export, graph image/render",
+        "a canonical blocked event can still drive notification even if some projection surfaces are degraded",
+        "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

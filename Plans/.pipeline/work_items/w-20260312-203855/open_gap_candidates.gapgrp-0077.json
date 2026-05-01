@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0077",
+  "coverage_row_ids_represented": [
+    "cov-003408",
+    "cov-003413",
+    "cov-003418",
+    "cov-003527",
+    "cov-003529",
+    "cov-003531",
+    "cov-003533",
+    "cov-003535",
+    "cov-003591",
+    "cov-003597"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0077; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Wave-004 Identity Closure Checklist"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003408",
+        "cov-003413",
+        "cov-003418",
+        "cov-003527",
+        "cov-003529",
+        "cov-003531",
+        "cov-003533",
+        "cov-003535",
+        "cov-003591",
+        "cov-003597"
+      ],
+      "source_obligation_ids": [
+        "obl-001615",
+        "obl-001616",
+        "obl-001617",
+        "obl-001683",
+        "obl-001684",
+        "obl-001685",
+        "obl-001686",
+        "obl-001687",
+        "obl-001704",
+        "obl-001705"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0013",
+        "seed-WAVE005-0018",
+        "shard-0040-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0042",
+        "shard-0043"
+      ],
+      "exact_missing_items": [
+        "8. OperationalIdentity block present in run.started, receipts, usage events, concern records",
+        "9. UsageRecord account_switch_reason? + switch_event_ref? in usage-feature.md",
+        "10. blocked/degraded reason field pairs in Contracts_V0.md effective-resolution record",
+        "Tools.md still needs richer event payloads, reconciled outcome taxonomy, and DAE tool-event reconstruction",
+        "tool.invoked / tool.denied still omit node/attempt/actor/account context",
+        "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy",
+        "mutation_capable is declared as authoritative but still barely integrated into schema/event/policy surfaces",
+        "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes",
+        "Make storage-plan.md the owner of generic projection freshness/health projection fields",
+        "Contracts_V0.md should own cross-cutting persisted-envelope field families and stable event names"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

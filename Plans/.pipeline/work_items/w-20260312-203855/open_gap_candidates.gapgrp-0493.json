@@ -1,0 +1,74 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0493",
+  "coverage_row_ids_represented": [
+    "cov-003112",
+    "cov-003116",
+    "cov-003120",
+    "cov-003184",
+    "cov-003185"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0493; path=Plans/Provider_Stream_Mapping_External_Reference_A2A.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "heading": "## actor_kind Enum Definition Gap"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003112",
+        "cov-003116",
+        "cov-003120",
+        "cov-003184",
+        "cov-003185"
+      ],
+      "source_obligation_ids": [
+        "obl-001451",
+        "obl-001452",
+        "obl-001453",
+        "obl-001484",
+        "obl-001485"
+      ],
+      "source_seed_ids": [
+        "shard-0037-s005",
+        "shard-0038-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "actor_kind and execution_role are missing from all runtime records, usage schemas, and stream-level events",
+        "both fields are required to support role-by-provider and role-by-account overrides, permission scoping, and governance-grade actor attribution",
+        "no canonical enum definition for actor_kind or execution_role exists in any planning doc",
+        "Overseer audit protocol in A2A doc must be superseded: rewrite \u00a79 to describe the dual-overseer / corroboration model, remove singular-Overseer language, add minority_advisory outcome category",
+        "\u00a79 rewrite must reference the canonical corroboration record family, overseer quorum rules, and audit receipt shape"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "actor_kind",
+        "execution_role"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0436",
+  "represented_seed_ids": [
+    "seed-WAVE006-0074"
+  ],
+  "source_shard_ids": [
+    "shard-0058"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0074"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "resume_url is currently positioned as a canonical route-target contract field, but its semantics are transport-layer (serialized URL) not application-layer (structured route model)",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "resume_url is currently positioned as a canonical route-target contract field, but its semantics are transport-layer (serialized URL) not application-layer (structured route model)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## resume_url"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011430-L011440"
+      ],
+      "notes": [
+        "resume_url is an architecture inversion: it treats serialized URL as the canonical model rather than as a serialized transport of a structured route_target. The contract must explicitly demote resume_url to transport-only."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0074"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "canon_label": "resume_url must be demoted to a transport-only serialized form; the canonical route model must be the structured route_target contract",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "resume_url must be demoted to a transport-only serialized form; the canonical route model must be the structured route_target contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## resume_url"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L011430-L011440"
+      ],
+      "notes": [
+        "resume_url is an architecture inversion: it treats serialized URL as the canonical model rather than as a serialized transport of a structured route_target. The contract must explicitly demote resume_url to transport-only."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

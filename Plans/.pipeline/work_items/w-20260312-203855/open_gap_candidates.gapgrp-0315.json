@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0315",
+  "coverage_row_ids_represented": [
+    "cov-001640",
+    "cov-002564",
+    "cov-002567",
+    "cov-003372",
+    "cov-003377",
+    "cov-003382",
+    "cov-003387",
+    "cov-003392",
+    "cov-003397",
+    "cov-003402"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0315; path=Plans/Models_System.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "## Worker Policy Display"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001640",
+        "cov-002564",
+        "cov-002567",
+        "cov-003372",
+        "cov-003377",
+        "cov-003382",
+        "cov-003387",
+        "cov-003392",
+        "cov-003397",
+        "cov-003402"
+      ],
+      "source_obligation_ids": [
+        "obl-000724",
+        "obl-001245",
+        "obl-001246",
+        "obl-001607",
+        "obl-001608",
+        "obl-001609",
+        "obl-001610",
+        "obl-001611",
+        "obl-001612",
+        "obl-001613"
+      ],
+      "source_seed_ids": [
+        "shard-0019-s005",
+        "shard-0033-s007",
+        "shard-0040-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0033",
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Worker policy needs the same source/requested/effective/reason display treatment: source (project/package/node override source), requested (subagent, fresh_worker), effective (what runtime actually used), reason (why it changed if it changed)",
+        "FinalGUISpec.md, Personas.md, and Models_System.md consistently require dual copy variants for tooltips/help strings: Expert vs ELI5",
+        "this is a copy-depth system, not yet a concept-governance system",
+        "Wave-004 identity closure checklist \u2014 each item must be tracked to a doc owner:",
+        "1. operational_identity block anchored in Contracts_V0.md",
+        "2. requested_account_binding (none/preferred/required) defined in Contracts_V0.md + Multi-Account.md",
+        "3. manual_preferred_account_id vs requested_account_id distinction in Multi-Account.md",
+        "4. account_switch_event + account_pressure_episode in storage-plan.md + Contracts_V0.md",
+        "5. reconciliation-readiness criteria list in Contracts_V0.md + Multi-Account.md",
+        "6. actor_kind + execution_role enums in Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

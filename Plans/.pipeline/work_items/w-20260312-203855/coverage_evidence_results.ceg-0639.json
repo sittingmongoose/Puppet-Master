@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0639",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-001060",
+      "source_obligation_ids": [
+        "obl-000446"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001064",
+      "source_obligation_ids": [
+        "obl-000447"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001067",
+      "source_obligation_ids": [
+        "obl-000448"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001070",
+      "source_obligation_ids": [
+        "obl-000449"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001073",
+      "source_obligation_ids": [
+        "obl-000450"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001076",
+      "source_obligation_ids": [
+        "obl-000451"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001077",
+      "source_obligation_ids": [
+        "obl-000452"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001079",
+      "source_obligation_ids": [
+        "obl-000453"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001081",
+      "source_obligation_ids": [
+        "obl-000454"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001083",
+      "source_obligation_ids": [
+        "obl-000455"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/WorktreeGitImprovement.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

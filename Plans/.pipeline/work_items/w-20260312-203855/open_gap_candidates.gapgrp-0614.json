@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0614",
+  "coverage_row_ids_represented": [
+    "cov-002193",
+    "cov-002195",
+    "cov-002197",
+    "cov-002199",
+    "cov-002201",
+    "cov-002203",
+    "cov-002205",
+    "cov-002207",
+    "cov-002209",
+    "cov-002211"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0614; path=Plans/UI_Wiring_Rules.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "heading": "## Object-Kind Vocabulary for Routing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002193",
+        "cov-002195",
+        "cov-002197",
+        "cov-002199",
+        "cov-002201",
+        "cov-002203",
+        "cov-002205",
+        "cov-002207",
+        "cov-002209",
+        "cov-002211"
+      ],
+      "source_obligation_ids": [
+        "obl-001103",
+        "obl-001104",
+        "obl-001105",
+        "obl-001106",
+        "obl-001107",
+        "obl-001108",
+        "obl-001109",
+        "obl-001110",
+        "obl-001111",
+        "obl-001112"
+      ],
+      "source_seed_ids": [
+        "shard-0029-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "node",
+        "lane",
+        "worktree",
+        "concern",
+        "promotion",
+        "review",
+        "corroboration",
+        "graph_patch",
+        "recovery_record",
+        "blocked_episode"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

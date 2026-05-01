@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0838",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-000882",
+      "source_obligation_ids": [
+        "obl-000380"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-003709",
+      "source_obligation_ids": [
+        "obl-001738"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0028"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-003713",
+      "source_obligation_ids": [
+        "obl-001739"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0028"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-003717",
+      "source_obligation_ids": [
+        "obl-001740"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0028"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004210",
+      "source_obligation_ids": [
+        "obl-001992"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0022"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004444",
+      "source_obligation_ids": [
+        "obl-002121"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0084"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-004445",
+      "source_obligation_ids": [
+        "obl-002122"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0084"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-004477",
+      "source_obligation_ids": [
+        "obl-002143"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0094"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-004479",
+      "source_obligation_ids": [
+        "obl-002144"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0094"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-004678",
+      "source_obligation_ids": [
+        "obl-002188"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/storage-plan.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/storage-plan.md:L1-L400:stale_tokens_absent"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

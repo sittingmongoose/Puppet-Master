@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0513",
+  "coverage_row_ids_represented": [
+    "cov-003568",
+    "cov-003575",
+    "cov-003582",
+    "cov-003589",
+    "cov-005088",
+    "cov-005096",
+    "cov-005104",
+    "cov-005112",
+    "cov-005120"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0513; path=Plans/Run_Graph_View.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003568",
+        "cov-003575",
+        "cov-003582",
+        "cov-003589",
+        "cov-005088",
+        "cov-005096",
+        "cov-005104",
+        "cov-005112",
+        "cov-005120"
+      ],
+      "source_obligation_ids": [
+        "obl-001700",
+        "obl-001701",
+        "obl-001702",
+        "obl-001703",
+        "obl-002269",
+        "obl-002270",
+        "obl-002271",
+        "obl-002272",
+        "obl-002273"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0017",
+        "seed-WAVE007-0041"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "Reserve trust_tier for preview/browser semantics only unless those docs are later explicitly renamed too",
+        "Make Glossary.md own the canonical term meanings for projection freshness and projection health",
+        "Let surface docs consume those terms instead of inventing local stale/degraded wording",
+        "Keep action gating rules tied to both axes: stale-but-healthy may allow read-only use with warning; degraded or unavailable should gate mutating actions much more aggressively",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`.",
+        "The canonical `object_kind` set: conversational/upstream: `thread`, `message`, `wizard`, `usage_event`; runtime/execution: `run`, `node`, `attempt`, `scheduler_pass`, `blocked_episode`, `safe_point`, `remediation`; orchestration rewrite: `feature_seam`, `work_package`, `lane`, `worktree`, `concern`, `promotion`, `graph_patch`, `graph_generation`",
+        "`object_id` must use existing canonical ids: `thread_id`, `message_id`, `wizard_id`, `run_id`, `attempt_id`, `scheduler_pass_id`, `blocked_sequence` in `{ run_id, node_id }` scope, `safe_point_id`, `remediation_root_id`, `lane_id`, `worktree_id`, concern/promotion/graph-patch/graph-generation ids when defined",
+        "`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+        "If new object families appear, they must be added deliberately, not ad hoc in surface docs."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "projection_freshness",
+        "projection_health",
+        "last_projected_at_utc",
+        "degraded_reason_code?",
+        "refresh_in_progress?"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0691",
+  "coverage_row_ids_represented": [
+    "cov-005114",
+    "cov-005122",
+    "cov-005185",
+    "cov-005192",
+    "cov-005199",
+    "cov-005206",
+    "cov-005213",
+    "cov-005220",
+    "cov-005227"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0691; path=Plans/assistant-chat-design.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## object_kind Canonical Enum"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005114",
+        "cov-005122",
+        "cov-005185",
+        "cov-005192",
+        "cov-005199",
+        "cov-005206",
+        "cov-005213",
+        "cov-005220",
+        "cov-005227"
+      ],
+      "source_obligation_ids": [
+        "obl-002272",
+        "obl-002273",
+        "obl-002285",
+        "obl-002286",
+        "obl-002287",
+        "obl-002288",
+        "obl-002289",
+        "obl-002290",
+        "obl-002291"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0041",
+        "seed-WAVE007-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+        "If new object families appear, they must be added deliberately, not ad hoc in surface docs.",
+        "Use `subject_id` only when the target is canonical renderable/openable content.",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects.",
+        "The canonical `subject_id` families remain: `doc:<document_id>`; `artifact:<artifact_id>`",
+        "Everything else routes through `object_kind` + `object_id`.",
+        "Put the classification rule directly in `Contracts_V0.md`.",
+        "Keep `subject_id` frozen to the two canonical families until a new cross-surface content identity proves necessary.",
+        "`subject_id` is not a second generic object taxonomy. If `subject_id` expands carelessly, the whole routing model becomes muddy again."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "object_kind = node | attempt | scheduler_pass | blocked_episode for tier-era pivots"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

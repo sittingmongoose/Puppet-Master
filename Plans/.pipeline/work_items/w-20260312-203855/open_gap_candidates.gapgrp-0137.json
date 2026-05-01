@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0137",
+  "coverage_row_ids_represented": [
+    "cov-005101",
+    "cov-005109",
+    "cov-005117",
+    "cov-005180",
+    "cov-005187",
+    "cov-005194",
+    "cov-005201",
+    "cov-005208",
+    "cov-005215",
+    "cov-005222"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0137; path=Plans/Crosswalk.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "## object_id Normalization Rules"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005101",
+        "cov-005109",
+        "cov-005117",
+        "cov-005180",
+        "cov-005187",
+        "cov-005194",
+        "cov-005201",
+        "cov-005208",
+        "cov-005215",
+        "cov-005222"
+      ],
+      "source_obligation_ids": [
+        "obl-002271",
+        "obl-002272",
+        "obl-002273",
+        "obl-002285",
+        "obl-002286",
+        "obl-002287",
+        "obl-002288",
+        "obl-002289",
+        "obl-002290",
+        "obl-002291"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0041",
+        "seed-WAVE007-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "`object_id` must use existing canonical ids: `thread_id`, `message_id`, `wizard_id`, `run_id`, `attempt_id`, `scheduler_pass_id`, `blocked_sequence` in `{ run_id, node_id }` scope, `safe_point_id`, `remediation_root_id`, `lane_id`, `worktree_id`, concern/promotion/graph-patch/graph-generation ids when defined",
+        "`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+        "If new object families appear, they must be added deliberately, not ad hoc in surface docs.",
+        "Use `subject_id` only when the target is canonical renderable/openable content.",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects.",
+        "The canonical `subject_id` families remain: `doc:<document_id>`; `artifact:<artifact_id>`",
+        "Everything else routes through `object_kind` + `object_id`.",
+        "Put the classification rule directly in `Contracts_V0.md`.",
+        "Keep `subject_id` frozen to the two canonical families until a new cross-surface content identity proves necessary.",
+        "`subject_id` is not a second generic object taxonomy. If `subject_id` expands carelessly, the whole routing model becomes muddy again."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "object_kind = node | attempt | scheduler_pass | blocked_episode for tier-era pivots"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

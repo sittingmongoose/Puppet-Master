@@ -1,0 +1,702 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0571",
+  "represented_seed_ids": [
+    "shard-0087-s049",
+    "shard-0087-s051",
+    "shard-0087-s053",
+    "shard-0087-s055",
+    "shard-0087-s057",
+    "shard-0087-s059",
+    "shard-0087-s061",
+    "shard-0087-s064",
+    "shard-0087-s065",
+    "shard-0087-s066",
+    "shard-0087-s067",
+    "shard-0087-s068",
+    "shard-0087-s070",
+    "shard-0087-s071",
+    "shard-0087-s073"
+  ],
+  "source_shard_ids": [
+    "shard-0087"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0087-s049"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`OpenSubject` landed, but runtime-lineage subject families and fuller OpenFile/OpenSubject governance remained partial.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`OpenSubject` landed, but runtime-lineage subject families and fuller OpenFile/OpenSubject governance remained partial."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017284"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `OpenSubject` landed, but runtime-lineage subject families and fuller OpenFile/OpenSubject"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0087-s049"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "OpenSubject",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "OpenSubject"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017284"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `OpenSubject` landed, but runtime-lineage subject families and fuller OpenFile/OpenSubject"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0087-s051"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Route-aware schema/gate/evidence extensions remain incomplete relative to the ledger's normalized routing model.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Route-aware schema/gate/evidence extensions remain incomplete relative to the ledger's normalized routing model."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017286"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Route-aware schema/gate/evidence extensions remain incomplete relative to the ledger's nor"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0087-s053"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Still preserve `resume_url` as a primary routing primitive in places that should treat it as derived transport only.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Still preserve `resume_url` as a primary routing primitive in places that should treat it as derived transport only."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017288"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Still preserve `resume_url` as a primary routing primitive in places that should treat it "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0087-s053"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "resume_url",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "resume_url"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017288"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Still preserve `resume_url` as a primary routing primitive in places that should treat it "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0087-s055"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Missing full lane/worktree lifecycle vocabularies, cleanup semantics, gating checks, and transition rules.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Missing full lane/worktree lifecycle vocabularies, cleanup semantics, gating checks, and transition rules."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017292"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Missing full lane/worktree lifecycle vocabularies, cleanup semantics, gating checks, and t"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0087-s057"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminology transfer.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminology transfer."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017294"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminolog"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0087-s057"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Orchestrator rewrite terms",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Orchestrator rewrite terms"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017294"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminolog"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0087-s059"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017296"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Missing help-entry template, related-concept linking, and distinction rules for high-risk "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0087-s061"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Older request/tier-era canon still coexists with newer blocked-runtime canon.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Older request/tier-era canon still coexists with newer blocked-runtime canon."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017300"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Older request/tier-era canon still coexists with newer blocked-runtime canon."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0087-s064"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017308"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: owner-doc primitive boundaries that remain prose-only rather than formalized (for example "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "shard-0087-s065"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "evidence/gate schemas that cannot yet structurally prove the richer routing/normalization behavior",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "evidence/gate schemas that cannot yet structurally prove the richer routing/normalization behavior"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017309"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: evidence/gate schemas that cannot yet structurally prove the richer routing/normalization "
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-013",
+      "source_seed_ids": [
+        "shard-0087-s066"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "cases where a doc implies a stronger shared contract should exist but does not clearly own it",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "cases where a doc implies a stronger shared contract should exist but does not clearly own it"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017310"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: cases where a doc implies a stronger shared contract should exist but does not clearly own"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-014",
+      "source_seed_ids": [
+        "shard-0087-s067"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017311"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: These should be treated as **secondary** findings behind the ledger-backed missed-transfer"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-015",
+      "source_seed_ids": [
+        "shard-0087-s068"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Do **not** treat these as missing transfer:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Do **not** treat these as missing transfer:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017314"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Do **not** treat these as missing transfer:"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-016",
+      "source_seed_ids": [
+        "shard-0087-s070"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`requested_account_id`, `requested_account_binding`, and `operational_identity` are not wholly absent from the current plan set.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`requested_account_id`, `requested_account_binding`, and `operational_identity` are not wholly absent from the current plan set."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017316"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `requested_account_id`, `requested_account_binding`, and `operational_identity` are not wh"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-017",
+      "source_seed_ids": [
+        "shard-0087-s070"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "requested_account_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested_account_id"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017316"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `requested_account_id`, `requested_account_binding`, and `operational_identity` are not wh"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-018",
+      "source_seed_ids": [
+        "shard-0087-s070"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "requested_account_binding",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested_account_binding"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017316"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `requested_account_id`, `requested_account_binding`, and `operational_identity` are not wh"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-019",
+      "source_seed_ids": [
+        "shard-0087-s070"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "operational_identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "operational_identity"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017316"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `requested_account_id`, `requested_account_binding`, and `operational_identity` are not wh"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-020",
+      "source_seed_ids": [
+        "shard-0087-s071"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "`account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missing transfer is the schema/detail layer.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missing transfer is the schema/detail layer."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017317"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `account_pressure_episode` and `account_switch_event` key families already exist as regist"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-021",
+      "source_seed_ids": [
+        "shard-0087-s071"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "account_pressure_episode",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "account_pressure_episode"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017317"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `account_pressure_episode` and `account_switch_event` key families already exist as regist"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-022",
+      "source_seed_ids": [
+        "shard-0087-s071"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "account_switch_event",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "account_switch_event"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017317"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: `account_pressure_episode` and `account_switch_event` key families already exist as regist"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-023",
+      "source_seed_ids": [
+        "shard-0087-s073"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L017319"
+      ],
+      "notes": [
+        "Extracted from generated ledger shard line containing obligation-grade evidence.",
+        "canon_label_hint: Route/open auditing must stay focused on **refinement omissions**, not on re-claiming abse"
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

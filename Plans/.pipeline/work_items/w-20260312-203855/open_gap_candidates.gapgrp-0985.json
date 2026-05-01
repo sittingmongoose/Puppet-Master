@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0985",
+  "coverage_row_ids_represented": [
+    "cov-006052",
+    "cov-006053",
+    "cov-006054",
+    "cov-006055",
+    "cov-006056",
+    "cov-006057",
+    "cov-006058",
+    "cov-006059",
+    "cov-006060",
+    "cov-006061"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0985; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006052",
+        "cov-006053",
+        "cov-006054",
+        "cov-006055",
+        "cov-006056",
+        "cov-006057",
+        "cov-006058",
+        "cov-006059",
+        "cov-006060",
+        "cov-006061"
+      ],
+      "source_obligation_ids": [
+        "obl-002955",
+        "obl-002956",
+        "obl-002957",
+        "obl-002958",
+        "obl-002959",
+        "obl-002960",
+        "obl-002961",
+        "obl-002962",
+        "obl-002963",
+        "obl-002964"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s015",
+        "shard-0084-s017",
+        "shard-0084-s020",
+        "shard-0084-s029",
+        "shard-0084-s032",
+        "shard-0084-s034",
+        "shard-0084-s035"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "The doc is already ahead on identity in some places:",
+        "`orchestrator.receipt.{run_id}.{attempt_id}` is attempt-native",
+        "orchestrator.receipt.{run_id}.{attempt_id}",
+        "no first-class `worktree_record` / `lane_record` family even though Orchestrator and Source Control now depend on durable lane/worktree lifecycle",
+        "worktree_record",
+        "lane_record",
+        "Storage already has the stronger blocked and attempt identities, but still preserves tier-era keys as peer canonical records.",
+        "Reconciliation should normalize `storage-plan.md` around:",
+        "subject-first restore identity",
+        "`tier_runtime_record`, tier-keyed `usage_record`, and tier-keyed `evidence_record` need owner-level demotion or replacement."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

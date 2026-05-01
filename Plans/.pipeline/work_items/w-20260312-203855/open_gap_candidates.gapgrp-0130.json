@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0130",
+  "coverage_row_ids_represented": [
+    "cov-000333",
+    "cov-004530",
+    "cov-004535",
+    "cov-004540",
+    "cov-004569",
+    "cov-004575",
+    "cov-004581",
+    "cov-004587",
+    "cov-004593",
+    "cov-004597"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0130; path=Plans/Crosswalk.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "## Canonical Labels"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000333",
+        "cov-004530",
+        "cov-004535",
+        "cov-004540",
+        "cov-004569",
+        "cov-004575",
+        "cov-004581",
+        "cov-004587",
+        "cov-004593",
+        "cov-004597"
+      ],
+      "source_obligation_ids": [
+        "obl-000152",
+        "obl-002158",
+        "obl-002159",
+        "obl-002160",
+        "obl-002171",
+        "obl-002172",
+        "obl-002173",
+        "obl-002174",
+        "obl-002175",
+        "obl-002176"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0006",
+        "seed-WAVE007-0014",
+        "seed-WAVE007-0015",
+        "shard-0001-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0062",
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "Canonical entity labels must be: 'Seams' (tab), 'Feature Seam' (entity), 'Work Package' (entity), 'Package Overseer' (actor), 'Seam Overseer' (actor)",
+        "existing user-facing wrapper commands may remain; their payload semantics should normalize through `route_target` / `OpenSubject`; older payload shapes can be accepted during migration; new producers/docs should emit the canonical normalized target model",
+        "new docs/producers MUST prefer canonical route-target forms; consumers MAY accept older wrapper-local payloads during migration; migration aliases MUST NOT become permanent parallel canon",
+        "Reuse the event-alias and recovery-command migration style as the template for navigation normalization.",
+        "Define `resume_url` as a serialized route-target transport in the contract layer once `route_target` exists.",
+        "Keep serialized forms intentionally narrower than the full internal object.",
+        "Let object families define only the extra anchor material truly needed for recovery or exact resume.",
+        "Decode all supported deep-link forms into the same internal routing path rather than handling URL activation as a separate system.",
+        "The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.",
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

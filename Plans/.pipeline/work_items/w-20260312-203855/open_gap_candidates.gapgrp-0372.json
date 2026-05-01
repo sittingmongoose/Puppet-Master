@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0372",
+  "coverage_row_ids_represented": [
+    "cov-000273",
+    "cov-000275",
+    "cov-000279",
+    "cov-000281",
+    "cov-000284",
+    "cov-000289",
+    "cov-000291",
+    "cov-000293",
+    "cov-000295",
+    "cov-000297"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0372; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Allowed Hosts"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000273",
+        "cov-000275",
+        "cov-000279",
+        "cov-000281",
+        "cov-000284",
+        "cov-000289",
+        "cov-000291",
+        "cov-000293",
+        "cov-000295",
+        "cov-000297"
+      ],
+      "source_obligation_ids": [
+        "obl-000127",
+        "obl-000128",
+        "obl-000130",
+        "obl-000131",
+        "obl-000133",
+        "obl-000135",
+        "obl-000136",
+        "obl-000137",
+        "obl-000138",
+        "obl-000139"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s005",
+        "shard-0012-s007",
+        "shard-0023-s010",
+        "shard-0034-s002",
+        "shard-0034-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0023",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widgets are not the composition model for: Orchestrator / Seams, Orchestrator / Node Graph, Orchestrator / Evidence, Orchestrator / History, Orchestrator / Ledger",
+        "only Progress should behave like a widget canvas on the Orchestrator page",
+        "widgets must not define meaning by subscribing directly to legacy event names or tier-specific objects",
+        "distinguish page/tab filters from widget presentation config",
+        "widgets should consume compact projections, not live-scan huge record sets per widget",
+        "the current widget contract mixes three different things that now need to stay separate: page layout persistence, widget-local presentation config, semantic scope/filter state",
+        "For Orchestrator specifically, semantic scope cannot be widget-owned",
+        "page/run context such as project_id, focused_run_id, historical-run mode, and object focus belong to the page/router state",
+        "widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope",
+        "Progress widgets must render against the current focused_run_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

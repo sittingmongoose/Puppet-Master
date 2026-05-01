@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0678",
+  "coverage_row_ids_represented": [
+    "cov-004261",
+    "cov-004263",
+    "cov-004265",
+    "cov-004267"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0678; path=Plans/assistant-chat-design.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Overlay vs Runtime Mode"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004261",
+        "cov-004263",
+        "cov-004265",
+        "cov-004267"
+      ],
+      "source_obligation_ids": [
+        "obl-002028",
+        "obl-002029",
+        "obl-002030",
+        "obl-002031"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0036",
+        "seed-WAVE006-0055"
+      ],
+      "source_shard_ids": [
+        "shard-0055",
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "/mode is now clearly overloaded across runtime-mode vs overlay semantics while the docs still expose only a single { mode } payload",
+        "reconcile /compact, /mode, override_builtin semantics, and stale/superseded command-state handling",
+        "/mode is overloaded across both execution-mode switching and UI overlay semantics with a single undifferentiated { mode } payload",
+        "The ambiguity persists in Commands_System.md and the chat design doc, forcing consumers to infer scope from context rather than a structural type discriminator"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

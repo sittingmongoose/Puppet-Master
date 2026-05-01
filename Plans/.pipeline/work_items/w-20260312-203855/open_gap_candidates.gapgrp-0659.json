@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0659",
+  "coverage_row_ids_represented": [
+    "cov-002590",
+    "cov-002593",
+    "cov-002596",
+    "cov-002784",
+    "cov-002786",
+    "cov-002788",
+    "cov-003689",
+    "cov-003693",
+    "cov-003697",
+    "cov-003701"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0659; path=Plans/WorktreeGitImprovement.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002590",
+        "cov-002593",
+        "cov-002596",
+        "cov-002784",
+        "cov-002786",
+        "cov-002788",
+        "cov-003689",
+        "cov-003693",
+        "cov-003697",
+        "cov-003701"
+      ],
+      "source_obligation_ids": [
+        "obl-001253",
+        "obl-001254",
+        "obl-001255",
+        "obl-001316",
+        "obl-001317",
+        "obl-001318",
+        "obl-001731",
+        "obl-001732",
+        "obl-001733",
+        "obl-001734"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0026",
+        "shard-0033-s011",
+        "shard-0035-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0035",
+        "shard-0044"
+      ],
+      "exact_missing_items": [
+        "History and Ledger especially need precise help because they are easy to collapse into one generic past activity concept",
+        "lane and worktree need asymmetric help across surfaces: Orchestrator emphasizes lane as operational object; Source Control emphasizes worktree as concrete Git object",
+        "legacy tier wording still present in docs is now both a data-model risk and a user-copy/help migration risk",
+        "Widget_System.md still splits terminal widgets between widget.terminal_output and widget.agent_terminal",
+        "Orchestrator-owned worktree partitioning still exists only as row metadata (owner run/tier) in Source Control docs, not as a canonical grouping/partition contract",
+        "widget layouts still need project-scoped keys rather than implicit global layouts for project-heavy surfaces",
+        "Consolidate Executor_Protocol.md addenda and add package/seam/corroboration/concern hooks",
+        "Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking",
+        "Replace or wrap TierContext with a node-native execution context carrying full canonical runtime identity",
+        "Add explicit CUP governance and handoff fields (execution_role, requested/effective account, isolation/worktree mode) to wizard docs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

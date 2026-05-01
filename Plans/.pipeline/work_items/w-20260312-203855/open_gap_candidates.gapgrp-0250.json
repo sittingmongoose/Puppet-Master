@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0250",
+  "coverage_row_ids_represented": [
+    "cov-005069",
+    "cov-005073",
+    "cov-005077",
+    "cov-005081",
+    "cov-005182",
+    "cov-005189",
+    "cov-005196",
+    "cov-005203",
+    "cov-005210",
+    "cov-005217"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0250; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Serialized Transport vs Canonical Identity"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005069",
+        "cov-005073",
+        "cov-005077",
+        "cov-005081",
+        "cov-005182",
+        "cov-005189",
+        "cov-005196",
+        "cov-005203",
+        "cov-005210",
+        "cov-005217"
+      ],
+      "source_obligation_ids": [
+        "obl-002265",
+        "obl-002266",
+        "obl-002267",
+        "obl-002268",
+        "obl-002285",
+        "obl-002286",
+        "obl-002287",
+        "obl-002288",
+        "obl-002289",
+        "obl-002290"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0040",
+        "seed-WAVE007-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0068",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "The serialized form does not carry: shell layout state; panel widths; widget state; broad filter state; provider/account disclosure data",
+        "`resume_url` decodes into `route_target`. `resume_url` does not define a second routing ontology.",
+        "Good serialized fields: `project_id`; `subject_id` or `object_kind` + `object_id`; `thread_id` when thread scope is required; `focused_run_id` when run scope is required; narrow anchor detail such as wizard-step focus when the workflow requires exact resumption",
+        "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`. State the allowed serialized data classes directly.",
+        "Use `subject_id` only when the target is canonical renderable/openable content.",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects.",
+        "The canonical `subject_id` families remain: `doc:<document_id>`; `artifact:<artifact_id>`",
+        "Everything else routes through `object_kind` + `object_id`.",
+        "Put the classification rule directly in `Contracts_V0.md`.",
+        "Keep `subject_id` frozen to the two canonical families until a new cross-surface content identity proves necessary."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md route_target contract"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

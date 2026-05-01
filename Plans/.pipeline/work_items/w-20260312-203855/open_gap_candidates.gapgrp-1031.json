@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1031",
+  "coverage_row_ids_represented": [
+    "cov-007689",
+    "cov-007690",
+    "cov-007691",
+    "cov-007692",
+    "cov-007693",
+    "cov-007694",
+    "cov-007695",
+    "cov-007705",
+    "cov-007706",
+    "cov-007707"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1031; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-007689",
+        "cov-007690",
+        "cov-007691",
+        "cov-007692",
+        "cov-007693",
+        "cov-007694",
+        "cov-007695",
+        "cov-007705",
+        "cov-007706",
+        "cov-007707"
+      ],
+      "source_obligation_ids": [
+        "obl-004271",
+        "obl-004272",
+        "obl-004273",
+        "obl-004274",
+        "obl-004275",
+        "obl-004276",
+        "obl-004277",
+        "obl-004287",
+        "obl-004288",
+        "obl-004289"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s089",
+        "shard-0088-s125"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "restore points",
+        "TierContext",
+        "tier_id",
+        "result_id",
+        "artifact_kind",
+        "task_id",
+        "{ tool_name, invocation_summary, options }",
+        "`gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+        "gap-005"
+      ],
+      "stale_tokens": [
+        "No remaining gaps",
+        "TierContext",
+        "artifact_kind",
+        "restore points",
+        "result_id",
+        "task_id",
+        "tier_id",
+        "{ tool_name, invocation_summary, options }",
+        "gap-005"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

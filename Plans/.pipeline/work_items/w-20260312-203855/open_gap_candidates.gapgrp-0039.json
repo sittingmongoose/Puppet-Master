@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0039",
+  "coverage_row_ids_represented": [
+    "cov-002313",
+    "cov-002315",
+    "cov-002317",
+    "cov-002319",
+    "cov-002321",
+    "cov-002323",
+    "cov-002543",
+    "cov-002545",
+    "cov-003929",
+    "cov-003932"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "group gapgrp-0039; path=Plans/Contracts_V0.md; row_type=missing_doc_reference; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Concern Record Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002313",
+        "cov-002315",
+        "cov-002317",
+        "cov-002319",
+        "cov-002321",
+        "cov-002323",
+        "cov-002543",
+        "cov-002545",
+        "cov-003929",
+        "cov-003932"
+      ],
+      "source_obligation_ids": [
+        "obl-001164",
+        "obl-001165",
+        "obl-001166",
+        "obl-001167",
+        "obl-001168",
+        "obl-001169",
+        "obl-001238",
+        "obl-001239",
+        "obl-001836",
+        "obl-001837"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0057",
+        "shard-0031-s007",
+        "shard-0033-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0033",
+        "shard-0048"
+      ],
+      "exact_missing_items": [
+        "There is still no obvious concern event family or concern record family in the local docs comparable to attempts/blocked/remediation",
+        "Add a canonical concern record family and corresponding projection contract",
+        "Add explicit concern lineage fields for merge/split/supersession",
+        "Add resolution_kind and rationale requirements for dismiss/resolve paths",
+        "concerns need durable identity and lineage, not just severity/status",
+        "acknowledged is a noise-control state, not a semantic resolution",
+        "There is still no canonical concern action matrix spanning: confirmation level, rationale requirements, who may perform the action, reversibility model, lineage side effects",
+        "Concern lifecycle alone is not enough: dismissed without required rationale will look too much like a convenience close, resolved without required resolution_kind will collapse meaningful semantic differences",
+        "Runtime_Artifacts_Panel.md still mandates a concrete envelope plus 19 per-type JSON schema files that do not exist, making its validation contract unimplementable as written",
+        "Runtime_Artifacts_Panel.md three-way ownership contradiction with Contracts_V0.md and storage-plan.md over payload schema authority; still points at missing schema files"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Missing doc reference obligation requires reconciliation or discovery.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

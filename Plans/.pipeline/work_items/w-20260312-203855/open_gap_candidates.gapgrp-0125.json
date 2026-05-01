@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0125",
+  "coverage_row_ids_represented": [
+    "cov-005484"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0125; path=Plans/Crosswalk.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "## 3.14 OrchestratorPage"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005484"
+      ],
+      "source_obligation_ids": [
+        "obl-002395"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0028"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "Crosswalk.md also still carries stale Orchestrator ownership text: OrchestratorPage still says the page has six tabs including Tiers; that stale primitive text will conflict with the rewrite tab model during reconciliation."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "OrchestratorPage rewrite tab model: Progress, Seams, Node Graph, Evidence, History, Ledger"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

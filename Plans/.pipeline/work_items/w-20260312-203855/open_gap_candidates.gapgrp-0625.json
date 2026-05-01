@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0625",
+  "coverage_row_ids_represented": [
+    "cov-000270",
+    "cov-000272",
+    "cov-000274",
+    "cov-000276",
+    "cov-000278",
+    "cov-000280",
+    "cov-000282",
+    "cov-000287",
+    "cov-000288",
+    "cov-000290"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0625; path=Plans/Widget_System.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## Widget Hostability Rules"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000270",
+        "cov-000272",
+        "cov-000274",
+        "cov-000276",
+        "cov-000278",
+        "cov-000280",
+        "cov-000282",
+        "cov-000287",
+        "cov-000288",
+        "cov-000290"
+      ],
+      "source_obligation_ids": [
+        "obl-000126",
+        "obl-000127",
+        "obl-000128",
+        "obl-000129",
+        "obl-000130",
+        "obl-000131",
+        "obl-000132",
+        "obl-000134",
+        "obl-000135",
+        "obl-000136"
+      ],
+      "source_seed_ids": [
+        "shard-0012-s005",
+        "shard-0012-s007",
+        "shard-0023-s010",
+        "shard-0034-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0012",
+        "shard-0023",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "widgets are allowed on: Dashboard, Usage, Orchestrator / Progress",
+        "widgets are not the composition model for: Orchestrator / Seams, Orchestrator / Node Graph, Orchestrator / Evidence, Orchestrator / History, Orchestrator / Ledger",
+        "only Progress should behave like a widget canvas on the Orchestrator page",
+        "widgets must consume stable orchestrator projections and canonical record/query contracts",
+        "widgets must not define meaning by subscribing directly to legacy event names or tier-specific objects",
+        "distinguish page/tab filters from widget presentation config",
+        "widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules",
+        "a widget should deep-link to the native tab when the user wants dense detail",
+        "the current widget contract mixes three different things that now need to stay separate: page layout persistence, widget-local presentation config, semantic scope/filter state",
+        "For Orchestrator specifically, semantic scope cannot be widget-owned"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

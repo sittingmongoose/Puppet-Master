@@ -1,0 +1,76 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0340",
+  "coverage_row_ids_represented": [
+    "cov-000848",
+    "cov-000889",
+    "cov-000982",
+    "cov-000985",
+    "cov-001025"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0340; path=Plans/Orchestrator_Page.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Settings Level Gap"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000848",
+        "cov-000889",
+        "cov-000982",
+        "cov-000985",
+        "cov-001025"
+      ],
+      "source_obligation_ids": [
+        "obl-000368",
+        "obl-000384",
+        "obl-000419",
+        "obl-000420",
+        "obl-000435"
+      ],
+      "source_seed_ids": [
+        "shard-0005-s007",
+        "shard-0006-s013",
+        "shard-0008-s011",
+        "shard-0009-s008",
+        "shard-0009-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006",
+        "shard-0008",
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Gap: provider/model settings are not yet defined at node, work package, feature seam, work package overseer, and delegated-subagent levels \u2014 this gap must be filled before schemas can be finalized",
+        "Gemini: chat is still single-threaded with no multi-lane overseer routing \u2014 the design must define how multiple overseer lanes communicate via chat",
+        "PM-owned SCM state is not fully visible: managed template repos, active git operations, live-run artifact roots, and worktree recovery state need Orchestrator/SCM registration",
+        "Worktree visibility is only partially wired between Source Control and Orchestrator \u2014 the interface contract between these two surfaces must be fully defined",
+        "Settings scopes are too coarse \u2014 global/project toggles exist but package/seam/lane/run/account-aware policy scopes are mostly absent and must be added"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

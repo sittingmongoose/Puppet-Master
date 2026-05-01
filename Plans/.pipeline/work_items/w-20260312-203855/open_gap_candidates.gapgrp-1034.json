@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1034",
+  "coverage_row_ids_represented": [
+    "cov-008105",
+    "cov-008106",
+    "cov-008109",
+    "cov-008110",
+    "cov-008111",
+    "cov-008112",
+    "cov-008113",
+    "cov-008114",
+    "cov-008115",
+    "cov-008116"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1034; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-008105",
+        "cov-008106",
+        "cov-008109",
+        "cov-008110",
+        "cov-008111",
+        "cov-008112",
+        "cov-008113",
+        "cov-008114",
+        "cov-008115",
+        "cov-008116"
+      ],
+      "source_obligation_ids": [
+        "obl-004460",
+        "obl-004461",
+        "obl-004464",
+        "obl-004465",
+        "obl-004466",
+        "obl-004467",
+        "obl-004468",
+        "obl-004469",
+        "obl-004470",
+        "obl-004471"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s090",
+        "shard-0091-s117",
+        "shard-0091-s118"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "action_available",
+        "No remaining gaps",
+        "summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`.",
+        "pm.open_gaps.v3",
+        "blocker_type=planning",
+        "Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict.",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "5.1B"
+      ],
+      "stale_tokens": [
+        "No remaining gaps",
+        "action_available",
+        "blocked_notice",
+        "detached_window",
+        "result_id",
+        "blocker_type=planning",
+        "pm.open_gaps.v3",
+        "5.1B",
+        "execution_unit_context",
+        "gap-001",
+        "gap-002",
+        "gap-005"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

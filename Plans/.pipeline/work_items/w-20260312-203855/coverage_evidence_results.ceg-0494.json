@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0494",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-005125",
+      "source_obligation_ids": [
+        "obl-002274"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0042"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005130",
+      "source_obligation_ids": [
+        "obl-002275"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0042"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005135",
+      "source_obligation_ids": [
+        "obl-002276"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0042"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005365",
+      "source_obligation_ids": [
+        "obl-002315"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0002"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005366",
+      "source_obligation_ids": [
+        "obl-002316"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0002"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005400",
+      "source_obligation_ids": [
+        "obl-002343"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005406",
+      "source_obligation_ids": [
+        "obl-002344"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005412",
+      "source_obligation_ids": [
+        "obl-002345"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005418",
+      "source_obligation_ids": [
+        "obl-002346"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-005424",
+      "source_obligation_ids": [
+        "obl-002347"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0012"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "evidence": [
+        "bounded_window=Plans/Run_Graph_View.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

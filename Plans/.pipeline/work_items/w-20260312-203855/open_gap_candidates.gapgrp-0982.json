@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0982",
+  "coverage_row_ids_represented": [
+    "cov-006022",
+    "cov-006023",
+    "cov-006024",
+    "cov-006025",
+    "cov-006026",
+    "cov-006027",
+    "cov-006028",
+    "cov-006029",
+    "cov-006030",
+    "cov-006031"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0982; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006022",
+        "cov-006023",
+        "cov-006024",
+        "cov-006025",
+        "cov-006026",
+        "cov-006027",
+        "cov-006028",
+        "cov-006029",
+        "cov-006030",
+        "cov-006031"
+      ],
+      "source_obligation_ids": [
+        "obl-002925",
+        "obl-002926",
+        "obl-002927",
+        "obl-002928",
+        "obl-002929",
+        "obl-002930",
+        "obl-002931",
+        "obl-002932",
+        "obl-002933",
+        "obl-002934"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s094",
+        "shard-0083-s102",
+        "shard-0083-s103",
+        "shard-0083-s104",
+        "shard-0083-s107",
+        "shard-0083-s108"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity collapse",
+        "pending approval is `blocked_reason_code = waiting_approval`",
+        "blocked_reason_code = waiting_approval",
+        "action binding is through canonical runtime action families",
+        "`blocked_sequence` is part of the runtime-facing identity",
+        "redb persistence text keyed to `request_id`, `tier_id`, `tier_type`, `request_kind`, and `allowed_actions`",
+        "visible labels such as `Reject`, `Cancel Run`, and `Skip`",
+        "Reject",
+        "Cancel Run",
+        "Skip"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,378 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0021",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0021-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "canonical term system",
+        "help entry system",
+        "contextual help system"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help System Contract",
+        "## Help Copy Architecture"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4031-L4043"
+      ],
+      "notes": [
+        "Three-way split: canonical term system (stable names), help entry system (dedicated explainer pages/cards), contextual help system (inline tooltips/badges/hover copy)"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s002",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "canonical name",
+        "short definition",
+        "why it matters",
+        "what it is not",
+        "common related states/actions",
+        "related concepts",
+        "surface examples / where you see it"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Help Entry Template",
+        "## Dedicated Help Entry Structure"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4083-L4092"
+      ],
+      "notes": [
+        "Fixed template required for each dedicated help entry; necessary because many concepts are easy to confuse (lane vs worktree, safe point vs restore point, historical vs superseded)"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "Feature Seam <-> Work Package <-> Weak Integration <-> Seam Complete",
+        "Promotion <-> Revoked <-> Reopened",
+        "Corroboration <-> Concern <-> Review",
+        "Graph Patch <-> Generation Updated <-> Historical Path",
+        "Lane <-> Worktree <-> Cleanup Eligible <-> Archived/Removed",
+        "Requested <-> Effective <-> Skipped/Clamped"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Related-Concept Clusters",
+        "## Help System Concept Links"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4101-L4107"
+      ],
+      "notes": [
+        "Six named related-concept clusters that must be explicitly linked in the help system"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "expert and ELI5 variants should share the same concept skeleton",
+        "differ in phrasing density and assumptions, not in substance"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Expert / ELI5 Help Layering",
+        "## Interaction Mode Copy Rules"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4109-L4119"
+      ],
+      "notes": [
+        "ELI5 must not introduce weaker or alternate semantics; plain-language only, not model-altering"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "Weak Integration",
+        "Promotion",
+        "Corroboration",
+        "Graph Patch",
+        "Reopened",
+        "Revoked",
+        "requested vs effective runtime identity",
+        "safe point vs restore point",
+        "lane vs worktree",
+        "concern lifecycle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Dedicated Help Entries",
+        "## Concepts Requiring Full Help Entries"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4057-L4073"
+      ],
+      "notes": [
+        "These are core rewrite concepts that appear across multiple surfaces and cannot be re-explained ad hoc every time; dedicated entries required"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "Plans/Glossary.md is the canonical concept inventory backbone",
+        "Glossary = canonical short definitions",
+        "Help entries = fuller explanations with examples and related links"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Glossary Role",
+        "## Glossary Split with Help Entries"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4131-L4135"
+      ],
+      "notes": [
+        "Glossary is the canonical short-definition inventory; help entries add fuller explanations and related links"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "`auto` must never appear as an opaque state with no resolved Persona/reason"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Persona Resolution Rules",
+        "## Auto Resolution Constraint"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4009"
+      ],
+      "notes": [
+        "Do-not-forget detail: auto must always resolve to a concrete Persona with a visible reason"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "historical runs must preserve the resolved effective Persona and reason from the time of execution"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Historical Run Persona Preservation"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4010"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0021-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "project health",
+        "project activity",
+        "project attention"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projects Page Status Model",
+        "## Project Card Status Split"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4182-L4192"
+      ],
+      "notes": [
+        "health=setup/integrity/config viability; activity=runs active/paused/queued/background; attention=whether user/operator action needed"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s010",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "project name",
+        "path",
+        "language/framework badges",
+        "activity status",
+        "attention status",
+        "primary blocked/attention reason",
+        "blocked owner / attention owner when relevant",
+        "pressure summary",
+        "last active / last opened"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Card Fields",
+        "## Projects Page Card Layout"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4194-L4200"
+      ],
+      "notes": [
+        "Required top-level project card fields for the rewrite"
+      ]
+    },
+    {
+      "seed_id": "shard-0021-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "Activity: idle | running | paused | queued | background_active"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Activity Status Values"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4206"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0021-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "Attention: none | attention_required | blocked | degraded"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Project Attention Status Values"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0021",
+      "source_evidence": [
+        "working_ledger.md:L4207"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "working_ledger.md:L4001-L4006 (ranked candidate/winning candidate/selection reason process notes)",
+    "working_ledger.md:L4013-L4022 (Research Progress header + Targeted docs read list \u2014 research metadata)",
+    "working_ledger.md:L4153-L4160 (Research Progress header + Targeted docs read list \u2014 research metadata)",
+    "working_ledger.md:L4075-L4080 (contextual-help-only candidates listing \u2014 no planning doc action required)",
+    "working_ledger.md:L4137-L4140 (contradictions/gaps narrative without concrete action items)"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

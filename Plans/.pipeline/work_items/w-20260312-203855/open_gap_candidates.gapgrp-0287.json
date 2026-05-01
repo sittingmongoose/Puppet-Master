@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0287",
+  "coverage_row_ids_represented": [
+    "cov-000332",
+    "cov-000335",
+    "cov-000338",
+    "cov-000341",
+    "cov-000344",
+    "cov-000349",
+    "cov-000352",
+    "cov-000355",
+    "cov-000367",
+    "cov-000370"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0287; path=Plans/Glossary.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Canonical Labels"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000332",
+        "cov-000335",
+        "cov-000338",
+        "cov-000341",
+        "cov-000344",
+        "cov-000349",
+        "cov-000352",
+        "cov-000355",
+        "cov-000367",
+        "cov-000370"
+      ],
+      "source_obligation_ids": [
+        "obl-000152",
+        "obl-000153",
+        "obl-000154",
+        "obl-000155",
+        "obl-000156",
+        "obl-000157",
+        "obl-000158",
+        "obl-000159",
+        "obl-000163",
+        "obl-000164"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s013",
+        "shard-0001-s014",
+        "shard-0001-s017",
+        "shard-0001-s018",
+        "shard-0001-s020",
+        "shard-0002-s001",
+        "shard-0002-s007",
+        "shard-0004-s003",
+        "shard-0005-s018",
+        "shard-0006-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0004",
+        "shard-0005",
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "Canonical entity labels must be: 'Seams' (tab), 'Feature Seam' (entity), 'Work Package' (entity), 'Package Overseer' (actor), 'Seam Overseer' (actor)",
+        "Canonical state/action labels must include: Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, Promotion Revoked, Corroboration Requested, Challenge Accepted, Challenge Not Accepted, Advisory Concern Recorded, Graph Patch Requested, Graph Patch Applied, Generation Updated",
+        "Promotion labels must be: 'Lane to Package' (lane_to_package), 'Package to Seam' (package_to_seam_available), 'Seam Completion' (seam_complete)",
+        "Revocation and reopen labels must be: Promotion Revoked, Seam Completion Revoked, Reopened, Reopened by Patch, Reopened by New Evidence",
+        "Blocked ownership labels must be a closed vocabulary: Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource",
+        "Feature seam is a first-class governance scope: seam completion requires integration quality across packages, not just local package-pass states",
+        "Weak-integration categories (10): GUI/runtime mismatch, incomplete end-to-end flow, cross-package state mismatch, contract drift, technically-wired-but-operationally-unusable, local-pass/global-fail, missing degraded/recovery behavior, inconsistent UX semantics, cross-seam architecture drift, invisible governance/missing operator affordances",
+        "Seam-level acceptance dimensions (5): operability, state coherence, workflow completeness, UX coherence, architectural coherence",
+        "Alert levels must be exactly: Info, Warning, Attention, Action Required \u2014 this is a closed four-level taxonomy",
+        "Alert state semantics: 'resolved' means the underlying condition changed; 'dismissed' means presentation hidden only; blockers must NOT be dismissible"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

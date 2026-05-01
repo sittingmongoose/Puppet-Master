@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0910",
+  "coverage_row_ids_represented": [
+    "cov-006740",
+    "cov-006741",
+    "cov-006742",
+    "cov-006743",
+    "cov-006744",
+    "cov-006745",
+    "cov-006746",
+    "cov-006747",
+    "cov-006748",
+    "cov-006749"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0910; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006740",
+        "cov-006741",
+        "cov-006742",
+        "cov-006743",
+        "cov-006744",
+        "cov-006745",
+        "cov-006746",
+        "cov-006747",
+        "cov-006748",
+        "cov-006749"
+      ],
+      "source_obligation_ids": [
+        "obl-003643",
+        "obl-003644",
+        "obl-003645",
+        "obl-003646",
+        "obl-003647",
+        "obl-003648",
+        "obl-003649",
+        "obl-003650",
+        "obl-003651",
+        "obl-003652"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s026",
+        "shard-0081-s122",
+        "shard-0081-s134",
+        "shard-0082-s055",
+        "shard-0082-s058",
+        "shard-0082-s061",
+        "shard-0082-s157",
+        "shard-0083-s012",
+        "shard-0083-s041",
+        "shard-0083-s049",
+        "shard-0088-s024"
+      ],
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "DRY_Rules.md",
+        "Crosswalk.md",
+        "Progression_Gates.md",
+        "Contracts_V0.md",
+        "`LSPSupport.md` still lacks a normalized split between run-scoped `tool.*` telemetry, UI-session LSP interactions, and mutation-capable apply-edit paths in multi-project/workspace-tab routing.",
+        "tool.*",
+        "`Crosswalk.md`, `DRY_Rules.md`, `Progression_Gates.md`, and `Decision_Log.md` now have explicitly cited duplicate section numbers, misbound `ContractRef`s, line-level gate semantics that do not match adjacent canon usage, and missing rewrite-era governance records.",
+        "`Architecture_Invariants.md` remains missing owner-level invariants for attempt immutability, failure-vs-blocked family separation, restore identity, projection authority, and shared provider-pool concurrency.",
+        "Architecture_Invariants.md",
+        "`OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, and `Provider_OpenCode` adjacencies still lack a canonical SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, and parity for requested/effective account/auth identity."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

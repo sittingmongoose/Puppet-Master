@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0516",
+  "coverage_row_ids_represented": [
+    "cov-004181",
+    "cov-004182",
+    "cov-004383",
+    "cov-004385",
+    "cov-004387",
+    "cov-005264",
+    "cov-005269"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0516; path=Plans/Run_Modes.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Modes.md",
+          "heading": "## Contribute (PR) Mode"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004181",
+        "cov-004182",
+        "cov-004383",
+        "cov-004385",
+        "cov-004387",
+        "cov-005264",
+        "cov-005269"
+      ],
+      "source_obligation_ids": [
+        "obl-001966",
+        "obl-001967",
+        "obl-002090",
+        "obl-002091",
+        "obl-002092",
+        "obl-002299",
+        "obl-002300"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0017",
+        "seed-WAVE006-0065",
+        "seed-WAVE007-0049"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0057",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "Run_Modes.md still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the yolo step-1 vs step-7 guard ambiguity, external_publish_side_effect behavior inside DAE, or mid-run account-switch invalidation of committed strategy",
+        "strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering",
+        "Run_Modes.md does not fully own DAE jail lifecycle entry/exit and transition rules \u2014 those are still scattered across executor, command, and policy docs",
+        "Run_Modes.md overpromises yolo capabilities relative to what other docs actually constrain",
+        "external_publish_side_effect semantics still lack a canonical owner",
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "These should not be collapsed back into generic summary language during reconciliation."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

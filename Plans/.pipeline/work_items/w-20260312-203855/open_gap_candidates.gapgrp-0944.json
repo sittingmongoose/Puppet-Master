@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0944",
+  "coverage_row_ids_represented": [
+    "cov-005642",
+    "cov-005643",
+    "cov-005644",
+    "cov-005645",
+    "cov-005646",
+    "cov-005647",
+    "cov-005648",
+    "cov-005649",
+    "cov-005650",
+    "cov-005651"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0944; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005642",
+        "cov-005643",
+        "cov-005644",
+        "cov-005645",
+        "cov-005646",
+        "cov-005647",
+        "cov-005648",
+        "cov-005649",
+        "cov-005650",
+        "cov-005651"
+      ],
+      "source_obligation_ids": [
+        "obl-002545",
+        "obl-002546",
+        "obl-002547",
+        "obl-002548",
+        "obl-002549",
+        "obl-002550",
+        "obl-002551",
+        "obl-002552",
+        "obl-002553",
+        "obl-002554"
+      ],
+      "source_seed_ids": [
+        "shard-0078-s014",
+        "shard-0078-s016",
+        "shard-0078-s017",
+        "shard-0078-s023",
+        "shard-0078-s025",
+        "shard-0078-s026",
+        "shard-0078-s033",
+        "shard-0078-s035",
+        "shard-0078-s036",
+        "shard-0078-s043",
+        "shard-0078-s047",
+        "shard-0084-s054"
+      ],
+      "source_shard_ids": [
+        "shard-0078",
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "usage and reasoning fields are split in the graph model without clearly tying back to the canonical requested/effective snapshot contract",
+        "run envelope still says `tier`",
+        "`persona_override_owner_id` still allows `tier_id`",
+        "persona_override_owner_id",
+        "Canonical owner:",
+        "The docs now have two simultaneous identity drifts:",
+        "field-name drift",
+        "Reconcile Prompt Pipeline scope language so run-envelope and override-owner wording stop using `tier` / `tier_id` as canonical scope labels.",
+        "The next reconciliation pass for graph and Orchestrator should fix field names and scope language together, not separately.",
+        "Research Progress - 2026-03-17 - Owner docs still leak tier-era scope language into canonical runtime wording"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

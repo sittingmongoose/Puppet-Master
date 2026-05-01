@@ -1,0 +1,281 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0157",
+  "represented_seed_ids": [
+    "shard-0014-s006",
+    "seed-WAVE005-0075"
+  ],
+  "source_shard_ids": [
+    "shard-0014",
+    "shard-0050"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "attempts should also expose when an attempt is superseded by later remediation/graph generation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempts should also expose when an attempt is superseded by later remediation/graph generation"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Semantic Application",
+        "## Object-Specific History Semantics"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002601"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "promotions need explicit distinction between: current accepted promotion, historical prior promotion, revoked promotion, superseded promotion",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "promotions need explicit distinction between: current accepted promotion, historical prior promotion, revoked promotion, superseded promotion"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Semantic Application",
+        "## Object-Specific History Semantics"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002601"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "concerns: merged/split/superseded concern records, resolved-but-historical concern lineage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concerns: merged/split/superseded concern records, resolved-but-historical concern lineage"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Semantic Application",
+        "## Object-Specific History Semantics"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002601"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "graph patches: old path/generation is historical; invalidated prior path may be superseded",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "graph patches: old path/generation is historical; invalidated prior path may be superseded"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Semantic Application",
+        "## Object-Specific History Semantics"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002601"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "recovery records: failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "recovery records: failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Semantic Application",
+        "## Object-Specific History Semantics"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002601"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0014-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "lane/worktree records: backing worktree may be removed; lane may still be historical; archival policy should be separate from semantic validity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "lane/worktree records: backing worktree may be removed; lane may still be historical; archival policy should be separate from semantic validity"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Semantic Application",
+        "## Object-Specific History Semantics"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002601"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "seed-WAVE005-0075"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "tier_runtime_record compatibility boundary: it should answer current visible progress state for tier-shaped UI grouping, latest active attempt or blocked episode pointer for this grouping, what progress tree / compact terminal / high-level ",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "tier_runtime_record compatibility boundary: it should answer current visible progress state for tier-shaped UI grouping, latest active attempt or blocked episode pointer for this grouping, what progress tree / compact terminal / high-level tab badges should display"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L009963-L010000"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "seed-WAVE005-0075"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "tier_runtime_record should NOT be treated as canonical source for execution identity, retry lineage, approval/recovery targeting, or usage truth",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "tier_runtime_record should NOT be treated as canonical source for execution identity, retry lineage, approval/recovery targeting, or usage truth"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L009963-L010000"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

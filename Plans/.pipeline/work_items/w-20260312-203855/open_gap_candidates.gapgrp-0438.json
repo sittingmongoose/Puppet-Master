@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0438",
+  "coverage_row_ids_represented": [
+    "cov-005277",
+    "cov-005287",
+    "cov-005297"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0438; path=Plans/Personas.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "## Plugin mutation_capable Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005277",
+        "cov-005287",
+        "cov-005297"
+      ],
+      "source_obligation_ids": [
+        "obl-002301",
+        "obl-002302",
+        "obl-002303"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0050"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`Plugins_System.md` still has a hook-name schism, missing `mutation_capable` on plugin tools, a `shell.env` bypass that can mutate PM control env vars, shadow approval paths via `permission.ask`, and Persona-disabled plugins whose tools remain callable.",
+        "`Skills_System.md` still has unresolved HTE/DAE runtime delivery mechanics, bundling-off ambiguity, bundled-skill compaction loss, actor-scope ambiguity for subagents/rotated runs, and provider-affinity ambiguity for `.claude/` discovery roots.",
+        "`Formatters_System.md` still conflicts with LSP formatting ownership, has no DAE reconciliation semantics for formatter writes, bypasses FileSafe/tool policy for custom formatter commands, and defines unregistered `format.*` / `file.edited` event families."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md for event registration"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

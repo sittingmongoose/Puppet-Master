@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0657",
+  "coverage_row_ids_represented": [
+    "cov-001917",
+    "cov-001918",
+    "cov-001920",
+    "cov-001921",
+    "cov-001923",
+    "cov-001924",
+    "cov-001925",
+    "cov-001926",
+    "cov-001929",
+    "cov-001930"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0657; path=Plans/WorktreeGitImprovement.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## Worktree State Vocabulary"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001917",
+        "cov-001918",
+        "cov-001920",
+        "cov-001921",
+        "cov-001923",
+        "cov-001924",
+        "cov-001925",
+        "cov-001926",
+        "cov-001929",
+        "cov-001930"
+      ],
+      "source_obligation_ids": [
+        "obl-000897",
+        "obl-000898",
+        "obl-000900",
+        "obl-000901",
+        "obl-000903",
+        "obl-000904",
+        "obl-000905",
+        "obl-000906",
+        "obl-000909",
+        "obl-000910"
+      ],
+      "source_seed_ids": [
+        "shard-0026-s002",
+        "shard-0026-s004",
+        "shard-0026-s006",
+        "shard-0088-s049",
+        "shard-0091-s049"
+      ],
+      "source_shard_ids": [
+        "shard-0026",
+        "shard-0088",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "recovering",
+        "retained",
+        "removed",
+        "no active-run ownership",
+        "no required safe-point restore targeting that worktree/baseline",
+        "no unresolved conflict workflow the user still needs to inspect",
+        "no newer lineage operation depending on that lane/worktree still being live",
+        "Source Control: compact current/live worktree rows with filters/toggles for retained, cleanup-eligible, archived/removed history",
+        "8. `Plans/WorktreeGitImprovement.md`",
+        "`Plans/WorktreeGitImprovement.md:704-708`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

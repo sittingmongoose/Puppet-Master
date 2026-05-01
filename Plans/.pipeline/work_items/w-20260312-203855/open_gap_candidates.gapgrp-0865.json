@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0865",
+  "coverage_row_ids_represented": [
+    "cov-001631",
+    "cov-001635",
+    "cov-001639",
+    "cov-001836",
+    "cov-001838",
+    "cov-001840",
+    "cov-002159",
+    "cov-002161",
+    "cov-002361",
+    "cov-002367"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0865; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Surface-Specific Override Presentation"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001631",
+        "cov-001635",
+        "cov-001639",
+        "cov-001836",
+        "cov-001838",
+        "cov-001840",
+        "cov-002159",
+        "cov-002161",
+        "cov-002361",
+        "cov-002367"
+      ],
+      "source_obligation_ids": [
+        "obl-000721",
+        "obl-000722",
+        "obl-000723",
+        "obl-000844",
+        "obl-000845",
+        "obl-000846",
+        "obl-001073",
+        "obl-001074",
+        "obl-001182",
+        "obl-001183"
+      ],
+      "source_seed_ids": [
+        "shard-0019-s004",
+        "shard-0022-s004",
+        "shard-0028-s008",
+        "shard-0031-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0022",
+        "shard-0028",
+        "shard-0031"
+      ],
+      "exact_missing_items": [
+        "Progress: compact requested/effective summary for live context",
+        "History / Ledger: exact audit trail of requested/effective + reason + source snapshot refs",
+        "Authentication / Usage: effective account/auth emphasis, with project-policy and manual-preferred-account source disclosure",
+        "provider/account pressure present",
+        "quota pressure severity",
+        "signal confidence",
+        "pressure/threshold warnings may use quiet periods",
+        "blocked states and canonical action-needed episodes may NOT quietly disappear behind the same suppression rule",
+        "Define one shared requested/effective identity disclosure contract reusable across: graph detail, artifacts, GitHub/auth surfaces, usage/account-pressure surfaces",
+        "Rework storage/usage attribution to treat seam_id, package_id, lane_id, and attempt_id as first-class where the runtime model now requires them, instead of centering tier_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0653",
+  "coverage_row_ids_represented": [
+    "cov-000725",
+    "cov-000734",
+    "cov-000737",
+    "cov-000740",
+    "cov-000743",
+    "cov-000747",
+    "cov-000843",
+    "cov-000988",
+    "cov-001058",
+    "cov-001060"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0653; path=Plans/WorktreeGitImprovement.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## Package-Based Worktrees"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000725",
+        "cov-000734",
+        "cov-000737",
+        "cov-000740",
+        "cov-000743",
+        "cov-000747",
+        "cov-000843",
+        "cov-000988",
+        "cov-001058",
+        "cov-001060"
+      ],
+      "source_obligation_ids": [
+        "obl-000313",
+        "obl-000316",
+        "obl-000317",
+        "obl-000318",
+        "obl-000319",
+        "obl-000320",
+        "obl-000366",
+        "obl-000421",
+        "obl-000445",
+        "obl-000446"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s007",
+        "shard-0004-s010",
+        "shard-0004-s019",
+        "shard-0005-s012",
+        "shard-0008-s012",
+        "shard-0010-s001",
+        "shard-0010-s002",
+        "shard-0010-s003",
+        "shard-0010-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0004",
+        "shard-0005",
+        "shard-0008",
+        "shard-0010"
+      ],
+      "exact_missing_items": [
+        "Package-based worktrees are preferred over per-node worktrees for scale; dependent nodes within the same package need defined lane/ordering rules",
+        "Orchestrator-managed worktrees must be visible in both Orchestrator page and Source Control view; they must be separated/partitioned from user/assistant-created worktrees",
+        "Source Control worktree view must partition worktrees as: 'Orchestrator Owned' vs 'Other'; 'Orchestrator Owned' must be further subdivided by feature seam",
+        "Source Control / Worktree Handshake research findings: Source Control is the primary operational surface for worktree inventory and user actions; Orchestrator consumes worktree identity/ownership/blocked state/lineage for run/history/recovery views",
+        "Existing docs still describe ownership as run/tier/subtask worktrees which collides with the package-based lane-pool model",
+        "Recommended boundary: Orchestrator owns package lane-pool operational truth; Source Control owns repo/worktree execution and inspection operations \u2014 this is the canonical surface division",
+        "'lane' object required fields: project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, ownership/display grouping",
+        "Cleanup and restore semantics must be lane-aware; contamination scope and safe-point prerequisites are underspecified and must be resolved",
+        "Lane is the primary operational object in Orchestrator; Worktree is the concrete filesystem/Git backing for a lane instance \u2014 lane identity persists after the live worktree is cleaned up/archived/removed",
+        "Lane/worktree lifecycle vocabulary must include these states: baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical; 'historical' coexists with 'archived' or 'removed'; 'cleanup_eligible' \u2260 already removed"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

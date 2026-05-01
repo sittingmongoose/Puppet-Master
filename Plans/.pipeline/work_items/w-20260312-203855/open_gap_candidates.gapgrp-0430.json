@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0430",
+  "coverage_row_ids_represented": [
+    "cov-002722",
+    "cov-002725",
+    "cov-002728",
+    "cov-002731",
+    "cov-002735",
+    "cov-002739",
+    "cov-002743",
+    "cov-002747",
+    "cov-002753",
+    "cov-002759"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0430; path=Plans/Permissions_System.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## Bridged Provider Capability Declarations"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002722",
+        "cov-002725",
+        "cov-002728",
+        "cov-002731",
+        "cov-002735",
+        "cov-002739",
+        "cov-002743",
+        "cov-002747",
+        "cov-002753",
+        "cov-002759"
+      ],
+      "source_obligation_ids": [
+        "obl-001301",
+        "obl-001302",
+        "obl-001303",
+        "obl-001304",
+        "obl-001305",
+        "obl-001306",
+        "obl-001307",
+        "obl-001308",
+        "obl-001309",
+        "obl-001310"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s001",
+        "shard-0035-s002",
+        "shard-0036-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0035",
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Add capability declarations for bridged providers to CLI_Bridged_Providers.md (matching language of direct providers): CAPABILITY_MULTI_ACCOUNT, CAPABILITY_SWITCH_NOTIFICATION, CAPABILITY_LANE_ATTRIBUTION, etc.",
+        "Bridge envelope must carry effective account identity and switch-reason when capabilities are declared",
+        "Permission reject-cascade and session-cache scope must be limited to actor/lane-aware boundaries, not whole session",
+        "Extend OpenCode SSE contract to filter events per actor/lane context",
+        "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission",
+        "Multi-Account.md requires switch notifications/history semantics that storage-plan.md, Prompt_Pipeline.md, and bridged-provider stream contracts still cannot represent durably",
+        "Permissions_System.md still treats session cache and reject-cascade as globally session-scoped, which directly conflicts with multi-lane isolation and shared-runtime actor separation",
+        "Add requested_account_id?, effective_account_id?, execution-scope fields, and actor_kind / execution_role to the shared runtime identity bundle and to the bridged-provider envelope",
+        "Replace tier-era persisted names/values in Prompt_Pipeline.md and Personas.md before they become entrenched in durable records",
+        "Define a canonical switch-history / pressure-episode family and make it queryable from History, Ledger, Usage, and Account/Usage Pressure projections"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

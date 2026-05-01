@@ -1,0 +1,274 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0744",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-004039",
+      "source_obligation_ids": [
+        "obl-001883"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0069"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004043",
+      "source_obligation_ids": [
+        "obl-001884"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0069"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004047",
+      "source_obligation_ids": [
+        "obl-001885"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0069"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007228",
+      "source_obligation_ids": [
+        "obl-004092"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s116",
+        "shard-0086-s065",
+        "shard-0086-s104",
+        "shard-0087-s039",
+        "shard-0087-s088",
+        "shard-0088-s091",
+        "shard-0089-s085",
+        "shard-0090-s029",
+        "shard-0090-s041",
+        "shard-0090-s105",
+        "shard-0090-s144",
+        "shard-0092-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0083",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0092"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007229",
+      "source_obligation_ids": [
+        "obl-004093"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s116",
+        "shard-0086-s065",
+        "shard-0086-s104",
+        "shard-0087-s039",
+        "shard-0087-s088",
+        "shard-0088-s091",
+        "shard-0089-s085",
+        "shard-0090-s025",
+        "shard-0090-s029",
+        "shard-0090-s039",
+        "shard-0090-s041",
+        "shard-0090-s105",
+        "shard-0090-s144",
+        "shard-0092-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0083",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0092"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007230",
+      "source_obligation_ids": [
+        "obl-004094"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s103",
+        "shard-0089-s103"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007231",
+      "source_obligation_ids": [
+        "obl-004095"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s103",
+        "shard-0089-s103"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007232",
+      "source_obligation_ids": [
+        "obl-004096"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s104"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007233",
+      "source_obligation_ids": [
+        "obl-004097"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s104"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-007234",
+      "source_obligation_ids": [
+        "obl-004098"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s025"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/orchestrator-subagent-integration.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

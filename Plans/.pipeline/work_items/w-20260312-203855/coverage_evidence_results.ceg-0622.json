@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0622",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-004268",
+      "source_obligation_ids": [
+        "obl-002032"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004270",
+      "source_obligation_ids": [
+        "obl-002033"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004272",
+      "source_obligation_ids": [
+        "obl-002034"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004274",
+      "source_obligation_ids": [
+        "obl-002035"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004276",
+      "source_obligation_ids": [
+        "obl-002036"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004278",
+      "source_obligation_ids": [
+        "obl-002037"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004280",
+      "source_obligation_ids": [
+        "obl-002038"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0057"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004282",
+      "source_obligation_ids": [
+        "obl-002039"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0057"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004285",
+      "source_obligation_ids": [
+        "obl-002040"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004287",
+      "source_obligation_ids": [
+        "obl-002041"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path": "Plans/Wiring_Matrix.md",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": [
+        "bounded_window=Plans/Wiring_Matrix.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

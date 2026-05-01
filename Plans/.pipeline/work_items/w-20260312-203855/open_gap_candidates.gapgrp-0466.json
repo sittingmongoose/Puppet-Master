@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0466",
+  "coverage_row_ids_represented": [
+    "cov-004420",
+    "cov-004422",
+    "cov-007895",
+    "cov-007902",
+    "cov-007909",
+    "cov-007956"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0466; path=Plans/Project_Output_Artifacts.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "heading": "## Draft Lineage"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004420",
+        "cov-004422",
+        "cov-007895",
+        "cov-007902",
+        "cov-007909",
+        "cov-007956"
+      ],
+      "source_obligation_ids": [
+        "obl-002111",
+        "obl-002112",
+        "obl-004383",
+        "obl-004384",
+        "obl-004385",
+        "obl-004396"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0075",
+        "shard-0090-s054",
+        "shard-0090-s089"
+      ],
+      "source_shard_ids": [
+        "shard-0058",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Project_Output_Artifacts.md draft lineage is described in a subject-first model but there is no link from the draft lineage to a route-target contract",
+        "Connect the draft lineage model to the route-target contract so draft artifacts can be opened, referenced, and routed through the canonical navigation model",
+        "gap-003",
+        "gap-004",
+        "gap-005"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

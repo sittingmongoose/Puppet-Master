@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0419",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-005374",
+      "source_obligation_ids": [
+        "obl-002323"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-005376",
+      "source_obligation_ids": [
+        "obl-002324"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-005378",
+      "source_obligation_ids": [
+        "obl-002325"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0006"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-005394",
+      "source_obligation_ids": [
+        "obl-002341"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0010"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-005396",
+      "source_obligation_ids": [
+        "obl-002342"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0010"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:stale_tokens_absent"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

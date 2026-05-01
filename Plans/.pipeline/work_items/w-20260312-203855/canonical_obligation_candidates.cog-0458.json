@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0458",
+  "represented_seed_ids": [
+    "seed-WAVE007-0009"
+  ],
+  "source_shard_ids": [
+    "shard-0062"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0009"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity."
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## MVP Promoted Features"
+      ],
+      "stale_residue_to_retire": [
+        "stale Final GUI summary text",
+        "persistence model not caught up to workspace-tab identity"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L012324"
+      ],
+      "notes": [
+        "Section15 still references command entries that have not been written. Persistence model needs to align with current workspace-tab identity model in storage-plan."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

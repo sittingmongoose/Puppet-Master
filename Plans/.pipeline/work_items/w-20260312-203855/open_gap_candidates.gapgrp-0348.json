@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0348",
+  "coverage_row_ids_represented": [
+    "cov-002557",
+    "cov-002560",
+    "cov-005262",
+    "cov-005267",
+    "cov-007352",
+    "cov-007355",
+    "cov-007358",
+    "cov-007385",
+    "cov-007392",
+    "cov-007399"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0348; path=Plans/Orchestrator_Page.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Concern Action Surface Rules"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002557",
+        "cov-002560",
+        "cov-005262",
+        "cov-005267",
+        "cov-007352",
+        "cov-007355",
+        "cov-007358",
+        "cov-007385",
+        "cov-007392",
+        "cov-007399"
+      ],
+      "source_obligation_ids": [
+        "obl-001243",
+        "obl-001244",
+        "obl-002299",
+        "obl-002300",
+        "obl-004189",
+        "obl-004190",
+        "obl-004191",
+        "obl-004198",
+        "obl-004199",
+        "obl-004200"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0049",
+        "shard-0033-s006",
+        "shard-0087-s107",
+        "shard-0088-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0070",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "if a concern is currently tied to active blocked status, acknowledgment alone must not clear the block",
+        "structural concern actions (merge, split, supersede) likely need guided flows rather than one-click menus because they change search/history/ledger interpretation",
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "These should not be collapsed back into generic summary language during reconciliation.",
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+        "Plans/storage-plan.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

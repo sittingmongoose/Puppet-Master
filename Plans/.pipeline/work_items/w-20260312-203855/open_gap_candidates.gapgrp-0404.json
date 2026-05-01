@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0404",
+  "coverage_row_ids_represented": [
+    "cov-001973",
+    "cov-001975",
+    "cov-001976",
+    "cov-001978",
+    "cov-001980",
+    "cov-002081",
+    "cov-002084",
+    "cov-002086",
+    "cov-002089",
+    "cov-002092"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0404; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Interaction with other families"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001973",
+        "cov-001975",
+        "cov-001976",
+        "cov-001978",
+        "cov-001980",
+        "cov-002081",
+        "cov-002084",
+        "cov-002086",
+        "cov-002089",
+        "cov-002092"
+      ],
+      "source_obligation_ids": [
+        "obl-000936",
+        "obl-000937",
+        "obl-000938",
+        "obl-000939",
+        "obl-000940",
+        "obl-001030",
+        "obl-001031",
+        "obl-001032",
+        "obl-001033",
+        "obl-001034"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s001",
+        "shard-0027-s002",
+        "shard-0031-s004",
+        "shard-0037-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0031",
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "recovery can: resolve concern, create follow-on concern if recovery exposes a new issue",
+        "blocked episodes can: reference concern when a concern becomes execution-blocking, but should not be replaced by the concern record",
+        "Attention item rollup rules must be specified: when can N concern records collapse into one attention item, what is the severity-merge strategy, when must distinct items remain separate",
+        "Attention item disclosure rules must be specified: which items are shown inline on surfaces vs surfaced only on click vs hidden until the user navigates to the attention center",
+        "Routing rules from attention item to primary/secondary action surfaces must be specified",
+        "assistant/interviewer/builders share: requested/effective provider/model/persona/account/auth semantics, selection reason, skipped/honored control disclosure, blocked/retry/remediation/degradation taxonomy, shared activity/event-stream infrastructure",
+        "they do NOT automatically become: Feature Seams, Work Packages, graph Nodes, lane-pool objects, package/seam-governance objects",
+        "conversation identity: thread_id",
+        "wizard/builder identity: wizard_id, builder stage/run ids, bundle/review ids",
+        "orchestration identity: run_id, package/seam/node ids, attempt ids"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

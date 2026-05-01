@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0428",
+  "coverage_row_ids_represented": [
+    "cov-001197",
+    "cov-001198",
+    "cov-001199",
+    "cov-001200",
+    "cov-001201",
+    "cov-002393",
+    "cov-002396",
+    "cov-002399",
+    "cov-002402",
+    "cov-002404"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0428; path=Plans/Permissions_System.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## Permission Snapshot Invalidation on Account Switch"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001197",
+        "cov-001198",
+        "cov-001199",
+        "cov-001200",
+        "cov-001201",
+        "cov-002393",
+        "cov-002396",
+        "cov-002399",
+        "cov-002402",
+        "cov-002404"
+      ],
+      "source_obligation_ids": [
+        "obl-000512",
+        "obl-000513",
+        "obl-000514",
+        "obl-000515",
+        "obl-000516",
+        "obl-001189",
+        "obl-001190",
+        "obl-001191",
+        "obl-001192",
+        "obl-001193"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0004",
+        "shard-0032-s001",
+        "shard-0032-s002",
+        "shard-0039-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0039",
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Account-neutral tool approvals (e.g., read-only filesystem reads) may survive account switches if explicitly exempted in the approval scope definition",
+        "Plans/Permissions_System.md needs scope-keyed approval semantics and richer permission snapshots",
+        "Permission approval caching and reject-cascade still lack actor/lane/account scope",
+        "Permission snapshots still do not project requested/effective identity richly enough for blocked/approval truth",
+        "Upgrade permission snapshots to carry requested/effective values, downgrade reasons, and identity context",
+        "Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "Permissions_System.md does not yet integrate the stricter requested/effective identity model that Contracts_V0.md now makes canonical",
+        "Architecture_Invariants.md needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "policy docs still assume a stronger single Puppet Master authority center",
+        "the rewrite now needs seam/package overseer scopes, blocked-owner attribution, and clearer separation between runtime/system/user authority"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

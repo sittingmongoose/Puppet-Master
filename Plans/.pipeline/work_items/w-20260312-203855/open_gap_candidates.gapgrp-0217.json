@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0217",
+  "coverage_row_ids_represented": [
+    "cov-000134",
+    "cov-000136",
+    "cov-000139",
+    "cov-000141",
+    "cov-000143",
+    "cov-000145",
+    "cov-000146",
+    "cov-000148",
+    "cov-000150",
+    "cov-000152"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0217; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Persistent Blocker Rule"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000134",
+        "cov-000136",
+        "cov-000139",
+        "cov-000141",
+        "cov-000143",
+        "cov-000145",
+        "cov-000146",
+        "cov-000148",
+        "cov-000150",
+        "cov-000152"
+      ],
+      "source_obligation_ids": [
+        "obl-000066",
+        "obl-000067",
+        "obl-000068",
+        "obl-000069",
+        "obl-000070",
+        "obl-000071",
+        "obl-000072",
+        "obl-000073",
+        "obl-000074",
+        "obl-000075"
+      ],
+      "source_seed_ids": [
+        "shard-0022-s008",
+        "shard-0023-s001",
+        "shard-0023-s008",
+        "shard-0025-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0022",
+        "shard-0023",
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "real blocked states should remain represented until underlying truth changes",
+        "concern severity + blocking effect + owner + persistence decide escalation",
+        "chronological but windowed",
+        "initial load shows a recent slice",
+        "explicit load-older / jump controls",
+        "dense event bursts should be summarized when collapsed",
+        "freshness_state",
+        "last_updated_at",
+        "data_source_kind",
+        "degraded_reason?"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

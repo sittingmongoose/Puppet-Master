@@ -1,0 +1,387 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0017",
+  "represented_seed_ids": [
+    "shard-0002-s009",
+    "shard-0002-s017",
+    "shard-0002-s018",
+    "shard-0015-s001",
+    "shard-0016-s004"
+  ],
+  "source_shard_ids": [
+    "shard-0002",
+    "shard-0015",
+    "shard-0016"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0002-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Concern model must be a first-class record with fields: identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history, visibility flags",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Concern model must be a first-class record with fields: identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history, visibility flags"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Model Fields"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000295-L000325"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0002-s017"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Projection freshness model: event-driven updates are primary; each projection must carry one of these health states: current, refreshing, stale, failed",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Projection freshness model: event-driven updates are primary; each projection must carry one of these health states: current, refreshing, stale, failed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Freshness"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000300-L000320"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0002-s018"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Projection degradation policy: a stale projection that undermines blocked/promotion/recovery/patch/account-pressure truth must mint a real concern \u2014 degraded projections are not silent",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Projection degradation policy: a stale projection that undermines blocked/promotion/recovery/patch/account-pressure truth must mint a real concern \u2014 degraded projections are not silent"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Degradation Policy"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000310-L000335"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0015-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "concern record = canonical durable object with stable identity and lifecycle",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern record = canonical durable object with stable identity and lifecycle"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Record",
+        "## Concern Object Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002996-L003000"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0015-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "concern source event/ref = review finding, corroboration result, blocked episode, patch result, recovery outcome that supports the concern",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern source event/ref = review finding, corroboration result, blocked episode, patch result, recovery outcome that supports the concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Record",
+        "## Concern Object Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002996-L003000"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0015-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "canon_label": "concern projection = surface-specific rendering for Progress / Seams / Evidence / History / Ledger",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern projection = surface-specific rendering for Progress / Seams / Evidence / History / Ledger"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Record",
+        "## Concern Object Model"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L002996-L003000"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0016-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "review finding: may nominate a concern or attach evidence to an existing concern",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "review finding: may nominate a concern or attach evidence to an existing concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Authority and Ownership",
+        "## Concern-to-Review/Corroboration/Patch/Recovery Linkage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003109-L003143"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0016-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "corroboration outcome: may confirm/deny/escalate/downgrade concern credibility; should be able to turn a nominated concern into an accepted canonical concern",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "corroboration outcome: may confirm/deny/escalate/downgrade concern credibility; should be able to turn a nominated concern into an accepted canonical concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Authority and Ownership",
+        "## Concern-to-Review/Corroboration/Patch/Recovery Linkage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003109-L003143"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0016-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "graph patch: may resolve a concern; may supersede a concern with successor concerns if the patch reframes the issue",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "graph patch: may resolve a concern; may supersede a concern with successor concerns if the patch reframes the issue"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Authority and Ownership",
+        "## Concern-to-Review/Corroboration/Patch/Recovery Linkage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003109-L003143"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "shard-0016-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "recovery: may resolve operational concerns; may create follow-on concerns if restore/recovery exposes deeper integrity issues",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "recovery: may resolve operational concerns; may create follow-on concerns if restore/recovery exposes deeper integrity issues"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Authority and Ownership",
+        "## Concern-to-Review/Corroboration/Patch/Recovery Linkage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003109-L003143"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "shard-0016-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "concern owner kinds: Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern owner kinds: Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Concern Authority and Ownership",
+        "## Concern-to-Review/Corroboration/Patch/Recovery Linkage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L003109-L003143"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

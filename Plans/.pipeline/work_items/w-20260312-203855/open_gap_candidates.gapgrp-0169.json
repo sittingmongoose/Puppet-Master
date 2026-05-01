@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0169",
+  "coverage_row_ids_represented": [
+    "cov-003952",
+    "cov-003963",
+    "cov-003966",
+    "cov-003969",
+    "cov-003972",
+    "cov-004060",
+    "cov-004065",
+    "cov-004070"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0169; path=Plans/Executor_Protocol.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003952",
+        "cov-003963",
+        "cov-003966",
+        "cov-003969",
+        "cov-003972",
+        "cov-004060",
+        "cov-004065",
+        "cov-004070"
+      ],
+      "source_obligation_ids": [
+        "obl-001842",
+        "obl-001846",
+        "obl-001847",
+        "obl-001848",
+        "obl-001849",
+        "obl-001892",
+        "obl-001893",
+        "obl-001894"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0058",
+        "seed-WAVE005-0060",
+        "seed-WAVE005-0072"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "Recast HITL request contracts so request_id is explicitly subordinate to blocked-episode identity",
+        "On restart, the runtime restores current unresolved blocked episodes from canonical blocked/runtime records/projections",
+        "The scheduler then emits a scheduler pass with wake_reason = startup_recovered; that startup-recovery pass does not mint new blocked episodes by itself; it rehydrates existing unresolved episodes",
+        "Executor_Protocol.md names startup_recovered but does not define the restore handshake strongly enough to prevent silent block-loss or accidental episode reminting",
+        "Define startup-recovery handshake ownership in Executor_Protocol.md + Contracts_V0.md",
+        "Introduce execution_unit_context as the canonical runtime-facing context object and make TierContext explicitly derived or compatibility-only",
+        "Canonical execution_unit_context minimum shape: project_id, run_id, thread_id?, feature_seam_id?, work_package_id?, node_id, attempt_id?, blocked_sequence?, replan_generation, execution_role, scheduler_lane, manual_priority?, safe_point_id?, remediation lineage refs, lane_id?, worktree_id?, workspace_ref, snapshot_ref?, requested/effective runtime identity, runtime state hooks",
+        "Refactor orchestrator-subagent-integration.md so selector and hook APIs consume: canonical execution-unit refs for truth and a smaller derived selection/decomposition object for heuristics"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "blocked_sequence (canonical per {run_id, node_id})",
+        "request_id (lookup metadata only, not canonical recovery target)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

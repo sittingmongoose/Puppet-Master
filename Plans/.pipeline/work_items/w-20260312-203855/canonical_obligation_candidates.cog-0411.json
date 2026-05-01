@@ -1,0 +1,426 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0411",
+  "represented_seed_ids": [
+    "seed-WAVE006-0037",
+    "seed-WAVE006-0046",
+    "seed-WAVE006-0057",
+    "seed-WAVE008-0031"
+  ],
+  "source_shard_ids": [
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0075"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE006-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Wiring_Matrix.md still has no hard reverse-coverage boundary, so ghost IDs survive simultaneously in Final GUI, Wiring Matrix, and command-owner docs",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Wiring_Matrix.md still has no hard reverse-coverage boundary, so ghost IDs survive simultaneously in Final GUI, Wiring Matrix, and command-owner docs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Recovery Actions",
+        "## cmd.runtime",
+        "## Reverse Coverage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010983-L010988"
+      ],
+      "notes": [
+        "Wiring_Matrix.schema.json must be extended to represent: wildcard family requirements, producer/consumer normative rows, reverse-coverage boundaries, recovery command families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE006-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "canonical cmd.runtime.* recovery commands are still absent from real matrix rows even where page/docs require the corresponding CTAs",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "canonical cmd.runtime.* recovery commands are still absent from real matrix rows even where page/docs require the corresponding CTAs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Recovery Actions",
+        "## cmd.runtime",
+        "## Reverse Coverage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010983-L010988"
+      ],
+      "notes": [
+        "Wiring_Matrix.schema.json must be extended to represent: wildcard family requirements, producer/consumer normative rows, reverse-coverage boundaries, recovery command families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE006-0037"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Wiring_Matrix.schema.json still cannot represent the normative recovery producer/consumer rows or wildcard command-family requirements now described in the doc",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Wiring_Matrix.schema.json still cannot represent the normative recovery producer/consumer rows or wildcard command-family requirements now described in the doc"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Recovery Actions",
+        "## cmd.runtime",
+        "## Reverse Coverage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L010983-L010988"
+      ],
+      "notes": [
+        "Wiring_Matrix.schema.json must be extended to represent: wildcard family requirements, producer/consumer normative rows, reverse-coverage boundaries, recovery command families"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE006-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "The addenda in Wiring_Matrix.md increasingly ask the matrix to cover runtime producers, blocked/recovery actions, and projection consumers, but the actual schema still models only UI element rows",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The addenda in Wiring_Matrix.md increasingly ask the matrix to cover runtime producers, blocked/recovery actions, and projection consumers, but the actual schema still models only UI element rows"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Wiring Matrix Schema",
+        "## Producer/Consumer Rows"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L011194-L011200"
+      ],
+      "notes": [
+        "Matrix/schema mismatch: prose expects runtime-producer/consumer/recovery rows but Wiring_Matrix.schema.json only models interactive-element dispatch rows. Must choose: separate producer/consumer matrix OR intentionally widen schema."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "seed-WAVE006-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "The prose is now expecting more than Wiring_Matrix.schema.json can encode",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The prose is now expecting more than Wiring_Matrix.schema.json can encode"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Wiring Matrix Schema",
+        "## Producer/Consumer Rows"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L011194-L011200"
+      ],
+      "notes": [
+        "Matrix/schema mismatch: prose expects runtime-producer/consumer/recovery rows but Wiring_Matrix.schema.json only models interactive-element dispatch rows. Must choose: separate producer/consumer matrix OR intentionally widen schema."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "seed-WAVE006-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Decide whether the matrix remains strictly UI-element wiring plus a separate producer/consumer matrix, or whether the schema is intentionally widened to cover both",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Decide whether the matrix remains strictly UI-element wiring plus a separate producer/consumer matrix, or whether the schema is intentionally widened to cover both"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Wiring Matrix Schema",
+        "## Producer/Consumer Rows"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L011194-L011200"
+      ],
+      "notes": [
+        "Matrix/schema mismatch: prose expects runtime-producer/consumer/recovery rows but Wiring_Matrix.schema.json only models interactive-element dispatch rows. Must choose: separate producer/consumer matrix OR intentionally widen schema."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "seed-WAVE006-0057"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "The matrix already uses JSON filenames (cmd.*.json) as fragment identifiers that could be extracted programmatically, but extraction is fragile without a schema commitment",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The matrix already uses JSON filenames (cmd.*.json) as fragment identifiers that could be extracted programmatically, but extraction is fragile without a schema commitment"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Filename Convention",
+        "## Fragment Extraction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L011201"
+      ],
+      "notes": [
+        "Wiring_Matrix.md cmd.*.json filename convention must be declared as a schema-level rule to prevent extraction hazards in automated tooling"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "seed-WAVE006-0057"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "canon_label": "add a schema-level filename-derivation rule that is explicit about the JSON filename for a command-family row so tooling can safely extract, validate, and round-trip between catalog and matrix",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "add a schema-level filename-derivation rule that is explicit about the JSON filename for a command-family row so tooling can safely extract, validate, and round-trip between catalog and matrix"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Filename Convention",
+        "## Fragment Extraction"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L011201"
+      ],
+      "notes": [
+        "Wiring_Matrix.md cmd.*.json filename convention must be declared as a schema-level rule to prevent extraction hazards in automated tooling"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "seed-WAVE008-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Plans/Wiring_Matrix.schema.json currently has no fields for command-kind or normalization metadata.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Plans/Wiring_Matrix.schema.json currently has no fields for command-kind or normalization metadata."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014836-L014893"
+      ],
+      "notes": [
+        "The matrix schema limitation and evidence schema limitation are different problems. Clean fix is catalog-owned normalization metadata consumed by wiring/gates."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-010",
+      "source_seed_ids": [
+        "seed-WAVE008-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "The wiring layer is still built around a simple command-binding contract (ui_element_id, ui_command_id, handler_location, expected_event_types) but it does not encode: wrapper normalization; deprecated alias mapping; route/open contract con",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The wiring layer is still built around a simple command-binding contract (ui_element_id, ui_command_id, handler_location, expected_event_types) but it does not encode: wrapper normalization; deprecated alias mapping; route/open contract consumption; command classification such as shell_view versus navigation_wrapper."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014836-L014893"
+      ],
+      "notes": [
+        "The matrix schema limitation and evidence schema limitation are different problems. Clean fix is catalog-owned normalization metadata consumed by wiring/gates."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-011",
+      "source_seed_ids": [
+        "seed-WAVE008-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Keep normalization metadata owned by the command-definition side, not by wiring rows.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Keep normalization metadata owned by the command-definition side, not by wiring rows."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014836-L014893"
+      ],
+      "notes": [
+        "The matrix schema limitation and evidence schema limitation are different problems. Clean fix is catalog-owned normalization metadata consumed by wiring/gates."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-012",
+      "source_seed_ids": [
+        "seed-WAVE008-0031"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Extend the wiring/gate model so it can consume catalog metadata for command_kind, normalization kind, canonical target contract.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Extend the wiring/gate model so it can consume catalog metadata for command_kind, normalization kind, canonical target contract."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L014836-L014893"
+      ],
+      "notes": [
+        "The matrix schema limitation and evidence schema limitation are different problems. Clean fix is catalog-owned normalization metadata consumed by wiring/gates."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

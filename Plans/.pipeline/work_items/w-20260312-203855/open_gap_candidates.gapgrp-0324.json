@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0324",
+  "coverage_row_ids_represented": [
+    "cov-000489",
+    "cov-000491",
+    "cov-000496",
+    "cov-000860",
+    "cov-000871",
+    "cov-000952",
+    "cov-001158",
+    "cov-001178",
+    "cov-001180",
+    "cov-001597"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0324; path=Plans/Multi-Account.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## Usage Model Extension"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000489",
+        "cov-000491",
+        "cov-000496",
+        "cov-000860",
+        "cov-000871",
+        "cov-000952",
+        "cov-001158",
+        "cov-001178",
+        "cov-001180",
+        "cov-001597"
+      ],
+      "source_obligation_ids": [
+        "obl-000204",
+        "obl-000205",
+        "obl-000206",
+        "obl-000373",
+        "obl-000378",
+        "obl-000408",
+        "obl-000484",
+        "obl-000499",
+        "obl-000500",
+        "obl-000712"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s001",
+        "shard-0003-s002",
+        "shard-0003-s003",
+        "shard-0005-s013",
+        "shard-0006-s006",
+        "shard-0008-s002",
+        "shard-0011-s001",
+        "shard-0011-s006",
+        "shard-0019-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0005",
+        "shard-0006",
+        "shard-0008",
+        "shard-0011",
+        "shard-0019"
+      ],
+      "exact_missing_items": [
+        "Multi-account failover behavior MUST extend the existing usage model in Plans/usage-feature.md \u2014 it must NOT invent a separate 'account pressure' subsystem",
+        "Multi-account control-loop scope applies to ALL provider-using actors: assistant, interviewer, requirements-doc builder, overseers, node workers, delegated workers \u2014 no actor is exempt",
+        "Non-Orchestrator conversational actors (assistant, interviewer, requirements-doc builder, PRD builder) share provider/account/usage/runtime identity behavior but are conversational-first, NOT orchestration nodes",
+        "Multi-account settings: user-configurable threshold for auto-switch; ON by default for all provider-using actors; granularity by provider, account, execution role; same-provider accounts with different quotas are NOT fungible",
+        "Multi-account settings structure must cover all 4 layers: project settings, run snapshot, attempt record, and precedence between provider/account/execution-role rules",
+        "Docker auth is the best existing example of a requested/effective auth pattern \u2014 this pattern should be extracted and generalized as the canonical requested/effective auth model",
+        "Add one canonical requested-side concrete-account field to the requested/effective runtime identity bundle, while retaining requested_account_policy as the routing rule rather than the selected account",
+        "Multi-Account.md still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields",
+        "the docs have not been rewritten around node/package/seam/lane-aware execution identity",
+        "treat as three separate axes: source axis (where configured value came from), request axis (what the run/attempt actually asked for at execution start), execution/result axis (what provider/runtime actually used and whether controls were honored/skipped/clamped)"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

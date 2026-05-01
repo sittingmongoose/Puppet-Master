@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0978",
+  "coverage_row_ids_represented": [
+    "cov-005982",
+    "cov-005983",
+    "cov-005984",
+    "cov-005985",
+    "cov-005986",
+    "cov-005987",
+    "cov-005988",
+    "cov-005989",
+    "cov-005990",
+    "cov-005991"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0978; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005982",
+        "cov-005983",
+        "cov-005984",
+        "cov-005985",
+        "cov-005986",
+        "cov-005987",
+        "cov-005988",
+        "cov-005989",
+        "cov-005990",
+        "cov-005991"
+      ],
+      "source_obligation_ids": [
+        "obl-002885",
+        "obl-002886",
+        "obl-002887",
+        "obl-002888",
+        "obl-002889",
+        "obl-002890",
+        "obl-002891",
+        "obl-002892",
+        "obl-002893",
+        "obl-002894"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s043",
+        "shard-0083-s044",
+        "shard-0083-s045",
+        "shard-0083-s046",
+        "shard-0083-s048",
+        "shard-0083-s050",
+        "shard-0083-s051",
+        "shard-0083-s054",
+        "shard-0083-s055"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "fix all `ContractRef` lines to use one taxonomy",
+        "extend `GATE-010` coverage so routing/wrapper normalization can be verified through command-definition metadata plus wiring evidence",
+        "`GATE-010` needs an explicit relationship to:",
+        "route/open primitives in `Contracts_V0.md`",
+        "evidence structures that can encode normalization and alias failures",
+        "The `ContractRef` syntax break in `GATE-003` is a hard owner-doc integrity defect, not a style preference.",
+        "GATE-003",
+        "Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership",
+        "`route_target`",
+        "`OpenSubject`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

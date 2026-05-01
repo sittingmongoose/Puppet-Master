@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0953",
+  "coverage_row_ids_represented": [
+    "cov-005732",
+    "cov-005733",
+    "cov-005734",
+    "cov-005735",
+    "cov-005736",
+    "cov-005737",
+    "cov-005738",
+    "cov-005739",
+    "cov-005740",
+    "cov-005741"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0953; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005732",
+        "cov-005733",
+        "cov-005734",
+        "cov-005735",
+        "cov-005736",
+        "cov-005737",
+        "cov-005738",
+        "cov-005739",
+        "cov-005740",
+        "cov-005741"
+      ],
+      "source_obligation_ids": [
+        "obl-002635",
+        "obl-002636",
+        "obl-002637",
+        "obl-002638",
+        "obl-002639",
+        "obl-002640",
+        "obl-002641",
+        "obl-002642",
+        "obl-002643",
+        "obl-002644"
+      ],
+      "source_seed_ids": [
+        "shard-0079-s023",
+        "shard-0079-s024",
+        "shard-0079-s027",
+        "shard-0079-s030",
+        "shard-0079-s031",
+        "shard-0079-s039",
+        "shard-0079-s040",
+        "shard-0079-s043",
+        "shard-0079-s044",
+        "shard-0080-s020",
+        "shard-0080-s034",
+        "shard-0085-s069"
+      ],
+      "source_shard_ids": [
+        "shard-0079",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "`cmd.graph.deny_hitl`",
+        "with `request_id` args",
+        "data model still carries `hitl_request_id`",
+        "hitl_request_id",
+        "live status still says HITL requests are keyed by `request_id`",
+        "blocked/recovery state already binds to `blocked_sequence` and `allowed_action_ids[]`",
+        "blocked-state actions map from canonical `allowed_action_ids[]`",
+        "graph approval actions target `request_id`",
+        "Reconcile graph and Orchestrator approval actions onto canonical runtime commands.",
+        "Remove `request_id` as the primary action target from graph command payloads."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

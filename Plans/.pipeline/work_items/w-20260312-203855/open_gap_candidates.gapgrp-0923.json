@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0923",
+  "coverage_row_ids_represented": [
+    "cov-006870",
+    "cov-006871",
+    "cov-006872",
+    "cov-006873",
+    "cov-006874",
+    "cov-006875",
+    "cov-006876",
+    "cov-006877",
+    "cov-006878",
+    "cov-006879"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0923; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006870",
+        "cov-006871",
+        "cov-006872",
+        "cov-006873",
+        "cov-006874",
+        "cov-006875",
+        "cov-006876",
+        "cov-006877",
+        "cov-006878",
+        "cov-006879"
+      ],
+      "source_obligation_ids": [
+        "obl-003773",
+        "obl-003774",
+        "obl-003775",
+        "obl-003776",
+        "obl-003777",
+        "obl-003778",
+        "obl-003779",
+        "obl-003780",
+        "obl-003781",
+        "obl-003782"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s095",
+        "shard-0087-s099",
+        "shard-0087-s111",
+        "shard-0087-s112",
+        "shard-0088-s017",
+        "shard-0088-s024",
+        "shard-0088-s034",
+        "shard-0088-s051",
+        "shard-0088-s062"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "4. Update mirrors/checklists only after owner/consumer canon is stable.",
+        "Missing cleanup/lifecycle rules will produce destructive ambiguity between archive/remove/prune/recover behaviors.",
+        "page-wide shared `focused_run_id` coherence across tabs",
+        "focused_run_id",
+        "default search scope = focused run, widening to project/all-runs, and required disclosure when search changes focused run",
+        "persistent-blocker semantics at the UI layer",
+        "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+        "`projection_freshness` / `projection_health` still exist; the missing transfer is the operational trust UI/gating/fallback layer.",
+        "confirm the highest-pressure owner/consumer docs still match the current blocker inventory",
+        "result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

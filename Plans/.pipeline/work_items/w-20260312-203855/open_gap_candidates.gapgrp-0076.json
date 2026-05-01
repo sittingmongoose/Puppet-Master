@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0076",
+  "coverage_row_ids_represented": [
+    "cov-003317",
+    "cov-003319",
+    "cov-003368",
+    "cov-003373",
+    "cov-003378",
+    "cov-003383",
+    "cov-003388",
+    "cov-003393",
+    "cov-003398",
+    "cov-003403"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0076; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Reconciliation-Readiness Criteria"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003317",
+        "cov-003319",
+        "cov-003368",
+        "cov-003373",
+        "cov-003378",
+        "cov-003383",
+        "cov-003388",
+        "cov-003393",
+        "cov-003398",
+        "cov-003403"
+      ],
+      "source_obligation_ids": [
+        "obl-001586",
+        "obl-001587",
+        "obl-001607",
+        "obl-001608",
+        "obl-001609",
+        "obl-001610",
+        "obl-001611",
+        "obl-001612",
+        "obl-001613",
+        "obl-001614"
+      ],
+      "source_seed_ids": [
+        "shard-0040-s001",
+        "shard-0040-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Criteria list must be explicit and testable: all pending receipts committed, no open HITL requests tied to the old account context, permission snapshots revalidated under new account, active workers notified and acknowledged",
+        "This criteria list is the gate for resuming execution and must be normative in Contracts_V0.md and referenced by Multi-Account.md",
+        "Wave-004 identity closure checklist \u2014 each item must be tracked to a doc owner:",
+        "1. operational_identity block anchored in Contracts_V0.md",
+        "2. requested_account_binding (none/preferred/required) defined in Contracts_V0.md + Multi-Account.md",
+        "3. manual_preferred_account_id vs requested_account_id distinction in Multi-Account.md",
+        "4. account_switch_event + account_pressure_episode in storage-plan.md + Contracts_V0.md",
+        "5. reconciliation-readiness criteria list in Contracts_V0.md + Multi-Account.md",
+        "6. actor_kind + execution_role enums in Contracts_V0.md",
+        "7. transport_host_id vs upstream_provider_id separation in Models_System.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

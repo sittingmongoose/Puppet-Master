@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0297",
+  "coverage_row_ids_represented": [
+    "cov-002214",
+    "cov-002218",
+    "cov-002220",
+    "cov-002222",
+    "cov-002225",
+    "cov-002568",
+    "cov-002571",
+    "cov-002574",
+    "cov-002577",
+    "cov-002581"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0297; path=Plans/Glossary.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Object-Kind Vocabulary for Routing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002214",
+        "cov-002218",
+        "cov-002220",
+        "cov-002222",
+        "cov-002225",
+        "cov-002568",
+        "cov-002571",
+        "cov-002574",
+        "cov-002577",
+        "cov-002581"
+      ],
+      "source_obligation_ids": [
+        "obl-001113",
+        "obl-001115",
+        "obl-001116",
+        "obl-001117",
+        "obl-001120",
+        "obl-001247",
+        "obl-001248",
+        "obl-001249",
+        "obl-001250",
+        "obl-001251"
+      ],
+      "source_seed_ids": [
+        "shard-0029-s003",
+        "shard-0030-s005",
+        "shard-0033-s008",
+        "shard-0033-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0030",
+        "shard-0033"
+      ],
+      "exact_missing_items": [
+        "usage_record",
+        "thread",
+        "wizard",
+        "bundle",
+        "reopened, revoked, and superseded should be reserved for true lineage-changing transitions, not generic old-state labels",
+        "Glossary.md is still too small and too pre-rewrite to anchor the newer Orchestrator vocabulary",
+        "it does not yet carry the terms that now need stable cross-doc meaning in Orchestrator, Source Control, search, history, ledger, and help",
+        "Orchestrator_Page.md and Run_Graph_View.md still expose the older execution ontology directly in user-facing labels (Tiers, Phase/Task/Subtask, Overseer wording as foreman shorthand)",
+        "Recommended dedicated help-entry set for the rewrite: Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Concern, Graph Patch, Graph Generation, Lane, requested vs effective, History vs Ledger, historical vs superseded vs revoked vs reopened",
+        "Recommended contextual-help-only set: individual graph badges, narrow panel chips, trust-state chrome, widget-specific filter fields, per-surface action gating messages"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

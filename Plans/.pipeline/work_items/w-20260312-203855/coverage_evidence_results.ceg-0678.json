@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0678",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-004476",
+      "source_obligation_ids": [
+        "obl-002143"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0094"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-004478",
+      "source_obligation_ids": [
+        "obl-002144"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0094"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:stale_token_live_use_suspected"
+      ]
+    },
+    {
+      "coverage_id": "cov-004952",
+      "source_obligation_ids": [
+        "obl-002241"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004955",
+      "source_obligation_ids": [
+        "obl-002242"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004958",
+      "source_obligation_ids": [
+        "obl-002243"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:stale_tokens_absent"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

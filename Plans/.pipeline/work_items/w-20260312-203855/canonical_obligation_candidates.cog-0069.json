@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0069",
+  "represented_seed_ids": [
+    "shard-0007-s008"
+  ],
+  "source_shard_ids": [
+    "shard-0007"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0007-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md: the body is tier-canonical while addenda are node-adjacent \u2014 this split-brain must be resolved by replacing the body with node/package/seam vocabulary",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Plans/orchestrator-subagent-integration.md: the body is tier-canonical while addenda are node-adjacent \u2014 this split-brain must be resolved by replacing the body with node/package/seam vocabulary"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## orchestrator-subagent-integration.md Overhaul"
+      ],
+      "stale_residue_to_retire": [
+        "TierContext",
+        "TierType",
+        "tier_id",
+        "select_for_tier"
+      ],
+      "canonical_replacement_hints": [
+        "Replace entire tier-rooted body with package/seam/node model"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001201-L001250"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

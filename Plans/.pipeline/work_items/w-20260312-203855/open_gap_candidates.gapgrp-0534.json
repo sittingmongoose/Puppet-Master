@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0534",
+  "coverage_row_ids_represented": [
+    "cov-002124",
+    "cov-002126",
+    "cov-002128",
+    "cov-002144",
+    "cov-002146",
+    "cov-002148",
+    "cov-002150",
+    "cov-002152",
+    "cov-002153",
+    "cov-002154"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0534; path=Plans/Runtime_Artifacts_Panel.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Orchestrator Export Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002124",
+        "cov-002126",
+        "cov-002128",
+        "cov-002144",
+        "cov-002146",
+        "cov-002148",
+        "cov-002150",
+        "cov-002152",
+        "cov-002153",
+        "cov-002154"
+      ],
+      "source_obligation_ids": [
+        "obl-001045",
+        "obl-001046",
+        "obl-001047",
+        "obl-001063",
+        "obl-001064",
+        "obl-001065",
+        "obl-001066",
+        "obl-001067",
+        "obl-001068",
+        "obl-001069"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s006",
+        "shard-0027-s010",
+        "shard-0028-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "record export: exact canonical record(s) with stable ids/refs and schema-aware payloads",
+        "bundle export: portable package containing multiple records/artifacts plus manifest",
+        "view export: user-facing filtered table/render output such as CSV, JSON summary, rendered image, or currently filtered list",
+        "filtered CSV is a view export, not canonical history",
+        "JSON summary export is not equivalent to canonical record export unless it preserves the exact record envelope",
+        "monolithic plan-graph export remains derived, never canonical",
+        "JSONL mirror export is still projection-derived, not a replacement for seglog ownership",
+        "artifacts preserve canonical run/thread/attempt linkage",
+        "receipt-like exports should not invent shadow IDs",
+        "usage-linked artifacts route through canonical usage identity"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0676",
+  "coverage_row_ids_represented": [
+    "cov-000887"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0676; path=Plans/assistant-chat-design.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Multi-Lane Chat Routing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000887"
+      ],
+      "source_obligation_ids": [
+        "obl-000384"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "Gemini: chat is still single-threaded with no multi-lane overseer routing \u2014 the design must define how multiple overseer lanes communicate via chat"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

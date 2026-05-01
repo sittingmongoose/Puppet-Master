@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0838",
+  "coverage_row_ids_represented": [
+    "cov-003563",
+    "cov-003570",
+    "cov-003577",
+    "cov-003584",
+    "cov-003670",
+    "cov-003674",
+    "cov-003678",
+    "cov-003682",
+    "cov-003686",
+    "cov-003728"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0838; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003563",
+        "cov-003570",
+        "cov-003577",
+        "cov-003584",
+        "cov-003670",
+        "cov-003674",
+        "cov-003678",
+        "cov-003682",
+        "cov-003686",
+        "cov-003728"
+      ],
+      "source_obligation_ids": [
+        "obl-001700",
+        "obl-001701",
+        "obl-001702",
+        "obl-001703",
+        "obl-001726",
+        "obl-001727",
+        "obl-001728",
+        "obl-001729",
+        "obl-001730",
+        "obl-001745"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0017",
+        "seed-WAVE005-0025",
+        "seed-WAVE005-0030"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0044",
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "Reserve trust_tier for preview/browser semantics only unless those docs are later explicitly renamed too",
+        "Make Glossary.md own the canonical term meanings for projection freshness and projection health",
+        "Let surface docs consume those terms instead of inventing local stale/degraded wording",
+        "Keep action gating rules tied to both axes: stale-but-healthy may allow read-only use with warning; degraded or unavailable should gate mutating actions much more aggressively",
+        "HITL now contains two contract eras: older request-local (HITLRequest with tier_id, tier_type, allowed_actions[]) and newer runtime-facing (waiting_approval as blocked overlay, allowed_action_ids[], cmd.runtime.*)",
+        "Move approval anchoring onto canonical runtime identity: run_id, node_id, blocked_sequence, attempt_id?, plus execution-unit context refs",
+        "Add an explicit approval-scope field or object, likely approval_scope_key, so reusable approvals and one-off blocked-episode approvals cannot bleed together",
+        "Add durable approver identity fields to approval/rejection records/events so audit/history can explain who approved or declined",
+        "Deprecated allowed_actions[] is compatibility-only and MUST NOT appear in new canonical schemas",
+        "Runtime_Artifacts_Panel.md still lacks attempt-level identity, producer attribution, trustworthy cost_usage linkage, and degraded/stale projector behavior"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "projection_freshness",
+        "projection_health",
+        "last_projected_at_utc",
+        "degraded_reason_code?",
+        "refresh_in_progress?"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

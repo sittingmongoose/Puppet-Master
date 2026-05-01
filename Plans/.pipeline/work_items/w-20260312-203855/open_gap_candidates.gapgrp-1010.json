@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1010",
+  "coverage_row_ids_represented": [
+    "cov-006302",
+    "cov-006303",
+    "cov-006304",
+    "cov-006305",
+    "cov-006306",
+    "cov-006307",
+    "cov-006308",
+    "cov-006309",
+    "cov-006310",
+    "cov-006311"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1010; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006302",
+        "cov-006303",
+        "cov-006304",
+        "cov-006305",
+        "cov-006306",
+        "cov-006307",
+        "cov-006308",
+        "cov-006309",
+        "cov-006310",
+        "cov-006311"
+      ],
+      "source_obligation_ids": [
+        "obl-003205",
+        "obl-003206",
+        "obl-003207",
+        "obl-003208",
+        "obl-003209",
+        "obl-003210",
+        "obl-003211",
+        "obl-003212",
+        "obl-003213",
+        "obl-003214"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s032",
+        "shard-0088-s033",
+        "shard-0088-s035",
+        "shard-0088-s036",
+        "shard-0088-s037",
+        "shard-0088-s038"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "`blocked_sequence` minting ownership still missing",
+        "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+        "normalizes_to_contract",
+        "target_kind",
+        "object_kind",
+        "inspector_target",
+        "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence.",
+        "some earlier baseline framing implied a fully new trust-state model was missing; the stronger reading is that the **operationalization** of trust states is missing, not the base freshness/health model itself.",
+        "route primitive indexing / bridge precedence / gate schema follow-through",
+        "blocked-sequence / startup-recovery / DAE policy ownership"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

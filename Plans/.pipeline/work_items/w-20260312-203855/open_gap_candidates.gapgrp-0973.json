@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0973",
+  "coverage_row_ids_represented": [
+    "cov-005932",
+    "cov-005933",
+    "cov-005934",
+    "cov-005935",
+    "cov-005936",
+    "cov-005937",
+    "cov-005938",
+    "cov-005939",
+    "cov-005940",
+    "cov-005941"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0973; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005932",
+        "cov-005933",
+        "cov-005934",
+        "cov-005935",
+        "cov-005936",
+        "cov-005937",
+        "cov-005938",
+        "cov-005939",
+        "cov-005940",
+        "cov-005941"
+      ],
+      "source_obligation_ids": [
+        "obl-002835",
+        "obl-002836",
+        "obl-002837",
+        "obl-002838",
+        "obl-002839",
+        "obl-002840",
+        "obl-002841",
+        "obl-002842",
+        "obl-002843",
+        "obl-002844"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s128",
+        "shard-0082-s131",
+        "shard-0082-s134",
+        "shard-0082-s138",
+        "shard-0082-s139",
+        "shard-0082-s140",
+        "shard-0083-s006",
+        "shard-0083-s024",
+        "shard-0083-s025",
+        "shard-0083-s054",
+        "shard-0083-s055",
+        "shard-0083-s064",
+        "shard-0083-s085",
+        "shard-0083-s092",
+        "shard-0084-s089",
+        "shard-0087-s013",
+        "shard-0087-s049",
+        "shard-0088-s033"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "route_target",
+        "OpenSubject",
+        "section `2` references `ContractName:Contracts_V0.md` instead of the file-path form used elsewhere",
+        "2",
+        "ContractName:Contracts_V0.md",
+        "the file is self-referential in its compliance line and therefore cannot serve as an independent example of owner-routing discipline",
+        "the primitive list still lacks named ownership for `route_target` and `OpenSubject`",
+        "`3.13` appears twice",
+        "3.13",
+        "`3.14` appears twice"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

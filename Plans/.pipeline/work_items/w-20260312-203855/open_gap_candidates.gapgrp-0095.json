@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0095",
+  "coverage_row_ids_represented": [
+    "cov-002996",
+    "cov-002998",
+    "cov-003000",
+    "cov-003002",
+    "cov-003004",
+    "cov-003041",
+    "cov-003043",
+    "cov-003045",
+    "cov-003081",
+    "cov-003084"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0095; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## concern_id as Route Target"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002996",
+        "cov-002998",
+        "cov-003000",
+        "cov-003002",
+        "cov-003004",
+        "cov-003041",
+        "cov-003043",
+        "cov-003045",
+        "cov-003081",
+        "cov-003084"
+      ],
+      "source_obligation_ids": [
+        "obl-001393",
+        "obl-001394",
+        "obl-001395",
+        "obl-001396",
+        "obl-001397",
+        "obl-001421",
+        "obl-001422",
+        "obl-001423",
+        "obl-001434",
+        "obl-001435"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0064",
+        "shard-0036-s009",
+        "shard-0036-s014",
+        "shard-0040-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0040",
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "Projection closure for concern records: every concern must be queryable by source surface (Orchestrator, Run Graph, Usage, History), by owner, by severity, and by resolution status",
+        "The canonical concern record family must be present in storage-plan.md; currently entirely absent",
+        "concern_id must be stable and usable as a route payload object_id for deep-link targeting",
+        "blocked_owner is absent from the blocked projection record, making it impossible to determine which system component is responsible for unblocking an attempt",
+        "storage-plan.md and Contracts_V0.md must add blocked_owner (the identity of the component/role that caused the block) to the blocked projection record",
+        "concern projection / concern_counts / node_concerns[] fields are missing from Run_Graph_View.md and from the candidate runtime projection contracts in Contracts_V0.md",
+        "blocked-owner vs concern-owner distinction must be added to the node-state model so UI can render correct triage options",
+        "concern records must be queryable from Run Graph node-click context",
+        "Add a node_concerns[] / concern_count projection to the Run Graph node state model so concern details are surfaced at node click",
+        "Bind concern-rendering to canonical concern record via concern_id, not ad-hoc blocked strings"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "concern_id (stable opaque)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

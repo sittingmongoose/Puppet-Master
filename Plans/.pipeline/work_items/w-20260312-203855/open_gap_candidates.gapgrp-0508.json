@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0508",
+  "coverage_row_ids_represented": [
+    "cov-002573",
+    "cov-002576",
+    "cov-002580",
+    "cov-002584",
+    "cov-002650",
+    "cov-002653",
+    "cov-002656",
+    "cov-002808",
+    "cov-002813",
+    "cov-002818"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0508; path=Plans/Run_Graph_View.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "### Key findings"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002573",
+        "cov-002576",
+        "cov-002580",
+        "cov-002584",
+        "cov-002650",
+        "cov-002653",
+        "cov-002656",
+        "cov-002808",
+        "cov-002813",
+        "cov-002818"
+      ],
+      "source_obligation_ids": [
+        "obl-001248",
+        "obl-001249",
+        "obl-001250",
+        "obl-001251",
+        "obl-001275",
+        "obl-001276",
+        "obl-001277",
+        "obl-001323",
+        "obl-001324",
+        "obl-001325"
+      ],
+      "source_seed_ids": [
+        "shard-0033-s008",
+        "shard-0033-s010",
+        "shard-0034-s011",
+        "shard-0035-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0034",
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "it does not yet carry the terms that now need stable cross-doc meaning in Orchestrator, Source Control, search, history, ledger, and help",
+        "Orchestrator_Page.md and Run_Graph_View.md still expose the older execution ontology directly in user-facing labels (Tiers, Phase/Task/Subtask, Overseer wording as foreman shorthand)",
+        "Recommended dedicated help-entry set for the rewrite: Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Concern, Graph Patch, Graph Generation, Lane, requested vs effective, History vs Ledger, historical vs superseded vs revoked vs reopened",
+        "Recommended contextual-help-only set: individual graph badges, narrow panel chips, trust-state chrome, widget-specific filter fields, per-surface action gating messages",
+        "UI_Command_Catalog.md already normalizes HITL and recovery around request_id, blocked_sequence, and cmd.runtime.* actions",
+        "Run_Graph_View.md and Orchestrator_Page.md still describe node-only or tier-era action/addressing patterns",
+        "Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and command args already present in UI_Command_Catalog.md",
+        "Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters",
+        "Add a shared projection-health / trust-state record family built from committed projection state, checkpoints, and last-updated metadata",
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

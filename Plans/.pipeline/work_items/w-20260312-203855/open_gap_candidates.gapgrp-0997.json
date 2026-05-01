@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0997",
+  "coverage_row_ids_represented": [
+    "cov-006172",
+    "cov-006173",
+    "cov-006174",
+    "cov-006175",
+    "cov-006176",
+    "cov-006177",
+    "cov-006178",
+    "cov-006179",
+    "cov-006180",
+    "cov-006181"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0997; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006172",
+        "cov-006173",
+        "cov-006174",
+        "cov-006175",
+        "cov-006176",
+        "cov-006177",
+        "cov-006178",
+        "cov-006179",
+        "cov-006180",
+        "cov-006181"
+      ],
+      "source_obligation_ids": [
+        "obl-003075",
+        "obl-003076",
+        "obl-003077",
+        "obl-003078",
+        "obl-003079",
+        "obl-003080",
+        "obl-003081",
+        "obl-003082",
+        "obl-003083",
+        "obl-003084"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s129",
+        "shard-0085-s130",
+        "shard-0085-s131",
+        "shard-0085-s147",
+        "shard-0085-s148",
+        "shard-0086-s001",
+        "shard-0086-s005",
+        "shard-0086-s016",
+        "shard-0086-s019"
+      ],
+      "source_shard_ids": [
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "`resume_url` reduced to transport or compatibility wording where it still survives",
+        "blocked-thread messages tied cleanly to the shared route/runtime action model",
+        "`assistant-chat-design.md` should not be over-corrected. It is mostly aligned and is no longer one of the main drift multipliers.",
+        "still describes Usage by `tier/session` and says tier config shows current usage",
+        "tier/session",
+        "still mirrors worktree ownership through `tier_id`",
+        "Git/worktree sections still use `tier_id` as worktree ownership glue",
+        "it also lists command families that now need revalidation against the newer runtime recovery and route/open model",
+        "This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones.",
+        "upstream owner docs first"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

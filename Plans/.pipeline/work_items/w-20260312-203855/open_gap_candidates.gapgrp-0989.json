@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0989",
+  "coverage_row_ids_represented": [
+    "cov-006092",
+    "cov-006093",
+    "cov-006094",
+    "cov-006095",
+    "cov-006096",
+    "cov-006097",
+    "cov-006098",
+    "cov-006099",
+    "cov-006100",
+    "cov-006101"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0989; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006092",
+        "cov-006093",
+        "cov-006094",
+        "cov-006095",
+        "cov-006096",
+        "cov-006097",
+        "cov-006098",
+        "cov-006099",
+        "cov-006100",
+        "cov-006101"
+      ],
+      "source_obligation_ids": [
+        "obl-002995",
+        "obl-002996",
+        "obl-002997",
+        "obl-002998",
+        "obl-002999",
+        "obl-003000",
+        "obl-003001",
+        "obl-003002",
+        "obl-003003",
+        "obl-003004"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s078",
+        "shard-0084-s084",
+        "shard-0084-s085",
+        "shard-0084-s091",
+        "shard-0084-s093",
+        "shard-0084-s094",
+        "shard-0084-s096",
+        "shard-0084-s097"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "exact_missing_items": [
+        "This seam is about ownership and scope, not renaming `requested_persona` back into older field families. The field names are already mostly right.",
+        "Gemini requested/effective auth/account identity is already framed correctly",
+        "Slint rewrite, seglog/redb/Tantivy, and Provider terminology are already locked",
+        "blocked-episode identity over request-centric HITL identity",
+        "`cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` still exist with `request_id`",
+        "the same file later defines canonical `cmd.runtime.*` recovery commands keyed by `run_id`, `node_id`, and `blocked_sequence`",
+        "cmd.runtime.*",
+        "`cmd.chat.open_thread_usage`",
+        "cmd.chat.open_thread_usage",
+        "`cmd.chat.focus_thread_usage`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

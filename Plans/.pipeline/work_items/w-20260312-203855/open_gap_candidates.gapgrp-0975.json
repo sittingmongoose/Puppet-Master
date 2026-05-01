@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0975",
+  "coverage_row_ids_represented": [
+    "cov-005952",
+    "cov-005953",
+    "cov-005954",
+    "cov-005955",
+    "cov-005956",
+    "cov-005957",
+    "cov-005958",
+    "cov-005959",
+    "cov-005960",
+    "cov-005961"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0975; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005952",
+        "cov-005953",
+        "cov-005954",
+        "cov-005955",
+        "cov-005956",
+        "cov-005957",
+        "cov-005958",
+        "cov-005959",
+        "cov-005960",
+        "cov-005961"
+      ],
+      "source_obligation_ids": [
+        "obl-002855",
+        "obl-002856",
+        "obl-002857",
+        "obl-002858",
+        "obl-002859",
+        "obl-002860",
+        "obl-002861",
+        "obl-002862",
+        "obl-002863",
+        "obl-002864"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s158",
+        "shard-0083-s001",
+        "shard-0083-s002",
+        "shard-0083-s003",
+        "shard-0083-s004",
+        "shard-0083-s006",
+        "shard-0083-s007",
+        "shard-0083-s008",
+        "shard-0083-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "Reconciliation should treat this as an owner-doc integrity stack, not three isolated docs:",
+        "`Crosswalk.md` first",
+        "`DRY_Rules.md` second",
+        "`Decision_Log.md` third",
+        "`Crosswalk.md` needs:",
+        "explicit primitive ownership for `route_target` and `OpenSubject`",
+        "`DRY_Rules.md` needs:",
+        "one deterministic `ContractRef` shape for `ContractName`",
+        "ContractName",
+        "`Decision_Log.md` needs:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

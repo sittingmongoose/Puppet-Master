@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0869",
+  "coverage_row_ids_represented": [
+    "cov-003350",
+    "cov-003354",
+    "cov-003358",
+    "cov-003371",
+    "cov-003376",
+    "cov-003381",
+    "cov-003386",
+    "cov-003391",
+    "cov-003396",
+    "cov-003401"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0869; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Identity/Projection Closure"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003350",
+        "cov-003354",
+        "cov-003358",
+        "cov-003371",
+        "cov-003376",
+        "cov-003381",
+        "cov-003386",
+        "cov-003391",
+        "cov-003396",
+        "cov-003401"
+      ],
+      "source_obligation_ids": [
+        "obl-001601",
+        "obl-001602",
+        "obl-001603",
+        "obl-001607",
+        "obl-001608",
+        "obl-001609",
+        "obl-001610",
+        "obl-001611",
+        "obl-001612",
+        "obl-001613"
+      ],
+      "source_seed_ids": [
+        "shard-0040-s008",
+        "shard-0040-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Identity/Projection closure: all surfaces that display effective identity (Orchestrator, History, Ledger, Usage, Source Control, Widgets) must consistently show the operational_identity block",
+        "No surface may display implied identity (run-level default assumed) when the actual effective identity diverged from the default during the execution",
+        "This is the canonical readiness posture for multi-account correctness: every surface that could show stale or misleading identity must have an explicit trust-state / freshness contract",
+        "Wave-004 identity closure checklist \u2014 each item must be tracked to a doc owner:",
+        "1. operational_identity block anchored in Contracts_V0.md",
+        "2. requested_account_binding (none/preferred/required) defined in Contracts_V0.md + Multi-Account.md",
+        "3. manual_preferred_account_id vs requested_account_id distinction in Multi-Account.md",
+        "4. account_switch_event + account_pressure_episode in storage-plan.md + Contracts_V0.md",
+        "5. reconciliation-readiness criteria list in Contracts_V0.md + Multi-Account.md",
+        "6. actor_kind + execution_role enums in Contracts_V0.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

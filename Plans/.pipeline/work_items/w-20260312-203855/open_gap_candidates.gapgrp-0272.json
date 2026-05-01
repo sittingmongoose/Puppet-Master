@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0272",
+  "coverage_row_ids_represented": [
+    "cov-002356",
+    "cov-002806",
+    "cov-002811",
+    "cov-002816",
+    "cov-002821",
+    "cov-002826",
+    "cov-003005",
+    "cov-003007",
+    "cov-003009",
+    "cov-003014"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0272; path=Plans/GitHub_Integration.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Artifact Identity"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002356",
+        "cov-002806",
+        "cov-002811",
+        "cov-002816",
+        "cov-002821",
+        "cov-002826",
+        "cov-003005",
+        "cov-003007",
+        "cov-003009",
+        "cov-003014"
+      ],
+      "source_obligation_ids": [
+        "obl-001181",
+        "obl-001323",
+        "obl-001324",
+        "obl-001325",
+        "obl-001326",
+        "obl-001327",
+        "obl-001398",
+        "obl-001399",
+        "obl-001400",
+        "obl-001404"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s012",
+        "shard-0035-s006",
+        "shard-0036-s003",
+        "shard-0036-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0035",
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "Runtime_Artifacts_Panel.md is missing attempt_id in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly",
+        "Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters",
+        "Add a shared projection-health / trust-state record family built from committed projection state, checkpoints, and last-updated metadata",
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control",
+        "Bind GitHub Integration to project-scoped selected_repo_id and provider_accounts.* state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths",
+        "selected_repo_id already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary",
+        "cmd.github.connect is effectively argument-free in GitHub_Integration.md but should carry context args (project scope target, desired capability tier, optional recovery-request context)",
+        "GitHub Integration command table diverges from UI_Command_Catalog.md (different command names and different arg shapes for overlapping commands)",
+        "These are now the only place where requested/effective admin capability is surfaced",
+        "GitHub_Integration.md now needs: effective-account display on all account-context views, account-switch-reason / degraded-capability UI, and account-blocked-recovery-request integration with canonical concern records"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

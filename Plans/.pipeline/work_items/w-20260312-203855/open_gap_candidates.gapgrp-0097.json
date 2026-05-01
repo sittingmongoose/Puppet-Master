@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0097",
+  "coverage_row_ids_represented": [
+    "cov-003178",
+    "cov-003181",
+    "cov-003321",
+    "cov-003323",
+    "cov-003325",
+    "cov-003327",
+    "cov-003329",
+    "cov-003332",
+    "cov-003334",
+    "cov-003336"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0097; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Retire page: string Payload Field"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003178",
+        "cov-003181",
+        "cov-003321",
+        "cov-003323",
+        "cov-003325",
+        "cov-003327",
+        "cov-003329",
+        "cov-003332",
+        "cov-003334",
+        "cov-003336"
+      ],
+      "source_obligation_ids": [
+        "obl-001482",
+        "obl-001483",
+        "obl-001588",
+        "obl-001589",
+        "obl-001590",
+        "obl-001591",
+        "obl-001592",
+        "obl-001593",
+        "obl-001594",
+        "obl-001595"
+      ],
+      "source_seed_ids": [
+        "shard-0038-s006",
+        "shard-0040-s002",
+        "shard-0040-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Replace all occurrences of bare page: string with the canonical route payload schema (surface_id + object_kind + object_id)",
+        "Any existing uses of page: string in cmd.* args or attention item payloads must be migrated",
+        "requested_account_id? alone is insufficient: must be paired with requested_account_binding (none | preferred | required)",
+        "none: no account preference; system uses default account",
+        "preferred: system tries requested account, falls back to default with degraded-mode flag if unavailable",
+        "required: system must use requested account; hard-blocks if unavailable, fires concern/blocked episode",
+        "This three-value binding model is cleaner than a bare optional field and must be the canonical model in Contracts_V0.md and Multi-Account.md",
+        "manual_preferred_account_id (set by user in settings) is distinct from requested_account_id (set per-run by the caller/dispatcher)",
+        "manual_preferred_account_id is a persistent user preference that provides a default requested account for runs that do not specify one",
+        "requested_account_id takes precedence over manual_preferred_account_id when both are present"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "surface_id + object_kind + object_id"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0124",
+  "coverage_row_ids_represented": [
+    "cov-004174",
+    "cov-004176",
+    "cov-004177",
+    "cov-004178",
+    "cov-004179",
+    "cov-004774",
+    "cov-004779",
+    "cov-004781",
+    "cov-004783",
+    "cov-004785"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0124; path=Plans/Crosswalk.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "## Primitive:UICommand"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004174",
+        "cov-004176",
+        "cov-004177",
+        "cov-004178",
+        "cov-004179",
+        "cov-004774",
+        "cov-004779",
+        "cov-004781",
+        "cov-004783",
+        "cov-004785"
+      ],
+      "source_obligation_ids": [
+        "obl-001959",
+        "obl-001961",
+        "obl-001962",
+        "obl-001963",
+        "obl-001964",
+        "obl-002207",
+        "obl-002209",
+        "obl-002210",
+        "obl-002211",
+        "obl-002212"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0028",
+        "seed-WAVE008-0023",
+        "seed-WAVE008-0024",
+        "seed-WAVE008-0033"
+      ],
+      "source_shard_ids": [
+        "shard-0065",
+        "shard-0074",
+        "shard-0075"
+      ],
+      "exact_missing_items": [
+        "Plans/Crosswalk.md still does not declare the routing/open-by-identity primitives that these behaviors require.",
+        "Repair Crosswalk.md numbering before using it as the owner boundary doc for route/open primitives.",
+        "Plans/Crosswalk.md has duplicated section numbering: 3.13 is used for both RunGraphView and DocumentInlineNotes; 3.14 is used for both OrchestratorPage and TargetedRevisionPass.",
+        "Crosswalk.md is especially risky because duplicate numbering weakens its role as a precedence document.",
+        "Treat duplicate numbering and repeated sections as first-class reconciliation tasks, not cosmetic cleanup.",
+        "`Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.",
+        "Plans/Contracts_V0.md still has resume_url, detail_ref, and event-local linkage fields, but it still does not own a named route_target or OpenSubject contract.",
+        "Structural gaps still live: Contracts_V0.md still lacks the named canonical contracts for route_target and OpenSubject.",
+        "Plans/Crosswalk.md still lacks the matching primitive-boundary declaration for route-target and subject-open navigation.",
+        "This is now a clear owner-doc gap, not a vague alignment issue. storage-plan.md is ahead of Contracts_V0.md and Crosswalk.md on this seam."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

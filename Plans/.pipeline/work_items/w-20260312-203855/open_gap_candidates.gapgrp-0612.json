@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0612",
+  "coverage_row_ids_represented": [
+    "cov-004789",
+    "cov-004795",
+    "cov-004801",
+    "cov-004807"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "group gapgrp-0612; path=Plans/UI_Wiring_Rules.md; row_type=missing_doc_reference; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "heading": "## route_target Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004789",
+        "cov-004795",
+        "cov-004801",
+        "cov-004807"
+      ],
+      "source_obligation_ids": [
+        "obl-002213",
+        "obl-002214",
+        "obl-002215",
+        "obl-002216"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "exact_missing_items": [
+        "`Contracts_V0.md` still has no canonical route-target/open-subject contract, which is why command docs keep improvising local payload semantics.",
+        "There is still no canonical navigation primitive in the contract layer, so wrapper commands remain forced to carry semantics in prose.",
+        "Keep domain-facing wrapper commands public and stable; add canonical `route_target` / `OpenSubject` semantics underneath them; let wrappers normalize internally to the shared navigation primitive",
+        "A smaller hidden or lower-level canonical navigation primitive still looks necessary, but it should be contract-owned rather than catalog-dominant."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Missing doc reference obligation requires reconciliation or discovery.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

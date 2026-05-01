@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0991",
+  "coverage_row_ids_represented": [
+    "cov-006112",
+    "cov-006113",
+    "cov-006114",
+    "cov-006115",
+    "cov-006116",
+    "cov-006117",
+    "cov-006118",
+    "cov-006119",
+    "cov-006120",
+    "cov-006121"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0991; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006112",
+        "cov-006113",
+        "cov-006114",
+        "cov-006115",
+        "cov-006116",
+        "cov-006117",
+        "cov-006118",
+        "cov-006119",
+        "cov-006120",
+        "cov-006121"
+      ],
+      "source_obligation_ids": [
+        "obl-003015",
+        "obl-003016",
+        "obl-003017",
+        "obl-003018",
+        "obl-003019",
+        "obl-003020",
+        "obl-003021",
+        "obl-003022",
+        "obl-003023",
+        "obl-003024"
+      ],
+      "source_seed_ids": [
+        "shard-0084-s122",
+        "shard-0084-s123",
+        "shard-0084-s126",
+        "shard-0084-s127",
+        "shard-0084-s134",
+        "shard-0084-s135",
+        "shard-0084-s138",
+        "shard-0085-s005",
+        "shard-0085-s006",
+        "shard-0085-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0084",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "Reconciliation order for this seam should be:",
+        "`rewrite-tie-in-memo.md` first as rewrite-root routing",
+        "`rewrite-tie-in-memo.md` needs explicit rewrite-root routing for:",
+        "Orchestrator graph/seam/package governance model",
+        "`resume_url` reduced to transport, not first-class navigation identity",
+        "dashboard and settings language brought in line with the graph/seam/package model",
+        "`rewrite-tie-in-memo.md` is mostly ahead, which makes it a strong place to record the missing rewrite-root decisions rather than inventing another owner doc.",
+        "canonical dispatch already uses scored ready-set selection, not pure lexical `node_id`",
+        "`attempt_id` is first-class",
+        "`scheduler_lane` is first-class"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

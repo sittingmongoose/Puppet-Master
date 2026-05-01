@@ -1,0 +1,145 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0003",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003-L000401-L000600.md",
+  "source_line_range": "L000401-L000600",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "handoff storage/delivery mapping",
+      "exact_items": [
+        "pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "specify the concrete project-scoped paths or storage domains that own them",
+        "specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Storage/delivery clarification pressure from user",
+        "Current recommended direction after checking docs"
+      ],
+      "stale_tokens": [
+        "optional JSON"
+      ],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000503-L000511",
+        "working_ledger.md:L000528-L000536"
+      ],
+      "notes": [
+        "Canonical stack exists, but the new orchestration artifacts are not yet mapped into it; this is the explicit unresolved seam."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "requested-vs-effective identity display",
+      "exact_items": [
+        "cover agent vs subagent",
+        "cover fresh vs reused retry worker",
+        "cover overseer delegation on/off",
+        "cover delegated-worker provider/model/effort policy",
+        "ensure consistent requested-vs-effective identity display across chat actors and orchestration actors"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "New execution-policy settings requirement",
+        "Clarified execution-policy UI split"
+      ],
+      "stale_tokens": [
+        "delegated worker"
+      ],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000537-L000555",
+        "working_ledger.md:L000556-L000557"
+      ],
+      "notes": [
+        "Separate worker-kind and retry-context policy; the UI seam must carry the requested/effective model through both chat and orchestration actors."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator canonical runtime consumer",
+      "exact_items": [
+        "Orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "use plan-graph index and node shard files as required execution inputs",
+        "treat runnable graph nodes, DAG readiness, and dispatch from a global ready set as the scheduling model"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Current docs do say Orchestrator consumes the plan/node graph for execution",
+        "Strong current runtime stance"
+      ],
+      "stale_tokens": [
+        "tier system",
+        "single agent"
+      ],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000588-L000591",
+        "working_ledger.md:L000593-L000597"
+      ],
+      "notes": [
+        "This is the consumer carry-through: Orchestrator is the consumer of shared contracts, not the schema owner."
+      ]
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "graph-canonical control loop",
+      "exact_items": [
+        "define the governing intelligence/control loop in a graph-canonical system",
+        "resolve whether tiers remain only a derived human-facing lens or retain execution authority"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Design discussion now has a concrete recommendation direction",
+        "User is now pressure-testing the missing runtime control pattern"
+      ],
+      "stale_tokens": [
+        "hybrid"
+      ],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L000592-L000598"
+      ],
+      "notes": [
+        "Explicit unresolved seam: execution authority and control-loop ownership are still not pinned down."
+      ]
+    }
+  ],
+  "noise_items": [
+    {
+      "source_evidence": [
+        "working_ledger.md:L417-L428"
+      ],
+      "reason": "document inventory / overlap summary, not an obligation-grade missing field"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L466-L484"
+      ],
+      "reason": "research summary / reusable-pattern summary, not a concrete blocker"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L564-L569"
+      ],
+      "reason": "status/tension summary, not a specific missing field"
+    }
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0003"
+}

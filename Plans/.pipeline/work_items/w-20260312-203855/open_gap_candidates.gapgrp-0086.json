@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0086",
+  "coverage_row_ids_represented": [
+    "cov-005164",
+    "cov-005169",
+    "cov-005174",
+    "cov-005335",
+    "cov-005340",
+    "cov-005345",
+    "cov-005350",
+    "cov-005355",
+    "cov-005360",
+    "cov-007543"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0086; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## inspector_target Closed Enum"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005164",
+        "cov-005169",
+        "cov-005174",
+        "cov-005335",
+        "cov-005340",
+        "cov-005345",
+        "cov-005350",
+        "cov-005355",
+        "cov-005360",
+        "cov-007543"
+      ],
+      "source_obligation_ids": [
+        "obl-002282",
+        "obl-002283",
+        "obl-002284",
+        "obl-002309",
+        "obl-002310",
+        "obl-002311",
+        "obl-002312",
+        "obl-002313",
+        "obl-002314",
+        "obl-004223"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0043",
+        "seed-WAVE007-0053",
+        "shard-0088-s027"
+      ],
+      "source_shard_ids": [
+        "shard-0069",
+        "shard-0070",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Use `inspector_target = lineage` for scheduler/remediation/safe-point/patch lineage drill-ins.",
+        "Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.",
+        "Keep all message-step-line-range style anchors out of `inspector_target`.",
+        "The contract now has enough shape to define concrete route normalization for the most common user-facing flows.",
+        "cost usage -> Show in Usage: `target_kind=primary_view`, `project_id=<id>`, `object_kind=usage_event`, `object_id=<canonical usage event id>`, `thread_id=<id>` when thread-scoped, `inspector_target=usage`",
+        "cost usage -> Show in Ledger: `target_kind=primary_view`, `project_id=<id>`, `object_kind=usage_event`, `object_id=<id>`, `thread_id=<id>` when thread-scoped, `tab_id=ledger`",
+        "wizard resume: `target_kind=primary_view`, `project_id=<id>`, `object_kind=wizard`, `object_id=<wizard_id>`, `thread_id=<id>` when thread must be restored; serialized `resume_url` carries narrow step anchor detail",
+        "chat search hit: `target_kind=side_panel`, `project_id=<id>`, `thread_id=<id>`, `object_kind=message`, `object_id=<message_id>`",
+        "node detail pivot: `target_kind=page_tab`, `project_id=<id>`, `focused_run_id=<run_id>`, `object_kind=node`, `object_id=<node_id>`, `tab_id=node_graph`, `inspector_target=details|evidence|usage|history`",
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

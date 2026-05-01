@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0670",
+  "coverage_row_ids_represented": [
+    "cov-005471",
+    "cov-005473"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0670; path=Plans/WorktreeGitImprovement.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-005471",
+        "cov-005473"
+      ],
+      "source_obligation_ids": [
+        "obl-002382",
+        "obl-002384"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0022"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "exact_missing_items": [
+        "The future crew/message examples are especially risky because they would propagate tier_id back into git/worktree coordination even after the broader execution-context rewrite.",
+        "Reconcile git/worktree coordination examples so they stop carrying tier_id as the operational identity anchor."
+      ],
+      "stale_tokens": [
+        "get_tier_worktree(tier_id) in WorktreeGitImprovement.md",
+        "worktree paths keyed by tier_id",
+        "tier_id as worktree identity anchor in crew/message examples"
+      ],
+      "canonical_replacement_hints": [
+        "lane/worktree plus execution-context model; canonical worktree object identity via object_kind=worktree"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

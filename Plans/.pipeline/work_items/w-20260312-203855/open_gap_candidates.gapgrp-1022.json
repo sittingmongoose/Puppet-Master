@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1022",
+  "coverage_row_ids_represented": [
+    "cov-006446",
+    "cov-006447",
+    "cov-006448",
+    "cov-006449",
+    "cov-006450",
+    "cov-006451",
+    "cov-006452",
+    "cov-006453",
+    "cov-006454",
+    "cov-007026"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1022; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006446",
+        "cov-006447",
+        "cov-006448",
+        "cov-006449",
+        "cov-006450",
+        "cov-006451",
+        "cov-006452",
+        "cov-006453",
+        "cov-006454",
+        "cov-007026"
+      ],
+      "source_obligation_ids": [
+        "obl-003349",
+        "obl-003350",
+        "obl-003351",
+        "obl-003352",
+        "obl-003353",
+        "obl-003354",
+        "obl-003355",
+        "obl-003356",
+        "obl-003357",
+        "obl-003929"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s072",
+        "shard-0090-s055",
+        "shard-0091-s018",
+        "shard-0091-s027",
+        "shard-0091-s028",
+        "shard-0091-s059",
+        "shard-0091-s060",
+        "shard-0091-s061",
+        "shard-0091-s091",
+        "shard-0091-s122"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Neither wave added a new exact missing field, command, status, cross-reference target, heading, stubbed transfer, over-summarized transfer, stale contradictory survivor, affected target, or blocker family.",
+        "Wave 1 and Wave 2 both count as zero-finding waves under the strict audit rule because they added no new exact missing field, command, heading, stale survivor, affected target, or blocker family.",
+        "Follow-up Wave 2 rechecked the storage/receipt/usage cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+        "Follow-up Wave 3 rechecked the blocked/chat/routing cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+        "Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.",
+        "Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+        "Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.",
+        "Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+        "Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family.",
+        "legacy `PuppetMasterEvent::*` source tables"
+      ],
+      "stale_tokens": [
+        "PuppetMasterEvent::*"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

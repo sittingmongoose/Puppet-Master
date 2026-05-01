@@ -1,0 +1,328 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0303",
+  "represented_seed_ids": [
+    "shard-0040-s002",
+    "shard-0040-s003"
+  ],
+  "source_shard_ids": [
+    "shard-0040"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0040-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "requested_account_id? alone is insufficient: must be paired with requested_account_binding (none | preferred | required)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested_account_id? alone is insufficient: must be paired with requested_account_binding (none | preferred | required)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## requested_account_binding Canonical Values",
+        "## Account Binding Failure Modes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "requested_account_binding: none | preferred | required"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0040-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "none: no account preference; system uses default account",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "none: no account preference; system uses default account"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## requested_account_binding Canonical Values",
+        "## Account Binding Failure Modes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "requested_account_binding: none | preferred | required"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0040-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "preferred: system tries requested account, falls back to default with degraded-mode flag if unavailable",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "preferred: system tries requested account, falls back to default with degraded-mode flag if unavailable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## requested_account_binding Canonical Values",
+        "## Account Binding Failure Modes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "requested_account_binding: none | preferred | required"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0040-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "required: system must use requested account; hard-blocks if unavailable, fires concern/blocked episode",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "required: system must use requested account; hard-blocks if unavailable, fires concern/blocked episode"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## requested_account_binding Canonical Values",
+        "## Account Binding Failure Modes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "requested_account_binding: none | preferred | required"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0040-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "This three-value binding model is cleaner than a bare optional field and must be the canonical model in Contracts_V0.md and Multi-Account.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "This three-value binding model is cleaner than a bare optional field and must be the canonical model in Contracts_V0.md and Multi-Account.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## requested_account_binding Canonical Values",
+        "## Account Binding Failure Modes"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "requested_account_binding: none | preferred | required"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0040-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "manual_preferred_account_id (set by user in settings) is distinct from requested_account_id (set per-run by the caller/dispatcher)",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "manual_preferred_account_id (set by user in settings) is distinct from requested_account_id (set per-run by the caller/dispatcher)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## manual_preferred_account_id vs requested_account_id"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "manual_preferred_account_id (settings-level)",
+        "requested_account_id (per-run)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0040-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "manual_preferred_account_id is a persistent user preference that provides a default requested account for runs that do not specify one",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "manual_preferred_account_id is a persistent user preference that provides a default requested account for runs that do not specify one"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## manual_preferred_account_id vs requested_account_id"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "manual_preferred_account_id (settings-level)",
+        "requested_account_id (per-run)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0040-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "requested_account_id takes precedence over manual_preferred_account_id when both are present",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested_account_id takes precedence over manual_preferred_account_id when both are present"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## manual_preferred_account_id vs requested_account_id"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "manual_preferred_account_id (settings-level)",
+        "requested_account_id (per-run)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0040-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "canon_label": "This distinction must be clearly defined in Multi-Account.md and in the account-identity resolution chain",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "This distinction must be clearly defined in Multi-Account.md and in the account-identity resolution chain"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## manual_preferred_account_id vs requested_account_id"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "manual_preferred_account_id (settings-level)",
+        "requested_account_id (per-run)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007801"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

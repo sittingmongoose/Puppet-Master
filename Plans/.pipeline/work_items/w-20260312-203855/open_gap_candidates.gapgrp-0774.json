@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0774",
+  "coverage_row_ids_represented": [
+    "cov-007732",
+    "cov-007733",
+    "cov-007734",
+    "cov-007921",
+    "cov-007928",
+    "cov-007935",
+    "cov-007942",
+    "cov-007949",
+    "cov-008017",
+    "cov-008040"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0774; path=Plans/storage-plan.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007732",
+        "cov-007733",
+        "cov-007734",
+        "cov-007921",
+        "cov-007928",
+        "cov-007935",
+        "cov-007942",
+        "cov-007949",
+        "cov-008017",
+        "cov-008040"
+      ],
+      "source_obligation_ids": [
+        "obl-004314",
+        "obl-004315",
+        "obl-004316",
+        "obl-004386",
+        "obl-004387",
+        "obl-004388",
+        "obl-004389",
+        "obl-004390",
+        "obl-004425",
+        "obl-004433"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s075",
+        "shard-0090-s054",
+        "shard-0091-s026",
+        "shard-0091-s057"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

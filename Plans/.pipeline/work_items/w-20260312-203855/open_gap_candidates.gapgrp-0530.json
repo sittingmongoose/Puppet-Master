@@ -1,0 +1,66 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0530",
+  "coverage_row_ids_represented": [
+    "cov-007896",
+    "cov-007903",
+    "cov-007910",
+    "cov-008085"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0530; path=Plans/Runtime_Artifacts_Panel.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007896",
+        "cov-007903",
+        "cov-007910",
+        "cov-008085"
+      ],
+      "source_obligation_ids": [
+        "obl-004383",
+        "obl-004384",
+        "obl-004385",
+        "obl-004448"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s054",
+        "shard-0091-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "gap-003",
+        "gap-004",
+        "gap-005"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

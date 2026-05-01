@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1000",
+  "coverage_row_ids_represented": [
+    "cov-006202",
+    "cov-006203",
+    "cov-006204",
+    "cov-006205",
+    "cov-006206",
+    "cov-006207",
+    "cov-006208",
+    "cov-006209",
+    "cov-006210",
+    "cov-006211"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1000; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006202",
+        "cov-006203",
+        "cov-006204",
+        "cov-006205",
+        "cov-006206",
+        "cov-006207",
+        "cov-006208",
+        "cov-006209",
+        "cov-006210",
+        "cov-006211"
+      ],
+      "source_obligation_ids": [
+        "obl-003105",
+        "obl-003106",
+        "obl-003107",
+        "obl-003108",
+        "obl-003109",
+        "obl-003110",
+        "obl-003111",
+        "obl-003112",
+        "obl-003113",
+        "obl-003114"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s001",
+        "shard-0087-s004",
+        "shard-0087-s005",
+        "shard-0087-s006",
+        "shard-0087-s007",
+        "shard-0087-s008",
+        "shard-0087-s010",
+        "shard-0087-s011",
+        "shard-0087-s012",
+        "shard-0087-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "This packet must be a canon-collapse pass, not a light additive pass.",
+        "Constraint for this pass: do **not** edit planning docs directly; use the existing work-item ledger plus current canonical docs.",
+        "Evidence base used for this pass:",
+        "prior direct reads of current owner docs and late-straggler route/records slices",
+        "state / storage / command / audit-trail behavior",
+        "tools / permissions / provider / identity integration",
+        "project-summary, escalation, blocked-owner, and resurfacing rules",
+        "lane/worktree lifecycle and cleanup semantics",
+        "route/open-subject/bridge-field refinement and verification rules",
+        "Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examples, and scoped-resolution rules are still missing."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

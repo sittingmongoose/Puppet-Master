@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0051",
+  "coverage_row_ids_represented": [
+    "cov-000594",
+    "cov-000596",
+    "cov-000598",
+    "cov-000600",
+    "cov-000602",
+    "cov-000611",
+    "cov-000617",
+    "cov-000623",
+    "cov-000627",
+    "cov-000629"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0051; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## graph_patch_request"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000594",
+        "cov-000596",
+        "cov-000598",
+        "cov-000600",
+        "cov-000602",
+        "cov-000611",
+        "cov-000617",
+        "cov-000623",
+        "cov-000627",
+        "cov-000629"
+      ],
+      "source_obligation_ids": [
+        "obl-000253",
+        "obl-000254",
+        "obl-000255",
+        "obl-000256",
+        "obl-000257",
+        "obl-000262",
+        "obl-000265",
+        "obl-000268",
+        "obl-000270",
+        "obl-000271"
+      ],
+      "source_seed_ids": [
+        "shard-0017-s004",
+        "shard-0017-s005",
+        "shard-0017-s006",
+        "shard-0017-s007",
+        "shard-0025-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0025"
+      ],
+      "exact_missing_items": [
+        "graph_patch_result: old generation, new generation, invalidated path refs, new path refs, surviving/rejoined path refs, resulting concern/promotion/recovery implications",
+        "promotion record: promotion class (lane_to_package, package_to_seam, seam_completion), source scope and target scope refs, eligibility state at decision time, blocking refs / concern refs, review/corroboration refs, decision outcome, revocation/reopen lineage if it later changes",
+        "recovery record: recovery kind (safe-point restore, restart reconciliation, blocked prerequisite resolution, lane/worktree restore), target scope refs, trigger reason, preconditions, result, resulting attempt/run linkage, affected concern refs",
+        "state transition report: from state, to state, target object, actor/source, why transition occurred, prerequisite evidence / review / corroboration refs, resulting downstream obligations",
+        "This may help avoid every major object family inventing bespoke decision summary fields",
+        "run_id?",
+        "status",
+        "summary",
+        "detail_ref?",
+        "source_refs[]"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

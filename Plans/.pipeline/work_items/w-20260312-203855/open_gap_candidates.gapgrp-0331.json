@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0331",
+  "coverage_row_ids_represented": [
+    "cov-003331",
+    "cov-003333",
+    "cov-003335",
+    "cov-003337",
+    "cov-003360",
+    "cov-003363",
+    "cov-003366",
+    "cov-003432",
+    "cov-003437",
+    "cov-003442"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0331; path=Plans/Multi-Account.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## manual_preferred_account_id vs requested_account_id"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003331",
+        "cov-003333",
+        "cov-003335",
+        "cov-003337",
+        "cov-003360",
+        "cov-003363",
+        "cov-003366",
+        "cov-003432",
+        "cov-003437",
+        "cov-003442"
+      ],
+      "source_obligation_ids": [
+        "obl-001593",
+        "obl-001594",
+        "obl-001595",
+        "obl-001596",
+        "obl-001604",
+        "obl-001605",
+        "obl-001606",
+        "obl-001624",
+        "obl-001625",
+        "obl-001626"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0006",
+        "shard-0040-s003",
+        "shard-0040-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "manual_preferred_account_id (set by user in settings) is distinct from requested_account_id (set per-run by the caller/dispatcher)",
+        "manual_preferred_account_id is a persistent user preference that provides a default requested account for runs that do not specify one",
+        "requested_account_id takes precedence over manual_preferred_account_id when both are present",
+        "This distinction must be clearly defined in Multi-Account.md and in the account-identity resolution chain",
+        "do-not-forget: run.started MUST field list in storage-plan.md must agree with the operational_identity block definition \u2014 the event row must include the full operational_identity snapshot inline or by normative reference",
+        "do-not-forget: provider_accounts.run_snapshot policy_hash must become policy_version_ref to support downstream policy-validity queries",
+        "do-not-forget: usage_event_ref as structured locator must be defined before any surface ships Show in Usage or Show in Ledger pivots",
+        "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record",
+        "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter",
+        "Operational identity kinds: github_api_account, registry_namespace, kubernetes_context"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "manual_preferred_account_id (settings-level)",
+        "requested_account_id (per-run)"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1020",
+  "coverage_row_ids_represented": [
+    "cov-006426",
+    "cov-006427",
+    "cov-006428",
+    "cov-006429",
+    "cov-006430",
+    "cov-006431",
+    "cov-006432",
+    "cov-006433",
+    "cov-006434",
+    "cov-006435"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1020; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006426",
+        "cov-006427",
+        "cov-006428",
+        "cov-006429",
+        "cov-006430",
+        "cov-006431",
+        "cov-006432",
+        "cov-006433",
+        "cov-006434",
+        "cov-006435"
+      ],
+      "source_obligation_ids": [
+        "obl-003329",
+        "obl-003330",
+        "obl-003331",
+        "obl-003332",
+        "obl-003333",
+        "obl-003334",
+        "obl-003335",
+        "obl-003336",
+        "obl-003337",
+        "obl-003338"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s120",
+        "shard-0084-s008",
+        "shard-0084-s048",
+        "shard-0084-s073",
+        "shard-0085-s022",
+        "shard-0085-s056",
+        "shard-0085-s084",
+        "shard-0085-s139",
+        "shard-0085-s143",
+        "shard-0086-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "Reconciliation should retire the request-centric opening contract and rebuild the file around:",
+        "stale tier-era and request-era pieces:",
+        "But the owner doc still frames those fields through stale scope vocabulary:",
+        "Reconciliation should keep the field names that are already correct and replace the stale scope model under them:",
+        "still carries stale worker identity fields:",
+        "Research Progress - 2026-03-17 - remaining high-risk stale consumers: Run Graph, Widget System, Usage, Assistant Chat",
+        "later says legacy key is deleted",
+        "the main risk is not fresh contradictions here; it is stale pass/fail references if upstream specs move and this checklist is not updated",
+        "still enumerates stale widgets such as:",
+        "it marks as PASS several things that are only PASS relative to stale upstream docs, such as:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0526",
+  "coverage_row_ids_represented": [
+    "cov-006642",
+    "cov-006643",
+    "cov-006644",
+    "cov-006645",
+    "cov-006646",
+    "cov-006647",
+    "cov-006648",
+    "cov-006649",
+    "cov-007802",
+    "cov-007805"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0526; path=Plans/Runtime_Artifacts_Panel.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-006642",
+        "cov-006643",
+        "cov-006644",
+        "cov-006645",
+        "cov-006646",
+        "cov-006647",
+        "cov-006648",
+        "cov-006649",
+        "cov-007802",
+        "cov-007805"
+      ],
+      "source_obligation_ids": [
+        "obl-003545",
+        "obl-003546",
+        "obl-003547",
+        "obl-003548",
+        "obl-003549",
+        "obl-003550",
+        "obl-003551",
+        "obl-003552",
+        "obl-004359",
+        "obl-004360"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s008",
+        "shard-0084-s026",
+        "shard-0085-s107",
+        "shard-0086-s084",
+        "shard-0086-s120",
+        "shard-0087-s028",
+        "shard-0087-s089",
+        "shard-0089-s140",
+        "shard-0089-s145",
+        "shard-0089-s150",
+        "shard-0090-s063",
+        "shard-0090-s079",
+        "shard-0090-s097",
+        "shard-0090-s111",
+        "shard-0090-s136",
+        "shard-0091-s001",
+        "shard-0091-s093",
+        "shard-0091-s102",
+        "shard-0091-s131",
+        "shard-0091-s143"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "`Plans/Runtime_Artifacts_Panel.md:63-93`",
+        "Plans/Runtime_Artifacts_Panel.md:63-93",
+        "`Plans/Runtime_Artifacts_Panel.md:61-93`",
+        "Plans/Runtime_Artifacts_Panel.md:61-93",
+        "`Plans/Runtime_Artifacts_Panel.md:57-65`",
+        "Plans/Runtime_Artifacts_Panel.md:57-65",
+        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0274",
+  "coverage_row_ids_represented": [
+    "cov-001205",
+    "cov-001207",
+    "cov-003058",
+    "cov-003062",
+    "cov-003066",
+    "cov-003070",
+    "cov-003814",
+    "cov-003817",
+    "cov-003820"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0274; path=Plans/GitHub_Integration.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## GitHub Login vs account_id"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001205",
+        "cov-001207",
+        "cov-003058",
+        "cov-003062",
+        "cov-003066",
+        "cov-003070",
+        "cov-003814",
+        "cov-003817",
+        "cov-003820"
+      ],
+      "source_obligation_ids": [
+        "obl-000519",
+        "obl-000520",
+        "obl-001427",
+        "obl-001428",
+        "obl-001429",
+        "obl-001430",
+        "obl-001789",
+        "obl-001790",
+        "obl-001791"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0041",
+        "shard-0011-s009",
+        "shard-0036-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0036",
+        "shard-0046"
+      ],
+      "exact_missing_items": [
+        "GitHub_API_Auth_and_Flows.md still keys storage/routing on mutable login",
+        "Replace GitHub login as a stable key with internal account_id, while keeping login as provider-native disclosure metadata",
+        "Reconcile GitHub command table with UI_Command_Catalog.md: align arg shapes for cmd.github.connect, cmd.github.disconnect, and any overlapping command definitions",
+        "Add a declared-capability mechanism to CLI_Bridged_Providers.md so bridged providers can announce multi-account, switch-notification, and attribution capabilities the same way direct providers do",
+        "Bind GitHub_API_Auth_and_Flows.md to stable account_id instead of mutable login and add account-health / degraded-capability model",
+        "Rewrite GitHub_Integration.md account UX to include: effective-account display, account-switch-reason display, requested-vs-effective admin-capability contrast, blocked-recovery-request trigger linking to canonical concern record",
+        ".puppet-master/state/active-git-operations.json cannot become canonical audit if storage-plan keeps seglog/receipts as the source of truth",
+        "WorktreeGitImprovement.md now has a sharper ownership split: worktree_id is first-class in storage-plan.md and GitHub_Integration.md, while the worktree plan still centers tier_id/filesystem path",
+        "Make worktree_id the durable worktree identity across storage, Source Control, and orchestration receipts, and resolve base_branch ownership into one canonical store"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "internal account_id as stable key; login as provider-native disclosure metadata only"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

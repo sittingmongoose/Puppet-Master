@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0252",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-000001",
+      "source_obligation_ids": [
+        "obl-000001"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "partial",
+      "required_action": "stale_retirement",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_token_present_with_retirement_context"
+      ]
+    },
+    {
+      "coverage_id": "cov-000005",
+      "source_obligation_ids": [
+        "obl-000002"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-000883",
+      "source_obligation_ids": [
+        "obl-000381"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-000920",
+      "source_obligation_ids": [
+        "obl-000396"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-001032",
+      "source_obligation_ids": [
+        "obl-000437"
+      ],
+      "source_seed_ids": [
+        "shard-0009-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004546",
+      "source_obligation_ids": [
+        "obl-002163"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0008"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004549",
+      "source_obligation_ids": [
+        "obl-002164"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0009"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004677",
+      "source_obligation_ids": [
+        "obl-002188"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004681",
+      "source_obligation_ids": [
+        "obl-002189"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    },
+    {
+      "coverage_id": "cov-004685",
+      "source_obligation_ids": [
+        "obl-002190"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0017"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/FinalGUISpec.md:L1-L400:stale_tokens_absent"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

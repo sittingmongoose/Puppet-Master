@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0066",
+  "represented_seed_ids": [
+    "shard-0007-s005"
+  ],
+  "source_shard_ids": [
+    "shard-0007"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0007-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Models_System.md model selection must become lane-aware \u2014 models must be selectable/overridable per lane context",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Models_System.md model selection must become lane-aware \u2014 models must be selectable/overridable per lane context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Lane-Aware Model Selection"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L001285-L001310"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

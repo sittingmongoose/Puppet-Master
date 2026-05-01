@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0467",
+  "coverage_row_ids_represented": [
+    "cov-003877",
+    "cov-003881",
+    "cov-003885",
+    "cov-003889",
+    "cov-003921",
+    "cov-003924",
+    "cov-003927",
+    "cov-004014",
+    "cov-004016",
+    "cov-004018"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0467; path=Plans/Project_Output_Artifacts.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003877",
+        "cov-003881",
+        "cov-003885",
+        "cov-003889",
+        "cov-003921",
+        "cov-003924",
+        "cov-003927",
+        "cov-004014",
+        "cov-004016",
+        "cov-004018"
+      ],
+      "source_obligation_ids": [
+        "obl-001819",
+        "obl-001820",
+        "obl-001821",
+        "obl-001822",
+        "obl-001833",
+        "obl-001834",
+        "obl-001835",
+        "obl-001868",
+        "obl-001869",
+        "obl-001870"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0052",
+        "seed-WAVE005-0056",
+        "seed-WAVE005-0066"
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0048",
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Extend validation_pass_report identity so it carries the planning/governance lineage needed for audit and routing: wizard_id, project_id, thread_id?, phase_plan_ref?, input/output artifact-bundle refs, requirements_quality_report_ref? when applicable",
+        "Add the upstream subset of canonical runtime identity to pass reports when a provider/model actually executed the pass: requested/effective persona/platform/model snapshot refs, requested_account_policy?, effective_account_id?, execution_role",
+        "Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref",
+        "workflow_run_id links the three passes together, but it is not enough by itself to relate the sweep to wizard_id, staged requirements state, or the later launched run",
+        "Audit storage-plan.md for other downstream-assumed families already discussed in research: project summary / attention items, concern records/projections, account pressure and switch history, projection freshness/health fields on projections",
+        "The storage gap is now about concrete missing object families, not just incomplete wording",
+        "Current storage families are still more attempt/block/usage-centric than lane/worktree/concern/project-attention-centric, even though the rewrite now relies on those object families elsewhere",
+        "Project_Output_Artifacts.md is now clearly under-keyed relative to the canonical EventRecord/runtime model: artifact events and validation pass reports still omit project/thread/run/attempt/account identity details",
+        "pass_verdict mismatches the wizard producer doc in Project_Output_Artifacts.md",
+        "interview-emitted artifact types (glossary, evidence/<node_id>.json) still do not line up with the package SSOT in Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

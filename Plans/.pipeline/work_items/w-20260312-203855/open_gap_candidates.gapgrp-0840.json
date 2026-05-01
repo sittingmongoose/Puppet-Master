@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0840",
+  "coverage_row_ids_represented": [
+    "cov-003826",
+    "cov-003829",
+    "cov-003892",
+    "cov-003894",
+    "cov-003896",
+    "cov-003898",
+    "cov-003901",
+    "cov-003904",
+    "cov-003940",
+    "cov-003945"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0840; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003826",
+        "cov-003829",
+        "cov-003892",
+        "cov-003894",
+        "cov-003896",
+        "cov-003898",
+        "cov-003901",
+        "cov-003904",
+        "cov-003940",
+        "cov-003945"
+      ],
+      "source_obligation_ids": [
+        "obl-001793",
+        "obl-001794",
+        "obl-001823",
+        "obl-001824",
+        "obl-001825",
+        "obl-001826",
+        "obl-001827",
+        "obl-001828",
+        "obl-001839",
+        "obl-001840"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0042",
+        "seed-WAVE005-0053",
+        "seed-WAVE005-0054",
+        "seed-WAVE005-0058"
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0048",
+        "shard-0049"
+      ],
+      "exact_missing_items": [
+        "Reconcile all approval/recovery schemas onto one key strategy and one field family (allowed_action_ids[], blocked_sequence, explicit mapping for any retained request_id)",
+        "storage-plan.md still registers HITL events as request_id, run_id, tier_id, tier_type, request_kind, message, allowed_actions, which is now behind the newer blocked-projection/action-family model",
+        "Add explicit first-class storage families for runtime-artifact indexing/projection: canonical redb key registration, projector ownership/checkpoint semantics, rebuild/failure semantics, clear schema ownership boundary",
+        "Runtime_Artifacts_Panel.md declares artifacts_index:v1:{project_id} as canonical, but storage-plan.md does not appear to register/own that family at the same level as other redb families",
+        "Proposed artifact-index keys: artifacts_index.v1:{project_id}:{artifact_id} (current lookup/index row), artifacts_project_state.v1:{project_id} (projector cursor/health), projector.checkpoint.runtime_artifacts:{project_id} (projector checkpoint)",
+        "Add explicit first-class storage families for durable worktree/lane lifecycle: worktree_record, lane_record, worktree_projection, lane_projection",
+        "WorktreeGitImprovement.md now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs but storage-plan.md currently has only adjacent state",
+        "Proposed: worktree_record.v1:{project_id}:{worktree_id}, lane_record.v1:{project_id}:{lane_id}, worktree_projection.v1:{project_id}:{worktree_id}, lane_projection.v1:{project_id}:{lane_id}",
+        "blocked_sequence should be owned by the runtime scheduler/executor layer, not by UI/HITL/chat/storage",
+        "blocked_sequence scope: monotonic per {run_id, node_id}, starts at 1, increments only when node transitions from non-blocked to a new blocked episode"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "allowed_action_ids[]",
+        "blocked_sequence"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

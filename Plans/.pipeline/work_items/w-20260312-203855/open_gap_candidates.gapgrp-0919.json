@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0919",
+  "coverage_row_ids_represented": [
+    "cov-006830",
+    "cov-006831",
+    "cov-006832",
+    "cov-006833",
+    "cov-006834",
+    "cov-006835",
+    "cov-006836",
+    "cov-006837",
+    "cov-006838",
+    "cov-006839"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0919; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006830",
+        "cov-006831",
+        "cov-006832",
+        "cov-006833",
+        "cov-006834",
+        "cov-006835",
+        "cov-006836",
+        "cov-006837",
+        "cov-006838",
+        "cov-006839"
+      ],
+      "source_obligation_ids": [
+        "obl-003733",
+        "obl-003734",
+        "obl-003735",
+        "obl-003736",
+        "obl-003737",
+        "obl-003738",
+        "obl-003739",
+        "obl-003740",
+        "obl-003741",
+        "obl-003742"
+      ],
+      "source_seed_ids": [
+        "shard-0085-s011",
+        "shard-0085-s015",
+        "shard-0085-s016",
+        "shard-0085-s017",
+        "shard-0085-s018",
+        "shard-0085-s028"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "Verifier",
+        "Overseer",
+        "still defines a six-tab page with `Tiers`",
+        "still says tabs `1, 2, 4, 5, 6` are widget-based",
+        "1, 2, 4, 5, 6",
+        "still makes `Tiers` the second tab and centers `widget.tier_tree`",
+        "widget.tier_tree",
+        "still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
+        "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs",
+        "PuppetMasterEvent::TierChanged"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

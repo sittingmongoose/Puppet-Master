@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0367",
+  "coverage_row_ids_represented": [
+    "cov-000156",
+    "cov-000158",
+    "cov-000160",
+    "cov-000162",
+    "cov-000164",
+    "cov-000166",
+    "cov-000168",
+    "cov-000170",
+    "cov-000172",
+    "cov-000174"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0367; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Projection Fallback Ladder"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000156",
+        "cov-000158",
+        "cov-000160",
+        "cov-000162",
+        "cov-000164",
+        "cov-000166",
+        "cov-000168",
+        "cov-000170",
+        "cov-000172",
+        "cov-000174"
+      ],
+      "source_obligation_ids": [
+        "obl-000077",
+        "obl-000078",
+        "obl-000079",
+        "obl-000080",
+        "obl-000081",
+        "obl-000082",
+        "obl-000083",
+        "obl-000084",
+        "obl-000085",
+        "obl-000086"
+      ],
+      "source_seed_ids": [
+        "shard-0025-s004",
+        "shard-0028-s002",
+        "shard-0028-s003",
+        "shard-0028-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0028"
+      ],
+      "exact_missing_items": [
+        "widget summary -> native tab",
+        "rollup tab -> filtered record list",
+        "projection-derived inspector -> Ledger / History / exact record view via detail_ref",
+        "advisory concern with no execution effect -> info or warning",
+        "concern tied to weak integration but not yet completion-blocking -> warning or attention_required",
+        "concern that blocks seam completion, promotion, or recovery -> blocked",
+        "acknowledged concerns should reduce repeat in-app surfacing, but must not mask an active blocked state if the underlying condition still blocks progress",
+        "blocked owner User: eligible for thread/chat prompt, Dashboard/Progress CtA, and possibly system notification",
+        "blocked owner Package/Seam Overseer / Corroboration: operational surfaces first, user escalation only if persistence or decision need crosses threshold",
+        "blocked owner Runtime / Recovery / Graph Patch: Progress/History/Node Graph first; user notification only when action or trust decision actually needed"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

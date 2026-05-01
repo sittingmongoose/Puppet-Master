@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0414",
+  "coverage_row_ids_represented": [
+    "cov-003721",
+    "cov-003723",
+    "cov-003725",
+    "cov-003900",
+    "cov-003903",
+    "cov-003906",
+    "cov-005089",
+    "cov-005097",
+    "cov-005105",
+    "cov-005113"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0414; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Progress Widget"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003721",
+        "cov-003723",
+        "cov-003725",
+        "cov-003900",
+        "cov-003903",
+        "cov-003906",
+        "cov-005089",
+        "cov-005097",
+        "cov-005105",
+        "cov-005113"
+      ],
+      "source_obligation_ids": [
+        "obl-001742",
+        "obl-001743",
+        "obl-001744",
+        "obl-001826",
+        "obl-001827",
+        "obl-001828",
+        "obl-002269",
+        "obl-002270",
+        "obl-002271",
+        "obl-002272"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0029",
+        "seed-WAVE005-0054",
+        "seed-WAVE007-0041"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0048",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "FinalGUISpec.md still lacks true Orchestrator-page ownership, concern-model UI, historical-run-mode behavior, and stable projection-freshness/health language",
+        "FinalGUISpec.md still has no first-class concern record/lifecycle/projection model",
+        "Add concern-model GUI contract and projection-freshness/health contract to FinalGUISpec.md",
+        "Add explicit first-class storage families for durable worktree/lane lifecycle: worktree_record, lane_record, worktree_projection, lane_projection",
+        "WorktreeGitImprovement.md now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs but storage-plan.md currently has only adjacent state",
+        "Proposed: worktree_record.v1:{project_id}:{worktree_id}, lane_record.v1:{project_id}:{lane_id}, worktree_projection.v1:{project_id}:{worktree_id}, lane_projection.v1:{project_id}:{lane_id}",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`.",
+        "The canonical `object_kind` set: conversational/upstream: `thread`, `message`, `wizard`, `usage_event`; runtime/execution: `run`, `node`, `attempt`, `scheduler_pass`, `blocked_episode`, `safe_point`, `remediation`; orchestration rewrite: `feature_seam`, `work_package`, `lane`, `worktree`, `concern`, `promotion`, `graph_patch`, `graph_generation`",
+        "`object_id` must use existing canonical ids: `thread_id`, `message_id`, `wizard_id`, `run_id`, `attempt_id`, `scheduler_pass_id`, `blocked_sequence` in `{ run_id, node_id }` scope, `safe_point_id`, `remediation_root_id`, `lane_id`, `worktree_id`, concern/promotion/graph-patch/graph-generation ids when defined",
+        "`tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "projection_freshness",
+        "projection_health"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.open_gaps_reducer_worklist.v2",
+  "work_id": "w-20260312-203855",
+  "summary": {
+    "candidate_groups_input": 1035,
+    "open_gaps_emitted": 1035,
+    "dedup_mode": "conservative_signature",
+    "actionable_rows_total": 7647,
+    "noise_rows_total": 0
+  },
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true,
+    "explore_wave_attestation_agent": "24c072da-c53a-4ea7-88ba-2d010af19b79",
+    "explore_plan_scan_attestation_agent": "24c072da-c53a-4ea7-88ba-2d010af19b79",
+    "explore_schema_attestation_agent": "24c072da-c53a-4ea7-88ba-2d010af19b79"
+  },
+  "next_required_stage": "Doc Discovery Worklist Builder"
+}

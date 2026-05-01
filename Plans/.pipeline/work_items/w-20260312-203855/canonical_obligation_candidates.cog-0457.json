@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0457",
+  "represented_seed_ids": [
+    "seed-WAVE007-0008"
+  ],
+  "source_shard_ids": [
+    "shard-0062"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0008"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "`GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI/Orchestrator docs.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI/Orchestrator docs."
+      ],
+      "affected_doc_hints": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Command IDs and Panel Assumptions"
+      ],
+      "stale_residue_to_retire": [
+        "phantom command IDs",
+        "stale panel assumptions"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L012323"
+      ],
+      "notes": [
+        "GUI_Rebuild_Requirements_Checklist.md has phantom command IDs that no longer exist in the catalog. Panel/view assumptions are stale relative to current FinalGUISpec and Orchestrator_Page structure."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

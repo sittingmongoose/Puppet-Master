@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0368",
+  "coverage_row_ids_represented": [
+    "cov-000176",
+    "cov-000179",
+    "cov-000181",
+    "cov-000183",
+    "cov-000185",
+    "cov-000187",
+    "cov-000189",
+    "cov-000191",
+    "cov-000193",
+    "cov-000194"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0368; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Blocked-Owner Notification Routing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000176",
+        "cov-000179",
+        "cov-000181",
+        "cov-000183",
+        "cov-000185",
+        "cov-000187",
+        "cov-000189",
+        "cov-000191",
+        "cov-000193",
+        "cov-000194"
+      ],
+      "source_obligation_ids": [
+        "obl-000087",
+        "obl-000088",
+        "obl-000089",
+        "obl-000090",
+        "obl-000091",
+        "obl-000092",
+        "obl-000093",
+        "obl-000094",
+        "obl-000095",
+        "obl-000096"
+      ],
+      "source_seed_ids": [
+        "shard-0028-s004",
+        "shard-0028-s005",
+        "shard-0028-s007",
+        "shard-0029-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0028",
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "blocked owner External Resource: warning/banner first, system notification only if it stalls meaningful progress long enough",
+        "stale projection: local in-app indicators may show but wording must disclose possible staleness",
+        "degraded projection: avoid strong notification claims relying on incomplete projections; prefer canonical event/blocked record-rooted notifications",
+        "severity increase",
+        "blocked owner change",
+        "concern changes from advisory to execution-impacting",
+        "blocked duration threshold crossed",
+        "trust state improves enough that previously suppressed actions become available",
+        "trust state degrades enough that prior assumptions are no longer safe",
+        "search result activation restores scope: set focused_run_id, switch to correct tab, apply any filter payload, open inspector on target object"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

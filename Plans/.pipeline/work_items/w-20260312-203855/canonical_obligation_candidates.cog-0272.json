@@ -1,0 +1,126 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0272",
+  "represented_seed_ids": [
+    "shard-0036-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0036"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0036-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Orchestrator Progress widget layout decision: app-default with project override \u2014 this must be the single authoritative decision documented in Widget_System.md and cross-referenced from Orchestrator_Page.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Orchestrator Progress widget layout decision: app-default with project override \u2014 this must be the single authoritative decision documented in Widget_System.md and cross-referenced from Orchestrator_Page.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "policy_version_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0036-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "do-not-forget: run.started MUST field list in storage-plan.md still disagrees with the surrounding prose about how much identity to include",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "do-not-forget: run.started MUST field list in storage-plan.md still disagrees with the surrounding prose about how much identity to include"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "policy_version_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0036-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "do-not-forget: provider_accounts.run_snapshot policy_hash should be a policy_version_ref for downstream policy-validity queries",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "do-not-forget: provider_accounts.run_snapshot policy_hash should be a policy_version_ref for downstream policy-validity queries"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "policy_version_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

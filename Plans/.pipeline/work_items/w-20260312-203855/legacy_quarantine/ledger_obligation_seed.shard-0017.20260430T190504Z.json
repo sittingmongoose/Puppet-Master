@@ -1,0 +1,226 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0017",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0017-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "use a shared record-envelope pattern across major governance/runtime record families",
+        "Shared envelope fields: record_id, record_kind, project_id, run_id?, seam_id?, package_id?, node_id?, attempt_id?, promotion_id?, concern_id?, lane_id?, worktree_id?, status, created_at_utc, created_by_kind, created_by_ref?, superseded_by_record_id?, source_refs[], artifact_refs[], evidence_refs[], summary, detail_ref?"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Record Envelope Convention",
+        "## Shared Record Fields"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003379-L003408"
+      ],
+      "notes": [
+        "Ledger and exports can inspect different record families consistently; search/routing can reuse common routing fields"
+      ]
+    },
+    {
+      "seed_id": "shard-0017-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "review record: review_id, review kind (package/seam/verifier-reviewer), target scope refs, requested/effective reviewer identity, review criteria/profile, findings summary, finding refs / concern refs, verdict / decision, linked artifacts/evidence, timestamps",
+        "review findings may nominate or update concerns, but the review record itself should remain distinct from concern records"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Review Record Schema"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003410-L003426"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0017-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "corroboration_request packet: claim/issue under test, target scope, why corroboration was triggered, evidence set/source refs, required quorum model, participating actor refs",
+        "corroboration_result: participant outputs, quorum result, accepted/not-accepted/advisory-only result, resulting concern/promotion/patch implications"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Corroboration Record Schema",
+        "## Corroboration Request",
+        "## Corroboration Result"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003428-L003443"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0017-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "graph_patch_request: patch point, triggering issue/concern refs, requested structural change summary, affected generation, requester identity",
+        "graph_patch_result: old generation, new generation, invalidated path refs, new path refs, surviving/rejoined path refs, resulting concern/promotion/recovery implications"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Graph Patch Record Schema",
+        "## graph_patch_request",
+        "## graph_patch_result"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003445-L003461"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0017-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "promotion record: promotion class (lane_to_package, package_to_seam, seam_completion), source scope and target scope refs, eligibility state at decision time, blocking refs / concern refs, review/corroboration refs, decision outcome, revocation/reopen lineage if it later changes"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Promotion Record Schema"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003463-L003474"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0017-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "recovery record: recovery kind (safe-point restore, restart reconciliation, blocked prerequisite resolution, lane/worktree restore), target scope refs, trigger reason, preconditions, result, resulting attempt/run linkage, affected concern refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Recovery Record Schema"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003476-L003488"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0017-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "state transition report: from state, to state, target object, actor/source, why transition occurred, prerequisite evidence / review / corroboration refs, resulting downstream obligations",
+        "This may help avoid every major object family inventing bespoke decision summary fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## State Transition Report Schema"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003490-L003498"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0017-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "keep records and artifacts separate",
+        "record = canonical structured object in Ledger/export/search/routing",
+        "artifact = file/blob/renderable output linked from the record",
+        "review markdown summary = artifact; review record = structured ledger object",
+        "corroboration packet JSON/markdown = artifact; corroboration result record = structured object"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Artifact vs Record Distinction"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L003501-L003511"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

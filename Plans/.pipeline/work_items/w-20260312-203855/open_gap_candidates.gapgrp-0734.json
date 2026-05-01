@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0734",
+  "coverage_row_ids_represented": [
+    "cov-007792",
+    "cov-007793",
+    "cov-007794",
+    "cov-007795",
+    "cov-007796",
+    "cov-007797",
+    "cov-007798",
+    "cov-007799",
+    "cov-007803",
+    "cov-007806"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0734; path=Plans/interview-subagent-integration.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007792",
+        "cov-007793",
+        "cov-007794",
+        "cov-007795",
+        "cov-007796",
+        "cov-007797",
+        "cov-007798",
+        "cov-007799",
+        "cov-007803",
+        "cov-007806"
+      ],
+      "source_obligation_ids": [
+        "obl-004350",
+        "obl-004351",
+        "obl-004352",
+        "obl-004353",
+        "obl-004354",
+        "obl-004355",
+        "obl-004356",
+        "obl-004357",
+        "obl-004359",
+        "obl-004360"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s137",
+        "shard-0089-s140",
+        "shard-0090-s037"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "`Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`.",
+        "Plans/interview-subagent-integration.md",
+        "### Runtime identity visibility",
+        "requested_account_binding",
+        "operational_identity",
+        "requested_account_policy",
+        "tool_use_id",
+        "`gap-001` now points at `Plans/interview-subagent-integration.md` \u2014 `### Runtime identity visibility` instead of a non-existent requested/effective identity heading.",
+        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

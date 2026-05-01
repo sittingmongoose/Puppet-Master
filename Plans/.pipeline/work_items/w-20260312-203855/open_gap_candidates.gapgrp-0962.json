@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0962",
+  "coverage_row_ids_represented": [
+    "cov-005822",
+    "cov-005823",
+    "cov-005824",
+    "cov-005825",
+    "cov-005826",
+    "cov-005827",
+    "cov-005828",
+    "cov-005829",
+    "cov-005830",
+    "cov-005831"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0962; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005822",
+        "cov-005823",
+        "cov-005824",
+        "cov-005825",
+        "cov-005826",
+        "cov-005827",
+        "cov-005828",
+        "cov-005829",
+        "cov-005830",
+        "cov-005831"
+      ],
+      "source_obligation_ids": [
+        "obl-002725",
+        "obl-002726",
+        "obl-002727",
+        "obl-002728",
+        "obl-002729",
+        "obl-002730",
+        "obl-002731",
+        "obl-002732",
+        "obl-002733",
+        "obl-002734"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s027",
+        "shard-0080-s028",
+        "shard-0080-s029",
+        "shard-0080-s032",
+        "shard-0080-s033",
+        "shard-0080-s034",
+        "shard-0080-s037",
+        "shard-0080-s039"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "exact_missing_items": [
+        "`safe_point_id`",
+        "safe_point_id",
+        "`replan_generation`",
+        "replan_generation",
+        "queue-analysis and blocked-state rendering rules keyed to canonical runtime records",
+        "the base structs and callbacks still teach tier/request-era identity",
+        "the later addenda teach attempt/block/runtime-lineage identity",
+        "`hitl_request_id` is now especially out of place because the same doc later centers `blocked_sequence` and canonical runtime commands.",
+        "Remove request-centric approval identity from the base graph model.",
+        "Reconcile the HITL callback model so graph actions normalize through canonical runtime action targets rather than graph-local request callbacks."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

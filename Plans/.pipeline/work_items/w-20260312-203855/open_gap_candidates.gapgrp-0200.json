@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0200",
+  "coverage_row_ids_represented": [
+    "cov-007019",
+    "cov-007020",
+    "cov-007021",
+    "cov-007022",
+    "cov-007023",
+    "cov-007024",
+    "cov-007025",
+    "cov-007318",
+    "cov-007322",
+    "cov-007325"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0200; path=Plans/FinalGUISpec.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007019",
+        "cov-007020",
+        "cov-007021",
+        "cov-007022",
+        "cov-007023",
+        "cov-007024",
+        "cov-007025",
+        "cov-007318",
+        "cov-007322",
+        "cov-007325"
+      ],
+      "source_obligation_ids": [
+        "obl-003922",
+        "obl-003923",
+        "obl-003924",
+        "obl-003925",
+        "obl-003926",
+        "obl-003927",
+        "obl-003928",
+        "obl-004178",
+        "obl-004180",
+        "obl-004181"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s052",
+        "shard-0087-s063",
+        "shard-0089-s130",
+        "shard-0091-s082",
+        "shard-0091-s109",
+        "shard-0091-s110"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0089",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Plans/FinalGUISpec.md:728-735",
+        "`Plans/FinalGUISpec.md:2924-2928`",
+        "Plans/FinalGUISpec.md:2924-2928",
+        "`Plans/FinalGUISpec.md:2092-2092`",
+        "Plans/FinalGUISpec.md:2092-2092",
+        "`Plans/FinalGUISpec.md:2736-2739`",
+        "Plans/FinalGUISpec.md:2736-2739",
+        "`Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`",
+        "Plans/FinalGUISpec.md",
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0831",
+  "coverage_row_ids_represented": [
+    "cov-002678",
+    "cov-002681",
+    "cov-002684",
+    "cov-002687",
+    "cov-002690",
+    "cov-002693",
+    "cov-002698",
+    "cov-002701",
+    "cov-002704",
+    "cov-002868"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0831; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## account_switch_event Family"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002678",
+        "cov-002681",
+        "cov-002684",
+        "cov-002687",
+        "cov-002690",
+        "cov-002693",
+        "cov-002698",
+        "cov-002701",
+        "cov-002704",
+        "cov-002868"
+      ],
+      "source_obligation_ids": [
+        "obl-001287",
+        "obl-001288",
+        "obl-001289",
+        "obl-001290",
+        "obl-001291",
+        "obl-001292",
+        "obl-001293",
+        "obl-001294",
+        "obl-001295",
+        "obl-001349"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s013",
+        "shard-0037-s006",
+        "shard-0037-s012",
+        "shard-0039-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0035",
+        "shard-0037",
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "account_switch_event record family must be append-only and carry: old_effective_account_id, new_effective_account_id, switch_reason, scope (run/lane/session), old_account_pressure_level, new_account_pressure_level",
+        "account_pressure_episode record family must carry: account_id, pressure_kind, start_utc, end_utc?, peak_pressure_level, contributing_switch_event_refs[]",
+        "both families must be queryable from History, Ledger, and Usage Pressure projections",
+        "Add account_switch_event and account_pressure_episode families to storage-plan.md and Contracts_V0.md",
+        "Define the canonical switch-event schema with required fields (old/new effective account, switch_reason, scope, pressure levels, timeline)",
+        "Define pressure-episode schema and bind it to History/Ledger/Usage Pressure projections",
+        "Identity semantics across docs must converge on OperationalIdentity block as the canonical snapshot",
+        "requested_account_id must always be accompanied by requested_account_binding (none / preferred / required) to clarify what failure mode applies when the requested account is unavailable",
+        "effective_account_id must always be present (may equal the default) and never absent from any record that involves a provider/model call",
+        "storage-plan.md internally contradicts itself: the early orchestrator.receipt.{run_id}.{attempt_id} value shape omits project_id and created_at_utc, while the later cross-surface receipt record makes them mandatory"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "account_switch_event",
+        "account_pressure_episode"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0160",
+  "coverage_row_ids_represented": [
+    "cov-000392",
+    "cov-000493",
+    "cov-000505",
+    "cov-000509",
+    "cov-000512",
+    "cov-000514",
+    "cov-000515",
+    "cov-000517",
+    "cov-000519",
+    "cov-000522"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0160; path=Plans/Executor_Protocol.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## Event Family Ownership"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000392",
+        "cov-000493",
+        "cov-000505",
+        "cov-000509",
+        "cov-000512",
+        "cov-000514",
+        "cov-000515",
+        "cov-000517",
+        "cov-000519",
+        "cov-000522"
+      ],
+      "source_obligation_ids": [
+        "obl-000172",
+        "obl-000205",
+        "obl-000210",
+        "obl-000211",
+        "obl-000212",
+        "obl-000213",
+        "obl-000214",
+        "obl-000215",
+        "obl-000216",
+        "obl-000217"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s002",
+        "shard-0003-s007",
+        "shard-0003-s008",
+        "shard-0003-s009",
+        "shard-0004-s002",
+        "shard-0004-s013",
+        "shard-0004-s018",
+        "shard-0006-s004",
+        "shard-0006-s005",
+        "shard-0090-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004",
+        "shard-0006",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Canonical event families must be shared between the runtime and UI projections \u2014 the Orchestrator must NOT invent a shadow event language separate from the runtime event model",
+        "Multi-account control-loop scope applies to ALL provider-using actors: assistant, interviewer, requirements-doc builder, overseers, node workers, delegated workers \u2014 no actor is exempt",
+        "Each failed node attempt must leave a structured receipt/handoff artifact containing: what it did, what changed, why failed, what to try next \u2014 this is mandatory, not optional",
+        "Canonical handoff/retry memory must be stored as structured runtime records NOT loose markdown; worker-facing handoff = synthesized bounded packet derived from canonical records",
+        "'attempt' object required fields: identity, actor type, requested vs effective provider/model/effort/persona/account, resolution/fallback metadata, lane/snapshot linkage, lifecycle/result, evidence refs",
+        "Attempt handoff artifact must include these 8 fields: what was attempted, what changed/artifacts produced, checks/tests/review outcome, why failed/blocked, contamination/restore state, recommended next action, reusable learnings/patterns, retry budget consumed",
+        "Corroboration rule: 2-of-3 quorum required before accepting high-impact overseer claims as canonical; failure to reach 2-of-3 still emits a non-blocking advisory even without quorum",
+        "Seam review outputs must include: verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendation, corroboration requirement and outcome",
+        "Issue classes requiring corroboration (5): missing wiring, implementation quality concerns, unmet intent despite passing tests, missing spec/hidden dependency, graph structure insufficiency",
+        "`Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered` in runtime wake canon."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

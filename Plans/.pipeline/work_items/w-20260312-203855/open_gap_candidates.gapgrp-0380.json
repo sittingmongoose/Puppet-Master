@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0380",
+  "coverage_row_ids_represented": [
+    "cov-000723",
+    "cov-000736",
+    "cov-000739",
+    "cov-000742",
+    "cov-000745",
+    "cov-000746",
+    "cov-000749",
+    "cov-000752",
+    "cov-000754",
+    "cov-000756"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0380; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Provider/Model Control Levels"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000723",
+        "cov-000736",
+        "cov-000739",
+        "cov-000742",
+        "cov-000745",
+        "cov-000746",
+        "cov-000749",
+        "cov-000752",
+        "cov-000754",
+        "cov-000756"
+      ],
+      "source_obligation_ids": [
+        "obl-000312",
+        "obl-000316",
+        "obl-000317",
+        "obl-000318",
+        "obl-000319",
+        "obl-000320",
+        "obl-000321",
+        "obl-000322",
+        "obl-000323",
+        "obl-000324"
+      ],
+      "source_seed_ids": [
+        "shard-0004-s010",
+        "shard-0004-s011",
+        "shard-0005-s012",
+        "shard-0010-s001",
+        "shard-0010-s002",
+        "shard-0010-s009",
+        "shard-0016-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0004",
+        "shard-0005",
+        "shard-0010",
+        "shard-0016"
+      ],
+      "exact_missing_items": [
+        "Provider/model controls must support these configuration levels: package, seam, node, overseer, and delegated-subagent \u2014 per-thread/per-run granularity alone is insufficient",
+        "Orchestrator-managed worktrees must be visible in both Orchestrator page and Source Control view; they must be separated/partitioned from user/assistant-created worktrees",
+        "Source Control worktree view must partition worktrees as: 'Orchestrator Owned' vs 'Other'; 'Orchestrator Owned' must be further subdivided by feature seam",
+        "Source Control / Worktree Handshake research findings: Source Control is the primary operational surface for worktree inventory and user actions; Orchestrator consumes worktree identity/ownership/blocked state/lineage for run/history/recovery views",
+        "Existing docs still describe ownership as run/tier/subtask worktrees which collides with the package-based lane-pool model",
+        "Recommended boundary: Orchestrator owns package lane-pool operational truth; Source Control owns repo/worktree execution and inspection operations \u2014 this is the canonical surface division",
+        "Multiple projects can run Orchestrator concurrently; data and storage must be strictly per-project with no cross-project leakage",
+        "same issue persists with more evidence: update existing concern, append sources/evidence, allow severity/attention escalation",
+        "one concern was too broad: split into child concerns with lineage links",
+        "two concerns are actually the same issue: merge into one retained concern id; close/redirect the merged-away ids explicitly"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

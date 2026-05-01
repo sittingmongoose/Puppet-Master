@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0166",
+  "coverage_row_ids_represented": [
+    "cov-004109",
+    "cov-007544",
+    "cov-007574",
+    "cov-007584",
+    "cov-007604",
+    "cov-007614",
+    "cov-008213",
+    "cov-008220",
+    "cov-008234",
+    "cov-008248"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0166; path=Plans/Executor_Protocol.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004109",
+        "cov-007544",
+        "cov-007574",
+        "cov-007584",
+        "cov-007604",
+        "cov-007614",
+        "cov-008213",
+        "cov-008220",
+        "cov-008234",
+        "cov-008248"
+      ],
+      "source_obligation_ids": [
+        "obl-001917",
+        "obl-004223",
+        "obl-004226",
+        "obl-004227",
+        "obl-004229",
+        "obl-004230",
+        "obl-004503",
+        "obl-004504",
+        "obl-004506",
+        "obl-004508"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s027",
+        "shard-0092-s031",
+        "shard-0092-s038"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "Plans/Executor_Protocol.md:134-178",
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+        "Plans/storage-plan.md",
+        "Plans/Models_System.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

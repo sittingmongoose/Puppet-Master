@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0515",
+  "coverage_row_ids_represented": [
+    "cov-004080",
+    "cov-004085",
+    "cov-004090",
+    "cov-005528",
+    "cov-005529"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0515; path=Plans/Run_Graph_View.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004080",
+        "cov-004085",
+        "cov-004090",
+        "cov-005528",
+        "cov-005529"
+      ],
+      "source_obligation_ids": [
+        "obl-001900",
+        "obl-001901",
+        "obl-001902",
+        "obl-002431",
+        "obl-002432"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0001",
+        "seed-WAVE008-0046"
+      ],
+      "source_shard_ids": [
+        "shard-0051",
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "tier_id can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key",
+        "Tier-shaped surfaces may still display and group by tier_id, but they should resolve through pointers to canonical execution objects rather than using tier_id as if it were the durable execution key",
+        "Retarget Run Graph and Usage links toward node_id / attempt_id semantics, with tier_id surviving only as a display/grouping label where needed",
+        "Plans/Run_Graph_View.md still routes Usage by node-through-tier: 'View in Usage' filters by tier_id; usage correlation is explicitly by tier_id.",
+        "Replace graph/detail uses of tier_id as navigation identity with object-first routing."
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "'View in Usage' filters by tier_id in Run_Graph_View.md",
+        "usage correlation by tier_id in Run_Graph_View.md"
+      ],
+      "canonical_replacement_hints": [
+        "node_id",
+        "attempt_id",
+        "run_id"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0027",
+  "coverage_row_ids_represented": [
+    "cov-002283",
+    "cov-002285",
+    "cov-008137",
+    "cov-008141",
+    "cov-008145",
+    "cov-008149"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0027; path=Plans/Contracts_V0.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Concern Record Minimum Shape"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002283",
+        "cov-002285",
+        "cov-008137",
+        "cov-008141",
+        "cov-008145",
+        "cov-008149"
+      ],
+      "source_obligation_ids": [
+        "obl-001149",
+        "obl-001150",
+        "obl-004480",
+        "obl-004481",
+        "obl-004482",
+        "obl-004483"
+      ],
+      "source_seed_ids": [
+        "shard-0030-s008",
+        "shard-0092-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0030",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "graph_patch_refs[]?",
+        "recovery_refs[]?",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

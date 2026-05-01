@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0258",
+  "coverage_row_ids_represented": [
+    "cov-007043",
+    "cov-007044",
+    "cov-007045",
+    "cov-007046",
+    "cov-007047",
+    "cov-007133",
+    "cov-007137",
+    "cov-007141",
+    "cov-007145",
+    "cov-007149"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0258; path=Plans/GUI_Rebuild_Requirements_Checklist.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007043",
+        "cov-007044",
+        "cov-007045",
+        "cov-007046",
+        "cov-007047",
+        "cov-007133",
+        "cov-007137",
+        "cov-007141",
+        "cov-007145",
+        "cov-007149"
+      ],
+      "source_obligation_ids": [
+        "obl-003946",
+        "obl-003947",
+        "obl-003948",
+        "obl-003949",
+        "obl-003950",
+        "obl-004036",
+        "obl-004037",
+        "obl-004038",
+        "obl-004039",
+        "obl-004040"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s099",
+        "shard-0081-s012",
+        "shard-0081-s053",
+        "shard-0081-s094",
+        "shard-0081-s107",
+        "shard-0081-s145",
+        "shard-0082-s023",
+        "shard-0082-s040",
+        "shard-0082-s074",
+        "shard-0085-s136",
+        "shard-0086-s002",
+        "shard-0086-s009",
+        "shard-0086-s045",
+        "shard-0086-s077",
+        "shard-0086-s127",
+        "shard-0092-s009",
+        "shard-0092-s029"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0081",
+        "shard-0082",
+        "shard-0085",
+        "shard-0086",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:",
+        "`Plans/GUI_Rebuild_Requirements_Checklist.md:31`",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:31",
+        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active.",
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

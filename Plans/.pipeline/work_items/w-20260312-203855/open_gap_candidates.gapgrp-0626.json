@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0626",
+  "coverage_row_ids_represented": [
+    "cov-000292",
+    "cov-000294",
+    "cov-000296",
+    "cov-000298",
+    "cov-000300",
+    "cov-000486",
+    "cov-001241",
+    "cov-001246",
+    "cov-001251",
+    "cov-001256"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0626; path=Plans/Widget_System.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## Widget Scope Ownership"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000292",
+        "cov-000294",
+        "cov-000296",
+        "cov-000298",
+        "cov-000300",
+        "cov-000486",
+        "cov-001241",
+        "cov-001246",
+        "cov-001251",
+        "cov-001256"
+      ],
+      "source_obligation_ids": [
+        "obl-000137",
+        "obl-000138",
+        "obl-000139",
+        "obl-000140",
+        "obl-000141",
+        "obl-000203",
+        "obl-000541",
+        "obl-000542",
+        "obl-000543",
+        "obl-000544"
+      ],
+      "source_seed_ids": [
+        "shard-0002-s015",
+        "shard-0011-s012",
+        "shard-0013-s002",
+        "shard-0034-s002",
+        "shard-0034-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0002",
+        "shard-0011",
+        "shard-0013",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "page/run context such as project_id, focused_run_id, historical-run mode, and object focus belong to the page/router state",
+        "widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope",
+        "Progress widgets must render against the current focused_run_id",
+        "moving between live and historical mode should not require per-widget manual retargeting",
+        "a widget must not drift into a stale prior run just because its own config persisted an old scope choice",
+        "Required orchestrator projection families (12): Run Summary, Seam Summary, Package Summary, Node Summary, Promotion Summary, Lane/Worktree Summary, Concern Summary, Account/Usage Pressure, Recent Major Events, Corroboration Summary, Recovery Summary, Overseer Activity",
+        "Introduce one shared projection-health / trust-state record family and require Orchestrator, widgets, and Run Graph surfaces to use it for action gating and fallback",
+        "no shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces",
+        "projection trust states: current, refreshing, stale, degraded, unavailable",
+        "current: projection is caught up enough for normal use"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0961",
+  "coverage_row_ids_represented": [
+    "cov-005812",
+    "cov-005813",
+    "cov-005814",
+    "cov-005815",
+    "cov-005816",
+    "cov-005817",
+    "cov-005818",
+    "cov-005819",
+    "cov-005820",
+    "cov-005821"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0961; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005812",
+        "cov-005813",
+        "cov-005814",
+        "cov-005815",
+        "cov-005816",
+        "cov-005817",
+        "cov-005818",
+        "cov-005819",
+        "cov-005820",
+        "cov-005821"
+      ],
+      "source_obligation_ids": [
+        "obl-002715",
+        "obl-002716",
+        "obl-002717",
+        "obl-002718",
+        "obl-002719",
+        "obl-002720",
+        "obl-002721",
+        "obl-002722",
+        "obl-002723",
+        "obl-002724"
+      ],
+      "source_seed_ids": [
+        "shard-0080-s007",
+        "shard-0080-s008",
+        "shard-0080-s010",
+        "shard-0080-s020",
+        "shard-0080-s023",
+        "shard-0080-s024",
+        "shard-0080-s025",
+        "shard-0080-s026",
+        "shard-0085-s069",
+        "shard-0085-s074"
+      ],
+      "source_shard_ids": [
+        "shard-0080",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "Keep any surviving `PuppetMasterEvent::*` references explicitly marked as compatibility transport or migration notes, not as the primary operational source.",
+        "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state.",
+        "The owner docs already have the stronger source model.",
+        "`hitl_request_id`",
+        "`hitl_action(node_id, action, rationale)` callback rather than a runtime-native blocked action target",
+        "hitl_action(node_id, action, rationale)",
+        "`attempt_id`",
+        "`blocked_reason_code`",
+        "blocked_reason_code",
+        "`allowed_action_ids[]`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

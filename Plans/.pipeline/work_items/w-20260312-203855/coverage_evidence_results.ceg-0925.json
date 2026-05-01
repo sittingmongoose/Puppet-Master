@@ -1,0 +1,158 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0925",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-007161",
+      "source_obligation_ids": [
+        "obl-004049"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s127"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "not_applicable",
+      "unresolved_reason": "doc_discovery_required",
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": []
+    },
+    {
+      "coverage_id": "cov-007720",
+      "source_obligation_ids": [
+        "obl-004302"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s047"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "not_applicable",
+      "unresolved_reason": "doc_discovery_required",
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": []
+    },
+    {
+      "coverage_id": "cov-007721",
+      "source_obligation_ids": [
+        "obl-004303"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s047"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "not_applicable",
+      "unresolved_reason": "doc_discovery_required",
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": []
+    },
+    {
+      "coverage_id": "cov-007722",
+      "source_obligation_ids": [
+        "obl-004304"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s047",
+        "shard-0091-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0091"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "not_applicable",
+      "unresolved_reason": "doc_discovery_required",
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": []
+    },
+    {
+      "coverage_id": "cov-007723",
+      "source_obligation_ids": [
+        "obl-004305"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s047",
+        "shard-0091-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0091"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "not_applicable",
+      "unresolved_reason": "doc_discovery_required",
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": []
+    },
+    {
+      "coverage_id": "cov-008107",
+      "source_obligation_ids": [
+        "obl-004462"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "not_applicable",
+      "unresolved_reason": "doc_discovery_required",
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": []
+    },
+    {
+      "coverage_id": "cov-008108",
+      "source_obligation_ids": [
+        "obl-004463"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "layout_blocker",
+      "file_existence_observation": "not_applicable",
+      "unresolved_reason": "doc_discovery_required",
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "packetizable_layout_repair",
+      "evidence": []
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

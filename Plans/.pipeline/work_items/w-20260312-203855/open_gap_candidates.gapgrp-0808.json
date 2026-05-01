@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0808",
+  "coverage_row_ids_represented": [
+    "cov-002456",
+    "cov-002459",
+    "cov-002462",
+    "cov-002464",
+    "cov-002467",
+    "cov-002470",
+    "cov-002473",
+    "cov-002480",
+    "cov-002485",
+    "cov-002490"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0808; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Key findings"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002456",
+        "cov-002459",
+        "cov-002462",
+        "cov-002464",
+        "cov-002467",
+        "cov-002470",
+        "cov-002473",
+        "cov-002480",
+        "cov-002485",
+        "cov-002490"
+      ],
+      "source_obligation_ids": [
+        "obl-001208",
+        "obl-001209",
+        "obl-001210",
+        "obl-001211",
+        "obl-001212",
+        "obl-001213",
+        "obl-001214",
+        "obl-001217",
+        "obl-001218",
+        "obl-001219"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s008",
+        "shard-0032-s009",
+        "shard-0032-s011",
+        "shard-0036-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "attempt.started / usage / storage / auth surfaces still lack one crisp contract for how requested/effective/provider/account identity propagates end to end",
+        "usage-feature.md remains centered on tier_id and omits lane/package/remediation dimensions now present elsewhere",
+        "storage-plan.md still lacks one shared governance-record envelope for concerns/reviews/promotions/corroboration/graph-patch/recovery records",
+        "provider_account_id now looks like a real shadow-identity risk because it appears in usage/storage without canonical contract ownership",
+        "pre-attempt-blocked episodes require scheduled_run record + blocked_sequence tracking but still need a way to fire concern/attention records without an attempt_id",
+        "account-switch history still requires a first-class canonical event family, not just state hints",
+        "usage_event_ref should be structured with at minimum: project_id, run_id, attempt_id?, node_id, lane_id?, created_at_utc \u2014 not a bare string",
+        "Normalize all persona/runtime identity field names to the canonical requested_* / effective_* contract from Contracts_V0.md, and remove drifted _id variants where they are being treated as canonical names",
+        "Add a governance-record template to storage/contracts so concern/review/promotion/corroboration/graph-patch/recovery records stop emerging ad hoc",
+        "Rework usage/storage attribution around lane/package/seam/attempt/remediation dimensions instead of centering tier_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

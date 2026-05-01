@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0265",
+  "coverage_row_ids_represented": [
+    "cov-007775",
+    "cov-007864",
+    "cov-007869",
+    "cov-007874",
+    "cov-007879",
+    "cov-008009",
+    "cov-008014",
+    "cov-008019"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0265; path=Plans/GitHub_Integration.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007775",
+        "cov-007864",
+        "cov-007869",
+        "cov-007874",
+        "cov-007879",
+        "cov-008009",
+        "cov-008014",
+        "cov-008019"
+      ],
+      "source_obligation_ids": [
+        "obl-004336",
+        "obl-004377",
+        "obl-004378",
+        "obl-004379",
+        "obl-004380",
+        "obl-004424",
+        "obl-004425",
+        "obl-004426"
+      ],
+      "source_seed_ids": [
+        "shard-0089-s080",
+        "shard-0090-s053",
+        "shard-0091-s026"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Plans/GitHub_Integration.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

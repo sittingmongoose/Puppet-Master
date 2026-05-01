@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0505",
+  "coverage_row_ids_represented": [
+    "cov-001410",
+    "cov-001412",
+    "cov-001414",
+    "cov-001527",
+    "cov-001530",
+    "cov-001533",
+    "cov-001536",
+    "cov-001539",
+    "cov-001542",
+    "cov-001544"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0505; path=Plans/Run_Graph_View.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## Run Semantics"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001410",
+        "cov-001412",
+        "cov-001414",
+        "cov-001527",
+        "cov-001530",
+        "cov-001533",
+        "cov-001536",
+        "cov-001539",
+        "cov-001542",
+        "cov-001544"
+      ],
+      "source_obligation_ids": [
+        "obl-000600",
+        "obl-000601",
+        "obl-000602",
+        "obl-000689",
+        "obl-000690",
+        "obl-000691",
+        "obl-000692",
+        "obl-000693",
+        "obl-000694",
+        "obl-000695"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0075",
+        "shard-0014-s006",
+        "shard-0014-s008",
+        "shard-0019-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0014",
+        "shard-0019",
+        "shard-0050"
+      ],
+      "exact_missing_items": [
+        "same project does not mean related; same repo does not mean related; temporal order does not mean related",
+        "Historical run views should show the frozen requested/effective state from that run, not recompute from current settings",
+        "current settings/inheritance may still be shown elsewhere, but must not overwrite history",
+        "attempts should also expose when an attempt is superseded by later remediation/graph generation",
+        "promotions need explicit distinction between: current accepted promotion, historical prior promotion, revoked promotion, superseded promotion",
+        "concerns: merged/split/superseded concern records, resolved-but-historical concern lineage",
+        "graph patches: old path/generation is historical; invalidated prior path may be superseded",
+        "recovery records: failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth",
+        "lane/worktree records: backing worktree may be removed; lane may still be historical; archival policy should be separate from semantic validity",
+        "tier_runtime_record compatibility boundary: it should answer current visible progress state for tier-shaped UI grouping, latest active attempt or blocked episode pointer for this grouping, what progress tree / compact terminal / high-level tab badges should display"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

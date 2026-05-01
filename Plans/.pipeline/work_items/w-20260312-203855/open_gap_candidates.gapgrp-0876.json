@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0876",
+  "coverage_row_ids_represented": [
+    "cov-003345",
+    "cov-003361",
+    "cov-003364",
+    "cov-003367",
+    "cov-003436",
+    "cov-003441",
+    "cov-003446",
+    "cov-003451",
+    "cov-003455",
+    "cov-003461"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0876; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## UsageRecord account_switch Fields"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003345",
+        "cov-003361",
+        "cov-003364",
+        "cov-003367",
+        "cov-003436",
+        "cov-003441",
+        "cov-003446",
+        "cov-003451",
+        "cov-003455",
+        "cov-003461"
+      ],
+      "source_obligation_ids": [
+        "obl-001600",
+        "obl-001604",
+        "obl-001605",
+        "obl-001606",
+        "obl-001624",
+        "obl-001625",
+        "obl-001626",
+        "obl-001627",
+        "obl-001628",
+        "obl-001629"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0006",
+        "seed-WAVE005-0007",
+        "shard-0040-s005",
+        "shard-0040-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0041"
+      ],
+      "exact_missing_items": [
+        "Usage records for calls that occurred after a switch must carry the switch_event_ref linking to the account_switch_event record",
+        "do-not-forget: run.started MUST field list in storage-plan.md must agree with the operational_identity block definition \u2014 the event row must include the full operational_identity snapshot inline or by normative reference",
+        "do-not-forget: provider_accounts.run_snapshot policy_hash must become policy_version_ref to support downstream policy-validity queries",
+        "do-not-forget: usage_event_ref as structured locator must be defined before any surface ships Show in Usage or Show in Ledger pivots",
+        "Add execution_role to effective-resolution record, attempt_record, tier_runtime_record or successor, and usage_record",
+        "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter",
+        "Operational identity kinds: github_api_account, registry_namespace, kubernetes_context",
+        "Ensure GUI inspectors can show requested/effective provider/account identity, requested/effective operational identity, execution role, and selection/switch reason",
+        "Add a canonical append-only event/record family for account-pressure and switching: account_pressure_episode and account_switch_event",
+        "account_pressure_episode fields: episode_id, project_id, provider_id, account_id, execution_role?, source_kind, signal_confidence, pressure_kind, projected_remaining?, reset_at?, started_at_utc, updated_at_utc, ended_at_utc?, status"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "account_switch_reason?",
+        "switch_event_ref?"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

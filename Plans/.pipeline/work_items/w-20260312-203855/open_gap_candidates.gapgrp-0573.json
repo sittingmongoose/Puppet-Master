@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0573",
+  "coverage_row_ids_represented": [
+    "cov-003738",
+    "cov-003739",
+    "cov-003741",
+    "cov-003742",
+    "cov-003743",
+    "cov-003744"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "group gapgrp-0573; path=Plans/UI_Command_Catalog.md; row_type=missing_doc_reference; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## cmd.nav"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003738",
+        "cov-003739",
+        "cov-003741",
+        "cov-003742",
+        "cov-003743",
+        "cov-003744"
+      ],
+      "source_obligation_ids": [
+        "obl-001751",
+        "obl-001752",
+        "obl-001754",
+        "obl-001755",
+        "obl-001756",
+        "obl-001757"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0050",
+        "seed-WAVE006-0067",
+        "seed-WAVE006-0081"
+      ],
+      "source_shard_ids": [
+        "shard-0056",
+        "shard-0057",
+        "shard-0059"
+      ],
+      "exact_missing_items": [
+        "UI_Command_Catalog.md currently has many specific pivots but those are still surface-specific commands, not a generalized subject-open family",
+        "There is still no canonical command family for subject-open or generalized route focus, so cross-surface pivots keep accreting as one-off commands",
+        "cmd.orchestrator.push_image is described in design context but absent from UI_Command_Catalog.md",
+        "Register cmd.orchestrator.push_image with full ownership and arg contract or explicitly retire it",
+        "UI_Command_Catalog.md artifact pivots, usage pivots, and panel pivots all lack a canonical target model \u2014 they use per-command arg shapes",
+        "All pivot commands must adopt the route_target canonical shape so pivot behavior is consistent and cross-surface verification is possible"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "cmd.nav.open_subject",
+        "cmd.nav.focus_route",
+        "cmd.nav.open_usage_subject"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Missing doc reference obligation requires reconciliation or discovery.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

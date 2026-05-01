@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0080",
+  "represented_seed_ids": [
+    "shard-0008-s001"
+  ],
+  "source_shard_ids": [
+    "shard-0008"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0008-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Blocked payload normalization: 'reason_code' / 'recovery_options[]' vs 'blocked_reason_code' / 'allowed_action_ids[]' are both active in docs \u2014 one canonical form must be chosen",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "Blocked payload normalization: 'reason_code' / 'recovery_options[]' vs 'blocked_reason_code' / 'allowed_action_ids[]' are both active in docs \u2014 one canonical form must be chosen"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "requires_reconciliation",
+      "heading_hints": [
+        "## Blocked Payload Normalization"
+      ],
+      "stale_residue_to_retire": [
+        "reason_code",
+        "recovery_options[]"
+      ],
+      "canonical_replacement_hints": [
+        "Use 'blocked_reason_code' and 'allowed_action_ids[]' as canonical field names"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L001401-L001430"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

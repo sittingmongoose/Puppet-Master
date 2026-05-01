@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0836",
+  "coverage_row_ids_represented": [
+    "cov-003131",
+    "cov-003133",
+    "cov-003135",
+    "cov-003282",
+    "cov-003284",
+    "cov-003286",
+    "cov-003295",
+    "cov-003298",
+    "cov-003301",
+    "cov-003359"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0836; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Candidate fixes to carry forward"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003131",
+        "cov-003133",
+        "cov-003135",
+        "cov-003282",
+        "cov-003284",
+        "cov-003286",
+        "cov-003295",
+        "cov-003298",
+        "cov-003301",
+        "cov-003359"
+      ],
+      "source_obligation_ids": [
+        "obl-001457",
+        "obl-001458",
+        "obl-001459",
+        "obl-001567",
+        "obl-001568",
+        "obl-001569",
+        "obl-001576",
+        "obl-001577",
+        "obl-001578",
+        "obl-001604"
+      ],
+      "source_seed_ids": [
+        "shard-0037-s009",
+        "shard-0039-s005",
+        "shard-0039-s008",
+        "shard-0040-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0039",
+        "shard-0040"
+      ],
+      "exact_missing_items": [
+        "Add rollup rules (severity-merge, collapse criteria, forced-split criteria) to the attention item family definition",
+        "Add disclosure-visibility rules: inline surface, click-to-expand, navigate-to-attention-center",
+        "Bind attention center widget in FinalGUISpec.md to the projection family, not to live polling",
+        "Projection-freshness trust vocabulary must be distinct from Preview trust_tier \u2014 trust_tier is already occupied in that namespace",
+        "Projection trust vocabulary must use a different name such as projection_freshness, data_freshness, or staleness_state",
+        "Using trust_tier for both preview capability trust and projection freshness would create a naming collision across surfaces",
+        "account-health / pressure event family: account_health_event must carry at minimum: account_id, health_kind, health_level, threshold_crossed?, details",
+        "account_pressure_episode must be queryable from any surface that shows account health trends",
+        "Models_System.md must also have an account-health display section for model-provider account degradation",
+        "do-not-forget: run.started MUST field list in storage-plan.md must agree with the operational_identity block definition \u2014 the event row must include the full operational_identity snapshot inline or by normative reference"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "project_attention_item.v1:{project_id}:{attention_item_id}"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

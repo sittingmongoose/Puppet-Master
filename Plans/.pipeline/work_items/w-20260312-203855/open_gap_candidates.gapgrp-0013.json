@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0013",
+  "coverage_row_ids_represented": [
+    "cov-002842",
+    "cov-002844",
+    "cov-002846",
+    "cov-002848",
+    "cov-002850",
+    "cov-002852",
+    "cov-002854",
+    "cov-002857",
+    "cov-002860",
+    "cov-002863"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0013; path=Plans/CLI_Bridged_Providers.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": "## minority_advisory Stream Event"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002842",
+        "cov-002844",
+        "cov-002846",
+        "cov-002848",
+        "cov-002850",
+        "cov-002852",
+        "cov-002854",
+        "cov-002857",
+        "cov-002860",
+        "cov-002863"
+      ],
+      "source_obligation_ids": [
+        "obl-001338",
+        "obl-001339",
+        "obl-001340",
+        "obl-001341",
+        "obl-001342",
+        "obl-001343",
+        "obl-001344",
+        "obl-001345",
+        "obl-001346",
+        "obl-001347"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s010",
+        "shard-0035-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "usage events carry no account attribution",
+        "auth_state carries no pool-member / account context for failover rotation",
+        "input_required / input_provided cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "no actor_kind in shared provider runtime stream; handoff uses bare agent names with no package/seam/lane context",
+        "SelectSpeakerEvent is demoted to raw_observation, which hides governance-relevant speaker/overseer transitions from downstream projections",
+        "minority_advisory is now conceptually required by the research, but it still has no canonical stream/event name",
+        "Introduce a versioned replacement for tier_boundary such as governance_boundary, keeping compatibility aliases only as an explicit migration strategy",
+        "Add attempt_id to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity",
+        "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them",
+        "Rewrite \u00a79 around dual-overseer / corroboration reality rather than layering more addenda onto the current singular-Overseer protocol"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "minority_advisory"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

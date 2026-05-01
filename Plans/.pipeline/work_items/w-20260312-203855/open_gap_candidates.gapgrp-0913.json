@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0913",
+  "coverage_row_ids_represented": [
+    "cov-006770",
+    "cov-006771",
+    "cov-006772",
+    "cov-006773",
+    "cov-006774",
+    "cov-006775",
+    "cov-006776",
+    "cov-006777",
+    "cov-006778",
+    "cov-006779"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0913; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006770",
+        "cov-006771",
+        "cov-006772",
+        "cov-006773",
+        "cov-006774",
+        "cov-006775",
+        "cov-006776",
+        "cov-006777",
+        "cov-006778",
+        "cov-006779"
+      ],
+      "source_obligation_ids": [
+        "obl-003673",
+        "obl-003674",
+        "obl-003675",
+        "obl-003676",
+        "obl-003677",
+        "obl-003678",
+        "obl-003679",
+        "obl-003680",
+        "obl-003681",
+        "obl-003682"
+      ],
+      "source_seed_ids": [
+        "shard-0082-s132",
+        "shard-0082-s136",
+        "shard-0082-s137",
+        "shard-0082-s142",
+        "shard-0082-s157",
+        "shard-0084-s102",
+        "shard-0084-s109",
+        "shard-0085-s015",
+        "shard-0085-s017",
+        "shard-0085-s142",
+        "shard-0086-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "2",
+        "`Primitive:WidgetCatalog` still says `Orchestrator widget tabs`",
+        "Primitive:WidgetCatalog",
+        "Orchestrator widget tabs",
+        "`Primitive:OrchestratorPage` still says six tabs with `Tiers`",
+        "Primitive:OrchestratorPage",
+        "Tiers",
+        "the duplicated headings appear after the `## References` block, which breaks the document\u2019s own structure and weakens deterministic anchor targeting",
+        "## References",
+        "`Crosswalk.md` still acts as if owner primitives are stable while the rewrite has already shifted ownership boundaries around Orchestrator, widgets, route/open contracts, blocked identity, and runtime identity disclosure."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

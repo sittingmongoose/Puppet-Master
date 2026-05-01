@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0296",
+  "coverage_row_ids_represented": [
+    "cov-002188",
+    "cov-002190",
+    "cov-002192",
+    "cov-002194",
+    "cov-002196",
+    "cov-002198",
+    "cov-002200",
+    "cov-002204",
+    "cov-002208",
+    "cov-002210"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0296; path=Plans/Glossary.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Object-Kind Vocabulary for Routing"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002188",
+        "cov-002190",
+        "cov-002192",
+        "cov-002194",
+        "cov-002196",
+        "cov-002198",
+        "cov-002200",
+        "cov-002204",
+        "cov-002208",
+        "cov-002210"
+      ],
+      "source_obligation_ids": [
+        "obl-001100",
+        "obl-001101",
+        "obl-001102",
+        "obl-001103",
+        "obl-001104",
+        "obl-001105",
+        "obl-001106",
+        "obl-001108",
+        "obl-001110",
+        "obl-001111"
+      ],
+      "source_seed_ids": [
+        "shard-0029-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "exact_missing_items": [
+        "run",
+        "feature_seam",
+        "work_package",
+        "node",
+        "lane",
+        "worktree",
+        "concern",
+        "review",
+        "graph_patch",
+        "recovery_record"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

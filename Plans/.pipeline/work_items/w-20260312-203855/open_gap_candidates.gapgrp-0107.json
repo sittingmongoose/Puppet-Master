@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0107",
+  "coverage_row_ids_represented": [
+    "cov-002019",
+    "cov-002020",
+    "cov-002021",
+    "cov-002022",
+    "cov-002023",
+    "cov-002024"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0107; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## 7. UICommand"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002019",
+        "cov-002020",
+        "cov-002021",
+        "cov-002022",
+        "cov-002023",
+        "cov-002024"
+      ],
+      "source_obligation_ids": [
+        "obl-000978",
+        "obl-000979",
+        "obl-000980",
+        "obl-000981",
+        "obl-000982",
+        "obl-000983"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE008-0026",
+        "seed-WAVE008-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0074",
+        "shard-0076"
+      ],
+      "exact_missing_items": [
+        "In Plans/Contracts_V0.md: add canonical route_target contract section under chapter 7.",
+        "The clean contract placement is: keep 7.1 UICommand envelope; add route_target and OpenSubject as new sibling contract sections inside chapter 7; keep WiringEntry after those sections so the wiring layer consumes, rather than owns, route/open semantics.",
+        "This is not just a missing paragraph. The owner-doc section order already tells us where the contract belongs.",
+        "Define a cross-family blocked minimum for canonical blocked objects: blocked reason; ordered allowed actions where applicable; preserved-work / local-state disclosure where applicable; stable blocked-episode identity or family-local equivalent; detail/report inspection refs.",
+        "Keep family-local additions separate: node-blocked keeps blocked_sequence, attempt_id, failure_class; wizard-blocked keeps wizard-specific clarification/report fields; thread blocked notices stay as rendered/persisted consumer state, not canonical blocked ownership.",
+        "assistant-chat-design.md is already stronger than the owner docs in how it treats blocked thread actions."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

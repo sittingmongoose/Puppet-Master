@@ -1,0 +1,327 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0035",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0035-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission",
+        "Multi-Account.md requires switch notifications/history semantics that storage-plan.md, Prompt_Pipeline.md, and bridged-provider stream contracts still cannot represent durably",
+        "Permissions_System.md still treats session cache and reject-cascade as globally session-scoped, which directly conflicts with multi-lane isolation and shared-runtime actor separation"
+      ],
+      "affected_doc_hints": ["Plans/CLI_Bridged_Providers.md", "Plans/Multi-Account.md", "Plans/storage-plan.md", "Plans/Permissions_System.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Bridged Provider Capability Parity", "## Permission Scope"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6801-L6803"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0035-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add requested_account_id?, effective_account_id?, execution-scope fields, and actor_kind / execution_role to the shared runtime identity bundle and to the bridged-provider envelope",
+        "Replace tier-era persisted names/values in Prompt_Pipeline.md and Personas.md before they become entrenched in durable records",
+        "Define a canonical switch-history / pressure-episode family and make it queryable from History, Ledger, Usage, and Account/Usage Pressure projections",
+        "Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch",
+        "Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries"
+      ],
+      "affected_doc_hints": ["Plans/Contracts_V0.md", "Plans/Prompt_Pipeline.md", "Plans/Personas.md", "Plans/Permissions_System.md", "Plans/CLI_Bridged_Providers.md", "Plans/Provider_OpenCode.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Candidate fixes to carry forward"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6806-L6810"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0035-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "usage_event_ref? is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is",
+        "Runtime_Artifacts_Panel.md assumes concrete runtime-artifact schema enforcement that is not currently present in the repo",
+        "Orchestrator_Page.md TOC sections 13-17 are genuinely missing, not relocated"
+      ],
+      "affected_doc_hints": ["Plans/storage-plan.md", "Plans/Runtime_Artifacts_Panel.md", "Plans/Orchestrator_Page.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## usage_event_ref Definition Gap", "## Orchestrator Page Missing Sections"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6866-L6867", "working_ledger.md:L6841"],
+      "notes": ["usage_event_ref is a hard blocker for trust-safe cross-surface navigation; Orchestrator_Page.md sections 13-17 are confirmed absent"]
+    },
+    {
+      "seed_id": "shard-0035-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Widget_System.md still splits terminal widgets between widget.terminal_output and widget.agent_terminal",
+        "Orchestrator-owned worktree partitioning still exists only as row metadata (owner run/tier) in Source Control docs, not as a canonical grouping/partition contract",
+        "widget layouts still need project-scoped keys rather than implicit global layouts for project-heavy surfaces"
+      ],
+      "affected_doc_hints": ["Plans/Widget_System.md", "Plans/WorktreeGitImprovement.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Terminal Widget Normalization", "## Worktree Partitioning"],
+      "stale_tokens": ["widget.terminal_output", "widget.agent_terminal"],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6842-L6844"],
+      "notes": ["terminal widget IDs must be normalized to a single canonical identity"]
+    },
+    {
+      "seed_id": "shard-0035-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "storage-plan.md already grounds freshness in committed projection state, checkpoints, and receipts",
+        "there is still no shared ProjectionHealth/trust contract spanning Usage, Orchestrator, Source Control, and widgets",
+        "live widget and page contracts still need attempt-/lane-/session-aware attribution rather than tier-only routing",
+        "stable live identity now centers on attempt_id, receipt refs, scheduler_lane, worktree_id, and requested/effective identity per attempt"
+      ],
+      "affected_doc_hints": ["Plans/storage-plan.md", "Plans/Widget_System.md", "Plans/Orchestrator_Page.md", "Plans/usage-feature.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Projection Health Contract", "## Live Attribution Model"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6845-L6851"],
+      "notes": ["A shared ProjectionHealth/trust contract is structurally absent; must be added to storage-plan.md"]
+    },
+    {
+      "seed_id": "shard-0035-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters",
+        "Add a shared projection-health / trust-state record family built from committed projection state, checkpoints, and last-updated metadata",
+        "Normalize terminal widget IDs/hostability and explicitly decide how Orchestrator-owned worktree state is grouped in Source Control",
+        "Bind GitHub Integration to project-scoped selected_repo_id and provider_accounts.* state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths",
+        "selected_repo_id already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary"
+      ],
+      "affected_doc_hints": ["Plans/storage-plan.md", "Plans/GitHub_Integration.md", "Plans/Widget_System.md", "Plans/Run_Graph_View.md", "Plans/Runtime_Artifacts_Panel.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Candidate fixes to carry forward"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6873-L6878"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0035-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "tier_boundary is not just stale prose; it is a reserved diagnostic category with hard detail keys (from_tier / to_tier)",
+        "the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep"
+      ],
+      "affected_doc_hints": ["Plans/Provider_Stream_Mapping_External_Reference_A2A.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## A2A Stream Schema", "## tier_boundary Reserved Category"],
+      "stale_tokens": ["tier_boundary", "from_tier", "to_tier"],
+      "canonical_replacement_hints": ["governance_boundary"],
+      "canonical_replacement_status": "replacement_known",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6898"],
+      "notes": ["tier_boundary with from_tier/to_tier keys requires versioned stream migration, not just prose cleanup"]
+    },
+    {
+      "seed_id": "shard-0035-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Overseer audit protocol is structurally incompatible with the rewrite: singular Overseer, audit_kind = start_of_tier | end_of_tier, hard exactly 2 reviewer subagents, no minority-advisory outcome for the now-required 2-of-3 corroboration pattern"
+      ],
+      "affected_doc_hints": ["Plans/Provider_Stream_Mapping_External_Reference_A2A.md", "Plans/Executor_Protocol.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Overseer Audit Protocol", "## Corroboration Model"],
+      "stale_tokens": ["audit_kind = start_of_tier", "audit_kind = end_of_tier"],
+      "canonical_replacement_hints": ["dual-overseer / corroboration audit protocol"],
+      "canonical_replacement_status": "replacement_known",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6899-L6903"],
+      "notes": ["§9 auditability guarantee in A2A doc is now false under the rewrite; section must be rewritten"]
+    },
+    {
+      "seed_id": "shard-0035-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "A2A doc internally contradicts itself on attempt continuity: 2026-03-09 addenda say normalized streams MUST preserve attempt_id, but none of the reserved diagnostic category schemas actually expose attempt_id",
+        "adapters currently have no canonical way to satisfy both requirements at once"
+      ],
+      "affected_doc_hints": ["Plans/Provider_Stream_Mapping_External_Reference_A2A.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## attempt_id Continuity in Streams"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6904-L6907"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0035-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "usage events carry no account attribution",
+        "auth_state carries no pool-member / account context for failover rotation",
+        "input_required / input_provided cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "no actor_kind in shared provider runtime stream; handoff uses bare agent names with no package/seam/lane context",
+        "SelectSpeakerEvent is demoted to raw_observation, which hides governance-relevant speaker/overseer transitions from downstream projections",
+        "minority_advisory is now conceptually required by the research, but it still has no canonical stream/event name"
+      ],
+      "affected_doc_hints": ["Plans/Provider_Stream_Mapping_External_Reference_A2A.md", "Plans/CLI_Bridged_Providers.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Stream Actor and Account Attribution", "## minority_advisory Stream Event"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": ["minority_advisory"],
+      "canonical_replacement_status": "replacement_known",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6908-L6915", "working_ledger.md:L6946"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0035-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "Introduce a versioned replacement for tier_boundary such as governance_boundary, keeping compatibility aliases only as an explicit migration strategy",
+        "Add attempt_id to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity",
+        "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them",
+        "Rewrite §9 around dual-overseer / corroboration reality rather than layering more addenda onto the current singular-Overseer protocol",
+        "Promote governance-relevant speaker/handoff selections out of raw_observation when they affect orchestration projections or audit reconstruction"
+      ],
+      "affected_doc_hints": ["Plans/Provider_Stream_Mapping_External_Reference_A2A.md", "Plans/CLI_Bridged_Providers.md", "Plans/Architecture_Invariants.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Candidate fixes to carry forward"],
+      "stale_tokens": ["tier_boundary"],
+      "canonical_replacement_hints": ["governance_boundary"],
+      "canonical_replacement_status": "replacement_known",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6936-L6941"],
+      "notes": ["This seam needs explicit contract-version governance; otherwise adapter-local shadow fields will proliferate"]
+    },
+    {
+      "seed_id": "shard-0035-s012",
+      "seed_type": "owner",
+      "exact_items": [
+        "Contracts_V0.md still conflicts with itself on remediation resolution enums and on safe-point / scheduler payload shapes",
+        "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage",
+        "the rewrite now clearly needs an actor envelope broader than run_id: missing minimum envelope is project_id + actor_kind + sparse actor refs (run_id?, attempt_id?, thread_id?, wizard_id?, interview_id?) plus requested/effective runtime/account fields"
+      ],
+      "affected_doc_hints": ["Plans/Contracts_V0.md", "Plans/storage-plan.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Actor Envelope", "## Canonical Payload Consolidation"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6960-L6966"],
+      "notes": ["The actor envelope is the canonical minimum needed for all actor-aware projections"]
+    },
+    {
+      "seed_id": "shard-0035-s013",
+      "seed_type": "owner",
+      "exact_items": [
+        "storage-plan.md internally contradicts itself: the early orchestrator.receipt.{run_id}.{attempt_id} value shape omits project_id and created_at_utc, while the later cross-surface receipt record makes them mandatory",
+        "usage-feature.md sharpened that the canonical pointer should be usage_event_ref, not a new opaque usage_event_id",
+        "usage_event_ref now needs one authoritative schema because artifacts, receipts, Usage, Ledger, and chat pivots all rely on it already"
+      ],
+      "affected_doc_hints": ["Plans/storage-plan.md", "Plans/usage-feature.md", "Plans/Contracts_V0.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## usage_event_ref Schema", "## Receipt Record Canonical Shape"],
+      "stale_tokens": ["usage_event_id"],
+      "canonical_replacement_hints": ["usage_event_ref"],
+      "canonical_replacement_status": "replacement_known",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6968-L6970"],
+      "notes": ["usage_event_ref needs one authoritative schema definition — currently undefined despite wide reliance"]
+    },
+    {
+      "seed_id": "shard-0035-s014",
+      "seed_type": "owner",
+      "exact_items": [
+        "cmd.graph.approve_hitl / deny_hitl arguments do not match UI_Command_Catalog.md (request_id mismatch)",
+        "graph-local recovery IDs still conflict with the canonical allowed_action_ids[] -> cmd.runtime.* model",
+        "cross-surface open commands are required in prose but not bound in the Run Graph command section",
+        "no projection-trust payload exists for mutating or cross-surface actions on stale/degraded graph projections"
+      ],
+      "affected_doc_hints": ["Plans/Run_Graph_View.md", "Plans/UI_Command_Catalog.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Run Graph Command Arg Mismatches", "## Graph Action Trust Gating"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L6972-L6975"],
+      "notes": ["cmd.graph.approve_hitl/deny_hitl arg mismatch vs UI_Command_Catalog.md is a concrete implementation risk"]
+    },
+    {
+      "seed_id": "shard-0035-s015",
+      "seed_type": "owner",
+      "exact_items": [
+        "Publish a single superseding canonical payload block in Contracts_V0.md for scheduler/safe-point/remediation records and explicitly demote older variants",
+        "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry",
+        "Normalize cross-surface receipt records so project_id, actor refs, created_at_utc, and usage_event_ref are required whenever a surface may pivot historically or across projects",
+        "Define usage_event_ref once as a locator-grade canonical reference and reuse it everywhere rather than inventing a new opaque ID family",
+        "Normalize Run Graph onto canonical cmd.runtime.* / cmd.orchestrator.open_in_* command bindings, add the missing action envelope, and add trust-state gating rules",
+        "Allow short-term concern rendering to piggyback on finding_refs[], but define a minimal non-remediation node_concerns[] projection next",
+        "Pre-attempt blocked episodes still need blocked_sequence handling without fabricating attempt_id",
+        "usage_event_ref should be a structured locator, not just a display string"
+      ],
+      "affected_doc_hints": ["Plans/Contracts_V0.md", "Plans/storage-plan.md", "Plans/usage-feature.md", "Plans/Run_Graph_View.md", "Plans/UI_Command_Catalog.md", "Plans/Runtime_Artifacts_Panel.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Candidate fixes to carry forward", "### Do-not-forget details"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0035",
+      "source_evidence": ["working_ledger.md:L7001-L7012"],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L6818-L6829: section header and targeted-docs-read list only",
+    "L6885-L6896: section header and targeted-docs-read list only",
+    "L6948-L6957: section header and targeted-docs-read list only",
+    "L6980-L6991: highest-risk impacted docs list — seeds extracted from content"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

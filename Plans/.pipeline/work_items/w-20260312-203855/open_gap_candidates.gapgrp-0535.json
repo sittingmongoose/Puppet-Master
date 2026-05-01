@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0535",
+  "coverage_row_ids_represented": [
+    "cov-002155",
+    "cov-002156",
+    "cov-002157",
+    "cov-002329",
+    "cov-002334",
+    "cov-002339",
+    "cov-002352",
+    "cov-002355",
+    "cov-002358",
+    "cov-002364"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0535; path=Plans/Runtime_Artifacts_Panel.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Runtime Artifact Envelope Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002155",
+        "cov-002156",
+        "cov-002157",
+        "cov-002329",
+        "cov-002334",
+        "cov-002339",
+        "cov-002352",
+        "cov-002355",
+        "cov-002358",
+        "cov-002364"
+      ],
+      "source_obligation_ids": [
+        "obl-001070",
+        "obl-001071",
+        "obl-001072",
+        "obl-001170",
+        "obl-001171",
+        "obl-001172",
+        "obl-001179",
+        "obl-001180",
+        "obl-001181",
+        "obl-001182"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0028",
+        "shard-0031-s008",
+        "shard-0031-s012",
+        "shard-0031-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0054"
+      ],
+      "exact_missing_items": [
+        "Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in Runtime_Artifacts_Panel.md",
+        "Make the envelope explicitly attempt-native and bridge-aware",
+        "the runtime-artifact envelope should be attempt-native by default",
+        "Contracts_V0.md is strong on canonical effective identity and envelope normalization",
+        "downstream docs still do not consistently model requested identity alongside verified/effective identity",
+        "this is especially visible in GitHub_API_Auth_and_Flows.md, GitHub_Integration.md, Run_Graph_View.md, and Runtime_Artifacts_Panel.md",
+        "GitHub_Integration.md still frames worktree ownership around run/tier",
+        "FileManager.md already wants identity-based artifact opening, but its open contract is still too path-first",
+        "Runtime_Artifacts_Panel.md is missing attempt_id in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly",
+        "Define one shared requested/effective identity disclosure contract reusable across: graph detail, artifacts, GitHub/auth surfaces, usage/account-pressure surfaces"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

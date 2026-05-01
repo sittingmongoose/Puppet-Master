@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0389",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-001240",
+      "source_obligation_ids": [
+        "obl-000541"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001245",
+      "source_obligation_ids": [
+        "obl-000542"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s012"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "present",
+      "required_action": "none",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=1/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001250",
+      "source_obligation_ids": [
+        "obl-000543"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001255",
+      "source_obligation_ids": [
+        "obl-000544"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001260",
+      "source_obligation_ids": [
+        "obl-000545"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001265",
+      "source_obligation_ids": [
+        "obl-000546"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001270",
+      "source_obligation_ids": [
+        "obl-000547"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001275",
+      "source_obligation_ids": [
+        "obl-000548"
+      ],
+      "source_seed_ids": [
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001280",
+      "source_obligation_ids": [
+        "obl-000549"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-001283",
+      "source_obligation_ids": [
+        "obl-000550"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Orchestrator_Page.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

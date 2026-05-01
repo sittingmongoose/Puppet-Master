@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0134",
+  "coverage_row_ids_represented": [
+    "cov-004894",
+    "cov-004901",
+    "cov-004908",
+    "cov-004915",
+    "cov-004997",
+    "cov-005002",
+    "cov-005007",
+    "cov-005012",
+    "cov-005017",
+    "cov-005482"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0134; path=Plans/Crosswalk.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "## Three-Contract Navigation Model"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004894",
+        "cov-004901",
+        "cov-004908",
+        "cov-004915",
+        "cov-004997",
+        "cov-005002",
+        "cov-005007",
+        "cov-005012",
+        "cov-005017",
+        "cov-005482"
+      ],
+      "source_obligation_ids": [
+        "obl-002232",
+        "obl-002233",
+        "obl-002234",
+        "obl-002235",
+        "obl-002250",
+        "obl-002251",
+        "obl-002252",
+        "obl-002253",
+        "obl-002254",
+        "obl-002393"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0034",
+        "seed-WAVE007-0038",
+        "shard-0092-s034"
+      ],
+      "source_shard_ids": [
+        "shard-0067",
+        "shard-0068",
+        "shard-0092"
+      ],
+      "exact_missing_items": [
+        "Define `OpenSubject` as the canonical identity-native source-open contract.",
+        "Keep `OpenFile` as the path-based editor contract only.",
+        "State the resolution chain directly: `route_target` may land on a surface that then invokes `OpenSubject`; `OpenSubject` may resolve to `OpenFile`; `OpenSubject` may resolve to a transient `generated://<artifact_id>` source buffer",
+        "The three contracts are now distinct: `route_target` = navigation; `OpenSubject` = identity-native source open; `OpenFile` = path-based editor open",
+        "Define the canonical `target_kind` enum in `Contracts_V0.md`.",
+        "The canonical vocabulary is: `primary_view` (full primary-content destinations: Dashboard, Projects, Wizard, Interview, Settings, Usage, Orchestrator); `side_panel` (activity-bar panel destinations: chat, files, source_control, github_actions, docker_manager, artifacts, run_debug); `bottom_panel` (bottom shell destinations: terminal, problems, output, ports, browser, debug); `embedded_surface` (embedded sub-surfaces: document_pane, agent_activity); `page_tab` (tab within a routed page: Orchestrator tabs)",
+        "Keep destination-local refinements outside the enum and outside the base route contract.",
+        "Use `page_tab` when the routed destination must land inside a known page and force a specific tab.",
+        "What is not `target_kind`: docked vs floating; panel width; widget slot; subview id; repo/worktree selection; browser tab id; workspace tab id",
+        "`Plans/Crosswalk.md:88-94`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

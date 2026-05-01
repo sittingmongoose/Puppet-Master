@@ -1,0 +1,70 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0642",
+  "coverage_row_ids_represented": [
+    "cov-004152",
+    "cov-004352",
+    "cov-004353",
+    "cov-004354"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "group gapgrp-0642; path=Plans/Wiring_Matrix.md; row_type=stale_retirement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004152",
+        "cov-004352",
+        "cov-004353",
+        "cov-004354"
+      ],
+      "source_obligation_ids": [
+        "obl-001937",
+        "obl-002073",
+        "obl-002074",
+        "obl-002075"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0012",
+        "seed-WAVE006-0053"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "Wiring_Matrix.md still contains normative ghost IDs (cmd.chat.branch_from_restore) plus wider matrix/catalog drift",
+        "Wiring_Matrix.md still contains stale example drift that matters mechanically, not just editorially",
+        "Clean stale/ghost command examples out of Wiring_Matrix.md before relying on it for automated extraction or coverage",
+        "the example row for cmd.orchestrator.switch_tab reinforces an older command shape even though the broader research already flagged that command family as a ghost/stale-ID risk"
+      ],
+      "stale_tokens": [
+        "cmd.chat.branch_from_restore",
+        "cmd.orchestrator.switch_tab"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

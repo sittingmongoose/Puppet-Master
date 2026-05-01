@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0020",
+  "represented_seed_ids": [
+    "shard-0002-s015"
+  ],
+  "source_shard_ids": [
+    "shard-0002"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0002-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Required orchestrator projection families (12): Run Summary, Seam Summary, Package Summary, Node Summary, Promotion Summary, Lane/Worktree Summary, Concern Summary, Account/Usage Pressure, Recent Major Events, Corroboration Summary, Recover",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Required orchestrator projection families (12): Run Summary, Seam Summary, Package Summary, Node Summary, Promotion Summary, Lane/Worktree Summary, Concern Summary, Account/Usage Pressure, Recent Major Events, Corroboration Summary, Recovery Summary, Overseer Activity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Projection Families"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000375-L000395"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

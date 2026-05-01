@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0863",
+  "coverage_row_ids_represented": [
+    "cov-000488",
+    "cov-000703",
+    "cov-000861",
+    "cov-000876",
+    "cov-001243",
+    "cov-001248",
+    "cov-001253",
+    "cov-001258",
+    "cov-001263",
+    "cov-001268"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0863; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Multi-Account Failover"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000488",
+        "cov-000703",
+        "cov-000861",
+        "cov-000876",
+        "cov-001243",
+        "cov-001248",
+        "cov-001253",
+        "cov-001258",
+        "cov-001263",
+        "cov-001268"
+      ],
+      "source_obligation_ids": [
+        "obl-000204",
+        "obl-000305",
+        "obl-000373",
+        "obl-000379",
+        "obl-000541",
+        "obl-000542",
+        "obl-000543",
+        "obl-000544",
+        "obl-000545",
+        "obl-000546"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s001",
+        "shard-0003-s016",
+        "shard-0005-s013",
+        "shard-0006-s008",
+        "shard-0011-s012",
+        "shard-0013-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0005",
+        "shard-0006",
+        "shard-0011",
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Multi-account failover behavior MUST extend the existing usage model in Plans/usage-feature.md \u2014 it must NOT invent a separate 'account pressure' subsystem",
+        "Plans/usage-feature.md is the strongest owner doc for usage/quota/alerts/analytics \u2014 all other docs must treat it as authoritative and not define usage rules independently",
+        "Multi-account settings: user-configurable threshold for auto-switch; ON by default for all provider-using actors; granularity by provider, account, execution role; same-provider accounts with different quotas are NOT fungible",
+        "Supersession hotspot docs (highest-risk for canon collapse): Plans/orchestrator-subagent-integration.md, Plans/human-in-the-loop.md, Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/storage-plan.md",
+        "Introduce one shared projection-health / trust-state record family and require Orchestrator, widgets, and Run Graph surfaces to use it for action gating and fallback",
+        "no shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces",
+        "projection trust states: current, refreshing, stale, degraded, unavailable",
+        "current: projection is caught up enough for normal use",
+        "refreshing: old committed projection still visible while refresh/rebuild runs",
+        "stale: projection is usable for context but may not reflect current runtime truth"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

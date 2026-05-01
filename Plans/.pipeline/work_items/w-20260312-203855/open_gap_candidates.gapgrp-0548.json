@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0548",
+  "coverage_row_ids_represented": [
+    "cov-004202",
+    "cov-004203",
+    "cov-004204",
+    "cov-007822",
+    "cov-007825",
+    "cov-007834",
+    "cov-007837",
+    "cov-007840"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "group gapgrp-0548; path=Plans/Tools.md; row_type=consumer; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "## tool.invoked"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004202",
+        "cov-004203",
+        "cov-004204",
+        "cov-007822",
+        "cov-007825",
+        "cov-007834",
+        "cov-007837",
+        "cov-007840"
+      ],
+      "source_obligation_ids": [
+        "obl-001987",
+        "obl-001988",
+        "obl-001989",
+        "obl-004366",
+        "obl-004367",
+        "obl-004370",
+        "obl-004371",
+        "obl-004372"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0019",
+        "shard-0090-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0053",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "Tools.md still treats tool.invoked primarily as analytics data: tool_name, run_id, optional thread_id, latency / success / error",
+        "Expand tool.invoked so it can carry runtime attribution on parity with side-effect-relevant tool.denied",
+        "Tools.md: stop at tool-specific semantics and reference the shared runtime attribution packet instead of keeping tool events analytics-only",
+        "`Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surfaces under audit.",
+        "Plans/Tools.md",
+        "report_ref",
+        "startup_recovered",
+        "escalation_level"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

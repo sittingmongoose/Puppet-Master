@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0579",
+  "coverage_row_ids_represented": [
+    "cov-001881",
+    "cov-001883",
+    "cov-001885",
+    "cov-001887",
+    "cov-001889",
+    "cov-001892",
+    "cov-001894",
+    "cov-001896",
+    "cov-001900",
+    "cov-001902"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0579; path=Plans/UI_Command_Catalog.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## Bulk Action Policy"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001881",
+        "cov-001883",
+        "cov-001885",
+        "cov-001887",
+        "cov-001889",
+        "cov-001892",
+        "cov-001894",
+        "cov-001896",
+        "cov-001900",
+        "cov-001902"
+      ],
+      "source_obligation_ids": [
+        "obl-000876",
+        "obl-000877",
+        "obl-000878",
+        "obl-000879",
+        "obl-000880",
+        "obl-000881",
+        "obl-000882",
+        "obl-000883",
+        "obl-000885",
+        "obl-000886"
+      ],
+      "source_seed_ids": [
+        "shard-0024-s003",
+        "shard-0024-s004",
+        "shard-0024-s005",
+        "shard-0024-s006",
+        "shard-0024-s007",
+        "shard-0038-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0024",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "live execution mutations should stay narrow unless the runtime has an explicit safe batch semantic for that exact action",
+        "command discoverability does not weaken confirmation requirements",
+        "strong/hard_gate/non_reversible/compensating_action_only actions must still honor same gating and preview requirements via palette and shortcut surfaces",
+        "shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions",
+        "object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics",
+        "resume_url is the transport/serialized form of a canonical route payload, not a separate identity system",
+        "resume_url must be derivable from any canonical route payload via a deterministic serialization rule",
+        "No doc currently defines this derivation or mandates that resume URLs and canonical route payloads are interchangeable for navigation purposes",
+        "focused_run_id",
+        "destination tab/surface"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

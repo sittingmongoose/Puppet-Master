@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0843",
+  "coverage_row_ids_represented": [
+    "cov-004403",
+    "cov-004964",
+    "cov-004970",
+    "cov-004976",
+    "cov-004982",
+    "cov-004988",
+    "cov-004994",
+    "cov-005025",
+    "cov-005030",
+    "cov-005035"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0843; path=Plans/storage-plan.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Project Switch Handoff"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004403",
+        "cov-004964",
+        "cov-004970",
+        "cov-004976",
+        "cov-004982",
+        "cov-004988",
+        "cov-004994",
+        "cov-005025",
+        "cov-005030",
+        "cov-005035"
+      ],
+      "source_obligation_ids": [
+        "obl-002101",
+        "obl-002244",
+        "obl-002245",
+        "obl-002246",
+        "obl-002247",
+        "obl-002248",
+        "obl-002249",
+        "obl-002255",
+        "obl-002256",
+        "obl-002257"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0069",
+        "seed-WAVE007-0037",
+        "seed-WAVE007-0039"
+      ],
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0067",
+        "shard-0068"
+      ],
+      "exact_missing_items": [
+        "project-switch handoff does not have a canonical transition sequence or event contract",
+        "The canonical minimum field set is: `target_kind`; `project_id`; one canonical target selector (`subject_id` OR `object_kind` + `object_id`)",
+        "The narrow scope-restoration fields are: `focused_run_id`; `thread_id`",
+        "The narrow focus-refinement fields are: `tab_id`; `inspector_target`",
+        "Full bounded shape: `target_kind`, `project_id`, `focused_run_id`, `thread_id`, `tab_id`, `subject_id`, `object_kind`, `object_id`, `inspector_target`",
+        "`project_id` is required. Exactly one canonical target selector is required.",
+        "What is NOT a base `route_target` field: `usage_event_ref`, `wizard_id`, `wizard_step`, `message_id`, `artifact_id`, `document_id`, `workflow_run_id`, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, `line`, `range`, per-surface state (`active_subview`, compare target, panel layout, browser tab state, widget layout)",
+        "The canonical selector rule is: exactly one primary selector is present: `subject_id` OR `object_kind` + `object_id`",
+        "`subject_id` wins for openable/renderable content subjects.",
+        "`object_kind` + `object_id` wins for domain/runtime/governance objects."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "memory.gist.created",
+        "memory.gist.updated",
+        "memory.automilestone.triggered"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

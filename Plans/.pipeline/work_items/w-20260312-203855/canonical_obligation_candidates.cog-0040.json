@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0040",
+  "represented_seed_ids": [
+    "shard-0004-s009"
+  ],
+  "source_shard_ids": [
+    "shard-0004"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0004-s009"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "HITL events, blocked states, and critical events must surface in all 3 of these locations: Dashboard, Orchestrator page, spawned chat thread",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "HITL events, blocked states, and critical events must surface in all 3 of these locations: Dashboard, Orchestrator page, spawned chat thread"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## HITL Surface Locations"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L000740-L000760"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

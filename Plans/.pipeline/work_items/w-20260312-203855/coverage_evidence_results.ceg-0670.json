@@ -1,0 +1,236 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0670",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-003510",
+      "source_obligation_ids": [
+        "obl-001671"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s043"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003511",
+      "source_obligation_ids": [
+        "obl-001672"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s043"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003512",
+      "source_obligation_ids": [
+        "obl-001673"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s078"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003513",
+      "source_obligation_ids": [
+        "obl-001674"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s078"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003514",
+      "source_obligation_ids": [
+        "obl-001675"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s113",
+        "shard-0091-s148"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003515",
+      "source_obligation_ids": [
+        "obl-001676"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s113",
+        "shard-0091-s148"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003516",
+      "source_obligation_ids": [
+        "obl-001677"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s147"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003517",
+      "source_obligation_ids": [
+        "obl-001678"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s147"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004568",
+      "source_obligation_ids": [
+        "obl-002171"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0014"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-004574",
+      "source_obligation_ids": [
+        "obl-002172"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0014"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/assistant-chat-design.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

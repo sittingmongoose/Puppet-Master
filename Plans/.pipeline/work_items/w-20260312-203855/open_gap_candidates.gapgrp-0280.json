@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0280",
+  "coverage_row_ids_represented": [
+    "cov-004160",
+    "cov-004162",
+    "cov-004163",
+    "cov-004164",
+    "cov-004165",
+    "cov-004166",
+    "cov-004167",
+    "cov-004168",
+    "cov-004169",
+    "cov-007351"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0280; path=Plans/Glossary.md; row_type=layout_blocker; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004160",
+        "cov-004162",
+        "cov-004163",
+        "cov-004164",
+        "cov-004165",
+        "cov-004166",
+        "cov-004167",
+        "cov-004168",
+        "cov-004169",
+        "cov-007351"
+      ],
+      "source_obligation_ids": [
+        "obl-001945",
+        "obl-001947",
+        "obl-001948",
+        "obl-001949",
+        "obl-001950",
+        "obl-001951",
+        "obl-001952",
+        "obl-001953",
+        "obl-001954",
+        "obl-004189"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s107",
+        "shard-0088-s124",
+        "shard-0090-s094",
+        "shard-0091-s025"
+      ],
+      "source_shard_ids": [
+        "shard-0087",
+        "shard-0088",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "related concepts",
+        "`Plans/Glossary.md` already carries the required help-entry field template and labels, but still does not have the named `### Orchestrator rewrite terms` / `### Runtime and routing terms` sections or populated help-entry rows.",
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "`gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`).",
+        "Term | Definition",
+        "canonical_name",
+        "short_definition",
+        "why_it_matters",
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

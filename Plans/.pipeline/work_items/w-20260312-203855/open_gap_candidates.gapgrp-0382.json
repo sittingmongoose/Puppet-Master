@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0382",
+  "coverage_row_ids_represented": [
+    "cov-000777",
+    "cov-000782",
+    "cov-000783",
+    "cov-000785",
+    "cov-000787",
+    "cov-000790",
+    "cov-000792",
+    "cov-000794",
+    "cov-000796",
+    "cov-000797"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0382; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Orchestrator Export Families"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000777",
+        "cov-000782",
+        "cov-000783",
+        "cov-000785",
+        "cov-000787",
+        "cov-000790",
+        "cov-000792",
+        "cov-000794",
+        "cov-000796",
+        "cov-000797"
+      ],
+      "source_obligation_ids": [
+        "obl-000335",
+        "obl-000337",
+        "obl-000338",
+        "obl-000339",
+        "obl-000340",
+        "obl-000341",
+        "obl-000342",
+        "obl-000343",
+        "obl-000344",
+        "obl-000345"
+      ],
+      "source_seed_ids": [
+        "shard-0018-s002",
+        "shard-0018-s003",
+        "shard-0018-s004",
+        "shard-0018-s005",
+        "shard-0022-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0018",
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "Run export should include a manifest: run metadata, exact records, linked artifacts/evidence, historical/superseded status flags",
+        "Manifest fields: export_id, export_kind, project_id, run_id?, focused_run_id?, generated_at_utc, source_surface, filter_summary, record_counts, artifact_counts, included_record_ids[], included_artifact_ids[], status_notes, schema_version",
+        "exact-record surfaces should export canonical records, not UI-specific transformed rows",
+        "Ledger export should preserve canonical ids and structured fields; CSV is fine as a convenience projection; JSON/JSONL should remain close to canonical record structure",
+        "exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from",
+        "Exports must preserve historical truth even when live backing objects no longer exist",
+        "removed worktree or retired graph path still exports as record metadata with historical status",
+        "absence of a live backing file/worktree should not corrupt the exported record bundle",
+        "view export is still useful, but should be clearly labeled as a convenience format; CSV/table exports are not canonical archival formats",
+        "project-summary projection"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

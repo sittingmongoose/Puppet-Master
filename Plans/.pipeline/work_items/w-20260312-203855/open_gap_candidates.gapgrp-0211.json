@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0211",
+  "coverage_row_ids_represented": [
+    "cov-000009",
+    "cov-000011",
+    "cov-000013",
+    "cov-000015",
+    "cov-000017",
+    "cov-000019",
+    "cov-000021",
+    "cov-000023",
+    "cov-000025",
+    "cov-000027"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0211; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Tab Navigation"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000009",
+        "cov-000011",
+        "cov-000013",
+        "cov-000015",
+        "cov-000017",
+        "cov-000019",
+        "cov-000021",
+        "cov-000023",
+        "cov-000025",
+        "cov-000027"
+      ],
+      "source_obligation_ids": [
+        "obl-000003",
+        "obl-000004",
+        "obl-000005",
+        "obl-000006",
+        "obl-000007",
+        "obl-000008",
+        "obl-000009",
+        "obl-000010",
+        "obl-000011",
+        "obl-000012"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s003",
+        "shard-0001-s007",
+        "shard-0001-s009",
+        "shard-0001-s010",
+        "shard-0001-s011",
+        "shard-0001-s015",
+        "shard-0002-s004",
+        "shard-0002-s005",
+        "shard-0002-s006",
+        "shard-0002-s020"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Orchestrator must remain tab-first (not widget-first) and expose exactly 6 canonical tabs: Progress, Seams, Node Graph, Evidence, History, Ledger",
+        "Seams tab must show Feature Seams at the top level, Work Packages at the second level, and individual nodes on drill-in",
+        "Evidence tab must have two distinct panes: an Evidence pane (verdicts/receipts) and an Artifacts pane (screenshots/recordings/diffs)",
+        "History tab = chronological story view; Ledger tab = structured durable record inspection; these are distinct purposes and must not be merged",
+        "Side inspectors must remain summary/action-light; dense objects (attempt handoff, review records, graph patch requests, etc.) must open full-record views, not be inlined in inspectors",
+        "Weak Integration must not be merely a badge; it must show grouped concerns under specific headings: Wiring, Workflow, State, GUI, Design",
+        "Operator event visibility must be tiered: history-only / badge-worthy / attention-card-worthy / chat-thread action-required \u2014 each event family must declare its tier",
+        "Tab badges must be sparse and purposeful; the Progress tab badge must count only meaningful attention/action-required items, not routine events",
+        "Condition-aging defaults: normal resolved conditions clear in ~15 minutes; major resolved conditions persist until dismissed or up to 24 hours",
+        "Under degraded projections, the UI must fall back to Ledger and direct record views; fallback path must be defined and surfaced to the user"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

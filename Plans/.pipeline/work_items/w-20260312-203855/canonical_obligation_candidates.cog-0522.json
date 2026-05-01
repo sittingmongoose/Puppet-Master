@@ -1,0 +1,165 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0522",
+  "represented_seed_ids": [
+    "seed-WAVE008-0029"
+  ],
+  "source_shard_ids": [
+    "shard-0074"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE008-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md is structurally ready for route/open adoption but still classifies several routed object actions as pure layout state: cmd.source_control.select_worktree; cmd.chat.open_thread_usage; cmd.chat.focus_thread_usage; ",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "Plans/UI_Command_Catalog.md is structurally ready for route/open adoption but still classifies several routed object actions as pure layout state: cmd.source_control.select_worktree; cmd.chat.open_thread_usage; cmd.chat.focus_thread_usage; cmd.panel.switch with contextual object refs."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "cmd.source_control.select_worktree classified as layout/UI state only",
+        "cmd.chat.open_thread_usage classified as layout state only",
+        "cmd.chat.focus_thread_usage classified as layout state only"
+      ],
+      "canonical_replacement_hints": [
+        "command classification: shell_view, navigation_wrapper, or domain_action; worktree selection and thread usage focus as navigation_wrapper"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L014787-L014800"
+      ],
+      "notes": [
+        "The catalog structure is not the problem. The command meaning labels are."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE008-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "classify commands as shell_view, navigation_wrapper, or domain_action.",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "classify commands as shell_view, navigation_wrapper, or domain_action."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "cmd.source_control.select_worktree classified as layout/UI state only",
+        "cmd.chat.open_thread_usage classified as layout state only",
+        "cmd.chat.focus_thread_usage classified as layout state only"
+      ],
+      "canonical_replacement_hints": [
+        "command classification: shell_view, navigation_wrapper, or domain_action; worktree selection and thread usage focus as navigation_wrapper"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L014787-L014800"
+      ],
+      "notes": [
+        "The catalog structure is not the problem. The command meaning labels are."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE008-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "reclassify worktree selection and thread Usage focus/open as navigation wrappers.",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "reclassify worktree selection and thread Usage focus/open as navigation wrappers."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "cmd.source_control.select_worktree classified as layout/UI state only",
+        "cmd.chat.open_thread_usage classified as layout state only",
+        "cmd.chat.focus_thread_usage classified as layout state only"
+      ],
+      "canonical_replacement_hints": [
+        "command classification: shell_view, navigation_wrapper, or domain_action; worktree selection and thread usage focus as navigation_wrapper"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L014787-L014800"
+      ],
+      "notes": [
+        "The catalog structure is not the problem. The command meaning labels are."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE008-0029"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "keep cmd.panel.switch pure shell-facing and move object targeting through routed wrappers or normalized route args.",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "keep cmd.panel.switch pure shell-facing and move object targeting through routed wrappers or normalized route args."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "cmd.source_control.select_worktree classified as layout/UI state only",
+        "cmd.chat.open_thread_usage classified as layout state only",
+        "cmd.chat.focus_thread_usage classified as layout state only"
+      ],
+      "canonical_replacement_hints": [
+        "command classification: shell_view, navigation_wrapper, or domain_action; worktree selection and thread usage focus as navigation_wrapper"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L014787-L014800"
+      ],
+      "notes": [
+        "The catalog structure is not the problem. The command meaning labels are."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

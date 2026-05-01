@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0063",
+  "coverage_row_ids_represented": [
+    "cov-002000",
+    "cov-002001",
+    "cov-002002",
+    "cov-002003",
+    "cov-002004",
+    "cov-002005",
+    "cov-002006",
+    "cov-002007",
+    "cov-002008",
+    "cov-002009"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0063; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## subject_id Families"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002000",
+        "cov-002001",
+        "cov-002002",
+        "cov-002003",
+        "cov-002004",
+        "cov-002005",
+        "cov-002006",
+        "cov-002007",
+        "cov-002008",
+        "cov-002009"
+      ],
+      "source_obligation_ids": [
+        "obl-000959",
+        "obl-000960",
+        "obl-000961",
+        "obl-000962",
+        "obl-000963",
+        "obl-000964",
+        "obl-000965",
+        "obl-000966",
+        "obl-000967",
+        "obl-000968"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0002",
+        "seed-WAVE008-0001",
+        "seed-WAVE008-0007"
+      ],
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0071",
+        "shard-0072"
+      ],
+      "exact_missing_items": [
+        "Avoid adding `thread:`, `run:`, `wizard:`, `safe_point:`, etc. as `subject_id` families when those are better modeled as `object_kind/object_id`",
+        "Declare the initial `subject_id` families narrowly and explicitly.",
+        "Declare an early canonical `object_kind` enum family in the contract layer, with room for later controlled extension.",
+        "Add these lineage examples to the route contract owner docs.",
+        "Keep blocked-episode identity explicit: blocked_sequence is the canonical id; run and node scope remain required resolver context",
+        "Keep scheduler/safe-point/remediation/patch lineage under inspector_target = lineage when the object is already selected.",
+        "Add explicit route validation rules to Contracts_V0.md.",
+        "State that invalid route payloads are contract failures, not 'best effort' cases.",
+        "Normalize before route construction, not during late destination-specific handling.",
+        "Canonical route validation rules are: reject when project_id is missing; reject when no primary selector exists; reject when both subject_id and object_kind/object_id are supplied as competing primary selectors; reject when object_kind is present without object_id; reject when object_id is present without object_kind; reject when inspector_target is present but no object selector exists; reject when tab_id conflicts with target_kind; reject when line or range appears in route_target; reject when per-surface state appears in route_target."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0155",
+  "coverage_row_ids_represented": [
+    "cov-003751",
+    "cov-003753",
+    "cov-003755",
+    "cov-003859",
+    "cov-003860",
+    "cov-003861",
+    "cov-005263",
+    "cov-005268",
+    "cov-007658"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0155; path=Plans/Executor_Protocol.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003751",
+        "cov-003753",
+        "cov-003755",
+        "cov-003859",
+        "cov-003860",
+        "cov-003861",
+        "cov-005263",
+        "cov-005268",
+        "cov-007658"
+      ],
+      "source_obligation_ids": [
+        "obl-001764",
+        "obl-001765",
+        "obl-001766",
+        "obl-001806",
+        "obl-001807",
+        "obl-001808",
+        "obl-002299",
+        "obl-002300",
+        "obl-004253"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0034",
+        "seed-WAVE005-0048",
+        "seed-WAVE007-0049",
+        "shard-0088-s084"
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0047",
+        "shard-0070",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "Executor_Protocol.md has a broken Glossary forward reference",
+        "Executor_Protocol.md has an incomplete wake-reason set, no real blocked_reason_code table, no blocked_sequence integration, and no actor/lifecycle model for reviewer/corroboration flows",
+        "Executor_Protocol.md still has duplicated canonical scheduler sections",
+        "Executor_Protocol.md contains byte-identical duplicated canonical scheduler sections",
+        "Executor_Protocol.md still leaves blocked_sequence minting, startup recovery handshake, execution_role ownership, and reviewer/corroboration lifecycle unowned",
+        "Collapse duplicated executor canon and explicitly assign owners for blocked_sequence, startup_recovered handshake, execution_role, and reviewer/corroboration lifecycle",
+        "`OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution, fixed server working directory requiring separate instances per worktree, session-scoped approvals and compaction state that are destroyed on session deletion, no observable upstream account identity, and no real reconnect/observe path for mid-run SSE loss.",
+        "These should not be collapsed back into generic summary language during reconciliation.",
+        "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

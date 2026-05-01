@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1002",
+  "coverage_row_ids_represented": [
+    "cov-006222",
+    "cov-006223",
+    "cov-006224",
+    "cov-006225",
+    "cov-006226",
+    "cov-006227",
+    "cov-006228",
+    "cov-006229",
+    "cov-006230",
+    "cov-006231"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1002; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006222",
+        "cov-006223",
+        "cov-006224",
+        "cov-006225",
+        "cov-006226",
+        "cov-006227",
+        "cov-006228",
+        "cov-006229",
+        "cov-006230",
+        "cov-006231"
+      ],
+      "source_obligation_ids": [
+        "obl-003125",
+        "obl-003126",
+        "obl-003127",
+        "obl-003128",
+        "obl-003129",
+        "obl-003130",
+        "obl-003131",
+        "obl-003132",
+        "obl-003133",
+        "obl-003134"
+      ],
+      "source_seed_ids": [
+        "shard-0087-s030",
+        "shard-0087-s032",
+        "shard-0087-s034",
+        "shard-0087-s036",
+        "shard-0087-s040",
+        "shard-0087-s041",
+        "shard-0087-s043",
+        "shard-0087-s045"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_missing_items": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses",
+        "Missing a unified execution-role and operational/account identity layer.",
+        "Missing `execution_role` in attempt/runtime packet families and still incomplete around blocked-family minimums and ref-family separation.",
+        "`tool.invoked` remains analytics-thin rather than carrying the richer attribution packet worked out in the ledger.",
+        "tool.invoked",
+        "Still preserves `TierContext`-era live canon rather than fully reflecting `execution_unit_context` direction.",
+        "execution_unit_context",
+        "Cluster D - Route / open-subject / bridge-field refinement misses",
+        "Base route/open primitives landed, but missing:",
+        "`resume_url` allowed/prohibited serialization classes"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

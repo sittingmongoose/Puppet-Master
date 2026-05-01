@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0164",
+  "coverage_row_ids_represented": [
+    "cov-003699",
+    "cov-003958",
+    "cov-003960",
+    "cov-003962",
+    "cov-004034",
+    "cov-004038",
+    "cov-004042",
+    "cov-004046",
+    "cov-004095",
+    "cov-004098"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0164; path=Plans/Executor_Protocol.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003699",
+        "cov-003958",
+        "cov-003960",
+        "cov-003962",
+        "cov-004034",
+        "cov-004038",
+        "cov-004042",
+        "cov-004046",
+        "cov-004095",
+        "cov-004098"
+      ],
+      "source_obligation_ids": [
+        "obl-001734",
+        "obl-001843",
+        "obl-001844",
+        "obl-001845",
+        "obl-001882",
+        "obl-001883",
+        "obl-001884",
+        "obl-001885",
+        "obl-001903",
+        "obl-001906"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0026",
+        "seed-WAVE005-0059",
+        "seed-WAVE005-0069",
+        "seed-WAVE006-0002",
+        "shard-0085-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0044",
+        "shard-0049",
+        "shard-0050",
+        "shard-0051",
+        "shard-0085"
+      ],
+      "exact_missing_items": [
+        "Add explicit CUP governance and handoff fields (execution_role, requested/effective account, isolation/worktree mode) to wizard docs",
+        "Add a deterministic rule for same blocked episode vs new blocked episode to Decision_Policy.md or Executor_Protocol.md",
+        "Decision_Policy.md does not currently own the minting rule or the same blocked episode vs new blocked episode distinction, even though that is exactly a deterministic policy boundary",
+        "Decision_Policy.md still missing the deterministic policies that executor/storage/runtime surfaces now assume exist: blocked_sequence minting, startup recovery sequencing, retry/remediation counter bindings, runtime blocked escalation, ready_since_utc restart policy",
+        "Prompt_Pipeline.md should remain the owner of the effective-resolution field family and which requested/effective runtime identity fields exist and what they mean",
+        "storage-plan.md should remain the owner of persisted execution/runtime record families and where requested/effective identity is stored for attempts and current runtime projections",
+        "Executor_Protocol.md should own which execution-scoped context is required for scheduler/executor correctness: minimum execution-unit identity/runtime anchors needed for dispatch, retry, blocked handling, and receipts",
+        "orchestrator-subagent-integration.md should stop owning a canonical mixed runtime object; it should consume canonical execution/runtime context by reference",
+        "Add an explicit execution_unit_context section to Executor_Protocol.md that names: mandatory dispatch fields, conditional recovery/blocked fields, optional disclosure fields",
+        "`Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

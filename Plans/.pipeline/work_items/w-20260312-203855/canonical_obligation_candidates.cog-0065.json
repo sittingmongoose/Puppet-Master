@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0065",
+  "represented_seed_ids": [
+    "shard-0007-s004"
+  ],
+  "source_shard_ids": [
+    "shard-0007"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0007-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Personas.md must define overseer personas (Package Overseer, Seam Overseer) and their relation to lanes \u2014 current Personas.md only covers worker personas",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans/Personas.md must define overseer personas (Package Overseer, Seam Overseer) and their relation to lanes \u2014 current Personas.md only covers worker personas"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Overseer Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L001265-L001290"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0373",
+  "coverage_row_ids_represented": [
+    "cov-000299",
+    "cov-000301",
+    "cov-000302",
+    "cov-000305",
+    "cov-000308",
+    "cov-000311",
+    "cov-000314",
+    "cov-000317",
+    "cov-000320",
+    "cov-000323"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0373; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## Widget Run Targeting"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000299",
+        "cov-000301",
+        "cov-000302",
+        "cov-000305",
+        "cov-000308",
+        "cov-000311",
+        "cov-000314",
+        "cov-000317",
+        "cov-000320",
+        "cov-000323"
+      ],
+      "source_obligation_ids": [
+        "obl-000140",
+        "obl-000141",
+        "obl-000142",
+        "obl-000143",
+        "obl-000144",
+        "obl-000145",
+        "obl-000146",
+        "obl-000147",
+        "obl-000148",
+        "obl-000149"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s008",
+        "shard-0013-s004",
+        "shard-0034-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0013",
+        "shard-0034"
+      ],
+      "exact_missing_items": [
+        "moving between live and historical mode should not require per-widget manual retargeting",
+        "a widget must not drift into a stale prior run just because its own config persisted an old scope choice",
+        "Node Graph tab must show a graph canvas with a right-side detail inspector",
+        "The inspector must expose: provider/model/effort/persona/account, usage/token/cost, worker policy, retry/review/promotion state, lane/worktree/snapshot, linked evidence",
+        "Every projection-backed operational surface should expose at least: trust state, last updated time, degraded/stale reason when not current, whether actions are partially gated",
+        "Progress: show run-level trust banner or chip when projections are stale/degraded",
+        "Seams: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "Node Graph: keep historical graph and current selections visible, but flag when live node state may be stale",
+        "Evidence: artifact browsing can remain available; live verdict/action affordances may gate",
+        "History / Ledger: usually the fallback-safe surfaces because they are closest to canonical records"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

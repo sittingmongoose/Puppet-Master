@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0471",
+  "represented_seed_ids": [
+    "seed-WAVE007-0023"
+  ],
+  "source_shard_ids": [
+    "shard-0064"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0023"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "canon_label": "`Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, and unregistered `format.*` events.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, and unregistered `format.*` events."
+      ],
+      "affected_doc_hints": [
+        "Plans/Formatters_System.md",
+        "Plans/LSPSupport.md",
+        "Plans/FileSafe.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "## LSP Formatting vs Formatters_System Ownership",
+        "## DAE Formatter Behavior",
+        "## format.* Event Registration"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L012749"
+      ],
+      "notes": [
+        "Formatters_System.md has four distinct issues: (1) LSP formatting ownership conflict, (2) under-specified DAE behavior for formatters, (3) custom formatter subprocess can bypass FileSafe/tool policy, (4) format.* events not registered in Contracts_V0."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

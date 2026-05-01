@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0295",
+  "coverage_row_ids_represented": [
+    "cov-001783",
+    "cov-001784",
+    "cov-001785",
+    "cov-001786",
+    "cov-001787",
+    "cov-001790",
+    "cov-002096",
+    "cov-002099",
+    "cov-002102",
+    "cov-002105"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0295; path=Plans/Glossary.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Glossary Entries Required for Rewrite"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001783",
+        "cov-001784",
+        "cov-001785",
+        "cov-001786",
+        "cov-001787",
+        "cov-001790",
+        "cov-002096",
+        "cov-002099",
+        "cov-002102",
+        "cov-002105"
+      ],
+      "source_obligation_ids": [
+        "obl-000804",
+        "obl-000805",
+        "obl-000806",
+        "obl-000807",
+        "obl-000808",
+        "obl-000811",
+        "obl-001035",
+        "obl-001036",
+        "obl-001037",
+        "obl-001038"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0022",
+        "shard-0026-s008",
+        "shard-0027-s003",
+        "shard-0088-s048"
+      ],
+      "source_shard_ids": [
+        "shard-0026",
+        "shard-0027",
+        "shard-0043",
+        "shard-0088"
+      ],
+      "exact_missing_items": [
+        "stale (projection trust)",
+        "degraded (projection trust)",
+        "unavailable (projection trust)",
+        "Glossary.md should own final canonical term definitions for: projection freshness, projection health, project summary, attention item, operational identity",
+        "Glossary.md currently missing the canonical rewrite vocabulary that later passes repeatedly depend on",
+        "7. `Plans/Glossary.md`",
+        "assistant conversation turn/run",
+        "interview phase/document/review run",
+        "builder stage/review run",
+        "orchestrator node/attempt/run"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

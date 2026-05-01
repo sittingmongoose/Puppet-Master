@@ -1,0 +1,13 @@
+{
+  "schema_id": "pm.canonical_obligations_reducer_worklist.v2",
+  "work_id": "w-20260312-203855",
+  "source_worklist": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_worklist.json",
+  "summary": {
+    "candidate_groups_total": 766,
+    "obligation_candidates_pre_dedup": 6647,
+    "obligations_post_dedup": 4510,
+    "dedup_collapsed": 2137,
+    "composite_candidate_ids_total": 6647
+  },
+  "dedup_rule": "strict_key_type_label_exact_affected_missing_stale"
+}

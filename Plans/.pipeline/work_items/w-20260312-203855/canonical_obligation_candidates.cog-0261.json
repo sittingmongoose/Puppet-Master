@@ -1,0 +1,270 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0261",
+  "represented_seed_ids": [
+    "shard-0035-s013",
+    "shard-0038-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0035",
+    "shard-0038"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0035-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "storage-plan.md internally contradicts itself: the early orchestrator.receipt.{run_id}.{attempt_id} value shape omits project_id and created_at_utc, while the later cross-surface receipt record makes them mandatory",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "storage-plan.md internally contradicts itself: the early orchestrator.receipt.{run_id}.{attempt_id} value shape omits project_id and created_at_utc, while the later cross-surface receipt record makes them mandatory"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Schema",
+        "## Receipt Record Canonical Shape"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "usage_event_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": [
+        "usage_event_ref needs one authoritative schema definition \u2014 currently undefined despite wide reliance"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0035-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "usage-feature.md sharpened that the canonical pointer should be usage_event_ref, not a new opaque usage_event_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "usage-feature.md sharpened that the canonical pointer should be usage_event_ref, not a new opaque usage_event_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Schema",
+        "## Receipt Record Canonical Shape"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "usage_event_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": [
+        "usage_event_ref needs one authoritative schema definition \u2014 currently undefined despite wide reliance"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0035-s013"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "usage_event_ref now needs one authoritative schema because artifacts, receipts, Usage, Ledger, and chat pivots all rely on it already",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "usage_event_ref now needs one authoritative schema because artifacts, receipts, Usage, Ledger, and chat pivots all rely on it already"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Schema",
+        "## Receipt Record Canonical Shape"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "usage_event_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L006801"
+      ],
+      "notes": [
+        "usage_event_ref needs one authoritative schema definition \u2014 currently undefined despite wide reliance"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0038-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "usage_event_ref schema must be defined once as a structured locator object",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "usage_event_ref schema must be defined once as a structured locator object"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Structured Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "usage_event_ref (structured locator)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0038-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "Minimum fields: project_id, run_id, attempt_id?, node_id, lane_id?, created_at_utc",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Minimum fields: project_id, run_id, attempt_id?, node_id, lane_id?, created_at_utc"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Structured Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "usage_event_ref (structured locator)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0038-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "All surface pivots (Show in Usage, Show in Ledger, pivot from receipt) must use this structured locator \u2014 not a bare opaque string ID",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All surface pivots (Show in Usage, Show in Ledger, pivot from receipt) must use this structured locator \u2014 not a bare opaque string ID"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Structured Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "usage_event_ref (structured locator)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007401"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0038-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "canon_label": "usage_event_id as bare opaque ID must be retired in favor of usage_event_ref",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "usage_event_id as bare opaque ID must be retired in favor of usage_event_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## usage_event_ref Structured Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "usage_event_ref (structured locator)"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L007401"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0976",
+  "coverage_row_ids_represented": [
+    "cov-005962",
+    "cov-005963",
+    "cov-005964",
+    "cov-005965",
+    "cov-005966",
+    "cov-005967",
+    "cov-005968",
+    "cov-005969",
+    "cov-005970",
+    "cov-005971"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0976; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005962",
+        "cov-005963",
+        "cov-005964",
+        "cov-005965",
+        "cov-005966",
+        "cov-005967",
+        "cov-005968",
+        "cov-005969",
+        "cov-005970",
+        "cov-005971"
+      ],
+      "source_obligation_ids": [
+        "obl-002865",
+        "obl-002866",
+        "obl-002867",
+        "obl-002868",
+        "obl-002869",
+        "obl-002870",
+        "obl-002871",
+        "obl-002872",
+        "obl-002873",
+        "obl-002874"
+      ],
+      "source_seed_ids": [
+        "shard-0083-s013",
+        "shard-0083-s014",
+        "shard-0083-s016",
+        "shard-0083-s022",
+        "shard-0083-s023",
+        "shard-0083-s024",
+        "shard-0083-s025",
+        "shard-0083-s026",
+        "shard-0083-s040",
+        "shard-0083-s044",
+        "shard-0083-s045"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "exact_missing_items": [
+        "`Decision_Log.md` currently gives downstream reconciliation no durable place to point when explaining why rewrite-era ownership changed.",
+        "Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates",
+        "Adjacent references checked through existing owner docs:",
+        "`GATE-010` still validates flat wiring coverage only. It does not validate:",
+        "GATE-010",
+        "command wrapper normalization",
+        "`route_target` pass-through",
+        "`OpenSubject` subject-open binding",
+        "`Runtime Recovery Canonicalization Gate Addendum` appears twice with the same body",
+        "Runtime Recovery Canonicalization Gate Addendum"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

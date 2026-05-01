@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0239",
+  "coverage_row_ids_represented": [
+    "cov-004584",
+    "cov-004590",
+    "cov-004595",
+    "cov-004603",
+    "cov-004611",
+    "cov-004619",
+    "cov-004627",
+    "cov-004637",
+    "cov-004643",
+    "cov-004649"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0239; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Deep-Link Transport"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004584",
+        "cov-004590",
+        "cov-004595",
+        "cov-004603",
+        "cov-004611",
+        "cov-004619",
+        "cov-004627",
+        "cov-004637",
+        "cov-004643",
+        "cov-004649"
+      ],
+      "source_obligation_ids": [
+        "obl-002174",
+        "obl-002175",
+        "obl-002176",
+        "obl-002177",
+        "obl-002178",
+        "obl-002179",
+        "obl-002180",
+        "obl-002181",
+        "obl-002182",
+        "obl-002183"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0014",
+        "seed-WAVE007-0015",
+        "seed-WAVE007-0016"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "exact_missing_items": [
+        "Decode all supported deep-link forms into the same internal routing path rather than handling URL activation as a separate system.",
+        "The existing wizard deep-link is a good precedent, but it should become one member of a normalized transport family.",
+        "Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+        "Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.",
+        "Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.",
+        "Allow the route model to name major destination surfaces/tabs/panels where operationally necessary.",
+        "This seam prevents the route model from swallowing the whole shell. The right question for routing is 'where should the user land,' not 'how should every panel be laid out when they get there.'",
+        "Define a controlled coarse destination enum/family in the route contract layer.",
+        "Let object identity and scope pick the thing to show; let destination pick the major surface class; let shell state handle the rest.",
+        "Recommended coarse destination classes: `primary_view` (Dashboard, Projects, Wizard, Interview, Settings, Usage, FileEditor, Orchestrator), `side_panel` (chat, files, source_control, github_actions, docker_manager, artifacts, run_debug), `bottom_panel` (terminal, problems, output, ports, browser, debug), `embedded_surface` (document_pane, agent_activity), `page_tab` (Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger)"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

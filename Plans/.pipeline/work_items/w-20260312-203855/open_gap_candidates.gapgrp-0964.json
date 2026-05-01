@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0964",
+  "coverage_row_ids_represented": [
+    "cov-005842",
+    "cov-005843",
+    "cov-005844",
+    "cov-005845",
+    "cov-005846",
+    "cov-005847",
+    "cov-005848",
+    "cov-005849",
+    "cov-005850",
+    "cov-005851"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0964; path=__DOC_DISCOVERY_REQUIRED__; row_type=owner; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-005842",
+        "cov-005843",
+        "cov-005844",
+        "cov-005845",
+        "cov-005846",
+        "cov-005847",
+        "cov-005848",
+        "cov-005849",
+        "cov-005850",
+        "cov-005851"
+      ],
+      "source_obligation_ids": [
+        "obl-002745",
+        "obl-002746",
+        "obl-002747",
+        "obl-002748",
+        "obl-002749",
+        "obl-002750",
+        "obl-002751",
+        "obl-002752",
+        "obl-002753",
+        "obl-002754"
+      ],
+      "source_seed_ids": [
+        "shard-0081-s001",
+        "shard-0081-s025",
+        "shard-0081-s029",
+        "shard-0081-s032",
+        "shard-0081-s033",
+        "shard-0081-s034",
+        "shard-0081-s039",
+        "shard-0081-s082",
+        "shard-0081-s131",
+        "shard-0081-s135"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "exact_missing_items": [
+        "This is a hard persistence-contract contradiction.",
+        "The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaining partial tranche. This is not yet a convergence zone.",
+        "GPT-5.4",
+        "Runtime identity and recovery semantics sharpened again:",
+        "`MiscPlan.md` and `FileSafe.md` continue to expose the same deep seam from different angles: deferred-run resume validity, pre-cleanup vs safe-point restore ordering, DAE/post-scan blocked phases, and orphan cleanup/remediation logic outside the canonical runtime lineage model.",
+        "OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:",
+        "`OpenCode_Deep_Extraction.md` sharpens the server-global SSE / fixed working-directory / session-scoped compaction and approvals / ephemeral session identity issues into direct PM obligations.",
+        "OpenCode_Deep_Extraction.md",
+        "`00-plans-index.md` still under-routes rewrite-critical owner docs, especially around Multi-Account, Provider, and Orchestrator packet ownership.",
+        "00-plans-index.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

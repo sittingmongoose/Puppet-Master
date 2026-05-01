@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0782",
+  "coverage_row_ids_represented": [
+    "cov-007739",
+    "cov-007893",
+    "cov-007900",
+    "cov-007907",
+    "cov-007914",
+    "cov-007997",
+    "cov-008002",
+    "cov-008007",
+    "cov-008012",
+    "cov-008022"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0782; path=Plans/storage-plan.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-007739",
+        "cov-007893",
+        "cov-007900",
+        "cov-007907",
+        "cov-007914",
+        "cov-007997",
+        "cov-008002",
+        "cov-008007",
+        "cov-008012",
+        "cov-008022"
+      ],
+      "source_obligation_ids": [
+        "obl-004321",
+        "obl-004382",
+        "obl-004383",
+        "obl-004384",
+        "obl-004385",
+        "obl-004421",
+        "obl-004422",
+        "obl-004423",
+        "obl-004424",
+        "obl-004426"
+      ],
+      "source_seed_ids": [
+        "shard-0090-s054",
+        "shard-0091-s026",
+        "shard-0091-s119"
+      ],
+      "source_shard_ids": [
+        "shard-0090",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "orchestrator.project_state.{project_id}",
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.",
+        "gap-003",
+        "gap-004",
+        "gap-005",
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+        "gap-007",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

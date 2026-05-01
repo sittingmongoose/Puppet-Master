@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0030",
+  "coverage_row_ids_represented": [
+    "cov-002231",
+    "cov-002237",
+    "cov-002239",
+    "cov-002241",
+    "cov-002243",
+    "cov-002271",
+    "cov-002273",
+    "cov-002277",
+    "cov-004361",
+    "cov-004364"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0030; path=Plans/Contracts_V0.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## Concern Record Minimum Shape"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002231",
+        "cov-002237",
+        "cov-002239",
+        "cov-002241",
+        "cov-002243",
+        "cov-002271",
+        "cov-002273",
+        "cov-002277",
+        "cov-004361",
+        "cov-004364"
+      ],
+      "source_obligation_ids": [
+        "obl-001123",
+        "obl-001126",
+        "obl-001127",
+        "obl-001128",
+        "obl-001129",
+        "obl-001143",
+        "obl-001144",
+        "obl-001146",
+        "obl-002078",
+        "obl-002079"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0056",
+        "shard-0030-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0030",
+        "shard-0057"
+      ],
+      "exact_missing_items": [
+        "run_id?",
+        "status",
+        "severity",
+        "category",
+        "summary",
+        "source_refs[]",
+        "evidence_refs[]",
+        "lineage_refs[]",
+        "Reserved-name policy is split across three docs (Commands_System.md, UI_Command_Catalog.md, and Contracts_V0.md) with different scope, depth, and authority claims",
+        "One doc must own the reserved-name policy, the others must defer"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

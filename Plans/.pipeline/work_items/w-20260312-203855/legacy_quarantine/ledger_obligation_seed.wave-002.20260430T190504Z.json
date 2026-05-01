@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_wave.v2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-002",
+  "subagent_id": "seed-extract-w2",
+  "status": "pending",
+  "subagent_tasks": [
+    {
+      "task_id": "seed-extract-w2-shard-0011",
+      "shard_id": "shard-0011",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0012",
+      "shard_id": "shard-0012",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0013",
+      "shard_id": "shard-0013",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0014",
+      "shard_id": "shard-0014",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0015",
+      "shard_id": "shard-0015",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0016",
+      "shard_id": "shard-0016",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0017",
+      "shard_id": "shard-0017",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0018",
+      "shard_id": "shard-0018",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0019",
+      "shard_id": "shard-0019",
+      "status": "pending"
+    },
+    {
+      "task_id": "seed-extract-w2-shard-0020",
+      "shard_id": "shard-0020",
+      "status": "pending"
+    }
+  ],
+  "assigned_input_boundaries": {
+    "shard_ids": [
+      "shard-0011",
+      "shard-0012",
+      "shard-0013",
+      "shard-0014",
+      "shard-0015",
+      "shard-0016",
+      "shard-0017",
+      "shard-0018",
+      "shard-0019",
+      "shard-0020"
+    ],
+    "shard_count": 10
+  },
+  "subagent_result_status": "pending",
+  "completed_task_count": 0,
+  "failed_task_count": 0,
+  "shard_ids_assigned": [
+    "shard-0011",
+    "shard-0012",
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0016",
+    "shard-0017",
+    "shard-0018",
+    "shard-0019",
+    "shard-0020"
+  ],
+  "shard_ids_completed": []
+}

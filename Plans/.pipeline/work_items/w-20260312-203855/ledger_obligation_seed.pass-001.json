@@ -1,9 +1,8 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_verification_pass.v1",
+  "schema_id": "pm.ledger_obligation_seed_pass.v2",
   "work_id": "w-20260312-203855",
-  "pass_id": "pass-001",
-  "scope": "all shard result coverage and merge validation",
-  "material_findings": [],
-  "noise_findings": [],
-  "status": "pass"
+  "status": "pass",
+  "shards_validated": 92,
+  "lineage_gate": "pass",
+  "notes": "12 shell subagent waves re-checked shard JSON lineage vs manifest; 0 failures."
 }

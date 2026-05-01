@@ -1,0 +1,243 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0033",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0033-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "low-risk presentation actions may use no confirmation plus short undo windows",
+        "durable state transitions often require explicit confirmation or explicit rationale",
+        "destructive or topology-changing actions use stronger gating and are not true undo",
+        "concern actions should NOT inherit the lightweight widget-removal policy because concerns are canonical operational/governance records rather than ephemeral layout state"
+      ],
+      "affected_doc_hints": ["Plans/Contracts_V0.md", "Plans/FinalGUISpec.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Concern Action Confirmation Policy", "## Action Classes"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6414-L6420"],
+      "notes": ["Concern actions are governance records not ephemeral layout — they need their own confirmation policy separate from widget removal"]
+    },
+    {
+      "seed_id": "shard-0033-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "acknowledge is closest to noise-control / ownership-signaling",
+        "dismiss is a durable semantic judgment and must not look like closing a toast",
+        "resolve is not one generic operation; it needs resolution_kind",
+        "merge / split / supersede are structural lineage edits, not ordinary state toggles",
+        "concern actions never hard-delete canonical concern history in normal operation",
+        "concern undo should generally be implemented as compensating follow-up records (reopened, reverse-merge lineage, successor concern, etc.), not history erasure"
+      ],
+      "affected_doc_hints": ["Plans/Contracts_V0.md", "Plans/FinalGUISpec.md", "Plans/Orchestrator_Page.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Concern action split", "## Concern Lifecycle Actions"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6425-L6432"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0033-s003",
+      "seed_type": "missing_doc_reference",
+      "exact_items": [
+        "There is still no canonical concern action matrix spanning: confirmation level, rationale requirements, who may perform the action, reversibility model, lineage side effects",
+        "Concern lifecycle alone is not enough: dismissed without required rationale will look too much like a convenience close, resolved without required resolution_kind will collapse meaningful semantic differences"
+      ],
+      "affected_doc_hints": ["Plans/Contracts_V0.md", "Plans/Decision_Policy.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Concern Action Policy Table"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6443-L6457"],
+      "notes": ["A canonical concern action matrix does not yet exist in any doc; must be created in Contracts_V0.md or Decision_Policy.md"]
+    },
+    {
+      "seed_id": "shard-0033-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "acknowledge: confirmation none; rationale optional; reversibility compensating_action_only via explicit return to active",
+        "resolve from a linked canonical fix/recovery/patch outcome: confirmation none or light; rationale optional if the linked record is sufficient; reversibility compensating_action_only via reopened",
+        "resolve without linked canonical evidence, including accepted_risk: confirmation strong; rationale required; reversibility compensating_action_only",
+        "dismiss: confirmation strong; rationale required; reversibility compensating_action_only via explicit reopened",
+        "reopen: confirmation none or light; rationale optional but recommended when reopening a dismissed concern; reversibility compensating_action_only",
+        "merge / split / supersede: confirmation strong; rationale required; reversibility compensating_action_only through new lineage records, never silent history rewrite",
+        "Reserve hard_gate for: admin repair, privacy/redaction paths, cross-run or cross-scope lineage rewrites that could materially change audit interpretation"
+      ],
+      "affected_doc_hints": ["Plans/Contracts_V0.md", "Plans/Decision_Policy.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Recommended default policy", "## Concern Action Policy Table"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6471-L6481"],
+      "notes": ["These are the concrete recommended policy rows that must appear in the canonical concern action policy table"]
+    },
+    {
+      "seed_id": "shard-0033-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Treat quiet or temporary suppression as UI-notification behavior, not concern dismissal",
+        "concern dismissal changes concern meaning/state",
+        "quieting only changes resurfacing behavior",
+        "Treat acknowledged as escalation/noise control and ownership visibility, not semantic closure and not blocker removal by itself"
+      ],
+      "affected_doc_hints": ["Plans/FinalGUISpec.md", "Plans/Orchestrator_Page.md", "Plans/Contracts_V0.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Concern Noise vs Dismissal"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6482-L6485"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0033-s006",
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "concern operations should likely be available from multiple surfaces (Progress, Seams, Evidence, History, Ledger, graph inspector), so the same action policy must survive different UI densities",
+        "narrow surfaces must not compress dismissed and resolved into one generic closed action",
+        "the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple",
+        "if a concern is currently tied to active blocked status, acknowledgment alone must not clear the block",
+        "structural concern actions (merge, split, supersede) likely need guided flows rather than one-click menus because they change search/history/ledger interpretation"
+      ],
+      "affected_doc_hints": ["Plans/FinalGUISpec.md", "Plans/Orchestrator_Page.md", "Plans/Widget_System.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Do-not-forget details", "## Concern Action Surface Rules"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6488-L6492"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0033-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "FinalGUISpec.md, Personas.md, and Models_System.md consistently require dual copy variants for tooltips/help strings: Expert vs ELI5",
+        "this is a copy-depth system, not yet a concept-governance system"
+      ],
+      "affected_doc_hints": ["Plans/FinalGUISpec.md", "Plans/Personas.md", "Plans/Models_System.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Help Depth System", "## Expert vs ELI5 Variants"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6506-L6508"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0033-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "Glossary.md is still too small and too pre-rewrite to anchor the newer Orchestrator vocabulary",
+        "it does not yet carry the terms that now need stable cross-doc meaning in Orchestrator, Source Control, search, history, ledger, and help",
+        "Orchestrator_Page.md and Run_Graph_View.md still expose the older execution ontology directly in user-facing labels (Tiers, Phase/Task/Subtask, Overseer wording as foreman shorthand)"
+      ],
+      "affected_doc_hints": ["Plans/Glossary.md", "Plans/Orchestrator_Page.md", "Plans/Run_Graph_View.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Key findings", "## Glossary Expansion"],
+      "stale_tokens": ["Tiers", "Phase/Task/Subtask"],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6509-L6514"],
+      "notes": ["Glossary.md must be expanded with rewrite-era vocabulary before reconciliation is safe"]
+    },
+    {
+      "seed_id": "shard-0033-s009",
+      "seed_type": "owner",
+      "exact_items": [
+        "Define a three-depth help contract: inline help (short tooltip), context help (richer popover/side panel), canonical help entry (dedicated glossary/help article for durable cross-surface concepts)",
+        "Add an anti-drift rule: canonical term names do not change between Expert and ELI5; only the explanatory copy changes"
+      ],
+      "affected_doc_hints": ["Plans/FinalGUISpec.md", "Plans/Glossary.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["## Help Depth Contract", "## Three-depth Help System"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6556-L6562"],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0033-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "Recommended dedicated help-entry set for the rewrite: Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Concern, Graph Patch, Graph Generation, Lane, requested vs effective, History vs Ledger, historical vs superseded vs revoked vs reopened",
+        "Recommended contextual-help-only set: individual graph badges, narrow panel chips, trust-state chrome, widget-specific filter fields, per-surface action gating messages"
+      ],
+      "affected_doc_hints": ["Plans/Glossary.md", "Plans/FinalGUISpec.md", "Plans/Orchestrator_Page.md", "Plans/Run_Graph_View.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Recommended dedicated help-entry set", "## Help Entry Catalog"],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6563-L6583"],
+      "notes": ["These are the specific terms requiring canonical help entries — Glossary.md must own them"]
+    },
+    {
+      "seed_id": "shard-0033-s011",
+      "seed_type": "owner",
+      "exact_items": [
+        "Expand Glossary.md so it becomes the owner for the stable term list, with longer help entries explaining: why the object exists, how it relates to nearby objects, common misunderstandings, links to related concepts",
+        "History and Ledger especially need precise help because they are easy to collapse into one generic past activity concept",
+        "lane and worktree need asymmetric help across surfaces: Orchestrator emphasizes lane as operational object; Source Control emphasizes worktree as concrete Git object",
+        "legacy tier wording still present in docs is now both a data-model risk and a user-copy/help migration risk"
+      ],
+      "affected_doc_hints": ["Plans/Glossary.md", "Plans/Orchestrator_Page.md", "Plans/WorktreeGitImprovement.md"],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": ["### Candidate fixes to carry forward", "### Do-not-forget details"],
+      "stale_tokens": ["tier"],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0033",
+      "source_evidence": ["working_ledger.md:L6584-L6596"],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    "L6402-L6411: section header and targeted-docs-read list only",
+    "L6434-L6440: impacted docs list — seeds extracted elsewhere",
+    "L6494-L6503: section header and targeted-docs-read list only",
+    "L6531-L6537: impacted docs list — seeds extracted elsewhere"
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

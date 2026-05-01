@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0245",
+  "coverage_row_ids_represented": [
+    "cov-001582",
+    "cov-001585",
+    "cov-001588",
+    "cov-001591",
+    "cov-003130",
+    "cov-003132",
+    "cov-003134",
+    "cov-003136",
+    "cov-003176",
+    "cov-003179"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0245; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Undo vs Compensating Action Labels"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001582",
+        "cov-001585",
+        "cov-001588",
+        "cov-001591",
+        "cov-003130",
+        "cov-003132",
+        "cov-003134",
+        "cov-003136",
+        "cov-003176",
+        "cov-003179"
+      ],
+      "source_obligation_ids": [
+        "obl-000708",
+        "obl-000709",
+        "obl-000710",
+        "obl-000711",
+        "obl-001456",
+        "obl-001457",
+        "obl-001458",
+        "obl-001459",
+        "obl-001481",
+        "obl-001482"
+      ],
+      "source_seed_ids": [
+        "shard-0016-s008",
+        "shard-0037-s009",
+        "shard-0038-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0037",
+        "shard-0038"
+      ],
+      "exact_missing_items": [
+        "do not over-promise undo when the system really only supports compensating actions",
+        "Undo only when true immediate undo exists; Reopen, Restore, Retry from Safe Point, Create New Lane, Re-request Promotion, Reapply for distinct compensating cases",
+        "strong confirmations should show: action name, target object(s), concrete consequence summary, whether local work/artifacts/history remain, reversibility class",
+        "hard_gate should show: runtime-defined allowed actions, why the gate exists, exact consequence of each allowed action, no hidden alternative path",
+        "Add project_attention_item projection family to storage-plan.md with canonical shape and projection freshness / trust-state contract",
+        "Add rollup rules (severity-merge, collapse criteria, forced-split criteria) to the attention item family definition",
+        "Add disclosure-visibility rules: inline surface, click-to-expand, navigate-to-attention-center",
+        "Bind attention center widget in FinalGUISpec.md to the projection family, not to live polling",
+        "Retire generic page: string route payload field \u2014 it is too coarse for cross-surface navigation and deep-link targeting",
+        "Replace all occurrences of bare page: string with the canonical route payload schema (surface_id + object_kind + object_id)"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "Undo / Reopen / Restore / Retry from Safe Point / Create New Lane / Re-request Promotion / Reapply"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

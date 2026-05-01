@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0270",
+  "coverage_row_ids_represented": [
+    "cov-001282",
+    "cov-001285",
+    "cov-001288",
+    "cov-001289",
+    "cov-001292",
+    "cov-001295",
+    "cov-001318",
+    "cov-001322",
+    "cov-001326",
+    "cov-001328"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0270; path=Plans/GitHub_Integration.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Action Ownership Split"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001282",
+        "cov-001285",
+        "cov-001288",
+        "cov-001289",
+        "cov-001292",
+        "cov-001295",
+        "cov-001318",
+        "cov-001322",
+        "cov-001326",
+        "cov-001328"
+      ],
+      "source_obligation_ids": [
+        "obl-000549",
+        "obl-000550",
+        "obl-000551",
+        "obl-000552",
+        "obl-000553",
+        "obl-000554",
+        "obl-000561",
+        "obl-000562",
+        "obl-000563",
+        "obl-000564"
+      ],
+      "source_seed_ids": [
+        "shard-0011-s013",
+        "shard-0011-s016",
+        "shard-0012-s001",
+        "shard-0012-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0012"
+      ],
+      "exact_missing_items": [
+        "Recast Orchestrator tab ownership explicitly: Progress as the widget-hosting operational tab; native deep-inspection tabs for seams/graph/evidence/history/ledger; Source Control as the Git/worktree inventory/manipulation surface",
+        "Orchestrator-owned initiation: inspect lane, inspect weak integration, request restore, request graph patch, request reopen/revocation, open lane in Source Control",
+        "Source-Control-owned execution surface: open worktree, compare against baseline/target, inspect changed files/history/graph, recover orphaned worktree, archive lane worktree, prune/remove worktree, cleanup current/all eligible worktrees",
+        "Source Control stays worktree-first",
+        "Source Control should keep Worktrees as the primary subview/object list rather than flipping to a lane-first list",
+        "Orchestrator should remain package/seam/lane-first and treat worktrees as backing execution assets shown in context",
+        "Add a formal distinction between: lane lifecycle state, worktree filesystem state, runtime blocked/recovery state",
+        "dirty_worktree and worktree_conflict are canonical blocked reasons and must remain visible in both surfaces without becoming generic SCM errors",
+        "Make Source Control the execution surface for Git-native mutations, while Orchestrator remains the operational surface for why those actions matter",
+        "Source Control worktree rows remain concrete and filesystem/Git oriented, but must show enough orchestration metadata to prevent isolation drift: owning package, owning lane, run reference when relevant, lifecycle state, blocked/recovery state when relevant"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

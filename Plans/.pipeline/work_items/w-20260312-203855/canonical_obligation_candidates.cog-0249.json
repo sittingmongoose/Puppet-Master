@@ -1,0 +1,330 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0249",
+  "represented_seed_ids": [
+    "shard-0034-s015",
+    "shard-0036-s008"
+  ],
+  "source_shard_ids": [
+    "shard-0034",
+    "shard-0036"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Provider_OpenCode.md still leaves effective account identity opaque behind the bridge, uses a server-global SSE bus with no explicit contamination filter contract, and relies on a fixed server working directory",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Provider_OpenCode.md still leaves effective account identity opaque behind the bridge, uses a server-global SSE bus with no explicit contamination filter contract, and relies on a fixed server working directory"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenCode Identity Gap",
+        "## Permission Scope Gap"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006601"
+      ],
+      "notes": [
+        "Permission session-scope under multi-lane/multi-actor is an unsafe behavioral risk, not just schema drift"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Permissions_System.md still scopes always approvals and reject-cascades to the whole session, which is unsafe for multi-lane/multi-actor execution",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permissions_System.md still scopes always approvals and reject-cascades to the whole session, which is unsafe for multi-lane/multi-actor execution"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenCode Identity Gap",
+        "## Permission Scope Gap"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006601"
+      ],
+      "notes": [
+        "Permission session-scope under multi-lane/multi-actor is an unsafe behavioral risk, not just schema drift"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "permission snapshots still have no account-switch invalidation rule even though account changes can affect effective tool availability",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "permission snapshots still have no account-switch invalidation rule even though account changes can affect effective tool availability"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenCode Identity Gap",
+        "## Permission Scope Gap"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006601"
+      ],
+      "notes": [
+        "Permission session-scope under multi-lane/multi-actor is an unsafe behavioral risk, not just schema drift"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "bridged-provider usage events still omit effective account and pressure/switch fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "bridged-provider usage events still omit effective account and pressure/switch fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenCode Identity Gap",
+        "## Permission Scope Gap"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006601"
+      ],
+      "notes": [
+        "Permission session-scope under multi-lane/multi-actor is an unsafe behavioral risk, not just schema drift"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "shard-0034-s015"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenCode Identity Gap",
+        "## Permission Scope Gap"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L006601"
+      ],
+      "notes": [
+        "Permission session-scope under multi-lane/multi-actor is an unsafe behavioral risk, not just schema drift"
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "shard-0036-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Add capability declarations for bridged providers to CLI_Bridged_Providers.md (matching language of direct providers): CAPABILITY_MULTI_ACCOUNT, CAPABILITY_SWITCH_NOTIFICATION, CAPABILITY_LANE_ATTRIBUTION, etc.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add capability declarations for bridged providers to CLI_Bridged_Providers.md (matching language of direct providers): CAPABILITY_MULTI_ACCOUNT, CAPABILITY_SWITCH_NOTIFICATION, CAPABILITY_LANE_ATTRIBUTION, etc."
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridged Provider Capability Declarations",
+        "## Permission Lane Scope"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "shard-0036-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Bridge envelope must carry effective account identity and switch-reason when capabilities are declared",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Bridge envelope must carry effective account identity and switch-reason when capabilities are declared"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridged Provider Capability Declarations",
+        "## Permission Lane Scope"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "shard-0036-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Permission reject-cascade and session-cache scope must be limited to actor/lane-aware boundaries, not whole session",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permission reject-cascade and session-cache scope must be limited to actor/lane-aware boundaries, not whole session"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridged Provider Capability Declarations",
+        "## Permission Lane Scope"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-009",
+      "source_seed_ids": [
+        "shard-0036-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Extend OpenCode SSE contract to filter events per actor/lane context",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Extend OpenCode SSE contract to filter events per actor/lane context"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Bridged Provider Capability Declarations",
+        "## Permission Lane Scope"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L007001"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

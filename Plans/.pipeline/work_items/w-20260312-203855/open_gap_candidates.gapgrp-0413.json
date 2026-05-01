@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0413",
+  "coverage_row_ids_represented": [
+    "cov-003055",
+    "cov-003255",
+    "cov-003259",
+    "cov-003263",
+    "cov-003560",
+    "cov-003567",
+    "cov-003574",
+    "cov-003581",
+    "cov-003588",
+    "cov-003719"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0413; path=Plans/Orchestrator_Page.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Do-not-forget details"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003055",
+        "cov-003255",
+        "cov-003259",
+        "cov-003263",
+        "cov-003560",
+        "cov-003567",
+        "cov-003574",
+        "cov-003581",
+        "cov-003588",
+        "cov-003719"
+      ],
+      "source_obligation_ids": [
+        "obl-001426",
+        "obl-001554",
+        "obl-001555",
+        "obl-001556",
+        "obl-001699",
+        "obl-001700",
+        "obl-001701",
+        "obl-001702",
+        "obl-001703",
+        "obl-001741"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0017",
+        "seed-WAVE005-0029",
+        "shard-0036-s011",
+        "shard-0039-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0036",
+        "shard-0039",
+        "shard-0043",
+        "shard-0045"
+      ],
+      "exact_missing_items": [
+        "do-not-forget: provider_accounts.run_snapshot policy_hash should be a policy_version_ref for downstream policy-validity queries",
+        "Route payload continuation: all cmd.*.open_in_* and cmd.*.show_in_* commands must carry the canonical route payload schema (surface_id + object_kind + object_id + project_id + optional scoped fields)",
+        "Commands that currently use bare page: string as a destination arg must be migrated to canonical route payload",
+        "UI_Command_Catalog.md must be the SSOT for the canonical cmd.* argument shapes; any divergence in Orchestrator_Page.md, Run_Graph_View.md, or FinalGUISpec.md must be corrected by pointing to the catalog definition",
+        "Use projection_freshness as the canonical recency field and projection_health as the canonical reliability/usability field",
+        "Reserve trust_tier for preview/browser semantics only unless those docs are later explicitly renamed too",
+        "Make Glossary.md own the canonical term meanings for projection freshness and projection health",
+        "Let surface docs consume those terms instead of inventing local stale/degraded wording",
+        "Keep action gating rules tied to both axes: stale-but-healthy may allow read-only use with warning; degraded or unavailable should gate mutating actions much more aggressively",
+        "Add a real Orchestrator section to FinalGUISpec.md, make Progress the only widget canvas, and bind all projection-state UX to projection_freshness + projection_health rather than overloaded trust language"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "policy_version_ref"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0233",
+  "coverage_row_ids_represented": [
+    "cov-001847",
+    "cov-001848",
+    "cov-001849",
+    "cov-001850",
+    "cov-001851",
+    "cov-001852",
+    "cov-001853",
+    "cov-001854",
+    "cov-001855",
+    "cov-001888"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0233; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Trust Disclosure Copy Patterns"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001847",
+        "cov-001848",
+        "cov-001849",
+        "cov-001850",
+        "cov-001851",
+        "cov-001852",
+        "cov-001853",
+        "cov-001854",
+        "cov-001855",
+        "cov-001888"
+      ],
+      "source_obligation_ids": [
+        "obl-000853",
+        "obl-000854",
+        "obl-000855",
+        "obl-000856",
+        "obl-000857",
+        "obl-000858",
+        "obl-000859",
+        "obl-000860",
+        "obl-000861",
+        "obl-000879"
+      ],
+      "source_seed_ids": [
+        "shard-0024-s004",
+        "shard-0025-s003",
+        "shard-0028-s009",
+        "shard-0037-s007"
+      ],
+      "source_shard_ids": [
+        "shard-0024",
+        "shard-0025",
+        "shard-0028",
+        "shard-0037"
+      ],
+      "exact_missing_items": [
+        "Live actions unavailable until refresh",
+        "Showing canonical history slice",
+        "Warning: provider pressure high",
+        "Blocked: waiting on user approval",
+        "View may be stale; refresh before acting",
+        "Projection degraded; showing canonical history only",
+        "FinalGUISpec.md attention center widget needs: attention_item record binding, rollup display, severity badge, primary-action affordance, secondary-action list",
+        "Attention center must clearly separate concern attention items from non-concern attention items (e.g., model degraded, account health warnings)",
+        "Attention center must declare how it sources data: from projected attention_item family vs polling live concern record families",
+        "shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

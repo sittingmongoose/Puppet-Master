@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0536",
+  "coverage_row_ids_represented": [
+    "cov-002370",
+    "cov-002376",
+    "cov-002382",
+    "cov-002385",
+    "cov-002388",
+    "cov-002391",
+    "cov-002775",
+    "cov-002778",
+    "cov-002781",
+    "cov-002809"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0536; path=Plans/Runtime_Artifacts_Panel.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Candidate Fixes"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002370",
+        "cov-002376",
+        "cov-002382",
+        "cov-002385",
+        "cov-002388",
+        "cov-002391",
+        "cov-002775",
+        "cov-002778",
+        "cov-002781",
+        "cov-002809"
+      ],
+      "source_obligation_ids": [
+        "obl-001183",
+        "obl-001184",
+        "obl-001185",
+        "obl-001186",
+        "obl-001187",
+        "obl-001188",
+        "obl-001313",
+        "obl-001314",
+        "obl-001315",
+        "obl-001323"
+      ],
+      "source_seed_ids": [
+        "shard-0031-s013",
+        "shard-0031-s014",
+        "shard-0035-s003",
+        "shard-0035-s006"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0035"
+      ],
+      "exact_missing_items": [
+        "Rework storage/usage attribution to treat seam_id, package_id, lane_id, and attempt_id as first-class where the runtime model now requires them, instead of centering tier_id",
+        "Tighten artifact/file routing around stable object identity: support attempt_id and other runtime object ids directly, define read-only / historical / restricted-trust render behavior explicitly",
+        "Add explicit projection freshness / degraded-trust states to storage-driven UI docs rather than assuming silently fresh projections",
+        "effective_provider_identity / display labels are audit/display fields, not routing keys",
+        "Source-qualified usage wording still matters for Gemini and other estimate-only providers",
+        "attempt_id is increasingly looking like a cross-surface anchor, not an optional artifact detail",
+        "usage_event_ref? is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is",
+        "Runtime_Artifacts_Panel.md assumes concrete runtime-artifact schema enforcement that is not currently present in the repo",
+        "Orchestrator_Page.md TOC sections 13-17 are genuinely missing, not relocated",
+        "Define usage_event_ref explicitly and make all Show in Usage / Show in Ledger pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

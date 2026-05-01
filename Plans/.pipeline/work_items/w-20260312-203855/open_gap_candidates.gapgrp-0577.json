@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0577",
+  "coverage_row_ids_represented": [
+    "cov-003740"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_doc_reference",
+      "description": "group gapgrp-0577; path=Plans/UI_Command_Catalog.md; row_type=missing_doc_reference; status=present",
+      "affected_targets": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## cmd.nav"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-003740"
+      ],
+      "source_obligation_ids": [
+        "obl-001753"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0050"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "exact_missing_items": [
+        "The catalog gap is now structural, not just a few missing IDs"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "cmd.nav.open_subject",
+        "cmd.nav.focus_route",
+        "cmd.nav.open_usage_subject"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Missing doc reference obligation requires reconciliation or discovery.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

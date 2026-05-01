@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0216",
+  "coverage_row_ids_represented": [
+    "cov-000114",
+    "cov-000116",
+    "cov-000118",
+    "cov-000120",
+    "cov-000122",
+    "cov-000124",
+    "cov-000126",
+    "cov-000128",
+    "cov-000130",
+    "cov-000132"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0216; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Escalation Surface Mapping"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000114",
+        "cov-000116",
+        "cov-000118",
+        "cov-000120",
+        "cov-000122",
+        "cov-000124",
+        "cov-000126",
+        "cov-000128",
+        "cov-000130",
+        "cov-000132"
+      ],
+      "source_obligation_ids": [
+        "obl-000056",
+        "obl-000057",
+        "obl-000058",
+        "obl-000059",
+        "obl-000060",
+        "obl-000061",
+        "obl-000062",
+        "obl-000063",
+        "obl-000064",
+        "obl-000065"
+      ],
+      "source_seed_ids": [
+        "shard-0022-s006",
+        "shard-0022-s007",
+        "shard-0022-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "Progress/Dashboard shows active warnings/attention/blocked",
+        "badges show compressed counts/severity markers",
+        "chat/thread only for genuine user decision/input",
+        "system notifications reserved for high-value sparse events",
+        "immediate show on first activation",
+        "suppress duplicate noise while unchanged",
+        "resurface only when: severity increases, owner changes, blocked duration crosses threshold, new action becomes available, user returns focus after time away",
+        "`dismissed` is presentation state, not semantic resolution",
+        "active blockers must not be dismissible into fake health",
+        "advisory warnings may respect quiet/dismiss windows"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

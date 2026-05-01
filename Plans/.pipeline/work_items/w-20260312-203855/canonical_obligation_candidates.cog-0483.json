@@ -1,0 +1,135 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0483",
+  "represented_seed_ids": [
+    "seed-WAVE007-0036"
+  ],
+  "source_shard_ids": [
+    "shard-0067"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`FileManager.md` still makes `OpenFile` look like the universal open/navigation primitive.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`FileManager.md` still makes `OpenFile` look like the universal open/navigation primitive."
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenFile Scope Correction"
+      ],
+      "stale_residue_to_retire": [
+        "OpenFile as universal open/navigation primitive"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013209-L013293"
+      ],
+      "notes": [
+        "FileManager.md must be updated to clearly scope OpenFile as path-based editor only. The doc must reference Contracts_V0 for OpenSubject and route_target rather than implying OpenFile handles all navigation."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE007-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`FileManager.md` should stay focused on path-based editor realization and should not become the owner of cross-surface identity navigation just because `OpenFile` is important there.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`FileManager.md` should stay focused on path-based editor realization and should not become the owner of cross-surface identity navigation just because `OpenFile` is important there."
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenFile Scope Correction"
+      ],
+      "stale_residue_to_retire": [
+        "OpenFile as universal open/navigation primitive"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013209-L013293"
+      ],
+      "notes": [
+        "FileManager.md must be updated to clearly scope OpenFile as path-based editor only. The doc must reference Contracts_V0 for OpenSubject and route_target rather than implying OpenFile handles all navigation."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE007-0036"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`assistant-chat-design.md` and `FinalGUISpec.md` already treat `open_source` as a real action, but the action still lacks a contract owner.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`assistant-chat-design.md` and `FinalGUISpec.md` already treat `open_source` as a real action, but the action still lacks a contract owner."
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenFile Scope Correction"
+      ],
+      "stale_residue_to_retire": [
+        "OpenFile as universal open/navigation primitive"
+      ],
+      "canonical_replacement_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L013209-L013293"
+      ],
+      "notes": [
+        "FileManager.md must be updated to clearly scope OpenFile as path-based editor only. The doc must reference Contracts_V0 for OpenSubject and route_target rather than implying OpenFile handles all navigation."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

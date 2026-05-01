@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0001",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001-L000001-L000200.md",
+  "source_line_range": "L000001-L000200",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Orchestrator / Evidence / Ledger layout contract",
+      "exact_items": [
+        "Orchestrator must remain tab-first, not widget-first",
+        "`Progress` remains the first tab and contains orchestrator widgets",
+        "`Tiers` should be replaced by a seam/package-oriented tab",
+        "`Evidence` tab needs major redesign",
+        "`History` and `Ledger` both remain candidates, but merging them is on the table",
+        "Evidence tab should use separate panes: evidence records pane; artifact pane",
+        "right-side inspectors should stay summary/action oriented; dense objects should open full-record views"
+      ],
+      "affected_doc_hints": [
+        "Plans/.../Orchestrator page shell docs",
+        "Plans/.../Evidence tab docs",
+        "Plans/.../Ledger/History docs"
+      ],
+      "heading_hints": [
+        "Topic / Scope",
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [
+        "`Tiers`"
+      ],
+      "source_shard_id": "shard-0001",
+      "source_evidence": [
+        "working_ledger.md:L000029-L000045",
+        "working_ledger.md:L000059-L000075",
+        "working_ledger.md:L000121-L000140"
+      ],
+      "notes": [
+        "Layout/ownership blocker: tab-first structure and pane split must be preserved in follow-on docs; dense record surfaces must not stay inspector-only."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "blocked-owner normalization / ownership fields",
+      "exact_items": [
+        "blocked reason",
+        "blocked owner",
+        "time blocked",
+        "next step",
+        "blocked ownership should be normalized with stable labels: `Runtime`; `Package Overseer`; `Seam Overseer`"
+      ],
+      "affected_doc_hints": [
+        "Plans/.../blocked-state schema docs",
+        "Plans/.../ownership normalization docs"
+      ],
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0001",
+      "source_evidence": [
+        "working_ledger.md:L000193-L000200"
+      ],
+      "notes": [
+        "Missing-field obligation: blocked states must always expose the owner field and normalize ownership labels."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "cross-tab consumer carry-through / deep-link contract",
+      "exact_items": [
+        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "deep links should carry selection/filter/focus context, not merely switch tabs",
+        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+        "evidence and artifacts should remain linked bidirectionally"
+      ],
+      "affected_doc_hints": [
+        "Plans/.../cross-tab navigation contract docs",
+        "Plans/.../graph detail inspector docs",
+        "Plans/.../Evidence linking docs"
+      ],
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0001",
+      "source_evidence": [
+        "working_ledger.md:L000120-L000126",
+        "working_ledger.md:L000141-L000145"
+      ],
+      "notes": [
+        "Consumer carry-through expectation: selection/filter/focus context must survive navigation and link traversal."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "legacy tab/object label retirement",
+      "exact_items": [
+        "replace `Tiers` with a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "prefer precise canonical terms in docs/runtime model",
+        "likely canonical tab/object labels: `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`"
+      ],
+      "affected_doc_hints": [
+        "Plans/.../Orchestrator shell docs",
+        "Plans/.../label glossary docs"
+      ],
+      "heading_hints": [
+        "Key Facts and Findings",
+        "Copy/labels direction is now firmer"
+      ],
+      "stale_tokens": [
+        "`Tiers`"
+      ],
+      "source_shard_id": "shard-0001",
+      "source_evidence": [
+        "working_ledger.md:L000031-L000033",
+        "working_ledger.md:L000145-L000152",
+        "working_ledger.md:L000167-L000170"
+      ],
+      "notes": [
+        "Stale term to retire: `Tiers`; replace with seam/package-oriented canonical labeling."
+      ]
+    }
+  ],
+  "noise_items": [
+    {
+      "source_evidence": [
+        "working_ledger.md:L000001-L000027"
+      ],
+      "reason": "process/meta constraints and scope framing; not obligation-grade field content"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L000029-L000118"
+      ],
+      "reason": "design/status recap and directional summaries without explicit missing-field obligations"
+    },
+    {
+      "source_evidence": [
+        "working_ledger.md:L000145-L000192"
+      ],
+      "reason": "copy/label preference and UI direction; mostly summary unless tied to blockers or stale-token retirement"
+    }
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0001"
+}

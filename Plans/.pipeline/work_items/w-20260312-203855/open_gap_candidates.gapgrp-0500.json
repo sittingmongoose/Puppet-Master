@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0500",
+  "coverage_row_ids_represented": [
+    "cov-000303",
+    "cov-000306",
+    "cov-000309",
+    "cov-000312",
+    "cov-000315",
+    "cov-000318",
+    "cov-000321",
+    "cov-000324",
+    "cov-000863",
+    "cov-000865"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0500; path=Plans/Run_Graph_View.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## Node Detail Inspector"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000303",
+        "cov-000306",
+        "cov-000309",
+        "cov-000312",
+        "cov-000315",
+        "cov-000318",
+        "cov-000321",
+        "cov-000324",
+        "cov-000863",
+        "cov-000865"
+      ],
+      "source_obligation_ids": [
+        "obl-000142",
+        "obl-000143",
+        "obl-000144",
+        "obl-000145",
+        "obl-000146",
+        "obl-000147",
+        "obl-000148",
+        "obl-000149",
+        "obl-000374",
+        "obl-000375"
+      ],
+      "source_seed_ids": [
+        "shard-0001-s008",
+        "shard-0005-s014",
+        "shard-0005-s015",
+        "shard-0013-s004"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0005",
+        "shard-0013"
+      ],
+      "exact_missing_items": [
+        "Node Graph tab must show a graph canvas with a right-side detail inspector",
+        "The inspector must expose: provider/model/effort/persona/account, usage/token/cost, worker policy, retry/review/promotion state, lane/worktree/snapshot, linked evidence",
+        "Every projection-backed operational surface should expose at least: trust state, last updated time, degraded/stale reason when not current, whether actions are partially gated",
+        "Progress: show run-level trust banner or chip when projections are stale/degraded",
+        "Seams: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "Node Graph: keep historical graph and current selections visible, but flag when live node state may be stale",
+        "Evidence: artifact browsing can remain available; live verdict/action affordances may gate",
+        "History / Ledger: usually the fallback-safe surfaces because they are closest to canonical records",
+        "Graph view must show full lineage including historical branches and patched fork/rejoin paths; must support thousands of nodes; zoom+pan+minimap is the primary navigation paradigm",
+        "Graph readability rule: zoom-dependent label density \u2014 far=structure/state only, medium=abbreviated labels, near=full labels; selected objects must expose full detail via right-side inspector regardless of zoom level"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

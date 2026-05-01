@@ -1,0 +1,211 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0482",
+  "represented_seed_ids": [
+    "seed-WAVE007-0035"
+  ],
+  "source_shard_ids": [
+    "shard-0067"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE007-0035"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define `OpenSubject` in `Contracts_V0.md` with: `subject_id`; `open_intent`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenSubject Contract",
+        "## open_intent Vocabulary"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L013236-L013313"
+      ],
+      "notes": [
+        "OpenSubject minimum field set: subject_id + open_intent (open_source | open_preview | open_review). Shell/scope (project_id, thread_id, etc.) belong to route_target not OpenSubject. Persistence/provenance (backing_document_id, source_kind, last_saved_path) belong to storage records. Transport/open realization (generated://) belongs to the resolver."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-WAVE007-0035"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Keep the intent vocabulary controlled and small: `open_source`; `open_preview`; `open_review`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep the intent vocabulary controlled and small: `open_source`; `open_preview`; `open_review`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenSubject Contract",
+        "## open_intent Vocabulary"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L013236-L013313"
+      ],
+      "notes": [
+        "OpenSubject minimum field set: subject_id + open_intent (open_source | open_preview | open_review). Shell/scope (project_id, thread_id, etc.) belong to route_target not OpenSubject. Persistence/provenance (backing_document_id, source_kind, last_saved_path) belong to storage records. Transport/open realization (generated://) belongs to the resolver."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-WAVE007-0035"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "Keep resolver-support metadata out of the contract.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep resolver-support metadata out of the contract."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenSubject Contract",
+        "## open_intent Vocabulary"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L013236-L013313"
+      ],
+      "notes": [
+        "OpenSubject minimum field set: subject_id + open_intent (open_source | open_preview | open_review). Shell/scope (project_id, thread_id, etc.) belong to route_target not OpenSubject. Persistence/provenance (backing_document_id, source_kind, last_saved_path) belong to storage records. Transport/open realization (generated://) belongs to the resolver."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-WAVE007-0035"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "State the resolution rule directly: `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists; otherwise it resolves to transient",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "State the resolution rule directly: `OpenSubject(subject_id = doc:...)` resolves to workspace-backed source opening; `OpenSubject(subject_id = artifact:...)` resolves to real document source if one exists; otherwise it resolves to transient `generated://<artifact_id>` source opening"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenSubject Contract",
+        "## open_intent Vocabulary"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L013236-L013313"
+      ],
+      "notes": [
+        "OpenSubject minimum field set: subject_id + open_intent (open_source | open_preview | open_review). Shell/scope (project_id, thread_id, etc.) belong to route_target not OpenSubject. Persistence/provenance (backing_document_id, source_kind, last_saved_path) belong to storage records. Transport/open realization (generated://) belongs to the resolver."
+      ]
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "seed-WAVE007-0035"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "`OpenSubject` does not carry: `project_id`, `thread_id`, `run_id`, `tab_id`, `panel_id`, `inspector_target`, `origin_surface`, `source_kind`, `backing_document_id`, `last_saved_path`, `generated://<artifact_id>`, preview persistence state, ",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`OpenSubject` does not carry: `project_id`, `thread_id`, `run_id`, `tab_id`, `panel_id`, `inspector_target`, `origin_surface`, `source_kind`, `backing_document_id`, `last_saved_path`, `generated://<artifact_id>`, preview persistence state, transport mode"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## OpenSubject Contract",
+        "## open_intent Vocabulary"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L013236-L013313"
+      ],
+      "notes": [
+        "OpenSubject minimum field set: subject_id + open_intent (open_source | open_preview | open_review). Shell/scope (project_id, thread_id, etc.) belong to route_target not OpenSubject. Persistence/provenance (backing_document_id, source_kind, last_saved_path) belong to storage records. Transport/open realization (generated://) belongs to the resolver."
+      ]
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

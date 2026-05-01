@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0779",
+  "coverage_row_ids_represented": [
+    "cov-004417",
+    "cov-004419"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0779; path=Plans/storage-plan.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## resume_url"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004417",
+        "cov-004419"
+      ],
+      "source_obligation_ids": [
+        "obl-002109",
+        "obl-002110"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE006-0074"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "exact_missing_items": [
+        "resume_url is currently positioned as a canonical route-target contract field, but its semantics are transport-layer (serialized URL) not application-layer (structured route model)",
+        "resume_url must be demoted to a transport-only serialized form; the canonical route model must be the structured route_target contract"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [
+        "route_target"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

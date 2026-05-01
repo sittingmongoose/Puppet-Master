@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0656",
+  "coverage_row_ids_represented": [
+    "cov-001128",
+    "cov-001301",
+    "cov-001304",
+    "cov-001316",
+    "cov-001320",
+    "cov-001324",
+    "cov-001911",
+    "cov-001913",
+    "cov-001914",
+    "cov-001916"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0656; path=Plans/WorktreeGitImprovement.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## Follow-Up Research Items"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001128",
+        "cov-001301",
+        "cov-001304",
+        "cov-001316",
+        "cov-001320",
+        "cov-001324",
+        "cov-001911",
+        "cov-001913",
+        "cov-001914",
+        "cov-001916"
+      ],
+      "source_obligation_ids": [
+        "obl-000475",
+        "obl-000556",
+        "obl-000557",
+        "obl-000561",
+        "obl-000562",
+        "obl-000563",
+        "obl-000891",
+        "obl-000893",
+        "obl-000894",
+        "obl-000896"
+      ],
+      "source_seed_ids": [
+        "shard-0010-s011",
+        "shard-0011-s014",
+        "shard-0011-s016",
+        "shard-0024-s009",
+        "shard-0026-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0011",
+        "shard-0024",
+        "shard-0026"
+      ],
+      "exact_missing_items": [
+        "Follow-up research items (6 canonical): (1) define package/seam/lane/promotion object family canonically; (2) extend requested/effective runtime identity to include account and overseer role; (3) choose one HITL model and one action family; (4) separate plan structure from mutable runtime state; (5) specify package-based worktree lane pools end-to-end; (6) normalize recovery vocabulary (safe point, restore point, rollback, contamination, retry)",
+        "a missing live worktree must render as historical/retired/removed, not disappear",
+        "lineage views must preserve: worktree_id, path snapshot, branch snapshot, compare target/commit-range snapshot, owning package/lane identity when applicable",
+        "Add a formal distinction between: lane lifecycle state, worktree filesystem state, runtime blocked/recovery state",
+        "dirty_worktree and worktree_conflict are canonical blocked reasons and must remain visible in both surfaces without becoming generic SCM errors",
+        "Make Source Control the execution surface for Git-native mutations, while Orchestrator remains the operational surface for why those actions matter",
+        "Source Control should lean on context menus and focused commands rather than dense inline action bars",
+        "live",
+        "dirty",
+        "orphaned"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

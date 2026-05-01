@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0214",
+  "coverage_row_ids_represented": [
+    "cov-000068",
+    "cov-000070",
+    "cov-000072",
+    "cov-000074",
+    "cov-000076",
+    "cov-000078",
+    "cov-000081",
+    "cov-000083",
+    "cov-000089",
+    "cov-000093"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0214; path=Plans/FinalGUISpec.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Action Family Mapping"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000068",
+        "cov-000070",
+        "cov-000072",
+        "cov-000074",
+        "cov-000076",
+        "cov-000078",
+        "cov-000081",
+        "cov-000083",
+        "cov-000089",
+        "cov-000093"
+      ],
+      "source_obligation_ids": [
+        "obl-000033",
+        "obl-000034",
+        "obl-000035",
+        "obl-000036",
+        "obl-000037",
+        "obl-000038",
+        "obl-000039",
+        "obl-000040",
+        "obl-000043",
+        "obl-000045"
+      ],
+      "source_seed_ids": [
+        "shard-0016-s007",
+        "shard-0021-s009",
+        "shard-0021-s011",
+        "shard-0021-s012",
+        "shard-0022-s001"
+      ],
+      "source_shard_ids": [
+        "shard-0016",
+        "shard-0021",
+        "shard-0022"
+      ],
+      "exact_missing_items": [
+        "hard_gate: examples include HITL approvals, graph patch application when it changes canonical graph generation, remote-side-effect actions with explicit non-bypassable policy",
+        "project health",
+        "project activity",
+        "project attention",
+        "Activity: idle | running | paused | queued | background_active",
+        "Attention: none | attention_required | blocked | degraded",
+        "Runtime",
+        "Package Overseer",
+        "Graph Patch",
+        "User"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0867",
+  "coverage_row_ids_represented": [
+    "cov-002471",
+    "cov-002474",
+    "cov-002481",
+    "cov-002486",
+    "cov-002491",
+    "cov-002496",
+    "cov-002792",
+    "cov-002796",
+    "cov-002800",
+    "cov-002804"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0867; path=Plans/usage-feature.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Do-not-forget details"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002471",
+        "cov-002474",
+        "cov-002481",
+        "cov-002486",
+        "cov-002491",
+        "cov-002496",
+        "cov-002792",
+        "cov-002796",
+        "cov-002800",
+        "cov-002804"
+      ],
+      "source_obligation_ids": [
+        "obl-001213",
+        "obl-001214",
+        "obl-001217",
+        "obl-001218",
+        "obl-001219",
+        "obl-001220",
+        "obl-001319",
+        "obl-001320",
+        "obl-001321",
+        "obl-001322"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s011",
+        "shard-0035-s005",
+        "shard-0036-s010"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0035",
+        "shard-0036"
+      ],
+      "exact_missing_items": [
+        "account-switch history still requires a first-class canonical event family, not just state hints",
+        "usage_event_ref should be structured with at minimum: project_id, run_id, attempt_id?, node_id, lane_id?, created_at_utc \u2014 not a bare string",
+        "Normalize all persona/runtime identity field names to the canonical requested_* / effective_* contract from Contracts_V0.md, and remove drifted _id variants where they are being treated as canonical names",
+        "Add a governance-record template to storage/contracts so concern/review/promotion/corroboration/graph-patch/recovery records stop emerging ad hoc",
+        "Rework usage/storage attribution around lane/package/seam/attempt/remediation dimensions instead of centering tier_id",
+        "Reclassify Orchestrator surfaces so only Progress is widget-composed and move non-Progress tabs onto native view-state contracts",
+        "storage-plan.md already grounds freshness in committed projection state, checkpoints, and receipts",
+        "there is still no shared ProjectionHealth/trust contract spanning Usage, Orchestrator, Source Control, and widgets",
+        "live widget and page contracts still need attempt-/lane-/session-aware attribution rather than tier-only routing",
+        "stable live identity now centers on attempt_id, receipt refs, scheduler_lane, worktree_id, and requested/effective identity per attempt"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

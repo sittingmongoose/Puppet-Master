@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0423",
+  "coverage_row_ids_represented": [
+    "cov-004556",
+    "cov-004560",
+    "cov-004564",
+    "cov-005255"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0423; path=Plans/Permissions_System.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## tool.invoked Event Contract"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004556",
+        "cov-004560",
+        "cov-004564",
+        "cov-005255"
+      ],
+      "source_obligation_ids": [
+        "obl-002168",
+        "obl-002169",
+        "obl-002170",
+        "obl-002297"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0013",
+        "seed-WAVE007-0047"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070"
+      ],
+      "exact_missing_items": [
+        "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+        "plan-mode tooling policy still denies `lsp` even though LSP context is assumed for planning/interview features.",
+        "mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract.",
+        "`FileSafe.md` still contains major DAE-enforcement holes, write-scope contradictions (`context_files` and prefix matching), absent remote side-effect integration, undefined safe-point restore triggers, and silent-disable / bypass paths."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

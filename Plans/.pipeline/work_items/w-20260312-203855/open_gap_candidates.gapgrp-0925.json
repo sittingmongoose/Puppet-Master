@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0925",
+  "coverage_row_ids_represented": [
+    "cov-006890",
+    "cov-006891",
+    "cov-006892",
+    "cov-006893",
+    "cov-006894",
+    "cov-006895",
+    "cov-006896",
+    "cov-006897",
+    "cov-006898",
+    "cov-006899"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-0925; path=__DOC_DISCOVERY_REQUIRED__; row_type=layout_blocker; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006890",
+        "cov-006891",
+        "cov-006892",
+        "cov-006893",
+        "cov-006894",
+        "cov-006895",
+        "cov-006896",
+        "cov-006897",
+        "cov-006898",
+        "cov-006899"
+      ],
+      "source_obligation_ids": [
+        "obl-003793",
+        "obl-003794",
+        "obl-003795",
+        "obl-003796",
+        "obl-003797",
+        "obl-003798",
+        "obl-003799",
+        "obl-003800",
+        "obl-003801",
+        "obl-003802"
+      ],
+      "source_seed_ids": [
+        "shard-0088-s119",
+        "shard-0088-s123",
+        "shard-0089-s040",
+        "shard-0089-s046",
+        "shard-0089-s117",
+        "shard-0091-s114"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.",
+        "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "gap-004",
+        "### Cross-surface receipt record",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref",
+        "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "open_gaps.json.next_required_stage"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0850",
+  "coverage_row_ids_represented": [
+    "cov-000891",
+    "cov-000994",
+    "cov-001227",
+    "cov-001231",
+    "cov-001235",
+    "cov-001239",
+    "cov-002340",
+    "cov-002342",
+    "cov-003267",
+    "cov-003270"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "other",
+      "description": "group gapgrp-0850; path=Plans/storage-plan.md; row_type=stale_token_replacement; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## active-agents.json Retirement"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000891",
+        "cov-000994",
+        "cov-001227",
+        "cov-001231",
+        "cov-001235",
+        "cov-001239",
+        "cov-002340",
+        "cov-002342",
+        "cov-003267",
+        "cov-003270"
+      ],
+      "source_obligation_ids": [
+        "obl-000385",
+        "obl-000424",
+        "obl-000537",
+        "obl-000538",
+        "obl-000539",
+        "obl-000540",
+        "obl-001173",
+        "obl-001174",
+        "obl-001557",
+        "obl-001558"
+      ],
+      "source_seed_ids": [
+        "shard-0006-s014",
+        "shard-0008-s015",
+        "shard-0011-s011",
+        "shard-0031-s009",
+        "shard-0039-s003"
+      ],
+      "source_shard_ids": [
+        "shard-0006",
+        "shard-0008",
+        "shard-0011",
+        "shard-0031",
+        "shard-0039"
+      ],
+      "exact_missing_items": [
+        "Contradiction: active-agents.json (flat file) vs seglog/redb (event-sourced) = split-brain risk; active-agents.json must be retired and replaced with seglog/redb canonical state",
+        "tier_runtime_record and tier_id-based usage rollups are still present in storage schema \u2014 must be replaced with attempt/package/seam records",
+        "Orchestrator_Page.md still keeps Tiers and multi-tab widget composition",
+        "Widget_System.md still catalogs tier widgets and weak hostability rules",
+        "usage-feature.md still aggregates around tier_id",
+        "storage-plan.md still splits tier-era event tables from newer attempt-centric records",
+        "storage-plan.md still leans on tier_id / run.tier_*",
+        "usage-feature.md still treats tier_id as a core attribution dimension and does not yet pivot to seam_id / package_id / lane_id",
+        "execution_role and actor_role are used interchangeably across shard content \u2014 need one canonical name",
+        "execution_role is the preferred canonical name: it distinguishes the role the actor plays during this execution (not their long-lived identity role)"
+      ],
+      "stale_tokens": [
+        "active-agents.json",
+        "tier_runtime_record",
+        "tier_id",
+        "Tiers tab",
+        "tier_id aggregation",
+        "tier-era event tables",
+        "TierChanged",
+        "IterationStart",
+        "TierTree",
+        "run.tier_*",
+        "actor_role"
+      ],
+      "canonical_replacement_hints": [
+        "Use seglog/redb for canonical agent/run state"
+      ],
+      "canonical_replacement_status": "known",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0004",
+  "coverage_row_ids_represented": [
+    "cov-002394",
+    "cov-002397",
+    "cov-002400",
+    "cov-002406",
+    "cov-002408",
+    "cov-002410",
+    "cov-002411",
+    "cov-002414",
+    "cov-002418",
+    "cov-002423"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0004; path=Plans/Architecture_Invariants.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Architecture_Invariants.md",
+          "heading": "### Key findings"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002394",
+        "cov-002397",
+        "cov-002400",
+        "cov-002406",
+        "cov-002408",
+        "cov-002410",
+        "cov-002411",
+        "cov-002414",
+        "cov-002418",
+        "cov-002423"
+      ],
+      "source_obligation_ids": [
+        "obl-001189",
+        "obl-001190",
+        "obl-001191",
+        "obl-001194",
+        "obl-001195",
+        "obl-001196",
+        "obl-001197",
+        "obl-001198",
+        "obl-001199",
+        "obl-001200"
+      ],
+      "source_seed_ids": [
+        "shard-0032-s001",
+        "shard-0032-s003",
+        "shard-0032-s004",
+        "shard-0032-s005"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "exact_missing_items": [
+        "Decision_Policy.md still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "Permissions_System.md does not yet integrate the stricter requested/effective identity model that Contracts_V0.md now makes canonical",
+        "Architecture_Invariants.md needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "ContributePr explicitly disables tier worktrees and forces single-branch execution",
+        "chain-wizard-flexibility.md introduces intent-specific execution modes",
+        "adaptive phase planning and contract unification create a broader orchestration-mode matrix than older docs assume",
+        "canonical runtime object families: node_id / attempt_id / blocked_reason_code / lane dispatch order / safe points",
+        "surrounding policy/HITL/permission docs still frequently reason through tier context and less precise ownership terms",
+        "Extend Decision_Policy.md with first-class policy objects and transitions for: concerns, corroboration, promotions, superseded/revoked/reopened states",
+        "Require requested/effective identity fields in decision/permission records, not just runtime event records"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

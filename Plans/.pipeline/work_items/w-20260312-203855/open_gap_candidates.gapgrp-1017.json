@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-1017",
+  "coverage_row_ids_represented": [
+    "cov-006396",
+    "cov-006397",
+    "cov-006398",
+    "cov-006399",
+    "cov-006400",
+    "cov-006401",
+    "cov-006402",
+    "cov-006403",
+    "cov-006404",
+    "cov-006405"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "doc_discovery_required",
+      "description": "group gapgrp-1017; path=__DOC_DISCOVERY_REQUIRED__; row_type=stale_retirement; status=missing",
+      "affected_targets": [],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "not_applicable",
+      "coverage_row_ids": [
+        "cov-006396",
+        "cov-006397",
+        "cov-006398",
+        "cov-006399",
+        "cov-006400",
+        "cov-006401",
+        "cov-006402",
+        "cov-006403",
+        "cov-006404",
+        "cov-006405"
+      ],
+      "source_obligation_ids": [
+        "obl-003299",
+        "obl-003300",
+        "obl-003301",
+        "obl-003302",
+        "obl-003303",
+        "obl-003304",
+        "obl-003305",
+        "obl-003306",
+        "obl-003307",
+        "obl-003308"
+      ],
+      "source_seed_ids": [
+        "shard-0077-s004",
+        "shard-0077-s040",
+        "shard-0077-s046",
+        "shard-0077-s051",
+        "shard-0077-s059",
+        "shard-0077-s069",
+        "shard-0077-s077",
+        "shard-0078-s018",
+        "shard-0078-s021",
+        "shard-0078-s041",
+        "shard-0078-s100",
+        "shard-0079-s033",
+        "shard-0079-s124",
+        "shard-0086-s036"
+      ],
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0086"
+      ],
+      "exact_missing_items": [
+        "Strong stale consumers:",
+        "This is no longer only \u201cstorage is stale in places.\u201d The document now carries multiple overlapping canonicality layers from different rewrite stages.",
+        "Retire or explicitly compatibility-label the older tier/HITL request-era tables instead of letting them stand as live canon beside the newer runtime sections.",
+        "older base text still remains live and keeps teaching the stale model",
+        "Highest-priority stale consumer set",
+        "stale consumer cleanup",
+        "stale consumers are mostly downstream reflections of those owner failures",
+        "Primary stale consumers:",
+        "Strong owner docs with residual stale scope wording:",
+        "The owner docs now have a split between modern canonical field names and stale canonical scope language."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Doc discovery required before a concrete Plans/** target can be assigned.",
+      "next_resolution_stage": "Doc Discovery Resolver"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

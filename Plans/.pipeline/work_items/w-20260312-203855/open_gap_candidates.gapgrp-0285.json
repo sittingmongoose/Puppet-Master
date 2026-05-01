@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0285",
+  "coverage_row_ids_represented": [
+    "cov-001749",
+    "cov-001753",
+    "cov-003752",
+    "cov-003754",
+    "cov-003756",
+    "cov-004153",
+    "cov-004154",
+    "cov-004161",
+    "cov-007677",
+    "cov-007683"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0285; path=Plans/Glossary.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "## Help Entry Template"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-001749",
+        "cov-001753",
+        "cov-003752",
+        "cov-003754",
+        "cov-003756",
+        "cov-004153",
+        "cov-004154",
+        "cov-004161",
+        "cov-007677",
+        "cov-007683"
+      ],
+      "source_obligation_ids": [
+        "obl-000773",
+        "obl-000775",
+        "obl-001764",
+        "obl-001765",
+        "obl-001766",
+        "obl-001938",
+        "obl-001939",
+        "obl-001946",
+        "obl-004264",
+        "obl-004267"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0034",
+        "seed-WAVE006-0014",
+        "shard-0021-s002",
+        "shard-0088-s124",
+        "shard-0091-s025",
+        "shard-0091-s058",
+        "shard-0091-s120"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0045",
+        "shard-0052",
+        "shard-0088",
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "common related states/actions",
+        "surface examples / where you see it",
+        "Executor_Protocol.md has a broken Glossary forward reference",
+        "Executor_Protocol.md has an incomplete wake-reason set, no real blocked_reason_code table, no blocked_sequence integration, and no actor/lifecycle model for reviewer/corroboration flows",
+        "Executor_Protocol.md still has duplicated canonical scheduler sections",
+        "attempt / attempt_id, safe point, lane, work package, and related rewrite-era vocabulary still have no Glossary owner",
+        "multiple adjacent docs cite Plans/Glossary.md \u00a72 for Overseer, but no such entry exists",
+        "gap-006",
+        "gap-007"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

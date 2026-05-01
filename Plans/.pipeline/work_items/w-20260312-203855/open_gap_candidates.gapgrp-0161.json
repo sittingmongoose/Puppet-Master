@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0161",
+  "coverage_row_ids_represented": [
+    "cov-000528",
+    "cov-000690",
+    "cov-000693",
+    "cov-000697",
+    "cov-000701",
+    "cov-000706",
+    "cov-000709",
+    "cov-000712",
+    "cov-000715",
+    "cov-000717"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0161; path=Plans/Executor_Protocol.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## (unspecified)"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-000528",
+        "cov-000690",
+        "cov-000693",
+        "cov-000697",
+        "cov-000701",
+        "cov-000706",
+        "cov-000709",
+        "cov-000712",
+        "cov-000715",
+        "cov-000717"
+      ],
+      "source_obligation_ids": [
+        "obl-000220",
+        "obl-000300",
+        "obl-000301",
+        "obl-000303",
+        "obl-000304",
+        "obl-000306",
+        "obl-000307",
+        "obl-000308",
+        "obl-000309",
+        "obl-000310"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s012",
+        "shard-0003-s013",
+        "shard-0003-s015",
+        "shard-0004-s001",
+        "shard-0004-s004",
+        "shard-0004-s005",
+        "shard-0004-s012",
+        "shard-0004-s014",
+        "shard-0006-s003",
+        "shard-0090-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004",
+        "shard-0006",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "startup_recovered",
+        "Execution-policy settings must allow the user to choose between fresh and retained-context retry workers; these must be separately configurable settings",
+        "Worker kind (subagent vs full agent) and retry-context policy (fresh vs retained) are SEPARATE settings \u2014 they must not be combined into a single toggle",
+        "Overseer-spawned node worker is the NORMAL/DEFAULT execution path, not an edge case \u2014 documentation must reflect this as the primary worker model",
+        "Node personas must be auto-selected from node scope/type; persona override must be a global node-worker policy setting, NOT a per-node override",
+        "Governance model must define 4 execution scopes: run = full canonical graph under deterministic runtime; work package = coherent precomputed subgraph with local overseer; feature seam = cross-package oversight scope; node = smallest executable unit",
+        "Each entity type must have its own lifecycle model \u2014 there is no single universal status enum: node lifecycle, work package lifecycle, feature seam lifecycle, promotion lifecycle, worktree lane lifecycle are all distinct",
+        "Three canonical promotion classes must be defined: lane_to_package (lane result \u2192 package baseline), package_to_seam_available (package \u2192 trusted seam contribution), seam_complete (seam marked complete)",
+        "Package completion is necessary but NOT sufficient for seam completion \u2014 integration quality at the seam level is a separate gate",
+        "Seam review loop must trigger at: package-completion boundaries, integration-edge/cross-package boundary crossings, before seam completion, and when package overseer raises a high-impact challenge"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

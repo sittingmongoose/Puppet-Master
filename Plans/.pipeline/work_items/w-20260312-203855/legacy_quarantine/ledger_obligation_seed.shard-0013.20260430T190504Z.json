@@ -1,0 +1,307 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0013",
+  "seed_candidates": [
+    {
+      "seed_id": "shard-0013-s001",
+      "seed_type": "owner",
+      "exact_items": [
+        "seglog is canonical; redb/Tantivy/JSONL are disposable projections; replay/rebuild targets a deterministic target_seq; UI freshness notifications should derive from committed projection state, not ad-hoc polling"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Storage Hierarchy",
+        "## Projection Rebuild",
+        "## Canonical Storage"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002399-L002403"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s002",
+      "seed_type": "owner",
+      "exact_items": [
+        "projection trust states: current, refreshing, stale, degraded, unavailable",
+        "current: projection is caught up enough for normal use",
+        "refreshing: old committed projection still visible while refresh/rebuild runs",
+        "stale: projection is usable for context but may not reflect current runtime truth",
+        "degraded: projector/scan partially failed or a dependency signal is missing; some fields/sections are less trustworthy",
+        "unavailable: projection cannot currently answer the surface contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Projection Trust States",
+        "## Trust State Definitions"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002414-L002426"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s003",
+      "seed_type": "owner",
+      "exact_items": [
+        "read-only navigation may continue on stale and some degraded projections if the UI says so clearly",
+        "live mutating / decision-bearing actions must tighten on trust state",
+        "stale: allow inspection and historical navigation; require refresh or direct runtime revalidation before sensitive live actions",
+        "degraded: restrict to safe inspection and canonical recovery paths; do not allow ambiguous live actions",
+        "unavailable: route to record-backed fallback views or explicit recovery/refresh actions",
+        "page state must not silently stand in for runtime state when freshness/trust is insufficient"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Action Gating by Trust State",
+        "## Trust-Gated Actions"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002429-L002439"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s004",
+      "seed_type": "owner",
+      "exact_items": [
+        "Every projection-backed operational surface should expose at least: trust state, last updated time, degraded/stale reason when not current, whether actions are partially gated",
+        "Progress: show run-level trust banner or chip when projections are stale/degraded",
+        "Seams: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "Node Graph: keep historical graph and current selections visible, but flag when live node state may be stale",
+        "Evidence: artifact browsing can remain available; live verdict/action affordances may gate",
+        "History / Ledger: usually the fallback-safe surfaces because they are closest to canonical records"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Trust State UI Contract",
+        "## Per-Surface Trust Behavior"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002458-L002469"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s005",
+      "seed_type": "owner",
+      "exact_items": [
+        "Add a shared projection health/trust contract used by: Orchestrator, Usage, Source Control, other projection-backed surfaces",
+        "Define which commands require: current projection, direct runtime confirmation, or are safe from stale views because they operate on durable records only",
+        "Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Shared Projection Health Contract",
+        "## Fallback Hierarchy"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002476-L002487"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s006",
+      "seed_type": "owner",
+      "exact_items": [
+        "distinguish active run truth from focused run context",
+        "active_run_id = currently running/paused/interrupted run for the project, if any",
+        "focused_run_id = the run whose data the Orchestrator tabs are currently showing",
+        "focus_mode = live when focused_run_id == active_run_id",
+        "focus_mode = historical when the user is inspecting any non-active run"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Run Focus Model",
+        "## active_run_id vs focused_run_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002521-L002534"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s007",
+      "seed_type": "owner",
+      "exact_items": [
+        "Historical Run Mode: all tabs clearly show the focused historical run_id; page displays a persistent banner/chip that the user is viewing historical data; controls that only make sense for the active run are disabled or removed",
+        "Historical-safe actions: inspect graph, inspect evidence, inspect ledger, export, view lineage, open related Source Control / GitHub / Docker context in historical mode",
+        "Actions disabled in historical mode: pause / resume / cancel active execution, live retry / remediation commands, approval/recovery actions that require current runtime state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Historical Run Mode",
+        "## Historical-Safe Actions"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002537-L002555"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s008",
+      "seed_type": "owner",
+      "exact_items": [
+        "background run presence is global project state; focused run is local Orchestrator viewing state",
+        "background/live-run strip or compact banner remains visible even in historical mode",
+        "do not forcibly yank focus away from the historical run when a new run becomes active; instead show a clear notice: active run exists, switch to live run, background runs count / status"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Background Runs Interaction",
+        "## Live/Historical Switch"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002570-L002579"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s009",
+      "seed_type": "missing_doc_reference",
+      "exact_items": [
+        "Likely missing project-state record: orchestrator.project_state.{project_id}",
+        "Candidate fields: focused_run_id?, focus_mode, last_live_run_id?, selected_tab, per-tab view state refs, maybe auto_return_to_live = false by default",
+        "persist the last focused run per project"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Orchestrator Project State",
+        "## orchestrator.project_state"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002581-L002595"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "shard-0013-s010",
+      "seed_type": "owner",
+      "exact_items": [
+        "all Orchestrator tabs share the same focused run_id",
+        "History selection changes the whole page's focused run",
+        "Node Graph, Evidence, and Ledger all pivot to the same run_id",
+        "Progress in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Cross-Tab Run Focus",
+        "## Shared focused_run_id"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0013",
+      "source_evidence": [
+        "working_ledger.md:L002597-L002614"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

@@ -1,0 +1,234 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-0167",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-000695",
+      "source_obligation_ids": [
+        "obl-000302"
+      ],
+      "source_seed_ids": [
+        "shard-0003-s014"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-000906",
+      "source_obligation_ids": [
+        "obl-000389"
+      ],
+      "source_seed_ids": [
+        "shard-0007-s002"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-002833",
+      "source_obligation_ids": [
+        "obl-001330"
+      ],
+      "source_seed_ids": [
+        "shard-0035-s008"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003660",
+      "source_obligation_ids": [
+        "obl-001722"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003662",
+      "source_obligation_ids": [
+        "obl-001723"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003664",
+      "source_obligation_ids": [
+        "obl-001724"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003666",
+      "source_obligation_ids": [
+        "obl-001725"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0024"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003937",
+      "source_obligation_ids": [
+        "obl-001839"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0058"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003942",
+      "source_obligation_ids": [
+        "obl-001840"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0058"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    },
+    {
+      "coverage_id": "cov-003947",
+      "source_obligation_ids": [
+        "obl-001841"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE005-0058"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "evidence": [
+        "bounded_window=Plans/Executor_Protocol.md:L1-L400:exact_hits=0/1"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

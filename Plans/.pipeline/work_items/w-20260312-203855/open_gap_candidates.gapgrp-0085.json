@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0085",
+  "coverage_row_ids_represented": [
+    "cov-004996",
+    "cov-005001",
+    "cov-005006",
+    "cov-005011",
+    "cov-005016",
+    "cov-005139",
+    "cov-005144",
+    "cov-005149",
+    "cov-005154",
+    "cov-005159"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "group gapgrp-0085; path=Plans/Contracts_V0.md; row_type=owner; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## target_kind Enum"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-004996",
+        "cov-005001",
+        "cov-005006",
+        "cov-005011",
+        "cov-005016",
+        "cov-005139",
+        "cov-005144",
+        "cov-005149",
+        "cov-005154",
+        "cov-005159"
+      ],
+      "source_obligation_ids": [
+        "obl-002250",
+        "obl-002251",
+        "obl-002252",
+        "obl-002253",
+        "obl-002254",
+        "obl-002277",
+        "obl-002278",
+        "obl-002279",
+        "obl-002280",
+        "obl-002281"
+      ],
+      "source_seed_ids": [
+        "seed-WAVE007-0038",
+        "seed-WAVE007-0043"
+      ],
+      "source_shard_ids": [
+        "shard-0068",
+        "shard-0069"
+      ],
+      "exact_missing_items": [
+        "Define the canonical `target_kind` enum in `Contracts_V0.md`.",
+        "The canonical vocabulary is: `primary_view` (full primary-content destinations: Dashboard, Projects, Wizard, Interview, Settings, Usage, Orchestrator); `side_panel` (activity-bar panel destinations: chat, files, source_control, github_actions, docker_manager, artifacts, run_debug); `bottom_panel` (bottom shell destinations: terminal, problems, output, ports, browser, debug); `embedded_surface` (embedded sub-surfaces: document_pane, agent_activity); `page_tab` (tab within a routed page: Orchestrator tabs)",
+        "Keep destination-local refinements outside the enum and outside the base route contract.",
+        "Use `page_tab` when the routed destination must land inside a known page and force a specific tab.",
+        "What is not `target_kind`: docked vs floating; panel width; widget slot; subview id; repo/worktree selection; browser tab id; workspace tab id",
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`.",
+        "The canonical vocabulary is: `summary`; `evidence`; `artifacts`; `history`; `reviews`; `usage`; `lineage`; `details`",
+        "`inspector_target` is not object identity. `inspector_target` is not a per-surface arbitrary bag. `inspector_target` does not replace `tab_id`.",
+        "`wizard_step`, `message_id`, `line`, `range`, and compare-target state are not `inspector_target` values.",
+        "Use `inspector_target` only after primary selector identity is already established."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

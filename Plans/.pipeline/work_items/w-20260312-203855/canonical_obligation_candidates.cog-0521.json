@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0521",
+  "represented_seed_ids": [
+    "seed-WAVE008-0028"
+  ],
+  "source_shard_ids": [
+    "shard-0074"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-WAVE008-0028"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Crosswalk.md also still carries stale Orchestrator ownership text: OrchestratorPage still says the page has six tabs including Tiers; that stale primitive text will conflict with the rewrite tab model during reconciliation.",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Crosswalk.md also still carries stale Orchestrator ownership text: OrchestratorPage still says the page has six tabs including Tiers; that stale primitive text will conflict with the rewrite tab model during reconciliation."
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [
+        "## 3.14 OrchestratorPage",
+        "## Primitive:OrchestratorPage"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [
+        "OrchestratorPage rewrite tab model: Progress, Seams, Node Graph, Evidence, History, Ledger"
+      ],
+      "canonical_replacement_status": "known",
+      "source_evidence": [
+        "working_ledger.md:L014769-L014772"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

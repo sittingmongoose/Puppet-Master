@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0733",
+  "coverage_row_ids_represented": [
+    "cov-002107",
+    "cov-002110",
+    "cov-002113",
+    "cov-002116",
+    "cov-002119",
+    "cov-007288",
+    "cov-007298"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "group gapgrp-0733; path=Plans/interview-subagent-integration.md; row_type=consumer; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "## Shared Blocked Taxonomy for Conversational Actors"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-002107",
+        "cov-002110",
+        "cov-002113",
+        "cov-002116",
+        "cov-002119",
+        "cov-007288",
+        "cov-007298"
+      ],
+      "source_obligation_ids": [
+        "obl-001039",
+        "obl-001040",
+        "obl-001041",
+        "obl-001042",
+        "obl-001043",
+        "obl-004152",
+        "obl-004162"
+      ],
+      "source_seed_ids": [
+        "shard-0027-s004",
+        "shard-0088-s122",
+        "shard-0090-s024"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0088",
+        "shard-0090"
+      ],
+      "exact_missing_items": [
+        "attention_required",
+        "blocked",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "resume_url",
+        "`Plans/interview-subagent-integration.md` already carries requested/effective runtime visibility and `operational_identity`.",
+        "`Plans/interview-subagent-integration.md` still carries `requested_account_binding` and `operational_identity`, but still omits `requested_account_policy` and `tool_use_id` in its runtime-identity section."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row indicates incomplete or missing canon alignment for concrete target.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

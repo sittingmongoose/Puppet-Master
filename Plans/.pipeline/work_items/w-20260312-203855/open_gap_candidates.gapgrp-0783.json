@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "gapgrp-0783",
+  "coverage_row_ids_represented": [
+    "cov-008027",
+    "cov-008032",
+    "cov-008036",
+    "cov-008038",
+    "cov-008042",
+    "cov-008044",
+    "cov-008048",
+    "cov-008050",
+    "cov-008084",
+    "cov-008086"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "packetizable_layout_defect",
+      "description": "group gapgrp-0783; path=Plans/storage-plan.md; row_type=layout_blocker; status=missing",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "## Layout"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-008027",
+        "cov-008032",
+        "cov-008036",
+        "cov-008038",
+        "cov-008042",
+        "cov-008044",
+        "cov-008048",
+        "cov-008050",
+        "cov-008084",
+        "cov-008086"
+      ],
+      "source_obligation_ids": [
+        "obl-004427",
+        "obl-004428",
+        "obl-004431",
+        "obl-004432",
+        "obl-004434",
+        "obl-004435",
+        "obl-004437",
+        "obl-004438",
+        "obl-004447",
+        "obl-004448"
+      ],
+      "source_seed_ids": [
+        "shard-0091-s026",
+        "shard-0091-s057",
+        "shard-0091-s088"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "exact_missing_items": [
+        "Plans/FinalGUISpec.md",
+        "restore points",
+        "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.",
+        "gap-003",
+        "Canonical records",
+        "Canonical records for this feature set...",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md#Canonical records",
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+        "gap-004"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Layout blocker: packetization/repair needed for orchestrator-facing layout fidelity.",
+      "next_resolution_stage": "Packetizable Layout Repair"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  }
+}

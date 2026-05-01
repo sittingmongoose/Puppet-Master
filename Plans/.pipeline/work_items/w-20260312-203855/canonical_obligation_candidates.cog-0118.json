@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260312-203855",
+  "group_id": "cog-0118",
+  "represented_seed_ids": [
+    "shard-0010-s011"
+  ],
+  "source_shard_ids": [
+    "shard-0010"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "shard-0010-s011"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Follow-up research items (6 canonical): (1) define package/seam/lane/promotion object family canonically; (2) extend requested/effective runtime identity to include account and overseer role; (3) choose one HITL model and one action family;",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Follow-up research items (6 canonical): (1) define package/seam/lane/promotion object family canonically; (2) extend requested/effective runtime identity to include account and overseer role; (3) choose one HITL model and one action family; (4) separate plan structure from mutable runtime state; (5) specify package-based worktree lane pools end-to-end; (6) normalize recovery vocabulary (safe point, restore point, rollback, contamination, retry)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "## Follow-Up Research Items"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L001950-L001980"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}
