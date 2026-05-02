@@ -1,11 +1,11 @@
 {
-  "schema_id": "pm.work_item_meta.v2.1",
+  "schema_id": "pm.work_item_meta.v2.2",
   "work_id": "w-20260312-203855",
   "mode": "migrated",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 35,
-  "status": "ready_for_planning",
+  "status": "active",
   "run_id": null,
   "ledger_shards": {
     "status": "generated_current",
@@ -17,7 +17,8 @@
     "status": "not_checked",
     "report_path": null
   },
-  "next_required_stage": "Coverage Matrix Reducer / Source Gate",
+  "stage_transition_log": [],
+  "next_required_stage": "Ledger Shard Indexer",
   "ledger_obligation_seed_summary": {
     "seed_items_total": 2912,
     "owner_seed_items": 1932,

@@ -1,5 +1,5 @@
 {
-  "schema_id": "pm.resolve_work_item_report.v2.1",
+  "schema_id": "pm.resolve_work_item_report.v2.2",
   "status": "complete",
   "resolved_work_id": "w-20260312-203855",
   "work_id_source": "user_provided",
@@ -37,12 +37,12 @@
     "skip_reason": {
       "skipped": true,
       "worklist_item_count": 1,
-      "largest_file_lines_read": 312,
-      "largest_json_items_read": 25,
+      "largest_file_lines_read": 40,
+      "largest_json_items_read": 9,
       "broad_scan_performed": false,
       "candidate_work_items_inspected_in_detail": 1
     },
     "wave_files_valid": true
   },
-  "next_required_stage": "Ledger Shard Indexer"
+  "next_required_stage": "Legacy Artifact Sanitizer"
 }
