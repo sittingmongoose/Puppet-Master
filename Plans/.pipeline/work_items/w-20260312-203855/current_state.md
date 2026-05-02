@@ -1,18 +1,21 @@
 # Current State
 
-## Open Gaps Reducer / Ready-Routing Gate v2.1 — complete
+## Legacy Artifact Sanitizer v2.2 — complete
 
-- **work_id:** w-20260312-203855
-- **inputs:** `open_gaps.worklist.json` v2.1; **540** `open_gap_candidates.gapgrp-####.json` v2.1; classifier waves **001–012**; `transfer_coverage_source_coverage_report.json` **pass**
-- **outputs:** `open_gaps.json` (`pm.open_gaps.v2.1`); `open_gaps_reducer.worklist.json`; **12** `open_gaps_reducer.wave-00N.json`; `open_gaps.noise.json` (empty `noise_rows`); **540** gaps; **2260** coverage rows preserved
-- **summary:** planning_blockers **255**, fix_backlog **285**; `planning_blocker_route_breakdown` sums to **255**; `unclassified_planning_blockers` **0**
-- **global route:** `open_gaps.next_required_stage` = **Coverage Matrix Reducer / Source Gate** (priority: **path_field_defect** = **2** → `gap-0001`, `gap-0002`; per-gap `path_field_defect` rows aligned to that stage). **Audit Mode** is not the global next stage.
-- **meta:** `status` **ready_for_planning**; top-level **next_required_stage:** Coverage Matrix Reducer / Source Gate
-- **not done:** `reconciliation_plan.json` not written
+- **work_id:** w-20260312-203855 (locked)
+- **root sweep:** `legacy_sanitizer.root_inventory.json` — **1916** active root files before quarantine (immediate children; `legacy_quarantine/` and `ledger_shards/` excluded from sweep list per spec)
+- **files quarantined:** **1912** → `Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/` with timestamped names (`*.20260502T165027Z.*` batch; internal helper JSON also quarantined)
+- **files left active at root:** **8** — `meta.json`, `current_state.md`, `working_ledger.md`, `resolve_work_item_report.json` (v2.2), `legacy_sanitizer.root_inventory.json`, `legacy_sanitizer.worklist.json`, `legacy_sanitizer.wave-001.json`, `legacy_sanitizer_report.json`
+- **root clean after sanitizer:** yes — `legacy_sanitizer_report.json` → `generated_artifacts_left_active`: **[]**
+- **old manifest:** none at root (`old_manifest_status`: absent)
+- **subagents:** used (explore) for multi-family schema sampling; see `legacy_sanitizer.wave-001.json`
+- **next_required_stage:** **Ledger Shard Indexer**
+- **report:** `Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer_report.json`
 
-## Open Gaps Classifier v2.1 — complete (reference)
+### Notes
 
-- **540** candidate files; attestation `f2d5ab35-a6be-4bdc-be17-3efb78e9d37c`
+- Prior v2.1 downstream artifacts (coverage, open gaps, canonical, waves, etc.) were quarantined for a fresh v2.2 pipeline start; **do not** treat quarantined copies as live pipeline authority.
+- `ledger_shards/**` unchanged; `working_ledger.md` unchanged.
 
 WORK_ID LOCK:
 - Active work_id: w-20260312-203855

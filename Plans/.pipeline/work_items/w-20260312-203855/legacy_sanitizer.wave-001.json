@@ -1,25 +1,38 @@
 {
-  "schema_id": "pm.legacy_sanitizer_wave.v2.1",
+  "schema_id": "pm.legacy_sanitizer_wave.v2.2",
+  "wave_id": "001",
   "work_id": "w-20260312-203855",
-  "wave_id": "wave-001",
   "subagent_tasks": [
     {
-      "task_id": "verify-root-post-quarantine",
-      "description": "Non-recursive listing of work-item root; confirm allowlist-only immediate files and directory presence.",
-      "attestation_agent_id": "01ba2994-aced-48e5-bfc1-6310797c8ad4"
+      "task_id": "schema-sample-001",
+      "subagent_type": "explore",
+      "description": "Sample representative root artifacts; read schema_id headers; confirm work_id lock",
+      "assigned_input_boundaries": {
+        "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855/",
+        "max_lines_per_file": 30,
+                "sample_paths": [
+                    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+                    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+                    "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+                    "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.wave-001.json",
+                    "Plans/.pipeline/work_items/w-20260312-203855/resolve_work_item_report.json"
+                ]
+      },
+      "subagent_result_status": "complete",
+      "subagent_agent_id": "9f269a7f-9fb7-4794-a490-6feabad478aa",
+      "notes": "Samples confirmed v2.1 downstream schemas for transfer_coverage/open_gaps/canonical_obligations/coverage_row_inventory_builder_wave; resolve report v2.2 retained; no wrong_work_item refs."
     }
   ],
   "assigned_input_boundaries": {
-    "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855/",
-    "quarantine_timestamp_utc": "20260501T190511Z",
-    "batch_quarantine_executed_by": "audited_python_batch_parent_shell",
-    "files_moved_in_batch": 3123
+    "root_inventory_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.root_inventory.json",
+    "worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.worklist.json",
+    "quarantine_directory": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/"
   },
   "subagent_result_status": "complete",
   "completed_task_count": 1,
   "failed_task_count": 0,
-  "files_assigned": 3123,
-  "files_completed": 3123,
-  "artifact_families_assigned": 7,
-  "artifact_families_completed": 7
+    "files_assigned": 5,
+    "files_completed": 5,
+  "artifact_families_assigned": 5,
+  "artifact_families_completed": 5
 }
