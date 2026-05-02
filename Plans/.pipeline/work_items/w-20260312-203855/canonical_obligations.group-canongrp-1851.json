@@ -1,0 +1,156 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1851",
+  "source_seed_ids_represented": [
+    "seed-1979",
+    "seed-1980",
+    "seed-1981",
+    "seed-1982"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0067",
+    "shard-0068",
+    "shard-0069",
+    "shard-0072"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002566",
+      "obligation_type": "prompt_process_obligation",
+      "canon_label": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "description": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "source_seed_ids": [
+        "seed-1979"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13318-L13318"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "doc_resolution_status": "process_only",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "prompt_process_resolution",
+      "priority": "major",
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-002567",
+      "obligation_type": "prompt_process_obligation",
+      "canon_label": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "description": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "source_seed_ids": [
+        "seed-1980"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13421-L13421",
+        "working_ledger.md:L13491-L13491",
+        "working_ledger.md:L13556-L13556"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "doc_resolution_status": "process_only",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "prompt_process_resolution",
+      "priority": "major",
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-002568",
+      "obligation_type": "prompt_process_obligation",
+      "canon_label": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "description": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "source_seed_ids": [
+        "seed-1981"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13624-L13624",
+        "working_ledger.md:L13708-L13708",
+        "working_ledger.md:L13767-L13767"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "doc_resolution_status": "process_only",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "prompt_process_resolution",
+      "priority": "major",
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-002569",
+      "obligation_type": "prompt_process_obligation",
+      "canon_label": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "description": "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+      "source_seed_ids": [
+        "seed-1982"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14205-L14205",
+        "working_ledger.md:L14252-L14252"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "doc_resolution_status": "process_only",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "prompt_process_resolution",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0960",
+  "source_seed_ids_represented": [
+    "seed-0803",
+    "seed-0804",
+    "seed-0805",
+    "seed-0806",
+    "seed-0807",
+    "seed-0808",
+    "seed-0809",
+    "seed-0810",
+    "seed-0811",
+    "seed-0812"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0019",
+    "shard-0020",
+    "shard-0034",
+    "shard-0037",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0042",
+    "shard-0043"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-001256",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0803"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2003-L2003",
+        "working_ledger.md:L2032-L2032"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001257",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0804"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L3667-L3667"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001258",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0805"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L3839-L3839"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001259",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0806"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6756-L6756",
+        "working_ledger.md:L6787-L6787"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001260",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0807"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7293-L7293",
+        "working_ledger.md:L7324-L7324"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001261",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0808"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7632-L7632",
+        "working_ledger.md:L7662-L7662"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001262",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0809"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7840-L7840",
+        "working_ledger.md:L7888-L7888",
+        "working_ledger.md:L7933-L7933",
+        "working_ledger.md:L7958-L7958",
+        "working_ledger.md:L7996-L7996"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001263",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0810"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8059-L8059",
+        "working_ledger.md:L8114-L8114",
+        "working_ledger.md:L8154-L8154"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001264",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0811"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8236-L8236",
+        "working_ledger.md:L8327-L8327",
+        "working_ledger.md:L8385-L8385"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-001265",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Prompt_Pipeline.md`",
+      "description": "- `Plans/Prompt_Pipeline.md`",
+      "source_seed_ids": [
+        "seed-0812"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8512-L8512"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Prompt_Pipeline.md",
+        "quarantined_placeholder_path:Plans/Prompt_Pipeline.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

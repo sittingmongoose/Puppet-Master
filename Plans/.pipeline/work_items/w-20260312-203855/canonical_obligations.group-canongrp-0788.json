@@ -1,0 +1,301 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0788",
+  "source_seed_ids_represented": [
+    "seed-1169",
+    "seed-1170",
+    "seed-1171",
+    "seed-1172",
+    "seed-1173",
+    "seed-1174",
+    "seed-1175",
+    "seed-1176"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0031",
+    "shard-0032",
+    "shard-0035",
+    "shard-0062",
+    "shard-0070",
+    "shard-0077",
+    "shard-0081",
+    "shard-0082"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000796",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1169"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6189-L6189"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000797",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1170"
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6215-L6215"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000798",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1171"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6895-L6895"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000799",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1172"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12304-L12304",
+        "working_ledger.md:L12349-L12349",
+        "working_ledger.md:L12382-L12382"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000800",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1173"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13836-L13836",
+        "working_ledger.md:L13890-L13890",
+        "working_ledger.md:L13935-L13935"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000801",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1174"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15360-L15360"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000802",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1175"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16009-L16009",
+        "working_ledger.md:L16057-L16057",
+        "working_ledger.md:L16102-L16102",
+        "working_ledger.md:L16125-L16125",
+        "working_ledger.md:L16171-L16171"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000803",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Architecture_Invariants.md`",
+      "description": "- `Plans/Architecture_Invariants.md`",
+      "source_seed_ids": [
+        "seed-1176"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16220-L16220",
+        "working_ledger.md:L16244-L16244",
+        "working_ledger.md:L16285-L16285"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Architecture_Invariants.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Architecture_Invariants.md",
+        "quarantined_placeholder_path:Plans/Architecture_Invariants.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

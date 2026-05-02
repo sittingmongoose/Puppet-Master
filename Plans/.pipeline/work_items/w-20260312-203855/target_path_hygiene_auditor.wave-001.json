@@ -1,0 +1,34 @@
+{
+  "schema_id": "pm.target_path_hygiene_auditor_wave.v2.2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "001",
+  "subagent_tasks": [
+    "verify_work_id_lock",
+    "confirm_root_artifact_inventory",
+    "confirm_no_semantic_json_at_root"
+  ],
+  "assigned_input_boundaries": {
+    "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855/",
+    "excluded_directories": ["legacy_quarantine/", "ledger_shards/"],
+    "semantic_families_expected_when_present": [
+      "canonical_obligations",
+      "transfer_coverage",
+      "open_gaps",
+      "doc_discovery",
+      "reconciliation",
+      "packet",
+      "fidelity",
+      "run_integrity",
+      "completion"
+    ]
+  },
+  "subagent_result_status": "complete",
+  "subagent_attestation_agent_id": "6feb6a68-2e70-41ec-98ab-d5db06a10cb3",
+  "completed_task_count": 3,
+  "failed_task_count": 0,
+  "artifact_paths_assigned": 8,
+  "artifact_paths_completed": 8,
+  "path_fields_assigned": 0,
+  "path_fields_completed": 0,
+  "notes": "Parent agent bounded JSON walk confirmed no obligations/coverage_rows/open_gaps shells; subagent attested inventory and work_id lock."
+}

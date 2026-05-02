@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1487",
+  "source_seed_ids_represented": [
+    "seed-0790"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0010"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002199",
+      "obligation_type": "owner",
+      "canon_label": "- docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/R...",
+      "description": "- docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`",
+      "source_seed_ids": [
+        "seed-0790"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1873-L1873"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Executor_Protocol.md",
+        "placeholder_path_removed:Plans/Progression_Gates.md",
+        "placeholder_path_removed:Plans/Run_Graph_View.md",
+        "placeholder_path_removed:Plans/plan_graph.schema.json",
+        "quarantined_placeholder_path:Plans/Executor_Protocol.md",
+        "quarantined_placeholder_path:Plans/Progression_Gates.md",
+        "quarantined_placeholder_path:Plans/Run_Graph_View.md",
+        "quarantined_placeholder_path:Plans/plan_graph.schema.json"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

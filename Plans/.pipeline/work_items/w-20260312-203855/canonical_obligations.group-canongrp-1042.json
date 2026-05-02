@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1042",
+  "source_seed_ids_represented": [
+    "seed-2090"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0075"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-001546",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalization metadata.",
+      "description": "- `Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalization metadata.",
+      "source_seed_ids": [
+        "seed-2090"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14856-L14856"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Wiring_Matrix.schema.json` currently has no fields for command-kind or normalization metadata."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Wiring_Matrix.schema.json",
+        "quarantined_placeholder_path:Plans/Wiring_Matrix.schema.json"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

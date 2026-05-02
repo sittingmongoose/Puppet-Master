@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1776",
+  "source_seed_ids_represented": [
+    "seed-1426"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0041"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002489",
+      "obligation_type": "owner",
+      "canon_label": "- they do not yet expose the non-provider operational identities that live on top of or beside those credentials",
+      "description": "- they do not yet expose the non-provider operational identities that live on top of or beside those credentials",
+      "source_seed_ids": [
+        "seed-1426"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8069-L8069"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- they do not yet expose the non-provider operational identities that live on top of or beside those credentials"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

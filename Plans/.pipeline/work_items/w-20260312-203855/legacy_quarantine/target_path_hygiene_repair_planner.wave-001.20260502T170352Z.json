@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.target_path_hygiene_repair_planner_wave.v2.2",
+  "wave_id": "001",
+  "work_id": "w-20260312-203855",
+  "run_id": null,
+  "subagent_tasks": [],
+  "assigned_input_boundaries": {
+    "locked_work_id": "w-20260312-203855",
+    "hygiene_report_path": "Plans/.pipeline/work_items/w-20260312-203855/target_path_hygiene_report.json",
+    "upstream_gate": "pm.target_path_hygiene_repair_planner.v2.2 upstream artifact quality gate",
+    "outcome": "blocked_before_repair_scope_no_subagent_tasks_dispatched"
+  },
+  "subagent_result_status": "skipped_not_required",
+  "completed_task_count": 0,
+  "failed_task_count": 0,
+  "finding_ids_assigned": [],
+  "finding_ids_completed": [],
+  "repair_actions_assigned": 0,
+  "repair_actions_completed": 0,
+  "notes": "Subagents not required: invalid_path_findings length 0; not more than 10 findings; no multi-family repair grouping. Wave records gate-only block."
+}

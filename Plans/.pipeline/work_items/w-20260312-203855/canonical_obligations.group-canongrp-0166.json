@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0166",
+  "source_seed_ids_represented": [
+    "seed-0582"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0007"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000166",
+      "obligation_type": "owner",
+      "canon_label": "- **New model pressure:** Missing canonical terms and owners for feature seam, work package, package/seam overseers, ...",
+      "description": "- **New model pressure:** Missing canonical terms and owners for feature seam, work package, package/seam overseers, promotion classes, lane pools, contamination, safe points, and effective execution identity.",
+      "source_seed_ids": [
+        "seed-0582"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1365-L1365"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- **New model pressure:** Missing canonical terms and owners for feature seam, work package, package/seam overseers, promotion classes, lane pools, contamination, safe points, and effective execution identity."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

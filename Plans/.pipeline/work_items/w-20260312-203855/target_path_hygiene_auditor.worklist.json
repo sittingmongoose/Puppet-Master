@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.target_path_hygiene_auditor_worklist.v2.2",
+  "work_id": "w-20260312-203855",
+  "run_id": null,
+  "artifact_tasks": [
+    {
+      "task_id": "tph-audit-001",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "artifact_family": "work_item_meta",
+      "schema_id": "pm.work_item_meta.v2.2",
+      "target_like_field_groups": ["summary_artifact_refs_only_no_obligation_target_paths"],
+      "max_json_items": 25
+    },
+    {
+      "task_id": "tph-audit-002",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/resolve_work_item_report.json",
+      "artifact_family": "resolve_work_item_report",
+      "schema_id": "pm.resolve_work_item_report.v2.2",
+      "target_like_field_groups": ["provenance_paths_only"],
+      "max_json_items": 25
+    },
+    {
+      "task_id": "tph-audit-003",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.root_inventory.json",
+      "artifact_family": "legacy_sanitizer",
+      "schema_id": "pm.legacy_sanitizer_root_inventory.v2.2",
+      "target_like_field_groups": ["inventory_paths_not_live_doc_targets"],
+      "max_json_items": 25
+    },
+    {
+      "task_id": "tph-audit-004",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.worklist.json",
+      "artifact_family": "legacy_sanitizer",
+      "schema_id": "pm.legacy_sanitizer_worklist.v2.2",
+      "target_like_field_groups": ["quarantine_paths_not_live_doc_targets"],
+      "max_json_items": 25
+    },
+    {
+      "task_id": "tph-audit-005",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.wave-001.json",
+      "artifact_family": "legacy_sanitizer",
+      "schema_id": "pm.legacy_sanitizer_wave.v2.2",
+      "target_like_field_groups": ["wave_boundaries_only"],
+      "max_json_items": 25
+    },
+    {
+      "task_id": "tph-audit-006",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer_report.json",
+      "artifact_family": "legacy_sanitizer",
+      "schema_id": "pm.legacy_sanitizer_report.v2.2",
+      "target_like_field_groups": ["report_paths_not_live_doc_targets"],
+      "max_json_items": 25
+    },
+    {
+      "task_id": "tph-audit-007",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+      "artifact_family": "other",
+      "schema_id": null,
+      "target_like_field_groups": ["markdown_state_no_structured_target_fields"],
+      "max_json_items": 25
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  },
+  "audit_scope_note": "No canonical_obligations, transfer_coverage, open_gaps, doc_discovery, reconciliation, packet, fidelity, run_integrity, or completion JSON at active root; target-like semantic fields from pm.target_path_hygiene_auditor.v2.2 list are absent in scanned artifacts."
+}

@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0079",
+  "source_seed_ids_represented": [
+    "seed-2623"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0091"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000079",
+      "obligation_type": "layout_blocker",
+      "canon_label": "- `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now c...",
+      "description": "- `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.",
+      "source_seed_ids": [
+        "seed-2623"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18116-L18116"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "packetizable_layout_repair",
+      "priority": "blocker",
+      "notes": [
+        "placeholder_path_removed:Plans/FinalGUISpec.md",
+        "placeholder_path_removed:Plans/storage-plan.md",
+        "quarantined_placeholder_path:Plans/FinalGUISpec.md",
+        "quarantined_placeholder_path:Plans/storage-plan.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

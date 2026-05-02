@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0241",
+  "source_seed_ids_represented": [
+    "seed-2224"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0082"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000241",
+      "obligation_type": "owner",
+      "canon_label": "- After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requ...",
+      "description": "- After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.",
+      "source_seed_ids": [
+        "seed-2224"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16343-L16343"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_obs:Plans/*.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

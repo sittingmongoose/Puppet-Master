@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0093",
+  "source_seed_ids_represented": [
+    "seed-2437"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0089"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000093",
+      "obligation_type": "missing_doc_reference",
+      "canon_label": "- `gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the acc...",
+      "description": "- `gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.",
+      "source_seed_ids": [
+        "seed-2437"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17601-L17601"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "exact_items": [
+        "- `gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "missing_doc_reference_resolution",
+      "priority": "blocker",
+      "notes": [
+        "placeholder_path_removed:Plans/usage-feature.md",
+        "quarantined_placeholder_path:Plans/usage-feature.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

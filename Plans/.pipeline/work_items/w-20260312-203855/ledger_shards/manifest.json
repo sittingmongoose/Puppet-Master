@@ -1,16 +1,16 @@
 {
-  "schema_id": "pm.ledger_shards_manifest.v2.1",
+  "schema_id": "pm.ledger_shards_manifest.v2.2",
   "work_id": "w-20260312-203855",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
   "source_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
-  "created_at_utc": "2026-05-01T19:25:00Z",
-  "total_lines": 18244,
+  "source_line_count": 18244,
   "shard_line_size": 200,
+  "shard_count": 92,
   "coverage": {
     "first_line": 1,
     "last_line": 18244,
-    "gaps": [],
-    "overlaps": []
+    "has_gaps": false,
+    "has_overlaps": false
   },
   "shards": [
     {
@@ -19,7 +19,7 @@
       "start_line": 1,
       "end_line": 200,
       "line_count": 200,
-      "sha256": "e7d35d7d98f10c4bc683b0712c873382afd1c8cd978b9d9986c9e63f72d28a4d"
+      "sha256": "dd5a38b9881b1462a53d22712c893efa9f6cad51d87643e8f1712eca24d98a62"
     },
     {
       "shard_id": "shard-0002",
@@ -27,7 +27,7 @@
       "start_line": 201,
       "end_line": 400,
       "line_count": 200,
-      "sha256": "c4d9ec902d6863a81beb1b309026fa3c79e4a578ff2cf4f9c6171587d6f98ee4"
+      "sha256": "76de620f38f8f5ddc7d303fa8ed7151f1be9989d428fcfc272e463dc5a87b19e"
     },
     {
       "shard_id": "shard-0003",
@@ -35,7 +35,7 @@
       "start_line": 401,
       "end_line": 600,
       "line_count": 200,
-      "sha256": "d43fd624ef6e14f53effeabe7d65dde5571e1b58c4e2e9d7649a8c3054a93320"
+      "sha256": "4513715a20322079499ddff39a0f551a7461e95a77d99b77ea63f09a1fdf662c"
     },
     {
       "shard_id": "shard-0004",
@@ -43,7 +43,7 @@
       "start_line": 601,
       "end_line": 800,
       "line_count": 200,
-      "sha256": "7ab7d1528a89b0dfc86e0a9b3602220aa1a2754d735cd47a587d5e736193b46d"
+      "sha256": "91ed12f29482022d9ebf7afbe3cd6018ee2cd720374653166d284559cd0b5799"
     },
     {
       "shard_id": "shard-0005",
@@ -51,7 +51,7 @@
       "start_line": 801,
       "end_line": 1000,
       "line_count": 200,
-      "sha256": "b1d95d9365b41e73f1cf7241619d8a8c35c8a451cc3edbcf0d44805155b355aa"
+      "sha256": "136471e5564be09cfb1bb7cfa2b3005e19035944dbea3f58fad9905fbc6d8d5e"
     },
     {
       "shard_id": "shard-0006",
@@ -59,7 +59,7 @@
       "start_line": 1001,
       "end_line": 1200,
       "line_count": 200,
-      "sha256": "ff254f60e09f8f67312891de3672bd3bb6a30cce530adb27bc6c32f1f3c9e443"
+      "sha256": "f176b149c663834d279c9afb37d5b8b7f441e2796de0bfb2881df0d0ccbd05ab"
     },
     {
       "shard_id": "shard-0007",
@@ -67,7 +67,7 @@
       "start_line": 1201,
       "end_line": 1400,
       "line_count": 200,
-      "sha256": "987fa21dfc2066e0b5686e765f8de093612ac7ecf1485aa9384e5f5ec9275772"
+      "sha256": "b55c9d00d93311bc0f86c44f2c6c8f376b569f43ef03edadebe32209e5ccea43"
     },
     {
       "shard_id": "shard-0008",
@@ -75,7 +75,7 @@
       "start_line": 1401,
       "end_line": 1600,
       "line_count": 200,
-      "sha256": "173cb1982a29c7e9d852a33f62904ab79cf3725744c7c4dba842f44d55413842"
+      "sha256": "c26aec8fa4b95e4821d766db808864497b8c1275c9327fcc1fd3c09d6f706ac5"
     },
     {
       "shard_id": "shard-0009",
@@ -83,7 +83,7 @@
       "start_line": 1601,
       "end_line": 1800,
       "line_count": 200,
-      "sha256": "3b29de3ba252d77007d5ee4f95b2c35dab9958cec5074e090d1b064e009789d4"
+      "sha256": "21b8bea00ef042f0bf35cee664c3fd4f1ddc37971a31b5c7cece97611f09578f"
     },
     {
       "shard_id": "shard-0010",
@@ -91,7 +91,7 @@
       "start_line": 1801,
       "end_line": 2000,
       "line_count": 200,
-      "sha256": "36a15d28d3c9707c2941712bbdd146bc972d85fa5327b71bf2b0b9cfc624bef2"
+      "sha256": "2924cd61011f0d749f5eb631356c9121817f5f5f27bee8a478933ea6ff4be7a2"
     },
     {
       "shard_id": "shard-0011",
@@ -99,7 +99,7 @@
       "start_line": 2001,
       "end_line": 2200,
       "line_count": 200,
-      "sha256": "2484e96913d5f17a38a99d78ff36e4a61dc6c5f6448bbb9ff43d7a6c35820753"
+      "sha256": "8a1c8c682741b39c0df8d76821e432a3054d008fb02b0517d41d021f7aacc45f"
     },
     {
       "shard_id": "shard-0012",
@@ -107,7 +107,7 @@
       "start_line": 2201,
       "end_line": 2400,
       "line_count": 200,
-      "sha256": "bf5dcdaba98c8faee11ea321a684ead6159175c91d8eb22757243908ae99ba27"
+      "sha256": "8842a2e56825dc89efd6b4b2b324f0a0d55daf184c42e867a033e066bbdd80f8"
     },
     {
       "shard_id": "shard-0013",
@@ -115,7 +115,7 @@
       "start_line": 2401,
       "end_line": 2600,
       "line_count": 200,
-      "sha256": "adaafbeeab2ae4ccd045d5b6598c3eb32baa8631dde4c3d765786c4622555fbc"
+      "sha256": "9becec162ccd964dfd7662550f9ae9d6205550ec475fa92e158cf9d46a168c97"
     },
     {
       "shard_id": "shard-0014",
@@ -123,7 +123,7 @@
       "start_line": 2601,
       "end_line": 2800,
       "line_count": 200,
-      "sha256": "37b9aba549cf0f53bec1b0d60ba687eeac7d7a9db384e05b9cb57ed3ed0abb4e"
+      "sha256": "7ff4ea07a2fa7b1d2657e8eb51d6381f281fc46adb36343ee2d2caedddc1e283"
     },
     {
       "shard_id": "shard-0015",
@@ -131,7 +131,7 @@
       "start_line": 2801,
       "end_line": 3000,
       "line_count": 200,
-      "sha256": "4446061ad6de90d62029a0904d46caef9c0a04d8fde57094459ec0b6966713d6"
+      "sha256": "ef150e18669ca7677081c4b6778a141add5db6eb08027d10d8d660b11b377cba"
     },
     {
       "shard_id": "shard-0016",
@@ -139,7 +139,7 @@
       "start_line": 3001,
       "end_line": 3200,
       "line_count": 200,
-      "sha256": "22f29892f6318b050f50463fe9591be97566f8d2ef6815ed51551fb5cee37cb8"
+      "sha256": "86b6505f6f738b07f5b880b4417e66ac9260044c69dc3002aa0ffda11395628c"
     },
     {
       "shard_id": "shard-0017",
@@ -147,7 +147,7 @@
       "start_line": 3201,
       "end_line": 3400,
       "line_count": 200,
-      "sha256": "4a10ad8c8fa882742922fd69bf477066aafab57038e615a3e936efe480856d32"
+      "sha256": "2df53299a5ac0fe4f147761a7d0778229929068d35f235e9781737898b9061a4"
     },
     {
       "shard_id": "shard-0018",
@@ -155,7 +155,7 @@
       "start_line": 3401,
       "end_line": 3600,
       "line_count": 200,
-      "sha256": "f234e72cd40ae780771aa5441573cfa4b8af23c0b56bdbe914f1ed4537b2db31"
+      "sha256": "4fef9b9c4954447b963b72f0dd060e7157c5eeca1aa92fabd43c3d082f475b29"
     },
     {
       "shard_id": "shard-0019",
@@ -163,7 +163,7 @@
       "start_line": 3601,
       "end_line": 3800,
       "line_count": 200,
-      "sha256": "6dfb4c6995568078c84453c147a84745fd8a2aad4f17ab396f8fe5eb9e14f2d8"
+      "sha256": "d4fe87a8db57bcc65f8de4c97bdfaa9610ec820903b5a60194411d2d87173dfe"
     },
     {
       "shard_id": "shard-0020",
@@ -171,7 +171,7 @@
       "start_line": 3801,
       "end_line": 4000,
       "line_count": 200,
-      "sha256": "3004da438c6e0a475ee11ed46de5bab361300e9f19a3f5657271bdddce4c46f7"
+      "sha256": "e3185521db6b5aace9fb620c1379d18c028f41fc632b404227b095e61993c2db"
     },
     {
       "shard_id": "shard-0021",
@@ -179,7 +179,7 @@
       "start_line": 4001,
       "end_line": 4200,
       "line_count": 200,
-      "sha256": "18bbc76ae0f221f5caa5aae72f12d33e35b733e0fe3a3fb58624909de345a6a1"
+      "sha256": "f3a2fcf7aed3fd0335691580da48e61d9551c982cadef3356f4484e7ccb7c5b8"
     },
     {
       "shard_id": "shard-0022",
@@ -187,7 +187,7 @@
       "start_line": 4201,
       "end_line": 4400,
       "line_count": 200,
-      "sha256": "7f8dcd358b95d7efbd43ef446659616130b81afb8d4831e7e9a5689161d4d65e"
+      "sha256": "4679a6122f44652ec2b172f1f4c21dcfa78a51d5d9edc4c277152a54c8e412ca"
     },
     {
       "shard_id": "shard-0023",
@@ -195,7 +195,7 @@
       "start_line": 4401,
       "end_line": 4600,
       "line_count": 200,
-      "sha256": "cb98b4021d89f2af43e5e554a254bf6d0c2efa3604aab8e7735d898b18100995"
+      "sha256": "b3e403c0c031e1954c7fb2333146df2509401d48d5b8e8e009dbdac6088a3b2a"
     },
     {
       "shard_id": "shard-0024",
@@ -203,7 +203,7 @@
       "start_line": 4601,
       "end_line": 4800,
       "line_count": 200,
-      "sha256": "a6a02a0b9a28cc747c90810abd1e6507d0c25fd75d1b8d5b606fb011b03ec508"
+      "sha256": "ac6f28e7403d2b1ef3d9e5cd67de928ef746c237bee22c8099f152d2df329956"
     },
     {
       "shard_id": "shard-0025",
@@ -211,7 +211,7 @@
       "start_line": 4801,
       "end_line": 5000,
       "line_count": 200,
-      "sha256": "9d8fbf4cfc53206f5e65846e94313706d3d908e6fba9d92f7d9cd62c886178a9"
+      "sha256": "71628220849b5a6ecbb2e5aff9ae8cd7a263a853a3140eb061668e08e256056d"
     },
     {
       "shard_id": "shard-0026",
@@ -219,7 +219,7 @@
       "start_line": 5001,
       "end_line": 5200,
       "line_count": 200,
-      "sha256": "a3a3c6fd35d57d98187d1fcc5bd9a9a800abfd30de8f3088326778d47f8cbb68"
+      "sha256": "3a2d2c28f3904332827d86ff56e63894261c87148ceaeec04b64d6ec7d6e5827"
     },
     {
       "shard_id": "shard-0027",
@@ -227,7 +227,7 @@
       "start_line": 5201,
       "end_line": 5400,
       "line_count": 200,
-      "sha256": "5087afc92098c98599b06b437f8774971c798e94b734d92a88cc19e08541596c"
+      "sha256": "78f997eacc13854023124f2ccf490f47dbb5b1a8f8e2a28f39861e14c9ab5f0a"
     },
     {
       "shard_id": "shard-0028",
@@ -235,7 +235,7 @@
       "start_line": 5401,
       "end_line": 5600,
       "line_count": 200,
-      "sha256": "664e992d938887f4cf9e91e705513126f3b13ea43def8e448c5b27d3e7860673"
+      "sha256": "6d83c74d4d2767746e0fe609470c88202a736936176644e3bb7c8a86e2676a5b"
     },
     {
       "shard_id": "shard-0029",
@@ -243,7 +243,7 @@
       "start_line": 5601,
       "end_line": 5800,
       "line_count": 200,
-      "sha256": "305d4ad8368bda74d1ed6a4385a0803cefb186aaeaedc45a5e771562e0968b59"
+      "sha256": "6f82f75eb9761f5d0246ae2025e85c0211eed9ddc5ac87c5cb8db10e91997b7c"
     },
     {
       "shard_id": "shard-0030",
@@ -251,7 +251,7 @@
       "start_line": 5801,
       "end_line": 6000,
       "line_count": 200,
-      "sha256": "dab43e0e4ed0687a4f44ba0fbf793b6e67caf86bfd230739abc72d313cf5d6a3"
+      "sha256": "89603c0b247309013588ec6f13b302eb844630231a0fb9686961ae9426461ce7"
     },
     {
       "shard_id": "shard-0031",
@@ -259,7 +259,7 @@
       "start_line": 6001,
       "end_line": 6200,
       "line_count": 200,
-      "sha256": "3e011a7981376ea9590e81c6287f75da37dcd1d6ae88d4f277041083b34e850a"
+      "sha256": "79d4a9f32afc04cbaa86e42abb66bd08593ad338584cd9f832c4b49caa8be940"
     },
     {
       "shard_id": "shard-0032",
@@ -267,7 +267,7 @@
       "start_line": 6201,
       "end_line": 6400,
       "line_count": 200,
-      "sha256": "5c9d9fcff2719e2aca0b0c096f5ee1d6f0fc601269e43d0c0d74b3de99a38449"
+      "sha256": "724cf0c74139db5a92b1702f54e5fd9fa9e97b9590204fa1554aaa8be7b5eed3"
     },
     {
       "shard_id": "shard-0033",
@@ -275,7 +275,7 @@
       "start_line": 6401,
       "end_line": 6600,
       "line_count": 200,
-      "sha256": "7f4b53479f64881a98025f5d509375c7155b6d3a8b15a72b7e8c133b690018db"
+      "sha256": "1e989535f93a26855ed79b9545cd5cf657e857caae732236101c643dc372b759"
     },
     {
       "shard_id": "shard-0034",
@@ -283,7 +283,7 @@
       "start_line": 6601,
       "end_line": 6800,
       "line_count": 200,
-      "sha256": "16a3988581a029bf6e1da2d6866465777136aab1239f6eea3cc6b1a0d19295f8"
+      "sha256": "4a65739541213bc5a20fe9a9de5a0e08d97d007c8a7d98b8cea1b75521c55ac8"
     },
     {
       "shard_id": "shard-0035",
@@ -291,7 +291,7 @@
       "start_line": 6801,
       "end_line": 7000,
       "line_count": 200,
-      "sha256": "142b323997636b0776a41bfc56e185a5e888c91017f194f899862281250dd29e"
+      "sha256": "68f9f839d0c24fd313a20afd68f4888092865d02f1d46d47c0d1058cb58dc8b7"
     },
     {
       "shard_id": "shard-0036",
@@ -299,7 +299,7 @@
       "start_line": 7001,
       "end_line": 7200,
       "line_count": 200,
-      "sha256": "72d9490ec52c093ca86717b5d39f473f507c69bc754f0d096e0b10d22c572e76"
+      "sha256": "c4299185a6eb8536fc6258dc2a0c7a79deed724acdd74c4e57e546fde53e9b8f"
     },
     {
       "shard_id": "shard-0037",
@@ -307,7 +307,7 @@
       "start_line": 7201,
       "end_line": 7400,
       "line_count": 200,
-      "sha256": "866b05f745507fa7afdffe0d4273ecd7bd39a1dd906116fc4f5258d29c0970be"
+      "sha256": "762c6b9a8fc1a963dcc52d97b6f5e3e404bc14f128e5d39c7b72a05eef4b7ed1"
     },
     {
       "shard_id": "shard-0038",
@@ -315,7 +315,7 @@
       "start_line": 7401,
       "end_line": 7600,
       "line_count": 200,
-      "sha256": "22631e04059e76af54844d24cbf106af20dcf840450f645ff43a7a34da2e992e"
+      "sha256": "8e7451c5c91d71a1c3ea98a44f6654ca937e24ad20853205e448cc25baf67594"
     },
     {
       "shard_id": "shard-0039",
@@ -323,7 +323,7 @@
       "start_line": 7601,
       "end_line": 7800,
       "line_count": 200,
-      "sha256": "b2192d7192eae569143df34bb42f5c821c2a9a9d3ca48e2b7d6896ee5d1ba14b"
+      "sha256": "26c8900da5b3c87d1440e4f250b74e1da608d3db6861f9ec3b14743a1c748bf6"
     },
     {
       "shard_id": "shard-0040",
@@ -331,7 +331,7 @@
       "start_line": 7801,
       "end_line": 8000,
       "line_count": 200,
-      "sha256": "af3b7d14cd68806eccc8f6b1122cbe03195bf80fc86f21d0f866cf5160a48070"
+      "sha256": "504dc373f8471a990ee81a58445496caf1b3218a34317a1fdc308751c64057c1"
     },
     {
       "shard_id": "shard-0041",
@@ -339,7 +339,7 @@
       "start_line": 8001,
       "end_line": 8200,
       "line_count": 200,
-      "sha256": "2923864bd574a8ddc79297ece6562e6700d036738251a86f8980e62c736d2dcd"
+      "sha256": "7de72a17ebaaf4538a6fdda7739dd260763a068926a606773cbe2001fc79b61c"
     },
     {
       "shard_id": "shard-0042",
@@ -347,7 +347,7 @@
       "start_line": 8201,
       "end_line": 8400,
       "line_count": 200,
-      "sha256": "0b5bfe607376e880d61f2f2ab248e0577f5bb7564b46bd73326b819502ef0eee"
+      "sha256": "7f5344a0eac1f094db93dfee393e2512d6da651eb40729e835d7a2393bbe70c6"
     },
     {
       "shard_id": "shard-0043",
@@ -355,7 +355,7 @@
       "start_line": 8401,
       "end_line": 8600,
       "line_count": 200,
-      "sha256": "3e380180b7e59da2ad9df493cc4ac3fe630f132ed7b49f688dd1ddaf713489f7"
+      "sha256": "dcf2bd7a9d0872c3d772e650a7847f4c7b5d24f0ffc3bb8b4fe1e4758ad877a2"
     },
     {
       "shard_id": "shard-0044",
@@ -363,7 +363,7 @@
       "start_line": 8601,
       "end_line": 8800,
       "line_count": 200,
-      "sha256": "8b7f20d537b777ace8efcd20821cf36027a4da0e299293721c1d7291a22df45f"
+      "sha256": "2956067b02e0991df306460dba083a47fbc8e48bad70a01329737f60d814aaed"
     },
     {
       "shard_id": "shard-0045",
@@ -371,7 +371,7 @@
       "start_line": 8801,
       "end_line": 9000,
       "line_count": 200,
-      "sha256": "f17ae72d8ee9ad891e17d9ddc1e9fa231e229b04748d6a5a57e893f9889e9c6f"
+      "sha256": "af6e347be665d792008b75d645c443c9f7632b4408b7af91e6821e4454424610"
     },
     {
       "shard_id": "shard-0046",
@@ -379,7 +379,7 @@
       "start_line": 9001,
       "end_line": 9200,
       "line_count": 200,
-      "sha256": "62fa421d78eb2d176064576b396cfd937e289439e89e5702d1f530bd23b4feee"
+      "sha256": "a489d9d71112ae3280ca1efb1c734e2fdd592c5c759ccd7e11a2a5318d008855"
     },
     {
       "shard_id": "shard-0047",
@@ -387,7 +387,7 @@
       "start_line": 9201,
       "end_line": 9400,
       "line_count": 200,
-      "sha256": "15d48b186b04c27c98042ce227cc83faac91f5e43994bc1845ca907ecbd4699b"
+      "sha256": "c166928d5f9ae98f6c7d0cf38ce46524d32835fb5eaf7963bf620c26330d7832"
     },
     {
       "shard_id": "shard-0048",
@@ -395,7 +395,7 @@
       "start_line": 9401,
       "end_line": 9600,
       "line_count": 200,
-      "sha256": "9c63207ee8b43b52db10f5946ad40db80035570a38128f4a96b86b12e61d8adc"
+      "sha256": "1cff1c10fe27ec9ffe80ee84e5ecae773e0dcb3a978c7150589329011c6d0b15"
     },
     {
       "shard_id": "shard-0049",
@@ -403,7 +403,7 @@
       "start_line": 9601,
       "end_line": 9800,
       "line_count": 200,
-      "sha256": "503c9ecde9ebd1f2fba25dbc681d961e4d3f49da55ec07858fe7952e03b2828c"
+      "sha256": "ab5457e449044b13233c909a3554c4fcb58a8ef68f4f0b63960bebafac71f371"
     },
     {
       "shard_id": "shard-0050",
@@ -411,7 +411,7 @@
       "start_line": 9801,
       "end_line": 10000,
       "line_count": 200,
-      "sha256": "006e5c5828a5ca2f5f2fb12d9f104bfe85ff1e02471186b0bac0a1a777eda55d"
+      "sha256": "22825bfefca95d45b8fc48907d52c4b5ce38469cf4d91898319be2b51f439f25"
     },
     {
       "shard_id": "shard-0051",
@@ -419,7 +419,7 @@
       "start_line": 10001,
       "end_line": 10200,
       "line_count": 200,
-      "sha256": "cb0e760bc89fa9cf6c21f878b49903c9cca5d855e30868a49f65bd63c1aa2353"
+      "sha256": "8a5761d324d1401aeff3ddc58120f451f151693ac980bde64a80e333a9a7c69c"
     },
     {
       "shard_id": "shard-0052",
@@ -427,7 +427,7 @@
       "start_line": 10201,
       "end_line": 10400,
       "line_count": 200,
-      "sha256": "106b417032e3d543e96503f85887c09439f26b3ebcf723986d77d269f1e645c8"
+      "sha256": "bfe2899647d0537c57a65cb6c4d3930a5d5a70b6e0bcf6590b66c30d4fff7fd7"
     },
     {
       "shard_id": "shard-0053",
@@ -435,7 +435,7 @@
       "start_line": 10401,
       "end_line": 10600,
       "line_count": 200,
-      "sha256": "97caf9b37cfc2199309f2377c3457629827aa54bba166312c628aa75f15bf36c"
+      "sha256": "bfec5bf21b1c2fba1b08e7265063de24b1fcd1462eac7ec1d452f94c4af8b3f8"
     },
     {
       "shard_id": "shard-0054",
@@ -443,7 +443,7 @@
       "start_line": 10601,
       "end_line": 10800,
       "line_count": 200,
-      "sha256": "1fc5c260ce080c2947549570129274304033fce2aec2fa63bc48b5cbb2da6bdd"
+      "sha256": "c542b18543984f8df4cf86e9d9937da53e2f3292e8fd6b7008049814fd4899aa"
     },
     {
       "shard_id": "shard-0055",
@@ -451,7 +451,7 @@
       "start_line": 10801,
       "end_line": 11000,
       "line_count": 200,
-      "sha256": "9fb8f428b852adfac7c8505afe09ec5943fba2649aad0fa9a5dc3a0e74ea3295"
+      "sha256": "8baa9e9d1e5644e64acc1b153803739d815b925dc95180402ed1f7b010466719"
     },
     {
       "shard_id": "shard-0056",
@@ -459,7 +459,7 @@
       "start_line": 11001,
       "end_line": 11200,
       "line_count": 200,
-      "sha256": "a3de22f8cb818a6e79581f56633e14a68ce7d86a80a67977ab5aa2e855965ab5"
+      "sha256": "c052daeaeda393f46b047b63c7d000fd8a683756431c4645081e003c84fa8f23"
     },
     {
       "shard_id": "shard-0057",
@@ -467,7 +467,7 @@
       "start_line": 11201,
       "end_line": 11400,
       "line_count": 200,
-      "sha256": "11102d9fd5f89b6d7992b7f5727d83226c03ba0e1fd0f387f37d516f95df8d04"
+      "sha256": "bee77374c727e693cb1633aced933a4eebbba91aeb9e14200f46e869056b24ef"
     },
     {
       "shard_id": "shard-0058",
@@ -475,7 +475,7 @@
       "start_line": 11401,
       "end_line": 11600,
       "line_count": 200,
-      "sha256": "92780801a3b60fd0d344ca302cc310f937e85faed7a589fa5e35e14a5354ef51"
+      "sha256": "a5fe9747defbd45f538e261cb74b52170ef085e97d94f4cbaa35c05bcf6644b4"
     },
     {
       "shard_id": "shard-0059",
@@ -483,7 +483,7 @@
       "start_line": 11601,
       "end_line": 11800,
       "line_count": 200,
-      "sha256": "0e1bbad31aebfba1f71dcae49c7071270a906eae8d97a7f5462aad9453914393"
+      "sha256": "213b24cba3b515b467fd3be8a3ce9b613d3b9c4ca5bd8b803c212c823aa185a0"
     },
     {
       "shard_id": "shard-0060",
@@ -491,7 +491,7 @@
       "start_line": 11801,
       "end_line": 12000,
       "line_count": 200,
-      "sha256": "b43dd386eaac45542637769d0b2179747803b79a667c5d1778c4f5fe8289da0b"
+      "sha256": "be98a53f660ad01798509584f6b118ebc42096701f74d90ee82c94fc0c2d0566"
     },
     {
       "shard_id": "shard-0061",
@@ -499,7 +499,7 @@
       "start_line": 12001,
       "end_line": 12200,
       "line_count": 200,
-      "sha256": "ec3cd72a8230408ee077a0430622a49f6627dfbd857c8b8618e709faabe0a1be"
+      "sha256": "e9a4cf6d4bd48790e41ed3fbac612582ddac7addc61f341b704a7426983420c0"
     },
     {
       "shard_id": "shard-0062",
@@ -507,7 +507,7 @@
       "start_line": 12201,
       "end_line": 12400,
       "line_count": 200,
-      "sha256": "16c2e617e7a15e6b4b6297e3da66ba438b7d85310c995efcdcafe1d843ac0476"
+      "sha256": "b8bf3b775f8ed47e92eed78312a1eda9b4b7554307ecac189d9d7d3ff15969d9"
     },
     {
       "shard_id": "shard-0063",
@@ -515,7 +515,7 @@
       "start_line": 12401,
       "end_line": 12600,
       "line_count": 200,
-      "sha256": "0a535ca1982401a83f307693a7a408be21c3d76b6cf7f8a30986929940110dc3"
+      "sha256": "9df3efdc714dffff4554035f444b35a5130a22cbf49331754cf51f834cecc921"
     },
     {
       "shard_id": "shard-0064",
@@ -523,7 +523,7 @@
       "start_line": 12601,
       "end_line": 12800,
       "line_count": 200,
-      "sha256": "60a0669a7c2acada2939051558bf0b0b4b1c4d66448bc9f557562e59fe640ab7"
+      "sha256": "19178521364e437ebf45ba88f65a638e3dfcb9391a43b4c94b28ced0e21130ba"
     },
     {
       "shard_id": "shard-0065",
@@ -531,7 +531,7 @@
       "start_line": 12801,
       "end_line": 13000,
       "line_count": 200,
-      "sha256": "adf1271a5558e9fb21d7cde7d89886be2ef4db549f6d65219f1e9e88c0f956b9"
+      "sha256": "e5e13c9dedf754d811be36b28b23e3caff9ccffc43dd0dbe0ef22249965ff343"
     },
     {
       "shard_id": "shard-0066",
@@ -539,7 +539,7 @@
       "start_line": 13001,
       "end_line": 13200,
       "line_count": 200,
-      "sha256": "44b0bb2d7c822a041aba1db0d25febd4db261d1d0ad4d1e84c45db7caeff4c84"
+      "sha256": "60ed905ae493bfa0dd1c753e6df12b6e1d9ad76c1f60beec5ce797f97b1af25e"
     },
     {
       "shard_id": "shard-0067",
@@ -547,7 +547,7 @@
       "start_line": 13201,
       "end_line": 13400,
       "line_count": 200,
-      "sha256": "ae58e79822417db80c93d09e1df13181cc15228d5bf56e7aaa7b7523645ae3e5"
+      "sha256": "f6958f12033bc97c9556c71eb38c9faf48a2a94e8d86706206f08d3487283e74"
     },
     {
       "shard_id": "shard-0068",
@@ -555,7 +555,7 @@
       "start_line": 13401,
       "end_line": 13600,
       "line_count": 200,
-      "sha256": "af3bff55a6d742478922b1734183701b40161228907d1de2d4971819c7ae3e31"
+      "sha256": "e0b2fc8d1ecc26722b559911b2939b678e71d9fdd171f60bc2eab3e496b3985d"
     },
     {
       "shard_id": "shard-0069",
@@ -563,7 +563,7 @@
       "start_line": 13601,
       "end_line": 13800,
       "line_count": 200,
-      "sha256": "17437a8561e2758684c13b6ff72a17ab32c5f00b6aa954b1afcb281f95cc4737"
+      "sha256": "ea00f5c33eab85053e0f45c39f8d0d0ca9573e88744788188fc6eb78a262243c"
     },
     {
       "shard_id": "shard-0070",
@@ -571,7 +571,7 @@
       "start_line": 13801,
       "end_line": 14000,
       "line_count": 200,
-      "sha256": "4d5b44bb4ef800dd51439aa9758814841519b93840f30c902ef86d9dc2eb4321"
+      "sha256": "b6056b8bc48fd5f01167005e1008ed94e8a7d86ee909edfe414d59e357b900f9"
     },
     {
       "shard_id": "shard-0071",
@@ -579,7 +579,7 @@
       "start_line": 14001,
       "end_line": 14200,
       "line_count": 200,
-      "sha256": "00782e50c57038a1456411c55bdb0d5a8aecb0e580f10827cf7e732e6a919a8a"
+      "sha256": "7b23f869a70a5def14618d4fff2022884f0319138e2256fb41c952c2f3ec0241"
     },
     {
       "shard_id": "shard-0072",
@@ -587,7 +587,7 @@
       "start_line": 14201,
       "end_line": 14400,
       "line_count": 200,
-      "sha256": "674bf7bc7865dfe3a093327ddce22a674f4c3fb452ff022af58b456df91078cf"
+      "sha256": "69079f0d1432ee8f95f066416b65ce3a6094562b1e1d3e7414515b20a4941a12"
     },
     {
       "shard_id": "shard-0073",
@@ -595,7 +595,7 @@
       "start_line": 14401,
       "end_line": 14600,
       "line_count": 200,
-      "sha256": "cc226e40d5211108ebb8546f27a157a452b34ad901d34142443d9b67e31aa202"
+      "sha256": "beb7d4f9fab8cbb8a381ceb08ddbfcd3a768b17cc19195bce1099865aa8b450b"
     },
     {
       "shard_id": "shard-0074",
@@ -603,7 +603,7 @@
       "start_line": 14601,
       "end_line": 14800,
       "line_count": 200,
-      "sha256": "9d2ff4c63c7697b5522da6d24259efb275e21721ea7b3a1f77924a2a0c83542f"
+      "sha256": "4a190733e426c06d82678efffe1f80c06eb0786bb80592f7a0ae9b617bc47fce"
     },
     {
       "shard_id": "shard-0075",
@@ -611,7 +611,7 @@
       "start_line": 14801,
       "end_line": 15000,
       "line_count": 200,
-      "sha256": "73c11f9c7011d9d4ff8d9bd13f0ac89f0b5fed31ac7a98fc1a10b9468d58d019"
+      "sha256": "43cab8e8ee10f0cb1749452bb461b9ee8d47b939aa2b1d407f2db791f8ec7161"
     },
     {
       "shard_id": "shard-0076",
@@ -619,7 +619,7 @@
       "start_line": 15001,
       "end_line": 15200,
       "line_count": 200,
-      "sha256": "583d35ea3872217219ffc8a3307e9659a86439eb71a70b292bc777d0811c1ff3"
+      "sha256": "a428d226e756950a24d18c73257823a150f11e66d86fd8f7b6aff491606bd9b5"
     },
     {
       "shard_id": "shard-0077",
@@ -627,7 +627,7 @@
       "start_line": 15201,
       "end_line": 15400,
       "line_count": 200,
-      "sha256": "76705587e46bfc8e59e1980691493056b32791fc6e2c689949270377d21ac547"
+      "sha256": "5d6b310f12b6f73f65ae3e8afebaae5487a6b95307e439527f08a8eaef85ef9b"
     },
     {
       "shard_id": "shard-0078",
@@ -635,7 +635,7 @@
       "start_line": 15401,
       "end_line": 15600,
       "line_count": 200,
-      "sha256": "169344e3991ef35f75e91eb998e91b5bd41d8bd03cce748651ebb33d367037cd"
+      "sha256": "53624292a942ee54484fa9863f39cb408787b7bcb1db1051e9f15b1ba9d19ac3"
     },
     {
       "shard_id": "shard-0079",
@@ -643,7 +643,7 @@
       "start_line": 15601,
       "end_line": 15800,
       "line_count": 200,
-      "sha256": "4a5ea2669842d6b7df79a89c8bcd73ccd359757bf69a945234ec6613f69d158f"
+      "sha256": "3f2f96979186b8180bd6c23560d563d291e17a9496addb34033d18b0f3f6de91"
     },
     {
       "shard_id": "shard-0080",
@@ -651,7 +651,7 @@
       "start_line": 15801,
       "end_line": 16000,
       "line_count": 200,
-      "sha256": "166db27288bdd32a1a20b9e64531737ba610b261e030c20ff0744914c513c266"
+      "sha256": "27693b5fb0ee61d8faae05b0f2ee5c3add53f04e036ef410c034f15c402dc65a"
     },
     {
       "shard_id": "shard-0081",
@@ -659,7 +659,7 @@
       "start_line": 16001,
       "end_line": 16200,
       "line_count": 200,
-      "sha256": "042b068ff0f0c5415e7b309ee1af77a08da69d7f054c81654b104bdc1bd91d1e"
+      "sha256": "a9e039035c4c1493fb98eddd3a35774a67c79c870b516ce0da402e92c4c5fc23"
     },
     {
       "shard_id": "shard-0082",
@@ -667,7 +667,7 @@
       "start_line": 16201,
       "end_line": 16400,
       "line_count": 200,
-      "sha256": "64ae35cec0289a3b47c98c1b34dce9bee9987a04fa585d8cd644af4e0cd449fd"
+      "sha256": "b5ac53da91fec29f90ebf622cf3b293624d9e93b1ae6e32c6f50cc07dc4d73d1"
     },
     {
       "shard_id": "shard-0083",
@@ -675,7 +675,7 @@
       "start_line": 16401,
       "end_line": 16600,
       "line_count": 200,
-      "sha256": "9cb287ca279c80fdb75b023cca3885b49bb937dd13bcf8308bd33c05b2506e29"
+      "sha256": "65538027ea6d2f24d7965cd0583e863844d5b004528a01b1db1b64c9014500e8"
     },
     {
       "shard_id": "shard-0084",
@@ -683,7 +683,7 @@
       "start_line": 16601,
       "end_line": 16800,
       "line_count": 200,
-      "sha256": "6e3923e2e79ffcb83fbbeec94ed5eee684f41948eb3e4285cb0547a7c8fdbd88"
+      "sha256": "fa1137dd87d055b9d5801873ce463276eed0014bff58b130f4d8db845d5a078d"
     },
     {
       "shard_id": "shard-0085",
@@ -691,7 +691,7 @@
       "start_line": 16801,
       "end_line": 17000,
       "line_count": 200,
-      "sha256": "3ecbdbb99804efc29bfa815d136d8c4e26a5b5dfc1171fdda09c29539e0f016a"
+      "sha256": "155ae2228a88031b8dd4fd8456bd398dc7b92f8c0895ca47b98c2449abaf30cb"
     },
     {
       "shard_id": "shard-0086",
@@ -699,7 +699,7 @@
       "start_line": 17001,
       "end_line": 17200,
       "line_count": 200,
-      "sha256": "4045014de8a74f9888b3d6c735abe2eaa6a7047fef7f7c32968a541cd17f493e"
+      "sha256": "f2e3255cf17d32542ff179ffa8648c32d977fb19c0f3a447355ab468e0a1a801"
     },
     {
       "shard_id": "shard-0087",
@@ -707,7 +707,7 @@
       "start_line": 17201,
       "end_line": 17400,
       "line_count": 200,
-      "sha256": "7b2ef7a35a3349664c6627c8a147fbd431e7201781f52fdce47fc5424b5a6ef0"
+      "sha256": "35462f50becbad6d33d8b515d50d19e583bd6c02fb567ca8d7f7e992f0f4320e"
     },
     {
       "shard_id": "shard-0088",
@@ -715,7 +715,7 @@
       "start_line": 17401,
       "end_line": 17600,
       "line_count": 200,
-      "sha256": "a083e1da319177f958a267264ad7a6cac31f0b89f1ad297c82f01e6311f94020"
+      "sha256": "17e8c1fe4d0c9b3a4fa363b3506afd625f73c51bc05efcdd727e31a26ce968dd"
     },
     {
       "shard_id": "shard-0089",
@@ -723,7 +723,7 @@
       "start_line": 17601,
       "end_line": 17800,
       "line_count": 200,
-      "sha256": "e5110c5ad22f25ed644ab1adf701c87a361dd6c8ff8cb61e8217077f615ee351"
+      "sha256": "4f3575d06aa6d655c3ca227d15400dfdfe93c002e037096067308bec625f7622"
     },
     {
       "shard_id": "shard-0090",
@@ -731,7 +731,7 @@
       "start_line": 17801,
       "end_line": 18000,
       "line_count": 200,
-      "sha256": "81ddefb7e9155870a80b2e674d6c37885c31168cbab4fec79144cb31de1ebfc6"
+      "sha256": "45a3cfcf25f56affdcc5069af92d455eff56ee38620f4140af705f07f12f5cea"
     },
     {
       "shard_id": "shard-0091",
@@ -739,7 +739,7 @@
       "start_line": 18001,
       "end_line": 18200,
       "line_count": 200,
-      "sha256": "0ff417a40254b004e28c2b0d94f6813e9ab3a46280bd6cdc512a148208d6ca53"
+      "sha256": "85428a4d31668dc579f91780e7755e1717a85b14f7231ba2f17a80b99d6ae51f"
     },
     {
       "shard_id": "shard-0092",
@@ -747,15 +747,15 @@
       "start_line": 18201,
       "end_line": 18244,
       "line_count": 44,
-      "sha256": "b12d2a17565315da2191390dc4ae4103931bebaaf9ac535d1d9af1503ef50e57"
+      "sha256": "0b7c3c56e5eea94eaa9491e3a5178d3b803d133a67e46e6dbeb2dbf27e1e0684"
     }
   ],
   "subagent_execution": {
     "required": true,
     "used": true,
     "skip_reason": null,
-    "explore_validation_attestation_agent": "4a82b4ac-4f3a-4792-8a9a-d542059775bf",
-    "parent_shell_full_validation": true,
-    "validation_notes": "Parent shell verified SHA256, per-shard hashes, contiguous coverage, and full reconstruction equals working_ledger.md. Explore agent structural/format attestation; subagent sandbox could not recompute file hash."
-  }
+    "wave_files_valid": true,
+    "attestation_agent_id": "6c9c89c1-590a-4e16-a631-ed068dc8b478"
+  },
+  "next_required_stage": "Ledger Obligation Seed Extractor"
 }

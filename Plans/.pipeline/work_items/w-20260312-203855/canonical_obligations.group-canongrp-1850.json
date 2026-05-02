@@ -1,0 +1,86 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1850",
+  "source_seed_ids_represented": [
+    "seed-2384",
+    "seed-2385"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0088",
+    "shard-0089"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002564",
+      "obligation_type": "prompt_process_obligation",
+      "canon_label": "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "description": "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "source_seed_ids": [
+        "seed-2384"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17530-L17530",
+        "working_ledger.md:L17534-L17534"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [
+        "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+      ],
+      "doc_resolution_status": "process_only",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "prompt_process_resolution",
+      "priority": "major",
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-002565",
+      "obligation_type": "prompt_process_obligation",
+      "canon_label": "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "description": "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "source_seed_ids": [
+        "seed-2385"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17668-L17668"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [
+        "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+      ],
+      "doc_resolution_status": "process_only",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "prompt_process_resolution",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

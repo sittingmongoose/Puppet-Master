@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0289",
+  "source_seed_ids_represented": [
+    "seed-1047"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0026"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000289",
+      "obligation_type": "owner",
+      "canon_label": "- Current docs expose worktree actions and blocked classifications, but they do not yet define the full lane/worktree...",
+      "description": "- Current docs expose worktree actions and blocked classifications, but they do not yet define the full lane/worktree cleanup lifecycle.",
+      "source_seed_ids": [
+        "seed-1047"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5060-L5060"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Current docs expose worktree actions and blocked classifications, but they do not yet define the full lane/worktree cleanup lifecycle."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

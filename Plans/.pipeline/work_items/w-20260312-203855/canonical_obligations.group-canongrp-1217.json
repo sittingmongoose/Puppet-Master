@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1217",
+  "source_seed_ids_represented": [
+    "seed-1260"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0034"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-001929",
+      "obligation_type": "owner",
+      "canon_label": "- `Provider_OpenCode.md` still leaves effective account identity opaque behind the bridge, uses a server-global SSE b...",
+      "description": "- `Provider_OpenCode.md` still leaves effective account identity opaque behind the bridge, uses a server-global SSE bus with no explicit contamination filter contract, and relies on a fixed server working directory",
+      "source_seed_ids": [
+        "seed-1260"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6778-L6778"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Provider_OpenCode.md` still leaves effective account identity opaque behind the bridge, uses a server-global SSE bus with no explicit contamination filter contract, and relies on a fixed server working directory"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

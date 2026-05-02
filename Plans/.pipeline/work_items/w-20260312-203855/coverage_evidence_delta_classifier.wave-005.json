@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.coverage_evidence_delta_classifier_wave.v2.2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-005",
+  "subagent_tasks": [
+    {
+      "task_id": "cedc-wave-005-covdelta-008",
+      "delta_task_id": "covdelta-008",
+      "description": "Bounded delta classification for resolved owner rows",
+      "coverage_rows": 10,
+      "resolved_path": "Plans/00-plans-index.md"
+    }
+  ],
+  "assigned_input_boundaries": {
+    "doc_discovery_resolution": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+    "transfer_coverage_slice": "delta rows only",
+    "max_doc_bytes_per_path": 800000
+  },
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-01201",
+    "cov-01202",
+    "cov-01203",
+    "cov-01204",
+    "cov-01205",
+    "cov-01206",
+    "cov-01207",
+    "cov-01208",
+    "cov-01209",
+    "cov-01210"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-01201",
+    "cov-01202",
+    "cov-01203",
+    "cov-01204",
+    "cov-01205",
+    "cov-01206",
+    "cov-01207",
+    "cov-01208",
+    "cov-01209",
+    "cov-01210"
+  ],
+  "resolved_paths_assigned": [
+    "Plans/00-plans-index.md"
+  ],
+  "resolved_paths_completed": [
+    "Plans/00-plans-index.md"
+  ]
+}

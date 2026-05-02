@@ -1,27 +1,56 @@
-# Current State
+# Current State — Open Gaps Delta Reducer / Ready-Routing Gate (pm.open_gaps_delta_reducer_ready_routing_gate.v2.2) — wave 2
 
-## Legacy Artifact Sanitizer v2.2 — complete
+## Work item
 
-- **work_id:** w-20260312-203855 (locked)
-- **root sweep:** `legacy_sanitizer.root_inventory.json` — **1916** active root files before quarantine (immediate children; `legacy_quarantine/` and `ledger_shards/` excluded from sweep list per spec)
-- **files quarantined:** **1912** → `Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/` with timestamped names (`*.20260502T165027Z.*` batch; internal helper JSON also quarantined)
-- **files left active at root:** **8** — `meta.json`, `current_state.md`, `working_ledger.md`, `resolve_work_item_report.json` (v2.2), `legacy_sanitizer.root_inventory.json`, `legacy_sanitizer.worklist.json`, `legacy_sanitizer.wave-001.json`, `legacy_sanitizer_report.json`
-- **root clean after sanitizer:** yes — `legacy_sanitizer_report.json` → `generated_artifacts_left_active`: **[]**
-- **old manifest:** none at root (`old_manifest_status`: absent)
-- **subagents:** used (explore) for multi-family schema sampling; see `legacy_sanitizer.wave-001.json`
-- **next_required_stage:** **Ledger Shard Indexer**
-- **report:** `Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer_report.json`
+- **work_id:** `w-20260312-203855` (locked)
 
-### Notes
+## Upstream gate
 
-- Prior v2.1 downstream artifacts (coverage, open gaps, canonical, waves, etc.) were quarantined for a fresh v2.2 pipeline start; **do not** treat quarantined copies as live pipeline authority.
-- `ledger_shards/**` unchanged; `working_ledger.md` unchanged.
+- **coverage_evidence_delta_result.json** v2.2 `complete` (**125** rows updated: **20** `present`, **105** `missing` on concrete paths)  
+- **transfer_coverage.json** / source report **pass**  
+- **open_gaps.json** v2.2 before: **97** gaps (**69** doc_discovery, **27** fix_backlog, **1** process)
+
+## Delta actions (wave 2)
+
+- **Doc-discovery gaps removed:** **7** (all rows in gap left the doc-discovery sentinel) → **`open_gaps.noise.json`** entries (`nogap-*-delta2`)  
+- **Doc-discovery gaps updated:** **62** — lists trimmed to **885** remaining `__DOC_DISCOVERY_REQUIRED__` rows  
+- **Prior fix_backlog gaps:** **27** preserved unchanged (**667** rows)  
+- **New fix_backlog gaps:** **5** (`gap-00105` … `gap-00109`) for **105** new concrete-`missing` rows (**772** total fix_backlog rows)  
+- **Process followup:** unchanged (`gap-00077`)  
+- **Path hygiene:** **pass**
+
+## After summary
+
+| Field | Value |
+|--------|------:|
+| open_gaps_total | 95 |
+| planning_blockers | 62 |
+| fix_backlog_items | 32 |
+| process_followup_items | 1 |
+| doc_discovery_required_items | 62 |
+
+## Artifacts
+
+- `open_gaps_delta_reducer.worklist.json` — **74** bounded tasks  
+- `open_gaps_delta_reducer.wave-001.json` … `wave-012.json`  
+- `open_gaps_delta_reducer_report.json`  
+- Updated `open_gaps.json`, `open_gaps.noise.json`
+
+## Subagent execution
+
+- **required / used:** true (**74** tasks > 25)  
+- **Attestation:** `209f9a65-7f23-4510-b58f-6a4deb481f63`, `78241b6a-4f70-4641-a41d-6cecbb2d7caf`
+
+## Route decision
+
+- **doc_discovery_required** **62** &gt; 0 → **Doc Discovery Worklist Builder**
+
+## Meta
+
+- **status:** `blocked`  
+- **next_required_stage:** **Doc Discovery Worklist Builder**
 
 WORK_ID LOCK:
-- Active work_id: w-20260312-203855
-- Active path: Plans/.pipeline/work_items/w-20260312-203855
+
+- Active work_id: w-20260312-203855  
 - Do not switch work items.
-- Do not use the most recent active work item.
-- Do not create a new work item.
-- Do not consume artifacts from any other work item as authority.
-- If another work_id appears in an artifact, treat it as stale/wrong-work-item evidence.

@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.ledger_shard_indexer_wave.v2.2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "001",
+  "subagent_tasks": [
+    "verify_manifest_schema",
+    "verify_coverage_ranges",
+    "verify_disk_shard_count",
+    "verify_source_hash"
+  ],
+  "assigned_input_boundaries": {
+    "ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+    "shard_dir": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/",
+    "shard_line_size": 200
+  },
+  "subagent_result_status": "complete",
+  "subagent_attestation_agent_id": "6c9c89c1-590a-4e16-a631-ed068dc8b478",
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "shard_ranges_assigned": 92,
+  "shard_ranges_completed": 92
+}

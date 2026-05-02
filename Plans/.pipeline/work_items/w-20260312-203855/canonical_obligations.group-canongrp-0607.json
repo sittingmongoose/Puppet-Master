@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0607",
+  "source_seed_ids_represented": [
+    "seed-2665"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0092"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000609",
+      "obligation_type": "owner",
+      "canon_label": "- The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit w...",
+      "description": "- The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change.",
+      "source_seed_ids": [
+        "seed-2665"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18242-L18242"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

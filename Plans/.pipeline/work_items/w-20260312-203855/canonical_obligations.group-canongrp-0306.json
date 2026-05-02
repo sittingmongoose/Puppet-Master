@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0306",
+  "source_seed_ids_represented": [
+    "seed-0345"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0006"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000306",
+      "obligation_type": "owner",
+      "canon_label": "- Do not create a new work item just to continue the blocked-audit recovery for the current run.",
+      "description": "- Do not create a new work item just to continue the blocked-audit recovery for the current run.",
+      "source_seed_ids": [
+        "seed-0345"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1143-L1143"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Do not create a new work item just to continue the blocked-audit recovery for the current run."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

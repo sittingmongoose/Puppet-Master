@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1793",
+  "source_seed_ids_represented": [
+    "seed-0151"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0004"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002506",
+      "obligation_type": "owner",
+      "canon_label": "- user clarified a broader app-level constraint:",
+      "description": "- user clarified a broader app-level constraint:",
+      "source_seed_ids": [
+        "seed-0151"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L652-L652"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- user clarified a broader app-level constraint:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

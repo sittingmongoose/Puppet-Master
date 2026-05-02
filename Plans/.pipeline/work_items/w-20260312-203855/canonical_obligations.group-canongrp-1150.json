@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1150",
+  "source_seed_ids_represented": [
+    "seed-2438"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0089"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-001814",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/storage-plan.md:330-337`",
+      "description": "- `Plans/storage-plan.md:330-337`",
+      "source_seed_ids": [
+        "seed-2438"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17616-L17616",
+        "working_ledger.md:L17673-L17673"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/storage-plan.md:330-337`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/storage-plan.md",
+        "placeholder_path_removed:Plans/storage-plan.md:330-337",
+        "quarantined_placeholder_path:Plans/storage-plan.md",
+        "quarantined_placeholder_path:Plans/storage-plan.md:330-337"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

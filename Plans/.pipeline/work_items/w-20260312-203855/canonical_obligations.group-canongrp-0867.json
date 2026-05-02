@@ -1,0 +1,162 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0867",
+  "source_seed_ids_represented": [
+    "seed-1917",
+    "seed-1918",
+    "seed-1919",
+    "seed-1920"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0064",
+    "shard-0070",
+    "shard-0081",
+    "shard-0082"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000955",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Formatters_System.md`",
+      "description": "- `Plans/Formatters_System.md`",
+      "source_seed_ids": [
+        "seed-1917"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12734-L12734",
+        "working_ledger.md:L12763-L12763",
+        "working_ledger.md:L12794-L12794"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Formatters_System.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Formatters_System.md",
+        "quarantined_placeholder_path:Plans/Formatters_System.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000956",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Formatters_System.md`",
+      "description": "- `Plans/Formatters_System.md`",
+      "source_seed_ids": [
+        "seed-1918"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13843-L13843",
+        "working_ledger.md:L13897-L13897"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Formatters_System.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Formatters_System.md",
+        "quarantined_placeholder_path:Plans/Formatters_System.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000957",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Formatters_System.md`",
+      "description": "- `Plans/Formatters_System.md`",
+      "source_seed_ids": [
+        "seed-1919"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16016-L16016",
+        "working_ledger.md:L16064-L16064",
+        "working_ledger.md:L16132-L16132",
+        "working_ledger.md:L16178-L16178"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Formatters_System.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Formatters_System.md",
+        "quarantined_placeholder_path:Plans/Formatters_System.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000958",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Formatters_System.md`",
+      "description": "- `Plans/Formatters_System.md`",
+      "source_seed_ids": [
+        "seed-1920"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16251-L16251",
+        "working_ledger.md:L16292-L16292"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Formatters_System.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Formatters_System.md",
+        "quarantined_placeholder_path:Plans/Formatters_System.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

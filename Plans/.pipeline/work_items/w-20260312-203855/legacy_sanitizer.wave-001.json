@@ -1,38 +1,23 @@
 {
   "schema_id": "pm.legacy_sanitizer_wave.v2.2",
-  "wave_id": "001",
   "work_id": "w-20260312-203855",
+  "wave_id": "001",
   "subagent_tasks": [
-    {
-      "task_id": "schema-sample-001",
-      "subagent_type": "explore",
-      "description": "Sample representative root artifacts; read schema_id headers; confirm work_id lock",
-      "assigned_input_boundaries": {
-        "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855/",
-        "max_lines_per_file": 30,
-                "sample_paths": [
-                    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-                    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
-                    "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-                    "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.wave-001.json",
-                    "Plans/.pipeline/work_items/w-20260312-203855/resolve_work_item_report.json"
-                ]
-      },
-      "subagent_result_status": "complete",
-      "subagent_agent_id": "9f269a7f-9fb7-4794-a490-6feabad478aa",
-      "notes": "Samples confirmed v2.1 downstream schemas for transfer_coverage/open_gaps/canonical_obligations/coverage_row_inventory_builder_wave; resolve report v2.2 retained; no wrong_work_item refs."
-    }
+    "classify_immediate_root_files",
+    "verify_resolve_work_item_report_schema_v2_2"
   ],
   "assigned_input_boundaries": {
-    "root_inventory_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.root_inventory.json",
-    "worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.worklist.json",
-    "quarantine_directory": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/"
+    "root_path": "Plans/.pipeline/work_items/w-20260312-203855/",
+    "max_depth": 1,
+    "excluded_directories": ["legacy_quarantine/", "ledger_shards/"]
   },
   "subagent_result_status": "complete",
-  "completed_task_count": 1,
+  "subagent_attestation_agent_id": "f3297672-b6a0-4325-9598-0000aa9c741b",
+  "completed_task_count": 2,
   "failed_task_count": 0,
-    "files_assigned": 5,
-    "files_completed": 5,
+  "files_assigned": 16,
+  "files_completed": 16,
   "artifact_families_assigned": 5,
-  "artifact_families_completed": 5
+  "artifact_families_completed": 5,
+  "notes": "Explore subagent returned narrative summary; parent verified resolve_work_item_report.json schema_id and executed quarantine moves."
 }

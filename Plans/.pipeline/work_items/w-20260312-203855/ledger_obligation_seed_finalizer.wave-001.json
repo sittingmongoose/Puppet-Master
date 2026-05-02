@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_finalizer_wave.v2.2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "001",
+  "subagent_tasks": [
+    "verify_finalized_seed_header",
+    "verify_lineage_zero_violations_sample"
+  ],
+  "assigned_input_boundaries": {
+    "seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+    "cleanup_groups": 12,
+    "lineage_strategy": "split_or_merge_evidence_per_manifest_shard"
+  },
+  "subagent_result_status": "complete",
+  "subagent_attestation_agent_id": "e556fbf3-5263-46bb-bbce-af49195588fb",
+  "completed_task_count": 2,
+  "failed_task_count": 0,
+  "seed_ids_assigned": 1896,
+  "seed_ids_completed": 2667,
+  "cleanup_group_ids_assigned": [
+    "seed-cleanup-001",
+    "seed-cleanup-002",
+    "seed-cleanup-003",
+    "seed-cleanup-004",
+    "seed-cleanup-005",
+    "seed-cleanup-006",
+    "seed-cleanup-007",
+    "seed-cleanup-008",
+    "seed-cleanup-009",
+    "seed-cleanup-010",
+    "seed-cleanup-011",
+    "seed-cleanup-012"
+  ],
+  "cleanup_group_ids_completed": [
+    "seed-cleanup-001",
+    "seed-cleanup-002",
+    "seed-cleanup-003",
+    "seed-cleanup-004",
+    "seed-cleanup-005",
+    "seed-cleanup-006",
+    "seed-cleanup-007",
+    "seed-cleanup-008",
+    "seed-cleanup-009",
+    "seed-cleanup-010",
+    "seed-cleanup-011",
+    "seed-cleanup-012"
+  ],
+  "notes": "Input 1896 seeds expanded to 2667 after multi-shard source_evidence splits; mechanical validation reports 0 lineage violations."
+}

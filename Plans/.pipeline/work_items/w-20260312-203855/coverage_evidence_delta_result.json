@@ -1,0 +1,1159 @@
+{
+  "schema_id": "pm.coverage_evidence_delta_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "source_doc_discovery_resolution": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+  "source_transfer_coverage_before_sha256": "ecbb060c91ca8ae34d7e8584246f13b1f6f54b51a87111d6d5e7801e230cbc23",
+  "source_transfer_coverage_after_sha256": "22736828e9917312f74bd2446e8e102ee1161d6e824530d95cfb6c3b7645fb66",
+  "status": "complete",
+  "summary": {
+    "coverage_rows_updated": 125,
+    "coverage_rows_marked_process_only": 0,
+    "coverage_rows_marked_noise": 0,
+    "coverage_rows_unresolved_ignored": 885,
+    "coverage_rows_missing_from_transfer_coverage": 0,
+    "path_quarantine_violations": 0,
+    "placeholder_path_violations": 0,
+    "source_seed_ids_preserved": 2667,
+    "source_shard_ids_preserved": 92
+  },
+  "updated_rows": [
+    {
+      "coverage_id": "cov-00251",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000251"
+      ]
+    },
+    {
+      "coverage_id": "cov-00252",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000252"
+      ]
+    },
+    {
+      "coverage_id": "cov-00253",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000253"
+      ]
+    },
+    {
+      "coverage_id": "cov-00254",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000254"
+      ]
+    },
+    {
+      "coverage_id": "cov-00255",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000255"
+      ]
+    },
+    {
+      "coverage_id": "cov-00256",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000256"
+      ]
+    },
+    {
+      "coverage_id": "cov-00257",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-000257"
+      ]
+    },
+    {
+      "coverage_id": "cov-00258",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-000258"
+      ]
+    },
+    {
+      "coverage_id": "cov-00259",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000259"
+      ]
+    },
+    {
+      "coverage_id": "cov-00260",
+      "resolution_id": "ddres-027",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000260"
+      ]
+    },
+    {
+      "coverage_id": "cov-00296",
+      "resolution_id": "ddres-029",
+      "resolved_path": "Plans/Models_System.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000296"
+      ]
+    },
+    {
+      "coverage_id": "cov-00297",
+      "resolution_id": "ddres-029",
+      "resolved_path": "Plans/Models_System.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000297"
+      ]
+    },
+    {
+      "coverage_id": "cov-00298",
+      "resolution_id": "ddres-029",
+      "resolved_path": "Plans/Models_System.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-000298"
+      ]
+    },
+    {
+      "coverage_id": "cov-00299",
+      "resolution_id": "ddres-029",
+      "resolved_path": "Plans/Models_System.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000299"
+      ]
+    },
+    {
+      "coverage_id": "cov-00300",
+      "resolution_id": "ddres-029",
+      "resolved_path": "Plans/Models_System.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000300"
+      ]
+    },
+    {
+      "coverage_id": "cov-00311",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-000311"
+      ]
+    },
+    {
+      "coverage_id": "cov-00312",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000312"
+      ]
+    },
+    {
+      "coverage_id": "cov-00313",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000313"
+      ]
+    },
+    {
+      "coverage_id": "cov-00314",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000314"
+      ]
+    },
+    {
+      "coverage_id": "cov-00315",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000315"
+      ]
+    },
+    {
+      "coverage_id": "cov-00316",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000316"
+      ]
+    },
+    {
+      "coverage_id": "cov-00317",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000317"
+      ]
+    },
+    {
+      "coverage_id": "cov-00318",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000318"
+      ]
+    },
+    {
+      "coverage_id": "cov-00319",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000319"
+      ]
+    },
+    {
+      "coverage_id": "cov-00320",
+      "resolution_id": "ddres-030",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000320"
+      ]
+    },
+    {
+      "coverage_id": "cov-00396",
+      "resolution_id": "ddres-035",
+      "resolved_path": "Plans/Contracts_V0.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000396"
+      ]
+    },
+    {
+      "coverage_id": "cov-00397",
+      "resolution_id": "ddres-035",
+      "resolved_path": "Plans/Contracts_V0.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-000397"
+      ]
+    },
+    {
+      "coverage_id": "cov-00398",
+      "resolution_id": "ddres-035",
+      "resolved_path": "Plans/Contracts_V0.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000398"
+      ]
+    },
+    {
+      "coverage_id": "cov-00399",
+      "resolution_id": "ddres-035",
+      "resolved_path": "Plans/Contracts_V0.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000399"
+      ]
+    },
+    {
+      "coverage_id": "cov-00400",
+      "resolution_id": "ddres-035",
+      "resolved_path": "Plans/Contracts_V0.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000400"
+      ]
+    },
+    {
+      "coverage_id": "cov-00621",
+      "resolution_id": "ddres-050",
+      "resolved_path": "Plans/Decision_Policy.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000621"
+      ]
+    },
+    {
+      "coverage_id": "cov-00622",
+      "resolution_id": "ddres-050",
+      "resolved_path": "Plans/Decision_Policy.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000622"
+      ]
+    },
+    {
+      "coverage_id": "cov-00623",
+      "resolution_id": "ddres-050",
+      "resolved_path": "Plans/Decision_Policy.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000623"
+      ]
+    },
+    {
+      "coverage_id": "cov-00624",
+      "resolution_id": "ddres-050",
+      "resolved_path": "Plans/Decision_Policy.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000624"
+      ]
+    },
+    {
+      "coverage_id": "cov-00625",
+      "resolution_id": "ddres-050",
+      "resolved_path": "Plans/Decision_Policy.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-000625"
+      ]
+    },
+    {
+      "coverage_id": "cov-00771",
+      "resolution_id": "ddres-058",
+      "resolved_path": "Plans/Prompt_Pipeline.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000771"
+      ]
+    },
+    {
+      "coverage_id": "cov-00772",
+      "resolution_id": "ddres-058",
+      "resolved_path": "Plans/Prompt_Pipeline.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-000772"
+      ]
+    },
+    {
+      "coverage_id": "cov-00773",
+      "resolution_id": "ddres-058",
+      "resolved_path": "Plans/Prompt_Pipeline.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000773"
+      ]
+    },
+    {
+      "coverage_id": "cov-00774",
+      "resolution_id": "ddres-058",
+      "resolved_path": "Plans/Prompt_Pipeline.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000774"
+      ]
+    },
+    {
+      "coverage_id": "cov-00775",
+      "resolution_id": "ddres-058",
+      "resolved_path": "Plans/Prompt_Pipeline.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-000775"
+      ]
+    },
+    {
+      "coverage_id": "cov-01151",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001151"
+      ]
+    },
+    {
+      "coverage_id": "cov-01152",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001152"
+      ]
+    },
+    {
+      "coverage_id": "cov-01153",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001153"
+      ]
+    },
+    {
+      "coverage_id": "cov-01154",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001154"
+      ]
+    },
+    {
+      "coverage_id": "cov-01155",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001155"
+      ]
+    },
+    {
+      "coverage_id": "cov-01156",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001156"
+      ]
+    },
+    {
+      "coverage_id": "cov-01157",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001157"
+      ]
+    },
+    {
+      "coverage_id": "cov-01158",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001158"
+      ]
+    },
+    {
+      "coverage_id": "cov-01159",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001159"
+      ]
+    },
+    {
+      "coverage_id": "cov-01160",
+      "resolution_id": "ddres-085",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001160"
+      ]
+    },
+    {
+      "coverage_id": "cov-01201",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001201"
+      ]
+    },
+    {
+      "coverage_id": "cov-01202",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001202"
+      ]
+    },
+    {
+      "coverage_id": "cov-01203",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001203"
+      ]
+    },
+    {
+      "coverage_id": "cov-01204",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001204"
+      ]
+    },
+    {
+      "coverage_id": "cov-01205",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001205"
+      ]
+    },
+    {
+      "coverage_id": "cov-01206",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001206"
+      ]
+    },
+    {
+      "coverage_id": "cov-01207",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001207"
+      ]
+    },
+    {
+      "coverage_id": "cov-01208",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001208"
+      ]
+    },
+    {
+      "coverage_id": "cov-01209",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001209"
+      ]
+    },
+    {
+      "coverage_id": "cov-01210",
+      "resolution_id": "ddres-089",
+      "resolved_path": "Plans/00-plans-index.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001210"
+      ]
+    },
+    {
+      "coverage_id": "cov-01277",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001277"
+      ]
+    },
+    {
+      "coverage_id": "cov-01278",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001278"
+      ]
+    },
+    {
+      "coverage_id": "cov-01279",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001279"
+      ]
+    },
+    {
+      "coverage_id": "cov-01280",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001280"
+      ]
+    },
+    {
+      "coverage_id": "cov-01281",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001281"
+      ]
+    },
+    {
+      "coverage_id": "cov-01282",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001282"
+      ]
+    },
+    {
+      "coverage_id": "cov-01283",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001283"
+      ]
+    },
+    {
+      "coverage_id": "cov-01284",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001284"
+      ]
+    },
+    {
+      "coverage_id": "cov-01285",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001285"
+      ]
+    },
+    {
+      "coverage_id": "cov-01286",
+      "resolution_id": "ddres-092",
+      "resolved_path": "Plans/Multi-Account.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001286"
+      ]
+    },
+    {
+      "coverage_id": "cov-01297",
+      "resolution_id": "ddres-093",
+      "resolved_path": "Plans/DRY_Rules.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001297"
+      ]
+    },
+    {
+      "coverage_id": "cov-01298",
+      "resolution_id": "ddres-093",
+      "resolved_path": "Plans/DRY_Rules.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001298"
+      ]
+    },
+    {
+      "coverage_id": "cov-01299",
+      "resolution_id": "ddres-093",
+      "resolved_path": "Plans/DRY_Rules.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001299"
+      ]
+    },
+    {
+      "coverage_id": "cov-01300",
+      "resolution_id": "ddres-093",
+      "resolved_path": "Plans/DRY_Rules.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001300"
+      ]
+    },
+    {
+      "coverage_id": "cov-01301",
+      "resolution_id": "ddres-093",
+      "resolved_path": "Plans/DRY_Rules.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001301"
+      ]
+    },
+    {
+      "coverage_id": "cov-01312",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001312"
+      ]
+    },
+    {
+      "coverage_id": "cov-01313",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001313"
+      ]
+    },
+    {
+      "coverage_id": "cov-01314",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001314"
+      ]
+    },
+    {
+      "coverage_id": "cov-01315",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001315"
+      ]
+    },
+    {
+      "coverage_id": "cov-01316",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001316"
+      ]
+    },
+    {
+      "coverage_id": "cov-01317",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001317"
+      ]
+    },
+    {
+      "coverage_id": "cov-01318",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001318"
+      ]
+    },
+    {
+      "coverage_id": "cov-01319",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001319"
+      ]
+    },
+    {
+      "coverage_id": "cov-01320",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001320"
+      ]
+    },
+    {
+      "coverage_id": "cov-01321",
+      "resolution_id": "ddres-095",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001321"
+      ]
+    },
+    {
+      "coverage_id": "cov-01377",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001377"
+      ]
+    },
+    {
+      "coverage_id": "cov-01378",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001378"
+      ]
+    },
+    {
+      "coverage_id": "cov-01379",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001379"
+      ]
+    },
+    {
+      "coverage_id": "cov-01380",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001380"
+      ]
+    },
+    {
+      "coverage_id": "cov-01381",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001381"
+      ]
+    },
+    {
+      "coverage_id": "cov-01382",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001382"
+      ]
+    },
+    {
+      "coverage_id": "cov-01383",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001383"
+      ]
+    },
+    {
+      "coverage_id": "cov-01384",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001384"
+      ]
+    },
+    {
+      "coverage_id": "cov-01385",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001385"
+      ]
+    },
+    {
+      "coverage_id": "cov-01386",
+      "resolution_id": "ddres-098",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001386"
+      ]
+    },
+    {
+      "coverage_id": "cov-01502",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001502"
+      ]
+    },
+    {
+      "coverage_id": "cov-01503",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001503"
+      ]
+    },
+    {
+      "coverage_id": "cov-01504",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001504"
+      ]
+    },
+    {
+      "coverage_id": "cov-01505",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001505"
+      ]
+    },
+    {
+      "coverage_id": "cov-01506",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001506"
+      ]
+    },
+    {
+      "coverage_id": "cov-01507",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001507"
+      ]
+    },
+    {
+      "coverage_id": "cov-01508",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001508"
+      ]
+    },
+    {
+      "coverage_id": "cov-01509",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001509"
+      ]
+    },
+    {
+      "coverage_id": "cov-01510",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001510"
+      ]
+    },
+    {
+      "coverage_id": "cov-01511",
+      "resolution_id": "ddres-106",
+      "resolved_path": "Plans/Crosswalk.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001511"
+      ]
+    },
+    {
+      "coverage_id": "cov-01537",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001537"
+      ]
+    },
+    {
+      "coverage_id": "cov-01538",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001538"
+      ]
+    },
+    {
+      "coverage_id": "cov-01539",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001539"
+      ]
+    },
+    {
+      "coverage_id": "cov-01540",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001540"
+      ]
+    },
+    {
+      "coverage_id": "cov-01541",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001541"
+      ]
+    },
+    {
+      "coverage_id": "cov-01542",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001542"
+      ]
+    },
+    {
+      "coverage_id": "cov-01543",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001543"
+      ]
+    },
+    {
+      "coverage_id": "cov-01544",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001544"
+      ]
+    },
+    {
+      "coverage_id": "cov-01545",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001545"
+      ]
+    },
+    {
+      "coverage_id": "cov-01546",
+      "resolution_id": "ddres-108",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001546"
+      ]
+    },
+    {
+      "coverage_id": "cov-01587",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001587"
+      ]
+    },
+    {
+      "coverage_id": "cov-01588",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001588"
+      ]
+    },
+    {
+      "coverage_id": "cov-01589",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001589"
+      ]
+    },
+    {
+      "coverage_id": "cov-01590",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001590"
+      ]
+    },
+    {
+      "coverage_id": "cov-01591",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001591"
+      ]
+    },
+    {
+      "coverage_id": "cov-01592",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "present",
+      "source_obligation_ids": [
+        "obl-001592"
+      ]
+    },
+    {
+      "coverage_id": "cov-01593",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001593"
+      ]
+    },
+    {
+      "coverage_id": "cov-01594",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001594"
+      ]
+    },
+    {
+      "coverage_id": "cov-01595",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001595"
+      ]
+    },
+    {
+      "coverage_id": "cov-01596",
+      "resolution_id": "ddres-110",
+      "resolved_path": "Plans/Glossary.md",
+      "status": "missing",
+      "source_obligation_ids": [
+        "obl-001596"
+      ]
+    }
+  ],
+  "blocked_rows": [],
+  "noise_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true,
+    "delta_wave_attestation_agents": [
+      "a8a74c3c-6ea2-43c7-8fe3-18d510eeb355",
+      "a1884954-2ee8-428a-b797-fc82114292f8"
+    ]
+  },
+  "next_required_stage": "Open Gaps Delta Reducer / Ready-Routing Gate"
+}

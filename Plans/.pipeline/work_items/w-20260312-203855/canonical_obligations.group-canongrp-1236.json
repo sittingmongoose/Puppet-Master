@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1236",
+  "source_seed_ids_represented": [
+    "seed-1738"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0055"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-001948",
+      "obligation_type": "owner",
+      "canon_label": "- `UI_Wiring_Rules.md` still lacks dispatcher-level obligations for `allowed_action_ids[]`, stale-projection revalida...",
+      "description": "- `UI_Wiring_Rules.md` still lacks dispatcher-level obligations for `allowed_action_ids[]`, stale-projection revalidation, and `correlation_id` trace-through.",
+      "source_seed_ids": [
+        "seed-1738"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10987-L10987"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `UI_Wiring_Rules.md` still lacks dispatcher-level obligations for `allowed_action_ids[]`, stale-projection revalidation, and `correlation_id` trace-through."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

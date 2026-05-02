@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.coverage_evidence_delta_classifier_wave.v2.2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-002",
+  "subagent_tasks": [
+    {
+      "task_id": "cedc-wave-002-covdelta-003",
+      "delta_task_id": "covdelta-003",
+      "description": "Bounded delta classification for resolved owner rows",
+      "coverage_rows": 10,
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md"
+    },
+    {
+      "task_id": "cedc-wave-002-covdelta-004",
+      "delta_task_id": "covdelta-004",
+      "description": "Bounded delta classification for resolved owner rows",
+      "coverage_rows": 5,
+      "resolved_path": "Plans/Contracts_V0.md"
+    }
+  ],
+  "assigned_input_boundaries": {
+    "doc_discovery_resolution": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+    "transfer_coverage_slice": "delta rows only",
+    "max_doc_bytes_per_path": 800000
+  },
+  "subagent_result_status": "complete",
+  "completed_task_count": 2,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-00311",
+    "cov-00312",
+    "cov-00313",
+    "cov-00314",
+    "cov-00315",
+    "cov-00316",
+    "cov-00317",
+    "cov-00318",
+    "cov-00319",
+    "cov-00320",
+    "cov-00396",
+    "cov-00397",
+    "cov-00398",
+    "cov-00399",
+    "cov-00400"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-00311",
+    "cov-00312",
+    "cov-00313",
+    "cov-00314",
+    "cov-00315",
+    "cov-00316",
+    "cov-00317",
+    "cov-00318",
+    "cov-00319",
+    "cov-00320",
+    "cov-00396",
+    "cov-00397",
+    "cov-00398",
+    "cov-00399",
+    "cov-00400"
+  ],
+  "resolved_paths_assigned": [
+    "Plans/Contracts_V0.md",
+    "Plans/GitHub_API_Auth_and_Flows.md"
+  ],
+  "resolved_paths_completed": [
+    "Plans/Contracts_V0.md",
+    "Plans/GitHub_API_Auth_and_Flows.md"
+  ]
+}

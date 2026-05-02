@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.target_path_hygiene_report.v2.2",
+  "work_id": "w-20260312-203855",
+  "run_id": null,
+  "status": "pass",
+  "summary": {
+    "artifacts_scanned": 12,
+    "artifact_families_scanned": 6,
+    "invalid_target_paths_total": 0,
+    "process_path_promotions": 0,
+    "placeholder_path_leaks": 0,
+    "sentinel_path_leaks": 0,
+    "wrong_work_item_artifacts": 0,
+    "affected_obligation_ids": 0,
+    "affected_coverage_ids": 0,
+    "affected_gap_ids": 0,
+    "affected_target_ids": 0,
+    "affected_packet_doc_intents": 0,
+    "affected_fidelity_rows": 0
+  },
+  "invalid_path_findings": [],
+  "currentness_findings": [
+    {
+      "finding_id": "tph-curr-001",
+      "finding_class": "missing_active_semantic_artifacts",
+      "detail": "Active work item root still has no canonical_obligations.json, transfer_coverage.json, open_gaps.json, doc_discovery, reconciliation, packet, or fidelity JSON after sanitizer quarantine. Target-like fields in those families cannot be audited until current artifacts exist on the active root.",
+      "meta_run_id": null,
+      "recommended_stage": "Run Artifact Currentness Gate"
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  },
+  "next_required_stage": "Run Artifact Currentness Gate"
+}

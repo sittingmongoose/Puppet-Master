@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0009",
+  "source_seed_ids_represented": [
+    "seed-1355"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0038"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000009",
+      "obligation_type": "consumer",
+      "canon_label": "- Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance/trust hints for stream c...",
+      "description": "- Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance/trust hints for stream consumers.",
+      "source_seed_ids": [
+        "seed-1355"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7416-L7416"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance/trust hints for stream consumers."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "consumer_propagation",
+      "priority": "minor",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

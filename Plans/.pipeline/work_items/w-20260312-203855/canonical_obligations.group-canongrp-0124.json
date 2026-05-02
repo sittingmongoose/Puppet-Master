@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0124",
+  "source_seed_ids_represented": [
+    "seed-2330"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0087"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000124",
+      "obligation_type": "missing_doc_reference",
+      "canon_label": "- `account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missin...",
+      "description": "- `account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missing transfer is the schema/detail layer.",
+      "source_seed_ids": [
+        "seed-2330"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17317-L17317"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missing transfer is the schema/detail layer."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "missing_doc_reference_resolution",
+      "priority": "blocker",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

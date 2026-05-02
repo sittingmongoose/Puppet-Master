@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1873",
+  "source_seed_ids_represented": [
+    "seed-2300"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0086"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002591",
+      "obligation_type": "stale_retirement",
+      "canon_label": "- `MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization should assume stale sections ...",
+      "description": "- `MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization should assume stale sections must be replaced or retired, not merely annotated.",
+      "source_seed_ids": [
+        "seed-2300"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17183-L17183"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization should assume stale sections must be replaced or retired, not merely annotated."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "stale_retirement",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

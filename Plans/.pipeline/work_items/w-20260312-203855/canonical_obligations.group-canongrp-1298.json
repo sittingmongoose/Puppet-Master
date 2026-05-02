@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1298",
+  "source_seed_ids_represented": [
+    "seed-2621"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0091"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002010",
+      "obligation_type": "owner",
+      "canon_label": "- `gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` ...",
+      "description": "- `gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading.",
+      "source_seed_ids": [
+        "seed-2621"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18114-L18114"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Contracts_V0.md",
+        "placeholder_path_removed:Plans/Orchestrator_Page.md",
+        "placeholder_path_removed:Plans/WorktreeGitImprovement.md",
+        "placeholder_path_removed:Plans/storage-plan.md",
+        "placeholder_path_removed:Plans/storage-plan.md#Canonical records",
+        "placeholder_path_removed:Plans/storage-plan.md#Restart and stale history",
+        "quarantined_placeholder_path:Plans/Contracts_V0.md",
+        "quarantined_placeholder_path:Plans/Orchestrator_Page.md",
+        "quarantined_placeholder_path:Plans/WorktreeGitImprovement.md",
+        "quarantined_placeholder_path:Plans/storage-plan.md",
+        "quarantined_placeholder_path:Plans/storage-plan.md#Canonical records",
+        "quarantined_placeholder_path:Plans/storage-plan.md#Restart and stale history"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.open_gaps_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "gap_task_id": "ogtask-077",
+  "gap_results": [
+    {
+      "gap_id": "gap-00077",
+      "coverage_row_ids": [
+        "cov-01252",
+        "cov-01648",
+        "cov-01649",
+        "cov-01650",
+        "cov-01651"
+      ],
+      "source_obligation_ids": [
+        "obl-001252",
+        "obl-001648",
+        "obl-001649",
+        "obl-001650",
+        "obl-001651"
+      ],
+      "source_seed_ids": [
+        "seed-1979",
+        "seed-1980",
+        "seed-1981",
+        "seed-1982",
+        "seed-2380",
+        "seed-2381",
+        "seed-2382",
+        "seed-2383",
+        "seed-2384",
+        "seed-2385"
+      ],
+      "source_shard_ids": [
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0072",
+        "shard-0088",
+        "shard-0089"
+      ],
+      "gap_type": "process_followup",
+      "blocker_type": "prompt_packet_update_required",
+      "severity": "major",
+      "affected_targets": [
+        {
+          "path": "__PROCESS_ONLY__",
+          "heading_hint": null,
+          "file_existence_observation": "not_applicable"
+        }
+      ],
+      "exact_missing_items": [
+        "- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`",
+        "- `Plans/.pipeline/work_items/w-20260312-203855/meta.json`",
+        "- `Plans/.pipeline/work_items/w-20260312-203855/current_state.md`",
+        "- `Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+        "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`"
+      ],
+      "exact_partial_items": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "prompt_process_resolution",
+      "path_field_status": "clean",
+      "routing_hint": "prompt_packet_update",
+      "notes": []
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

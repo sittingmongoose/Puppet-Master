@@ -1,0 +1,331 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0790",
+  "source_seed_ids_represented": [
+    "seed-0827",
+    "seed-0828",
+    "seed-0829",
+    "seed-0830",
+    "seed-0831",
+    "seed-0832",
+    "seed-0833",
+    "seed-0834",
+    "seed-0835"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0011",
+    "shard-0034",
+    "shard-0035",
+    "shard-0037",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0064",
+    "shard-0082"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000808",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0827"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2004-L2004",
+        "working_ledger.md:L2034-L2034"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000809",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0828"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6758-L6758",
+        "working_ledger.md:L6791-L6791"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000810",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0829"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6889-L6889",
+        "working_ledger.md:L6920-L6920"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000811",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0830"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7358-L7358",
+        "working_ledger.md:L7393-L7393"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000812",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0831"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7697-L7697",
+        "working_ledger.md:L7730-L7730"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000813",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0832"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7991-L7991"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000814",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0833"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8023-L8023"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000815",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0834"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12776-L12776"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000816",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/CLI_Bridged_Providers.md`",
+      "description": "- `Plans/CLI_Bridged_Providers.md`",
+      "source_seed_ids": [
+        "seed-0835"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16208-L16208",
+        "working_ledger.md:L16321-L16321"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/CLI_Bridged_Providers.md",
+        "quarantined_placeholder_path:Plans/CLI_Bridged_Providers.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

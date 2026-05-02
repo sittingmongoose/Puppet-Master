@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0105",
+  "source_seed_ids_represented": [
+    "seed-2312"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0087"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000105",
+      "obligation_type": "missing_doc_reference",
+      "canon_label": "- Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / prima...",
+      "description": "- Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure, and action-surface / shortcut / context-menu policy.",
+      "source_seed_ids": [
+        "seed-2312"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17251-L17251"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure, and action-surface / shortcut / context-menu policy."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "missing_doc_reference_resolution",
+      "priority": "blocker",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0789",
+  "source_seed_ids_represented": [
+    "seed-1913",
+    "seed-1914",
+    "seed-1915",
+    "seed-1916"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0064",
+    "shard-0070",
+    "shard-0081",
+    "shard-0082"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000804",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/BinaryLocator_Spec.md`",
+      "description": "- `Plans/BinaryLocator_Spec.md`",
+      "source_seed_ids": [
+        "seed-1913"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12731-L12731",
+        "working_ledger.md:L12760-L12760"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/BinaryLocator_Spec.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/BinaryLocator_Spec.md",
+        "quarantined_placeholder_path:Plans/BinaryLocator_Spec.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000805",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/BinaryLocator_Spec.md`",
+      "description": "- `Plans/BinaryLocator_Spec.md`",
+      "source_seed_ids": [
+        "seed-1914"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13837-L13837",
+        "working_ledger.md:L13891-L13891"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/BinaryLocator_Spec.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/BinaryLocator_Spec.md",
+        "quarantined_placeholder_path:Plans/BinaryLocator_Spec.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000806",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/BinaryLocator_Spec.md`",
+      "description": "- `Plans/BinaryLocator_Spec.md`",
+      "source_seed_ids": [
+        "seed-1915"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16010-L16010",
+        "working_ledger.md:L16058-L16058",
+        "working_ledger.md:L16126-L16126",
+        "working_ledger.md:L16172-L16172"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/BinaryLocator_Spec.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/BinaryLocator_Spec.md",
+        "quarantined_placeholder_path:Plans/BinaryLocator_Spec.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000807",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/BinaryLocator_Spec.md`",
+      "description": "- `Plans/BinaryLocator_Spec.md`",
+      "source_seed_ids": [
+        "seed-1916"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16245-L16245",
+        "working_ledger.md:L16286-L16286"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/BinaryLocator_Spec.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/BinaryLocator_Spec.md",
+        "quarantined_placeholder_path:Plans/BinaryLocator_Spec.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

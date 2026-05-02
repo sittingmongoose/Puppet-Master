@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0002",
+  "source_seed_ids_represented": [
+    "seed-1493"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0045"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000002",
+      "obligation_type": "consumer",
+      "canon_label": "- Consolidate execution-core protocol docs around node-native execution context, reviewer/corroboration/concern lifec...",
+      "description": "- Consolidate execution-core protocol docs around node-native execution context, reviewer/corroboration/concern lifecycle hooks, and wake/block taxonomies that are complete enough to serve downstream consumers.",
+      "source_seed_ids": [
+        "seed-1493"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8918-L8918"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Consolidate execution-core protocol docs around node-native execution context, reviewer/corroboration/concern lifecycle hooks, and wake/block taxonomies that are complete enough to serve downstream consumers."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "consumer_propagation",
+      "priority": "minor",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

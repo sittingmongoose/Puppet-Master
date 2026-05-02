@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0748",
+  "source_seed_ids_represented": [
+    "seed-1657"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0049"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000750",
+      "obligation_type": "owner",
+      "canon_label": "- `FileManager.md` still cannot satisfy its own addendum requiring open-by-runtime-identity because its core open con...",
+      "description": "- `FileManager.md` still cannot satisfy its own addendum requiring open-by-runtime-identity because its core open contract is path-only; `generated://` only covers preview restore, and `evidence_record` is still tier-keyed where attempt-native pivots are now required.",
+      "source_seed_ids": [
+        "seed-1657"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9782-L9782"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `FileManager.md` still cannot satisfy its own addendum requiring open-by-runtime-identity because its core open contract is path-only; `generated://` only covers preview restore, and `evidence_record` is still tier-keyed where attempt-native pivots are now required."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}
