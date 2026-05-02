@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1311",
+  "source_seed_ids_represented": [
+    "seed-0175"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0004"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002023",
+      "obligation_type": "owner",
+      "canon_label": "- `lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage...",
+      "description": "- `lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation",
+      "source_seed_ids": [
+        "seed-0175"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L789-L789"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

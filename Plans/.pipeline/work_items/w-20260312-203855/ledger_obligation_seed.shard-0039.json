@@ -1,0 +1,945 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0039",
+  "seed_candidates": [
+    {
+      "line_start": 7611,
+      "line_end": 7611,
+      "seed_type": "owner",
+      "exact_items": [
+        "- stored `resume_url` fields can remain for portability, but must not imply a separate routing ontology"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7629,
+      "line_end": 7629,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Multi-Account.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7630,
+      "line_end": 7630,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Models_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7632,
+      "line_end": 7632,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7635,
+      "line_end": 7635,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7636,
+      "line_end": 7636,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7637,
+      "line_end": 7637,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7643,
+      "line_end": 7643,
+      "seed_type": "owner",
+      "exact_items": [
+        "- GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7648,
+      "line_end": 7648,
+      "seed_type": "owner",
+      "exact_items": [
+        "- The missing role dimension is now clearly the link between account routing and auditability:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7652,
+      "line_end": 7652,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7656,
+      "line_end": 7656,
+      "seed_type": "owner",
+      "exact_items": [
+        "- GPT-5.2 reinforced that switch-history remains under-owned as an event family, not just a missing view:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7662,
+      "line_end": 7662,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7663,
+      "line_end": 7663,
+      "seed_type": "owner",
+      "exact_items": [
+        "- still needs requested concrete-account ownership plus explicit role/actor semantics in the canonical runtime record"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7664,
+      "line_end": 7664,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Multi-Account.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7666,
+      "line_end": 7666,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Models_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7668,
+      "line_end": 7668,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Contracts_V0.md` + `Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7670,
+      "line_end": 7670,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7682,
+      "line_end": 7682,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Add an OperationalIdentity block or equivalent disclosure layer to the shared runtime identity grammar."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7690,
+      "line_end": 7690,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Operational identities must be displayable with provider/account identity but must not imply shared token ownership."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7692,
+      "line_end": 7692,
+      "seed_type": "owner",
+      "exact_items": [
+        "- If role-scoped routing is not surfaced in records, later projections will recreate it heuristically and drift immediately."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7697,
+      "line_end": 7697,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7698,
+      "line_end": 7698,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Provider_OpenCode.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7699,
+      "line_end": 7699,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7700,
+      "line_end": 7700,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Permissions_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7702,
+      "line_end": 7702,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7703,
+      "line_end": 7703,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Executor_Protocol.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7710,
+      "line_end": 7710,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Bridge/event contracts are still too thin for rewrite-era correlation:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7713,
+      "line_end": 7713,
+      "seed_type": "owner",
+      "exact_items": [
+        "- the A2A doc\u2019s hard \u201cno new categories\u201d rule now blocks clean introduction of those semantics without version governance"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7722,
+      "line_end": 7722,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Permission snapshots still do not satisfy rewrite-era requested/effective disclosure:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7728,
+      "line_end": 7728,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Provider_OpenCode.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7730,
+      "line_end": 7730,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/CLI_Bridged_Providers.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7731,
+      "line_end": 7731,
+      "seed_type": "owner",
+      "exact_items": [
+        "- now clearly needs a versioned correlation/context block and stronger account-health semantics"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7732,
+      "line_end": 7732,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7734,
+      "line_end": 7734,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Permissions_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7736,
+      "line_end": 7736,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Contracts_V0.md` + `Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7737,
+      "line_end": 7737,
+      "seed_type": "owner",
+      "exact_items": [
+        "- likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7741,
+      "line_end": 7741,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Bridged envelopes still conflict with their own later correlation-preservation addenda."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7745,
+      "line_end": 7745,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7749,
+      "line_end": 7749,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Add a versioned event/correlation context block for bridged runtimes and normalized streams."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7756,
+      "line_end": 7756,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `origin` is still audit-only; do not turn it into behavior-driving actor identity."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7759,
+      "line_end": 7759,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Permission approval state must not leak across lanes or accounts just because actors share a UI session."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7768,
+      "line_end": 7768,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7776,
+      "line_end": 7776,
+      "seed_type": "owner",
+      "exact_items": [
+        "- **reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7779,
+      "line_end": 7779,
+      "seed_type": "owner",
+      "exact_items": [
+        "- requested concrete-account ownership"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7781,
+      "line_end": 7781,
+      "seed_type": "owner",
+      "exact_items": [
+        "- projection-freshness vocabulary and ownership distinct from Preview `trust_tier`"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7784,
+      "line_end": 7784,
+      "seed_type": "owner",
+      "exact_items": [
+        "- native vs widget surface ownership"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7789,
+      "line_end": 7789,
+      "seed_type": "owner",
+      "exact_items": [
+        "- help/glossary term ownership"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7792,
+      "line_end": 7792,
+      "seed_type": "owner",
+      "exact_items": [
+        "- whenever a seam still depends on a missing canonical event/record family or a missing owner doc, it is not yet reconciliation-ready"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7797,
+      "line_end": 7797,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `remediation.resolved` conflict"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7798,
+      "line_end": 7798,
+      "seed_type": "owner",
+      "exact_items": [
+        "- requested concrete-account gap"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7799,
+      "line_end": 7799,
+      "seed_type": "owner",
+      "exact_items": [
+        "- missing role/actor dimension in effective/runtime records"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 7800,
+      "line_end": 7800,
+      "seed_type": "missing_doc_reference",
+      "exact_items": [
+        "- missing shared route-payload schema"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_observations": [],
+  "source_lineage_status": "pass"
+}

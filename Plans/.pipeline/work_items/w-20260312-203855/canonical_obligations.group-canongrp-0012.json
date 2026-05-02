@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0012",
+  "source_seed_ids_represented": [
+    "seed-2256"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0083"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000012",
+      "obligation_type": "consumer",
+      "canon_label": "- This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep rec...",
+      "description": "- This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep recreating the same storage and command drift.",
+      "source_seed_ids": [
+        "seed-2256"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16597-L16597"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep recreating the same storage and command drift."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "consumer_propagation",
+      "priority": "minor",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

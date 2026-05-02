@@ -1,0 +1,154 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0018",
+  "seed_candidates": [
+    {
+      "line_start": 3437,
+      "line_end": 3437,
+      "seed_type": "owner",
+      "exact_items": [
+        "- required quorum model"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 3518,
+      "line_end": 3518,
+      "seed_type": "owner",
+      "exact_items": [
+        "- The product already assumes many exact record families, but the local docs do not shape them consistently."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 3543,
+      "line_end": 3543,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 3544,
+      "line_end": 3544,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 3545,
+      "line_end": 3545,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Widget_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 3559,
+      "line_end": 3559,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- what happens when exported content includes historical, superseded, or removed backing objects"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 3584,
+      "line_end": 3584,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Evidence export` should preserve evidence/artifact distinction"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 3589,
+      "line_end": 3589,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- historical/superseded status flags where relevant"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_observations": [],
+  "source_lineage_status": "pass"
+}

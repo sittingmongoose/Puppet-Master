@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1230",
+  "source_seed_ids_represented": [
+    "seed-1480"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0045"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-001942",
+      "obligation_type": "owner",
+      "canon_label": "- `Tools.md` still leaves tool events under-attributed (`node_id`, `attempt_id`, actor/account/role, lane context mis...",
+      "description": "- `Tools.md` still leaves tool events under-attributed (`node_id`, `attempt_id`, actor/account/role, lane context missing), keeps the normalized outcome taxonomy unwired to actual event fields, and still lacks any real DAE post-hoc tool-event contract.",
+      "source_seed_ids": [
+        "seed-1480"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8879-L8879"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Tools.md` still leaves tool events under-attributed (`node_id`, `attempt_id`, actor/account/role, lane context missing), keeps the normalized outcome taxonomy unwired to actual event fields, and still lacks any real DAE post-hoc tool-event contract."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

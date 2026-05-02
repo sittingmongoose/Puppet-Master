@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1875",
+  "source_seed_ids_represented": [
+    "seed-1478"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0045"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002593",
+      "obligation_type": "stale_retirement",
+      "canon_label": "- `UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated graph recovery commands are ...",
+      "description": "- `UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated graph recovery commands are still presented as live canon, HITL `approve_continue` still has no canonical `cmd.*` mapping, cross-surface pivot payloads still lack rewrite-era structural keys, and there are still no stable `cmd.account.*`, `cmd.concern.*`, or `cmd.promotion.*` families.",
+      "source_seed_ids": [
+        "seed-1478"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8874-L8874"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated graph recovery commands are still presented as live canon, HITL `approve_continue` still has no canonical `cmd.*` mapping, cross-surface pivot payloads still lack rewrite-era structural keys, and there are still no stable `cmd.account.*`, `cmd.concern.*`, or `cmd.promotion.*` families."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "stale_retirement",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0228",
+  "source_seed_ids_represented": [
+    "seed-1948"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0065"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000228",
+      "obligation_type": "owner",
+      "canon_label": "- Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and c...",
+      "description": "- Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and canonical navigation is explicit.",
+      "source_seed_ids": [
+        "seed-1948"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12863-L12863"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and canonical navigation is explicit."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

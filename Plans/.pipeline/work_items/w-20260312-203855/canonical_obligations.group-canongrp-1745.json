@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1745",
+  "source_seed_ids_represented": [
+    "seed-2635"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0091"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002458",
+      "obligation_type": "owner",
+      "canon_label": "- summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfi...",
+      "description": "- summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`.",
+      "source_seed_ids": [
+        "seed-2635"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18153-L18153"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

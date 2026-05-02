@@ -1,0 +1,424 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0015",
+  "seed_candidates": [
+    {
+      "line_start": 2805,
+      "line_end": 2805,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `superseded`"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2820,
+      "line_end": 2820,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `superseded`"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2832,
+      "line_end": 2832,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `historical` vs `superseded`"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2833,
+      "line_end": 2833,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- every superseded object is historical"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2834,
+      "line_end": 2834,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- not every historical object is superseded"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2835,
+      "line_end": 2835,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `superseded` vs `revoked`"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2836,
+      "line_end": 2836,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `superseded` = replaced by newer truth"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2848,
+      "line_end": 2848,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- should also expose when an attempt is superseded by later remediation/graph generation"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2854,
+      "line_end": 2854,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- superseded promotion if replaced by a later accepted promotion"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2858,
+      "line_end": 2858,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- merged/split/superseded concern records"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2862,
+      "line_end": 2862,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- invalidated prior path may be superseded by newer generation"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2877,
+      "line_end": 2877,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `Superseded by Generation 4`"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2891,
+      "line_end": 2891,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked` / `reopened` / `archived` / `removed`."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2903,
+      "line_end": 2903,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- Add explicit successor/predecessor links where `superseded` is possible."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2904,
+      "line_end": 2904,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- Keep visibility policy (`archived`, hidden from default lists) separate from semantic state (`historical`, `revoked`, `superseded`)."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2909,
+      "line_end": 2909,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- old graph paths should remain visible and clickable even when superseded."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2923,
+      "line_end": 2923,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `historical run` must not imply:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2931,
+      "line_end": 2931,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Relationship must be explicit, not inferred from same-project membership."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2956,
+      "line_end": 2956,
+      "seed_type": "owner",
+      "exact_items": [
+        "- But those must be explicit metadata, not inferred by heuristics."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2959,
+      "line_end": 2959,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Search results should preserve run identity exactly and avoid collapsing similarly named seams/packages/nodes across unrelated runs."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2966,
+      "line_end": 2966,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2971,
+      "line_end": 2971,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- Avoid UI copy like `superseded by newer run` unless there is an explicit relationship proving that."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2976,
+      "line_end": 2976,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2980,
+      "line_end": 2980,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_observations": [],
+  "source_lineage_status": "pass"
+}

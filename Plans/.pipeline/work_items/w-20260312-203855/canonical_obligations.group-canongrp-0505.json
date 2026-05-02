@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0505",
+  "source_seed_ids_represented": [
+    "seed-1901"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0063"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000507",
+      "obligation_type": "owner",
+      "canon_label": "- Side-panel and page-tab distinctions are already stable enough to use canonically, but the docs do not yet connect ...",
+      "description": "- Side-panel and page-tab distinctions are already stable enough to use canonically, but the docs do not yet connect them cleanly to the routing work.",
+      "source_seed_ids": [
+        "seed-1901"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12596-L12596"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Side-panel and page-tab distinctions are already stable enough to use canonically, but the docs do not yet connect them cleanly to the routing work."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

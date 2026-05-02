@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.transfer_coverage_source_coverage_report.v2.2",
+  "work_id": "w-20260312-203855",
+  "status": "pass",
+  "obligations_total": 1896,
+  "obligations_with_rows": 1896,
+  "obligations_without_rows": 0,
+  "missing_obligation_ids": [],
+  "missing_source_seed_ids": [],
+  "missing_source_shard_ids": [],
+  "path_quarantine_status": "pass",
+  "placeholder_path_status": "pass",
+  "missing_doc_path_status": "pass",
+  "placeholder_replacement_status": "pass",
+  "work_id_status": "pass",
+  "subagent_execution_status": "pass",
+  "subagent_attestation_agent": "c6464b92-3fab-4bc5-ba2a-52d4911137e3",
+  "known_target_files_missing": 0,
+  "doc_discovery_rows": 885,
+  "process_only_rows": 5,
+  "invalid_path_findings": [],
+  "blockers": [],
+  "next_required_stage": "Open Gaps Delta Reducer / Ready-Routing Gate",
+  "delta_update_refs": {
+    "coverage_evidence_delta_result": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_delta_result.json",
+    "before_sha256": "ecbb060c91ca8ae34d7e8584246f13b1f6f54b51a87111d6d5e7801e230cbc23",
+    "after_sha256": "22736828e9917312f74bd2446e8e102ee1161d6e824530d95cfb6c3b7645fb66"
+  },
+  "source_lineage_status": "pass"
+}

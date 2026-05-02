@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0749",
+  "source_seed_ids_represented": [
+    "seed-2204"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0081"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000751",
+      "obligation_type": "owner",
+      "canon_label": "- `FileSafe.md` still has a concrete DAE enforcement seam: post-approval arg mutation, `context_files` widening write...",
+      "description": "- `FileSafe.md` still has a concrete DAE enforcement seam: post-approval arg mutation, `context_files` widening write scope, fail-open initialization paths, and `recovery_options[]` vs `allowed_action_ids[]` schema drift.",
+      "source_seed_ids": [
+        "seed-2204"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16155-L16155"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `FileSafe.md` still has a concrete DAE enforcement seam: post-approval arg mutation, `context_files` widening write scope, fail-open initialization paths, and `recovery_options[]` vs `allowed_action_ids[]` schema drift."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

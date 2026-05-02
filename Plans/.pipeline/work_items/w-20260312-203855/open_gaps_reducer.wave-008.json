@@ -1,0 +1,72 @@
+{
+  "schema_id": "pm.open_gaps_reducer_wave.v2.2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-008",
+  "subagent_tasks": [
+    {
+      "task_id": "ogr-w008-gap-00008",
+      "gap_id": "gap-00008",
+      "description": "Validate merged gap slice for reducer/source gate"
+    },
+    {
+      "task_id": "ogr-w008-gap-00020",
+      "gap_id": "gap-00020",
+      "description": "Validate merged gap slice for reducer/source gate"
+    },
+    {
+      "task_id": "ogr-w008-gap-00032",
+      "gap_id": "gap-00032",
+      "description": "Validate merged gap slice for reducer/source gate"
+    },
+    {
+      "task_id": "ogr-w008-gap-00044",
+      "gap_id": "gap-00044",
+      "description": "Validate merged gap slice for reducer/source gate"
+    },
+    {
+      "task_id": "ogr-w008-gap-00056",
+      "gap_id": "gap-00056",
+      "description": "Validate merged gap slice for reducer/source gate"
+    },
+    {
+      "task_id": "ogr-w008-gap-00068",
+      "gap_id": "gap-00068",
+      "description": "Validate merged gap slice for reducer/source gate"
+    }
+  ],
+  "assigned_input_boundaries": {
+    "open_gaps_result_glob": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_result.*.json",
+    "gaps_in_wave": 6
+  },
+  "subagent_result_status": "complete",
+  "completed_task_count": 6,
+  "failed_task_count": 0,
+  "gap_ids_assigned": [
+    "gap-00008",
+    "gap-00020",
+    "gap-00032",
+    "gap-00044",
+    "gap-00056",
+    "gap-00068"
+  ],
+  "gap_ids_completed": [
+    "gap-00008",
+    "gap-00020",
+    "gap-00032",
+    "gap-00044",
+    "gap-00056",
+    "gap-00068"
+  ],
+  "route_breakdown_groups_assigned": [
+    "route-008"
+  ],
+  "route_breakdown_groups_completed": [
+    "route-008"
+  ],
+  "validation_groups_assigned": [
+    "val-008"
+  ],
+  "validation_groups_completed": [
+    "val-008"
+  ]
+}

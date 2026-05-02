@@ -1,0 +1,425 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0012",
+  "seed_candidates": [
+    {
+      "line_start": 2218,
+      "line_end": 2218,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Source Control worktree rows remain concrete and filesystem/Git oriented, but must show enough orchestration metadata to prevent isolation drift:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2231,
+      "line_end": 2231,
+      "seed_type": "stale_token_replacement",
+      "exact_items": [
+        "- Do not rename Source Control objects so aggressively that `worktree` becomes hidden or secondary there."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2232,
+      "line_end": 2232,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Lane` is important for runtime/governance modeling, but in Source Control it should appear as ownership/context metadata for a worktree, not replace worktree as the primary object."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2235,
+      "line_end": 2235,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/GitHub_Integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2237,
+      "line_end": 2237,
+      "seed_type": "owner",
+      "exact_items": [
+        "- enrich row metadata with package/lane/run ownership and lifecycle state"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2238,
+      "line_end": 2238,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2242,
+      "line_end": 2242,
+      "seed_type": "owner",
+      "exact_items": [
+        "- preserve Source Control as Git/worktree-first"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2245,
+      "line_end": 2245,
+      "seed_type": "owner",
+      "exact_items": [
+        "## Research Progress - 2026-03-16 - Source Control Panel Constraint"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2247,
+      "line_end": 2247,
+      "seed_type": "owner",
+      "exact_items": [
+        "### Confirmed constraint"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2251,
+      "line_end": 2251,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Source Control rows and tabs must stay information-dense but selective."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2252,
+      "line_end": 2252,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2265,
+      "line_end": 2265,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Widget_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2266,
+      "line_end": 2266,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2268,
+      "line_end": 2268,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2271,
+      "line_end": 2271,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Widget_System.md` is still heavily aligned to the older orchestrator model:"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2304,
+      "line_end": 2304,
+      "seed_type": "owner",
+      "exact_items": [
+        "- widgets must consume stable orchestrator projections and canonical record/query contracts"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2305,
+      "line_end": 2305,
+      "seed_type": "owner",
+      "exact_items": [
+        "- widgets must not define meaning by subscribing directly to legacy event names or tier-specific objects"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2324,
+      "line_end": 2324,
+      "seed_type": "owner",
+      "exact_items": [
+        "- widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2347,
+      "line_end": 2347,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2366,
+      "line_end": 2366,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Widget_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2368,
+      "line_end": 2368,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2393,
+      "line_end": 2393,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 2395,
+      "line_end": 2395,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_observations": [],
+  "source_lineage_status": "pass"
+}

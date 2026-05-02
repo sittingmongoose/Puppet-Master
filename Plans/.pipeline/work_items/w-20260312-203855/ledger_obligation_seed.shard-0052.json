@@ -1,0 +1,991 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0052",
+  "seed_candidates": [
+    {
+      "line_start": 10225,
+      "line_end": 10225,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Multi-Account.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10226,
+      "line_end": 10226,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10227,
+      "line_end": 10227,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10228,
+      "line_end": 10228,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10230,
+      "line_end": 10230,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10231,
+      "line_end": 10231,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10236,
+      "line_end": 10236,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Runtime_Artifacts_Panel.md` already needs canonical linkage into Source Control / GitHub / Docker / Usage, but it still lacks a normalized operational-identity field family."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10256,
+      "line_end": 10256,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Commands_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Commands_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10257,
+      "line_end": 10257,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Wiring_Matrix.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10258,
+      "line_end": 10258,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/UI_Wiring_Rules.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10259,
+      "line_end": 10259,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Project_Output_Artifacts.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10263,
+      "line_end": 10263,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Decision_Policy.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10265,
+      "line_end": 10265,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Progression_Gates.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10267,
+      "line_end": 10267,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/assistant-memory-subsystem.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10270,
+      "line_end": 10270,
+      "seed_type": "owner",
+      "exact_items": [
+        "- The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10276,
+      "line_end": 10276,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `Wiring_Matrix.md` still contains normative ghost IDs (`cmd.chat.branch_from_restore`) plus wider matrix/catalog drift, and `UI_Wiring_Rules.md` still lacks reverse coverage, stale/superseded ID states, dispatcher precondition fields, and projection-freshness/mutation gating hooks."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10277,
+      "line_end": 10277,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Project_Output_Artifacts.md`, `FileManager.md`, `newtools.md`, and `assistant-memory-subsystem.md` now form a stronger artifact/event/runtime-observability gap cluster:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10285,
+      "line_end": 10285,
+      "seed_type": "owner",
+      "exact_items": [
+        "- multiple adjacent docs cite `Plans/Glossary.md \u00a72` for `Overseer`, but no such entry exists."
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Glossary.md \u00a72"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10288,
+      "line_end": 10288,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Crosswalk.md` still has duplicate section numbering, a wrong `Primitive:` ContractRef, missing \u00a72 index entries for appended primitives, and orphaned source-control/GitHub-actions/docker surfaces outside the normal routing structure."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10290,
+      "line_end": 10290,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Decision_Policy.md`, `Run_Modes.md`, and `Progression_Gates.md` sharpened from vague policy drift into implementation-blocking runtime-governance gaps:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10291,
+      "line_end": 10291,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10292,
+      "line_end": 10292,
+      "seed_type": "layout_blocker",
+      "exact_items": [
+        "- `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, or mid-run account-switch invalidation of committed strategy."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10294,
+      "line_end": 10294,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placeholders, and a material collision where GATE-012 BLOCKED semantics collapse wizard `attention_required` and true wizard `blocked` escalation into the same gate state."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10299,
+      "line_end": 10299,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Commands_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Commands_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10300,
+      "line_end": 10300,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Wiring_Matrix.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10301,
+      "line_end": 10301,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/UI_Wiring_Rules.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10302,
+      "line_end": 10302,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Project_Output_Artifacts.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10306,
+      "line_end": 10306,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Decision_Policy.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10308,
+      "line_end": 10308,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Progression_Gates.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10310,
+      "line_end": 10310,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/assistant-memory-subsystem.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10312,
+      "line_end": 10312,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10315,
+      "line_end": 10315,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10316,
+      "line_end": 10316,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10317,
+      "line_end": 10317,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Executor_Protocol.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10318,
+      "line_end": 10318,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10319,
+      "line_end": 10319,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Multi-Account.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10325,
+      "line_end": 10325,
+      "seed_type": "owner",
+      "exact_items": [
+        "- The repo still lacks a coherent owner for several rewrite-era operational nouns and primitives, so adjacent docs can cite terms (`Overseer`, `attempt`, `Seglog`, promotion senses, handoff kinds) that no SSOT doc actually defines."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10329,
+      "line_end": 10329,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Register/fix the missing command families and remove false catalog/wiring claims:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10331,
+      "line_end": 10331,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- reconcile `/compact`, `/mode`, override_builtin semantics, and stale/superseded command-state handling across command-system, chat, catalog, and wiring docs."
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10336,
+      "line_end": 10336,
+      "seed_type": "owner",
+      "exact_items": [
+        "- add missing artifact types,"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10337,
+      "line_end": 10337,
+      "seed_type": "owner",
+      "exact_items": [
+        "- define an `OpenArtifact`-style FileManager contract plus required supporting projections,"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10340,
+      "line_end": 10340,
+      "seed_type": "owner",
+      "exact_items": [
+        "- add missing Glossary entries for rewrite-era terms,"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10350,
+      "line_end": 10350,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Commands_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Commands_System.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10351,
+      "line_end": 10351,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Wiring_Matrix.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10352,
+      "line_end": 10352,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/UI_Wiring_Rules.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10353,
+      "line_end": 10353,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Project_Output_Artifacts.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10355,
+      "line_end": 10355,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Decision_Policy.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10357,
+      "line_end": 10357,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Progression_Gates.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10359,
+      "line_end": 10359,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/assistant-memory-subsystem.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10360,
+      "line_end": 10360,
+      "seed_type": "owner",
+      "exact_items": [
+        "- with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures."
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/Glossary.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10366,
+      "line_end": 10366,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10369,
+      "line_end": 10369,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 10370,
+      "line_end": 10370,
+      "seed_type": "owner",
+      "exact_items": [
+        "- spot-checks against `Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_observations": [],
+  "source_lineage_status": "pass"
+}

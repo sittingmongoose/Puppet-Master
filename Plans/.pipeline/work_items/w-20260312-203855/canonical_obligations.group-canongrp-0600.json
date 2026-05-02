@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0600",
+  "source_seed_ids_represented": [
+    "seed-2249"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0083"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000602",
+      "obligation_type": "owner",
+      "canon_label": "- The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream dr...",
+      "description": "- The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream drift across Orchestrator, Graph, HITL, storage, and command docs.",
+      "source_seed_ids": [
+        "seed-2249"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16527-L16527"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream drift across Orchestrator, Graph, HITL, storage, and command docs."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

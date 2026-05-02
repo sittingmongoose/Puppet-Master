@@ -1,0 +1,867 @@
+{
+  "schema_id": "pm.coverage_evidence_delta_worklist.v2.2",
+  "work_id": "w-20260312-203855",
+  "source_doc_discovery_resolution": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+  "source_transfer_coverage": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+  "summary": {
+    "resolved_coverage_rows_total": 125,
+    "delta_tasks_total": 15,
+    "resolved_existing_owner_rows": 125,
+    "process_only_rows": 0,
+    "noise_rows": 0,
+    "unresolved_rows_ignored": 885,
+    "path_quarantine_violations": 0,
+    "placeholder_path_violations": 0
+  },
+  "delta_tasks": [
+    {
+      "delta_task_id": "covdelta-001",
+      "coverage_row_ids": [
+        "cov-00251",
+        "cov-00252",
+        "cov-00253",
+        "cov-00254",
+        "cov-00255",
+        "cov-00256",
+        "cov-00257",
+        "cov-00258",
+        "cov-00259",
+        "cov-00260"
+      ],
+      "resolution_ids": [
+        "ddres-027"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Project_Output_Artifacts.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-000251",
+        "obl-000252",
+        "obl-000253",
+        "obl-000254",
+        "obl-000255",
+        "obl-000256",
+        "obl-000257",
+        "obl-000258",
+        "obl-000259",
+        "obl-000260"
+      ],
+      "source_seed_ids": [
+        "seed-0780",
+        "seed-0781",
+        "seed-0782",
+        "seed-0783",
+        "seed-0784",
+        "seed-0785",
+        "seed-0786",
+        "seed-0787",
+        "seed-0788",
+        "seed-0789"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "exact_items": [
+        "- `Plans/newtools.md`, `Plans/assistant-chat-design.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Project_Output_Artifacts.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-002",
+      "coverage_row_ids": [
+        "cov-00296",
+        "cov-00297",
+        "cov-00298",
+        "cov-00299",
+        "cov-00300"
+      ],
+      "resolution_ids": [
+        "ddres-029"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Models_System.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-000296",
+        "obl-000297",
+        "obl-000298",
+        "obl-000299",
+        "obl-000300"
+      ],
+      "source_seed_ids": [
+        "seed-0869",
+        "seed-0870",
+        "seed-0871",
+        "seed-0872",
+        "seed-0873"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "exact_items": [
+        "- Reconcile downstream consumers to one canonical requested/effective identity block owned by `Contracts_V0.md`, including explicit account-switch/fallback disclosure fields."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "consumer_propagation",
+      "bounded_inputs": [
+        "Plans/Models_System.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-003",
+      "coverage_row_ids": [
+        "cov-00311",
+        "cov-00312",
+        "cov-00313",
+        "cov-00314",
+        "cov-00315",
+        "cov-00316",
+        "cov-00317",
+        "cov-00318",
+        "cov-00319",
+        "cov-00320"
+      ],
+      "resolution_ids": [
+        "ddres-030"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-000311",
+        "obl-000312",
+        "obl-000313",
+        "obl-000314",
+        "obl-000315",
+        "obl-000316",
+        "obl-000317",
+        "obl-000318",
+        "obl-000319",
+        "obl-000320"
+      ],
+      "source_seed_ids": [
+        "seed-0884",
+        "seed-0885",
+        "seed-0886",
+        "seed-0887",
+        "seed-0888",
+        "seed-0889",
+        "seed-0890",
+        "seed-0891",
+        "seed-0892",
+        "seed-0893"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0012"
+      ],
+      "exact_items": [
+        "- project identity must stay stable across path moves/rebinds and across worktree-aware flows."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-004",
+      "coverage_row_ids": [
+        "cov-00396",
+        "cov-00397",
+        "cov-00398",
+        "cov-00399",
+        "cov-00400"
+      ],
+      "resolution_ids": [
+        "ddres-035"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Contracts_V0.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-000396",
+        "obl-000397",
+        "obl-000398",
+        "obl-000399",
+        "obl-000400"
+      ],
+      "source_seed_ids": [
+        "seed-0983",
+        "seed-0984",
+        "seed-0985",
+        "seed-0986",
+        "seed-0987"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "exact_items": [
+        "- The remaining gap is mostly for Orchestrator and cross-surface explanation:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Contracts_V0.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-005",
+      "coverage_row_ids": [
+        "cov-00621",
+        "cov-00622",
+        "cov-00623",
+        "cov-00624",
+        "cov-00625"
+      ],
+      "resolution_ids": [
+        "ddres-050"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Decision_Policy.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-000621",
+        "obl-000622",
+        "obl-000623",
+        "obl-000624",
+        "obl-000625"
+      ],
+      "source_seed_ids": [
+        "seed-1259",
+        "seed-1260",
+        "seed-1261",
+        "seed-1262",
+        "seed-1263"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "exact_items": [
+        "- `Prompt_Pipeline.md` still contains a normative MUST against creating execution layers beyond `Phase / Task / Subtask / Iteration`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Decision_Policy.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-006",
+      "coverage_row_ids": [
+        "cov-00771",
+        "cov-00772",
+        "cov-00773",
+        "cov-00774",
+        "cov-00775"
+      ],
+      "resolution_ids": [
+        "ddres-058"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Prompt_Pipeline.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-000771",
+        "obl-000772",
+        "obl-000773",
+        "obl-000774",
+        "obl-000775"
+      ],
+      "source_seed_ids": [
+        "seed-1411",
+        "seed-1412",
+        "seed-1413",
+        "seed-1414",
+        "seed-1415"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0041"
+      ],
+      "exact_items": [
+        "- but prompt/runtime/storage schemas still have no parallel operational-identity block"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Prompt_Pipeline.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-007",
+      "coverage_row_ids": [
+        "cov-01151",
+        "cov-01152",
+        "cov-01153",
+        "cov-01154",
+        "cov-01155",
+        "cov-01156",
+        "cov-01157",
+        "cov-01158",
+        "cov-01159",
+        "cov-01160"
+      ],
+      "resolution_ids": [
+        "ddres-085"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Runtime_Artifacts_Panel.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001151",
+        "obl-001152",
+        "obl-001153",
+        "obl-001154",
+        "obl-001155",
+        "obl-001156",
+        "obl-001157",
+        "obl-001158",
+        "obl-001159",
+        "obl-001160"
+      ],
+      "source_seed_ids": [
+        "seed-1834",
+        "seed-1835",
+        "seed-1836",
+        "seed-1837",
+        "seed-1838",
+        "seed-1839",
+        "seed-1840",
+        "seed-1841",
+        "seed-1842",
+        "seed-1843"
+      ],
+      "source_shard_ids": [
+        "shard-0059",
+        "shard-0060"
+      ],
+      "exact_items": [
+        "- packaged document sets already have explicit `manifest.json` ownership"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-008",
+      "coverage_row_ids": [
+        "cov-01201",
+        "cov-01202",
+        "cov-01203",
+        "cov-01204",
+        "cov-01205",
+        "cov-01206",
+        "cov-01207",
+        "cov-01208",
+        "cov-01209",
+        "cov-01210"
+      ],
+      "resolution_ids": [
+        "ddres-089"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/00-plans-index.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001201",
+        "obl-001202",
+        "obl-001203",
+        "obl-001204",
+        "obl-001205",
+        "obl-001206",
+        "obl-001207",
+        "obl-001208",
+        "obl-001209",
+        "obl-001210"
+      ],
+      "source_seed_ids": [
+        "seed-1911",
+        "seed-1912",
+        "seed-1913",
+        "seed-1914",
+        "seed-1915",
+        "seed-1916",
+        "seed-1917",
+        "seed-1918",
+        "seed-1919",
+        "seed-1920",
+        "seed-1921",
+        "seed-1922",
+        "seed-1923",
+        "seed-1924",
+        "seed-1925",
+        "seed-1926",
+        "seed-1927",
+        "seed-1928",
+        "seed-1929",
+        "seed-1930",
+        "seed-1931",
+        "seed-1932",
+        "seed-1933",
+        "seed-1934",
+        "seed-1935",
+        "seed-1936",
+        "seed-1937"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0084",
+        "shard-0086"
+      ],
+      "exact_items": [
+        "- must not preserve unrelated current primary-view context just because it was last open"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-009",
+      "coverage_row_ids": [
+        "cov-01277",
+        "cov-01278",
+        "cov-01279",
+        "cov-01280",
+        "cov-01281",
+        "cov-01282",
+        "cov-01283",
+        "cov-01284",
+        "cov-01285",
+        "cov-01286"
+      ],
+      "resolution_ids": [
+        "ddres-092"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Multi-Account.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001277",
+        "obl-001278",
+        "obl-001279",
+        "obl-001280",
+        "obl-001281",
+        "obl-001282",
+        "obl-001283",
+        "obl-001284",
+        "obl-001285",
+        "obl-001286"
+      ],
+      "source_seed_ids": [
+        "seed-2007",
+        "seed-2008",
+        "seed-2009",
+        "seed-2010",
+        "seed-2011",
+        "seed-2012",
+        "seed-2013",
+        "seed-2014",
+        "seed-2015",
+        "seed-2016"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "exact_items": [
+        "- `OpenCode_Coverage_Matrix.md` itself is now behind the rewrite: it omits A2A/stream-owner coverage, runtime-correlation records, OpenCode dual-auth-realm ownership, several Multi-Account GUI surfaces, and even some fixes that are already complete."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Multi-Account.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-010",
+      "coverage_row_ids": [
+        "cov-01297",
+        "cov-01298",
+        "cov-01299",
+        "cov-01300",
+        "cov-01301"
+      ],
+      "resolution_ids": [
+        "ddres-093"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/DRY_Rules.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001297",
+        "obl-001298",
+        "obl-001299",
+        "obl-001300",
+        "obl-001301"
+      ],
+      "source_seed_ids": [
+        "seed-2027",
+        "seed-2028",
+        "seed-2029",
+        "seed-2030",
+        "seed-2031"
+      ],
+      "source_shard_ids": [
+        "shard-0072",
+        "shard-0073"
+      ],
+      "exact_items": [
+        "- Resolver logic must be responsible for applying the correct scoped lookup rules."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/DRY_Rules.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-011",
+      "coverage_row_ids": [
+        "cov-01312",
+        "cov-01313",
+        "cov-01314",
+        "cov-01315",
+        "cov-01316",
+        "cov-01317",
+        "cov-01318",
+        "cov-01319",
+        "cov-01320",
+        "cov-01321"
+      ],
+      "resolution_ids": [
+        "ddres-095"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/WorktreeGitImprovement.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001312",
+        "obl-001313",
+        "obl-001314",
+        "obl-001315",
+        "obl-001316",
+        "obl-001317",
+        "obl-001318",
+        "obl-001319",
+        "obl-001320",
+        "obl-001321"
+      ],
+      "source_seed_ids": [
+        "seed-2042",
+        "seed-2043",
+        "seed-2044",
+        "seed-2045",
+        "seed-2046",
+        "seed-2047",
+        "seed-2048",
+        "seed-2049",
+        "seed-2050",
+        "seed-2051"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0074"
+      ],
+      "exact_items": [
+        "- `assistant-chat-design.md` already relies on stable identity for message/search/jump behavior but still lacks the shared named primitive that should connect those behaviors to the route/object model."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/WorktreeGitImprovement.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-012",
+      "coverage_row_ids": [
+        "cov-01377",
+        "cov-01378",
+        "cov-01379",
+        "cov-01380",
+        "cov-01381",
+        "cov-01382",
+        "cov-01383",
+        "cov-01384",
+        "cov-01385",
+        "cov-01386"
+      ],
+      "resolution_ids": [
+        "ddres-098"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/assistant-chat-design.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001377",
+        "obl-001378",
+        "obl-001379",
+        "obl-001380",
+        "obl-001381",
+        "obl-001382",
+        "obl-001383",
+        "obl-001384",
+        "obl-001385",
+        "obl-001386"
+      ],
+      "source_seed_ids": [
+        "seed-2109",
+        "seed-2110",
+        "seed-2111",
+        "seed-2112",
+        "seed-2113",
+        "seed-2114",
+        "seed-2115",
+        "seed-2116",
+        "seed-2117",
+        "seed-2118"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "exact_items": [
+        "- This split will make the owner-doc rewrite much easier because most refs do not need replacement."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/assistant-chat-design.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-013",
+      "coverage_row_ids": [
+        "cov-01502",
+        "cov-01503",
+        "cov-01504",
+        "cov-01505",
+        "cov-01506",
+        "cov-01507",
+        "cov-01508",
+        "cov-01509",
+        "cov-01510",
+        "cov-01511"
+      ],
+      "resolution_ids": [
+        "ddres-106"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Crosswalk.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001502",
+        "obl-001503",
+        "obl-001504",
+        "obl-001505",
+        "obl-001506",
+        "obl-001507",
+        "obl-001508",
+        "obl-001509",
+        "obl-001510",
+        "obl-001511"
+      ],
+      "source_seed_ids": [
+        "seed-2234",
+        "seed-2235",
+        "seed-2236",
+        "seed-2237",
+        "seed-2238",
+        "seed-2239",
+        "seed-2240",
+        "seed-2241",
+        "seed-2242",
+        "seed-2243"
+      ],
+      "source_shard_ids": [
+        "shard-0082",
+        "shard-0083"
+      ],
+      "exact_items": [
+        "- `Decision_Log.md` and `Crosswalk.md` are now both missing the same high-impact rewrite decisions, which means reconciliation has no single owner-traceability path for them."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Crosswalk.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-014",
+      "coverage_row_ids": [
+        "cov-01537",
+        "cov-01538",
+        "cov-01539",
+        "cov-01540",
+        "cov-01541",
+        "cov-01542",
+        "cov-01543",
+        "cov-01544",
+        "cov-01545",
+        "cov-01546"
+      ],
+      "resolution_ids": [
+        "ddres-108"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/rewrite-tie-in-memo.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001537",
+        "obl-001538",
+        "obl-001539",
+        "obl-001540",
+        "obl-001541",
+        "obl-001542",
+        "obl-001543",
+        "obl-001544",
+        "obl-001545",
+        "obl-001546"
+      ],
+      "source_seed_ids": [
+        "seed-2269",
+        "seed-2270",
+        "seed-2271",
+        "seed-2272",
+        "seed-2273",
+        "seed-2274",
+        "seed-2275",
+        "seed-2276",
+        "seed-2277",
+        "seed-2278"
+      ],
+      "source_shard_ids": [
+        "shard-0084",
+        "shard-0085"
+      ],
+      "exact_items": [
+        "- This seam is about ownership and scope, not renaming `requested_persona` back into older field families. The field names are already mostly right."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "stale_token_replacement_resolution",
+      "bounded_inputs": [
+        "Plans/rewrite-tie-in-memo.md"
+      ]
+    },
+    {
+      "delta_task_id": "covdelta-015",
+      "coverage_row_ids": [
+        "cov-01587",
+        "cov-01588",
+        "cov-01589",
+        "cov-01590",
+        "cov-01591",
+        "cov-01592",
+        "cov-01593",
+        "cov-01594",
+        "cov-01595",
+        "cov-01596"
+      ],
+      "resolution_ids": [
+        "ddres-110"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "resolved_path": "Plans/Glossary.md",
+      "resolved_heading": null,
+      "resolution_class": "resolved_existing_owner",
+      "source_obligation_ids": [
+        "obl-001587",
+        "obl-001588",
+        "obl-001589",
+        "obl-001590",
+        "obl-001591",
+        "obl-001592",
+        "obl-001593",
+        "obl-001594",
+        "obl-001595",
+        "obl-001596"
+      ],
+      "source_seed_ids": [
+        "seed-2319",
+        "seed-2320",
+        "seed-2321",
+        "seed-2322",
+        "seed-2323",
+        "seed-2324",
+        "seed-2325",
+        "seed-2326",
+        "seed-2327",
+        "seed-2328"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "exact_items": [
+        "- `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `evidence.schema.json`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "bounded_inputs": [
+        "Plans/Glossary.md"
+      ]
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true,
+    "delta_wave_attestation_agents": [
+      "a8a74c3c-6ea2-43c7-8fe3-18d510eeb355",
+      "a1884954-2ee8-428a-b797-fc82114292f8"
+    ]
+  }
+}

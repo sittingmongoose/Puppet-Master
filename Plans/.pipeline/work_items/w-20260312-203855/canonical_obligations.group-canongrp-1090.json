@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1090",
+  "source_seed_ids_represented": [
+    "seed-2492",
+    "seed-2493"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0089",
+    "shard-0091"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-001691",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/human-in-the-loop.md:22-49`",
+      "description": "- `Plans/human-in-the-loop.md:22-49`",
+      "source_seed_ids": [
+        "seed-2492"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17736-L17736",
+        "working_ledger.md:L17762-L17762"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/human-in-the-loop.md:22-49`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/human-in-the-loop.md",
+        "placeholder_path_removed:Plans/human-in-the-loop.md:22-49",
+        "quarantined_placeholder_path:Plans/human-in-the-loop.md",
+        "quarantined_placeholder_path:Plans/human-in-the-loop.md:22-49"
+      ]
+    },
+    {
+      "obligation_id": "obl-001692",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/human-in-the-loop.md:22-49`",
+      "description": "- `Plans/human-in-the-loop.md:22-49`",
+      "source_seed_ids": [
+        "seed-2493"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18006-L18006"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/human-in-the-loop.md:22-49`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/human-in-the-loop.md",
+        "placeholder_path_removed:Plans/human-in-the-loop.md:22-49",
+        "quarantined_placeholder_path:Plans/human-in-the-loop.md",
+        "quarantined_placeholder_path:Plans/human-in-the-loop.md:22-49"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

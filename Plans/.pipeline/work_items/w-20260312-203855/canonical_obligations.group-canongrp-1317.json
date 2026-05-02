@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1317",
+  "source_seed_ids_represented": [
+    "seed-2018"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0070"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002029",
+      "obligation_type": "owner",
+      "canon_label": "- `meta.json` must remain active; this is still an in-progress research sweep, not a reconciliation-ready state.",
+      "description": "- `meta.json` must remain active; this is still an in-progress research sweep, not a reconciliation-ready state.",
+      "source_seed_ids": [
+        "seed-2018"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13950-L13950"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `meta.json` must remain active; this is still an in-progress research sweep, not a reconciliation-ready state."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

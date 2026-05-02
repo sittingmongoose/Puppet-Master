@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1448",
+  "source_seed_ids_represented": [
+    "seed-1052"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0026"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002160",
+      "obligation_type": "owner",
+      "canon_label": "- contextual help can simplify wording, but must not mutate the underlying semantics",
+      "description": "- contextual help can simplify wording, but must not mutate the underlying semantics",
+      "source_seed_ids": [
+        "seed-1052"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5147-L5147"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- contextual help can simplify wording, but must not mutate the underlying semantics"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

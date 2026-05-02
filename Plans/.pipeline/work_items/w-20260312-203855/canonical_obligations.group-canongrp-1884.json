@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1884",
+  "source_seed_ids_represented": [
+    "seed-1556"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0047"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002604",
+      "obligation_type": "stale_retirement",
+      "canon_label": "- `interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/...",
+      "description": "- `interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key.",
+      "source_seed_ids": [
+        "seed-1556"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L9279-L9279"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "stale_retirement",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

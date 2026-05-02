@@ -5,8 +5,9 @@
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 35,
-  "status": "active",
+  "status": "blocked",
   "run_id": null,
+  "next_required_stage": "Doc Discovery Worklist Builder",
   "ledger_shards": {
     "status": "generated_current",
     "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
@@ -18,7 +19,227 @@
     "report_path": null
   },
   "stage_transition_log": [],
-  "next_required_stage": "Ledger Shard Indexer",
+  "open_gaps_reducer_ready_routing_gate_summary": {
+    "schema_id": "pm.open_gaps_reducer_ready_routing_gate_summary.v2.2",
+    "open_gaps_total": 77,
+    "planning_blockers": 76,
+    "fix_backlog_items": 0,
+    "process_followup_items": 1,
+    "doc_discovery_required": 76,
+    "path_quarantine_violations": 0,
+    "next_required_stage": "Doc Discovery Worklist Builder",
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "reducer_attestation_agent": "10dd9d22-43c7-4918-8776-8049bfbb7ab3"
+    },
+    "artifacts": {
+      "open_gaps": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.noise.json",
+      "reducer_worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.wave-001.json … wave-012.json"
+    }
+  },
+  "open_gaps_classifier_summary": {
+    "schema_id": "pm.open_gaps_classifier_summary.v2.2",
+    "gap_tasks_classified": 77,
+    "result_files": 77,
+    "concrete_fix_backlog_gaps": 0,
+    "planning_blocker_gaps": 76,
+    "process_followup_gaps": 1,
+    "wave_files": 12,
+    "noise_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "classifier_attestation_agent": "af1ce028-9970-4298-bb91-01ade19863b3"
+    },
+    "artifacts": {
+      "results": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_result.ogtask-###.json (77 files)",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.wave-001.json … wave-012.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.noise-001.json … noise-012.json"
+    },
+    "next_required_stage": "Open Gaps Reducer / Ready-Routing Gate"
+  },
+  "open_gaps_worklist_builder_summary": {
+    "schema_id": "pm.open_gaps_worklist_builder_summary.v2.2",
+    "actionable_rows_total": 1896,
+    "gap_tasks_total": 77,
+    "doc_discovery_task_chunks": 76,
+    "process_only_task_chunks": 1,
+    "concrete_fix_backlog_tasks": 0,
+    "doc_discovery_tasks": 76,
+    "process_only_tasks": 1,
+    "known_target_files_missing": 0,
+    "path_quarantine_status": "pass",
+    "placeholder_path_status": "pass",
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "worklist_attestation_agent": "18605f4e-4ffc-4615-80c0-503963593688"
+    },
+    "artifacts": {
+      "open_gaps_worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.worklist.json",
+      "builder_worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Open Gaps Classifier"
+  },
+  "transfer_coverage_reducer_source_gate_summary": {
+    "schema_id": "pm.transfer_coverage_reducer_source_gate_summary.v2.2",
+    "coverage_rows_total": 1896,
+    "obligations_total": 1896,
+    "obligations_without_rows": 0,
+    "doc_discovery_rows": 1891,
+    "process_only_rows": 5,
+    "known_target_files_missing": 0,
+    "path_quarantine_status": "pass",
+    "placeholder_path_status": "pass",
+    "source_coverage_status": "pass",
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "reducer_attestation_agent": "c6464b92-3fab-4bc5-ba2a-52d4911137e3"
+    },
+    "artifacts": {
+      "transfer_coverage": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "source_coverage_report": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_coverage_report.json",
+      "reducer_worklist": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Open Gaps Worklist Builder"
+  },
+  "coverage_evidence_classifier_summary": {
+    "schema_id": "pm.coverage_evidence_classifier_summary.v2.2",
+    "coverage_rows_total": 1896,
+    "evidence_groups_total": 190,
+    "doc_discovery_groups": 187,
+    "process_only_touching_groups": 3,
+    "mixed_sentinel_groups": 3,
+    "path_quarantine_violations": 0,
+    "placeholder_path_violations": 0,
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "classifier_attestation_agent": "6a8c7c2a-444c-4ac9-b682-36cdb0992b7e"
+    },
+    "artifacts": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.wave-001.json … wave-012.json",
+      "results": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_results.ceg-###.json (190 files)"
+    },
+    "next_required_stage": "Coverage Matrix Reducer / Source Gate"
+  },
+  "coverage_row_inventory_builder_summary": {
+    "schema_id": "pm.coverage_row_inventory_builder_summary.v2.2",
+    "obligations_total": 1896,
+    "coverage_rows_total": 1896,
+    "doc_discovery_rows": 1891,
+    "process_only_rows": 5,
+    "concrete_path_rows": 0,
+    "known_target_files_missing": 0,
+    "path_quarantine_violations": 0,
+    "placeholder_path_violations": 0,
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "row_inventory_attestation_agent": "5455ee6f-7a17-4e66-9e59-bf57aef3c2b1"
+    },
+    "artifacts": {
+      "row_inventory": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.wave-001.json … wave-012.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.noise.json"
+    },
+    "next_required_stage": "Coverage Evidence Classifier"
+  },
+  "canonical_obligations_reducer_source_gate_summary": {
+    "schema_id": "pm.canonical_obligations_reducer_source_gate_summary.v2.2",
+    "raw_obligations_total": 2667,
+    "merged_obligations_total": 1896,
+    "source_seed_ids_total": 2667,
+    "source_seed_ids_represented": 2667,
+    "source_shard_ids_total": 92,
+    "source_shard_ids_represented": 92,
+    "path_quarantine_status": "pass",
+    "placeholder_path_status": "pass",
+    "source_coverage_status": "pass",
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "reducer_attestation_agent": "230a5c5e-3559-4c68-a0f6-7005040aadb9"
+    },
+    "artifacts": {
+      "canonical_obligations": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "source_coverage_report": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_source_coverage_report.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.noise.json",
+      "reducer_worklist": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_reducer.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_reducer.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Coverage Row Inventory Builder"
+  },
+  "canonical_obligation_converter_summary": {
+    "schema_id": "pm.canonical_obligation_converter_summary.v2.2",
+    "work_groups_total": 1947,
+    "obligations_total": 2667,
+    "group_file_prefix": "canonical_obligations.group-",
+    "path_quarantine_violations": 0,
+    "placeholder_path_violations": 0,
+    "wave_files": 12,
+    "noise_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "converter_output_attestation_agent": "6828504e-31d1-49a6-a782-f98ce391cbcd"
+    },
+    "artifacts": {
+      "groups": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.group-canongrp-####.json (1947 files)",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_converter.wave-001.json … wave-012.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_converter.noise-001.json … noise-012.json"
+    },
+    "next_required_stage": "Canonical Obligations Reducer / Source Gate"
+  },
+  "canonical_obligation_worklist_builder_summary": {
+    "schema_id": "pm.canonical_obligation_worklist_builder_summary.v2.2",
+    "seed_items_total": 2667,
+    "work_groups_total": 1947,
+    "source_shards_represented": 92,
+    "path_quarantine_violations": 0,
+    "placeholder_path_violations": 0,
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "worklist_coverage_attestation_agent": "5b526f2f-8dd2-438b-9fa3-0b46bcbb69f3"
+    },
+    "artifacts": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_worklist_builder.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Canonical Obligation Converter"
+  },
   "ledger_obligation_seed_summary": {
     "seed_items_total": 2912,
     "owner_seed_items": 1932,
@@ -57,29 +278,99 @@
     "source_shards_represented": 92
   },
   "doc_discovery_resolution_summary": {
-    "rows_considered": 1518,
-    "rows_resolved_to_existing_docs": 750,
-    "rows_unresolved_need_audit": 768,
+    "schema_id": "pm.doc_discovery_resolution_summary.v2.2",
+    "rows_considered": 1010,
+    "rows_resolved_to_existing_docs": 125,
+    "rows_unresolved_need_audit": 885,
     "path_quarantine_violations": 0,
-    "source_seed_ids_preserved": 1057,
-    "source_shard_ids_preserved": 16
+    "source_seed_ids_preserved": 1358,
+    "source_shard_ids_preserved": 92
   },
   "doc_discovery_resolver_summary": {
-    "schema_id": "pm.doc_discovery_resolution.v2",
+    "schema_id": "pm.doc_discovery_resolver_summary.v2.2",
+    "discovery_tasks_total": 124,
     "resolver_wave_files": 12,
+    "coverage_rows_resolved_existing_owner": 125,
+    "coverage_rows_unresolved_owner": 885,
+    "evidence_rule": "verbatim_exact_item_or_whitespace_normalized_min_score_3_unique_winner",
     "subagent_execution": {
       "required": true,
       "used": true,
       "wave_files_valid": true,
       "skip_reason": null,
-      "explore_wave_attestation_agent": "2dba947f-dfdb-4bf9-89a4-9e8a12decbdc",
-      "explore_plan_scan_attestation_agent": "2dba947f-dfdb-4bf9-89a4-9e8a12decbdc",
-      "explore_schema_attestation_agent": "2dba947f-dfdb-4bf9-89a4-9e8a12decbdc"
+      "resolver_wave_attestation_agents": [
+        "16ac8a27-6937-42d1-91cb-681e097bbc79",
+        "b1b5b146-1812-4cfc-9d93-7f44f2315dcf",
+        "4d09a029-0c40-43bc-9445-eeff8f0d065f"
+      ]
     },
-    "next_required_stage": "Coverage Row Inventory Builder",
-    "rows_considered": 1518,
-    "rows_resolved_to_existing_docs": 750,
-    "rows_unresolved_need_audit": 768
+    "artifacts": {
+      "resolution": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.noise.json",
+      "resolver_worklist": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.wave-001.json … wave-012.json"
+    },
+    "next_required_stage": "Coverage Evidence Delta Classifier"
+  },
+  "open_gaps_delta_reducer_ready_routing_gate_summary": {
+    "schema_id": "pm.open_gaps_delta_reducer_ready_routing_gate_summary.v2.2",
+    "delta_wave": 2,
+    "gaps_removed": 7,
+    "gaps_updated_doc_discovery": 62,
+    "new_fix_backlog_gaps": 5,
+    "open_gaps_total_after": 95,
+    "remaining_planning_blockers": 62,
+    "remaining_doc_discovery_rows": 885,
+    "fix_backlog_rows": 772,
+    "path_quarantine_status": "pass",
+    "placeholder_path_status": "pass",
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "delta_wave_attestation_agents": [
+        "209f9a65-7f23-4510-b58f-6a4deb481f63",
+        "78241b6a-4f70-4641-a41d-6cecbb2d7caf"
+      ]
+    },
+    "artifacts": {
+      "report": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_delta_reducer_report.json",
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_delta_reducer.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_delta_reducer.wave-001.json … wave-012.json",
+      "open_gaps": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.noise.json"
+    },
+    "next_required_stage": "Doc Discovery Worklist Builder"
+  },
+  "coverage_evidence_delta_classifier_summary": {
+    "schema_id": "pm.coverage_evidence_delta_classifier_summary.v2.2",
+    "delta_tasks_total": 15,
+    "coverage_rows_updated": 125,
+    "doc_discovery_rows_after": 885,
+    "rows_present_after": 234,
+    "rows_partial_after": 0,
+    "rows_missing_after": 1657,
+    "path_quarantine_status": "pass",
+    "placeholder_path_status": "pass",
+    "wave_files": 12,
+    "subagent_execution": {
+      "required": true,
+      "used": true,
+      "wave_files_valid": true,
+      "skip_reason": null,
+      "delta_wave_attestation_agents": [
+        "a8a74c3c-6ea2-43c7-8fe3-18d510eeb355",
+        "a1884954-2ee8-428a-b797-fc82114292f8"
+      ]
+    },
+    "artifacts": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_delta_classifier.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_delta_classifier.wave-001.json … wave-012.json",
+      "delta_result": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_delta_result.json"
+    },
+    "next_required_stage": "Open Gaps Delta Reducer / Ready-Routing Gate"
   },
   "coverage_evidence_classifier_summary": {
     "schema_id": "pm.coverage_evidence_classifier_worklist.v2",
@@ -288,23 +579,29 @@
     "next_required_stage": "Coverage Matrix Reducer / Source Gate"
   },
   "doc_discovery_worklist_builder_summary": {
-    "schema_id": "pm.doc_discovery_worklist.v2",
-    "unresolved_groups_total": 305,
-    "coverage_rows_total": 1518,
-    "doc_discovery_rows": 1518,
-    "owner_unknown_rows": 0,
-    "candidate_docs_total": 60,
+    "schema_id": "pm.doc_discovery_worklist_builder_summary.v2.2",
+    "doc_discovery_rows_total": 1010,
+    "discovery_tasks_total": 124,
+    "candidate_docs_total": 63,
+    "doc_discovery_gap_chunks": 69,
     "path_quarantine_violations": 0,
+    "placeholder_path_violations": 0,
     "wave_files": 12,
     "subagent_execution": {
       "required": true,
       "used": true,
       "wave_files_valid": true,
-      "explore_wave_attestation_agent": "b9350a43-4818-4381-9f8b-51c955647592",
-      "explore_plan_scan_attestation_agent": "b9350a43-4818-4381-9f8b-51c955647592",
-      "explore_schema_attestation_agent": "b9350a43-4818-4381-9f8b-51c955647592"
+      "skip_reason": null,
+      "worklist_wave_attestation_agents": [
+        "4366b7e9-efc6-45e8-9e19-c0a25a9d8361",
+        "8a7aa920-b938-43d9-8e18-79b64846da4a",
+        "3fa5f257-bed2-4356-8c62-aa2c2516a40c"
+      ],
+      "worklist_row_sum_verified_local": true,
+      "worklist_row_sum": 1010
     },
     "artifacts": {
+      "builder_worklist": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_worklist_builder.worklist.json",
       "worklist": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery.worklist.json",
       "waves": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_worklist_builder.wave-001.json … wave-012.json"
     },

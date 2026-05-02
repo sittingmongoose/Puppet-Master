@@ -1,0 +1,583 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2.2",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0004",
+  "seed_candidates": [
+    {
+      "line_start": 606,
+      "line_end": 606,
+      "seed_type": "owner",
+      "exact_items": [
+        "- when an overseer finds missing work / wiring / design correctness issues, two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "missing_doc_reference_candidate",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 616,
+      "line_end": 616,
+      "seed_type": "owner",
+      "exact_items": [
+        "- settings / GUI must be updated for the new execution/governance model"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 625,
+      "line_end": 625,
+      "seed_type": "owner",
+      "exact_items": [
+        "- if overseer-spawned node subagents are enabled, their provider/model/effort must be configurable"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 630,
+      "line_end": 630,
+      "seed_type": "owner",
+      "exact_items": [
+        "- user requested a concrete ownership / inheritance / override matrix next"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 635,
+      "line_end": 635,
+      "seed_type": "owner",
+      "exact_items": [
+        "- user clarified an important global constraint: the system should be fully automated by default; humans are only involved when something critically fails or a major decision is required"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 640,
+      "line_end": 640,
+      "seed_type": "owner",
+      "exact_items": [
+        "- if HITL blocks or a critical failure / decision occurs, the issue must surface in:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 647,
+      "line_end": 647,
+      "seed_type": "owner",
+      "exact_items": [
+        "- user added a cross-surface requirement: worktrees should be visible in the Orchestrator page and likely also in Source Control"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 652,
+      "line_end": 652,
+      "seed_type": "owner",
+      "exact_items": [
+        "- user clarified a broader app-level constraint:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 663,
+      "line_end": 663,
+      "seed_type": "owner",
+      "exact_items": [
+        "- direct search found no current references to `feature seam` or `work package` in `Plans/**`"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": [
+        "placeholder_obs:Plans/**"
+      ]
+    },
+    {
+      "line_start": 664,
+      "line_end": 664,
+      "seed_type": "owner",
+      "exact_items": [
+        "- current GUI/spec docs therefore do not yet reflect these newly discussed governance objects"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 666,
+      "line_end": 666,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md` still defines tabs `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 667,
+      "line_end": 667,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Orchestrator_Page.md` still explicitly says runs and tier checks are driven by the `Overseer`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 668,
+      "line_end": 668,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Run_Graph_View.md` describes the graph as live DAG execution, but node rendering still includes tier-type iconography and tier-oriented vocabulary"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 669,
+      "line_end": 669,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/FinalGUISpec.md` still references `phase/task/subtask` progress and mapping editors rather than package/seam governance surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 672,
+      "line_end": 672,
+      "seed_type": "owner",
+      "exact_items": [
+        "- the page doc already admits unresolved data-source ownership gaps and explicitly says the UI must bind to upstream owners rather than minting local compatibility fields"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 675,
+      "line_end": 675,
+      "seed_type": "consumer",
+      "exact_items": [
+        "- runtime addenda emphasize \"consumer of canonical contracts\" and \"must not redefine locally\""
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 676,
+      "line_end": 676,
+      "seed_type": "owner",
+      "exact_items": [
+        "- likely reconciliation seam: remove shadow event/schema ownership from the page layer and tighten it around projections and controls only"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 677,
+      "line_end": 677,
+      "seed_type": "owner",
+      "exact_items": [
+        "- another active tension: docs still preserve a first-class tier model (`Phase`, `Task`, `Subtask`, `Iteration`) at the same time they describe execution over graph nodes, so the rewrite docs are not yet purely graph-native in vocabulary"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 682,
+      "line_end": 682,
+      "seed_type": "stale_retirement",
+      "exact_items": [
+        "- `packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 684,
+      "line_end": 684,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/Executor_Protocol.md#5. Node execution fields` -> `TierContext`, `tier_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Executor_Protocol.md#5. Node execution fields"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 685,
+      "line_end": 685,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)` -> `github_api:github.com/<login>`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 686,
+      "line_end": 686,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)` -> `approve_continue`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 687,
+      "line_end": 687,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy` -> `tier_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 691,
+      "line_end": 691,
+      "seed_type": "owner",
+      "exact_items": [
+        "- packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 693,
+      "line_end": 693,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Orchestrator currently appears split across at least two concerns that can drift:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 696,
+      "line_end": 696,
+      "seed_type": "owner",
+      "exact_items": [
+        "- Current docs likely risk shadow ownership at the page layer:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 698,
+      "line_end": 698,
+      "seed_type": "owner",
+      "exact_items": [
+        "- runtime doc says canonical contracts live elsewhere and Orchestrator must consume them without redefining"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 702,
+      "line_end": 702,
+      "seed_type": "owner",
+      "exact_items": [
+        "- GUI gap is now explicit:"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 706,
+      "line_end": 706,
+      "seed_type": "owner",
+      "exact_items": [
+        "- worktree visibility/controls likely need coordination across Orchestrator and Source Control, not isolated ownership in only one surface"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 717,
+      "line_end": 717,
+      "seed_type": "owner",
+      "exact_items": [
+        "- some events are runtime-internal, some must be operator-visible, and some must specifically drive Dashboard/Orchestrator/chat resolution surfaces"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 746,
+      "line_end": 746,
+      "seed_type": "owner",
+      "exact_items": [
+        "- very provider/OAuth-specific implementation details when our model must span broader execution roles/providers"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    },
+    {
+      "line_start": 789,
+      "line_end": 789,
+      "seed_type": "owner",
+      "exact_items": [
+        "- `lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_observations": [
+    {
+      "line": 663,
+      "value": "Plans/**"
+    }
+  ],
+  "source_lineage_status": "pass"
+}

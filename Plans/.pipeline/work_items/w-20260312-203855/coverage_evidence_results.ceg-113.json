@@ -1,0 +1,263 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "ceg-113",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-01121",
+      "source_obligation_ids": [
+        "obl-001121"
+      ],
+      "source_seed_ids": [
+        "seed-1804"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01122",
+      "source_obligation_ids": [
+        "obl-001122"
+      ],
+      "source_seed_ids": [
+        "seed-1805"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01123",
+      "source_obligation_ids": [
+        "obl-001123"
+      ],
+      "source_seed_ids": [
+        "seed-1806"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "stale_retirement",
+      "required_action": "stale_retirement",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01124",
+      "source_obligation_ids": [
+        "obl-001124"
+      ],
+      "source_seed_ids": [
+        "seed-1807"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "stale_retirement",
+      "required_action": "stale_retirement",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01125",
+      "source_obligation_ids": [
+        "obl-001125"
+      ],
+      "source_seed_ids": [
+        "seed-1808"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01126",
+      "source_obligation_ids": [
+        "obl-001126"
+      ],
+      "source_seed_ids": [
+        "seed-1809"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01127",
+      "source_obligation_ids": [
+        "obl-001127"
+      ],
+      "source_seed_ids": [
+        "seed-1810"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01128",
+      "source_obligation_ids": [
+        "obl-001128"
+      ],
+      "source_seed_ids": [
+        "seed-1811"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01129",
+      "source_obligation_ids": [
+        "obl-001129"
+      ],
+      "source_seed_ids": [
+        "seed-1812"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    },
+    {
+      "coverage_id": "cov-01130",
+      "source_obligation_ids": [
+        "obl-001130"
+      ],
+      "source_seed_ids": [
+        "seed-1813"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "row_type": "owner",
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "not_applicable",
+      "path_field_status": "clean",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "doc_discovery_sentinel",
+          "detail": "Row inventory path is __DOC_DISCOVERY_REQUIRED__; no live Plans/** target to inspect"
+        }
+      ],
+      "unresolved_reason": "doc_discovery_required"
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

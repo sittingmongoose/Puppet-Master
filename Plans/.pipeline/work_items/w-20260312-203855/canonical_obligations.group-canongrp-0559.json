@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0559",
+  "source_seed_ids_represented": [
+    "seed-2265"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0084"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000561",
+      "obligation_type": "owner",
+      "canon_label": "- The effective-resolution record is close to the rewrite direction, but it still lacks the newer identity layers alr...",
+      "description": "- The effective-resolution record is close to the rewrite direction, but it still lacks the newer identity layers already established elsewhere:",
+      "source_seed_ids": [
+        "seed-2265"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16682-L16682"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- The effective-resolution record is close to the rewrite direction, but it still lacks the newer identity layers already established elsewhere:"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1308",
+  "source_seed_ids_represented": [
+    "seed-1479"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0045"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002020",
+      "obligation_type": "owner",
+      "canon_label": "- `human-in-the-loop.md` remains tier-keyed at its canonical request/storage layer, still lacks node/package/lane/att...",
+      "description": "- `human-in-the-loop.md` remains tier-keyed at its canonical request/storage layer, still lacks node/package/lane/attempt anchors, still has no approver identity on durable HITL events, and still leaves session-scoped reject/always semantics lane-unsafe.",
+      "source_seed_ids": [
+        "seed-1479"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8878-L8878"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `human-in-the-loop.md` remains tier-keyed at its canonical request/storage layer, still lacks node/package/lane/attempt anchors, still has no approver identity on durable HITL events, and still leaves session-scoped reject/always semantics lane-unsafe."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

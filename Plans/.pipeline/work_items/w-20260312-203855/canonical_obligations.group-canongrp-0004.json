@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0004",
+  "source_seed_ids_represented": [
+    "seed-2068"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0074"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000004",
+      "obligation_type": "consumer",
+      "canon_label": "- If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating...",
+      "description": "- If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating local navigation semantics and drift will recur.",
+      "source_seed_ids": [
+        "seed-2068"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L14720-L14720"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating local navigation semantics and drift will recur."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "consumer_propagation",
+      "priority": "minor",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

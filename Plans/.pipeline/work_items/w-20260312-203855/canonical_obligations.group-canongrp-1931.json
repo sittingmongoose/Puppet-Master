@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1931",
+  "source_seed_ids_represented": [
+    "seed-0750"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002651",
+      "obligation_type": "stale_retirement",
+      "canon_label": "- what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecat...",
+      "description": "- what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering.",
+      "source_seed_ids": [
+        "seed-0750"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1734-L1734"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "stale_retirement",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

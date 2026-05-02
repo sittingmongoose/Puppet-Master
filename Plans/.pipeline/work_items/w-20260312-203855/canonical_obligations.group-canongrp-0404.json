@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0404",
+  "source_seed_ids_represented": [
+    "seed-2318"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0087"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000404",
+      "obligation_type": "owner",
+      "canon_label": "- Missing per-command `command_kind` / normalization metadata and still lacks the canonicalized navigation-family tre...",
+      "description": "- Missing per-command `command_kind` / normalization metadata and still lacks the canonicalized navigation-family treatment implied by the ledger.",
+      "source_seed_ids": [
+        "seed-2318"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17282-L17282"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Missing per-command `command_kind` / normalization metadata and still lacks the canonicalized navigation-family treatment implied by the ledger."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.ledger_seed_completeness_report.v2.2",
+  "work_id": "w-20260312-203855",
+  "status": "pass",
+  "source_manifest": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+  "source_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "seed_items_total": 2667,
+  "source_shards_total": 92,
+  "source_shards_covered": 92,
+  "shard_line_size": 200,
+  "path_quarantine_status": "pass",
+  "placeholder_path_status": "pass",
+  "process_artifact_refs_count": 10,
+  "placeholder_replacement_status": "pass",
+  "source_lineage_status": "pass",
+  "work_id_status": "pass",
+  "subagent_execution_status": "pass",
+  "blockers": [],
+  "next_required_stage": "Canonical Obligation Worklist Builder"
+}

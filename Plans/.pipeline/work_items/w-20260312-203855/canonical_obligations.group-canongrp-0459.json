@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0459",
+  "source_seed_ids_represented": [
+    "seed-1943"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0065"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000461",
+      "obligation_type": "owner",
+      "canon_label": "- Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible,...",
+      "description": "- Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible, but they do not own canonical target identity.",
+      "source_seed_ids": [
+        "seed-1943"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12825-L12825"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible, but they do not own canonical target identity."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

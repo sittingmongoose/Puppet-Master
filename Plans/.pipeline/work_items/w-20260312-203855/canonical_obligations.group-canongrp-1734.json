@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1734",
+  "source_seed_ids_represented": [
+    "seed-1264"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0034"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002447",
+      "obligation_type": "owner",
+      "canon_label": "- still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane/worktree attribution, an...",
+      "description": "- still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane/worktree attribution, and projection-ready usage signals",
+      "source_seed_ids": [
+        "seed-1264"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6792-L6792"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- still the biggest dispatch-boundary gap for account identity, execution-role scoping, lane/worktree attribution, and projection-ready usage signals"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

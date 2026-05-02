@@ -1,0 +1,161 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0829",
+  "source_seed_ids_represented": [
+    "seed-1860",
+    "seed-1861",
+    "seed-1862",
+    "seed-1863"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0062",
+    "shard-0070",
+    "shard-0081",
+    "shard-0082"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000876",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Document_Packaging_Policy.md`",
+      "description": "- `Plans/Document_Packaging_Policy.md`",
+      "source_seed_ids": [
+        "seed-1860"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L12306-L12306",
+        "working_ledger.md:L12351-L12351"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Document_Packaging_Policy.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Document_Packaging_Policy.md",
+        "quarantined_placeholder_path:Plans/Document_Packaging_Policy.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000877",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Document_Packaging_Policy.md`",
+      "description": "- `Plans/Document_Packaging_Policy.md`",
+      "source_seed_ids": [
+        "seed-1861"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13841-L13841",
+        "working_ledger.md:L13895-L13895"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Document_Packaging_Policy.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Document_Packaging_Policy.md",
+        "quarantined_placeholder_path:Plans/Document_Packaging_Policy.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000878",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Document_Packaging_Policy.md`",
+      "description": "- `Plans/Document_Packaging_Policy.md`",
+      "source_seed_ids": [
+        "seed-1862"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16014-L16014",
+        "working_ledger.md:L16062-L16062",
+        "working_ledger.md:L16130-L16130",
+        "working_ledger.md:L16176-L16176"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Document_Packaging_Policy.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Document_Packaging_Policy.md",
+        "quarantined_placeholder_path:Plans/Document_Packaging_Policy.md"
+      ]
+    },
+    {
+      "obligation_id": "obl-000879",
+      "obligation_type": "owner",
+      "canon_label": "- `Plans/Document_Packaging_Policy.md`",
+      "description": "- `Plans/Document_Packaging_Policy.md`",
+      "source_seed_ids": [
+        "seed-1863"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16249-L16249",
+        "working_ledger.md:L16290-L16290"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Plans/Document_Packaging_Policy.md`"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": [
+        "placeholder_path_removed:Plans/Document_Packaging_Policy.md",
+        "quarantined_placeholder_path:Plans/Document_Packaging_Policy.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1898",
+  "source_seed_ids_represented": [
+    "seed-1802"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0057"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002618",
+      "obligation_type": "stale_retirement",
+      "canon_label": "- deprecated alias coverage",
+      "description": "- deprecated alias coverage",
+      "source_seed_ids": [
+        "seed-1802"
+      ],
+      "source_shard_ids": [
+        "shard-0057"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L11290-L11290"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- deprecated alias coverage"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "stale_retirement",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

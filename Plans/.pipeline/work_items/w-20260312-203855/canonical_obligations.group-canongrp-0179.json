@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0179",
+  "source_seed_ids_represented": [
+    "seed-0568"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0007"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000179",
+      "obligation_type": "owner",
+      "canon_label": "- **Persona system has no overseer concept.** `Personas.md` defines personas for subagent selection but has zero refe...",
+      "description": "- **Persona system has no overseer concept.** `Personas.md` defines personas for subagent selection but has zero references to overseer personas, package-overseer assignment, or seam-overseer assignment. The ledger's earlier research established that overseers need configurable personas — this gap is unaddressed.",
+      "source_seed_ids": [
+        "seed-0568"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1282-L1282"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- **Persona system has no overseer concept.** `Personas.md` defines personas for subagent selection but has zero references to overseer personas, package-overseer assignment, or seam-overseer assignment. The ledger's earlier research established that overseers need configurable personas — this gap is unaddressed."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

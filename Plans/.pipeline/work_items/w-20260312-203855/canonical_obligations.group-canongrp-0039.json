@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0039",
+  "source_seed_ids_represented": [
+    "seed-2519"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0089"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000039",
+      "obligation_type": "consumer",
+      "canon_label": "- summary: Ran one more narrow pass on the blocked-episode canon and confirmed that several gap-005 items were overst...",
+      "description": "- summary: Ran one more narrow pass on the blocked-episode canon and confirmed that several gap-005 items were overstated as globally missing when they are actually owner-defined elsewhere and only missing from the Tools/chat/usage consumers.",
+      "source_seed_ids": [
+        "seed-2519"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17799-L17799"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- summary: Ran one more narrow pass on the blocked-episode canon and confirmed that several gap-005 items were overstated as globally missing when they are actually owner-defined elsewhere and only missing from the Tools/chat/usage consumers."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "consumer_propagation",
+      "priority": "minor",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0080",
+  "source_seed_ids_represented": [
+    "seed-2590"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0091"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000080",
+      "obligation_type": "layout_blocker",
+      "canon_label": "- `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not onl...",
+      "description": "- `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+      "source_seed_ids": [
+        "seed-2590"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18033-L18033"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "packetizable_layout_repair",
+      "priority": "blocker",
+      "notes": [
+        "placeholder_path_removed:Plans/FinalGUISpec.md",
+        "placeholder_path_removed:Plans/GitHub_Integration.md",
+        "placeholder_path_removed:Plans/Orchestrator_Page.md",
+        "placeholder_path_removed:Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "placeholder_path_removed:Plans/WorktreeGitImprovement.md",
+        "placeholder_path_removed:Plans/storage-plan.md",
+        "quarantined_placeholder_path:Plans/FinalGUISpec.md",
+        "quarantined_placeholder_path:Plans/GitHub_Integration.md",
+        "quarantined_placeholder_path:Plans/Orchestrator_Page.md",
+        "quarantined_placeholder_path:Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "quarantined_placeholder_path:Plans/WorktreeGitImprovement.md",
+        "quarantined_placeholder_path:Plans/storage-plan.md"
+      ]
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

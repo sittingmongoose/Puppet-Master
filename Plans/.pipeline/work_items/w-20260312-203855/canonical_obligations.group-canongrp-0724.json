@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0724",
+  "source_seed_ids_represented": [
+    "seed-2235"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0082"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000726",
+      "obligation_type": "owner",
+      "canon_label": "- `Crosswalk.md` still acts as if owner primitives are stable while the rewrite has already shifted ownership boundar...",
+      "description": "- `Crosswalk.md` still acts as if owner primitives are stable while the rewrite has already shifted ownership boundaries around Orchestrator, widgets, route/open contracts, blocked identity, and runtime identity disclosure.",
+      "source_seed_ids": [
+        "seed-2235"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16397-L16397"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `Crosswalk.md` still acts as if owner primitives are stable while the rewrite has already shifted ownership boundaries around Orchestrator, widgets, route/open contracts, blocked identity, and runtime identity disclosure."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

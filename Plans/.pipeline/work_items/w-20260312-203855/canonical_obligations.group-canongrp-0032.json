@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-0032",
+  "source_seed_ids_represented": [
+    "seed-2436"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0088"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-000032",
+      "obligation_type": "consumer",
+      "canon_label": "- `gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation sema...",
+      "description": "- `gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+      "source_seed_ids": [
+        "seed-2436"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17600-L17600"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "consumer_propagation",
+      "priority": "minor",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

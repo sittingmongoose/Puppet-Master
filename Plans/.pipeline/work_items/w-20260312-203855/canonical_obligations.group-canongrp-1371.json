@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.canonical_obligations_group.v2.2",
+  "work_id": "w-20260312-203855",
+  "group_id": "canongrp-1371",
+  "source_seed_ids_represented": [
+    "seed-1997"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0069"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-002083",
+      "obligation_type": "owner",
+      "canon_label": "- `tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+      "description": "- `tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+      "source_seed_ids": [
+        "seed-1997"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13671-L13671"
+      ],
+      "affected_doc_hints": [],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [],
+      "exact_items": [
+        "- `tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "required_action": "owner_create_or_rewrite",
+      "priority": "major",
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "path_quarantine_violations": [],
+  "placeholder_path_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}
