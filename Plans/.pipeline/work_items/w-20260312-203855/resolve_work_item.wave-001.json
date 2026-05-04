@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.resolve_work_item.wave.v2.3",
+  "wave": 1,
+  "locked_work_id": "w-20260312-203855",
+  "subagent_tasks": [
+    {
+      "task_id": "evidence-top-level-json-work-id",
+      "unit": "top_level_artifact_family",
+      "description": "Read Plans/.pipeline/*.json (maxdepth 1): change_manifest.json, research_packet.json, traceability_handoff.json for work_id / w-20 conflicts vs w-20260312-203855"
+    },
+    {
+      "task_id": "evidence-peer-current-state",
+      "unit": "candidate_work_item_directory",
+      "description": "Read w-20260328-192905 meta.json and current_state.md for cross-reference to w-20260312-203855"
+    }
+  ],
+  "assigned_input_boundaries": [
+    "Plans/.pipeline/change_manifest.json",
+    "Plans/.pipeline/research_packet.json",
+    "Plans/.pipeline/traceability_handoff.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/current_state.md"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 2,
+  "failed_task_count": 0,
+  "candidate_work_ids_assigned": [
+    "w-20260312-203855",
+    "w-20260328-192905"
+  ],
+  "candidate_work_ids_completed": [
+    "w-20260312-203855",
+    "w-20260328-192905"
+  ],
+  "evidence_files_assigned": [
+    "Plans/.pipeline/change_manifest.json",
+    "Plans/.pipeline/research_packet.json",
+    "Plans/.pipeline/traceability_handoff.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/current_state.md"
+  ],
+  "evidence_files_completed": [
+    "Plans/.pipeline/change_manifest.json",
+    "Plans/.pipeline/research_packet.json",
+    "Plans/.pipeline/traceability_handoff.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/current_state.md"
+  ],
+  "subagent_attestations": [
+    {
+      "task_id": "evidence-top-level-json-work-id",
+      "agent_id": "32a12c21-f5f7-40b9-a063-184b1c97a14c",
+      "conflicts_with_locked_candidate": false
+    },
+    {
+      "task_id": "evidence-peer-current-state",
+      "agent_id": "f82e7024-f515-489f-a50e-4bcb0a7f5a44",
+      "mentions_requested_work_id": false
+    }
+  ],
+  "parent_notes": "Inventory: 20 work item directories. Subagents required (>5 items; >1 root current_state.md among peers). User explicit work_id takes precedence."
+}

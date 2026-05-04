@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.legacy_artifact_sanitizer.worklist.v2.3",
+  "work_id": "w-20260312-203855",
+  "locked_run_id_active_packet": "r-20260312-203855-run-034",
+  "meta_run_id": null,
+  "tasks": [
+    {
+      "task_id": "validate-lock",
+      "kind": "gate",
+      "description": "Confirm locked work_id from resolve_work_item_report.json, meta.json, current_state.md"
+    },
+    {
+      "task_id": "inventory-top-level",
+      "kind": "inventory",
+      "description": "Enumerate Plans/.pipeline maxdepth 1 *.json and *.txt; classify vs active run-034 / locked work_id"
+    },
+    {
+      "task_id": "inventory-runs-metadata",
+      "kind": "inventory",
+      "description": "Count Plans/.pipeline/runs direct children; map prefix families vs r-20260312-203855"
+    },
+    {
+      "task_id": "subagent-top-level-classification",
+      "kind": "subagent_evidence",
+      "description": "Bounded per-file header scan (subagent eedbace4-fcb2-4c50-97d3-830e98ba6c35)"
+    },
+    {
+      "task_id": "subagent-runs-prefix-classification",
+      "kind": "subagent_evidence",
+      "description": "Run directory prefix census (subagent 48f326e1-15fd-4815-accd-cbda92bdefa0)"
+    },
+    {
+      "task_id": "quarantine-stale-top-level",
+      "kind": "execute",
+      "description": "Move agreed stale top-level files into legacy_quarantine/20260504T153803Z preserving relative path; write sidecar manifest jsonl"
+    },
+    {
+      "task_id": "write-report-update-meta-state",
+      "kind": "report",
+      "description": "Emit legacy_artifact_sanitizer_report.json; set meta.status sanitized; extend current_state.md"
+    }
+  ],
+  "constraints": {
+    "do_not_move": [
+      "Plans/.pipeline/work_items/w-20260312-203855/**",
+      "Plans/.pipeline/runs/r-20260312-203855-run-034/**",
+      "Plans/.evidence/**",
+      "Plans/_shards/**"
+    ],
+    "runs_bulk_quarantine": "deferred — other work_items reference non-locked run prefixes; only root mirror files quarantined this wave"
+  }
+}

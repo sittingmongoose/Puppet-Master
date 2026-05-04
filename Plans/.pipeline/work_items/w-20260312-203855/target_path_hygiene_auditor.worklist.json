@@ -1,69 +1,69 @@
 {
-  "schema_id": "pm.target_path_hygiene_auditor_worklist.v2.2",
+  "schema_id": "pm.target_path_hygiene_auditor.worklist.v2.3",
   "work_id": "w-20260312-203855",
   "run_id": null,
-  "artifact_tasks": [
+  "locked_from": [
+    "meta.json",
+    "current_state.md",
+    "resolve_work_item_report.json"
+  ],
+  "artifact_families": [
+    "open_gaps",
+    "transfer_coverage",
+    "doc_discovery",
+    "ledger_seed",
+    "canonical_obligations"
+  ],
+  "tasks": [
     {
-      "task_id": "tph-audit-001",
-      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
-      "artifact_family": "work_item_meta",
-      "schema_id": "pm.work_item_meta.v2.2",
-      "target_like_field_groups": ["summary_artifact_refs_only_no_obligation_target_paths"],
-      "max_json_items": 25
+      "task_id": "tph-lock-gate",
+      "kind": "gate",
+      "description": "Confirm work_id w-20260312-203855; exclude legacy_quarantine and other work_ids"
     },
     {
-      "task_id": "tph-audit-002",
-      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/resolve_work_item_report.json",
-      "artifact_family": "resolve_work_item_report",
-      "schema_id": "pm.resolve_work_item_report.v2.2",
-      "target_like_field_groups": ["provenance_paths_only"],
-      "max_json_items": 25
+      "task_id": "tph-scan-open-gaps",
+      "kind": "subagent_scan",
+      "artifacts": [
+        "open_gaps.json",
+        "open_gaps.worklist.json"
+      ],
+      "subagent_id": "6c58ee80-fec7-48b7-b646-2001057f1dce"
     },
     {
-      "task_id": "tph-audit-003",
-      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.root_inventory.json",
-      "artifact_family": "legacy_sanitizer",
-      "schema_id": "pm.legacy_sanitizer_root_inventory.v2.2",
-      "target_like_field_groups": ["inventory_paths_not_live_doc_targets"],
-      "max_json_items": 25
+      "task_id": "tph-scan-transfer-coverage",
+      "kind": "subagent_scan",
+      "artifacts": [
+        "transfer_coverage.json",
+        "transfer_coverage.row_inventory.json"
+      ],
+      "subagent_id": "16bfba71-12c1-4d22-89e9-88f6231c520b"
     },
     {
-      "task_id": "tph-audit-004",
-      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.worklist.json",
-      "artifact_family": "legacy_sanitizer",
-      "schema_id": "pm.legacy_sanitizer_worklist.v2.2",
-      "target_like_field_groups": ["quarantine_paths_not_live_doc_targets"],
-      "max_json_items": 25
+      "task_id": "tph-scan-doc-discovery",
+      "kind": "subagent_scan",
+      "artifacts": [
+        "doc_discovery.worklist.json",
+        "doc_discovery_resolution.json"
+      ],
+      "subagent_id": "f903ad25-3c63-4548-9758-4b056cbfb28d"
     },
     {
-      "task_id": "tph-audit-005",
-      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer.wave-001.json",
-      "artifact_family": "legacy_sanitizer",
-      "schema_id": "pm.legacy_sanitizer_wave.v2.2",
-      "target_like_field_groups": ["wave_boundaries_only"],
-      "max_json_items": 25
+      "task_id": "tph-scan-seed-canonical",
+      "kind": "subagent_scan",
+      "artifacts": [
+        "ledger_obligation_seed.json",
+        "canonical_obligations.json"
+      ],
+      "subagent_id": "e9935763-a78b-48d8-a46f-d168fbeba24a"
     },
     {
-      "task_id": "tph-audit-006",
-      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_sanitizer_report.json",
-      "artifact_family": "legacy_sanitizer",
-      "schema_id": "pm.legacy_sanitizer_report.v2.2",
-      "target_like_field_groups": ["report_paths_not_live_doc_targets"],
-      "max_json_items": 25
-    },
-    {
-      "task_id": "tph-audit-007",
-      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
-      "artifact_family": "other",
-      "schema_id": null,
-      "target_like_field_groups": ["markdown_state_no_structured_target_fields"],
-      "max_json_items": 25
+      "task_id": "tph-synthesize-report",
+      "kind": "main_agent",
+      "description": "Merge findings; classify lineage vs target slots; set delta_repair_safe and routing"
     }
   ],
-  "subagent_execution": {
-    "required": true,
-    "used": true,
-    "skip_reason": null
-  },
-  "audit_scope_note": "No canonical_obligations, transfer_coverage, open_gaps, doc_discovery, reconciliation, packet, fidelity, run_integrity, or completion JSON at active root; target-like semantic fields from pm.target_path_hygiene_auditor.v2.2 list are absent in scanned artifacts."
+  "notes": [
+    "reconciliation_plan.json, packet.worklist.json, packet_content_group absent in active work item dir (prior artifacts in legacy_quarantine only).",
+    "target_document_existence_report.json absent; meta.target_document_existence.status not_checked."
+  ]
 }

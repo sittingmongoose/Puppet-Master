@@ -1,0 +1,116 @@
+{
+  "schema_id": "pm.legacy_artifact_sanitizer_report.v2.3",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "meta_run_id_before": null,
+  "active_run_basis": "packet_builder_summary.run_id (meta.run_id null; pre-run / multi-run mirrors at root)",
+  "quarantine_timestamp": "20260504T153803Z",
+  "manifest_sidecar": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/_sanitizer_manifest.20260504T153803Z.jsonl",
+  "status": "complete",
+  "summary": {
+    "artifacts_scanned": 139,
+    "top_level_files_scanned": 11,
+    "run_directories_scanned": 128,
+    "active_artifacts_preserved": 6,
+    "stale_artifacts_quarantined": 5,
+    "wrong_work_item_artifacts": 0,
+    "wrong_run_artifacts": 4,
+    "old_schema_artifacts": 1,
+    "ambiguous_artifacts": 1
+  },
+  "quarantined": [
+    {
+      "original_path": "Plans/.pipeline/traceability_handoff.json",
+      "quarantine_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/20260504T153803Z/Plans/.pipeline/traceability_handoff.json",
+      "reason": "old_schema_no_locked_work_id; non-r-prefixed run_id",
+      "detected_work_id": null,
+      "detected_run_id": "rewrite-20260306-220950-persona-system-provider-capability-resolution",
+      "schema_id": "section_audit_traceability.v1",
+      "sha256": "fe95fbbfde3210ff828c47793478740f59baf3e044f31cc3fd3f880f58762cfa"
+    },
+    {
+      "original_path": "Plans/.pipeline/run_integrity_report.txt",
+      "quarantine_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/20260504T153803Z/Plans/.pipeline/run_integrity_report.txt",
+      "reason": "top_level_stale_run_mismatch_vs_active_packet_run-034",
+      "detected_work_id": "w-20260312-203855",
+      "detected_run_id": "r-20260312-203855-16",
+      "schema_id": null,
+      "sha256": "cb389c1b5cce23c5cb4c7ccd6c57d7be6553a127cd31fabffeb32e49a431b1dc"
+    },
+    {
+      "original_path": "Plans/.pipeline/canonical_cleanup_plan.txt",
+      "quarantine_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/20260504T153803Z/Plans/.pipeline/canonical_cleanup_plan.txt",
+      "reason": "top_level_stale_run_mismatch_vs_active_packet_run-034",
+      "detected_work_id": null,
+      "detected_run_id": "r-20260312-203855-07",
+      "schema_id": null,
+      "sha256": "6effb00b5b4ae90fd7aac1728ebf13fc5fd7b937caa763f21fb05c80c972aa2c"
+    },
+    {
+      "original_path": "Plans/.pipeline/repair_scope.txt",
+      "quarantine_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/20260504T153803Z/Plans/.pipeline/repair_scope.txt",
+      "reason": "top_level_stale_run_mismatch_vs_active_packet_run-034",
+      "detected_work_id": null,
+      "detected_run_id": "r-20260312-203855-07",
+      "schema_id": null,
+      "sha256": "125bc515aba5bd7c114dd22f60b1162535a5fdb1f673238e69002209389b4aed"
+    },
+    {
+      "original_path": "Plans/.pipeline/ledger_fidelity_report.txt",
+      "quarantine_path": "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/20260504T153803Z/Plans/.pipeline/ledger_fidelity_report.txt",
+      "reason": "top_level_stale_duplicate_run_scoped_exists_run-030",
+      "detected_work_id": "w-20260312-203855",
+      "detected_run_id": "r-20260312-203855-run-030",
+      "schema_id": null,
+      "sha256": "af0443043369c9bbac36bc914964e1f404f910f6f27bc47afaf666ff36533233"
+    }
+  ],
+  "preserved": [
+    {
+      "path": "Plans/.pipeline/change_manifest.json",
+      "reason": "work_id and run_id match lock and active packet run r-20260312-203855-run-034"
+    },
+    {
+      "path": "Plans/.pipeline/research_packet.json",
+      "reason": "work_id and run_id match lock and active packet run"
+    },
+    {
+      "path": "Plans/.pipeline/packet_shape_report.txt",
+      "reason": "run_id r-20260312-203855-run-034 aligns with active packet"
+    },
+    {
+      "path": "Plans/.pipeline/verifier_report.txt",
+      "reason": "work_id and run_id match lock and active packet run"
+    },
+    {
+      "path": "Plans/.pipeline/verifier_exit_code.txt",
+      "reason": "paired with verifier_report.txt for same gate"
+    },
+    {
+      "path": "Plans/.pipeline/fidelity_recovery_plan.txt",
+      "reason": "No work_id/run_id header; retained at root pending explicit stage binding — see ambiguous"
+    },
+    {
+      "path": "Plans/.pipeline/runs/r-20260312-203855-run-034",
+      "reason": "Active run tree for packet/verifier currentness — not moved"
+    },
+    {
+      "path": "Plans/.pipeline/runs/**",
+      "reason": "128 run directories include other legitimate work_items prefixes; bulk quarantine deferred to avoid cross-work breakage"
+    }
+  ],
+  "ambiguous": [
+    {
+      "path": "Plans/.pipeline/fidelity_recovery_plan.txt",
+      "action": "preserved",
+      "reason": "Large recovery narrative without structured work_id/run_id; not promoted to quarantine to avoid dropping fidelity context mid Doc Discovery track"
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  },
+  "next_required_stage": "Doc Discovery Worklist Builder"
+}

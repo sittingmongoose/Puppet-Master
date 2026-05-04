@@ -47,10 +47,35 @@
 
 ## Meta
 
-- **status:** `blocked`  
+- **status:** `sanitized`  
 - **next_required_stage:** **Doc Discovery Worklist Builder**
 
 WORK_ID LOCK:
 
 - Active work_id: w-20260312-203855  
 - Do not switch work items.
+
+## Resolve Work Item (pm.resolve_work_item.v2.3)
+
+- **locked_work_id:** `w-20260312-203855` (explicit user prompt; matches `meta.json`)  
+- **Evidence:** `resolve_work_item_report.json`, `resolve_work_item.wave-001.json`  
+- **Next stage (routing):** Doc Discovery Worklist Builder
+
+## Legacy Artifact Sanitizer (pm.legacy_artifact_sanitizer.v2.3)
+
+- **Active packet run (root mirror):** `r-20260312-203855-run-034` (`meta.run_id` remains `null`; basis `packet_builder_summary.run_id`)  
+- **Quarantined (5) stale top-level mirrors:** moved under `legacy_quarantine/20260504T153803Z/Plans/.pipeline/` — see `legacy_artifact_sanitizer_report.json` and `_sanitizer_manifest.20260504T153803Z.jsonl`  
+- **Preserved top-level:** `change_manifest.json`, `research_packet.json`, `packet_shape_report.txt`, `verifier_report.txt`, `verifier_exit_code.txt`, `fidelity_recovery_plan.txt` (latter: ambiguous, kept with reason in report)  
+- **Runs tree:** not bulk-moved (other `w-*` work items share `Plans/.pipeline/runs/` prefixes)  
+- **meta.status:** `sanitized`  
+- **Next stage:** Doc Discovery Worklist Builder (unchanged)
+
+## Target Path Hygiene Auditor (pm.target_path_hygiene_auditor.v2.3)
+
+- **Report:** `target_path_hygiene_report.json` (supersedes prior v2.2 pass artifact in same path)  
+- **Evidence:** `target_path_hygiene_auditor.wave-001.json`, `target_path_hygiene_auditor.worklist.json`  
+- **Polluted fields:** **5** (`gap-00077` `exact_missing_items[]` — `Plans/.pipeline/work_items/...` process paths; mirrored in `open_gaps.worklist.json` `ogtask-077` `exact_items[]`)  
+- **Transfer + doc discovery:** no target-slot pollution; `source_*` lineage pointers excluded from pollution counts  
+- **delta_repair_safe:** false (no `process_artifact_refs` slot on gap objects)  
+- **Repair route (narrow):** Prompt Packet Update / Process Defect Repair (see `repair_plan` in report)  
+- **Pipeline next (queue):** Doc Discovery Worklist Builder (`meta.next_required_stage` unchanged)
