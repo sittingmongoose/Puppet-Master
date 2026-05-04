@@ -5,8 +5,16 @@
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 35,
-  "status": "blocked",
+  "status": "sanitized",
   "run_id": null,
+  "target_path_hygiene_audit_v2_3": {
+    "schema_id": "pm.target_path_hygiene_report.v2.3",
+    "report_path": "Plans/.pipeline/work_items/w-20260312-203855/target_path_hygiene_report.json",
+    "polluted_fields_total": 5,
+    "delta_repair_safe": false,
+    "repair_plan_next_required_stage": "Prompt Packet Update / Process Defect Repair",
+    "note": "meta.next_required_stage unchanged — Doc Discovery queue still primary"
+  },
   "next_required_stage": "Doc Discovery Worklist Builder",
   "ledger_shards": {
     "status": "generated_current",

@@ -1,34 +1,108 @@
 {
-  "schema_id": "pm.target_path_hygiene_auditor_wave.v2.2",
+  "schema_id": "pm.target_path_hygiene_auditor.wave.v2.3",
+  "wave": 1,
   "work_id": "w-20260312-203855",
-  "wave_id": "001",
   "subagent_tasks": [
-    "verify_work_id_lock",
-    "confirm_root_artifact_inventory",
-    "confirm_no_semantic_json_at_root"
+    {
+      "task_id": "scan-open-gaps-family",
+      "unit": "artifact_family",
+      "description": "open_gaps.json + open_gaps.worklist.json path-like fields vs v2.3 pollution rules"
+    },
+    {
+      "task_id": "scan-transfer-coverage-family",
+      "unit": "artifact_family",
+      "description": "transfer_coverage.json + row_inventory path strings vs sentinels"
+    },
+    {
+      "task_id": "scan-doc-discovery-family",
+      "unit": "artifact_family",
+      "description": "doc_discovery.worklist.json + doc_discovery_resolution.json discovery path slots"
+    },
+    {
+      "task_id": "scan-seed-canonical-lineage",
+      "unit": "schema_version_group",
+      "description": "Bounded rg for Plans/.pipeline, ellipsis, __NEW_FILE__ in ledger_obligation_seed + canonical_obligations"
+    }
   ],
-  "assigned_input_boundaries": {
-    "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855/",
-    "excluded_directories": ["legacy_quarantine/", "ledger_shards/"],
-    "semantic_families_expected_when_present": [
-      "canonical_obligations",
-      "transfer_coverage",
-      "open_gaps",
-      "doc_discovery",
-      "reconciliation",
-      "packet",
-      "fidelity",
-      "run_integrity",
-      "completion"
-    ]
-  },
+  "assigned_input_boundaries": [
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery.worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json"
+  ],
   "subagent_result_status": "complete",
-  "subagent_attestation_agent_id": "6feb6a68-2e70-41ec-98ab-d5db06a10cb3",
-  "completed_task_count": 3,
+  "completed_task_count": 4,
   "failed_task_count": 0,
-  "artifact_paths_assigned": 8,
-  "artifact_paths_completed": 8,
-  "path_fields_assigned": 0,
-  "path_fields_completed": 0,
-  "notes": "Parent agent bounded JSON walk confirmed no obligations/coverage_rows/open_gaps shells; subagent attested inventory and work_id lock."
+  "artifact_paths_assigned": [
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery.worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json"
+  ],
+  "artifact_paths_completed": [
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery.worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json"
+  ],
+  "field_paths_assigned": [
+    "open_gaps.json:/source_transfer_coverage (lineage review)",
+    "open_gaps.json:/open_gaps/*/affected_targets/*/path",
+    "open_gaps.json:/open_gaps/*/exact_missing_items/*",
+    "open_gaps.worklist.json:/gap_tasks/*/path",
+    "open_gaps.worklist.json:/gap_tasks/*/exact_items/*",
+    "transfer_coverage*.json:rows[].path + doc_resolution_status",
+    "doc_discovery*.json:discovery_tasks + resolutions path slots",
+    "ledger_obligation_seed.json: bounded pattern hits",
+    "canonical_obligations.json: $.source_seed_file + bounded pattern hits"
+  ],
+  "field_paths_completed": [
+    "open_gaps.json:/source_transfer_coverage (lineage review)",
+    "open_gaps.json:/open_gaps/*/affected_targets/*/path",
+    "open_gaps.json:/open_gaps/*/exact_missing_items/*",
+    "open_gaps.worklist.json:/gap_tasks/*/path",
+    "open_gaps.worklist.json:/gap_tasks/*/exact_items/*",
+    "transfer_coverage*.json:rows[].path + doc_resolution_status",
+    "doc_discovery*.json:discovery_tasks + resolutions path slots",
+    "ledger_obligation_seed.json: bounded pattern hits",
+    "canonical_obligations.json: $.source_seed_file + bounded pattern hits"
+  ],
+  "subagent_attestations": [
+    {
+      "task_id": "scan-open-gaps-family",
+      "agent_id": "6c58ee80-fec7-48b7-b646-2001057f1dce",
+      "polluted_count_reported": 12,
+      "lineage_false_positives": [
+        "/source_transfer_coverage",
+        "/source_transfer_coverage"
+      ]
+    },
+    {
+      "task_id": "scan-transfer-coverage-family",
+      "agent_id": "16bfba71-12c1-4d22-89e9-88f6231c520b",
+      "polluted_count_reported": 0
+    },
+    {
+      "task_id": "scan-doc-discovery-family",
+      "agent_id": "f903ad25-3c63-4548-9758-4b056cbfb28d",
+      "polluted_count_reported": 0
+    },
+    {
+      "task_id": "scan-seed-canonical-lineage",
+      "agent_id": "e9935763-a78b-48d8-a46f-d168fbeba24a",
+      "pattern_line_matches_total": 764
+    }
+  ]
 }

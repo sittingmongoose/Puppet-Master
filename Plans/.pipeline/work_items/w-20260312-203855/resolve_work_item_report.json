@@ -1,8 +1,9 @@
 {
-  "schema_id": "pm.resolve_work_item_report.v2.2",
-  "status": "complete",
-  "resolved_work_id": "w-20260312-203855",
-  "work_id_source": "user_provided",
+  "schema_id": "pm.resolve_work_item_report.v2.3",
+  "status": "resolved",
+  "locked_work_id": "w-20260312-203855",
+  "selection_source": "explicit_user_prompt",
+  "prompt_version": "pm.resolve_work_item.v2.3",
   "candidate_work_items": [
     "w-20260312-160857",
     "w-20260312-203855",
@@ -22,7 +23,8 @@
     "w-20260328-192905",
     "w-20260328-192938",
     "w-20260329-235630",
-    "w-20260330-191149"
+    "w-20260330-191149",
+    "w-20260413-213554"
   ],
   "ignored_work_items": [
     "w-20260312-160857",
@@ -42,27 +44,36 @@
     "w-20260328-192905",
     "w-20260328-192938",
     "w-20260329-235630",
-    "w-20260330-191149"
+    "w-20260330-191149",
+    "w-20260413-213554"
   ],
-  "wrong_work_item_evidence": [],
-  "ambiguity_blockers": [],
-  "created_new_work_item": false,
-  "meta_path": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
-  "current_state_path": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
-  "working_ledger_exists": true,
-  "ledger_shards_status": "generated_current",
+  "conflicts": [],
+  "wrong_work_item_artifacts": [
+    "Plans/.pipeline/runs/r-20260329-235630-25/ledger_fidelity_report.txt (work_id w-20260329-235630; cites Plans/.pipeline/research_packet.json as supporting context)",
+    "Plans/.pipeline/runs/r-20260329-235630-25/packet_shape_report.txt (work_id w-20260329-235630)",
+    "Plans/.pipeline/runs/r-20260329-235630-23/ledger_fidelity_report.txt (work_id w-20260329-235630)",
+    "Plans/.pipeline/runs/r-20260329-235630-03/fidelity_recovery_plan.txt (work_id w-20260329-235630)",
+    "Plans/.pipeline/runs/r-20260328-192850-03/change_manifest.json (paths reference w-20260328-192850 work item)",
+    "Plans/.pipeline/runs/r-20260328-192938-03/change_manifest.json (paths reference w-20260328-192938 work item)",
+    "Plans/.pipeline/runs/r-20260330-191149-01/working_ledger.md (run prefix r-20260330-191149)",
+    "Plans/.pipeline/runs/r-20260312-160857-01/change_manifest.json (run_id r-20260312-160857-01 — maps to work w-20260312-160857, not locked item)"
+  ],
+  "selected_meta_status_before": "blocked",
+  "selected_next_required_stage_before": "Doc Discovery Worklist Builder",
+  "selected_next_required_stage_after": "Doc Discovery Worklist Builder",
   "subagent_execution": {
-    "required": false,
-    "used": false,
-    "skip_reason": {
-      "skipped": true,
-      "worklist_item_count": 1,
-      "largest_file_lines_read": 363,
-      "largest_json_items_read": 1,
-      "broad_scan_performed": false,
-      "candidate_work_items_inspected_in_detail": 1
-    },
+    "required": true,
+    "used": true,
+    "skip_reason": null,
     "wave_files_valid": true
   },
-  "next_required_stage": "Legacy Artifact Sanitizer"
+  "next_required_stage": "Doc Discovery Worklist Builder",
+  "inventory": {
+    "work_item_directories_total": 20,
+    "work_items_with_root_current_state_md": [
+      "w-20260312-203855",
+      "w-20260328-192905"
+    ],
+    "top_level_pipeline_json_work_id_alignment": "change_manifest.json and research_packet.json declare w-20260312-203855; traceability_handoff.json has no work_id field (subagent evidence)."
+  }
 }
