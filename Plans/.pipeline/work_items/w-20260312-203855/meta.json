@@ -7,15 +7,135 @@
   "next_run_seq": 35,
   "status": "sanitized",
   "run_id": null,
+  "resolve_currentness_hygiene_gate_v3": {
+    "schema_id": "pm.resolve_currentness_hygiene_gate_summary.v3",
+    "prompt_version": "pm.resolve_currentness_hygiene_gate.v3.0",
+    "currentness_status": "pass",
+    "path_hygiene_status": "blocked",
+    "report_path": "Plans/.pipeline/work_items/w-20260312-203855/resolve_currentness_hygiene_report.json",
+    "stage_report_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.01.json",
+    "mirror_verification": {
+      "change_manifest_root_vs_run034": "byte_identical",
+      "research_packet_root_vs_run034": "byte_identical"
+    },
+    "next_required_stage": "14 Completion / Process Defect Handler"
+  },
+  "completion_process_defect_handler_v3": {
+    "schema_id": "pm.completion_process_defect_handler_summary.v3",
+    "prompt_version": "pm.completion_process_defect_handler.v3.0",
+    "certification_status": "blocked",
+    "active_run_id": "r-20260312-203855-run-034",
+    "blocker_summary": "Transfer mirror chain + scribe/normalize/verify/fidelity proof current; completion blocked solely on open_gaps gap-00077 path pollution (path_hygiene_status blocked in resolve_currentness_hygiene_gate_v3).",
+    "reports": {
+      "run_integrity": "Plans/.pipeline/work_items/w-20260312-203855/run_integrity_report.json",
+      "completion_certifier": "Plans/.pipeline/work_items/w-20260312-203855/completion_certifier_report.json",
+      "process_defect": "Plans/.pipeline/work_items/w-20260312-203855/process_defect_report.json",
+      "prompt_recommendations": "Plans/.pipeline/work_items/w-20260312-203855/prompt_packet_update_recommendations.md",
+      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.14.json"
+    },
+    "next_required_stage": "manual_decision"
+  },
+  "packet_builder_v3": {
+    "schema_id": "pm.packet_builder_summary.v3",
+    "prompt_version": "pm.packet_builder.v3.0",
+    "run_id": "r-20260312-203855-run-034",
+    "build_mode": "span_repair_merge",
+    "research_packet_schema": "pm.research_packet.v2",
+    "anchors_patched": 492,
+    "reconciliation_plan_present": false,
+    "reports": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/packet_builder.worklist.json",
+      "wave_001": "Plans/.pipeline/work_items/w-20260312-203855/packet_builder.wave-001.json",
+      "content_group": "Plans/.pipeline/work_items/w-20260312-203855/packet_content_group.span_repair.v3.json",
+      "research_packet": "Plans/.pipeline/work_items/w-20260312-203855/research_packet.json",
+      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.09.json"
+    },
+    "next_required_stage": "13 Fidelity Audit / Recovery"
+  },
+  "packet_validator_v3": {
+    "schema_id": "pm.packet_validator_summary.v3",
+    "prompt_version": "pm.packet_validator.v3.0",
+    "run_id": "r-20260312-203855-run-034",
+    "validation_status": "pass",
+    "anchors_total": 555,
+    "anchors_valid": 555,
+    "mechanical_repairs_pending": 0,
+    "non_mechanical_duplicate_heading": 0,
+    "built_from_reconciliation_plan_missing": true,
+    "advisory": "reconciliation_plan.json still absent at built_from path; span/anchor gate pass",
+    "reports": {
+      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/packet_validator.worklist.json",
+      "waves": "Plans/.pipeline/work_items/w-20260312-203855/packet_validator.wave-001.json … wave-003.json",
+      "packet_shape_report_json": "Plans/.pipeline/work_items/w-20260312-203855/packet_shape_report.json",
+      "packet_span_conflicts": "Plans/.pipeline/work_items/w-20260312-203855/packet_span_conflicts.json",
+      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.10.json"
+    },
+    "next_required_stage": "13 Fidelity Audit / Recovery"
+  },
+  "scribe_apply_v3": {
+    "schema_id": "pm.scribe_apply_summary.v3",
+    "prompt_version": "pm.scribe_apply.v3.0",
+    "run_id": "r-20260312-203855-run-034",
+    "apply_status": "applied",
+    "insert_after_anchors_total": 555,
+    "inserts_written_to_disk": 0,
+    "inserts_idempotent_skipped": 555,
+    "anchor_heading_mismatches": 0,
+    "reports": {
+      "preflight": "Plans/.pipeline/work_items/w-20260312-203855/scribe_preflight_report.json",
+      "plan": "Plans/.pipeline/work_items/w-20260312-203855/scribe_apply_plan.json",
+      "apply": "Plans/.pipeline/work_items/w-20260312-203855/scribe_apply_report.json",
+      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.11.json"
+    },
+    "next_required_stage": "13 Fidelity Audit / Recovery"
+  },
+  "normalize_verify_v3": {
+    "schema_id": "pm.normalize_verify_summary.v3",
+    "prompt_version": "pm.normalize_verify.v3.0",
+    "run_id": "r-20260312-203855-run-034",
+    "verifier_exit_code": 0,
+    "verifier_classification": "pass",
+    "pm_shard_plans_check_exit_code": 0,
+    "pm_plans_verify_run_gates_exit_code": 0,
+    "spec_lock_refreshed_this_stage": false,
+    "reports": {
+      "normalizer": "Plans/.pipeline/work_items/w-20260312-203855/normalizer_report.json",
+      "verifier_report": "Plans/.pipeline/work_items/w-20260312-203855/verifier_report.txt",
+      "verifier_exit_code": "Plans/.pipeline/work_items/w-20260312-203855/verifier_exit_code.txt",
+      "verifier_classification": "Plans/.pipeline/work_items/w-20260312-203855/verifier_classification.json",
+      "change_manifest": "Plans/.pipeline/work_items/w-20260312-203855/change_manifest.json",
+      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.12.json"
+    },
+    "next_required_stage": "13 Fidelity Audit / Recovery"
+  },
+  "fidelity_audit_recovery_v3": {
+    "schema_id": "pm.fidelity_audit_recovery_summary.v3",
+    "prompt_version": "pm.fidelity_audit_recovery.v3.0",
+    "run_id": "r-20260312-203855-run-034",
+    "fidelity_status": "pass",
+    "acceptance_checks_total": 1731,
+    "false_positives_adjudicated": 1,
+    "recovery_plan_emitted": false,
+    "reports": {
+      "evidence_worklist": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_evidence.worklist.json",
+      "evidence_waves": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_evidence.wave-001.json … wave-023.json",
+      "evidence_index": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_evidence_index.json",
+      "audit_waves": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_audit.wave-001.json … wave-023.json",
+      "ledger_fidelity_report": "Plans/.pipeline/work_items/w-20260312-203855/ledger_fidelity_report.txt",
+      "reducer_report": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_audit_reducer_report.json",
+      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.13.json"
+    },
+    "next_required_stage": "14 Completion / Process Defect Handler"
+  },
   "target_path_hygiene_audit_v2_3": {
     "schema_id": "pm.target_path_hygiene_report.v2.3",
     "report_path": "Plans/.pipeline/work_items/w-20260312-203855/target_path_hygiene_report.json",
     "polluted_fields_total": 5,
     "delta_repair_safe": false,
     "repair_plan_next_required_stage": "Prompt Packet Update / Process Defect Repair",
-    "note": "meta.next_required_stage unchanged — Doc Discovery queue still primary"
+    "note": "Superseded for routing by resolve_currentness_hygiene_gate_v3 (2026-05-04): top-level next_required_stage now 14 Completion / Process Defect Handler until gap-00077 hygiene addressed; Doc Discovery queue remains downstream after process defect"
   },
-  "next_required_stage": "Doc Discovery Worklist Builder",
+  "next_required_stage": "manual_decision",
   "ledger_shards": {
     "status": "generated_current",
     "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",

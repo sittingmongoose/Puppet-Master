@@ -11,5 +11,7 @@ run_gates_exit_code: 0
 blocker_class: null
 exact blockers:
 - []
-run_gates_output:
-next_required_stage: Fidelity Evidence Indexer
+run_gates_command: python3 scripts/pm-plans-verify.py run-gates
+normalize_verify_prompt_version: pm.normalize_verify.v3.0
+scribe_net_doc_changes: 0
+next_required_stage: 13 Fidelity Audit / Recovery
