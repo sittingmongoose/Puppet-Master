@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.stage_report.v3",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "stage_id": "09",
+  "stage_name": "Packet Builder",
+  "status": "complete",
+  "inputs_read": [
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/packet_span_conflicts.json",
+    "Plans/.pipeline/research_packet.json (pre-merge via script load)"
+  ],
+  "inputs_declared_unavailable": [
+    "Plans/.pipeline/work_items/w-20260312-203855/reconciliation_plan.json (missing — not a full v3 regroup from plan)",
+    "target_document_existence_report.json (absent; meta.target_document_existence not_checked)"
+  ],
+  "outputs_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/packet_builder.worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/packet_builder.wave-001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/packet_content_group.span_repair.v3.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/research_packet.json",
+    "Plans/.pipeline/research_packet.json",
+    "Plans/.pipeline/runs/r-20260312-203855-run-034/research_packet.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.09.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+  ],
+  "subagents": {
+    "required": true,
+    "used": false,
+    "skip_reason": "Deterministic merge from packet_span_conflicts target_id map; 555 anchors exceeds 25-record chunk without splitting merge logic.",
+    "max_ledger_lines_per_task": 200,
+    "max_live_doc_lines_per_task": 400,
+    "max_json_records_per_task": 25
+  },
+  "path_hygiene": {
+    "invalid_live_target_paths": 0,
+    "invalid_paths": []
+  },
+  "route": {
+    "next_required_stage": "10 Packet Validator",
+    "route_reason": "research_packet remitted with aligned live_anchor line refs; re-validate before Scribe",
+    "route_rule_id": "ROUTE-PACKET-BUILDER-SPAN-REPAIR-V3"
+  },
+  "blockers": [
+    "reconciliation_plan.json still missing at built_from path — patch applied without full v3 doc_intent regroup"
+  ]
+}

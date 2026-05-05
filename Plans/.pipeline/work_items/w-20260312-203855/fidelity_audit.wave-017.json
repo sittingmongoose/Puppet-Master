@@ -1,0 +1,185 @@
+{
+  "schema_id": "pm.fidelity_audit.wave.v3",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "wave_index": 17,
+  "target_ids": [
+    "packet-target-0401",
+    "packet-target-0402",
+    "packet-target-0403",
+    "packet-target-0404",
+    "packet-target-0405",
+    "packet-target-0406",
+    "packet-target-0407",
+    "packet-target-0408",
+    "packet-target-0409",
+    "packet-target-0410",
+    "packet-target-0411",
+    "packet-target-0412",
+    "packet-target-0413",
+    "packet-target-0414",
+    "packet-target-0415",
+    "packet-target-0416",
+    "packet-target-0417",
+    "packet-target-0418",
+    "packet-target-0419",
+    "packet-target-0420",
+    "packet-target-0421",
+    "packet-target-0422",
+    "packet-target-0423",
+    "packet-target-0424",
+    "packet-target-0425"
+  ],
+  "classifications": [
+    {
+      "target_id": "packet-target-0401",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0402",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0403",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0404",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0405",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0406",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0407",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0408",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0409",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0410",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0411",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0412",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0413",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0414",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0415",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0416",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0417",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0418",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0419",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0420",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0421",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0422",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0423",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0424",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    },
+    {
+      "target_id": "packet-target-0425",
+      "acceptance": "pass",
+      "forbidden_strings": "advisory_full_file_scan_deferred",
+      "notes": "Verifier exit 0 + idempotent scribe; forbidden guardrails not asserted against whole-document cross-references"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_id": "pm.normalizer_report.v3",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "prompt_version": "pm.normalize_verify.v3.0",
+  "status": "complete",
+  "summary": {
+    "live_docs_modified_this_scribe_session": 0,
+    "canonicalization": "no_ssot_content_delta_required_idempotent_scribe",
+    "shard_check": "pass",
+    "spec_lock_touch": "skipped_no_delta",
+    "auto_decisions_touch": "skipped_no_delta"
+  },
+  "commands": [
+    {
+      "name": "pm-shard-plans.py --check",
+      "exit_code": 0
+    },
+    {
+      "name": "pm-plans-verify.py run-gates",
+      "exit_code": 0
+    }
+  ]
+}

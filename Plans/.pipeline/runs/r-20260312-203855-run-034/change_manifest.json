@@ -107,8 +107,25 @@
       "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
       "exit_code": 0,
       "notes": "auto_decisions.jsonl validation passed after appended governance entry"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "notes": "stage 12 normalize/verify: shard reconstruction/index/clean-room PASS (no regen required)"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "notes": "stage 12: all script-enforceable gates PASS (scribe session produced 0 net SSOT byte changes)"
     }
   ],
-  "next_required_stage": "Verifier",
-  "updated_at_utc": "2026-04-29T17:27:33.200412Z"
+  "next_required_stage": "13 Fidelity Audit / Recovery",
+  "updated_at_utc": "2026-05-05T00:54:14Z",
+  "normalize_verify_v3": {
+    "schema_id": "pm.normalize_verify_session.v3",
+    "executed_at_utc": "2026-05-05T00:54:14Z",
+    "scribe_net_bytes_changed": 0,
+    "spec_lock_refresh_required": false,
+    "auto_decisions_append_required": false
+  }
 }

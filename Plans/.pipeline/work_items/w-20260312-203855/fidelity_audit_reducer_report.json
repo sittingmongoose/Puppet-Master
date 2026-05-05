@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.fidelity_audit_reducer_report.v3",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-034",
+  "status": "pass",
+  "summary": {
+    "acceptance_checks_total": 1731,
+    "acceptance_checks_passed": 1731,
+    "acceptance_checks_missing": 0,
+    "forbidden_strings_present": 0,
+    "contract_refs_missing_or_nonlocal": 0,
+    "false_positives": 1,
+    "recovery_targets": 0
+  },
+  "findings": [
+    {
+      "classification": "false_positive",
+      "target_id": "packet-target-0261",
+      "path": "Plans/Glossary.md",
+      "detail": "One exact_acceptance_check string in the research packet uses the token family name 'exact_stale_tokens_to_retire' as a literal phrase. Live Plans/Glossary.md (under the # Glossary anchor addendum) states the same obligation with the packet's normalized placeholder 'exact_[retired-token-12]_tokens_to_retire'. Substring match against the packet string fails; semantic acceptance is present on evidence line ~147.",
+      "adjudication": "Literal check string does not match live placeholder variant; no reconciliation content defect."
+    }
+  ],
+  "recovery_targets": [],
+  "next_required_stage": "14 Completion / Process Defect Handler"
+}

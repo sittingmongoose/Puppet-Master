@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.resolve_currentness_hygiene_report.v3",
+  "work_id": "w-20260312-203855",
+  "prompt_version": "pm.resolve_currentness_hygiene_gate.v3.0",
+  "status": "resolved",
+  "locked_work_id": "w-20260312-203855",
+  "currentness_status": "pass",
+  "path_hygiene_status": "blocked",
+  "wrong_work_item_artifacts": [],
+  "stale_artifacts": [],
+  "polluted_fields": [
+    {
+      "finding_ref": "tph-001",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "field_path": "/open_gaps/76/exact_missing_items/0",
+      "invalid_class": "process_artifact_path",
+      "gap_id": "gap-00077"
+    },
+    {
+      "finding_ref": "tph-002",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "field_path": "/open_gaps/76/exact_missing_items/1",
+      "invalid_class": "process_artifact_path",
+      "gap_id": "gap-00077"
+    },
+    {
+      "finding_ref": "tph-003",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "field_path": "/open_gaps/76/exact_missing_items/2",
+      "invalid_class": "process_artifact_path",
+      "gap_id": "gap-00077"
+    },
+    {
+      "finding_ref": "tph-004",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "field_path": "/open_gaps/76/exact_missing_items/3",
+      "invalid_class": "process_artifact_path",
+      "gap_id": "gap-00077"
+    },
+    {
+      "finding_ref": "tph-005",
+      "artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "field_path": "/open_gaps/76/exact_missing_items/4",
+      "invalid_class": "process_artifact_path",
+      "gap_id": "gap-00077"
+    }
+  ],
+  "repairs_applied": [
+    "Verified byte identity: Plans/.pipeline/change_manifest.json and Plans/.pipeline/research_packet.json match Plans/.pipeline/runs/r-20260312-203855-run-034/ counterparts (sha256 match); no mirror rewrite required.",
+    "Active packet run basis unchanged: packet_builder_summary.run_id r-20260312-203855-run-034; meta.run_id intentionally null per prior notes — no automatic meta.run_id promotion applied."
+  ],
+  "evidence": {
+    "target_path_hygiene_report": "Plans/.pipeline/work_items/w-20260312-203855/target_path_hygiene_report.json",
+    "legacy_artifact_sanitizer_report": "Plans/.pipeline/work_items/w-20260312-203855/legacy_artifact_sanitizer_report.json",
+    "delta_repair_safe": false,
+    "prompt_process_defect": true
+  },
+  "notes": "gap-00077 is process_followup with affected_targets __PROCESS_ONLY__ and required_action prompt_process_resolution; exact_missing_items still contain Plans/.pipeline/** strings classified as target-adjacent pollution (pm.target_path_hygiene_report.v2.3). Mechanical move_to_process_artifact_refs unsafe without schema slot per tph repair_plan.",
+  "next_required_stage": "14 Completion / Process Defect Handler"
+}

@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.process_defect_report.v3",
+  "work_id": "w-20260312-203855",
+  "status": "complete",
+  "defects": [
+    {
+      "defect_id": "proc-001",
+      "defect_type": "path_pollution",
+      "evidence": [
+        "Plans/.pipeline/work_items/w-20260312-203855/resolve_currentness_hygiene_report.v3 path_hygiene_status blocked",
+        "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json gap-00077 exact_missing_items[]",
+        "Plans/.pipeline/work_items/w-20260312-203855/target_path_hygiene_report.json tph-001..005",
+        "delta_repair_safe: false (no process_artifact_refs slot)"
+      ],
+      "affected_stage_ids": [
+        "01",
+        "06",
+        "14"
+      ],
+      "generic_fix": "Extend open_gaps / reducer schemas so process_followup gaps store Plans/.pipeline/** references only in process_artifact_refs[] (or notes), never in exact_missing_items; add a gate that rejects target-shaped arrays containing pipeline paths before classification waves.",
+      "next_required_stage": "manual_decision"
+    },
+    {
+      "defect_id": "proc-002",
+      "defect_type": "stale_artifact",
+      "evidence": [
+        "Plans/.pipeline/packet_shape_report.txt next_required_stage: 11 Scribe Apply",
+        "Plans/.pipeline/verifier_report.txt next_required_stage: 13 Fidelity Audit / Recovery",
+        "Both files share run_id r-20260312-203855-run-034; packet shape text predates post-verify canonical route"
+      ],
+      "affected_stage_ids": [
+        "10",
+        "12"
+      ],
+      "generic_fix": "After normalize/verify, regenerate or patch auxiliary mirror texts (packet_shape_report.txt) so successor hints match the canonical pipeline DAG; or stop emitting next_required_stage from multiple authorities—pick one artifact as canonical.",
+      "next_required_stage": "manual_decision"
+    }
+  ]
+}
