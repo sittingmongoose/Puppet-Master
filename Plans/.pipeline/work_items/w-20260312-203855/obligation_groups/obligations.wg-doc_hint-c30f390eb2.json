@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-doc_hint-c30f390eb2",
+  "category": "doc_hint",
+  "family_key": "classify_seams_still_needs_research_concrete_account_operational_identity_switch_history_projection_freshness_concern",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0040-003"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-doc_hint-c30f390eb2--SEED-shard-0040-003",
+      "seed_id": "SEED-shard-0040-003",
+      "source_shard_id": "shard-0040",
+      "batch_index": 10,
+      "obligation_type": "doc_hint",
+      "work_group_category": "doc_hint",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0040",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Classify seams: still needs research (concrete account, operational identity, switch history, projection-freshness, concern authority) vs primarily reconciliation (orchestrator retargeting, widget cleanup, command/route normalization).",
+      "evidence_ledger_excerpt": "**Still needs research decisions**... **Primarily reconciliation work after those decisions**",
+      "related_paths": [],
+      "doc_hints": [
+        {
+          "hint": "Classify seams: still needs research (concrete account, operational identity, switch history, projection-freshness, concern authority) vs primarily reconciliation (orchestrator retargeting, widget cleanup, command/route normalization).",
+          "evidence_ledger_excerpt": "**Still needs research decisions**... **Primarily reconciliation work after those decisions**",
+          "related_paths": []
+        }
+      ],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Classify seams: still needs research (concrete account, operational identity, switch history, projection-freshness, concern authority) vs primarily reconciliation (orchestrator retargeting, widget cleanup, command/route normalization)."
+      ],
+      "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels."
+    }
+  ]
+}

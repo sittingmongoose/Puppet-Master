@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-c3aa61389d",
+  "category": "process_only",
+  "family_key": "reject_multi_selector_payloads_as_non_canonical_normalize_special_case_ids_before_entering_canonical",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0068-012"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-c3aa61389d--SEED-shard-0068-012",
+      "seed_id": "SEED-shard-0068-012",
+      "source_shard_id": "shard-0068",
+      "batch_index": 17,
+      "obligation_type": "candidate_fix",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0068",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Reject multi-selector payloads as non-canonical; normalize special-case ids before entering canonical route layer; state precedence in Contracts_V0.",
+      "evidence_ledger_excerpt": "State the precedence rule directly in `Contracts_V0.md`.\n- Reject multi-selector route payloads as non-canonical.\n- Normalize all special-case ids into `subject_id` or `object_kind` + `object_id` before they enter the canonical route layer.",
+      "related_paths": [
+        "Plans/Contracts_V0.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Reject multi-selector payloads as non-canonical; normalize special-case ids before entering canonical route layer; state precedence in Contracts_V0.",
+          "kind": "candidate_fix",
+          "evidence_ledger_excerpt": "State the precedence rule directly in `Contracts_V0.md`.\n- Reject multi-selector route payloads as non-canonical.\n- Normalize all special-case ids into `subject_id` or `object_kind` + `object_id` before they enter the canonical route layer.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        }
+      ],
+      "exact_items": [
+        "Reject multi-selector payloads as non-canonical",
+        "normalize special-case ids before entering canonical route layer",
+        "state precedence in Contracts_V0."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

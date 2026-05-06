@@ -1,0 +1,256 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-030",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-030.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale_historical`",
+      "line_in_shard": 1
+    },
+    {
+      "type": "decision",
+      "text": "- previously accepted/promoted/active decision or state explicitly withdrawn",
+      "line_in_shard": 6
+    },
+    {
+      "type": "requirement",
+      "text": "- `attention_required` vs `blocked`",
+      "line_in_shard": 23
+    },
+    {
+      "type": "doc_hint",
+      "text": "- these should remain family-specific, while still allowing cross-family historical overlays where relevant",
+      "line_in_shard": 24
+    },
+    {
+      "type": "process_defect",
+      "text": "- There is a real contract conflict in `Plans/Contracts_V0.md` for `remediation.resolved`:",
+      "line_in_shard": 27
+    },
+    {
+      "type": "data_shape",
+      "text": "- one section says resolution enum is:",
+      "line_in_shard": 28
+    },
+    {
+      "type": "requirement",
+      "text": "- `replan_required`",
+      "line_in_shard": 32
+    },
+    {
+      "type": "data_shape",
+      "text": "- another section defines minimum payload resolution as:",
+      "line_in_shard": 33
+    },
+    {
+      "type": "process_defect",
+      "text": "- This is not just wording drift; it is a real semantic conflict.",
+      "line_in_shard": 37
+    },
+    {
+      "type": "data_shape",
+      "text": "- remediation should use one canonical resolution family, and the richer lineage-aware enum looks more compatible with the rewrite than a coarse success/failed enum",
+      "line_in_shard": 42
+    },
+    {
+      "type": "requirement",
+      "text": "- `superseded` and `replan_required` matter for graph patch and generation lineage",
+      "line_in_shard": 44
+    },
+    {
+      "type": "data_shape",
+      "text": "- This is exactly why the word `resolved` needs family-local payload detail rather than one global interpretation.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Storage and UI already hint at an important distinction:",
+      "line_in_shard": 58
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Earlier research established these as important for promotions and graph/patch flows, but local docs are still uneven.",
+      "line_in_shard": 70
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This especially matters for:",
+      "line_in_shard": 73
+    },
+    {
+      "type": "doc_hint",
+      "text": "- search filters and ledger inspectors should be able to distinguish:",
+      "line_in_shard": 82
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- stale_historical vs merely historical",
+      "line_in_shard": 86
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Without that, the exact record-inspection surface will flatten the very distinctions the rewrite depends on.",
+      "line_in_shard": 87
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Contracts_V0.md` has a real `remediation.resolved` enum conflict.",
+      "line_in_shard": 90
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Several docs imply strong historical semantics, but those meanings are not yet summarized in one shared consistency rule.",
+      "line_in_shard": 91
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Some families clearly need local lifecycle terms, and the docs do not yet sharply separate \u201ccross-family historical overlays\u201d from \u201cfamily-local workflow states.\u201d",
+      "line_in_shard": 92
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale_historical`",
+      "line_in_shard": 97
+    },
+    {
+      "type": "data_shape",
+      "text": "- Explicitly state that family-local workflow states remain distinct and are not collapsed into one universal lifecycle enum.",
+      "line_in_shard": 103
+    },
+    {
+      "type": "data_shape",
+      "text": "- Reconcile `remediation.resolved` to one canonical resolution enum, likely the richer lineage-aware variant.",
+      "line_in_shard": 104
+    },
+    {
+      "type": "data_shape",
+      "text": "- consistency here means shared meaning, not one single lifecycle enum for every object family",
+      "line_in_shard": 108
+    },
+    {
+      "type": "process_defect",
+      "text": "- the `remediation.resolved` contract conflict is a real reconciliation item, not just a wording preference",
+      "line_in_shard": 110
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 114
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 115
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The local docs still do not define a canonical concern record family the way they define:",
+      "line_in_shard": 124
+    },
+    {
+      "type": "data_shape",
+      "text": "- But adjacent durable-object patterns are now strong enough to use as guidance:",
+      "line_in_shard": 130
+    },
+    {
+      "type": "data_shape",
+      "text": "### Concern vs adjacent object boundaries",
+      "line_in_shard": 138
+    },
+    {
+      "type": "verification_rule",
+      "text": "- a durable tracked issue/observation that may aggregate, outlive, or be updated by multiple findings/events",
+      "line_in_shard": 150
+    },
+    {
+      "type": "data_shape",
+      "text": "- document-review instruction/comment object with anchoring lifecycle",
+      "line_in_shard": 154
+    },
+    {
+      "type": "data_shape",
+      "text": "- Recommended concern envelope + payload core:",
+      "line_in_shard": 158
+    },
+    {
+      "type": "open_question",
+      "text": "- `run_id?`",
+      "line_in_shard": 161
+    },
+    {
+      "type": "data_shape",
+      "text": "- `scope_type`",
+      "line_in_shard": 162
+    },
+    {
+      "type": "open_question",
+      "text": "- `description?`",
+      "line_in_shard": 168
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `owner_kind?`",
+      "line_in_shard": 169
+    },
+    {
+      "type": "open_question",
+      "text": "- `resolution_kind?`",
+      "line_in_shard": 175
+    },
+    {
+      "type": "open_question",
+      "text": "- `resolution_rationale?`",
+      "line_in_shard": 176
+    },
+    {
+      "type": "open_question",
+      "text": "- `acknowledged_by?`",
+      "line_in_shard": 177
+    },
+    {
+      "type": "open_question",
+      "text": "- `acknowledged_at_utc?`",
+      "line_in_shard": 178
+    },
+    {
+      "type": "open_question",
+      "text": "- `dismissed_by?`",
+      "line_in_shard": 179
+    },
+    {
+      "type": "open_question",
+      "text": "- `dismissed_at_utc?`",
+      "line_in_shard": 180
+    },
+    {
+      "type": "open_question",
+      "text": "- `blocked_episode_refs[]?`",
+      "line_in_shard": 185
+    },
+    {
+      "type": "open_question",
+      "text": "- `promotion_refs[]?`",
+      "line_in_shard": 186
+    },
+    {
+      "type": "open_question",
+      "text": "- `graph_patch_refs[]?`",
+      "line_in_shard": 187
+    },
+    {
+      "type": "open_question",
+      "text": "- `recovery_refs[]?`",
+      "line_in_shard": 188
+    },
+    {
+      "type": "requirement",
+      "text": "- `resolved` must carry exact resolution semantics",
+      "line_in_shard": 198
+    }
+  ]
+}

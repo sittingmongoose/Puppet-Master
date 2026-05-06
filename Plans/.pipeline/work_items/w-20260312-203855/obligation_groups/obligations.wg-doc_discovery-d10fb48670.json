@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-doc_discovery-d10fb48670",
+  "category": "doc_discovery",
+  "family_key": "plans_ui_command_catalog_md_plans_crosswalk_md_pure_shell_view_state_commands_change",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0065-002"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-doc_discovery-d10fb48670--SEED-shard-0065-002",
+      "seed_id": "SEED-shard-0065-002",
+      "source_shard_id": "shard-0065",
+      "batch_index": 17,
+      "obligation_type": "routing_rule",
+      "work_group_category": "doc_discovery",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0065",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Pure shell/view-state commands change visible panel/subview/layout but do not own canonical target identity; route-consuming commands must reveal a specific object or scope and normalize through route_target.",
+      "evidence_ledger_excerpt": "Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible, but they do not own canonical target identity.\n- Route-consuming navigation commands are the ones that must reveal a specific object or scope. They should normalize through the emerging `route_target` model",
+      "related_paths": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Pure shell/view-state commands change visible panel/subview/layout but do not own canonical target identity",
+        "route-consuming commands must reveal a specific object or scope and normalize through route_target."
+      ],
+      "required_action": "Bind this obligation to concrete canonical document paths (Plans/** targets), replacing discovery placeholders where appropriate."
+    }
+  ]
+}

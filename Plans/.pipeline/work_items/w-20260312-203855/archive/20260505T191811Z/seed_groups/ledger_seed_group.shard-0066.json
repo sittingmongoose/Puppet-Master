@@ -1,0 +1,1274 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0066",
+  "coverage": {
+    "shard_id": "shard-0066",
+    "start_line": 12225,
+    "end_line": 12419,
+    "line_count": 195,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0066.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 23,
+        "text": "Navigation should follow the same pattern instead of claiming a hard flag day.",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "their payload semantics should normalize through `route_target` / `OpenSubject`",
+        "tokens": [
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "new producers/docs should emit the canonical normalized target model",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "but it should stop being treated as a stronger separate primitive",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "docs should explicitly mark older/raw payload conventions as migration aliases where needed",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "new docs/producers MUST prefer canonical route-target forms",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "migration aliases MUST NOT become permanent parallel canon",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just “command id exists.”",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "Index / checklist / promoted-feature docs are now confirmed drift carriers, not just passive summaries:",
+        "tokens": []
+      },
+      {
+        "line": 99,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI/Orchestrator docs.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states.",
+        "tokens": [
+          "Document_Packaging_Policy.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+        "tokens": [
+          "LSPSupport.md",
+          "run_id",
+          "tool.invoked"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans.",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.",
+        "tokens": [
+          "Plans/00-plans-index.md",
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "That is useful, but it should be treated as one serialized transport form of the broader routing model, not as the hidden canonical navigation contract.",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "The internal `route_target` model can and should be richer than the serialized URL form.",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "A deep-link transport should preserve:",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "It should generally NOT try to preserve:",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 3,
+        "text": "Keep line/range under `OpenFile`.",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "existing user-facing wrapper commands may remain",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "it can remain as a serialized transport form during migration",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_source_control` may remain user-facing wrappers",
+        "tokens": [
+          "cmd.artifacts.show_in_usage",
+          "cmd.orchestrator.open_in_source_control"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Let wrapper commands remain if they provide real UX meaning, but make the underlying target model canonical.",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "This uncovered tranche produced real new synthesis, not filler. The remaining Gemini-only surface still hides several owner-level contradictions.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Several remaining docs are still structurally tied to old tier-era execution assumptions:",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "`Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still disagree on live capability re-checks vs frozen run snapshots, and `platform.capability_evaluated` remains outside Contracts_V0 event registration.",
+        "tokens": [
+          "Media_Generation_and_Capabilities.md",
+          "orchestrator-subagent-integration.md",
+          "platform.capability_evaluated"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "DockerHub auth/account identity remains structurally isolated from Multi-Account and still lacks a coherent receipt/lineage bridge.",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "LSP/tooling and PM internal-tool boundaries remain under-owned:",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract.",
+        "tokens": [
+          "lsp",
+          "mutation_capable: bool"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans.",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "This tranche confirms that some of the remaining docs are not just “less important” — they were simply under-examined and still contain real contradictions.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 2,
+        "text": "Define `inspector_target` narrowly in the contract layer as reusable detail/subsection focus.",
+        "tokens": [
+          "inspector_target"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "Allow some object-family-specific anchors, but force them to justify themselves instead of defaulting every special case into the base route contract.",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "This seam is what prevents the new route-target contract from immediately turning back into per-surface deep-link spaghetti.",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "canonical event names with explicit legacy aliases in `Contracts_V0.md`",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "their payload semantics should normalize through `route_target` / `OpenSubject`",
+        "tokens": [
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "older payload shapes can be accepted during migration",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "docs should explicitly mark older/raw payload conventions as migration aliases where needed",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "consumers MAY accept older wrapper-local payloads during migration",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "Without that discipline, consumer docs may either freeze old payloads forever or overclaim an immediate canonical switch that downstream docs cannot actually absorb.",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "Wrapper commands are currently real and useful, but the docs still lack a rule for when they are canonical UX affordances versus deprecated raw transport shapes.",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "`FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement.",
+        "tokens": [
+          "FileSafe.md"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "`Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still disagree on live capability re-checks vs frozen run snapshots, and `platform.capability_evaluated` remains outside Contracts_V0 event registration.",
+        "tokens": [
+          "Media_Generation_and_Capabilities.md",
+          "orchestrator-subagent-integration.md",
+          "platform.capability_evaluated"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states.",
+        "tokens": [
+          "Document_Packaging_Policy.md"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract.",
+        "tokens": [
+          "lsp",
+          "mutation_capable: bool"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "STATE_FILES.md",
+        "tokens": [
+          "STATE_FILES.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "The broader rewrite still lacks a strong single source for several cross-cutting concerns: command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, and actor-scope/rules injection.",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "That is useful, but it should be treated as one serialized transport form of the broader routing model, not as the hidden canonical navigation contract.",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "ephemeral UI layout state",
+        "tokens": []
+      },
+      {
+        "line": 193,
+        "text": "non-stable local widget state",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 4,
+        "text": "Allow some object-family-specific anchors, but force them to justify themselves instead of defaulting every special case into the base route contract.",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "The base routing model gets much cleaner once those layers stay separate.",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "This seam is what prevents the new route-target contract from immediately turning back into per-surface deep-link spaghetti.",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "The likely stable migration rule is:",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "their payload semantics should normalize through `route_target` / `OpenSubject`",
+        "tokens": [
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "route_target",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_source_control` may remain user-facing wrappers",
+        "tokens": [
+          "cmd.artifacts.show_in_usage",
+          "cmd.orchestrator.open_in_source_control"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "new docs/producers MUST prefer canonical route-target forms",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "This seam is what makes the route-target work practical to reconcile across the existing doc set.",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "`00-plans-index.md` still misroutes or under-describes several rewrite-critical owners (`Orchestrator_Page`, `Widget_System`, `storage-plan`, `Executor_Protocol`) and does not surface Multi-Account/Crosswalk strongly enough.",
+        "tokens": [
+          "00-plans-index.md",
+          "Executor_Protocol",
+          "Orchestrator_Page",
+          "Widget_System",
+          "storage-plan"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI/Orchestrator docs.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "`Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.",
+        "tokens": [
+          "Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "`FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement.",
+        "tokens": [
+          "FileSafe.md"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "`Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still disagree on live capability re-checks vs frozen run snapshots, and `platform.capability_evaluated` remains outside Contracts_V0 event registration.",
+        "tokens": [
+          "Media_Generation_and_Capabilities.md",
+          "orchestrator-subagent-integration.md",
+          "platform.capability_evaluated"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "`cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authority with the same event family.",
+        "tokens": [
+          "cmd.docker.image.push",
+          "cmd.orchestrator.push_image"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "That is useful, but it should be treated as one serialized transport form of the broader routing model, not as the hidden canonical navigation contract.",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "The internal `route_target` model can and should be richer than the serialized URL form.",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "stable sharable identity",
+        "tokens": []
+      },
+      {
+        "line": 189,
+        "text": "deterministic decoding back into internal routing",
+        "tokens": []
+      },
+      {
+        "line": 193,
+        "text": "non-stable local widget state",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 97,
+        "text": "Index / checklist / promoted-feature docs are now confirmed drift carriers, not just passive summaries:",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "packaging evidence and execution evidence still share confusing `evidence/` naming without a canonical discriminator.",
+        "tokens": [
+          "evidence/"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Treat these docs as real follow-on candidates for later-model continuation if the next coverage audit still shows too much unevenness.",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "The broader sweep still cannot be called complete until coverage is recomputed again after this tranche.",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "This tranche confirms that some of the remaining docs are not just “less important” — they were simply under-examined and still contain real contradictions.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 22,
+        "text": "canonical runtime recovery command consolidation in `UI_Command_Catalog.md`, where legacy command families become deprecated aliases but consumers map to one shared namespace",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "consumers MAY accept older wrapper-local payloads during migration",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "Without that discipline, consumer docs may either freeze old payloads forever or overclaim an immediate canonical switch that downstream docs cannot actually absorb.",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "This uncovered tranche produced real new synthesis, not filler. The remaining Gemini-only surface still hides several owner-level contradictions.",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "`UI_Command_Catalog.md` backfill plus adjacent docs sharpened command/event ownership further:",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "`00-plans-index.md` still misroutes or under-describes several rewrite-critical owners (`Orchestrator_Page`, `Widget_System`, `storage-plan`, `Executor_Protocol`) and does not surface Multi-Account/Crosswalk strongly enough.",
+        "tokens": [
+          "00-plans-index.md",
+          "Executor_Protocol",
+          "Orchestrator_Page",
+          "Widget_System",
+          "storage-plan"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "`Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation.",
+        "tokens": [
+          "Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Provider/runtime capability and account seams continued to widen in useful ways:",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "`agent-rules-context.md` still assumes a tiny set of actors and CLI-only transport, while the real provider-using actor set is much broader and now includes non-CLI transports.",
+        "tokens": [
+          "agent-rules-context.md"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "Container / Docker / Unraid ownership is still more fragmented than the main owner set suggested:",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "`cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authority with the same event family.",
+        "tokens": [
+          "cmd.docker.image.push",
+          "cmd.orchestrator.push_image"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Repeatedly implicated adjacent owners:",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "The broader rewrite still lacks a strong single source for several cross-cutting concerns: command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, and actor-scope/rules injection.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "`UI_Command_Catalog.md` now has the missing Gemini pass, which removes a weird asymmetry from the most central command-owner doc.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 21,
+        "text": "canonical event names with explicit legacy aliases in `Contracts_V0.md`",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "canonical runtime recovery command consolidation in `UI_Command_Catalog.md`, where legacy command families become deprecated aliases but consumers map to one shared namespace",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Wrapper commands are currently real and useful, but the docs still lack a rule for when they are canonical UX affordances versus deprecated raw transport shapes.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just “command id exists.”",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "the catalog still has an unresolved split between legacy `cmd.graph.*` recovery commands and canonical `cmd.runtime.*` recovery families.",
+        "tokens": [
+          "cmd.graph.*",
+          "cmd.runtime.*"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI/Orchestrator docs.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "`Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.",
+        "tokens": [
+          "Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "`Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation.",
+        "tokens": [
+          "Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "`MiscPlan.md` still embeds sequential tier-era cleanup/remediation assumptions, including a cleanup-remediation loop outside the canonical runtime failure matrix and prepare/cleanup ordering that can erase safe-point baselines.",
+        "tokens": [
+          "MiscPlan.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "The broader rewrite still lacks a strong single source for several cross-cutting concerns: command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, and actor-scope/rules injection.",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "Multiple supporting docs still silently inherit stale assumptions from earlier docs rather than independently reflecting the rewrite model.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "`UI_Command_Catalog.md` now has the missing Gemini pass, which removes a weird asymmetry from the most central command-owner doc.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 3,
+        "text": "Keep line/range under `OpenFile`.",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "their payload semantics should normalize through `route_target` / `OpenSubject`",
+        "tokens": [
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "OpenSubject",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "specialized `OpenFile`",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_source_control` may remain user-facing wrappers",
+        "tokens": [
+          "cmd.artifacts.show_in_usage",
+          "cmd.orchestrator.open_in_source_control"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "`OpenCode_Deep_Extraction.md` source-verified that OpenCode’s SSE bus and auth model are process-global/server-global, making per-session/per-run identity and account binding impossible without explicit PM-side scoping logic.",
+        "tokens": [
+          "OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Treat these docs as real follow-on candidates for later-model continuation if the next coverage audit still shows too much unevenness.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 95,
+        "text": "the catalog still has an unresolved split between legacy `cmd.graph.*` recovery commands and canonical `cmd.runtime.*` recovery families.",
+        "tokens": [
+          "cmd.graph.*",
+          "cmd.runtime.*"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "`Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.",
+        "tokens": [
+          "Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "`Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation.",
+        "tokens": [
+          "Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "`MiscPlan.md` still embeds sequential tier-era cleanup/remediation assumptions, including a cleanup-remediation loop outside the canonical runtime failure matrix and prepare/cleanup ordering that can erase safe-point baselines.",
+        "tokens": [
+          "MiscPlan.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Packaging / evidence / artifact lineage gaps are broader than just Project_Output_Artifacts:",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract.",
+        "tokens": [
+          "lsp",
+          "mutation_capable: bool"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "`UI_Command_Catalog.md` now has the missing Gemini pass, which removes a weird asymmetry from the most central command-owner doc.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 14,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "`Plans/UI_Command_Catalog.md` (Gemini backfill)",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/00-plans-index.md",
+        "tokens": [
+          "Plans/00-plans-index.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "Plans/Containers_Registry_and_Unraid.md",
+        "tokens": [
+          "Plans/Containers_Registry_and_Unraid.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/Document_Packaging_Policy.md",
+        "tokens": [
+          "Plans/Document_Packaging_Policy.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/FileSafe.md",
+        "tokens": [
+          "Plans/FileSafe.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Plans/Media_Generation_and_Capabilities.md",
+        "tokens": [
+          "Plans/Media_Generation_and_Capabilities.md"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Plans/MiscPlan.md",
+        "tokens": [
+          "Plans/MiscPlan.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "Plans/agent-rules-context.md",
+        "tokens": [
+          "Plans/agent-rules-context.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Plans/LSPSupport.md",
+        "tokens": [
+          "Plans/LSPSupport.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Plans/00-plans-index.md",
+        "tokens": [
+          "Plans/00-plans-index.md"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Plans/Containers_Registry_and_Unraid.md",
+        "tokens": [
+          "Plans/Containers_Registry_and_Unraid.md"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Plans/Document_Packaging_Policy.md",
+        "tokens": [
+          "Plans/Document_Packaging_Policy.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/FileSafe.md",
+        "tokens": [
+          "Plans/FileSafe.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/Media_Generation_and_Capabilities.md",
+        "tokens": [
+          "Plans/Media_Generation_and_Capabilities.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/MiscPlan.md",
+        "tokens": [
+          "Plans/MiscPlan.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Plans/agent-rules-context.md",
+        "tokens": [
+          "Plans/agent-rules-context.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/LSPSupport.md",
+        "tokens": [
+          "Plans/LSPSupport.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Permissions_System.md",
+        "tokens": [
+          "Plans/Permissions_System.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/newtools.md",
+        "tokens": [
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Plans/Containers_Registry_and_Unraid.md",
+        "tokens": [
+          "Plans/Containers_Registry_and_Unraid.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Plans/FileSafe.md",
+        "tokens": [
+          "Plans/FileSafe.md"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "Plans/Media_Generation_and_Capabilities.md",
+        "tokens": [
+          "Plans/Media_Generation_and_Capabilities.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/MiscPlan.md",
+        "tokens": [
+          "Plans/MiscPlan.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Plans/LSPSupport.md",
+        "tokens": [
+          "Plans/LSPSupport.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.",
+        "tokens": [
+          "Plans/00-plans-index.md",
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 177,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 178,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

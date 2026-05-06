@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.canonical_obligations_source_gate_report.v3.1.12",
+  "prompt_id": "D3",
+  "prompt_version": "pm.d3.v3.1.12",
+  "timestamp_utc": "20260506T192319Z",
+  "work_id": "w-20260312-203855",
+  "final_gate": {
+    "passed": true,
+    "reason": "Seed coverage matches ledger per_shard.seeds; doc_hint encodings not promoted; paths quarantined per live-doc rule; open_questions carried in obligation records."
+  },
+  "seed_coverage": {
+    "ledger_seeds_expected": 393,
+    "canonical_obligations_count": 393,
+    "missing_seed_ids": [],
+    "extra_seed_ids": []
+  },
+  "doc_hint_promotion_check": {
+    "violations": [],
+    "passed": true
+  },
+  "open_questions": {
+    "records_with_non_empty_open_questions": 21,
+    "seed_ids_sample": [
+      "SEED-shard-0003-007",
+      "SEED-shard-0003-017",
+      "SEED-shard-0004-018",
+      "SEED-shard-0037-009",
+      "SEED-shard-0038-011",
+      "SEED-shard-0039-013",
+      "SYNTH-shard-0009-L00035-open_question-acffa6f39a",
+      "SYNTH-shard-0010-L00095-open_question-f224e5868f",
+      "SYNTH-shard-0010-L00098-open_question-bc50b43ca9",
+      "SYNTH-shard-0010-L00101-open_question-5a6a9903ba",
+      "SYNTH-shard-0010-L00104-open_question-9af0d97db8",
+      "SYNTH-shard-0010-L00110-open_question-5aac9ad524",
+      "SYNTH-shard-0011-L00060-open_question-eb15494b22",
+      "SYNTH-shard-0011-L00061-open_question-b604cff7d5",
+      "SYNTH-shard-0012-L00173-open_question-e6082e6d6d",
+      "SYNTH-shard-0017-L00137-open_question-dd9b991321",
+      "SYNTH-shard-0018-L00155-open_question-98e6745318",
+      "SYNTH-shard-0019-L00046-open_question-0a51fcdbd0",
+      "SYNTH-shard-0020-L00017-open_question-b344a7781f",
+      "SYNTH-shard-0020-L00189-open_question-d126eec6a5",
+      "c3-s033-010"
+    ]
+  },
+  "path_quarantine": {
+    "quarantined_path_references_total": 0,
+    "quarantined_path_examples": []
+  },
+  "blocking_issues": []
+}

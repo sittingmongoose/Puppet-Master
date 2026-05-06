@@ -1,0 +1,744 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0032",
+  "coverage": {
+    "shard_id": "shard-0032",
+    "start_line": 5718,
+    "end_line": 5913,
+    "line_count": 196,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0032.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 7,
+        "text": "all “Open in …” / “Show in …” actions should become thin wrappers over the shared routing payload",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "some route activations should update stored view state",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "others should be transient focus changes only",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "hover previews or temporary compare pivots should not necessarily rewrite persistent state",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "if the target surface is degraded, the route should still land on the canonical fallback representation when possible rather than fail opaque",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "URL deep links and in-app search routes should decode to the same internal navigation model",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "degraded surfaces should still be routable via canonical fallback views when possible",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "historical worktree references must survive live prune/retire operations",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "attention_required` vs `blocked",
+        "tokens": [
+          " vs "
+        ]
+      },
+      {
+        "line": 107,
+        "text": "these should remain family-specific, while still allowing cross-family historical overlays where relevant",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "replan_required",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "remediation should use one canonical resolution family, and the richer lineage-aware enum looks more compatible with the rewrite than a coarse success/failed enum",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "`superseded` and `replan_required` matter for graph patch and generation lineage",
+        "tokens": [
+          "replan_required",
+          "superseded"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "This is exactly why the word `resolved` needs family-local payload detail rather than one global interpretation.",
+        "tokens": [
+          "resolved"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "removed live backing should not imply erased canonical history",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "`reopened`, `revoked`, and `superseded` should be reserved for true lineage-changing transitions, not generic “old state” labels",
+        "tokens": [
+          "reopened",
+          "revoked",
+          "superseded"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "search filters and ledger inspectors should be able to distinguish:",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "`resolved` is overloaded and needs family-local detail to stay meaningful",
+        "tokens": [
+          "resolved"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 56,
+        "text": "blocked projections remain historical after resolution and are not overwritten",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "archived/deleted threads remain distinct storage postures",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "replaced by a newer canonical successor in the same lineage",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "previously accepted/promoted/active decision or state explicitly withdrawn",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "these should remain family-specific, while still allowing cross-family historical overlays where relevant",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "Recommended fix direction:",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "Explicitly state that family-local workflow states remain distinct and are not collapsed into one universal lifecycle enum.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 7,
+        "text": "all “Open in …” / “Show in …” actions should become thin wrappers over the shared routing payload",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "some route activations should update stored view state",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "hover previews or temporary compare pivots should not necessarily rewrite persistent state",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "deep link to a concern during projection degradation might route to exact record view / Ledger-backed inspector instead of the normal rollup tab presentation",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "Current docs have several route-like mechanisms, but they are still defined per feature rather than by one shared navigation payload.",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "Define one shared routing/deep-link payload for search, command palette, widget drill-downs, recovery links, and cross-surface pivots.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "Normalize “Open in …” and “Show in …” commands as adapters over the same routing payload.",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "route payloads need to restore context like `focused_run_id`, not merely switch tabs",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Several record families already have strong historical/lineage rules:",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "safe-point restore creates a new attempt record rather than mutating the old one",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "blocked/recovery records",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "wizard blocked state",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "That means the consistency problem is not “make every object use one lifecycle enum.”",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "queryable past object/state that is no longer the currently active focus",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "previously accepted/promoted/active decision or state explicitly withdrawn",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "There is a real contract conflict in `Plans/Contracts_V0.md` for `remediation.resolved`:",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "remediation.resolved"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "one section says resolution enum is:",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "another section defines minimum payload resolution as:",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "remediation should use one canonical resolution family, and the richer lineage-aware enum looks more compatible with the rewrite than a coarse success/failed enum",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "This is exactly why the word `resolved` needs family-local payload detail rather than one global interpretation.",
+        "tokens": [
+          "resolved"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "`reopened`, `revoked`, and `superseded` should be reserved for true lineage-changing transitions, not generic “old state” labels",
+        "tokens": [
+          "reopened",
+          "revoked",
+          "superseded"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Without that, the exact record-inspection surface will flatten the very distinctions the rewrite depends on.",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "`Contracts_V0.md` has a real `remediation.resolved` enum conflict.",
+        "tokens": [
+          "Contracts_V0.md",
+          "remediation.resolved"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "Some families clearly need local lifecycle terms, and the docs do not yet sharply separate “cross-family historical overlays” from “family-local workflow states.”",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "Explicitly state that family-local workflow states remain distinct and are not collapsed into one universal lifecycle enum.",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "Reconcile `remediation.resolved` to one canonical resolution enum, likely the richer lineage-aware variant.",
+        "tokens": [
+          "remediation.resolved"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Make ledger/search/filter contracts preserve these distinctions rather than flattening them into generic “old” or “resolved.”",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "consistency here means shared meaning, not one single lifecycle enum for every object family",
+        "tokens": []
+      },
+      {
+        "line": 193,
+        "text": "the `remediation.resolved` contract conflict is a real reconciliation item, not just a wording preference",
+        "tokens": [
+          "remediation.resolved"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 5,
+        "text": "do not invent feature-local routing semantics",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "all “Open in …” / “Show in …” actions should become thin wrappers over the shared routing payload",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "some route activations should update stored view state",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "Routing also intersects with projection trust.",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "if the target surface is degraded, the route should still land on the canonical fallback representation when possible rather than fail opaque",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "deep link to a concern during projection degradation might route to exact record view / Ledger-backed inspector instead of the normal rollup tab presentation",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "Current docs have several route-like mechanisms, but they are still defined per feature rather than by one shared navigation payload.",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "`resume_url` is currently stronger than some Orchestrator pivots in terms of specificity, which suggests the more generic routing layer is still underdefined.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "Define one shared routing/deep-link payload for search, command palette, widget drill-downs, recovery links, and cross-surface pivots.",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "Add stable `object_kind` / `object_id` vocabulary for the newer Orchestrator object model and adjacent runtime actors.",
+        "tokens": [
+          "object_id",
+          "object_kind"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "Make route activation restore scope, not just surface.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "Normalize “Open in …” and “Show in …” commands as adapters over the same routing payload.",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "route payloads need to restore context like `focused_run_id`, not merely switch tabs",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "URL deep links and in-app search routes should decode to the same internal navigation model",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "degraded surfaces should still be routable via canonical fallback views when possible",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "previously closed/accepted path returned to active question or work",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "Earlier research established these as important for promotions and graph/patch flows, but local docs are still uneven.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 135,
+        "text": "blocked episode can become historical after resolution, but still matters for audit and lineage",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [],
+    "stale_retirement_items": [
+      {
+        "line": 57,
+        "text": "attempts from older generations become `stale_historical` and are never resumable",
+        "tokens": [
+          "stale_historical"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "historical worktree references must survive live prune/retire operations",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "stale_historical",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "superseded",
+        "tokens": []
+      },
+      {
+        "line": 80,
+        "text": "removed",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "stale_historical",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "superseded",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "intentionally retained but removed from default active presentation",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "removed",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "live backing removed while historical identity may still persist",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "superseded",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "`superseded` and `replan_required` matter for graph patch and generation lineage",
+        "tokens": [
+          "replan_required",
+          "superseded"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "concern can resolve via `accepted_risk` or `superseded`, not only “fixed”",
+        "tokens": [
+          "accepted_risk",
+          "superseded"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "removed",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "worktree archived vs removed are distinct",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "removed live backing should not imply erased canonical history",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "`reopened`, `revoked`, and `superseded` should be reserved for true lineage-changing transitions, not generic “old state” labels",
+        "tokens": [
+          "reopened",
+          "revoked",
+          "superseded"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "superseded vs revoked",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "archived vs removed",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "stale_historical vs merely historical",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "stale_historical",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "superseded",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "removed",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "Explicitly state that family-local workflow states remain distinct and are not collapsed into one universal lifecycle enum.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 7,
+        "text": "all “Open in …” / “Show in …” actions should become thin wrappers over the shared routing payload",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "Normalize “Open in …” and “Show in …” commands as adapters over the same routing payload.",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "annotation lifecycle (`open -> addressed -> resolved`)",
+        "tokens": [
+          "open -> addressed -> resolved"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "reopened",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "reopened",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "previously closed/accepted path returned to active question or work",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "open -> addressed -> resolved",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "It matters because remediation lineage is one of the places where historical semantics, reopening, patching, and recovery all intersect.",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "`reopened`, `revoked`, and `superseded` should be reserved for true lineage-changing transitions, not generic “old state” labels",
+        "tokens": [
+          "reopened",
+          "revoked",
+          "superseded"
+        ]
+      },
+      {
+        "line": 183,
+        "text": "reopened",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 128,
+        "text": "`abandoned` is not the same thing as simple failure",
+        "tokens": [
+          "abandoned"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "concern can resolve via `accepted_risk` or `superseded`, not only “fixed”",
+        "tokens": [
+          "accepted_risk",
+          "superseded"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 46,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "There is a real contract conflict in `Plans/Contracts_V0.md` for `remediation.resolved`:",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "remediation.resolved"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

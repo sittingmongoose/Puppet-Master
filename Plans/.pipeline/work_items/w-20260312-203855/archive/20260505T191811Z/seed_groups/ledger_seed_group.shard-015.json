@@ -1,0 +1,176 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-015",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-015.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary",
+      "line_in_shard": 1
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale_historical`",
+      "line_in_shard": 4
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale_historical`",
+      "line_in_shard": 18
+    },
+    {
+      "type": "doc_hint",
+      "text": "- historical and specifically not resumable/reusable as live execution state",
+      "line_in_shard": 19
+    },
+    {
+      "type": "decision",
+      "text": "- previously accepted/active decision or state was explicitly withdrawn",
+      "line_in_shard": 23
+    },
+    {
+      "type": "data_shape",
+      "text": "- an object previously treated as settled/completed became active again",
+      "line_in_shard": 25
+    },
+    {
+      "type": "data_shape",
+      "text": "- live backing object is gone, but history may remain",
+      "line_in_shard": 29
+    },
+    {
+      "type": "data_shape",
+      "text": "- every superseded object is historical",
+      "line_in_shard": 33
+    },
+    {
+      "type": "data_shape",
+      "text": "- not every historical object is superseded",
+      "line_in_shard": 34
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `revoked` = prior acceptance/approval/promotion was invalidated or withdrawn",
+      "line_in_shard": 37
+    },
+    {
+      "type": "data_shape",
+      "text": "- `removed` is backing-object or storage-presence state",
+      "line_in_shard": 42
+    },
+    {
+      "type": "data_shape",
+      "text": "### Candidate application by object family",
+      "line_in_shard": 45
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- already have `stale_historical`",
+      "line_in_shard": 47
+    },
+    {
+      "type": "verification_rule",
+      "text": "- invalidated prior path may be superseded by newer generation",
+      "line_in_shard": 62
+    },
+    {
+      "type": "decision",
+      "text": "- the patch request/decision record itself may later be historical without being revoked",
+      "line_in_shard": 63
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This matters especially in:",
+      "line_in_shard": 82
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Deletion/archive language in storage docs risks bleeding into semantic validity language if not separated carefully.",
+      "line_in_shard": 92
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Orchestrator/UI docs currently refer to some of these ideas conceptually, but not yet as one consistent cross-record system.",
+      "line_in_shard": 93
+    },
+    {
+      "type": "data_shape",
+      "text": "- lane/worktree objects",
+      "line_in_shard": 102
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale_historical` is specifically stronger than plain `historical`; it carries non-resumable/non-live semantics.",
+      "line_in_shard": 108
+    },
+    {
+      "type": "requirement",
+      "text": "- `historical run` must not imply:",
+      "line_in_shard": 123
+    },
+    {
+      "type": "decision",
+      "text": "- or older in time than another selected/current run",
+      "line_in_shard": 130
+    },
+    {
+      "type": "requirement",
+      "text": "- Relationship must be explicit, not inferred from same-project membership.",
+      "line_in_shard": 131
+    },
+    {
+      "type": "requirement",
+      "text": "- But those must be explicit metadata, not inferred by heuristics.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "routing_rule",
+      "text": "### Search / routing implication",
+      "line_in_shard": 158
+    },
+    {
+      "type": "decision",
+      "text": "- Cross-run navigation should switch focus to the selected run, not imply that the selected object is part of the currently focused run's lineage.",
+      "line_in_shard": 160
+    },
+    {
+      "type": "data_shape",
+      "text": "- `superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs.",
+      "line_in_shard": 166
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 175
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 179
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The local docs are still relatively sparse on exact concern record shape.",
+      "line_in_shard": 189
+    },
+    {
+      "type": "data_shape",
+      "text": "- explicit canonical record schema",
+      "line_in_shard": 191
+    },
+    {
+      "type": "routing_rule",
+      "text": "- stronger search/routing semantics",
+      "line_in_shard": 194
+    },
+    {
+      "type": "data_shape",
+      "text": "### Recommended concern object split",
+      "line_in_shard": 196
+    }
+  ]
+}

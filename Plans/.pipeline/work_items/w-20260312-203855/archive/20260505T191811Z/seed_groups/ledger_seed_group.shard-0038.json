@@ -1,0 +1,1420 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0038",
+  "coverage": {
+    "shard_id": "shard-0038",
+    "start_line": 6879,
+    "end_line": 7076,
+    "line_count": 198,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0038.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 5,
+        "text": "Projection trust should be derived from committed state and receipts, not reinvented per page with ad-hoc polling language.",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "no minority-advisory outcome for the now-required 2-of-3 corroboration pattern",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "2026-03-09 addenda say normalized streams MUST preserve `attempt_id`",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "adapters currently have no canonical way to satisfy both requirements at once",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "`input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "tokens": [
+          "input_provided",
+          "input_required"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "must decide whether these field additions are V0 extensions or a V1 event contract",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "requires per-interaction account attribution and switch/failover reasoning that the stream cannot currently express",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it explicitly.",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "This seam now needs explicit contract-version governance; otherwise adapter-local shadow fields will proliferate.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "`minority_advisory` is now conceptually required by the research, but it still has no canonical stream/event name.",
+        "tokens": [
+          "minority_advisory"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "The rewrite now clearly needs an actor envelope broader than `run_id`:",
+        "tokens": [
+          "run_id"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "usage-feature.md` sharpened that the canonical pointer should be `usage_event_ref`, not a new opaque `usage_event_id",
+        "tokens": [
+          " sharpened that the canonical pointer should be ",
+          ", not a new opaque ",
+          "usage-feature.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "`usage_event_ref` now needs one authoritative schema because artifacts, receipts, Usage, Ledger, and chat pivots all rely on it already",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "cross-surface open commands are required in prose but not bound in the Run Graph command section",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "now owns the sharpest receipt/actor-snapshot contradictions and needs a project+actor-aware canonical cross-surface receipt contract",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "Normalize cross-surface receipt records so `project_id`, actor refs, `created_at_utc`, and `usage_event_ref` are required whenever a surface may pivot historically or across projects.",
+        "tokens": [
+          "created_at_utc",
+          "project_id",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "`usage_event_ref` should be a structured locator, not just a display string.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors share provider runtime but are not orchestration nodes.",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "`cmd.github.connect` is still effectively arg-less even though reconnect must bind back to a blocked run/node/thread/wizard context",
+        "tokens": [
+          "cmd.github.connect"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Deferred GitHub recovery binding still needs `project_id`, `auth_realm`, actor context, and effective-account snapshot/ref to resume safely across projects and actors",
+        "tokens": [
+          "auth_realm",
+          "project_id"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "`Orchestrator_Page.md` still requires forbidden `requested_persona_id` / `effective_persona_id` names in live-status dependencies",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "widget view models still lack requested/effective account, switch-history, and projection-trust envelope requirements",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "still needs command normalization, trust-state gating, and stronger project/account binding for resumed flows",
+        "tokens": []
+      },
+      {
+        "line": 194,
+        "text": "Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields.",
+        "tokens": []
+      },
+      {
+        "line": 195,
+        "text": "Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*` projections and require trust/scope inheritance from the host surface.",
+        "tokens": [
+          "provider_accounts.*"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 4,
+        "text": "`selected_repo_id` already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary.",
+        "tokens": [
+          "selected_repo_id"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Introduce a versioned replacement for `tier_boundary` such as `governance_boundary`, keeping compatibility aliases only as an explicit migration strategy.",
+        "tokens": [
+          "governance_boundary",
+          "tier_boundary"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "GitHub recovery and command ownership remain under-keyed:",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "Orchestrator/Widget hostability and persistence remain inconsistent:",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "terminal widget hostability remains split between `widget.terminal_output` and `widget.agent_terminal`",
+        "tokens": [
+          "widget.agent_terminal",
+          "widget.terminal_output"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "GitHub and Orchestrator surfaces still do not promote auth/scope/rate-limit issues into concern-aware or trust-aware projections; they remain closer to UI error states than canonical runtime records",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "Orchestrator and Widget docs still disagree with the rewrite’s non-widget / Progress-only direction for several surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only.",
+        "tokens": [
+          "account_id",
+          "credential_ref",
+          "login"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 3,
+        "text": "The promised runtime-artifact schemas are absent today, so any linkage that depends on them is currently documentation-only.",
+        "tokens": []
+      },
+      {
+        "line": 4,
+        "text": "`selected_repo_id` already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary.",
+        "tokens": [
+          "selected_repo_id"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "Projection trust should be derived from committed state and receipts, not reinvented per page with ad-hoc polling language.",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "`tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep.",
+        "tokens": [
+          "from_tier",
+          "tier_boundary",
+          "to_tier"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "but none of the reserved diagnostic category schemas actually expose `attempt_id`",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "`auth_state` carries no pool-member / account context for failover rotation",
+        "tokens": [
+          "auth_state"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "now clearly a schema-owner doc that will need a versioned migration, not only prose cleanup",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "must decide whether these field additions are V0 extensions or a V1 event contract",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "canonical requested/effective identity and blocked-owner payloads still do not round-trip through the stream adapter",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it explicitly.",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "`usage` and `auth_state` events still cannot support correct multi-account attribution or failover routing.",
+        "tokens": [
+          "auth_state",
+          "usage"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "Add `attempt_id` to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity.",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them.",
+        "tokens": []
+      },
+      {
+        "line": 66,
+        "text": "This seam now needs explicit contract-version governance; otherwise adapter-local shadow fields will proliferate.",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "The canonical contract layer still has unresolved intra-doc collisions, not just downstream drift:",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "`Contracts_V0.md` still conflicts with itself on remediation resolution enums and on safe-point / scheduler payload shapes",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Codex sharpened that the missing minimum envelope is now `project_id` + `actor_kind` + sparse actor refs (`run_id?`, `attempt_id?`, `thread_id?`, `wizard_id?`, `interview_id?`) plus requested/effective runtime/account fields",
+        "tokens": [
+          "actor_kind",
+          "attempt_id?",
+          "interview_id?",
+          "project_id",
+          "run_id?",
+          "thread_id?",
+          "wizard_id?"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "`storage-plan.md` internally contradicts itself because the early `orchestrator.receipt.{run_id}.{attempt_id}` value shape omits `project_id` and `created_at_utc`, while the later cross-surface receipt record makes them mandatory",
+        "tokens": [
+          "created_at_utc",
+          "orchestrator.receipt.{run_id}.{attempt_id}",
+          "project_id",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "`usage_event_ref` now needs one authoritative schema because artifacts, receipts, Usage, Ledger, and chat pivots all rely on it already",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "Run Graph still has concrete command/routing contract drift:",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "no projection-trust payload exists for mutating or cross-surface actions on stale/degraded graph projections",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "but non-remediation concern posture, projection freshness, and degraded-action gating still lack a single contract owner at the canonical layer",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "now owns the sharpest receipt/actor-snapshot contradictions and needs a project+actor-aware canonical cross-surface receipt contract",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "now clearly depends on a defined `usage_event_ref` schema and a single scope-precedence envelope",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "still has exact command-arg mismatches, legacy recovery namespaces, and no trust/action-gating payload",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "`Contracts_V0.md` still self-conflicts on canonical remediation / safe-point / scheduler payloads.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "`storage-plan.md` receipt row shape still conflicts with its own later minimum cross-surface receipt contract.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "`usage-feature.md` and related docs already rely on `usage_event_ref`, but no authoritative shape exists.",
+        "tokens": [
+          "usage-feature.md",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Projection trust and node concern posture still lack a compact canonical contract that page/widget consumers can reuse.",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "Publish a single superseding canonical payload block in `Contracts_V0.md` for scheduler/safe-point/remediation records and explicitly demote older variants.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry.",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "Normalize cross-surface receipt records so `project_id`, actor refs, `created_at_utc`, and `usage_event_ref` are required whenever a surface may pivot historically or across projects.",
+        "tokens": [
+          "created_at_utc",
+          "project_id",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command bindings, add the missing action envelope, and add trust-state gating rules.",
+        "tokens": [
+          "cmd.orchestrator.open_in_*",
+          "cmd.runtime.*"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Orchestrator page contracts still lag the canonical identity model in concrete ways:",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "`Widget_System.md` still persists layouts for them and still has an explicit internal contradiction over whether legacy `dashboard_layout:v1` is retained or deleted",
+        "tokens": [
+          "Widget_System.md",
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Widget/account/trust contracts still lag the rewrite:",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "GitHub and Orchestrator surfaces still do not promote auth/scope/rate-limit issues into concern-aware or trust-aware projections; they remain closer to UI error states than canonical runtime records",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "still needs command normalization, trust-state gating, and stronger project/account binding for resumed flows",
+        "tokens": []
+      },
+      {
+        "line": 178,
+        "text": "still drifts from canonical storage namespaces and lacks settled hostability, migration, and trust contracts",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "Neither GitHub nor Orchestrator pages yet bind degraded-trust / stale-data states tightly enough to mutation gating and concern ownership.",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "Add a canonical GitHub recovery context payload that can round-trip blocked episode, project, actor kind, auth realm, and effective-account refs.",
+        "tokens": []
+      },
+      {
+        "line": 193,
+        "text": "Publish a GitHub command migration map from legacy IDs to canonical `UI_Command_Catalog.md` IDs and payloads.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields.",
+        "tokens": []
+      },
+      {
+        "line": 195,
+        "text": "Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*` projections and require trust/scope inheritance from the host surface.",
+        "tokens": [
+          "provider_accounts.*"
+        ]
+      },
+      {
+        "line": 197,
+        "text": "Add trust/degraded-state gating and concern handoff rules for GitHub mutations and Orchestrator actions.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 36,
+        "text": "`handoff` uses bare agent names with no package/seam/lane context",
+        "tokens": [
+          "handoff"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "The tier model is still encoded in reserved stream categories even where planning docs now move to package/seam/lane authority.",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "`usage` and `auth_state` events still cannot support correct multi-account attribution or failover routing.",
+        "tokens": [
+          "auth_state",
+          "usage"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "The §9 auditability guarantee is now false under the rewrite unless the audit protocol itself is redesigned.",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them.",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "Cross-surface receipt and usage routing are now under-specified in exact, actionable ways:",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "`storage-plan.md` internally contradicts itself because the early `orchestrator.receipt.{run_id}.{attempt_id}` value shape omits `project_id` and `created_at_utc`, while the later cross-surface receipt record makes them mandatory",
+        "tokens": [
+          "created_at_utc",
+          "orchestrator.receipt.{run_id}.{attempt_id}",
+          "project_id",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "Run Graph still has concrete command/routing contract drift:",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command bindings, add the missing action envelope, and add trust-state gating rules.",
+        "tokens": [
+          "cmd.orchestrator.open_in_*",
+          "cmd.runtime.*"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "GitHub account identity is still anchored to mutable login at the auth boundary:",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Codex reinforced that this is now the clearest auth-boundary conflict with the stable internal `account_id` / requested-vs-effective model",
+        "tokens": [
+          "account_id"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "GitHub_Integration.md` still carries a split-brain command table that diverges from `UI_Command_Catalog.md",
+        "tokens": [
+          " still carries a split-brain command table that diverges from ",
+          "GitHub_Integration.md",
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Orchestrator page contracts still lag the canonical identity model in concrete ways:",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "`Orchestrator_Page.md` still requires forbidden `requested_persona_id` / `effective_persona_id` names in live-status dependencies",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Orchestrator/Widget hostability and persistence remain inconsistent:",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "`Orchestrator_Page.md` still describes widgetized Tiers/Evidence/History/Ledger surfaces",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "terminal widget hostability remains split between `widget.terminal_output` and `widget.agent_terminal`",
+        "tokens": [
+          "widget.agent_terminal",
+          "widget.terminal_output"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "Orchestrator ledger widget semantics still center tier-era filters rather than attempt/account/receipt-aware routing",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "GitHub and Orchestrator surfaces still do not promote auth/scope/rate-limit issues into concern-aware or trust-aware projections; they remain closer to UI error states than canonical runtime records",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "now the sharpest auth-boundary conflict for stable account identity, reconnect correlation, and requested/effective disclosure",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "still mixes forbidden canonical names, incomplete account identity, widget-era tab assumptions, and missing projection trust semantics",
+        "tokens": []
+      },
+      {
+        "line": 178,
+        "text": "still drifts from canonical storage namespaces and lacks settled hostability, migration, and trust contracts",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "GitHub durable identity is still keyed by `login`, conflicting with the stable internal account model.",
+        "tokens": [
+          "login"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "Orchestrator and Widget docs still disagree with the rewrite’s non-widget / Progress-only direction for several surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "Neither GitHub nor Orchestrator pages yet bind degraded-trust / stale-data states tightly enough to mutation gating and concern ownership.",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only.",
+        "tokens": [
+          "account_id",
+          "credential_ref",
+          "login"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields.",
+        "tokens": []
+      },
+      {
+        "line": 196,
+        "text": "Resolve one authoritative hostability and migration story for terminal widgets and legacy dashboard layout keys.",
+        "tokens": []
+      },
+      {
+        "line": 197,
+        "text": "Add trust/degraded-state gating and concern handoff rules for GitHub mutations and Orchestrator actions.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 21,
+        "text": "The Overseer audit protocol is structurally incompatible with the rewrite:",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "audit_kind = start_of_tier | end_of_tier",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "both now depend on richer blocked-owner / audit-scope vocabulary than the stream exposes today",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "The §9 auditability guarantee is now false under the rewrite unless the audit protocol itself is redesigned.",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "Add `attempt_id` to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity.",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Promote governance-relevant speaker/handoff selections out of `raw_observation` when they affect orchestration projections or audit reconstruction.",
+        "tokens": [
+          "raw_observation"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "`Orchestrator_Page.md` still describes widgetized Tiers/Evidence/History/Ledger surfaces",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 10,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Multi-account and blocked-owner semantics are still lost at the stream boundary:",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "Shared provider runtime still lacks actor-class disclosure in the normalized stream:",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "now clearly a schema-owner doc that will need a versioned migration, not only prose cleanup",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "canonical requested/effective identity and blocked-owner payloads still do not round-trip through the stream adapter",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "both now depend on richer blocked-owner / audit-scope vocabulary than the stream exposes today",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "The tier model is still encoded in reserved stream categories even where planning docs now move to package/seam/lane authority.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Stream consumers still cannot tell whether an event came from a node worker, package overseer, seam overseer, chat assistant, interviewer, or builder.",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them.",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "storage-plan.md` still keys provider account snapshots as `provider_accounts.run_snapshot.{run_id}.{provider_id}",
+        "tokens": [
+          " still keys provider account snapshots as ",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "Concern and trust ownership are still only partial:",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "but non-remediation concern posture, projection freshness, and degraded-action gating still lack a single contract owner at the canonical layer",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "still the primary SSOT for canonical payloads, but now clearly needs addendum consolidation plus actor-envelope ownership",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "`storage-plan.md` still models durable provider account snapshots for runs but not for other actor classes that use the same provider runtime.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Projection trust and node concern posture still lack a compact canonical contract that page/widget consumers can reuse.",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry.",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors share provider runtime but are not orchestration nodes.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "GitHub recovery and command ownership remain under-keyed:",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "`Orchestrator_Page.md` still requires forbidden `requested_persona_id` / `effective_persona_id` names in live-status dependencies",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "`widget.multi_account` still binds to `settings/multi_account.*` instead of the canonical `provider_accounts.*` storage family",
+        "tokens": [
+          "provider_accounts.*",
+          "settings/multi_account.*",
+          "widget.multi_account"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "both are now the likely owners of the normalization needed to make these surface docs converge",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Neither GitHub nor Orchestrator pages yet bind degraded-trust / stale-data states tightly enough to mutation gating and concern ownership.",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only.",
+        "tokens": [
+          "account_id",
+          "credential_ref",
+          "login"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields.",
+        "tokens": []
+      },
+      {
+        "line": 195,
+        "text": "Rebind widget multi-account/account-pressure contracts to canonical `provider_accounts.*` projections and require trust/scope inheritance from the host surface.",
+        "tokens": [
+          "provider_accounts.*"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 2,
+        "text": "The missing `usage_event_ref` definition is now a hard blocker for trust-safe cross-surface navigation, not just a naming cleanup.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "`tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep.",
+        "tokens": [
+          "from_tier",
+          "tier_boundary",
+          "to_tier"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "now clearly a schema-owner doc that will need a versioned migration, not only prose cleanup",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "Multi-account attribution and projection trust are coupled here: stale projections plus account-less stream events leave no trustworthy account-pressure signal at all.",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "no projection-trust payload exists for mutating or cross-surface actions on stale/degraded graph projections",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "still has exact command-arg mismatches, legacy recovery namespaces, and no trust/action-gating payload",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "`Widget_System.md` still persists layouts for them and still has an explicit internal contradiction over whether legacy `dashboard_layout:v1` is retained or deleted",
+        "tokens": [
+          "Widget_System.md",
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Neither GitHub nor Orchestrator pages yet bind degraded-trust / stale-data states tightly enough to mutation gating and concern ownership.",
+        "tokens": []
+      },
+      {
+        "line": 193,
+        "text": "Publish a GitHub command migration map from legacy IDs to canonical `UI_Command_Catalog.md` IDs and payloads.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "Resolve one authoritative hostability and migration story for terminal widgets and legacy dashboard layout keys.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 96,
+        "text": "cross-surface open commands are required in prose but not bound in the Run Graph command section",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command bindings, add the missing action envelope, and add trust-state gating rules.",
+        "tokens": [
+          "cmd.orchestrator.open_in_*",
+          "cmd.runtime.*"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 2,
+        "text": "The missing `usage_event_ref` definition is now a hard blocker for trust-safe cross-surface navigation, not just a naming cleanup.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "`selected_repo_id` already exists in storage planning; the gap is now in UI contract adoption, not in basic storage vocabulary.",
+        "tokens": [
+          "selected_repo_id"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "The canonical contract layer still has unresolved intra-doc collisions, not just downstream drift:",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Codex sharpened that the missing minimum envelope is now `project_id` + `actor_kind` + sparse actor refs (`run_id?`, `attempt_id?`, `thread_id?`, `wizard_id?`, `interview_id?`) plus requested/effective runtime/account fields",
+        "tokens": [
+          "actor_kind",
+          "attempt_id?",
+          "interview_id?",
+          "project_id",
+          "run_id?",
+          "thread_id?",
+          "wizard_id?"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command bindings, add the missing action envelope, and add trust-state gating rules.",
+        "tokens": [
+          "cmd.orchestrator.open_in_*",
+          "cmd.runtime.*"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "GitHub and Orchestrator surfaces still do not promote auth/scope/rate-limit issues into concern-aware or trust-aware projections; they remain closer to UI error states than canonical runtime records",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "still mixes forbidden canonical names, incomplete account identity, widget-era tab assumptions, and missing projection trust semantics",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 10,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "Plans/human-in-the-loop.md` + `Plans/Executor_Protocol.md",
+        "tokens": [
+          " + ",
+          "Plans/Executor_Protocol.md",
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "Plans/UI_Command_Catalog.md` + `Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          " + ",
+          "Plans/Runtime_Artifacts_Panel.md",
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 177,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "Plans/UI_Command_Catalog.md` + `Plans/storage-plan.md",
+        "tokens": [
+          " + ",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/storage-plan.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

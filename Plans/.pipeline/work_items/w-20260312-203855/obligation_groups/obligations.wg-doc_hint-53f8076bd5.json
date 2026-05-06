@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-doc_hint-53f8076bd5",
+  "category": "doc_hint",
+  "family_key": "cross_check_action_confirmation_work_against_plans_storage_plan_md_orchestrator_page_md_contracts",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0017-L00157-doc_hint-a24566f700"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-doc_hint-53f8076bd5--SYNTH-shard-0017-L00157-doc_hint-a24566f700",
+      "seed_id": "SYNTH-shard-0017-L00157-doc_hint-a24566f700",
+      "source_shard_id": "shard-0017",
+      "batch_index": 5,
+      "obligation_type": "doc_hint",
+      "work_group_category": "doc_hint",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0017",
+        "line_in_shard": 157,
+        "line_in_source": null,
+        "source_line": 3357
+      },
+      "statement": "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions.",
+      "evidence_ledger_excerpt": "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions.",
+      "related_paths": [],
+      "doc_hints": [
+        {
+          "hint": "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions.",
+          "evidence_ledger_excerpt": "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions.",
+          "related_paths": []
+        }
+      ],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions."
+      ],
+      "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels."
+    }
+  ]
+}

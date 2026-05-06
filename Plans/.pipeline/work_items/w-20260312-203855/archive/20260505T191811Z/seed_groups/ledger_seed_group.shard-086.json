@@ -1,0 +1,301 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-086",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-086.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Git/worktree sections still use `tier_id` as worktree ownership glue",
+      "line_in_shard": 1
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:",
+      "line_in_shard": 2
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- it marks as PASS several things that are only PASS relative to stale upstream docs, such as:",
+      "line_in_shard": 3
+    },
+    {
+      "type": "routing_rule",
+      "text": "- it also lists command families that now need revalidation against the newer runtime recovery and route/open model",
+      "line_in_shard": 6
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 8
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Primary docs:",
+      "line_in_shard": 9
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 10
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 13
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Adjacent owners implicated:",
+      "line_in_shard": 14
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 15
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones.",
+      "line_in_shard": 23
+    },
+    {
+      "type": "verification_rule",
+      "text": "- That still makes it dangerous: once upstream reconciliation happens, these docs can continue to broadcast stale \u201cPASS\u201d status or outdated feature summaries unless they are explicitly rechecked.",
+      "line_in_shard": 24
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- upstream owner docs first",
+      "line_in_shard": 28
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `GUI_Rebuild_Requirements_Checklist.md` second as status repair",
+      "line_in_shard": 29
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Section15_MVP_Promoted_Features_Spec.md` last as a verification pass against the corrected upstream owners",
+      "line_in_shard": 31
+    },
+    {
+      "type": "doc_hint",
+      "text": "- These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts.",
+      "line_in_shard": 32
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `GUI_Rebuild_Requirements_Checklist.md` can create false confidence if stale upstream PASS conditions remain unchallenged.",
+      "line_in_shard": 35
+    },
+    {
+      "type": "verification_rule",
+      "text": "### Targeted docs checked for coverage convergence",
+      "line_in_shard": 41
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Owner stack:",
+      "line_in_shard": 42
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Log.md`",
+      "line_in_shard": 49
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 51
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale consumers:",
+      "line_in_shard": 52
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 54
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Mirrors and summary/checklist followers:",
+      "line_in_shard": 59
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 62
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 63
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- mixed-canon owner docs",
+      "line_in_shard": 68
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- stale primary consumers",
+      "line_in_shard": 69
+    },
+    {
+      "type": "verification_rule",
+      "text": "- mirror/checklist docs that will need revalidation after owner reconciliation",
+      "line_in_shard": 70
+    },
+    {
+      "type": "routing_rule",
+      "text": "1. Owner docs and rewrite-root routing",
+      "line_in_shard": 75
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "2. Primary stale consumers",
+      "line_in_shard": 76
+    },
+    {
+      "type": "verification_rule",
+      "text": "3. Mirror/checklist followers",
+      "line_in_shard": 77
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The ledger contains enough owner-routing, contradiction, and cleanup-order detail for downstream reconciliation without restarting discovery.",
+      "line_in_shard": 81
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Mirror docs should be updated only after their owner docs are reconciled.",
+      "line_in_shard": 85
+    },
+    {
+      "type": "doc_hint",
+      "text": "## Reconciliation / Coverage Pass - 2026-03-17 - final impacted-doc register before packetization",
+      "line_in_shard": 88
+    },
+    {
+      "type": "doc_hint",
+      "text": "#### Docs clearly implicated",
+      "line_in_shard": 92
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Log.md`",
+      "line_in_shard": 99
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 101
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 105
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 115
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 116
+    },
+    {
+      "type": "doc_hint",
+      "text": "#### Docs probably implicated",
+      "line_in_shard": 118
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Policy.md`",
+      "line_in_shard": 128
+    },
+    {
+      "type": "doc_hint",
+      "text": "#### Docs that could drift if left untouched",
+      "line_in_shard": 130
+    },
+    {
+      "type": "requirement",
+      "text": "#### MUST CHANGE",
+      "line_in_shard": 138
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Log.md`",
+      "line_in_shard": 145
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 147
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 151
+    },
+    {
+      "type": "requirement",
+      "text": "#### MUST RECONCILE",
+      "line_in_shard": 158
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Policy.md`",
+      "line_in_shard": 170
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 173
+    },
+    {
+      "type": "requirement",
+      "text": "#### MUST VERIFY",
+      "line_in_shard": 175
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 176
+    },
+    {
+      "type": "requirement",
+      "text": "- `MUST CHANGE` docs carry either direct stale canon or owner-level gaps. Packetization should assume stale sections must be replaced or retired, not merely annotated.",
+      "line_in_shard": 183
+    },
+    {
+      "type": "requirement",
+      "text": "- `MUST RECONCILE` docs are not primary execution owners, but they will drift or mislead if omitted from the packet.",
+      "line_in_shard": 184
+    },
+    {
+      "type": "requirement",
+      "text": "- `MUST VERIFY` docs stay out of the packet unless final reconciliation inspection shows that they also require edits.",
+      "line_in_shard": 185
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 195
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 199
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.section_entry_E_report.v3.1.12",
+  "prompt_id": "E0",
+  "prompt_version": "pm.e0.v3.1.12",
+  "timestamp_utc": "20260506T192742Z",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "source_section_exit_d_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
+  "coverage_inputs": {
+    "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "canonical_obligations_exists": true,
+    "canonical_obligations_sha256_expected_from_section_exit_d": "fb1498de127b3bfee342f271dc2ba692d8347e937f925587d5ab8ecff733a1ce",
+    "canonical_obligations_sha256_verified": true,
+    "obligation_count_expected_from_section_exit_d": 393,
+    "obligation_count_verified": 393
+  },
+  "deterministic_verification": {
+    "section_exit_d_status": "complete",
+    "section_exit_d_final_gate_passed": true,
+    "canonical_obligations_status": "complete",
+    "canonical_obligations_work_id_matches": true,
+    "canonical_obligations_sha256_matches_section_exit_d": true,
+    "canonical_obligations_obligation_count_matches_section_exit_d": true,
+    "work_id_consistency_passed": true
+  },
+  "final_gate": {
+    "passed": true,
+    "reason": "Active Section D handoff resolved; canonical_obligations.json exists, is complete, and matches Section D obligation count and SHA256."
+  },
+  "next_prompt_request": "Paste prompt E1 — Coverage Worklist Builder v3.1.12."
+}

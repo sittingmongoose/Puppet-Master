@@ -1,0 +1,376 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-047",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-047.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- wizard, builder, interview remain conversational/document-production actors, not orchestration nodes/packages/seams",
+      "line_in_shard": 1
+    },
+    {
+      "type": "data_shape",
+      "text": "- but their handoff payloads still need to carry enough canonical identity and lineage so downstream runtime, history, ledger, search, and audit can explain how execution began",
+      "line_in_shard": 2
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 4
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- downstream consumers:",
+      "line_in_shard": 9
+    },
+    {
+      "type": "data_shape",
+      "text": "- `chain-wizard-flexibility.md` already carries `project_id` in the assistant-to-wizard payload, but `interview-subagent-integration.md` still shows `thread_id: None` in concrete orchestration/crew paths that should likely preserve thread correlation.",
+      "line_in_shard": 16
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Prompt_Pipeline.md` owns the canonical requested/effective runtime record, but the wizard/interview handoff payloads only expose a thin subset of it.",
+      "line_in_shard": 17
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `persona_override_owner_id` still allows `tier_id`-style ownership in shared runtime docs, while wizard/interview are simultaneously trying to align with newer non-tier execution semantics.",
+      "line_in_shard": 18
+    },
+    {
+      "type": "data_shape",
+      "text": "- Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+      "line_in_shard": 19
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the bridge from that lineage into the eventual execution run identity.",
+      "line_in_shard": 20
+    },
+    {
+      "type": "data_shape",
+      "text": "- Extend wizard/interview handoff payloads so they can carry the upstream subset of canonical runtime identity:",
+      "line_in_shard": 23
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_persona?` / `effective_persona?`",
+      "line_in_shard": 27
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_platform?` / `effective_platform?`",
+      "line_in_shard": 28
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_model?` / `effective_model?`",
+      "line_in_shard": 29
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_policy?`",
+      "line_in_shard": 30
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_id?`",
+      "line_in_shard": 31
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_binding?`",
+      "line_in_shard": 32
+    },
+    {
+      "type": "open_question",
+      "text": "- `effective_account_id?`",
+      "line_in_shard": 33
+    },
+    {
+      "type": "open_question",
+      "text": "- `operational_identity?`",
+      "line_in_shard": 35
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add an explicit lineage bridge from wizard/interview artifacts and handoff payloads into the eventual execution run:",
+      "line_in_shard": 37
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.",
+      "line_in_shard": 40
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough canonical identity for downstream consumers to remain truthful without reconstructing context heuristically.",
+      "line_in_shard": 41
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 50
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 51
+    },
+    {
+      "type": "verification_rule",
+      "text": "- adjacent owner docs pulled for contradiction checks (`Orchestrator_Page.md`, `Run_Graph_View.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Commands_System.md`, `Project_Output_Artifacts.md`, `GitHub_Integration.md`, `Contracts_V0.md`, `storage-plan.md`, `Permissions_System.md`)",
+      "line_in_shard": 62
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The Codex pass mostly closed the loop by turning several remaining downstream issues into exact spec-integrity failures.",
+      "line_in_shard": 65
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- GUI / command ownership remains split in concrete, machine-breaking ways:",
+      "line_in_shard": 66
+    },
+    {
+      "type": "process_defect",
+      "text": "- `FinalGUISpec.md` now shows a second internal navigation contradiction beyond the already-known Orchestrator-page drift (`\u00a74.1` vs `\u00a75.1`), and `Orchestrator_Page.md` itself is structurally incomplete because its TOC advertises a missing `UICommand IDs` section.",
+      "line_in_shard": 67
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved slash commands may be overridden, while `UI_Command_Catalog.md` still lacks the corresponding `cmd.chat.run_user_command` owner row.",
+      "line_in_shard": 69
+    },
+    {
+      "type": "data_shape",
+      "text": "- Artifact / HITL / tool contracts remain under-owned at the exact file/field level:",
+      "line_in_shard": 71
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Runtime_Artifacts_Panel.md` still sits in a three-way ownership contradiction with `Contracts_V0.md` and `storage-plan.md` over payload schema authority; it still points at missing schema files and still lacks a concrete artifact-projection key family in `storage-plan.md`.",
+      "line_in_shard": 72
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `human-in-the-loop.md` still contains an intra-doc contradiction on `allowed_actions` vs `allowed_action_ids`, still leaves `request_id <-> blocked_sequence` mapping unowned, and still keeps approval-scope/session semantics under-keyed while neighboring docs cascade approvals broadly.",
+      "line_in_shard": 73
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Executor_Protocol.md` contains byte-identical duplicated canonical scheduler sections and still leaves `blocked_sequence` minting, startup recovery handshake, `execution_role` ownership, and reviewer/corroboration lifecycle unowned.",
+      "line_in_shard": 76
+    },
+    {
+      "type": "data_shape",
+      "text": "- `orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `TierContext` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.",
+      "line_in_shard": 77
+    },
+    {
+      "type": "data_shape",
+      "text": "- `interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key.",
+      "line_in_shard": 79
+    },
+    {
+      "type": "data_shape",
+      "text": "- `chain-wizard-flexibility.md` still leaves the normalized downstream payload too lineage-thin, still conflicts with interview ownership on where pre-run quality/CUP correction lives, and still contains a self-contradictory Contribute(PR) worktree policy.",
+      "line_in_shard": 80
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Highest-risk impacted docs",
+      "line_in_shard": 83
+    },
+    {
+      "type": "data_shape",
+      "text": "- schema-family authority, missing storage key owner, and missing attempt/project identity remain unresolved.",
+      "line_in_shard": 87
+    },
+    {
+      "type": "data_shape",
+      "text": "- approval identity, field-family normalization, and persistence semantics are still split across incompatible shapes.",
+      "line_in_shard": 89
+    },
+    {
+      "type": "routing_rule",
+      "text": "- runtime identity parity and routing-key correctness remain visibly incomplete.",
+      "line_in_shard": 95
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Several docs now fail because they promise canonical sections/IDs that do not exist at all.",
+      "line_in_shard": 102
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The same owner docs still claim both file-based canon and event-sourced canon for runtime coordination/audit.",
+      "line_in_shard": 104
+    },
+    {
+      "type": "data_shape",
+      "text": "- Storage-plan is now clearly missing several record/projection families that downstream docs already treat as if they exist (`runtime_artifact` payload schemas, worktree records/projections, artifact index registration).",
+      "line_in_shard": 105
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Reconcile all remaining command/template/example drift so `UI_Command_Catalog.md` is the sole stable action owner and every referenced command actually exists.",
+      "line_in_shard": 109
+    },
+    {
+      "type": "data_shape",
+      "text": "- Resolve the payload-owner triangle for runtime artifacts and either add the missing schema family/registration or soften the mandate explicitly.",
+      "line_in_shard": 110
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance.",
+      "line_in_shard": 111
+    },
+    {
+      "type": "process_defect",
+      "text": "- Add the missing canonical record/projection families to `storage-plan.md` for worktree lifecycle and artifact index state before downstream docs keep inventing them implicitly.",
+      "line_in_shard": 112
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Collapse duplicated executor canon and explicitly assign owners for `blocked_sequence`, `startup_recovered` handshake, `execution_role`, and reviewer/corroboration lifecycle.",
+      "line_in_shard": 113
+    },
+    {
+      "type": "requirement",
+      "text": "- Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/project/run/attempt identity families already required elsewhere.",
+      "line_in_shard": 114
+    },
+    {
+      "type": "process_defect",
+      "text": "- `Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity problem, not only a content gap.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Runtime_Artifacts_Panel.md` still points at schema files that do not exist and an index key not registered in storage-plan.",
+      "line_in_shard": 119
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 125
+    },
+    {
+      "type": "data_shape",
+      "text": "- stored in seglog as `artifact_type: validation_pass_report`",
+      "line_in_shard": 136
+    },
+    {
+      "type": "requirement",
+      "text": "- required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `provider` / `model`",
+      "line_in_shard": 137
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The current lineage story is fragmented across multiple docs:",
+      "line_in_shard": 142
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Project_Output_Artifacts.md` owns the artifact type and `workflow_run_id`",
+      "line_in_shard": 144
+    },
+    {
+      "type": "data_shape",
+      "text": "- The missing fields are now fairly clear:",
+      "line_in_shard": 147
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 151
+    },
+    {
+      "type": "open_question",
+      "text": "- `phase_plan_ref?`",
+      "line_in_shard": 152
+    },
+    {
+      "type": "open_question",
+      "text": "- `staged_bundle_ref?` or equivalent pre/post-unification bundle refs",
+      "line_in_shard": 153
+    },
+    {
+      "type": "open_question",
+      "text": "- `requirements_quality_report_ref?` when relevant",
+      "line_in_shard": 154
+    },
+    {
+      "type": "open_question",
+      "text": "- `effective_account_id?`",
+      "line_in_shard": 157
+    },
+    {
+      "type": "open_question",
+      "text": "- likely eventual `run_id?` or launch receipt ref once execution begins",
+      "line_in_shard": 162
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 169
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- downstream consumers:",
+      "line_in_shard": 174
+    },
+    {
+      "type": "data_shape",
+      "text": "- Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+      "line_in_shard": 181
+    },
+    {
+      "type": "verification_rule",
+      "text": "- The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records.",
+      "line_in_shard": 182
+    },
+    {
+      "type": "data_shape",
+      "text": "- The docs clearly state that the post-pass artifact tree is the canonical final set, but they do not define a strong receipt/reference object that binds that finality to the sweep reports and later execution handoff.",
+      "line_in_shard": 184
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing:",
+      "line_in_shard": 187
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 190
+    },
+    {
+      "type": "open_question",
+      "text": "- `phase_plan_ref?`",
+      "line_in_shard": 191
+    },
+    {
+      "type": "open_question",
+      "text": "- `requirements_quality_report_ref?` when applicable",
+      "line_in_shard": 193
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_policy?`",
+      "line_in_shard": 196
+    },
+    {
+      "type": "open_question",
+      "text": "- `effective_account_id?`",
+      "line_in_shard": 197
+    }
+  ]
+}

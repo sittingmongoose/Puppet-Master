@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.section_entry_A_report.v1",
+  "prompt_id": "A0",
+  "prompt_version": "pm.a0.v3.1.12",
+  "work_id": "w-20260312-203855",
+  "run_mode": "fresh_restart",
+  "run_mode_source": "default_task_rule_no_explicit_user_mode",
+  "execution_type": "mechanical_tool_operation",
+  "subagents_required": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification": {
+    "inputs_used": [
+      "user prompt (work_id, A0 instructions, default run_mode rule)"
+    ],
+    "tooling": "bounded JSON write to Plans/.pipeline/section_entry_A_report.json",
+    "semantic_artifacts_inspected": false
+  },
+  "subagents_admission_gate": {
+    "input_families": 1,
+    "bounded_to_user_prompt_and_optional_meta_listing_only": true,
+    "rationale": "A0 only selects run_mode and next Run Control prompt; no ledger/json/doc fan-out or broad reads."
+  },
+  "status": "COMPLETE",
+  "next_prompt_request": "A2",
+  "next_prompt_name": "Fresh Run Initializer / Artifact Sanitizer",
+  "notes": [
+    "work_id supplied explicitly by user and locked",
+    "run_mode defaulted to fresh_restart because no explicit mode was provided",
+    "no semantic artifacts were inspected"
+  ]
+}

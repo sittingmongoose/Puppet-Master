@@ -1,0 +1,960 @@
+{
+  "subagent_task_id": "c3-shard-0015",
+  "shard_id": "shard-0015",
+  "source_start_line": 2458,
+  "source_end_line": 2647,
+  "requirements": [
+    {
+      "requirement": "Projection-backed operational surfaces must expose trust state, last updated time, degraded/stale reason when not current, and whether actions are partially gated.",
+      "evidence": "Every projection-backed operational surface should expose at least trust state, last updated time, degraded/stale reason, and partial action gating."
+    },
+    {
+      "requirement": "Refreshing states should continue showing last committed projection instead of blanking the page.",
+      "evidence": "'refreshing' should continue showing the last committed projection rather than blanking the page."
+    },
+    {
+      "requirement": "UI must never silently present stale operational truth as live truth.",
+      "evidence": "The system should never quietly present stale operational truth as if it were live truth."
+    },
+    {
+      "requirement": "Historical run mode must visibly indicate focused historical run across tabs and gate live-only controls.",
+      "evidence": "Required behavior lists persistent historical banner/chip, visible focused historical run_id, and disabling/removing active-run-only controls."
+    },
+    {
+      "requirement": "All Orchestrator tabs should share one focused run_id to prevent context drift.",
+      "evidence": "Strong recommendation says all Orchestrator tabs share the same focused run_id."
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "Adopt explicit separation between active run truth and focused run context.",
+      "rationale": "Prevents conflation of currently running state with user-inspected historical context."
+    },
+    {
+      "decision": "Introduce first-class Historical Run Mode in Orchestrator.",
+      "rationale": "Needed to define stable behavior, action gating, and user awareness when inspecting non-active runs."
+    },
+    {
+      "decision": "Do not auto-switch user focus from historical run to live run when new activity appears.",
+      "rationale": "Avoids unstable UX and unintentional context replacement."
+    },
+    {
+      "decision": "Persist per-project Orchestrator focus state in a dedicated project-state record.",
+      "rationale": "Current persistence support appears underspecified for run focus/restore behavior."
+    }
+  ],
+  "data_shapes": [
+    {
+      "shape": "Run focus model",
+      "fields": [
+        "active_run_id?",
+        "focused_run_id?",
+        "focus_mode = live | historical"
+      ]
+    },
+    {
+      "shape": "orchestrator.project_state.{project_id}",
+      "fields": [
+        "focused_run_id?",
+        "focus_mode",
+        "last_live_run_id?",
+        "selected_tab",
+        "per-tab view state refs",
+        "auto_return_to_live = false (default candidate)"
+      ]
+    },
+    {
+      "shape": "Projection health/trust contract",
+      "fields": [
+        "trust_state",
+        "last_updated",
+        "stale_or_degraded_reason",
+        "partial_action_gating"
+      ]
+    }
+  ],
+  "routing_rules": [
+    {
+      "rule": "In historical mode, route actions only when historical-safe; disable live-runtime mutating commands.",
+      "examples": [
+        "historical-safe: inspect graph/evidence/ledger, export, view lineage",
+        "disable: pause/resume/cancel, live retry/remediation, approval/recovery requiring current runtime truth"
+      ]
+    },
+    {
+      "rule": "If active run appears while user views history, keep historical focus and offer explicit switch-to-live notice.",
+      "examples": [
+        "show active run exists notice",
+        "show switch-to-live CTA",
+        "show background runs status/count"
+      ]
+    },
+    {
+      "rule": "Cross-tab navigation must preserve focused run_id so History, Graph, Evidence, and Ledger remain coherent.",
+      "examples": [
+        "History selection pivots entire page run context",
+        "deep links carry focused run_id"
+      ]
+    }
+  ],
+  "verification_rules": [
+    {
+      "rule": "Projection-backed surfaces always show trust and freshness metadata.",
+      "check": "Each relevant tab/widget renders trust state and last updated, plus stale/degraded reason when applicable."
+    },
+    {
+      "rule": "Refreshing does not blank previously committed projection.",
+      "check": "During refresh transitions, last committed view remains visible."
+    },
+    {
+      "rule": "Historical mode clearly signaled and live-only controls gated.",
+      "check": "Persistent historical indicator present; live-only controls disabled/hidden."
+    },
+    {
+      "rule": "Focus stability is preserved across background/live updates.",
+      "check": "A new active run does not forcibly replace historical focus; explicit switch path is shown."
+    },
+    {
+      "rule": "Cross-tab run coherence holds.",
+      "check": "History -> Node Graph -> Evidence -> Ledger remain aligned on same focused run_id."
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "owner": "Projection producers (Usage/Orchestrator/Source Control and similar)",
+      "obligations": [
+        "Emit standardized trust/freshness fields for projection-backed views.",
+        "Provide degraded/stale reasons and action gating signals."
+      ],
+      "consumers": [
+        "Projection-backed UI surfaces"
+      ]
+    },
+    {
+      "owner": "Orchestrator state owner",
+      "obligations": [
+        "Maintain active_run_id vs focused_run_id semantics.",
+        "Persist and restore focused run state per project.",
+        "Apply mode-aware command gating."
+      ],
+      "consumers": [
+        "Orchestrator tabs (Progress, History, Node Graph, Evidence, Ledger)"
+      ]
+    },
+    {
+      "owner": "UI consumers",
+      "obligations": [
+        "Display trust and historical/live mode indicators prominently.",
+        "Avoid presenting stale truth as live truth.",
+        "Respect routing and gating rules for live-only vs historical-safe actions."
+      ],
+      "consumers": [
+        "End users operating runs"
+      ]
+    }
+  ],
+  "stale_retirement_items": [
+    {
+      "item": "Retire ad-hoc, surface-specific stale handling by introducing one reusable projection health/trust UI contract.",
+      "why": "Current docs suggest inconsistent stale/degraded mitigation across surfaces."
+    },
+    {
+      "item": "Retire implicit or silent live-vs-historical context switching.",
+      "why": "Explicit historical mode and focus persistence are needed to prevent ambiguous state."
+    },
+    {
+      "item": "Retire blank-on-refresh rendering behavior where present.",
+      "why": "Requirement states last committed projection should remain visible during refresh."
+    }
+  ],
+  "open_questions": [
+    {
+      "question": "What is the final sharp contract for Progress tab behavior in historical mode?",
+      "context": "Document notes this needs sharper definition."
+    },
+    {
+      "question": "How should Delete Run semantics be defined to avoid conflict with durable historical/audit expectations?",
+      "context": "History includes Delete Run, but durability/audit implications are unresolved."
+    },
+    {
+      "question": "What exact shared freshness schema should be standardized across all projection-backed domains?",
+      "context": "Gap called out: no obvious shared projection freshness schema."
+    }
+  ],
+  "process_defects": [
+    {
+      "defect": "Cross-domain trust/freshness contract is not yet explicitly unified.",
+      "impact": "Inconsistent stale/degraded UX and action-gating behavior across tabs/surfaces."
+    },
+    {
+      "defect": "Orchestrator run-focus persistence model appears missing/underspecified.",
+      "impact": "Unclear restore behavior and potential focus instability."
+    },
+    {
+      "defect": "Live-vs-historical interaction rules for background runs are not fully specified.",
+      "impact": "Risk of ambiguous routing and UI behavior during concurrent activity."
+    }
+  ],
+  "doc_hints": [
+    {
+      "hint": "Define reusable projection trust-state contract in Final GUI-level spec and reference it from Usage, Orchestrator, and Source Control docs."
+    },
+    {
+      "hint": "Add explicit Orchestrator Historical Run Mode section covering indicators, action gating, and switch-to-live behavior."
+    },
+    {
+      "hint": "Add orchestrator.project_state.{project_id} schema and persistence/restore lifecycle to storage documentation."
+    },
+    {
+      "hint": "Document active_run_id vs focused_run_id semantics and make cross-tab focused run_id coherence normative."
+    },
+    {
+      "hint": "Clarify Progress tab rendering/CTA behavior when focused run is historical."
+    }
+  ]
+}
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0015",
+  "coverage": {
+    "shard_id": "shard-0015",
+    "start_line": 2458,
+    "end_line": 2647,
+    "line_count": 190,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0015.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 2,
+        "text": "Every projection-backed operational surface should expose at least:",
+        "tokens": []
+      },
+      {
+        "line": 6,
+        "text": "whether actions are partially gated",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "`Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "tokens": [
+          "Seams"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "`Evidence`: artifact browsing can remain available; live verdict/action affordances may gate",
+        "tokens": [
+          "Evidence"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "Define which commands require:",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "`refreshing` should continue showing the last committed projection rather than blanking the page.",
+        "tokens": [
+          "refreshing"
+        ]
+      },
+      {
+        "line": 34,
+        "text": "stale/degraded trust must be visible without making the UI feel broken or unusable.",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "the system should never quietly present stale operational truth as if it were live truth.",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "Required behavior:",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "Actions that should generally be disabled in historical mode:",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "approval/recovery actions that require current runtime state",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "Orchestrator should surface that without silently replacing the focused context",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "`Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "If Orchestrator shares one focused run across all tabs, then `Progress` needs an explicit historical behavior.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "This needs a sharper contract later.",
+        "tokens": []
+      },
+      {
+        "line": 178,
+        "text": "The page must not auto-switch focus away from a historical run just because live activity appears.",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "The user should always know whether they are looking at the active run or a historical run.",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.",
+        "tokens": [
+          "run_id"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 10,
+        "text": "`Node Graph`: keep historical graph and current selections visible, but flag when live node state may be stale",
+        "tokens": [
+          "Node Graph"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "`Evidence`: artifact browsing can remain available; live verdict/action affordances may gate",
+        "tokens": [
+          "Evidence"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "or a selected historical run",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "`Orchestrator_Page.md` says the graph renders when a run is active or a historical run is selected",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "`Ledger` filters to the current/selected run",
+        "tokens": [
+          "Ledger"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "but there is no clear mode contract for what the whole page is in after a historical run is selected",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "there is no obvious equivalent `orchestrator.project_state.{project_id}` with focused/selected run state",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "background/live-run strip or compact banner remains visible even in historical mode",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "selected_tab",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "Likely good direction:",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 3,
+        "text": "trust state",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "`Node Graph`: keep historical graph and current selections visible, but flag when live node state may be stale",
+        "tokens": [
+          "Node Graph"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "`History` / `Ledger`: usually the fallback-safe surfaces because they are closest to canonical records",
+        "tokens": [
+          "History",
+          "Ledger"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for projection-backed tabs/widgets/panels.",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "Add a shared projection health/trust contract used by:",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.",
+        "tokens": [
+          "last updated",
+          "trust state"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "or are safe from stale views because they operate on durable records only",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable.",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "but there is no clear mode contract for what the whole page is in after a historical run is selected",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Storage/project-state support appears incomplete for this seam:",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "`storage-plan.md` defines project state for Source Control, GitHub Actions, and Docker Manager",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "there is no obvious equivalent `orchestrator.project_state.{project_id}` with focused/selected run state",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "background runs have queue/state events",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "Proposed fields conceptually:",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "approval/recovery actions that require current runtime state",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "background events and live state changes update the focused tabs directly",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "background run presence is global project state",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "focused run is local Orchestrator viewing state",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "Likely missing project-state record:",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "orchestrator.project_state.{project_id}",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "Candidate fields:",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "per-tab view state refs",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "`Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "or show disabled/live-unavailable state with explanation",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "This needs a sharper contract later.",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "No explicit `historical-run mode` contract yet.",
+        "tokens": [
+          "historical-run mode"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "No obvious `orchestrator.project_state.{project_id}` for focused run persistence.",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "Add a first-class `Historical Run Mode` UI contract for Orchestrator.",
+        "tokens": [
+          "Historical Run Mode"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "record-only/export-only",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 15,
+        "text": "No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "Usage has concrete stale-data mitigations, but Orchestrator currently lacks equally explicit stale/degraded trust copy and action rules.",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for projection-backed tabs/widgets/panels.",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "Orchestrator",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Current docs already imply that Orchestrator can focus either:",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "`Orchestrator_Page.md` says the graph renders when a run is active or a historical run is selected",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "there is no obvious equivalent `orchestrator.project_state.{project_id}` with focused/selected run state",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Background-run behavior exists, but it is still somewhat separate from Orchestrator run-focus semantics:",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "but Orchestrator does not yet clearly define how active background runs interact with a currently focused historical run",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "`focused_run_id` = the run whose data the Orchestrator tabs are currently showing",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "all tabs clearly show the focused historical `run_id`",
+        "tokens": [
+          "run_id"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "actions route against the focused run only when they are historical-safe",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "background events and live state changes update the focused tabs directly",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "This avoids the page feeling unstable.",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "focused run is local Orchestrator viewing state",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "Orchestrator should surface that without silently replacing the focused context",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "orchestrator.project_state.{project_id}",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "selected_tab",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "per-tab view state refs",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "all Orchestrator tabs share the same focused `run_id`",
+        "tokens": [
+          "run_id"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "otherwise each tab can drift into a different run context and the page becomes incoherent",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Current `Progress` tab language is heavily live-run oriented.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "If Orchestrator shares one focused run across all tabs, then `Progress` needs an explicit historical behavior.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "No obvious `orchestrator.project_state.{project_id}` for focused run persistence.",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Background runs exist in Dashboard, but Orchestrator focus rules for live-vs-historical switching are not yet specified.",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "Add a first-class `Historical Run Mode` UI contract for Orchestrator.",
+        "tokens": [
+          "Historical Run Mode"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.",
+        "tokens": [
+          "run_id"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 11,
+        "text": "`Evidence`: artifact browsing can remain available; live verdict/action affordances may gate",
+        "tokens": [
+          "Evidence"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "direct runtime confirmation",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "`History` rows can load a historical run into the graph/evidence",
+        "tokens": [
+          "History"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "inspect evidence",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "Node Graph`, `Evidence`, and `Ledger` all pivot to the same `run_id",
+        "tokens": [
+          " all pivot to the same ",
+          ", ",
+          ", and "
+        ]
+      },
+      {
+        "line": 163,
+        "text": "`History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.",
+        "tokens": [
+          "Delete Run",
+          "History"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.",
+        "tokens": [
+          "run_id"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [],
+    "stale_retirement_items": [
+      {
+        "line": 5,
+        "text": "degraded/stale reason when not current",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "`Progress`: show run-level trust banner or chip when projections are stale/degraded",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "`Node Graph`: keep historical graph and current selections visible, but flag when live node state may be stale",
+        "tokens": [
+          "Node Graph"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "Usage has concrete stale-data mitigations, but Orchestrator currently lacks equally explicit stale/degraded trust copy and action rules.",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "or are safe from stale views because they operate on durable records only",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable.",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "stale/degraded trust must be visible without making the UI feel broken or unusable.",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "the system should never quietly present stale operational truth as if it were live truth.",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "controls that only make sense for the active run are disabled or removed",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 93,
+        "text": "open related Source Control / GitHub / Docker context in historical mode where possible",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "Candidate fields:",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "on restart/project reopen:",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 9,
+        "text": "`Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth",
+        "tokens": [
+          "Seams"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "Likely missing project-state record:",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 40,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

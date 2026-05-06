@@ -1,0 +1,98 @@
+{
+  "subagent_task_id": "c3-shard-0019",
+  "shard_id": "shard-0019",
+  "source_start_line": 3198,
+  "source_end_line": 3378,
+  "seeds": [
+    {
+      "seed_id": "shard-0019-s01",
+      "title": "Adopt a shared confirmation policy matrix",
+      "statement": "Define a cross-surface action policy matrix spanning Orchestrator runtime, Source Control, cleanup, and governance flows, using explicit confirmation levels and reversibility classes.",
+      "evidence": [
+        "Docs currently have isolated confirmations but no unified action policy.",
+        "Recommended matrix axes are confirmation level and reversibility class."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s02",
+      "title": "Standardize confirmation levels",
+      "statement": "Classify user actions into none, light, strong, and hard_gate confirmation levels so risk handling is consistent and predictable.",
+      "evidence": [
+        "Candidate levels are listed as none, light, strong, and hard_gate.",
+        "Current behavior is fragmented across multiple feature-specific rules."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s03",
+      "title": "Differentiate undoability from compensation",
+      "statement": "Model reversibility separately as immediate_undo, compensating_action_only, and non_reversible, and expose recovery paths that match real system capabilities.",
+      "evidence": [
+        "Recommended reversibility classes separate true undo from compensating actions.",
+        "Many orchestration actions are explicitly not true editor-style undo operations."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s04",
+      "title": "Reserve hard gates for contract-controlled approvals",
+      "statement": "Use hard_gate only when runtime or HITL contracts define allowed actions, and prevent bypass through generic confirmation modals.",
+      "evidence": [
+        "Hard-gated actions are described as canonical approval/blocked flows that cannot be bypassed.",
+        "HITL approvals already rely on explicit allowed actions instead of generic confirms."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s05",
+      "title": "Enrich strong confirmation payloads",
+      "statement": "Strong confirmations should include target scope, concrete consequences, artifact/history impact, and reversibility class rather than generic yes/no prompts.",
+      "evidence": [
+        "Strong confirm guidance calls for target objects, consequence summary, retention details, and reversibility.",
+        "Docs explicitly warn against generic 'Are you sure?' confirmations."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s06",
+      "title": "Use precise recovery language",
+      "statement": "Normalize action copy so Undo is used only for true immediate undo, while Reopen, Restore, Retry from Safe Point, and Create New Lane are used for compensating flows.",
+      "evidence": [
+        "Recommended labels distinguish Undo from Reopen/Restore/Retry/New Lane.",
+        "The notes emphasize avoiding over-promising undo when only compensation exists."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s07",
+      "title": "Apply strict confirmation to destructive cleanup",
+      "statement": "Worktree prune/remove, workspace cleanup, and evidence pruning should require strong confirmation with explicit disclosure of lineage retention and restore limitations.",
+      "evidence": [
+        "Destructive cleanup actions are mapped into strong confirmation guidance.",
+        "Docs require disclosure of worktree removal, lineage retention, and direct restore availability."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s08",
+      "title": "Treat authorization separately from confirmation",
+      "statement": "Do not conflate UI confirmation with permission: high-consequence runtime actions should bind to blocked/HITL contracts where authorization is enforced by runtime policy.",
+      "evidence": [
+        "Docs state confirmation is not equivalent to authorization.",
+        "High-consequence runtime actions are recommended to bind to canonical blocked/HITL contracts."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s09",
+      "title": "Finalize delete-run semantics before enabling deletion",
+      "statement": "History delete actions should remain constrained until deletion semantics, reversibility, and recovery guarantees are explicitly defined in the shared policy.",
+      "evidence": [
+        "Delete Run is called out as questionable pending clearer reversibility semantics.",
+        "Current terminology and policy inconsistencies create high risk for misleading destructive actions."
+      ]
+    },
+    {
+      "seed_id": "shard-0019-s10",
+      "title": "Define canonical record family envelopes",
+      "statement": "Specify normalized record envelopes and linkage for review, corroboration, graph patch, promotion, recovery, and state-transition records, with Ledger as exact record authority and projections for summary views.",
+      "evidence": [
+        "Major record families are named but still under-shaped compared with established attempt/blocked/usage families.",
+        "Docs state exact records belong in Ledger while summary and inspection surfaces may project from them."
+      ]
+    }
+  ]
+}

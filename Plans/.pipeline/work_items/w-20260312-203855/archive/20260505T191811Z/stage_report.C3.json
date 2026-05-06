@@ -1,0 +1,395 @@
+{
+  "schema_id": "pm.stage_report.C3.v3.1.10",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.10",
+  "work_id": "w-20260312-203855",
+  "status": "BLOCKED",
+  "required_subagent_tasks_total": 92,
+  "wave_artifacts_total": 1,
+  "wave_artifacts_expected_min": 7,
+  "wave_artifact_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C3.json#waves.wave-01"
+  ],
+  "waves": [
+    {
+      "wave_id": "wave-01",
+      "invocations": [
+        {
+          "subagent_invocation_id": "922365d8-b89f-40b8-a879-ee8a2a8293d5",
+          "subagent_task_id": "C3-SHARD-001",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-001.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-001.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "51275bfe-98d7-4547-9cf2-b873b7a716a9",
+          "subagent_task_id": "C3-SHARD-002",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-002.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-002.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "d8e4e9fb-7006-40b6-89eb-ddf4645b381b",
+          "subagent_task_id": "C3-SHARD-003",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-003.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-003.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "6cfca03c-f36f-47b1-9ffb-d5fa7bd5f5c0",
+          "subagent_task_id": "C3-SHARD-004",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-004.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-004.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "f9077209-e1cd-42c2-bbc0-412d08db6d42",
+          "subagent_task_id": "C3-SHARD-005",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-005.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-005.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "f6e470b2-f368-4160-88e1-0c5d42ff5172",
+          "subagent_task_id": "C3-SHARD-006",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-006.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-006.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "2be4ec7c-3764-4434-ac2e-ccce143fb3e6",
+          "subagent_task_id": "C3-SHARD-007",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-007.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-007.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "9005526a-d547-421c-b1c3-f41d72da8dec",
+          "subagent_task_id": "C3-SHARD-008",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-008.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-008.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "50f7c98d-1b74-48d3-83b2-50bf949332d5",
+          "subagent_task_id": "C3-SHARD-009",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-009.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-009.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "26e1d0d0-81c6-4bab-947b-7f587bc34635",
+          "subagent_task_id": "C3-SHARD-010",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-010.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-010.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "f616335e-8c4a-450d-84f0-f7a36ad319f8",
+          "subagent_task_id": "C3-SHARD-011",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-011.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-011.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "25168e58-b53e-4db5-bd18-9622598da5dc",
+          "subagent_task_id": "C3-SHARD-012",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-012.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-012.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "6b9cfc1a-9291-47d8-bdab-a8ab0fecd41d",
+          "subagent_task_id": "C3-SHARD-013",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-013.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-013.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "b81e52af-b2f5-40ab-99c2-222b0ce1098d",
+          "subagent_task_id": "C3-SHARD-014",
+          "input_bounds": {
+            "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-014.md",
+            "max_line_budget": 200
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-014.json",
+          "status": "complete"
+        }
+      ]
+    }
+  ],
+  "completed_task_ids_from_wave_artifacts": [
+    "C3-SHARD-001",
+    "C3-SHARD-002",
+    "C3-SHARD-003",
+    "C3-SHARD-004",
+    "C3-SHARD-005",
+    "C3-SHARD-006",
+    "C3-SHARD-007",
+    "C3-SHARD-008",
+    "C3-SHARD-009",
+    "C3-SHARD-010",
+    "C3-SHARD-011",
+    "C3-SHARD-012",
+    "C3-SHARD-013",
+    "C3-SHARD-014"
+  ],
+  "pending_task_ids_from_wave_artifacts": [
+    "C3-SHARD-015",
+    "C3-SHARD-016",
+    "C3-SHARD-017",
+    "C3-SHARD-018",
+    "C3-SHARD-019",
+    "C3-SHARD-020",
+    "C3-SHARD-021",
+    "C3-SHARD-022",
+    "C3-SHARD-023",
+    "C3-SHARD-024",
+    "C3-SHARD-025",
+    "C3-SHARD-026",
+    "C3-SHARD-027",
+    "C3-SHARD-028",
+    "C3-SHARD-029",
+    "C3-SHARD-030",
+    "C3-SHARD-031",
+    "C3-SHARD-032",
+    "C3-SHARD-033",
+    "C3-SHARD-034",
+    "C3-SHARD-035",
+    "C3-SHARD-036",
+    "C3-SHARD-037",
+    "C3-SHARD-038",
+    "C3-SHARD-039",
+    "C3-SHARD-040",
+    "C3-SHARD-041",
+    "C3-SHARD-042",
+    "C3-SHARD-043",
+    "C3-SHARD-044",
+    "C3-SHARD-045",
+    "C3-SHARD-046",
+    "C3-SHARD-047",
+    "C3-SHARD-048",
+    "C3-SHARD-049",
+    "C3-SHARD-050",
+    "C3-SHARD-051",
+    "C3-SHARD-052",
+    "C3-SHARD-053",
+    "C3-SHARD-054",
+    "C3-SHARD-055",
+    "C3-SHARD-056",
+    "C3-SHARD-057",
+    "C3-SHARD-058",
+    "C3-SHARD-059",
+    "C3-SHARD-060",
+    "C3-SHARD-061",
+    "C3-SHARD-062",
+    "C3-SHARD-063",
+    "C3-SHARD-064",
+    "C3-SHARD-065",
+    "C3-SHARD-066",
+    "C3-SHARD-067",
+    "C3-SHARD-068",
+    "C3-SHARD-069",
+    "C3-SHARD-070",
+    "C3-SHARD-071",
+    "C3-SHARD-072",
+    "C3-SHARD-073",
+    "C3-SHARD-074",
+    "C3-SHARD-075",
+    "C3-SHARD-076",
+    "C3-SHARD-077",
+    "C3-SHARD-078",
+    "C3-SHARD-079",
+    "C3-SHARD-080",
+    "C3-SHARD-081",
+    "C3-SHARD-082",
+    "C3-SHARD-083",
+    "C3-SHARD-084",
+    "C3-SHARD-085",
+    "C3-SHARD-086",
+    "C3-SHARD-087",
+    "C3-SHARD-088",
+    "C3-SHARD-089",
+    "C3-SHARD-090",
+    "C3-SHARD-091",
+    "C3-SHARD-092"
+  ],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [
+    "922365d8-b89f-40b8-a879-ee8a2a8293d5",
+    "51275bfe-98d7-4547-9cf2-b873b7a716a9",
+    "d8e4e9fb-7006-40b6-89eb-ddf4645b381b",
+    "6cfca03c-f36f-47b1-9ffb-d5fa7bd5f5c0",
+    "f9077209-e1cd-42c2-bbc0-412d08db6d42",
+    "f6e470b2-f368-4160-88e1-0c5d42ff5172",
+    "2be4ec7c-3764-4434-ac2e-ccce143fb3e6",
+    "9005526a-d547-421c-b1c3-f41d72da8dec",
+    "50f7c98d-1b74-48d3-83b2-50bf949332d5",
+    "26e1d0d0-81c6-4bab-947b-7f587bc34635",
+    "f616335e-8c4a-450d-84f0-f7a36ad319f8",
+    "25168e58-b53e-4db5-bd18-9622598da5dc",
+    "6b9cfc1a-9291-47d8-bdab-a8ab0fecd41d",
+    "b81e52af-b2f5-40ab-99c2-222b0ce1098d"
+  ],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 14,
+  "task_to_invocation_map": [
+    {
+      "subagent_task_id": "C3-SHARD-001",
+      "subagent_invocation_id": "922365d8-b89f-40b8-a879-ee8a2a8293d5"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-002",
+      "subagent_invocation_id": "51275bfe-98d7-4547-9cf2-b873b7a716a9"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-003",
+      "subagent_invocation_id": "d8e4e9fb-7006-40b6-89eb-ddf4645b381b"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-004",
+      "subagent_invocation_id": "6cfca03c-f36f-47b1-9ffb-d5fa7bd5f5c0"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-005",
+      "subagent_invocation_id": "f9077209-e1cd-42c2-bbc0-412d08db6d42"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-006",
+      "subagent_invocation_id": "f6e470b2-f368-4160-88e1-0c5d42ff5172"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-007",
+      "subagent_invocation_id": "2be4ec7c-3764-4434-ac2e-ccce143fb3e6"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-008",
+      "subagent_invocation_id": "9005526a-d547-421c-b1c3-f41d72da8dec"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-009",
+      "subagent_invocation_id": "50f7c98d-1b74-48d3-83b2-50bf949332d5"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-010",
+      "subagent_invocation_id": "26e1d0d0-81c6-4bab-947b-7f587bc34635"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-011",
+      "subagent_invocation_id": "f616335e-8c4a-450d-84f0-f7a36ad319f8"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-012",
+      "subagent_invocation_id": "25168e58-b53e-4db5-bd18-9622598da5dc"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-013",
+      "subagent_invocation_id": "6b9cfc1a-9291-47d8-bdab-a8ab0fecd41d"
+    },
+    {
+      "subagent_task_id": "C3-SHARD-014",
+      "subagent_invocation_id": "b81e52af-b2f5-40ab-99c2-222b0ce1098d"
+    }
+  ],
+  "invocation_to_task_map": [
+    {
+      "subagent_invocation_id": "922365d8-b89f-40b8-a879-ee8a2a8293d5",
+      "subagent_task_id": "C3-SHARD-001"
+    },
+    {
+      "subagent_invocation_id": "51275bfe-98d7-4547-9cf2-b873b7a716a9",
+      "subagent_task_id": "C3-SHARD-002"
+    },
+    {
+      "subagent_invocation_id": "d8e4e9fb-7006-40b6-89eb-ddf4645b381b",
+      "subagent_task_id": "C3-SHARD-003"
+    },
+    {
+      "subagent_invocation_id": "6cfca03c-f36f-47b1-9ffb-d5fa7bd5f5c0",
+      "subagent_task_id": "C3-SHARD-004"
+    },
+    {
+      "subagent_invocation_id": "f9077209-e1cd-42c2-bbc0-412d08db6d42",
+      "subagent_task_id": "C3-SHARD-005"
+    },
+    {
+      "subagent_invocation_id": "f6e470b2-f368-4160-88e1-0c5d42ff5172",
+      "subagent_task_id": "C3-SHARD-006"
+    },
+    {
+      "subagent_invocation_id": "2be4ec7c-3764-4434-ac2e-ccce143fb3e6",
+      "subagent_task_id": "C3-SHARD-007"
+    },
+    {
+      "subagent_invocation_id": "9005526a-d547-421c-b1c3-f41d72da8dec",
+      "subagent_task_id": "C3-SHARD-008"
+    },
+    {
+      "subagent_invocation_id": "50f7c98d-1b74-48d3-83b2-50bf949332d5",
+      "subagent_task_id": "C3-SHARD-009"
+    },
+    {
+      "subagent_invocation_id": "26e1d0d0-81c6-4bab-947b-7f587bc34635",
+      "subagent_task_id": "C3-SHARD-010"
+    },
+    {
+      "subagent_invocation_id": "f616335e-8c4a-450d-84f0-f7a36ad319f8",
+      "subagent_task_id": "C3-SHARD-011"
+    },
+    {
+      "subagent_invocation_id": "25168e58-b53e-4db5-bd18-9622598da5dc",
+      "subagent_task_id": "C3-SHARD-012"
+    },
+    {
+      "subagent_invocation_id": "6b9cfc1a-9291-47d8-bdab-a8ab0fecd41d",
+      "subagent_task_id": "C3-SHARD-013"
+    },
+    {
+      "subagent_invocation_id": "b81e52af-b2f5-40ab-99c2-222b0ce1098d",
+      "subagent_task_id": "C3-SHARD-014"
+    }
+  ],
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": true,
+  "fanout_proof_status": "fail",
+  "blocking_reason": "fanout_proof_missing_or_invalid",
+  "next_prompt_request": "manual_decision"
+}

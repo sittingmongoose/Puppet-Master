@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-f9ecbfd24c",
+  "category": "process_only",
+  "family_key": "provider_opencode_maps_canonical_thread_id_to_opencode_session_id_while_cli_bridged_providers",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0039-009"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-f9ecbfd24c--SEED-shard-0039-009",
+      "seed_id": "SEED-shard-0039-009",
+      "source_shard_id": "shard-0039",
+      "batch_index": 10,
+      "obligation_type": "process_defect",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0039",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Provider_OpenCode maps canonical thread_id to OpenCode session ID while CLI_Bridged_Providers treats thread_id as stable PM correlation\u2014contract-level identity bug.",
+      "evidence_ledger_excerpt": "it maps canonical `thread_id` to an OpenCode session ID while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id",
+      "related_paths": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Provider_OpenCode maps canonical thread_id to OpenCode session ID while CLI_Bridged_Providers treats thread_id as stable PM correlation\u2014contract-level identity bug.",
+          "kind": "process_defect",
+          "evidence_ledger_excerpt": "it maps canonical `thread_id` to an OpenCode session ID while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id",
+          "related_paths": [
+            "Plans/Provider_OpenCode.md",
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        }
+      ],
+      "exact_items": [
+        "Provider_OpenCode maps canonical thread_id to OpenCode session ID while CLI_Bridged_Providers treats thread_id as stable PM correlation\u2014contract-level identity bug."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

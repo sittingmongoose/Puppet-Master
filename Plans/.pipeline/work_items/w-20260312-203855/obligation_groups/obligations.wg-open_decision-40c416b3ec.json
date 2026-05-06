@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-40c416b3ec",
+  "category": "open_decision",
+  "family_key": "provider_continuity_fields_like_provider_attempt_ref_lack_a_stable_owning_schema_slot_reconnect",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0039-013"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-40c416b3ec--SEED-shard-0039-013",
+      "seed_id": "SEED-shard-0039-013",
+      "source_shard_id": "shard-0039",
+      "batch_index": 10,
+      "obligation_type": "open_question",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0039",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Provider continuity fields like provider_attempt_ref? lack a stable owning schema slot\u2014reconnect/replay semantics underspecified.",
+      "evidence_ledger_excerpt": "bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`",
+      "related_paths": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [
+        {
+          "question": "Provider continuity fields like provider_attempt_ref? lack a stable owning schema slot\u2014reconnect/replay semantics underspecified.",
+          "evidence_ledger_excerpt": "bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`",
+          "related_paths": [
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        }
+      ],
+      "process_notes": [],
+      "exact_items": [
+        "Provider continuity fields like provider_attempt_ref? lack a stable owning schema slot\u2014reconnect/replay semantics underspecified."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

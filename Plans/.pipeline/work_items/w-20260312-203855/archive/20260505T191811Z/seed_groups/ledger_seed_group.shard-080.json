@@ -1,0 +1,296 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-080",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-080.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another.",
+      "line_in_shard": 3
+    },
+    {
+      "type": "requirement",
+      "text": "- That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families.",
+      "line_in_shard": 4
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Reconcile the live-status source tables in graph and Orchestrator docs so they consume canonical runtime records/projections first.",
+      "line_in_shard": 11
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem.",
+      "line_in_shard": 16
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The owner docs already have the stronger source model.",
+      "line_in_shard": 17
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-17 - `Run_Graph_View.md` base view-model still preserves tier-era and request-era fields",
+      "line_in_shard": 19
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 21
+    },
+    {
+      "type": "data_shape",
+      "text": "- The base `GraphNode` struct still preserves stale fields as if they were core model state:",
+      "line_in_shard": 28
+    },
+    {
+      "type": "data_shape",
+      "text": "- `tier_type`",
+      "line_in_shard": 29
+    },
+    {
+      "type": "data_shape",
+      "text": "- `tier_type` string in UI state",
+      "line_in_shard": 36
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 47
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale consumer:",
+      "line_in_shard": 48
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The document now has an internal model mismatch:",
+      "line_in_shard": 52
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `hitl_request_id` is now especially out of place because the same doc later centers `blocked_sequence` and canonical runtime commands.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "data_shape",
+      "text": "- `tier_type` still appears as a core node UI field even though the broader rewrite direction is to demote tier/phase labels to derived or compatibility-only view context.",
+      "line_in_shard": 56
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 70
+    },
+    {
+      "type": "data_shape",
+      "text": "- `widget.current_task` = active tier title/objective/platform/model",
+      "line_in_shard": 76
+    },
+    {
+      "type": "doc_hint",
+      "text": "- terminal instances can be pinned to a specific `tier_id`",
+      "line_in_shard": 81
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The same doc already has stronger later sections for:",
+      "line_in_shard": 83
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 90
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale consumer:",
+      "line_in_shard": 91
+    },
+    {
+      "type": "process_defect",
+      "text": "- That conflicts with the rewrite direction where:",
+      "line_in_shard": 96
+    },
+    {
+      "type": "data_shape",
+      "text": "- seams/packages/lanes are the higher-level operational objects",
+      "line_in_shard": 98
+    },
+    {
+      "type": "data_shape",
+      "text": "- `widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+      "line_in_shard": 100
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:",
+      "line_in_shard": 104
+    },
+    {
+      "type": "data_shape",
+      "text": "- active work objects",
+      "line_in_shard": 105
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This is one of the clearest remaining consumer-layer pockets where the old execution model still shapes the UI.",
+      "line_in_shard": 112
+    },
+    {
+      "type": "process_defect",
+      "text": "- The later sections in the same doc already show the stronger direction, so this is a local reconciliation problem rather than a missing concept.",
+      "line_in_shard": 113
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "## Research Progress - 2026-03-17 - `Widget_System.md` still encodes tier-era Orchestrator widget contracts and stale hostability",
+      "line_in_shard": 115
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 117
+    },
+    {
+      "type": "data_shape",
+      "text": "- `widget.current_task` = active tier title/objective/elapsed",
+      "line_in_shard": 123
+    },
+    {
+      "type": "requirement",
+      "text": "- `widget.cta_stack` sourced from `PuppetMasterEvent::UserInteractionRequired`",
+      "line_in_shard": 125
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The doc also still exposes widgetized non-Progress Orchestrator tabs:",
+      "line_in_shard": 128
+    },
+    {
+      "type": "process_defect",
+      "text": "- This conflicts directly with the rewrite direction already logged elsewhere:",
+      "line_in_shard": 134
+    },
+    {
+      "type": "requirement",
+      "text": "- `PuppetMasterEvent::UserInteractionRequired`",
+      "line_in_shard": 139
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 142
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale owner/consumer hybrid:",
+      "line_in_shard": 143
+    },
+    {
+      "type": "doc_hint",
+      "text": "- It still teaches tier-tree and active-tier widget semantics from a doc that is supposed to be a reusable widget SSOT.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Because this document is cross-cutting, its stale hostability rules can easily reintroduce drift into:",
+      "line_in_shard": 149
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `FinalGUISpec.md`",
+      "line_in_shard": 150
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "requirement",
+      "text": "- Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and tier-targeted worker filters toward canonical runtime and attention projections.",
+      "line_in_shard": 157
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon.",
+      "line_in_shard": 158
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This is a cross-cutting SSOT problem, not just a page-local doc issue.",
+      "line_in_shard": 161
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled early.",
+      "line_in_shard": 162
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 166
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 168
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- after migration, the legacy key is deleted",
+      "line_in_shard": 176
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md` appendix C.5 mirrors the backup-preserving version:",
+      "line_in_shard": 177
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 182
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Primary spec-integrity docs:",
+      "line_in_shard": 183
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 185
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- preserve legacy backup",
+      "line_in_shard": 189
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- delete legacy key",
+      "line_in_shard": 190
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `FinalGUISpec.md` aligns with only one of those outcomes.",
+      "line_in_shard": 191
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 198
+    },
+    {
+      "type": "decision",
+      "text": "- Treat this as a persistence-contract decision, not as appendix-level wording trivia.",
+      "line_in_shard": 199
+    }
+  ]
+}

@@ -1,0 +1,981 @@
+{
+  "subagent_task_id": "c3-shard-0003",
+  "shard_id": "shard-0003",
+  "source_start_line": 228,
+  "source_end_line": 427,
+  "seeds": [
+    {
+      "theme": "Backbone Events",
+      "items": [
+        "Block/completion/reopen/supersede events are core user-facing backbone events.",
+        "Promotion blocked/promoted/revoked events are core user-facing backbone events.",
+        "Graph patch requested/applied/generation updated events are core user-facing backbone events.",
+        "Restore required/failed/completed events are core user-facing backbone events.",
+        "Threshold crossed/account switched/account exhausted events are core user-facing backbone events."
+      ]
+    },
+    {
+      "theme": "Badge Strategy",
+      "items": [
+        "Tab badges must remain sparse and purposeful.",
+        "Progress badge should represent meaningful attention/action-required count.",
+        "Other tabs should use targeted counts or dot badges rather than noisy unread-style counters."
+      ]
+    },
+    {
+      "theme": "Condition Aging",
+      "items": [
+        "Unresolved conditions remain on operational surfaces.",
+        "Resolved conditions move to History.",
+        "Recently resolved major items may linger briefly in summary surfaces.",
+        "Normal resolved operational items default to about 15 minutes.",
+        "Major resolved items default to dismissal or up to 24 hours.",
+        "Future controls should be policy-level, not per-alert micro-configuration."
+      ]
+    },
+    {
+      "theme": "Alert and Acknowledgement Semantics",
+      "items": [
+        "Resolved means underlying condition changed.",
+        "Dismissed means presentation hidden/acknowledged while condition may still exist.",
+        "Active blockers must not be dismissible in ways that imply unblocked state.",
+        "Acknowledged is distinct from resolved and dismissed.",
+        "Acknowledged applies to advisory/minor/non-blocking concerns explicitly seen/accepted by user.",
+        "Acknowledgement should reduce operational noise while preserving traceability.",
+        "Blockers requiring real action must not be acknowledgeable as a substitute for resolution."
+      ]
+    },
+    {
+      "theme": "Concern Model",
+      "items": [
+        "Concern is a first-class record, not embedded-only review/alert metadata.",
+        "Concern record should include identity, scope, severity, category, owner, lifecycle state, and summary/meaning.",
+        "Concern record should link to evidence, artifacts, history, and source records.",
+        "Concern record should include visibility/attention flags.",
+        "Concern lifecycle states include active, acknowledged, resolved, and dismissed."
+      ]
+    },
+    {
+      "theme": "Concern Creation and Resolution",
+      "items": [
+        "Canonical concerns are created by runtime, package overseer, seam overseer, corroboration outcomes, and graph patch/state-transition logic.",
+        "Workers can nominate findings but should not mint canonical concerns directly.",
+        "Persistent underlying issues should update/escalate/downgrade existing concerns instead of creating duplicates.",
+        "Resolution must track underlying truth changes, not presentation-only changes."
+      ]
+    },
+    {
+      "theme": "Concern Projections Across Surfaces",
+      "items": [
+        "All major surfaces should project a shared concern model rather than local variants.",
+        "Progress is the operational attention projection.",
+        "Seams is the integration/governance projection.",
+        "Evidence is the proof-backed concern projection.",
+        "History is the concern lifecycle timeline projection.",
+        "Ledger is the exact structured concern-record projection."
+      ]
+    },
+    {
+      "theme": "Action Model",
+      "items": [
+        "User-facing concern actions should remain narrow: open/focus/open evidence/open history/open ledger.",
+        "Acknowledge and dismiss actions should be exposed only where allowed.",
+        "Open resolution thread is an allowed user-facing concern action.",
+        "Approve/reject actions should only appear at true manual/HITL boundaries.",
+        "Runtime/overseer actions remain mostly non-generic GUI actions: request corroboration, route to remediation, request graph patch, mutate severity/owner, merge/split, and true resolution."
+      ]
+    },
+    {
+      "theme": "Inspector vs Full Record",
+      "items": [
+        "Side inspectors should stay summary-oriented and action-light.",
+        "Heavy/high-consequence actions and dense records belong in full-record views."
+      ]
+    },
+    {
+      "theme": "Widget and Projection Contracts",
+      "items": [
+        "Orchestrator widgets should consume stable shared projections, not raw event streams or bespoke queries.",
+        "Widget shell needs identity/type, scope, filter/sort/display config, and projection reference.",
+        "Required projection families include run, seam, package, node, promotion, lane/worktree, concern, account/usage pressure, recent major events, corroboration, recovery, and overseer activity summaries.",
+        "Run/seam/concern/account-pressure/recent-major-events summaries should be reusable across Orchestrator, Dashboard, and Projects.",
+        "Operationally dense summaries should remain primarily Orchestrator-focused."
+      ]
+    },
+    {
+      "theme": "Projection Freshness and Degradation",
+      "items": [
+        "Primary projection updates should be event-driven; manual refresh/tab reopen are secondary.",
+        "Projection health states include current, refreshing, stale, and failed.",
+        "Projection health degradation should mint a real concern when it threatens trust in blocked/promotion/recovery/patch/account-pressure truth.",
+        "Truth-changing actions require fresh-enough projection state; observational/navigation/export actions generally remain safe.",
+        "Gating UI should state what is stale, why it matters, and what user can do next.",
+        "Under stale projections, degrade to direct record-backed inspection.",
+        "Ledger/direct records are trust anchors under degraded projection health.",
+        "Only current and generation-matched direct records should be action-capable."
+      ]
+    },
+    {
+      "theme": "Direct Record Actionability",
+      "items": [
+        "Most trustworthy action-capable direct records are promotion records, graph patch records with state transition reports, recovery/restore records, and concern records for acknowledge/dismiss.",
+        "Action-capable direct record views should explicitly show currentness, generation match, superseded status, and actionable status."
+      ]
+    },
+    {
+      "theme": "Views, Sorting, and Surface Split",
+      "items": [
+        "Each tab needs role-appropriate filters.",
+        "Orchestrator should support at least per-project saved views for tabs/filters/sort/grouping/widget layout.",
+        "Default sorting: Seams by most operationally problematic first; History newest first; Ledger newest first.",
+        "Dashboard is summary/urgency/entry points; Orchestrator is operational depth; Projects is richer multi-project summary management."
+      ]
+    },
+    {
+      "theme": "Projects and Usage Pressure",
+      "items": [
+        "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked.",
+        "Projects page shows coarse account/usage pressure summary.",
+        "Dashboard shows cross-project pressure with operational importance.",
+        "Orchestrator shows execution-specific provider/account pressure context.",
+        "Usage page should include account-level breakdown, role usage view, and switch history, while full Usage-page redesign is out of current thread scope."
+      ]
+    },
+    {
+      "theme": "Settings Taxonomy and Scope Hierarchy",
+      "items": [
+        "Multi-account belongs with provider/model setup, not isolated orchestrator-only settings.",
+        "Major settings groupings include Providers & Models, Execution Identity, Governance, Workers, Recovery, and HITL.",
+        "Scope hierarchy: App/Global defaults, Project as primary policy owner, Seam feature-level overrides, Package local execution/recovery overrides, Node rare targeted overrides, Actor/Role cross-cutting policy, Runtime-only as computed truth.",
+        "UI should explicitly display Inherited, Overridden, and Effective without requiring separate resolution/inheritance modal."
+      ]
+    },
+    {
+      "theme": "Node Graph and Deep Linking",
+      "items": [
+        "Node Graph tab should include graph canvas and right-side detail inspector.",
+        "Node detail should expose requested/effective provider-model-effort-persona-account, usage/token/cost, worker policy, retry/review/promotion state, lane/worktree/snapshot state, and linked evidence/artifacts.",
+        "Evidence/artifact links from node detail should navigate to Evidence tab with relevant item selected.",
+        "Important objects/events should be deep-linkable across Progress, Seams, Node Graph, Evidence, History, and Ledger.",
+        "Cross-tab navigation should preserve/filter/select target context rather than only switching tabs."
+      ]
+    },
+    {
+      "theme": "Usage Documentation Alignment",
+      "items": [
+        "Usage tracking is already heavily documented, with strongest ownership in usage-feature documentation plus supporting storage and GUI planning docs.",
+        "Usage is already treated as first-class cross-surface concern, not a side feature.",
+        "Existing docs already assume warning thresholds, platform quota visibility, rate-limit/reset countdown surfaces, project-scoped usage storage, dashboard widgets, and orchestrator/runtime event persistence."
+      ]
+    }
+  ]
+}
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0003",
+  "coverage": {
+    "shard_id": "shard-0003",
+    "start_line": 228,
+    "end_line": 427,
+    "line_count": 200,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 3,
+        "text": "chat-thread-worthy action-required cases",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "restore required / failed / completed",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "badges should stay sparse and purposeful",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "`Progress` badge should represent meaningful attention/action-required count",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "other tabs should prefer targeted counts or simple dot-badges rather than noisy unread-like counters",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "future settings should use a simple policy-level control, not per-alert micro-configuration",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "active blockers must not be dismissible in a way that makes the system appear unblocked",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "acknowledgment should reduce operational noise while preserving traceability",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "blockers requiring real action must not be acknowledgeable in place of resolution",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "`concern` should be a first-class record, not just a field buried in review/alert logic",
+        "tokens": [
+          "concern"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "concern records should carry:",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "canonical concerns should be created by:",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "workers may nominate findings but should not mint canonical concerns directly",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "concern records should update/escalate/downgrade when the same underlying issue persists rather than duplicating endlessly",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "resolution must track underlying truth changes, not mere presentation changes",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "all major surfaces should project the same concern model rather than inventing local versions",
+        "tokens": []
+      },
+      {
+        "line": 66,
+        "text": "user-facing concern actions should stay narrow:",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "runtime/overseer actions should remain mostly non-generic GUI buttons:",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "side inspectors should remain summary/action-light",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "widget shell needs:",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Required orchestrator projection families now identified:",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "`Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, `Recent Major Events` should be broadly reusable across Orchestrator / Dashboard / Projects",
+        "tokens": [
+          "Account / Usage Pressure",
+          "Concern Summary",
+          "Recent Major Events",
+          "Run Summary",
+          "Seam Summary"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "projection health states should conceptually include:",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "at that point it should mint a real concern rather than staying a silent widget problem",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "UI should explain gating inline:",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "only certain current/generation-matched direct records should support action",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "direct record views that allow action should explicitly show:",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "each tab needs role-appropriate filters",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "Orchestrator should support saved views (at least per project) for tabs/filters/sort/grouping/widget layout",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "Usage page needs account-level breakdown, role usage view, and switch history, but full Usage-page redesign is intentionally out of scope for this thread",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "UI should explicitly show:",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "users should not need a separate modal just to understand resolution/inheritance/fallback",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "node click should expose:",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "important objects/events should be deep-linkable across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "tokens": []
+      },
+      {
+        "line": 189,
+        "text": "cross-tab navigation should preserve/filter/select the target context, not merely switch tabs",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 10,
+        "text": "Tab-badge direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "Condition-aging direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "Acknowledgement model direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "Concern-model direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "Concern creation/resolution direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "Concern action-model direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "runtime/overseer actions should remain mostly non-generic GUI buttons:",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "merge/split",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "side inspectors should remain summary/action-light",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "Widget-system data-contract direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "Projection freshness direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "manual refresh / tab re-open refresh remain secondary",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "Action-gating direction under degraded projections now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "observational/navigation/export actions generally remain safe",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "Direct-record actionability direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "Filters / saved views direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "Sorting/grouping direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "Dashboard / Projects / Orchestrator split direction is clearer:",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "Settings categorization direction is clearer:",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "Settings scope hierarchy direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "Override-display direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Node Graph tab direction now includes:",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 22,
+        "text": "Alert-state semantics now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "`concern` should be a first-class record, not just a field buried in review/alert logic",
+        "tokens": [
+          "concern"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "concern records should carry:",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "lifecycle state",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "linkage to evidence/artifacts/history/source records",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "likely concern lifecycle states:",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "graph patch/state-transition logic",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "concern records should update/escalate/downgrade when the same underlying issue persists rather than duplicating endlessly",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "`Ledger` = exact structured concern-record projection",
+        "tokens": [
+          "Ledger"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Inspector vs full-record action split clarified:",
+        "tokens": []
+      },
+      {
+        "line": 80,
+        "text": "heavy/high-consequence actions and dense records belong in full-record views",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "Widget-system data-contract direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "projection health states should conceptually include:",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "degrade from summary/projection surfaces to direct record-backed inspection",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "`Ledger` and direct record views become the trust anchor under degraded projection health",
+        "tokens": [
+          "Ledger"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "only certain current/generation-matched direct records should support action",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "Direct-record actionability direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "most trustworthy action-capable direct records:",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "promotion record",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "graph patch record + state transition report",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "recovery/restore record",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "concern record for acknowledge/dismiss style actions",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "direct record views that allow action should explicitly show:",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "retry/review/promotion state",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "lane/worktree/snapshot state",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "Cross-tab navigation is now treated as a design contract:",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 10,
+        "text": "Tab-badge direction now clarified:",
+        "tokens": []
+      },
+      {
+        "line": 13,
+        "text": "other tabs should prefer targeted counts or simple dot-badges rather than noisy unread-like counters",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "route to remediation",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Required orchestrator projection families now identified:",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "Lane / Worktree Summary",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "`Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, `Recent Major Events` should be broadly reusable across Orchestrator / Dashboard / Projects",
+        "tokens": [
+          "Account / Usage Pressure",
+          "Concern Summary",
+          "Recent Major Events",
+          "Run Summary",
+          "Seam Summary"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "more operational/dense summaries stay primarily Orchestrator-facing",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "manual refresh / tab re-open refresh remain secondary",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "Fallback path under stale projections is now clearer:",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "each tab needs role-appropriate filters",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "Orchestrator should support saved views (at least per project) for tabs/filters/sort/grouping/widget layout",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "Dashboard / Projects / Orchestrator split direction is clearer:",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "Orchestrator = operational depth",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "Orchestrator shows execution-specific provider/account pressure context",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "multi-account belongs with provider/model setup, not in an isolated orchestrator-only settings area",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Node Graph tab direction now includes:",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "lane/worktree/snapshot state",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "Cross-tab navigation is now treated as a design contract:",
+        "tokens": []
+      },
+      {
+        "line": 189,
+        "text": "cross-tab navigation should preserve/filter/select the target context, not merely switch tabs",
+        "tokens": []
+      },
+      {
+        "line": 194,
+        "text": "Usage docs already assume several concepts that overlap directly with current Orchestrator/multi-account research:",
+        "tokens": []
+      },
+      {
+        "line": 200,
+        "text": "orchestrator/runtime event persistence",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 41,
+        "text": "linkage to evidence/artifacts/history/source records",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "`Evidence` = proof-backed concern projection",
+        "tokens": [
+          "Evidence"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "open / focus / open evidence / open history / open ledger",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "linked evidence/artifacts",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "important objects/events should be deep-linkable across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "Targeted usage-tracking doc check confirms usage is already heavily documented rather than missing:",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 38,
+        "text": "owner",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "severity/owner mutation",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "Orchestrator shows execution-specific provider/account pressure context",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "multi-account belongs with provider/model setup, not in an isolated orchestrator-only settings area",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "Providers & Models",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "`Project` = main execution policy owner",
+        "tokens": [
+          "Project"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "`Actor / Role` = cross-cutting provider/account/persona/worker policy",
+        "tokens": [
+          "Actor / Role"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "requested/effective provider/model/effort/persona/account",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 110,
+        "text": "stale",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "what is stale",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "Fallback path under stale projections is now clearer:",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "superseded yes/no",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 5,
+        "text": "block / completion / reopen / supersede",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "open / focus / open evidence / open history / open ledger",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "open resolution thread",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "manual refresh / tab re-open refresh remain secondary",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 15,
+        "text": "unresolved conditions stay on operational surfaces",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "active blockers must not be dismissible in a way that makes the system appear unblocked",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "blockers requiring real action must not be acknowledgeable in place of resolution",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "concern records should update/escalate/downgrade when the same underlying issue persists rather than duplicating endlessly",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "Targeted usage-tracking doc check confirms usage is already heavily documented rather than missing:",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 191,
+        "text": "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 192,
+        "text": "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions.",
+        "tokens": [
+          "Plans/FinalGUISpec.md",
+          "Plans/storage-plan.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

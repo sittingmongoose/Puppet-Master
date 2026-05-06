@@ -1,0 +1,411 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-064",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-064.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- Let object identity and scope pick the thing to show; let destination pick the major surface class; let shell state handle the rest.",
+      "line_in_shard": 1
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The route model needs destination intent, but only at the coarse-surface level.",
+      "line_in_shard": 5
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Orchestrator tab routing and side-panel routing both fit cleanly once this coarse vocabulary is recognized explicitly.",
+      "line_in_shard": 7
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 11
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 14
+    },
+    {
+      "type": "decision",
+      "text": "- Source Control: `active_subview`, selected repo/worktree, compare target, graph filters",
+      "line_in_shard": 18
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Docker Manager: `active_subview`, runtime/context/registry/namespace focus, publish state",
+      "line_in_shard": 20
+    },
+    {
+      "type": "decision",
+      "text": "- Document pane: selected document, selected view, history selection, approval stage",
+      "line_in_shard": 21
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Those are real and useful, but they are not the same thing as canonical route identity.",
+      "line_in_shard": 22
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The clean routing rule is:",
+      "line_in_shard": 23
+    },
+    {
+      "type": "doc_hint",
+      "text": "- destination surface may indicate the user should land in `source_control`, `github_actions`, `docker_manager`, or `document_pane`",
+      "line_in_shard": 24
+    },
+    {
+      "type": "routing_rule",
+      "text": "- persisted surface state continues to supply defaults when the route does not override them",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "- This means `active_subview` and similar fields belong to destination/view-state handling, not to `object_kind`, `subject_id`, or the base route identity contract.",
+      "line_in_shard": 27
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 29
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 30
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 33
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 35
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The docs do not yet clearly say when route activation should override a remembered subview versus reuse the current/persisted one.",
+      "line_in_shard": 41
+    },
+    {
+      "type": "data_shape",
+      "text": "- Without this rule, route payloads risk absorbing filter/subview noise and becoming surface-shaped again.",
+      "line_in_shard": 42
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.",
+      "line_in_shard": 45
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Let routes optionally name a destination-local subview only when that is necessary for the task, but treat it as destination refinement, not base identity.",
+      "line_in_shard": 46
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Reuse persisted project/surface state when the route does not specify a destination-local override.",
+      "line_in_shard": 47
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The route model should be able to land a user in `Source Control` without becoming a full serialized `source_control.project_state`.",
+      "line_in_shard": 51
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary",
+      "line_in_shard": 54
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 56
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 57
+    },
+    {
+      "type": "routing_rule",
+      "text": "- At the same time, several route actions clearly need to force a change in destination context:",
+      "line_in_shard": 65
+    },
+    {
+      "type": "requirement",
+      "text": "- route activation overrides remembered state only when required to satisfy the requested destination/object/context",
+      "line_in_shard": 72
+    },
+    {
+      "type": "requirement",
+      "text": "- MUST override:",
+      "line_in_shard": 76
+    },
+    {
+      "type": "data_shape",
+      "text": "- target object identity",
+      "line_in_shard": 77
+    },
+    {
+      "type": "requirement",
+      "text": "- scope required to make the target meaningful, such as `project_id`, `thread_id`, `focused_run_id`, or an explicitly requested panel/tab",
+      "line_in_shard": 79
+    },
+    {
+      "type": "doc_hint",
+      "text": "- panel docking/floating realization",
+      "line_in_shard": 81
+    },
+    {
+      "type": "routing_rule",
+      "text": "- destination-local subview when not specified by the route",
+      "line_in_shard": 82
+    },
+    {
+      "type": "requirement",
+      "text": "- MUST NOT reuse persisted state when doing so would:",
+      "line_in_shard": 84
+    },
+    {
+      "type": "data_shape",
+      "text": "- land on the wrong object",
+      "line_in_shard": 85
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- silently keep the user on a stale run/thread/project context",
+      "line_in_shard": 87
+    },
+    {
+      "type": "requirement",
+      "text": "- must open/focus Usage in the correct project/thread/run scope",
+      "line_in_shard": 91
+    },
+    {
+      "type": "requirement",
+      "text": "- must land in Source Control with the relevant run/worktree/repo context available",
+      "line_in_shard": 94
+    },
+    {
+      "type": "requirement",
+      "text": "- must override to the wizard surface and the correct wizard/step context",
+      "line_in_shard": 97
+    },
+    {
+      "type": "requirement",
+      "text": "- must not preserve unrelated current primary-view context just because it was last open",
+      "line_in_shard": 98
+    },
+    {
+      "type": "requirement",
+      "text": "- must focus the thread Usage detail surface for that thread",
+      "line_in_shard": 100
+    },
+    {
+      "type": "doc_hint",
+      "text": "- may reuse side-panel docking/floating realization",
+      "line_in_shard": 101
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 103
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 104
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 106
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 108
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Current docs imply the right behavior locally, but there is still no general override rule shared across routing consumers.",
+      "line_in_shard": 115
+    },
+    {
+      "type": "decision",
+      "text": "- Without this rule, implementers could legitimately choose either \u201calways restore old shell state\u201d or \u201calways hard-reset the destination,\u201d and both would look superficially consistent.",
+      "line_in_shard": 116
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Add a shared route-activation override rule in the contract/GUI owner docs.",
+      "line_in_shard": 119
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The route model should be precise enough to get the user where they asked to go, but restrained enough not to trash unrelated remembered shell state.",
+      "line_in_shard": 125
+    },
+    {
+      "type": "routing_rule",
+      "text": "- \u201cOverride only what is necessary\u201d is the practical rule that ties the routing and shell-state work together.",
+      "line_in_shard": 126
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 130
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/BinaryLocator_Spec.md`",
+      "line_in_shard": 131
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Log.md`",
+      "line_in_shard": 133
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The last Gemini-only docs were not cleanup residue. They still exposed important structural drift, especially where older reference/index/spec docs silently shape downstream understanding.",
+      "line_in_shard": 143
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Rewrite summary / index / inventory docs are lagging hard enough to misroute future reconciliation work:",
+      "line_in_shard": 144
+    },
+    {
+      "type": "decision",
+      "text": "- `Decision_Log.md` is functionally empty for the rewrite era and does not capture major accepted design decisions already present in working memory and downstream addenda.",
+      "line_in_shard": 145
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `rewrite-tie-in-memo.md` is itself now stale as a rewrite-alignment owner because it predates seams/packages/lanes/overseers, scopes requested/effective identity too narrowly, and does not surface projection-trust or lane scheduling as rewrite invariants.",
+      "line_in_shard": 146
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `feature-list.md` and `newfeatures.md` still carry tier-era execution framing, old widget inventories, stale shell terminology, and promoted-feature phasing contradictions that would actively mislead implementation readers.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, and unregistered `format.*` events.",
+      "line_in_shard": 149
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, and prompt/param hooks that can bypass run-mode safety assumptions.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.",
+      "line_in_shard": 151
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Audit/governance meta-docs now show their own integrity failures:",
+      "line_in_shard": 152
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `DRY_Rules.md` cross-checking surfaced exact duplicate and mislabeled sections in owner docs, showing that stale/additive layering has become a mechanical doc-integrity issue rather than just a conceptual one.",
+      "line_in_shard": 153
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `OpenCode_Coverage_Matrix.md` is no longer broad enough to audit current rewrite concerns because it omits multi-account/runtime-correlation coverage dimensions and now contains stale fix recommendations.",
+      "line_in_shard": 154
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Even narrowly scoped system docs still picked up rewrite-adjacent tension:",
+      "line_in_shard": 155
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `BinaryLocator_Spec.md` now looks stale around OpenCode launcher ownership, dead four-tier naming references, and process/session-scope wording.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 158
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Primary docs in this tranche:",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/BinaryLocator_Spec.md`",
+      "line_in_shard": 160
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Log.md`",
+      "line_in_shard": 162
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Repeatedly implicated adjacent owners:",
+      "line_in_shard": 170
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 173
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 179
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The remaining partial surface is now fully confirmed as meaningful; none of these docs should be treated as low-signal leftovers.",
+      "line_in_shard": 186
+    },
+    {
+      "type": "decision",
+      "text": "- Multiple \"owner-of-owners\" docs (`Decision_Log`, `rewrite-tie-in-memo`, `feature-list`, `newfeatures`, `OpenCode_Coverage_Matrix`, `DRY_Rules`) are stale enough that they amplify downstream drift rather than containing it.",
+      "line_in_shard": 187
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Runtime safety and capability contracts are still under-owned in plugins/skills/formatters, especially under DAE, mixed mutation semantics, and runtime tool reachability.",
+      "line_in_shard": 188
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This tranche is strong enough to justify continuing the ordered model sequence on the same docs rather than stopping at Opus.",
+      "line_in_shard": 191
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Highest-signal continuation docs from this tranche appear to be:",
+      "line_in_shard": 192
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Log.md`",
+      "line_in_shard": 193
+    }
+  ]
+}

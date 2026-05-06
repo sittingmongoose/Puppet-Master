@@ -1,0 +1,378 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-obligation_core-8e50725415",
+  "category": "obligation_core",
+  "family_key": "verification_rule",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0001-017",
+      "SEED-shard-0002-006",
+      "SEED-shard-0002-007",
+      "SEED-shard-0002-016",
+      "SEED-shard-0004-011",
+      "SYNTH-shard-0009-L00165-verification_rule-020fbce4d1",
+      "SYNTH-shard-0009-L00199-verification_rule-9fdb0796da",
+      "SYNTH-shard-0011-L00102-verification_rule-2000e11315",
+      "SYNTH-shard-0011-L00192-verification_rule-d7b57e5f85",
+      "SYNTH-shard-0017-L00086-verification_rule-d5d1cd8632",
+      "SYNTH-shard-0019-L00032-verification_rule-23a669ce9f",
+      "SYNTH-shard-0019-L00199-verification_rule-1616ac571b",
+      "SYNTH-shard-0020-L00142-verification_rule-f6e429b6bd"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SEED-shard-0001-017",
+      "seed_id": "SEED-shard-0001-017",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Present seam completion distinctly from package completion and package-to-seam availability: Locally Complete, Available to Seam, Seam Complete.",
+      "evidence_ledger_excerpt": "seam completion should be presented distinctly... `Locally Complete`... `Available to Seam`... `Seam Complete`",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Present seam completion distinctly from package completion and package-to-seam availability: Locally Complete, Available to Seam, Seam Complete."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SEED-shard-0002-006",
+      "seed_id": "SEED-shard-0002-006",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "resolved = underlying condition changed; dismissed = hidden while condition may persist; active blockers must not be dismissible to appear unblocked.",
+      "evidence_ledger_excerpt": "`resolved` = underlying condition actually changed... active blockers must not be dismissible in a way that makes the system appear unblocked",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "resolved = underlying condition changed",
+        "dismissed = hidden while condition may persist",
+        "active blockers must not be dismissible to appear unblocked."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SEED-shard-0002-007",
+      "seed_id": "SEED-shard-0002-007",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "acknowledged distinct from resolved/dismissed; for advisory/non-blocking; must not replace resolution for real blockers.",
+      "evidence_ledger_excerpt": "blockers requiring real action must not be acknowledgeable in place of resolution",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "acknowledged distinct from resolved/dismissed",
+        "for advisory/non-blocking",
+        "must not replace resolution for real blockers."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SEED-shard-0002-016",
+      "seed_id": "SEED-shard-0002-016",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "When projection health undermines trust in blocked/promotion/recovery/patch/account truth, mint real concern; action changing execution truth requires fresh-enough projection with inline UI explanation.",
+      "evidence_ledger_excerpt": "actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "When projection health undermines trust in blocked/promotion/recovery/patch/account truth, mint real concern",
+        "action changing execution truth requires fresh-enough projection with inline UI explanation."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SEED-shard-0004-011",
+      "seed_id": "SEED-shard-0004-011",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Packet emission must not proceed until packet-planning contradiction repairs; artifacts useful as planning state but not faithful-emission-safe.",
+      "evidence_ledger_excerpt": "packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Packet emission must not proceed until packet-planning contradiction repairs",
+        "artifacts useful as planning state but not faithful-emission-safe."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0009-L00165-verification_rule-020fbce4d1",
+      "seed_id": "SYNTH-shard-0009-L00165-verification_rule-020fbce4d1",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 165,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "GUI rebuild surfaces (Orchestrator_Page, Run_Graph_View, Widget_System, GUI_Rebuild_Requirements_Checklist) must replace tier-primary mental model with package/seam/lane/promotion/contamination/resolution-thread UX.",
+      "evidence_ledger_excerpt": "GUI rebuild surfaces (Orchestrator_Page, Run_Graph_View, Widget_System, GUI_Rebuild_Requirements_Checklist) must replace tier-primary mental model with package/seam/lane/promotion/contamination/resolution-thread UX.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "GUI rebuild surfaces (Orchestrator_Page, Run_Graph_View, Widget_System, GUI_Rebuild_Requirements_Checklist) must replace tier-primary mental model with package/seam/lane/promotion/contamination/resolution-thread UX."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0009-L00199-verification_rule-9fdb0796da",
+      "seed_id": "SYNTH-shard-0009-L00199-verification_rule-9fdb0796da",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 199,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Executor_Protocol, Progression_Gates, and Run_Graph_View must reconcile lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families into one lifecycle model.",
+      "evidence_ledger_excerpt": "Executor_Protocol, Progression_Gates, and Run_Graph_View must reconcile lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families into one lifecycle model.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Executor_Protocol, Progression_Gates, and Run_Graph_View must reconcile lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families into one lifecycle model."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0011-L00102-verification_rule-2000e11315",
+      "seed_id": "SYNTH-shard-0011-L00102-verification_rule-2000e11315",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 102,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Run_Graph_View needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts.",
+      "evidence_ledger_excerpt": "Run_Graph_View needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Run_Graph_View needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0011-L00192-verification_rule-d7b57e5f85",
+      "seed_id": "SYNTH-shard-0011-L00192-verification_rule-d7b57e5f85",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 192,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Ensure cleanup/archive/remove preserves historical lane/worktree lineage and safe-point/remediation linkage.",
+      "evidence_ledger_excerpt": "Ensure cleanup/archive/remove preserves historical lane/worktree lineage and safe-point/remediation linkage.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Ensure cleanup/archive/remove preserves historical lane/worktree lineage and safe-point/remediation linkage."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0017-L00086-verification_rule-d5d1cd8632",
+      "seed_id": "SYNTH-shard-0017-L00086-verification_rule-d5d1cd8632",
+      "source_shard_id": "shard-0017",
+      "batch_index": 5,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0017",
+        "line_in_shard": 86,
+        "line_in_source": null,
+        "source_line": 3286
+      },
+      "statement": "hard_gate confirmations must surface runtime-defined allowed actions, why the gate exists, exact consequence of each allowed action, and no hidden alternative path; strong confirmations must include reversibility class and whether local work/artifacts/history remain.",
+      "evidence_ledger_excerpt": "hard_gate confirmations must surface runtime-defined allowed actions, why the gate exists, exact consequence of each allowed action, and no hidden alternative path; strong confirmations must include reversibility class and whether local work/artifacts/history remain.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "hard_gate confirmations must surface runtime-defined allowed actions, why the gate exists, exact consequence of each allowed action, and no hidden alternative path",
+        "strong confirmations must include reversibility class and whether local work/artifacts/history remain."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0019-L00032-verification_rule-23a669ce9f",
+      "seed_id": "SYNTH-shard-0019-L00032-verification_rule-23a669ce9f",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 32,
+        "line_in_source": null,
+        "source_line": 3632
+      },
+      "statement": "Exports must preserve historical truth when live backing objects are gone (e.g., removed worktree or retired graph path) \u2014 absence of live files must not corrupt exported record bundles.",
+      "evidence_ledger_excerpt": "Exports must preserve historical truth when live backing objects are gone (e.g., removed worktree or retired graph path) \u2014 absence of live files must not corrupt exported record bundles.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Exports must preserve historical truth when live backing objects are gone (e.g., removed worktree or retired graph path) \u2014 absence of live files must not corrupt exported record bundles."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0019-L00199-verification_rule-1616ac571b",
+      "seed_id": "SYNTH-shard-0019-L00199-verification_rule-1616ac571b",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 199,
+        "line_in_source": null,
+        "source_line": 3799
+      },
+      "statement": "Historical run views must show frozen requested/effective state from that run; current settings/inheritance elsewhere must not overwrite historical audit rows.",
+      "evidence_ledger_excerpt": "Historical run views must show frozen requested/effective state from that run; current settings/inheritance elsewhere must not overwrite historical audit rows.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Historical run views must show frozen requested/effective state from that run",
+        "current settings/inheritance elsewhere must not overwrite historical audit rows."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-8e50725415--SYNTH-shard-0020-L00142-verification_rule-f6e429b6bd",
+      "seed_id": "SYNTH-shard-0020-L00142-verification_rule-f6e429b6bd",
+      "source_shard_id": "shard-0020",
+      "batch_index": 5,
+      "obligation_type": "verification_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0020",
+        "line_in_shard": 142,
+        "line_in_source": null,
+        "source_line": 3942
+      },
+      "statement": "Retain Prompt Pipeline clarification rule: if two same-tier candidates remain and the system cannot choose deterministically, ask for clarification rather than speculating \u2014 rare in Orchestrator but still needed for ambiguous manual natural-language requests.",
+      "evidence_ledger_excerpt": "Retain Prompt Pipeline clarification rule: if two same-tier candidates remain and the system cannot choose deterministically, ask for clarification rather than speculating \u2014 rare in Orchestrator but still needed for ambiguous manual natural-language requests.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Retain Prompt Pipeline clarification rule: if two same-tier candidates remain and the system cannot choose deterministically, ask for clarification rather than speculating \u2014 rare in Orchestrator but still needed for ambiguous manual natural-language requests."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    }
+  ]
+}

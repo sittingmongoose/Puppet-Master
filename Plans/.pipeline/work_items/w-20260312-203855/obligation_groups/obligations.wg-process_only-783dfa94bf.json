@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-783dfa94bf",
+  "category": "process_only",
+  "family_key": "add_minimal_classification_normalization_to_command_definition_layer_extend_gate_010_for_wrapper_divergence",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0066-004"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-783dfa94bf--SEED-shard-0066-004",
+      "seed_id": "SEED-shard-0066-004",
+      "source_shard_id": "shard-0066",
+      "batch_index": 17,
+      "obligation_type": "candidate_fix",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0066",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Add minimal classification/normalization to command-definition layer; extend GATE-010 for wrapper divergence and deprecated-alias resolution; use Crosswalk to state catalog owns metadata, route contract owns structure, wiring owns bindings.",
+      "evidence_ledger_excerpt": "Extend `GATE-010` to verify:\n  - wrapper commands marked as normalizing to the same primitive do not diverge in handler semantics unexpectedly\n  - deprecated aliases resolve to real canonical command IDs\n- Use `Crosswalk.md` to make the owner split explicit",
+      "related_paths": [
+        "Plans/Progression_Gates.md",
+        "Plans/Crosswalk.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Add minimal classification/normalization to command-definition layer; extend GATE-010 for wrapper divergence and deprecated-alias resolution; use Crosswalk to state catalog owns metadata, route contract owns structure, wiring owns bindings.",
+          "kind": "candidate_fix",
+          "evidence_ledger_excerpt": "Extend `GATE-010` to verify:\n  - wrapper commands marked as normalizing to the same primitive do not diverge in handler semantics unexpectedly\n  - deprecated aliases resolve to real canonical command IDs\n- Use `Crosswalk.md` to make the owner split explicit",
+          "related_paths": [
+            "Plans/Progression_Gates.md",
+            "Plans/Crosswalk.md"
+          ]
+        }
+      ],
+      "exact_items": [
+        "Add minimal classification/normalization to command-definition layer",
+        "extend GATE-010 for wrapper divergence and deprecated-alias resolution",
+        "use Crosswalk to state catalog owns metadata, route contract owns structure, wiring owns bindings."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

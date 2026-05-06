@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-1916adc826",
+  "category": "open_decision",
+  "family_key": "delete_run_in_history_remains_questionable_until_delete_semantics_authorization_and_reversibility_are_defined",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0017-L00137-open_question-dd9b991321"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-1916adc826--SYNTH-shard-0017-L00137-open_question-dd9b991321",
+      "seed_id": "SYNTH-shard-0017-L00137-open_question-dd9b991321",
+      "source_shard_id": "shard-0017",
+      "batch_index": 5,
+      "obligation_type": "open_question",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0017",
+        "line_in_shard": 137,
+        "line_in_source": null,
+        "source_line": 3337
+      },
+      "statement": "Delete Run in History remains questionable until delete semantics, authorization, and reversibility are defined relative to lineage and ledger records.",
+      "evidence_ledger_excerpt": "Delete Run in History remains questionable until delete semantics, authorization, and reversibility are defined relative to lineage and ledger records.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [
+        {
+          "question": "Delete Run in History remains questionable until delete semantics, authorization, and reversibility are defined relative to lineage and ledger records.",
+          "evidence_ledger_excerpt": "Delete Run in History remains questionable until delete semantics, authorization, and reversibility are defined relative to lineage and ledger records.",
+          "related_paths": []
+        }
+      ],
+      "process_notes": [],
+      "exact_items": [
+        "Delete Run in History remains questionable until delete semantics, authorization, and reversibility are defined relative to lineage and ledger records."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

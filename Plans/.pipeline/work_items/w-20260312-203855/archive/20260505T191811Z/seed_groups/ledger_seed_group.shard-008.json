@@ -1,0 +1,396 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-008",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-008.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- **Priority 1 \u2014 Lock the runtime schema anchors**",
+      "line_in_shard": 4
+    },
+    {
+      "type": "data_shape",
+      "text": "- Relax or replace stale graph-schema constants (`selection_rule`, tier-rooted breadcrumbs).",
+      "line_in_shard": 5
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+      "line_in_shard": 6
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts.",
+      "line_in_shard": 7
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- **Priority 2 \u2014 Establish terminology and ownership**",
+      "line_in_shard": 9
+    },
+    {
+      "type": "decision",
+      "text": "- Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+      "line_in_shard": 10
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Clarify which docs own execution truth vs projections vs UI-only overlays.",
+      "line_in_shard": 11
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than prose-only references.",
+      "line_in_shard": 16
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Priority 4 \u2014 Consolidate addenda and normalize payloads**",
+      "line_in_shard": 18
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
+      "line_in_shard": 20
+    },
+    {
+      "type": "data_shape",
+      "text": "1. **Scored scheduler vs lexicographic schema lock.** Runtime docs define a scored ready-set; graph schemas still hard-code lexicographic node selection.",
+      "line_in_shard": 24
+    },
+    {
+      "type": "doc_hint",
+      "text": "3. **Single Overseer vs package + seam overseers.** Runtime and UI docs still model one Overseer while the emerging design requires dual governance layers.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "6. **Legacy blocked payload fields vs normalized blocked-state contract.** Old and new field names coexist across Docker, runtime recovery, and policy docs.",
+      "line_in_shard": 29
+    },
+    {
+      "type": "data_shape",
+      "text": "2. **Design the package/seam/lane schema family.** Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.",
+      "line_in_shard": 34
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "4. **Specify package-based worktree lane pools.** Define lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility for PM-owned worktrees.",
+      "line_in_shard": 36
+    },
+    {
+      "type": "doc_hint",
+      "text": "5. **Normalize safe-point / restore-point / rollback / contamination terminology.** Create one authoritative mapping and event taxonomy across runtime, storage, policy, and UI docs.",
+      "line_in_shard": 37
+    },
+    {
+      "type": "routing_rule",
+      "text": "6. **Rebuild attention routing.** Specify the canonical event-to-surface path for blocked states, optional HITL boundaries, and side-effect approvals across Dashboard, Orchestrator, and chat-thread.",
+      "line_in_shard": 38
+    },
+    {
+      "type": "data_shape",
+      "text": "8. **Reconcile automation-first with existing settings and gates.** Classify which gates remain mandatory HITL, which are optional boundaries, and which defaults need to flip at the settings/schema layer.",
+      "line_in_shard": 40
+    },
+    {
+      "type": "data_shape",
+      "text": "Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the same high-risk Orchestrator seams as prior waves, but it was especially strong at surfacing contract drift, schema inconsistencies, and places where the rewrite already partially assumes node-graph execution without fully retiring tier-centric ownership.",
+      "line_in_shard": 44
+    },
+    {
+      "type": "doc_hint",
+      "text": "## Highest-Impact Docs",
+      "line_in_shard": 46
+    },
+    {
+      "type": "data_shape",
+      "text": "- **`Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json` + `Plans/project_plan_graph_index.schema.json`**",
+      "line_in_shard": 53
+    },
+    {
+      "type": "process_defect",
+      "text": "- **Old assumption:** Lexicographic node selection, weak dependency duality (`depends_on` vs `blockers/unblocks`), no package/seam/worktree/account identity.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "data_shape",
+      "text": "- **New model pressure:** Need node/package/seam/lane/promotion/safe-point fields, multi-project scoping, and alignment with scored ready-set scheduling.",
+      "line_in_shard": 56
+    },
+    {
+      "type": "doc_hint",
+      "text": "- **`Plans/Run_Graph_View.md` + `Plans/FinalGUISpec.md` + `Plans/assistant-chat-design.md`**",
+      "line_in_shard": 58
+    },
+    {
+      "type": "requirement",
+      "text": "- **New model pressure:** Must visualize work packages, seams, blocked episodes, safe-point restore, requested/effective identity, and cross-surface attention routing.",
+      "line_in_shard": 61
+    },
+    {
+      "type": "data_shape",
+      "text": "- **New model pressure:** Need package-based lane pools, worktree-aware evidence roots, safe-point-aware live sessions, normalized blocked payloads, and PM-owned worktree visibility in Orchestrator/SCM.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- **Why impacted:** These anchor storage, telemetry, ownership, and terminology.",
+      "line_in_shard": 69
+    },
+    {
+      "type": "data_shape",
+      "text": "- **New model pressure:** Need explicit package/seam/lane/attempt/work-package objects, effective execution identity including account, and canonical ownership for contamination/safe-point/promotion concepts.",
+      "line_in_shard": 71
+    },
+    {
+      "type": "routing_rule",
+      "text": "- **Attention flow exists, but is fragmented.** GPT-5.2 found strong pieces of Dashboard CtAs, thread badges, blocked node CTAs, and live-run cards, but no single canonical routing contract across Dashboard \u2192 Orchestrator \u2192 chat-thread.",
+      "line_in_shard": 75
+    },
+    {
+      "type": "process_defect",
+      "text": "- **Requested vs effective display is inconsistent.** Persona/model/platform mismatches are sometimes surfaced, but effective account, worktree lane, package/seam scope, and overseer role are usually missing from UI contracts.",
+      "line_in_shard": 77
+    },
+    {
+      "type": "requirement",
+      "text": "- **Mandatory vs optional HITL is not normalized.** Docker repo creation, FileSafe approvals, Multi-Pass review, wizard attention-required, and graph-level HITL all exist, but they are not consistently classified into one boundary model.",
+      "line_in_shard": 78
+    },
+    {
+      "type": "doc_hint",
+      "text": "- **Source Control / Orchestrator integration is only partially specified.** GPT-5.2 repeatedly found expectations that Orchestrator CTAs preserve worktree lineage while many UI/state docs still assume one active worktree or a single thread-scoped execution context.",
+      "line_in_shard": 79
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Schema-level contradictions are active, not hypothetical.**",
+      "line_in_shard": 83
+    },
+    {
+      "type": "data_shape",
+      "text": "- Graph schemas still hard-code lexicographic node ordering while runtime addenda describe scored scheduler tuples.",
+      "line_in_shard": 84
+    },
+    {
+      "type": "data_shape",
+      "text": "- Base provider envelope/spec tables omit node/attempt/safe-point fields that later addenda require.",
+      "line_in_shard": 85
+    },
+    {
+      "type": "data_shape",
+      "text": "- Acceptance/evidence/coverage schemas cannot yet express work-package/seam/promotion/account/lane identity cleanly.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- **Blocked-state normalization is incomplete.** GPT-5.2 repeatedly surfaced legacy `reason_code` / `recovery_options[]` drift against canonical `blocked_reason_code` / `allowed_action_ids[]` rules.",
+      "line_in_shard": 87
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Safe-point policy is present but not fully modeled.** Safe-point, restore-point, rollback, and contamination are all referenced, but not unified into one canonical field/event/object family.",
+      "line_in_shard": 88
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Runtime identity snapshots stop too early.** Requested/effective persona/platform/model fields exist; requested/effective account and execution identity do not.",
+      "line_in_shard": 89
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Package/seam/work-package remain schema ghosts.** The runtime increasingly assumes them conceptually, but core schemas, receipts, and event families still lack the objects and IDs.",
+      "line_in_shard": 90
+    },
+    {
+      "type": "process_defect",
+      "text": "- **Automation-first conflicts with existing defaults.** `regular`/HTE defaults, `visual_mode = auto` preferring visible runs, and several mandatory approval flows all work against the desired automation-first baseline.",
+      "line_in_shard": 94
+    },
+    {
+      "type": "doc_hint",
+      "text": "- **Docker auth is the clearest requested/effective example.** It should likely be generalized into the shared execution identity pattern instead of remaining a domain-specific one-off.",
+      "line_in_shard": 98
+    },
+    {
+      "type": "process_defect",
+      "text": "- **Package-based lane pools are the missing parallelism contract.** Many docs already discuss worktree isolation, per-run branches, or per-subtask worktrees, but GPT-5.2 found no stable lane-pool model that unifies them.",
+      "line_in_shard": 102
+    },
+    {
+      "type": "process_defect",
+      "text": "- **Cleanup and restore semantics are not lane-aware yet.** Broad cleanup, conflict worktrees, and revert-last-edit flows still underspecify contamination scope and safe-point prerequisites.",
+      "line_in_shard": 105
+    },
+    {
+      "type": "process_defect",
+      "text": "- **Parallel caps are the wrong shape.** Thread caps, provider caps, and simple queue models exist, but package/lane-aware capacity and conflict models do not.",
+      "line_in_shard": 106
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Priority 1 \u2014 Fix canonical contracts and schemas**",
+      "line_in_shard": 110
+    },
+    {
+      "type": "data_shape",
+      "text": "- Reconcile graph ordering rules, dependency representations, and blocked payload field names.",
+      "line_in_shard": 111
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add package/seam/lane/worktree/account identity fields to runtime/event/envelope/schema families.",
+      "line_in_shard": 112
+    },
+    {
+      "type": "decision",
+      "text": "- Extend `Glossary.md`, `Crosswalk.md`, and `Decision_Policy.md` with feature seam, work package, lane pool, contamination, safe point, promotion class, and effective execution identity.",
+      "line_in_shard": 116
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Normalize safe-point vs restore-point vs rollback vs contamination across runtime/storage/UI docs.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+      "line_in_shard": 121
+    },
+    {
+      "type": "doc_hint",
+      "text": "- GPT-5.2 repeatedly found split-brain specs where addenda carry the correct modern model but anchor tables/body text still describe older rules.",
+      "line_in_shard": 124
+    },
+    {
+      "type": "data_shape",
+      "text": "1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule.",
+      "line_in_shard": 128
+    },
+    {
+      "type": "doc_hint",
+      "text": "3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers.",
+      "line_in_shard": 130
+    },
+    {
+      "type": "data_shape",
+      "text": "5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+      "line_in_shard": 132
+    },
+    {
+      "type": "data_shape",
+      "text": "1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+      "line_in_shard": 137
+    },
+    {
+      "type": "data_shape",
+      "text": "2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+      "line_in_shard": 138
+    },
+    {
+      "type": "doc_hint",
+      "text": "3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+      "line_in_shard": 139
+    },
+    {
+      "type": "routing_rule",
+      "text": "4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families.",
+      "line_in_shard": 140
+    },
+    {
+      "type": "data_shape",
+      "text": "6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "data_shape",
+      "text": "7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs.",
+      "line_in_shard": 143
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "Model-wave synthesis from GPT-5.4 fleet sweep across `Plans/**`. This pass surfaced the strongest contradiction map so far: not just stale terminology, but multiple places where old tier-era contracts and newer node/safe-point/runtime addenda are simultaneously marked canonical.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "doc_hint",
+      "text": "## Highest-Impact Docs",
+      "line_in_shard": 149
+    },
+    {
+      "type": "data_shape",
+      "text": "- **What old assumption is present:** Tiers are still first-class UI and contract nouns; HITL still has tier-boundary ancestry; `AttemptJournal`/handoff payloads remain subtask/iteration-shaped; one Overseer still owns orchestration.",
+      "line_in_shard": 153
+    },
+    {
+      "type": "data_shape",
+      "text": "- **`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json`**",
+      "line_in_shard": 156
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Why impacted:** These define the canonical event/storage/schema backbone and are still consumed by many downstream docs.",
+      "line_in_shard": 157
+    },
+    {
+      "type": "data_shape",
+      "text": "- **What old assumption is present:** Tier/phase/iteration events, `tier_runtime_record`, `tier_id`-based usage rollups, lexicographic graph dispatch, narrow node status enums, runtime state embedded in plan shards.",
+      "line_in_shard": 158
+    },
+    {
+      "type": "data_shape",
+      "text": "- **What likely new model pressure is:** Need attempt-scoped runtime state, package/seam/lane/promotion fields, blocked lineage, safe-point/restore linkage, and separation between plan structure and mutable runtime projections.",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "- **`Plans/FinalGUISpec.md` + `Plans/Run_Graph_View.md` + `Plans/Widget_System.md` + `Plans/UI_Command_Catalog.md`**",
+      "line_in_shard": 161
+    },
+    {
+      "type": "verification_rule",
+      "text": "- **What old assumption is present:** Tiers tab, phase/task/subtask trees, graph-local retry/approve/deny actions, completed-work prose by phase/task, single-current-task widgets, restore/checkpoint wording.",
+      "line_in_shard": 163
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- **What old assumption is present:** Worktree ownership is `run/tier/subtask`, branch-per-run or subtask-per-worktree flows, GitHub/project flows are wizard-centric, account switching is still mostly run/iteration-scoped.",
+      "line_in_shard": 168
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- **Attention flow is fragmented across surfaces and vocabularies.** Some docs use Dashboard CtAs and blocked cards, others still use modal/toast approvals, graph-local dialogs, or inline chat actions. Resolution-thread ownership is largely missing.",
+      "line_in_shard": 180
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- **Requested vs effective runtime display remains incomplete.** Persona/platform/model are sometimes surfaced, but effective account, fallback reason, lane/worktree identity, package/seam ownership, and overseer role are generally absent.",
+      "line_in_shard": 182
+    },
+    {
+      "type": "verification_rule",
+      "text": "- **Restore language is still dangerously overloaded.** Several docs still use rollback/checkpoint/revert wording where newer addenda require safe-point-aware retry and explicit \u201cstart fresh attempt\u201d semantics.",
+      "line_in_shard": 184
+    },
+    {
+      "type": "data_shape",
+      "text": "- Graph schemas still fix lexicographic selection.",
+      "line_in_shard": 191
+    },
+    {
+      "type": "data_shape",
+      "text": "- **Blocked payload and recovery families are inconsistent.**",
+      "line_in_shard": 194
+    },
+    {
+      "type": "data_shape",
+      "text": "- Plan-node shards and project-local JSON sidecars still act like mutable runtime sources in several docs.",
+      "line_in_shard": 200
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.stage_report.E0.v3.1.12",
+  "prompt_id": "E0",
+  "prompt_version": "pm.e0.v3.1.12",
+  "timestamp_utc": "20260506T192742Z",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "required": false,
+    "reason": "Task is deterministic section-entry verification of Section D handoff and canonical obligations artifact presence and integrity."
+  },
+  "required_subagent_tasks_total": 0,
+  "distinct_subagent_invocations_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification_proof": {
+    "active_section_exit_d_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
+    "section_exit_d_exists": true,
+    "section_exit_d_status_complete": true,
+    "section_exit_d_final_gate_passed": true,
+    "section_exit_d_work_id": "w-20260312-203855",
+    "section_exit_d_coverage_active_source": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "canonical_obligations_exists": true,
+    "canonical_obligations_status_complete": true,
+    "canonical_obligations_work_id_matches_section_exit_d": true,
+    "canonical_obligations_obligation_count": 393,
+    "canonical_obligations_obligation_count_matches_section_exit_d": true,
+    "canonical_obligations_sha256_matches_section_exit_d": true,
+    "coverage_inputs_exist": true
+  },
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_E_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.E0.json"
+  ],
+  "next_prompt_request": "Paste prompt E1 — Coverage Worklist Builder v3.1.12."
+}

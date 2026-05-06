@@ -1,0 +1,376 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-052",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-052.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- Docker context/image/publish target",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- other environment-specific target identities",
+      "line_in_shard": 5
+    },
+    {
+      "type": "routing_rule",
+      "text": "- immutable runtime handoff bundle",
+      "line_in_shard": 10
+    },
+    {
+      "type": "doc_hint",
+      "text": "- worker identity/detail inspectors",
+      "line_in_shard": 13
+    },
+    {
+      "type": "open_question",
+      "text": "- add `operational_identity?` to:",
+      "line_in_shard": 14
+    },
+    {
+      "type": "data_shape",
+      "text": "- relevant `tool.invoked` / `tool.denied` / runtime artifact payloads when side effects occur",
+      "line_in_shard": 17
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 22
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- likely UI consumers:",
+      "line_in_shard": 29
+    },
+    {
+      "type": "open_question",
+      "text": "- `Orchestrator_Page.md` still uses a weak worker identity row (`requested_persona_id`, `effective_persona_id`, provider, model, attempt_id, session_id?`) that does not expose `execution_role` or operational target context.",
+      "line_in_shard": 34
+    },
+    {
+      "type": "data_shape",
+      "text": "- `usage-feature.md` is correctly account-aware, but it still has no place for execution-role disclosure even though runs from assistant/interview/builder/orchestrator share one schema.",
+      "line_in_shard": 35
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Runtime_Artifacts_Panel.md` already needs canonical linkage into Source Control / GitHub / Docker / Usage, but it still lacks a normalized operational-identity field family.",
+      "line_in_shard": 36
+    },
+    {
+      "type": "data_shape",
+      "text": "- The provider/account snapshot fields are at risk of becoming a dumping ground for non-provider identity unless this split is made explicit.",
+      "line_in_shard": 37
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define `operational_identity` as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records.",
+      "line_in_shard": 41
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Update worker/detail surface docs so \u201cworker identity\u201d shows:",
+      "line_in_shard": 42
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep usage attribution schema shared across all run kinds, but permit execution-role display/filtering without creating a second usage system.",
+      "line_in_shard": 46
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-16 - Sonnet owner-doc tranche synthesis",
+      "line_in_shard": 53
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 55
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Policy.md`",
+      "line_in_shard": 63
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 65
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The owner-doc tranche deepened from generic drift into hard SSOT-integrity failures across command registration, wiring verification, and dispatcher/runtime gating.",
+      "line_in_shard": 70
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Wiring_Matrix.md` still contains normative ghost IDs (`cmd.chat.branch_from_restore`) plus wider matrix/catalog drift, and `UI_Wiring_Rules.md` still lacks reverse coverage, stale/superseded ID states, dispatcher precondition fields, and projection-freshness/mutation gating hooks.",
+      "line_in_shard": 76
+    },
+    {
+      "type": "process_defect",
+      "text": "- `validation_pass_report.pass_verdict` still conflicts with downstream `skipped` behavior.",
+      "line_in_shard": 78
+    },
+    {
+      "type": "data_shape",
+      "text": "- `glossary` and execution-evidence style artifact types remain unregistered in the canonical artifact-type table.",
+      "line_in_shard": 80
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `newtools.md` introduces uncataloged preview/build command IDs, unregistered `live.*` and doctor/custom-headless event families, and a conditional `CustomHeadlessTool` lifecycle with no canonical Tools/permissions owner.",
+      "line_in_shard": 82
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `assistant-memory-subsystem.md` still promises persisted `memory.gist.*` style behavior without storage-plan registration, leaves AutoRunBoundary/AutoMilestone without observable lifecycle events, and specifies chat/Assistant handoff actions with no canonical `cmd.*` coverage.",
+      "line_in_shard": 83
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Glossary.md` and `Crosswalk.md` remain structurally unsafe as owner docs:",
+      "line_in_shard": 84
+    },
+    {
+      "type": "doc_hint",
+      "text": "- multiple adjacent docs cite `Plans/Glossary.md \u00a72` for `Overseer`, but no such entry exists.",
+      "line_in_shard": 85
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `attempt` / `attempt_id`, `safe point`, `lane`, `work package`, and related rewrite-era vocabulary still have no Glossary owner.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Crosswalk.md` still has duplicate section numbering, a wrong `Primitive:` ContractRef, missing \u00a72 index entries for appended primitives, and orphaned source-control/GitHub-actions/docker surfaces outside the normal routing structure.",
+      "line_in_shard": 88
+    },
+    {
+      "type": "routing_rule",
+      "text": "- rewrite-era primitives like `Seglog`, evidence-bundle style outputs, and capability-gating concepts still lack Crosswalk routing, so adjacent docs can cite primitives that Crosswalk cannot resolve.",
+      "line_in_shard": 89
+    },
+    {
+      "type": "decision",
+      "text": "- `Decision_Policy.md`, `Run_Modes.md`, and `Progression_Gates.md` sharpened from vague policy drift into implementation-blocking runtime-governance gaps:",
+      "line_in_shard": 90
+    },
+    {
+      "type": "decision",
+      "text": "- `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned.",
+      "line_in_shard": 91
+    },
+    {
+      "type": "process_defect",
+      "text": "- `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, or mid-run account-switch invalidation of committed strategy.",
+      "line_in_shard": 92
+    },
+    {
+      "type": "requirement",
+      "text": "- `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placeholders, and a material collision where GATE-012 BLOCKED semantics collapse wizard `attention_required` and true wizard `blocked` escalation into the same gate state.",
+      "line_in_shard": 94
+    },
+    {
+      "type": "requirement",
+      "text": "- GATE evidence still cannot verify `attention_required` persistence because the storage/event family for that state remains unowned.",
+      "line_in_shard": 95
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 97
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 98
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Policy.md`",
+      "line_in_shard": 106
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 108
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs repeatedly implicated by this tranche:",
+      "line_in_shard": 111
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Command-system docs still allow ghost or stale IDs to survive across catalog, wiring, and chat surfaces without a canonical tombstone/deprecation model.",
+      "line_in_shard": 122
+    },
+    {
+      "type": "data_shape",
+      "text": "- Runtime mutation/recovery surfaces now depend on preconditions (`allowed_action_ids[]`, freshness/trust state, account/runtime capability) that the wiring/schema/gate stack still cannot express or verify.",
+      "line_in_shard": 123
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Artifact lineage now clearly requires project/run/thread/wizard/attempt/account anchors, but the project-artifact and memory/handoff surfaces still underspecify those joins.",
+      "line_in_shard": 124
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The repo still lacks a coherent owner for several rewrite-era operational nouns and primitives, so adjacent docs can cite terms (`Overseer`, `attempt`, `Seglog`, promotion senses, handoff kinds) that no SSOT doc actually defines.",
+      "line_in_shard": 125
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Runtime/governance verification is increasingly split between numbered gates and addendum prose, producing mandatory checks that are real in meaning but invisible to the gate registry and script-enforcement tables.",
+      "line_in_shard": 126
+    },
+    {
+      "type": "process_defect",
+      "text": "- Register/fix the missing command families and remove false catalog/wiring claims:",
+      "line_in_shard": 129
+    },
+    {
+      "type": "routing_rule",
+      "text": "- add or explicitly retire `cmd.chat.run_user_command`, `cmd.chat.branch_from_restore`, preview/build/open-artifact commands, Assistant/HITL handoff commands, and any other normative ghost IDs.",
+      "line_in_shard": 130
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- reconcile `/compact`, `/mode`, override_builtin semantics, and stale/superseded command-state handling across command-system, chat, catalog, and wiring docs.",
+      "line_in_shard": 131
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Extend the wiring/gate contracts so runtime-era gating is machine-verifiable:",
+      "line_in_shard": 132
+    },
+    {
+      "type": "data_shape",
+      "text": "- add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough.",
+      "line_in_shard": 133
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Promote artifact/memory/live/runtime-observability records to full owner status:",
+      "line_in_shard": 134
+    },
+    {
+      "type": "data_shape",
+      "text": "- add missing artifact types,",
+      "line_in_shard": 136
+    },
+    {
+      "type": "requirement",
+      "text": "- define an `OpenArtifact`-style FileManager contract plus required supporting projections,",
+      "line_in_shard": 137
+    },
+    {
+      "type": "routing_rule",
+      "text": "- register `memory.*`, `live.*`, doctor/custom-headless, and handoff lifecycle events where they truly belong.",
+      "line_in_shard": 138
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Repair structural owner docs before downstream reconciliation work depends on them:",
+      "line_in_shard": 139
+    },
+    {
+      "type": "process_defect",
+      "text": "- add missing Glossary entries for rewrite-era terms,",
+      "line_in_shard": 140
+    },
+    {
+      "type": "routing_rule",
+      "text": "- repair Crosswalk numbering/index/primitive routing,",
+      "line_in_shard": 141
+    },
+    {
+      "type": "verification_rule",
+      "text": "- collapse duplicate runtime/gate addenda into one numbered canonical section per owner.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Close the runtime-governance owner gaps:",
+      "line_in_shard": 143
+    },
+    {
+      "type": "verification_rule",
+      "text": "- give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs rather than leaving them implied across addenda.",
+      "line_in_shard": 144
+    },
+    {
+      "type": "verification_rule",
+      "text": "- This tranche is no longer just \u201csupporting docs need cleanup.\u201d Several owner docs are currently making false or unverifiable claims that would mislead later reconciliation or gate implementation.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The biggest repeated pattern is that runtime-era concepts already exist in adjacent docs, but the owner docs for registration/verification/routing still lag behind them.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Highest-risk docs for immediate later-model continuation remain:",
+      "line_in_shard": 149
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Policy.md`",
+      "line_in_shard": 155
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 157
+    },
+    {
+      "type": "routing_rule",
+      "text": "- with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.",
+      "line_in_shard": 160
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 164
+    },
+    {
+      "type": "verification_rule",
+      "text": "- spot-checks against `Plans/Orchestrator_Page.md`",
+      "line_in_shard": 170
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Tool events, runtime artifacts, receipts, and usage now want one shared attribution packet, but the docs still describe them as separate identity worlds.",
+      "line_in_shard": 173
+    },
+    {
+      "type": "open_question",
+      "text": "- `attempt_record` already has `provider_attempt_ref?`",
+      "line_in_shard": 187
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actions / Docker / Kubernetes / Usage",
+      "line_in_shard": 188
+    },
+    {
+      "type": "data_shape",
+      "text": "- `usage_record` already carries `run_id`, `attempt_id?`, `thread_id?`, and effective account/model/auth fields",
+      "line_in_shard": 189
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Contracts_V0.md` already tightens `tool.denied` when scheduler state is affected, but `tool.invoked` and runtime-artifact docs still lag behind that attribution level.",
+      "line_in_shard": 190
+    }
+  ]
+}

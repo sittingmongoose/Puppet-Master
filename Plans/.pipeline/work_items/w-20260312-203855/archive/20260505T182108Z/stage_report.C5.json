@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.stage_report.C5.v3.1",
+  "prompt_id": "C5",
+  "prompt_version": "pm.c5.v3.1",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "checks": {
+    "ledger_seed_completeness_report_present": true,
+    "ledger_seed_completeness_status_complete": true,
+    "ledger_obligation_seed_present": true,
+    "ledger_obligation_seed_coverage_ok": true,
+    "section_c_outputs_complete": true
+  },
+  "artifacts": {
+    "ledger_obligation_seed": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "ledger_seed_completeness_report": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "section_exit_C": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json"
+  },
+  "blockers": [],
+  "next_prompt_request": "D0 — Section Entry: Obligation Conversion",
+  "timestamp_utc": "20260505T180200Z"
+}

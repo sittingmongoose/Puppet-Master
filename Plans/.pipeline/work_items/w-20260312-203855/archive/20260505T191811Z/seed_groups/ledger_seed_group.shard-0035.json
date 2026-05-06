@@ -1,0 +1,1314 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0035",
+  "coverage": {
+    "shard_id": "shard-0035",
+    "start_line": 6291,
+    "end_line": 6486,
+    "line_count": 196,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0035.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 29,
+        "text": "`provider_account_id` needs an explicit relationship to `effective_account_id` / `effective_provider_identity` or it will become a hidden second identity system",
+        "tokens": [
+          "effective_account_id",
+          "effective_provider_identity",
+          "provider_account_id"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "historical-run mode needs to be designed for widgets and graph/page surfaces, not just live mode",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "GitHub realm isolation still matters; fixing multi-account/runtime identity must not collapse `github_api` and `copilot_github` into one identity bucket",
+        "tokens": [
+          "copilot_github",
+          "github_api"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "storage/contracts often require richer snapshots in prose than they enumerate in their registered field tables",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented.",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "Reconcile event-table rows with the richer prose MUSTs for:",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "event/addendum supersession should be explicit enough that implementers do not need to diff three addenda to know the final field set",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "durable state transitions often require explicit confirmation or explicit rationale",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "concern actions should NOT inherit that policy because concerns are canonical operational/governance records rather than ephemeral layout state",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "`dismiss` is a durable semantic judgment and must not look like closing a toast",
+        "tokens": [
+          "dismiss"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "resolve` is not one generic operation; it needs `resolution_kind",
+        "tokens": [
+          " is not one generic operation; it needs "
+        ]
+      },
+      {
+        "line": 142,
+        "text": "concern \"undo\" should generally be implemented as compensating follow-up records (`reopened`, reverse-merge lineage, successor concern, etc.), not history erasure",
+        "tokens": [
+          "reopened"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "rationale requirements",
+        "tokens": []
+      },
+      {
+        "line": 159,
+        "text": "Existing UI docs have many local confirmation examples, but nothing yet defines how durable concern actions should differ from:",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "`dismissed` without required rationale will look too much like a convenience close",
+        "tokens": [
+          "dismissed"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`resolved` without required `resolution_kind` will collapse meaningful semantic differences",
+        "tokens": [
+          "resolution_kind",
+          "resolved"
+        ]
+      },
+      {
+        "line": 177,
+        "text": "rationale_required",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "resolve` without linked canonical evidence, including `accepted_risk`: confirmation `strong`; rationale required; reversibility `compensating_action_only",
+        "tokens": [
+          " without linked canonical evidence, including ",
+          ": confirmation ",
+          "; rationale required; reversibility "
+        ]
+      },
+      {
+        "line": 185,
+        "text": "dismiss`: confirmation `strong`; rationale required; reversibility `compensating_action_only` via explicit `reopened",
+        "tokens": [
+          " via explicit ",
+          ": confirmation ",
+          "; rationale required; reversibility "
+        ]
+      },
+      {
+        "line": 187,
+        "text": "`merge` / `split` / `supersede`: confirmation `strong`; rationale required; reversibility `compensating_action_only` through new lineage records, never silent history rewrite",
+        "tokens": [
+          "compensating_action_only",
+          "merge",
+          "split",
+          "strong",
+          "supersede"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Reserve `hard_gate` for exceptional concern-affecting operations only:",
+        "tokens": [
+          "hard_gate"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 12,
+        "text": "the rewrite direction keeps calling for native specialized tabs instead",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "several downstream docs therefore cannot represent a user-selected concrete account on the requested side without collapsing it into policy text",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "Run Graph remains under-modeled at the command and struct level:",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "non-Progress Orchestrator tabs remain described partly as widget pages and partly as deeper native surfaces",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Replace mutable display identities like GitHub `login` as storage keys with stable internal account ids while keeping display identities audit-only.",
+        "tokens": [
+          "login"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity",
+        "tokens": [
+          " remains risky because Sonnet reinforces that it still conflicts conceptually with "
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Sonnet adds important precision but mostly confirms the same hotspot docs; those remain the right focus for GPT-5.4 / GPT-5.2 / GPT-5.3-Codex next",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "delete / rollback / repository creation / permission preset replacement all use confirmations because they create durable or side-effectful changes",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "`merge` / `split` / `supersede` are structural lineage edits, not ordinary state toggles",
+        "tokens": [
+          "merge",
+          "split",
+          "supersede"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "concern \"undo\" should generally be implemented as compensating follow-up records (`reopened`, reverse-merge lineage, successor concern, etc.), not history erasure",
+        "tokens": [
+          "reopened"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`merge` / `split` / `supersede` without dedicated action policy will create silent lineage ambiguity",
+        "tokens": [
+          "merge",
+          "split",
+          "supersede"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "`merge` / `split` / `supersede`: confirmation `strong`; rationale required; reversibility `compensating_action_only` through new lineage records, never silent history rewrite",
+        "tokens": [
+          "compensating_action_only",
+          "merge",
+          "split",
+          "strong",
+          "supersede"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 4,
+        "text": "`Contracts_V0.md` explicitly says those are not canonical persisted names",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "prompt/runtime resolution records, usage records, auth events, graph detail panels, and artifact views still do not share one obvious identity disclosure contract",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "event envelope and projected-record families are still structurally separate without one shared governance-record template",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "Opus confirms that widget/page/graph docs still do not make degraded/stale projection states operational enough for mutation gating and historical-run rendering",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "Normalize all persona/runtime identity field names to the canonical `requested_*` / `effective_*` contract from `Contracts_V0.md`, and remove drifted `_id` variants where they are being treated as canonical names.",
+        "tokens": [
+          "Contracts_V0.md",
+          "_id",
+          "effective_*",
+          "requested_*"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "usage records",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "blocked/recovery records",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "Add a governance-record template to storage/contracts so concern/review/promotion/corroboration/graph-patch/recovery records stop emerging ad hoc.",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "Reclassify Orchestrator surfaces so only `Progress` is widget-composed and move non-Progress tabs onto native view-state contracts.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "graph patch lineage and concern/promotion visibility are now contract-level omissions, not just UI polish gaps",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "canonical contracts expose `requested_account_policy`",
+        "tokens": [
+          "requested_account_policy"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "Event-schema precision gaps are wider than the earlier passes suggested:",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "safe_point.created`, `scheduler.pass`, and `remediation.resolved` still have multi-addendum field drift inside `Contracts_V0.md",
+        "tokens": [
+          " still have multi-addendum field drift inside ",
+          ", ",
+          ", and ",
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "GitHub docs have a very specific identity-contract flaw:",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "but canonical contracts want stable internal `account_id` plus display-only provider identity",
+        "tokens": [
+          "account_id"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "Widget/page/native-surface docs still lack operational idle/trust-state detail:",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "`Widget_System.md` has no concrete chrome slot for trust state",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Dashboard-hosted push widgets still lack a no-active-run/historical-run render contract",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "Sonnet specifically highlighted missing concern/corroboration/promotion/graph-patch fields, missing trust state, and command-catalog gaps rather than just high-level conceptual absence",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "canonical contracts have `requested_account_policy` but no robust requested-side concrete account anchor",
+        "tokens": [
+          "requested_account_policy"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "canonical contracts want stable internal `account_id`",
+        "tokens": [
+          "account_id"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "username rename risk is now a concrete contract inconsistency, not just a theoretical identity concern",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "storage/contracts often require richer snapshots in prose than they enumerate in their registered field tables",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Add a canonical requested-side concrete account field or explicit equivalent rule wherever user-selected account pinning must be represented.",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "Add explicit trust/idle/historical rendering contracts to widget/page specs, including a chrome-level trust indicator and no-active-run states for Dashboard-hosted push widgets.",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "Tighten Run Graph and Orchestrator page schemas around canonical runtime objects (`node_id`, `attempt_id`, `lane_id`, `seam_id`, `package_id`) and add the missing governance object hooks/commands.",
+        "tokens": [
+          "attempt_id",
+          "lane_id",
+          "node_id",
+          "package_id",
+          "seam_id"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "command payloads with generic `page: string` or tier-bound filters will quietly undermine any native-surface cleanup if they are not constrained at the same time",
+        "tokens": [
+          "page: string"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "event/addendum supersession should be explicit enough that implementers do not need to diff three addenda to know the final field set",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "durable state transitions often require explicit confirmation or explicit rationale",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "concern actions should NOT inherit that policy because concerns are canonical operational/governance records rather than ephemeral layout state",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "annotation flow distinguishes runtime-progressed state (`addressed`) from user-controlled semantic closure (`resolved`)",
+        "tokens": [
+          "addressed",
+          "resolved"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "dismissible banners are presentation-noise controls, not durable issue-state transitions",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "`merge` / `split` / `supersede` are structural lineage edits, not ordinary state toggles",
+        "tokens": [
+          "merge",
+          "split",
+          "supersede"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "concern \"undo\" should generally be implemented as compensating follow-up records (`reopened`, reverse-merge lineage, successor concern, etc.), not history erasure",
+        "tokens": [
+          "reopened"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "future concern-specific record/action docs not yet written",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "There is still no explicit rule for whether runtime/overseer actors may directly perform concern-state transitions versus only propose them through linked records.",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "audit_fields",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "resolve` from a linked canonical fix/recovery/patch outcome: confirmation `none` or `light`; rationale optional if the linked record is sufficient; reversibility `compensating_action_only` via `reopened",
+        "tokens": [
+          " from a linked canonical fix/recovery/patch outcome: confirmation ",
+          " or ",
+          " via ",
+          "; rationale optional if the linked record is sufficient; reversibility "
+        ]
+      },
+      {
+        "line": 187,
+        "text": "`merge` / `split` / `supersede`: confirmation `strong`; rationale required; reversibility `compensating_action_only` through new lineage records, never silent history rewrite",
+        "tokens": [
+          "compensating_action_only",
+          "merge",
+          "split",
+          "strong",
+          "supersede"
+        ]
+      },
+      {
+        "line": 193,
+        "text": "concern dismissal changes concern meaning/state",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 11,
+        "text": "widget-hostability and widget-layout persistence still imply non-Progress Orchestrator tabs are widget pages",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "the rewrite direction keeps calling for native specialized tabs instead",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "Rework usage/storage attribution around lane/package/seam/attempt/remediation dimensions instead of centering `tier_id`.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "Reclassify Orchestrator surfaces so only `Progress` is widget-composed and move non-Progress tabs onto native view-state contracts.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "login` still acts like a stable key in `GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          " still acts like a stable key in ",
+          "GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "but canonical contracts want stable internal `account_id` plus display-only provider identity",
+        "tokens": [
+          "account_id"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "the gap is not just \"missing multi-account support\" but \"mutable display identity used as storage/routing anchor\"",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "`Orchestrator_Page.md` still uses tier-era scoping in concrete table/column/widget definitions",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "Mutable-key gap:",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "canonical contracts want stable internal `account_id`",
+        "tokens": [
+          "account_id"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Event-table vs prose-rule mismatch:",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "storage/contracts often require richer snapshots in prose than they enumerate in their registered field tables",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "non-Progress Orchestrator tabs remain described partly as widget pages and partly as deeper native surfaces",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "widget commands and persistence keys still do not clearly enforce the native-tab boundary",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "Reconcile event-table rows with the richer prose MUSTs for:",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Replace mutable display identities like GitHub `login` as storage keys with stable internal account ids while keeping display identities audit-only.",
+        "tokens": [
+          "login"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "Tighten Run Graph and Orchestrator page schemas around canonical runtime objects (`node_id`, `attempt_id`, `lane_id`, `seam_id`, `package_id`) and add the missing governance object hooks/commands.",
+        "tokens": [
+          "attempt_id",
+          "lane_id",
+          "node_id",
+          "package_id",
+          "seam_id"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "the GitHub realm split is still correct; the fix is stable account identity inside each realm, not realm collapse",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "Add a canonical concern action policy table with at least:",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "privacy/redaction paths",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 14,
+        "text": "Opus confirms that widget/page/graph docs still do not make degraded/stale projection states operational enough for mutation gating and historical-run rendering",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "`run.started` / `usage.event` / `hitl.*` / config-validation rows in `storage-plan.md` still under-specify or mis-key the runtime identity and execution anchors they are supposed to carry",
+        "tokens": [
+          "hitl.*",
+          "run.started",
+          "storage-plan.md",
+          "usage.event"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "related runtime/config validation events",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Replace mutable display identities like GitHub `login` as storage keys with stable internal account ids while keeping display identities audit-only.",
+        "tokens": [
+          "login"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Sonnet adds important precision but mostly confirms the same hotspot docs; those remain the right focus for GPT-5.4 / GPT-5.2 / GPT-5.3-Codex next",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "low-risk presentation actions may use no confirmation plus short undo windows",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "durable state transitions often require explicit confirmation or explicit rationale",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "delete / rollback / repository creation / permission preset replacement all use confirmations because they create durable or side-effectful changes",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "confirmation level",
+        "tokens": []
+      },
+      {
+        "line": 159,
+        "text": "Existing UI docs have many local confirmation examples, but nothing yet defines how durable concern actions should differ from:",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "confirmation_level",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "audit_fields",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "acknowledge`: confirmation `none`; rationale optional; reversibility `compensating_action_only` via explicit return to `active",
+        "tokens": [
+          " via explicit return to ",
+          ": confirmation ",
+          "; rationale optional; reversibility "
+        ]
+      },
+      {
+        "line": 183,
+        "text": "resolve` from a linked canonical fix/recovery/patch outcome: confirmation `none` or `light`; rationale optional if the linked record is sufficient; reversibility `compensating_action_only` via `reopened",
+        "tokens": [
+          " from a linked canonical fix/recovery/patch outcome: confirmation ",
+          " or ",
+          " via ",
+          "; rationale optional if the linked record is sufficient; reversibility "
+        ]
+      },
+      {
+        "line": 184,
+        "text": "resolve` without linked canonical evidence, including `accepted_risk`: confirmation `strong`; rationale required; reversibility `compensating_action_only",
+        "tokens": [
+          " without linked canonical evidence, including ",
+          ": confirmation ",
+          "; rationale required; reversibility "
+        ]
+      },
+      {
+        "line": 185,
+        "text": "dismiss`: confirmation `strong`; rationale required; reversibility `compensating_action_only` via explicit `reopened",
+        "tokens": [
+          " via explicit ",
+          ": confirmation ",
+          "; rationale required; reversibility "
+        ]
+      },
+      {
+        "line": 186,
+        "text": "reopen`: confirmation `none` or `light`; rationale optional but recommended when reopening a dismissed concern; reversibility `compensating_action_only",
+        "tokens": [
+          " or ",
+          ": confirmation ",
+          "; rationale optional but recommended when reopening a dismissed concern; reversibility "
+        ]
+      },
+      {
+        "line": 187,
+        "text": "`merge` / `split` / `supersede`: confirmation `strong`; rationale required; reversibility `compensating_action_only` through new lineage records, never silent history rewrite",
+        "tokens": [
+          "compensating_action_only",
+          "merge",
+          "split",
+          "strong",
+          "supersede"
+        ]
+      },
+      {
+        "line": 191,
+        "text": "cross-run or cross-scope lineage rewrites that could materially change audit interpretation",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 3,
+        "text": "some docs still normalize around `requested_persona_id` / `effective_persona_id`",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Normalize all persona/runtime identity field names to the canonical `requested_*` / `effective_*` contract from `Contracts_V0.md`, and remove drifted `_id` variants where they are being treated as canonical names.",
+        "tokens": [
+          "Contracts_V0.md",
+          "_id",
+          "effective_*",
+          "requested_*"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "Define a shared requested/effective/provider/account identity disclosure pattern reusable across:",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "`provider_account_id` needs an explicit relationship to `effective_account_id` / `effective_provider_identity` or it will become a hidden second identity system",
+        "tokens": [
+          "effective_account_id",
+          "effective_provider_identity",
+          "provider_account_id"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "but canonical contracts want stable internal `account_id` plus display-only provider identity",
+        "tokens": [
+          "account_id"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity",
+        "tokens": [
+          " remains risky because Sonnet reinforces that it still conflicts conceptually with "
+        ]
+      },
+      {
+        "line": 136,
+        "text": "`acknowledge` is closest to noise-control / ownership-signaling",
+        "tokens": [
+          "acknowledge"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "but `dismissed`, manual `accepted_risk`, and some lineage edits likely need tighter authority",
+        "tokens": [
+          "accepted_risk",
+          "dismissed"
+        ]
+      },
+      {
+        "line": 195,
+        "text": "Treat `acknowledged` as escalation/noise control and ownership visibility, not semantic closure and not blocker removal by itself",
+        "tokens": [
+          "acknowledged"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 14,
+        "text": "Opus confirms that widget/page/graph docs still do not make degraded/stale projection states operational enough for mutation gating and historical-run rendering",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "Normalize all persona/runtime identity field names to the canonical `requested_*` / `effective_*` contract from `Contracts_V0.md`, and remove drifted `_id` variants where they are being treated as canonical names.",
+        "tokens": [
+          "Contracts_V0.md",
+          "_id",
+          "effective_*",
+          "requested_*"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "GitHub realm isolation still matters; fixing multi-account/runtime identity must not collapse `github_api` and `copilot_github` into one identity bucket",
+        "tokens": [
+          "copilot_github",
+          "github_api"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "command payloads with generic `page: string` or tier-bound filters will quietly undermine any native-surface cleanup if they are not constrained at the same time",
+        "tokens": [
+          "page: string"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "the GitHub realm split is still correct; the fix is stable account identity inside each realm, not realm collapse",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "`resolved` without required `resolution_kind` will collapse meaningful semantic differences",
+        "tokens": [
+          "resolution_kind",
+          "resolved"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 142,
+        "text": "concern \"undo\" should generally be implemented as compensating follow-up records (`reopened`, reverse-merge lineage, successor concern, etc.), not history erasure",
+        "tokens": [
+          "reopened"
+        ]
+      },
+      {
+        "line": 183,
+        "text": "resolve` from a linked canonical fix/recovery/patch outcome: confirmation `none` or `light`; rationale optional if the linked record is sufficient; reversibility `compensating_action_only` via `reopened",
+        "tokens": [
+          " from a linked canonical fix/recovery/patch outcome: confirmation ",
+          " or ",
+          " via ",
+          "; rationale optional if the linked record is sufficient; reversibility "
+        ]
+      },
+      {
+        "line": 185,
+        "text": "dismiss`: confirmation `strong`; rationale required; reversibility `compensating_action_only` via explicit `reopened",
+        "tokens": [
+          " via explicit ",
+          ": confirmation ",
+          "; rationale required; reversibility "
+        ]
+      },
+      {
+        "line": 186,
+        "text": "reopen`: confirmation `none` or `light`; rationale optional but recommended when reopening a dismissed concern; reversibility `compensating_action_only",
+        "tokens": [
+          " or ",
+          ": confirmation ",
+          "; rationale optional but recommended when reopening a dismissed concern; reversibility "
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 5,
+        "text": "Identity propagation gap:",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "Storage projection gap:",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "missing families now matter more because the rewrite depends on concerns, promotions, corroboration, graph patches, and recovery as first-class durable objects",
+        "tokens": []
+      },
+      {
+        "line": 13,
+        "text": "Trust/freshness gap:",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "graph patch lineage and concern/promotion visibility are now contract-level omissions, not just UI polish gaps",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "Opus reinforces that contract naming drift and native-surface ownership are among the highest-risk reconciliation areas",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "Sonnet sharpened the identity problem from \"requested vs effective is missing\" to a more specific structural asymmetry:",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "Event-schema precision gaps are wider than the earlier passes suggested:",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "the gap is not just \"missing multi-account support\" but \"mutable display identity used as storage/routing anchor\"",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "Sonnet specifically highlighted missing concern/corroboration/promotion/graph-patch fields, missing trust state, and command-catalog gaps rather than just high-level conceptual absence",
+        "tokens": []
+      },
+      {
+        "line": 78,
+        "text": "Requested-side identity gap:",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "Mutable-key gap:",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "username rename risk is now a concrete contract inconsistency, not just a theoretical identity concern",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Native-surface precision gap:",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "Historical/degraded-mode gap:",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "Sonnet reinforces that historical-run rendering, idle widget rendering, and degraded projection gating are still missing from the surface-level specs rather than only from storage docs",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "Tighten Run Graph and Orchestrator page schemas around canonical runtime objects (`node_id`, `attempt_id`, `lane_id`, `seam_id`, `package_id`) and add the missing governance object hooks/commands.",
+        "tokens": [
+          "attempt_id",
+          "lane_id",
+          "node_id",
+          "package_id",
+          "seam_id"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "provider_account_id` remains risky because Sonnet reinforces that it still conflicts conceptually with `effective_provider_identity",
+        "tokens": [
+          " remains risky because Sonnet reinforces that it still conflicts conceptually with "
+        ]
+      },
+      {
+        "line": 125,
+        "text": "low-risk presentation actions may use no confirmation plus short undo windows",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "dismissible banners are presentation-noise controls, not durable issue-state transitions",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "dismissing a banner",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "but `dismissed`, manual `accepted_risk`, and some lineage edits likely need tighter authority",
+        "tokens": [
+          "accepted_risk",
+          "dismissed"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "resolve` without linked canonical evidence, including `accepted_risk`: confirmation `strong`; rationale required; reversibility `compensating_action_only",
+        "tokens": [
+          " without linked canonical evidence, including ",
+          ": confirmation ",
+          "; rationale required; reversibility "
+        ]
+      },
+      {
+        "line": 195,
+        "text": "Treat `acknowledged` as escalation/noise control and ownership visibility, not semantic closure and not blocker removal by itself",
+        "tokens": [
+          "acknowledged"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 6,
+        "text": "prompt/runtime resolution records, usage records, auth events, graph detail panels, and artifact views still do not share one obvious identity disclosure contract",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "supporting references from `Multi-Account.md`, `Prompt_Pipeline.md`, and the current ledger",
+        "tokens": [
+          "Multi-Account.md",
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

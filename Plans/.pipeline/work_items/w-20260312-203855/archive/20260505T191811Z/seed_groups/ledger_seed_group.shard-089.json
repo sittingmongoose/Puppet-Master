@@ -1,0 +1,306 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-089",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-089.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.",
+      "line_in_shard": 1
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+      "line_in_shard": 2
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 5
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:1842-1845`",
+      "line_in_shard": 20
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092`",
+      "line_in_shard": 21
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2737-2739`",
+      "line_in_shard": 22
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2924-2925`",
+      "line_in_shard": 23
+    },
+    {
+      "type": "data_shape",
+      "text": "- This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+      "line_in_shard": 43
+    },
+    {
+      "type": "requirement",
+      "text": "- `open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+      "line_in_shard": 44
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 49
+    },
+    {
+      "type": "routing_rule",
+      "text": "- summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser.",
+      "line_in_shard": 50
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `gap-001` is no longer best described as `missing_data_shape`; the owner docs already carry `requested_account_binding`, `requested_account_policy`, and `tool_use_id`, so the live blocker is split owner anchors plus active `TierContext` / `tier_id` survivor residue.",
+      "line_in_shard": 52
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.",
+      "line_in_shard": 53
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+      "line_in_shard": 54
+    },
+    {
+      "type": "data_shape",
+      "text": "- `gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "process_defect",
+      "text": "- `gap-005` through `gap-008` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `gap-007` still carries a live `restore points` contradiction in addition to missing structural headings.",
+      "line_in_shard": 56
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 58
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 63
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "line_in_shard": 68
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092`",
+      "line_in_shard": 79
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2737-2739`",
+      "line_in_shard": 80
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Handoff target is now `Ledger Condenser`.",
+      "line_in_shard": 84
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 89
+    },
+    {
+      "type": "process_defect",
+      "text": "- summary: Re-audited the condensed blocker bundle against live plan sections in bounded chunks and confirmed all eight blocker families remain, but one storage item was overstated and several blocker reasons needed sharper exact wording.",
+      "line_in_shard": 90
+    },
+    {
+      "type": "process_defect",
+      "text": "- `historical_lineage_refs[]` is already present in `Plans/storage-plan.md`, so it no longer belongs in `gap-003`'s exact-missing list.",
+      "line_in_shard": 92
+    },
+    {
+      "type": "requirement",
+      "text": "- `orchestrator.project_state.{project_id}` still is not present in `Plans/storage-plan.md`, and the required owner headings `### Required redb keys` and `### Restart and stale history` still are not discoverable.",
+      "line_in_shard": 93
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`.",
+      "line_in_shard": 94
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/usage-feature.md` still lacks the named `artifact drill-through`, usage-attribution, export-taxonomy, account-history, and degrade-behavior consumer sections.",
+      "line_in_shard": 95
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Plans/UI_Command_Catalog.md` still lacks the exact `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors even though real normalization content exists under `### 2.0A Promoted Section 15 command families`.",
+      "line_in_shard": 96
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction.",
+      "line_in_shard": 98
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#11. Source Control boundary`, which sharpens `gap-007`'s owner-heading defect.",
+      "line_in_shard": 99
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 100
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 111
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092`",
+      "line_in_shard": 133
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2737-2739`",
+      "line_in_shard": 134
+    },
+    {
+      "type": "process_defect",
+      "text": "- This pass did not remove any blocker families; it only removed one overstated exact-missing item and sharpened several blocker reasons.",
+      "line_in_shard": 139
+    },
+    {
+      "type": "requirement",
+      "text": "- `open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still needs targeted owner-anchor and consumer-propagation repair rather than another readiness check.",
+      "line_in_shard": 140
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 145
+    },
+    {
+      "type": "data_shape",
+      "text": "- summary: Re-audited the already-condensed blocker bundle in smaller target passes and found one more precision improvement: assistant-chat blocked-state headings are real, so that blocker is now more clearly a skeletal consumer-payload problem rather than a missing-section problem.",
+      "line_in_shard": 146
+    },
+    {
+      "type": "process_defect",
+      "text": "- `Plans/assistant-chat-design.md` also contains `### Multi-episode display`, so the blocked-notice flow is not missing wholesale.",
+      "line_in_shard": 149
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/assistant-chat-design.md` still does not carry the exact blocked packet fields `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, or `escalation_level`.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Plans/FinalGUISpec.md` still contains the exact consumer anchor `### 7.3 Shared route and open behavior`, so gap-002 remains an owner-heading and stale-survivor problem rather than a missing Final GUI consumer anchor.",
+      "line_in_shard": 151
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- No blocker families resolved; the live defects remain owner-anchor absence, skeletal consumer carry-through, and exact stale contradictory survivors.",
+      "line_in_shard": 152
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 153
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 155
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:728-735`",
+      "line_in_shard": 160
+    },
+    {
+      "type": "process_defect",
+      "text": "- This pass only refined heading precision and did not change blocker counts, top-pressure docs, or next stage.",
+      "line_in_shard": 165
+    },
+    {
+      "type": "data_shape",
+      "text": "- `gap-005` stays open because the blocked-packet payload is still under-specified even though the assistant-chat headings are now confirmed.",
+      "line_in_shard": 166
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 171
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- summary: Ran another narrow evidence pass against the remaining exact-missing items and found two more bundle-level precision fixes: gap-001 was under-reporting Interview as an affected consumer, and gap-004 still needed the missing Usage drill-through anchor recorded as an exact missing item rather than only in blocker prose.",
+      "line_in_shard": 172
+    },
+    {
+      "type": "requirement",
+      "text": "- `Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`.",
+      "line_in_shard": 174
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket \"missing everywhere\" claim.",
+      "line_in_shard": 175
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+      "line_in_shard": 177
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 178
+    },
+    {
+      "type": "process_defect",
+      "text": "- This pass refined affected-target precision and exact-missing lists only; blocker counts, pressure docs, and next stage remain unchanged.",
+      "line_in_shard": 192
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-through, and exact stale contradictory survivors.",
+      "line_in_shard": 193
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 198
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- summary: Ran one more narrow pass on the blocked-episode canon and confirmed that several gap-005 items were overstated as globally missing when they are actually owner-defined elsewhere and only missing from the Tools/chat/usage consumers.",
+      "line_in_shard": 199
+    }
+  ]
+}

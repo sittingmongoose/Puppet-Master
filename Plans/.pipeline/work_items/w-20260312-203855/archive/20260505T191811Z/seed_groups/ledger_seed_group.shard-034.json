@@ -1,0 +1,301 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-034",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-034.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- For Orchestrator specifically, semantic scope cannot be widget-owned.",
+      "line_in_shard": 15
+    },
+    {
+      "type": "data_shape",
+      "text": "- page/run context such as `project_id`, `focused_run_id`, historical-run mode, and object focus belong to the page/router state",
+      "line_in_shard": 16
+    },
+    {
+      "type": "requirement",
+      "text": "- widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope",
+      "line_in_shard": 17
+    },
+    {
+      "type": "requirement",
+      "text": "- `Progress` widgets must render against the current `focused_run_id`",
+      "line_in_shard": 19
+    },
+    {
+      "type": "requirement",
+      "text": "- a widget must not drift into a stale prior run just because its own config persisted an old scope choice",
+      "line_in_shard": 21
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- then immediately defines SSOT precedence saying legacy keys are converted and the legacy key is deleted",
+      "line_in_shard": 24
+    },
+    {
+      "type": "doc_hint",
+      "text": "- but `FinalGUISpec.md` already has project-scoped state containers like `project_state:v1:{project_id}`",
+      "line_in_shard": 28
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 31
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 34
+    },
+    {
+      "type": "doc_hint",
+      "text": "- widget docs still assume widgetized `Tiers`, `Evidence`, `History`, and `Ledger`",
+      "line_in_shard": 39
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Scope ownership gap:",
+      "line_in_shard": 41
+    },
+    {
+      "type": "decision",
+      "text": "- but there is no explicit decision yet on app-global vs project-scoped widget layouts for Orchestrator `Progress`",
+      "line_in_shard": 49
+    },
+    {
+      "type": "process_defect",
+      "text": "- `dashboard_layout:v1` backup retention vs deletion rule conflicts inside the same section",
+      "line_in_shard": 51
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Define explicit filter/scope ownership layers:",
+      "line_in_shard": 56
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `router/page scope`: `project_id`, `focused_run_id`, historical/live mode, deep-link target",
+      "line_in_shard": 57
+    },
+    {
+      "type": "data_shape",
+      "text": "- `tab scope`: tab-native filters and object pivots for that surface",
+      "line_in_shard": 58
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Resolve the `dashboard_layout:v1` migration contradiction in one place and cross-reference it from `FinalGUISpec.md`",
+      "line_in_shard": 70
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- widget trust/freshness chrome should come from the same projection-trust model used elsewhere; individual widgets should not invent their own stale-state language",
+      "line_in_shard": 73
+    },
+    {
+      "type": "data_shape",
+      "text": "- widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions",
+      "line_in_shard": 76
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - GPT-5.2 Contract / Routing Deepening",
+      "line_in_shard": 78
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 80
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Canonical runtime identity is still split between strong normative prose and weaker tables/consumers:",
+      "line_in_shard": 92
+    },
+    {
+      "type": "requirement",
+      "text": "- `Contracts_V0.md` and `storage-plan.md` say run/attempt state must carry full requested/effective persona/runtime/auth/account identity",
+      "line_in_shard": 93
+    },
+    {
+      "type": "data_shape",
+      "text": "- `storage-plan.md` event rows for `run.started` and `usage.event` still omit those fields by enumeration",
+      "line_in_shard": 94
+    },
+    {
+      "type": "data_shape",
+      "text": "- downstream Orchestrator/Run Graph/UI docs still depend on compatibility-era field names or partial projections",
+      "line_in_shard": 95
+    },
+    {
+      "type": "data_shape",
+      "text": "- Account switching is still modeled as fields and latest-state hints rather than as a first-class historical record family:",
+      "line_in_shard": 96
+    },
+    {
+      "type": "doc_hint",
+      "text": "- remote-mode docs still leave GitHub REST side effects local while remote agents run elsewhere, without a clear orchestration boundary contract",
+      "line_in_shard": 103
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Routing/action contracts are now stronger in `UI_Command_Catalog.md` than in the page specs that consume them:",
+      "line_in_shard": 104
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Highest-risk impacted docs",
+      "line_in_shard": 113
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- strongest remaining table-vs-prose conflict for runtime identity, usage attribution, and receipt/projection ownership",
+      "line_in_shard": 115
+    },
+    {
+      "type": "data_shape",
+      "text": "- still lag behind command/catalog normalization and still encode compatibility-era identity/action fields",
+      "line_in_shard": 121
+    },
+    {
+      "type": "requirement",
+      "text": "- `storage-plan.md` says `run.started` MUST include the full persona/runtime snapshot, but the event table row still enumerates a much thinner field set.",
+      "line_in_shard": 126
+    },
+    {
+      "type": "data_shape",
+      "text": "- `storage-plan.md` `usage.event` row still omits effective auth/account/model identity even though `usage-feature.md` `UsageRecord` expects those fields downstream.",
+      "line_in_shard": 127
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Contracts_V0.md` forbids `_persona_id` canonical names while `Orchestrator_Page.md` still requires them in runtime-facing worker identity fields.",
+      "line_in_shard": 128
+    },
+    {
+      "type": "data_shape",
+      "text": "- either inline the canonical runtime snapshot fields explicitly",
+      "line_in_shard": 134
+    },
+    {
+      "type": "data_shape",
+      "text": "- or normatively reference the shared snapshot object so table readers cannot under-implement it",
+      "line_in_shard": 135
+    },
+    {
+      "type": "process_defect",
+      "text": "- `manual_preferred_account_id` now exists as a concrete preferred-account override, but it still does not solve the broader missing `requested_account_id` asymmetry in the shared runtime identity grammar.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The cross-surface receipt record is already the strongest trust-safe pivot anchor; follow-on doc cleanup should prefer receipt/attempt-based routing over ad-hoc page-local refs.",
+      "line_in_shard": 149
+    },
+    {
+      "type": "requirement",
+      "text": "- GitHub fixes must preserve the hard realm split between `github_api` and `copilot_github`.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 154
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Prompt_Pipeline.md` still lacks a requested concrete-account field and still stores only singular `account_switch_reason?`",
+      "line_in_shard": 165
+    },
+    {
+      "type": "data_shape",
+      "text": "- `CLI_Bridged_Providers.md` `ProviderRequestEnvelope` still omits typed account identity and execution-role fields",
+      "line_in_shard": 166
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Models_System.md` still behaves as if provider/model/variant selection is separable from account routing and role-scoped pool selection",
+      "line_in_shard": 167
+    },
+    {
+      "type": "data_shape",
+      "text": "- `plan_or_tier_default` is still a persisted enum value in `Prompt_Pipeline.md`",
+      "line_in_shard": 169
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `persona_override_owner_id` still allows `tier_id`",
+      "line_in_shard": 170
+    },
+    {
+      "type": "requirement",
+      "text": "- `Prompt_Pipeline.md` still contains a normative MUST against creating execution layers beyond `Phase / Task / Subtask / Iteration`",
+      "line_in_shard": 171
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Personas.md` still references `select_for_tier()` and still violates canonical persona field naming inside its own SSOT section",
+      "line_in_shard": 172
+    },
+    {
+      "type": "data_shape",
+      "text": "- no canonical role enum or `actor_kind` / `execution_role` field exists to support role-by-provider and role-by-account overrides consistently across docs",
+      "line_in_shard": 176
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Bridged/runtime transport docs still cannot support the rewrite\u2019s parallel actor model safely:",
+      "line_in_shard": 177
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Projection consumers still cannot derive complete account/pressure truth from provider/runtime streams:",
+      "line_in_shard": 181
+    },
+    {
+      "type": "data_shape",
+      "text": "- bridged-provider `usage` events still omit effective account and pressure/switch fields",
+      "line_in_shard": 182
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Highest-risk impacted docs",
+      "line_in_shard": 186
+    },
+    {
+      "type": "data_shape",
+      "text": "- still the highest-leverage SSOT for requested/effective identity, but still carries tier-era persisted values, missing scope fields, and no durable account-switch history model",
+      "line_in_shard": 188
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- strongest policy owner, but still missing switch-history records, queryable snapshot lineage, and a canonical requested-side account identifier",
+      "line_in_shard": 190
+    },
+    {
+      "type": "data_shape",
+      "text": "- still violates canonical field naming in its own SSOT and still has no structural slot for overseer-class actor types",
+      "line_in_shard": 194
+    },
+    {
+      "type": "requirement",
+      "text": "- `Prompt_Pipeline.md` still preserves `plan_or_tier_default`, `tier_id`, and a MUST against new execution tiers while the rewrite replaces tier authority with seam/package/node/lane authority.",
+      "line_in_shard": 199
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Personas.md` still uses `_persona_id` canonical names and `select_for_tier()` references even though `Contracts_V0.md` prohibits the former and the rewrite invalidates the latter.",
+      "line_in_shard": 200
+    }
+  ]
+}

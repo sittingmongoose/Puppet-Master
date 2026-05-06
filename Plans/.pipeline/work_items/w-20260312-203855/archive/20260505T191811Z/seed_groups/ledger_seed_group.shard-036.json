@@ -1,0 +1,311 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-036",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-036.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- Publish a single superseding canonical payload block in `Contracts_V0.md` for scheduler/safe-point/remediation records and explicitly demote older variants.",
+      "line_in_shard": 1
+    },
+    {
+      "type": "requirement",
+      "text": "- Normalize cross-surface receipt records so `project_id`, actor refs, `created_at_utc`, and `usage_event_ref` are required whenever a surface may pivot historically or across projects.",
+      "line_in_shard": 3
+    },
+    {
+      "type": "process_defect",
+      "text": "- Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command bindings, add the missing action envelope, and add trust-state gating rules.",
+      "line_in_shard": 5
+    },
+    {
+      "type": "requirement",
+      "text": "- Actor/runtime unification must preserve ontology separation: chat/interview/wizard actors share provider runtime but are not orchestration nodes.",
+      "line_in_shard": 12
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 16
+    },
+    {
+      "type": "process_defect",
+      "text": "- Codex reinforced that this is now the clearest auth-boundary conflict with the stable internal `account_id` / requested-vs-effective model",
+      "line_in_shard": 29
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- GitHub recovery and command ownership remain under-keyed:",
+      "line_in_shard": 30
+    },
+    {
+      "type": "requirement",
+      "text": "- `cmd.github.connect` is still effectively arg-less even though reconnect must bind back to a blocked run/node/thread/wizard context",
+      "line_in_shard": 31
+    },
+    {
+      "type": "requirement",
+      "text": "- requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set",
+      "line_in_shard": 36
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Widget_System.md` still persists layouts for them and still has an explicit internal contradiction over whether legacy `dashboard_layout:v1` is retained or deleted",
+      "line_in_shard": 40
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Orchestrator ledger widget semantics still center tier-era filters rather than attempt/account/receipt-aware routing",
+      "line_in_shard": 45
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Highest-risk impacted docs",
+      "line_in_shard": 48
+    },
+    {
+      "type": "process_defect",
+      "text": "- now the sharpest auth-boundary conflict for stable account identity, reconnect correlation, and requested/effective disclosure",
+      "line_in_shard": 50
+    },
+    {
+      "type": "process_defect",
+      "text": "- still mixes forbidden canonical names, incomplete account identity, widget-era tab assumptions, and missing projection trust semantics",
+      "line_in_shard": 54
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- both are now the likely owners of the normalization needed to make these surface docs converge",
+      "line_in_shard": 58
+    },
+    {
+      "type": "process_defect",
+      "text": "- GitHub durable identity is still keyed by `login`, conflicting with the stable internal account model.",
+      "line_in_shard": 61
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Orchestrator and Widget docs still disagree with the rewrite\u2019s non-widget / Progress-only direction for several surfaces.",
+      "line_in_shard": 64
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Neither GitHub nor Orchestrator pages yet bind degraded-trust / stale-data states tightly enough to mutation gating and concern ownership.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add a canonical GitHub recovery context payload that can round-trip blocked episode, project, actor kind, auth realm, and effective-account refs.",
+      "line_in_shard": 70
+    },
+    {
+      "type": "data_shape",
+      "text": "- Publish a GitHub command migration map from legacy IDs to canonical `UI_Command_Catalog.md` IDs and payloads.",
+      "line_in_shard": 71
+    },
+    {
+      "type": "requirement",
+      "text": "- Normalize Orchestrator/Interview/UI docs to canonical persona field names and extend their required identity sets with requested/effective account fields.",
+      "line_in_shard": 72
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Resolve one authoritative hostability and migration story for terminal widgets and legacy dashboard layout keys.",
+      "line_in_shard": 74
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Add trust/degraded-state gating and concern handoff rules for GitHub mutations and Orchestrator actions.",
+      "line_in_shard": 75
+    },
+    {
+      "type": "requirement",
+      "text": "- Orchestrator already has a strong \u201crequested vs effective must remain visible on fallback\u201d rule; the gap is now the missing account/auth/trust fields and canonical naming alignment.",
+      "line_in_shard": 79
+    },
+    {
+      "type": "requirement",
+      "text": "- Dashboard-hosted widgets must not become independent scope engines or stale-action loopholes.",
+      "line_in_shard": 80
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- GitHub auth/scope/rate-limit failures likely need concern hooks without collapsing blocked-owner semantics into generic error banners.",
+      "line_in_shard": 81
+    },
+    {
+      "type": "decision",
+      "text": "## Research Progress - 2026-03-16 - widget persistence scope decision update",
+      "line_in_shard": 83
+    },
+    {
+      "type": "decision",
+      "text": "### Decision",
+      "line_in_shard": 85
+    },
+    {
+      "type": "doc_hint",
+      "text": "- one global layout for every project is too coarse once `Progress` reflects project-specific operational habits",
+      "line_in_shard": 89
+    },
+    {
+      "type": "requirement",
+      "text": "- historical/current run switching must not change layout identity; layout scope is project-level, not run-level",
+      "line_in_shard": 100
+    },
+    {
+      "type": "doc_hint",
+      "text": "- the UI should make it clear when a project is using the inherited app-default layout versus a project-specific override",
+      "line_in_shard": 103
+    },
+    {
+      "type": "decision",
+      "text": "- this decision applies to Orchestrator `Progress`; it does not automatically decide the final persistence rule for Usage or Dashboard",
+      "line_in_shard": 104
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-16 - project summary and blocked-owner model cluster",
+      "line_in_shard": 106
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 108
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 109
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- current ledger escalation/current-vs-historical/blocked-owner notes",
+      "line_in_shard": 114
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The new blocked-owner logic sharpens the summary rule:",
+      "line_in_shard": 128
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- they should identify the primary blocked owner / attention owner when one exists",
+      "line_in_shard": 130
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The dashboard and attention-surface docs already imply a useful precedent:",
+      "line_in_shard": 135
+    },
+    {
+      "type": "requirement",
+      "text": "- `attention_required` and `blocked` must remain distinct",
+      "line_in_shard": 136
+    },
+    {
+      "type": "routing_rule",
+      "text": "- severity and routing should not collapse into one generic red project badge",
+      "line_in_shard": 137
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- if a project summary is derived from stale/degraded projections, the card should not pretend to be authoritative",
+      "line_in_shard": 140
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 143
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 144
+    },
+    {
+      "type": "doc_hint",
+      "text": "- future Projects-view / attention-center docs not yet written or expanded",
+      "line_in_shard": 148
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked owner",
+      "line_in_shard": 160
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- concern owner",
+      "line_in_shard": 161
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- active run owner",
+      "line_in_shard": 162
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Current docs do not yet define how unrelated concurrent or historical runs should roll up into one project badge/card.",
+      "line_in_shard": 164
+    },
+    {
+      "type": "requirement",
+      "text": "- `attention_state` (`none | advisory | attention_required | blocked`)",
+      "line_in_shard": 172
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `primary_owner_kind?`",
+      "line_in_shard": 174
+    },
+    {
+      "type": "open_question",
+      "text": "- `primary_reason_code?`",
+      "line_in_shard": 175
+    },
+    {
+      "type": "data_shape",
+      "text": "- `primary_object_ref?`",
+      "line_in_shard": 176
+    },
+    {
+      "type": "data_shape",
+      "text": "- `attention_object_count`",
+      "line_in_shard": 179
+    },
+    {
+      "type": "requirement",
+      "text": "- `blocked` outranks `attention_required`",
+      "line_in_shard": 185
+    },
+    {
+      "type": "requirement",
+      "text": "- `attention_required` outranks advisory pressure/noise",
+      "line_in_shard": 186
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- stale/degraded trust modifies confidence/disclosure, not the underlying canonical status by itself",
+      "line_in_shard": 187
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- one compact primary line: current state + owner + reason",
+      "line_in_shard": 189
+    },
+    {
+      "type": "routing_rule",
+      "text": "- blocked owner should help route the user to the right next surface, not merely decorate the badge",
+      "line_in_shard": 196
+    },
+    {
+      "type": "requirement",
+      "text": "- project summaries must preserve the distinction between user-attention problems and internal degraded-trust warnings",
+      "line_in_shard": 197
+    }
+  ]
+}

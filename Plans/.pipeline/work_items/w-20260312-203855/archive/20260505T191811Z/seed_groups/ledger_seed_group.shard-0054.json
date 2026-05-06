@@ -1,0 +1,837 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0054",
+  "coverage": {
+    "shard_id": "shard-0054",
+    "start_line": 9910,
+    "end_line": 10108,
+    "line_count": 199,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0054.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 13,
+        "text": "needs_testing?",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "This object is allowed to stay tier-shaped if the integration policy still wants phase/task/subtask/iteration selectors, but it should no longer pretend to be the canonical runtime context.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "executor docs define required presence at dispatch/runtime boundaries",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "If `TierContext` survives at all, it should survive as a derived selection/view helper, not as the thing that owns canonical runtime identity.",
+        "tokens": [
+          "TierContext"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "tier-shaped records should be overlays or derived views",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "It should answer questions like:",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "what should the progress tree / compact terminal / high-level tab badges display right now",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "It should not be treated as the canonical source for:",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Canonical mutation and audit actions should route by:",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve through pointers to canonical execution objects rather than using `tier_id` as if it were the durable execution key.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "`tier_id` can still survive as a human-readable grouping label, but it should stop acting like the canonical execution correlation key.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "workspace/isolation refs required for side effects and recovery",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "That context should be strict enough to support:",
+        "tokens": []
+      },
+      {
+        "line": 156,
+        "text": "must exist for any dispatched attempt:",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "required when applicable, but canonical field names must exist in the contract:",
+        "tokens": []
+      },
+      {
+        "line": 178,
+        "text": "required for all provider-executed attempts:",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "executor/runtime/UI surfaces all need the same truth; these should be carried by stable refs or canonical embedded snapshot fragments, not rederived from prompt text or surface config later",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "required whenever execution can touch repo/worktree or external side effects:",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 63,
+        "text": "The downstream surface docs still expose the old tier-shaped correlation model much more strongly than the runtime/storage direction now supports.",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "The surface docs are therefore already behaving as if `tier_runtime_record` is canonical, even though the stronger rewrite direction is:",
+        "tokens": [
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "`Orchestrator_Page.md` still describes tab 2 as `Tiers` and uses tier-keyed widgets/event rows even though the rewrite direction is now `Seams` plus node/package/seam/lane-native execution objects.",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Seams",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Keep `tier_runtime_record` only as a compatibility/overlay projection and say that explicitly in `storage-plan.md`.",
+        "tokens": [
+          "storage-plan.md",
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "The downstream pages most likely to keep reintroducing the old model are `Orchestrator_Page.md`, `Run_Graph_View.md`, and `human-in-the-loop.md`.",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Run_Graph_View.md",
+          "human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "these fields identify the concrete execution unit and the scheduler decision that produced it",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 16,
+        "text": "This object is allowed to stay tier-shaped if the integration policy still wants phase/task/subtask/iteration selectors, but it should no longer pretend to be the canonical runtime context.",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "`storage-plan.md` still publishes both `attempt_record` and `tier_runtime_record`, but only the attempt record is close to the rewrite-era execution unit; the tier runtime record still reflects old tier-shaped progress ownership.",
+        "tokens": [
+          "attempt_record",
+          "storage-plan.md",
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "`Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration doc duplicates a thinner subset of those fields directly on `TierContext`.",
+        "tokens": [
+          "Prompt_Pipeline.md",
+          "TierContext"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "`Executor_Protocol.md` is node-native in its scheduler addendum, but it still lacks an explicit execution-context contract naming the minimum fields the runtime expects to exist on dispatch.",
+        "tokens": [
+          "Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Move all requested/effective runtime identity field definitions back behind the owner split:",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "`Prompt_Pipeline.md` defines field family and meaning",
+        "tokens": [
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Recast `tier_runtime_record` as a current-view/runtime-overlay projection rather than the canonical execution owner.",
+        "tokens": [
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "The downstream surface docs still expose the old tier-shaped correlation model much more strongly than the runtime/storage direction now supports.",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "`Orchestrator_Page.md` still describes the page as `Progress / Tiers / Node Graph / Evidence / History / Ledger`, and many data-source rows still bind live state to:",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Progress / Tiers / Node Graph / Evidence / History / Ledger"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "older request state keyed by `request_id`, `tier_id`, `tier_type`",
+        "tokens": [
+          "request_id",
+          "tier_id",
+          "tier_type"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "The surface docs are therefore already behaving as if `tier_runtime_record` is canonical, even though the stronger rewrite direction is:",
+        "tokens": [
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "`attempt_record` and blocked/runtime records hold canonical execution truth",
+        "tokens": [
+          "attempt_record"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "tier-shaped records should be overlays or derived views",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "`tier_runtime_record` may survive, but only as a derived current-view/runtime-overlay projection.",
+        "tokens": [
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "what is the current visible progress state for this tier-shaped UI grouping",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve through pointers to canonical execution objects rather than using `tier_id` as if it were the durable execution key.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "`human-in-the-loop.md` still stores approval state as `request_id + tier_id + tier_type`, which conflicts with the newer blocked-episode identity model.",
+        "tokens": [
+          "human-in-the-loop.md",
+          "request_id + tier_id + tier_type"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Keep `tier_runtime_record` only as a compatibility/overlay projection and say that explicitly in `storage-plan.md`.",
+        "tokens": [
+          "storage-plan.md",
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Recast HITL surface state around blocked-episode identity first, with tier labels as explanatory metadata rather than canonical targeting.",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "The concrete field family is already present, but split across three owner docs:",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "`Contracts_V0.md` already owns the canonical runtime event field packets for `scheduler.pass`, `attempt.started`, `attempt.completed`, `node.blocked`, `safe_point.*`, and remediation events.",
+        "tokens": [
+          "Contracts_V0.md",
+          "attempt.completed",
+          "attempt.started",
+          "node.blocked",
+          "safe_point.*",
+          "scheduler.pass"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "`storage-plan.md` already owns the persisted `attempt_record`, `blocked_projection`, and related runtime records.",
+        "tokens": [
+          "attempt_record",
+          "blocked_projection",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "The missing contract is not “which fields exist somewhere”; it is the executor-facing statement of which fields are mandatory for correctness at dispatch time versus optional disclosure/overlay fields.",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "these fields identify the concrete execution unit and the scheduler decision that produced it",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "required when applicable, but canonical field names must exist in the contract:",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "these fields are what make retry, blocked recovery, remediation, and restart behavior deterministic instead of heuristic",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 19,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "`orchestrator-subagent-integration.md` constructs `TierContext` without clear run/node/attempt/lane identity, which means downstream hook, artifact, and retry logic can inherit a context object that is not a trustworthy canonical anchor.",
+        "tokens": [
+          "TierContext",
+          "orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "`Executor_Protocol.md` is node-native in its scheduler addendum, but it still lacks an explicit execution-context contract naming the minimum fields the runtime expects to exist on dispatch.",
+        "tokens": [
+          "Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "executor docs define required presence at dispatch/runtime boundaries",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "Refactor `orchestrator-subagent-integration.md` so selector and hook APIs consume:",
+        "tokens": [
+          "orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "`Orchestrator_Page.md` still describes the page as `Progress / Tiers / Node Graph / Evidence / History / Ledger`, and many data-source rows still bind live state to:",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Progress / Tiers / Node Graph / Evidence / History / Ledger"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "what should the progress tree / compact terminal / high-level tab badges display right now",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Canonical mutation and audit actions should route by:",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "`Orchestrator_Page.md` still describes tab 2 as `Tiers` and uses tier-keyed widgets/event rows even though the rewrite direction is now `Seams` plus node/package/seam/lane-native execution objects.",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Seams",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Evidence and terminal routing are still described as tier-keyed, which will be increasingly wrong once multiple attempts, blocked episodes, and graph generations are first-class.",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "The downstream pages most likely to keep reintroducing the old model are `Orchestrator_Page.md`, `Run_Graph_View.md`, and `human-in-the-loop.md`.",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Run_Graph_View.md",
+          "human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "spot-checks against `Plans/orchestrator-subagent-integration.md`",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "`Prompt_Pipeline.md` already owns the immutable runtime handoff bundle captured at attempt start.",
+        "tokens": [
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "The missing contract is not “which fields exist somewhere”; it is the executor-facing statement of which fields are mandatory for correctness at dispatch time versus optional disclosure/overlay fields.",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "immutable attempt handoff identity",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "scheduler dispatch",
+        "tokens": []
+      },
+      {
+        "line": 156,
+        "text": "must exist for any dispatched attempt:",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "executor/runtime/UI surfaces all need the same truth; these should be carried by stable refs or canonical embedded snapshot fragments, not rederived from prompt text or surface config later",
+        "tokens": []
+      },
+      {
+        "line": 193,
+        "text": "lane_id?",
+        "tokens": []
+      },
+      {
+        "line": 195,
+        "text": "`workspace_ref` or canonical workspace path ref",
+        "tokens": [
+          "workspace_ref"
+        ]
+      },
+      {
+        "line": 198,
+        "text": "mutation/recovery flows cannot be audited or repaired correctly without stable workspace and provider-attempt anchors",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 13,
+        "text": "needs_testing?",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "`Orchestrator_Page.md` still describes the page as `Progress / Tiers / Node Graph / Evidence / History / Ledger`, and many data-source rows still bind live state to:",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Progress / Tiers / Node Graph / Evidence / History / Ledger"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "tier-scoped evidence and terminal widgets",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "what is the latest active attempt or blocked episode pointer for this grouping",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Canonical mutation and audit actions should route by:",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "Evidence and terminal routing are still described as tier-keyed, which will be increasingly wrong once multiple attempts, blocked episodes, and graph generations are first-class.",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "Update surface specs so tier/group views carry pointers to canonical execution objects instead of using `tier_id` as the primary mutation/audit key.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "UI inspection/audit",
+        "tokens": []
+      },
+      {
+        "line": 198,
+        "text": "mutation/recovery flows cannot be audited or repaired correctly without stable workspace and provider-attempt anchors",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 23,
+        "text": "likely downstream consumers:",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "`storage-plan.md` still publishes both `attempt_record` and `tier_runtime_record`, but only the attempt record is close to the rewrite-era execution unit; the tier runtime record still reflects old tier-shaped progress ownership.",
+        "tokens": [
+          "attempt_record",
+          "storage-plan.md",
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Move all requested/effective runtime identity field definitions back behind the owner split:",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "Recast `tier_runtime_record` as a current-view/runtime-overlay projection rather than the canonical execution owner.",
+        "tokens": [
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "This seam is now mostly an ownership cleanup, not a concept invention problem.",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "artifact ownership",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "The concrete field family is already present, but split across three owner docs:",
+        "tokens": []
+      },
+      {
+        "line": 178,
+        "text": "required for all provider-executed attempts:",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "requested/effective persona snapshot ref",
+        "tokens": []
+      },
+      {
+        "line": 196,
+        "text": "provider_attempt_ref?",
+        "tokens": []
+      },
+      {
+        "line": 198,
+        "text": "mutation/recovery flows cannot be audited or repaired correctly without stable workspace and provider-attempt anchors",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 47,
+        "text": "This seam is now mostly an ownership cleanup, not a concept invention problem.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 68,
+        "text": "copy/open actions",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "It should answer questions like:",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 48,
+        "text": "The highest-risk duplication is requested/effective runtime identity being defined three times:",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "The missing contract is not “which fields exist somewhere”; it is the executor-facing statement of which fields are mandatory for correctness at dispatch time versus optional disclosure/overlay fields.",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "failure_class?",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 19,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "`Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration doc duplicates a thinner subset of those fields directly on `TierContext`.",
+        "tokens": [
+          "Prompt_Pipeline.md",
+          "TierContext"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "`Prompt_Pipeline.md` defines field family and meaning",
+        "tokens": [
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "prompt pipeline",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "spot-checks against `Plans/storage-plan.md`",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "spot-checks against `Plans/orchestrator-subagent-integration.md`",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "`Prompt_Pipeline.md` already owns the immutable runtime handoff bundle captured at attempt start.",
+        "tokens": [
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "executor/runtime/UI surfaces all need the same truth; these should be carried by stable refs or canonical embedded snapshot fragments, not rederived from prompt text or surface config later",
+        "tokens": []
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

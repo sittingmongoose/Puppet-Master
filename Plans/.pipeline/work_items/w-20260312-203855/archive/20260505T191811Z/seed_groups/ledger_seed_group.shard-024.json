@@ -1,0 +1,306 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-024",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-024.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- open/close right-side inspector",
+      "line_in_shard": 3
+    },
+    {
+      "type": "decision",
+      "text": "- fit graph / focus selected node / toggle generation overlay",
+      "line_in_shard": 5
+    },
+    {
+      "type": "data_shape",
+      "text": "- Context menus are the right home for object-specific operational actions.",
+      "line_in_shard": 9
+    },
+    {
+      "type": "data_shape",
+      "text": "- object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics",
+      "line_in_shard": 11
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This fits especially well for:",
+      "line_in_shard": 12
+    },
+    {
+      "type": "routing_rule",
+      "text": "### Routing contract implication",
+      "line_in_shard": 20
+    },
+    {
+      "type": "data_shape",
+      "text": "- command palette results, keyboard shortcuts, context menus, and widgets should route through the same destination payload model",
+      "line_in_shard": 22
+    },
+    {
+      "type": "data_shape",
+      "text": "- Good shared payload fields:",
+      "line_in_shard": 23
+    },
+    {
+      "type": "decision",
+      "text": "- selected object id and type",
+      "line_in_shard": 27
+    },
+    {
+      "type": "doc_hint",
+      "text": "- optional inspector target",
+      "line_in_shard": 28
+    },
+    {
+      "type": "data_shape",
+      "text": "- optional filter payload",
+      "line_in_shard": 29
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `hard_gate`",
+      "line_in_shard": 38
+    },
+    {
+      "type": "requirement",
+      "text": "then command palette and shortcut surfaces must still honor the same gating and preview requirements.",
+      "line_in_shard": 41
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The command infrastructure is ahead of the Orchestrator-specific safety policy.",
+      "line_in_shard": 49
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Current docs do not yet define which Orchestrator actions are:",
+      "line_in_shard": 50
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Current grouped/bulk navigation wording could be misread as license for broad bulk execution controls unless rewrite docs tighten it.",
+      "line_in_shard": 56
+    },
+    {
+      "type": "data_shape",
+      "text": "- Reuse one shared routing payload across command palette, shortcuts, widgets, search, and deep links.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "requirement",
+      "text": "- palette visibility must not silently downgrade confirmation strength",
+      "line_in_shard": 70
+    },
+    {
+      "type": "data_shape",
+      "text": "- context menus are likely the cleanest home for exact object-valid live actions",
+      "line_in_shard": 72
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "## Research Progress - 2026-03-16 - Projection Health / Stale-Data Trust Execution Policy",
+      "line_in_shard": 74
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 76
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 78
+    },
+    {
+      "type": "data_shape",
+      "text": "- `redb`, Tantivy, JSONL mirrors, rollups, and UI-facing keys are projections or derived state",
+      "line_in_shard": 86
+    },
+    {
+      "type": "requirement",
+      "text": "- projections must be rebuildable from canonical records",
+      "line_in_shard": 87
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Some docs already hint at trust/freshness issues:",
+      "line_in_shard": 88
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Usage explicitly worries about stale data and requires `Last updated` + refresh behavior",
+      "line_in_shard": 89
+    },
+    {
+      "type": "process_defect",
+      "text": "- What is still missing is a shared Orchestrator-wide execution policy for:",
+      "line_in_shard": 92
+    },
+    {
+      "type": "requirement",
+      "text": "- when actions must be gated",
+      "line_in_shard": 95
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale`",
+      "line_in_shard": 103
+    },
+    {
+      "type": "data_shape",
+      "text": "- slightly behind but actively catching up; read is fine, write may still be fine depending on object class",
+      "line_in_shard": 110
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale`",
+      "line_in_shard": 111
+    },
+    {
+      "type": "requirement",
+      "text": "- projection cannot currently support that surface; UI must fall back or disable",
+      "line_in_shard": 116
+    },
+    {
+      "type": "doc_hint",
+      "text": "- low-risk read-only inspection",
+      "line_in_shard": 122
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- allowed on `refreshing`, often allowed on `stale`, sometimes allowed on `degraded`",
+      "line_in_shard": 123
+    },
+    {
+      "type": "data_shape",
+      "text": "- usually allowed if the target object identity is still valid",
+      "line_in_shard": 125
+    },
+    {
+      "type": "requirement",
+      "text": "- If a surface is `stale` or `degraded`, the GUI must not present mutation controls that imply hidden confidence.",
+      "line_in_shard": 128
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Surface-specific direction",
+      "line_in_shard": 130
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- most vulnerable to stale/degraded projection confusion because it is summary-heavy",
+      "line_in_shard": 132
+    },
+    {
+      "type": "routing_rule",
+      "text": "- should show visible freshness state and route users to native tabs for exact inspection when trust drops",
+      "line_in_shard": 133
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- rollups can remain browsable when slightly stale, but completion/promote/governance actions should tighten quickly",
+      "line_in_shard": 135
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- focused inspection may survive mild staleness",
+      "line_in_shard": 137
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- evidence/artifact browsing can often survive stale projections because records/artifacts are durable",
+      "line_in_shard": 140
+    },
+    {
+      "type": "doc_hint",
+      "text": "- strongest fallback surface for exact inspection",
+      "line_in_shard": 145
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- if a write action is attempted from a stale/degraded surface, the runtime should either:",
+      "line_in_shard": 150
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- The GUI should never guess that a previously visible `allowed_action_ids[]` set is still valid if the blocked projection is stale.",
+      "line_in_shard": 153
+    },
+    {
+      "type": "data_shape",
+      "text": "- Good shared fields:",
+      "line_in_shard": 157
+    },
+    {
+      "type": "open_question",
+      "text": "- `degraded_reason?`",
+      "line_in_shard": 161
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `action_gate_reason?`",
+      "line_in_shard": 162
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `View may be stale`",
+      "line_in_shard": 164
+    },
+    {
+      "type": "doc_hint",
+      "text": "- when trust drops, degrade toward exact record-backed inspection, not toward empty ambiguity",
+      "line_in_shard": 171
+    },
+    {
+      "type": "doc_hint",
+      "text": "- projection-derived inspector -> `Ledger` / `History` / exact record view via `detail_ref`",
+      "line_in_shard": 175
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Current docs establish canonical vs derived storage, but not the UI policy that follows from that distinction.",
+      "line_in_shard": 178
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Gate mutation controls on trusted projections or explicit runtime revalidation.",
+      "line_in_shard": 185
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Standardize fallback toward record-backed views (`History`, `Ledger`, exact record inspectors) when projections are degraded.",
+      "line_in_shard": 186
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- stale visibility is not the same as action authority",
+      "line_in_shard": 189
+    },
+    {
+      "type": "doc_hint",
+      "text": "- blocked/recovery controls are especially sensitive because `allowed_action_ids[]` can go invalid if projection trust drops",
+      "line_in_shard": 190
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Ledger` and record inspectors should be the stable fallback when summary surfaces lose trust",
+      "line_in_shard": 191
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 195
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 200
+    }
+  ]
+}

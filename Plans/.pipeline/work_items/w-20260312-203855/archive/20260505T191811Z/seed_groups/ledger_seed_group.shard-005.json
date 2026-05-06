@@ -1,0 +1,231 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-005",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-005.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "requirement",
+      "text": "- trim parent and child objects into must-persist vs cacheable vs derived fields",
+      "line_in_shard": 1
+    },
+    {
+      "type": "verification_rule",
+      "text": "- current discussion implies provider/model settings at node, work package, feature seam, overseer, and delegated-subagent levels",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- current docs under discussion have not yet been reconciled around that model",
+      "line_in_shard": 4
+    },
+    {
+      "type": "process_defect",
+      "text": "- Missing from the current conversation so far:",
+      "line_in_shard": 8
+    },
+    {
+      "type": "process_defect",
+      "text": "- what distinct authority belongs to package overseer vs feature-seam overseer so they do not become redundant or conflicting co-governors",
+      "line_in_shard": 15
+    },
+    {
+      "type": "data_shape",
+      "text": "- but probably not canonical runtime enums, event semantics, or scheduler truth",
+      "line_in_shard": 20
+    },
+    {
+      "type": "decision",
+      "text": "- No decision yet on the primary discussion seam for this research pass:",
+      "line_in_shard": 21
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Use the ledger to capture terminology, precedence rules, effective-vs-requested state, and cross-doc ownership as they emerge.",
+      "line_in_shard": 33
+    },
+    {
+      "type": "doc_hint",
+      "text": "- keep scheduler semantics, attempt identity, blocked reasons, allowed actions, and remediation lineage owned by shared runtime docs",
+      "line_in_shard": 36
+    },
+    {
+      "type": "doc_hint",
+      "text": "- \"Orchestrator uses the node graph\" is already documented as true for scheduling/execution inputs",
+      "line_in_shard": 42
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- a lightweight planning/replan agent may still exist, but only at graph-construction or graph-patch boundaries, not as the continuous owner of all execution truth",
+      "line_in_shard": 47
+    },
+    {
+      "type": "requirement",
+      "text": "- overseers may critique or challenge package outcomes, but newly discovered work must become explicit remediation nodes or graph-patch requests",
+      "line_in_shard": 53
+    },
+    {
+      "type": "requirement",
+      "text": "- blocked/HITL/critical promotion states must surface on Dashboard, Orchestrator, and a spawned chat thread",
+      "line_in_shard": 64
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Promotion gate direction now discussed:",
+      "line_in_shard": 65
+    },
+    {
+      "type": "requirement",
+      "text": "- `lane_to_package` gates focus on local correctness, uncontaminated lane state, required automated verification/review, and promotable package outputs",
+      "line_in_shard": 66
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `package_to_seam_available` gates focus on trusted package baseline, package-level evidence, acceptable package-overseer verdict, and seam-consumable outputs",
+      "line_in_shard": 67
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `seam_complete` gates focus on integration review, absence of unresolved major/critical findings, seam evidence, workflow completeness, GUI/runtime alignment, and no pending corroboration/remediation",
+      "line_in_shard": 68
+    },
+    {
+      "type": "requirement",
+      "text": "- define required evidence at node/package/seam levels so promotion gates are concrete",
+      "line_in_shard": 70
+    },
+    {
+      "type": "verification_rule",
+      "text": "- overseer-delegated node worker",
+      "line_in_shard": 79
+    },
+    {
+      "type": "requirement",
+      "text": "- requested vs effective provider/model must remain visible at all levels where fallback/override can occur",
+      "line_in_shard": 80
+    },
+    {
+      "type": "data_shape",
+      "text": "- node persona selection should be dynamic-by-default from node scope/type",
+      "line_in_shard": 82
+    },
+    {
+      "type": "data_shape",
+      "text": "- node worker personas should default dynamically from node scope/type",
+      "line_in_shard": 87
+    },
+    {
+      "type": "verification_rule",
+      "text": "- if allowed, settings should define the provider/model policy for those delegated node workers",
+      "line_in_shard": 91
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- first pin Orchestrator ownership boundaries",
+      "line_in_shard": 93
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- then define worktree ownership/isolation rules",
+      "line_in_shard": 97
+    },
+    {
+      "type": "doc_hint",
+      "text": "## Impacted Docs",
+      "line_in_shard": 99
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 102
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Likely adjacent owners if this expands:",
+      "line_in_shard": 107
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 113
+    },
+    {
+      "type": "decision",
+      "text": "## Decisions Already Resolved",
+      "line_in_shard": 115
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- First targeted reading should stay narrow and centered on Orchestrator docs plus direct owner contracts, not a repo-wide sweep.",
+      "line_in_shard": 119
+    },
+    {
+      "type": "decision",
+      "text": "- User explicitly wants to keep researching in this thread; prior readiness marker should not be treated as a handoff decision.",
+      "line_in_shard": 121
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Current working focus is moving into projection ownership by surface rather than reconciliation.",
+      "line_in_shard": 122
+    },
+    {
+      "type": "open_question",
+      "text": "## Open Questions / Uncertainties",
+      "line_in_shard": 124
+    },
+    {
+      "type": "decision",
+      "text": "- selected objects should still expose strong detail via the right-side inspector regardless of zoom",
+      "line_in_shard": 143
+    },
+    {
+      "type": "data_shape",
+      "text": "- object/text search across Seams / Graph / Evidence / History / Ledger",
+      "line_in_shard": 158
+    },
+    {
+      "type": "decision",
+      "text": "- scheduler plus bounded \"manager\" agent for replan/escalation decisions",
+      "line_in_shard": 169
+    },
+    {
+      "type": "open_question",
+      "text": "- How should bounded context be enforced so one agent never accumulates the whole graph as working memory?",
+      "line_in_shard": 171
+    },
+    {
+      "type": "doc_hint",
+      "text": "- or issue-class-specific escalation rules",
+      "line_in_shard": 175
+    },
+    {
+      "type": "process_defect",
+      "text": "- missing or inconsistent state transitions across package boundaries",
+      "line_in_shard": 183
+    },
+    {
+      "type": "data_shape",
+      "text": "- GUI still reflects an older model and does not expose the new runtime/governance objects",
+      "line_in_shard": 188
+    },
+    {
+      "type": "process_defect",
+      "text": "- missing GUI representation of runtime/governance state",
+      "line_in_shard": 191
+    },
+    {
+      "type": "verification_rule",
+      "text": "- technically passing local checks while seam-level UX or architecture remains poor",
+      "line_in_shard": 195
+    },
+    {
+      "type": "requirement",
+      "text": "- turn weak integration into explicit seam-level acceptance criteria and failure classes",
+      "line_in_shard": 197
+    }
+  ]
+}

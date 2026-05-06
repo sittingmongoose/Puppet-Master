@@ -1,0 +1,747 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0039",
+  "coverage": {
+    "shard_id": "shard-0039",
+    "start_line": 7077,
+    "end_line": 7252,
+    "line_count": 176,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0039.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 3,
+        "text": "Orchestrator already has a strong “requested vs effective must remain visible on fallback” rule; the gap is now the missing account/auth/trust fields and canonical naming alignment.",
+        "tokens": []
+      },
+      {
+        "line": 4,
+        "text": "Dashboard-hosted widgets must not become independent scope engines or stale-action loopholes.",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "Orchestrator `Progress` widget layout persistence should use **app-default with project override**.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "effective `Progress` widget layout should be computed as:",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "reset flows should distinguish:",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "historical/current run switching must not change layout identity; layout scope is project-level, not run-level",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "the UI should make it clear when a project is using the inherited app-default layout versus a project-specific override",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "project cards should not just say “blocked”",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "they should identify the primary blocked owner / attention owner when one exists",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "`attention_required` and `blocked` must remain distinct",
+        "tokens": [
+          "attention_required",
+          "blocked"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "severity and routing should not collapse into one generic red project badge",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "canonical blocked episodes should outrank derived projection warnings",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "if a project summary is derived from stale/degraded projections, the card should not pretend to be authoritative",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "trust state may downgrade confidence, but should not automatically manufacture a blocked state",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "surface where the user should go next",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Current docs do not yet define how unrelated concurrent or historical runs should roll up into one project badge/card.",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "one blocked run should not necessarily flatten the whole project into a generic “red project” without context",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "`attention_state` (`none | advisory | attention_required | blocked`)",
+        "tokens": [
+          "attention_state",
+          "none | advisory | attention_required | blocked"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "blocked` outranks `attention_required",
+        "tokens": [
+          " outranks "
+        ]
+      },
+      {
+        "line": 110,
+        "text": "`attention_required` outranks advisory pressure/noise",
+        "tokens": [
+          "attention_required"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "blocked owner should help route the user to the right next surface, not merely decorate the badge",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "project summaries must preserve the distinction between user-attention problems and internal degraded-trust warnings",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "title-bar project badges, Projects page cards, command-palette summaries, and attention-center rows should all reuse the same status vocabulary and precedence rules",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "Project-level attention should remain object-first, not notification-first.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "the attention center should still point to the canonical owning object and next action path, not just show copied banner text",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "projection-derived warnings should still appear, but their rows need trust qualification and should not pretend to be equally authoritative",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 3,
+        "text": "Orchestrator already has a strong “requested vs effective must remain visible on fallback” rule; the gap is now the missing account/auth/trust fields and canonical naming alignment.",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "this decision applies to Orchestrator `Progress`; it does not automatically decide the final persistence rule for Usage or Dashboard",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "instant project switch keeps non-active project activity visible through badges and attention surfaces",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "`attention_required` and `blocked` must remain distinct",
+        "tokens": [
+          "attention_required",
+          "blocked"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Keep “no active run” neutral.",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "Project-level attention should remain object-first, not notification-first.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "There is still no explicit precedence rule for how multiple attention items collapse into one project badge while remaining individually actionable in the attention center.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 3,
+        "text": "Orchestrator already has a strong “requested vs effective must remain visible on fallback” rule; the gap is now the missing account/auth/trust fields and canonical naming alignment.",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "The shell already assumes project-scoped background state in several places:",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "title bar shows current project context plus badges for background activity / blocked items / unsaved shell state",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "storage already persists `projects:v1` and `project_state:v1:{project_id}`",
+        "tokens": [
+          "project_state:v1:{project_id}",
+          "projects:v1"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "`projects:v1` currently only promises list metadata like path, detected languages, last-opened timestamp, health status, and overrides",
+        "tokens": [
+          "projects:v1"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "`health` = overall project/system condition, including trust and unresolved blocking state",
+        "tokens": [
+          "health"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Historical-only projects need explicit protection against false alarm states.",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "no-active-run is not a problem state by itself",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "trust state may downgrade confidence, but should not automatically manufacture a blocked state",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "There is still no canonical `project_summary` or equivalent projection contract.",
+        "tokens": [
+          "project_summary"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "`projects:v1` is too thin",
+        "tokens": [
+          "projects:v1"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "`project_state:v1:{project_id}` is UI-state heavy, not operational-summary heavy",
+        "tokens": [
+          "project_state:v1:{project_id}"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "some talk about unsaved shell state",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "Add a canonical project-summary projection, likely alongside `projects:v1` rather than inside raw shell UI state.",
+        "tokens": [
+          "projects:v1"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "Recommended minimum project-summary shape:",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "`activity_state` (`idle | active | background_active | historical_only`)",
+        "tokens": [
+          "activity_state",
+          "idle | active | background_active | historical_only"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "`attention_state` (`none | advisory | attention_required | blocked`)",
+        "tokens": [
+          "attention_state",
+          "none | advisory | attention_required | blocked"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "`health_state` (`healthy | degraded | blocked`)",
+        "tokens": [
+          "health_state",
+          "healthy | degraded | blocked"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "projection_trust_state",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "one compact primary line: current state + owner + reason",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "use `historical_only` or `idle`, not a warning color/state",
+        "tokens": [
+          "historical_only",
+          "idle"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "What is still missing is a shared project-attention item contract.",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "canonical blocked episodes, approval waits, and persisted thread/wizard states can drive strong routing",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "`attention center` exists in the glossary, but there is no concrete payload/schema for attention-center items.",
+        "tokens": [
+          "attention center"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 2,
+        "text": "Preserve the hard realm split between `github_api` and `copilot_github` even while normalizing stable account identity.",
+        "tokens": [
+          "copilot_github",
+          "github_api"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "Orchestrator already has a strong “requested vs effective must remain visible on fallback” rule; the gap is now the missing account/auth/trust fields and canonical naming alignment.",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "Orchestrator `Progress` widget layout persistence should use **app-default with project override**.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "fully isolated per-project layouts are too heavy and lose the value of a stable default operating surface",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "this decision applies to Orchestrator `Progress`; it does not automatically decide the final persistence rule for Usage or Dashboard",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "`projects:v1` currently only promises list metadata like path, detected languages, last-opened timestamp, health status, and overrides",
+        "tokens": [
+          "projects:v1"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "that is not enough for the newer Orchestrator/concern/projection-trust model",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "severity and routing should not collapse into one generic red project badge",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "blocked owner should help route the user to the right next surface, not merely decorate the badge",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "current ledger routing/escalation/project-summary clusters",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "wizard and thread flows already preserve precise recovery routes through a stored deep link",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "the rewrite should generalize that idea beyond wizards so project-level attention objects can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "the attention center should still point to the canonical owning object and next action path, not just show copied banner text",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "canonical blocked episodes, approval waits, and persisted thread/wizard states can drive strong routing",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "Current docs still risk coupling routing too tightly to one surface.",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "for example, a blocked project card might imply “open Orchestrator”",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [],
+    "owner_consumer_obligations": [
+      {
+        "line": 5,
+        "text": "GitHub auth/scope/rate-limit failures likely need concern hooks without collapsing blocked-owner semantics into generic error banners.",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "current ledger escalation/current-vs-historical/blocked-owner notes",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "The new blocked-owner logic sharpens the summary rule:",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "they should identify the primary blocked owner / attention owner when one exists",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "blocked owner",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "concern owner",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "active run owner",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "primary_owner_kind?",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "one compact primary line: current state + owner + reason",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "blocked owner should help route the user to the right next surface, not merely decorate the badge",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "but the real owner might be `Auth`, `Source Control`, `GitHub`, or `Usage pressure`",
+        "tokens": [
+          "Auth",
+          "GitHub",
+          "Source Control",
+          "Usage pressure"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 4,
+        "text": "Dashboard-hosted widgets must not become independent scope engines or stale-action loopholes.",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "severity and routing should not collapse into one generic red project badge",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "if a project summary is derived from stale/degraded projections, the card should not pretend to be authoritative",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "stale/degraded trust modifies confidence/disclosure, not the underlying canonical status by itself",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "There is still no explicit precedence rule for how multiple attention items collapse into one project badge while remaining individually actionable in the attention center.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 46,
+        "text": "`projects:v1` currently only promises list metadata like path, detected languages, last-opened timestamp, health status, and overrides",
+        "tokens": [
+          "projects:v1"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "for example, a blocked project card might imply “open Orchestrator”",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 3,
+        "text": "Orchestrator already has a strong “requested vs effective must remain visible on fallback” rule; the gap is now the missing account/auth/trust fields and canonical naming alignment.",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "GitHub auth/scope/rate-limit failures likely need concern hooks without collapsing blocked-owner semantics into generic error banners.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "`health` = overall project/system condition, including trust and unresolved blocking state",
+        "tokens": [
+          "health"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "The model still risks conflating:",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "What is still missing is a shared project-attention item contract.",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "auth/account issues",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "Current docs still risk coupling routing too tightly to one surface.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 33,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 34,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "degraded-trust inspection prompts",
+        "tokens": []
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

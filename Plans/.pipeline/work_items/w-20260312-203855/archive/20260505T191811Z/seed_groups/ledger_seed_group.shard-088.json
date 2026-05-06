@@ -1,0 +1,471 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-088",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-088.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- orchestration-specific undo/compensating-action label policy",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`",
+      "line_in_shard": 6
+    },
+    {
+      "type": "data_shape",
+      "text": "- explicit source-layer enumeration",
+      "line_in_shard": 13
+    },
+    {
+      "type": "data_shape",
+      "text": "- Orchestrator actor-type and operation-type resolver inputs",
+      "line_in_shard": 15
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`",
+      "line_in_shard": 20
+    },
+    {
+      "type": "process_defect",
+      "text": "- The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts:",
+      "line_in_shard": 21
+    },
+    {
+      "type": "data_shape",
+      "text": "- project `activity_state` enum",
+      "line_in_shard": 25
+    },
+    {
+      "type": "data_shape",
+      "text": "- project `attention_state` enum",
+      "line_in_shard": 26
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked-owner 8-kind taxonomy",
+      "line_in_shard": 27
+    },
+    {
+      "type": "data_shape",
+      "text": "- primary attention reason field",
+      "line_in_shard": 28
+    },
+    {
+      "type": "data_shape",
+      "text": "- pressure-summary field",
+      "line_in_shard": 29
+    },
+    {
+      "type": "process_defect",
+      "text": "- persistent-blocker semantics at the UI layer",
+      "line_in_shard": 33
+    },
+    {
+      "type": "routing_rule",
+      "text": "#### Route / bridge / normalization misses remain refinement-heavy but are more specific now",
+      "line_in_shard": 35
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`",
+      "line_in_shard": 36
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The rerun reinforces earlier route findings and sharpens them:",
+      "line_in_shard": 37
+    },
+    {
+      "type": "data_shape",
+      "text": "- bridge-field precedence still missing from `Contracts_V0.md`",
+      "line_in_shard": 38
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Crosswalk.md` still lacks `Primitive:RouteTarget` / `Primitive:OpenSubject` in the primitive index",
+      "line_in_shard": 41
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields",
+      "line_in_shard": 42
+    },
+    {
+      "type": "data_shape",
+      "text": "- GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+      "line_in_shard": 43
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+      "line_in_shard": 44
+    },
+    {
+      "type": "data_shape",
+      "text": "- `resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field",
+      "line_in_shard": 45
+    },
+    {
+      "type": "doc_hint",
+      "text": "#### Identity / attribution / blocked-policy misses were reconfirmed with stronger specificity",
+      "line_in_shard": 47
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `execution_role` absent in many key owner/consumer docs",
+      "line_in_shard": 50
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `blocked_sequence` minting ownership still missing",
+      "line_in_shard": 54
+    },
+    {
+      "type": "verification_rule",
+      "text": "- The chunked recheck **did not** re-open the already-correct false-positive exclusions:",
+      "line_in_shard": 60
+    },
+    {
+      "type": "data_shape",
+      "text": "- `route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+      "line_in_shard": 61
+    },
+    {
+      "type": "process_defect",
+      "text": "- `projection_freshness` / `projection_health` still exist; the missing transfer is the operational trust UI/gating/fallback layer.",
+      "line_in_shard": 62
+    },
+    {
+      "type": "data_shape",
+      "text": "- account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence.",
+      "line_in_shard": 63
+    },
+    {
+      "type": "process_defect",
+      "text": "- some earlier baseline framing implied a fully new trust-state model was missing; the stronger reading is that the **operationalization** of trust states is missing, not the base freshness/health model itself.",
+      "line_in_shard": 65
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The rerun found **more concrete transfer misses**, especially in:",
+      "line_in_shard": 68
+    },
+    {
+      "type": "data_shape",
+      "text": "- concern/governance record schemas",
+      "line_in_shard": 71
+    },
+    {
+      "type": "data_shape",
+      "text": "- route primitive indexing / bridge precedence / gate schema follow-through",
+      "line_in_shard": 73
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked-sequence / startup-recovery / DAE policy ownership",
+      "line_in_shard": 74
+    },
+    {
+      "type": "process_defect",
+      "text": "- major missing material is still concentrated in:",
+      "line_in_shard": 77
+    },
+    {
+      "type": "data_shape",
+      "text": "- schemas",
+      "line_in_shard": 78
+    },
+    {
+      "type": "data_shape",
+      "text": "- enums",
+      "line_in_shard": 79
+    },
+    {
+      "type": "routing_rule",
+      "text": "- routing/bridge refinement rules",
+      "line_in_shard": 81
+    },
+    {
+      "type": "data_shape",
+      "text": "- This rerun adds confidence that reconciliation should proceed as a **canon-collapse and owner-schema completion pass**, not as a generic polish pass.",
+      "line_in_shard": 85
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Owner-doc-first order still holds:",
+      "line_in_shard": 86
+    },
+    {
+      "type": "doc_hint",
+      "text": "5. `Plans/FinalGUISpec.md`",
+      "line_in_shard": 91
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Then consumer cleanup and same-file supersession collapse.",
+      "line_in_shard": 95
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- confirm the highest-pressure owner/consumer docs still match the current blocker inventory",
+      "line_in_shard": 99
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- capture any newly visible stale survivors or false-cognate cross-references that the current gap wording was not explicit enough about",
+      "line_in_shard": 100
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Exact findings confirmed from live docs:",
+      "line_in_shard": 101
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Plans/assistant-chat-design.md:1775-1784` still contains a stale self-verdict:",
+      "line_in_shard": 102
+    },
+    {
+      "type": "decision",
+      "text": "- `**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP.`",
+      "line_in_shard": 103
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- this directly conflicts with still-open chat consumer gaps already tracked under `FIDELITY-049` through `FIDELITY-053`",
+      "line_in_shard": 104
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text",
+      "line_in_shard": 105
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092` still references `restore points` through `Plans/newfeatures.md`",
+      "line_in_shard": 106
+    },
+    {
+      "type": "requirement",
+      "text": "- `Plans/FinalGUISpec.md:2737-2739` separately and correctly says safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points",
+      "line_in_shard": 107
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+      "line_in_shard": 109
+    },
+    {
+      "type": "data_shape",
+      "text": "- fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`",
+      "line_in_shard": 110
+    },
+    {
+      "type": "process_defect",
+      "text": "- result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims",
+      "line_in_shard": 111
+    },
+    {
+      "type": "decision",
+      "text": "- Audit-stage handoff decision:",
+      "line_in_shard": 112
+    },
+    {
+      "type": "process_defect",
+      "text": "- blocker inventory remains materially open",
+      "line_in_shard": 113
+    },
+    {
+      "type": "verification_rule",
+      "text": "- stage: Ready Check",
+      "line_in_shard": 118
+    },
+    {
+      "type": "decision",
+      "text": "- finding_type: decision",
+      "line_in_shard": 119
+    },
+    {
+      "type": "process_defect",
+      "text": "- summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain.",
+      "line_in_shard": 120
+    },
+    {
+      "type": "data_shape",
+      "text": "- `meta.json` now uses `pm.work_item_meta.v2`.",
+      "line_in_shard": 122
+    },
+    {
+      "type": "data_shape",
+      "text": "- `current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.",
+      "line_in_shard": 123
+    },
+    {
+      "type": "requirement",
+      "text": "- `next_required_stage` remains `Audit Mode`.",
+      "line_in_shard": 124
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, and `restore points`.",
+      "line_in_shard": 125
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 126
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/.pipeline/work_items/w-20260312-203855/meta.json`",
+      "line_in_shard": 127
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+      "line_in_shard": 129
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "line_in_shard": 130
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`",
+      "line_in_shard": 133
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`",
+      "line_in_shard": 134
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/.pipeline/work_items/w-20260312-203855/meta.json`",
+      "line_in_shard": 135
+    },
+    {
+      "type": "data_shape",
+      "text": "- The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+      "line_in_shard": 138
+    },
+    {
+      "type": "data_shape",
+      "text": "- The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+      "line_in_shard": 139
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 144
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+      "line_in_shard": 145
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/orchestrator-subagent-integration.md` already carries an `execution_unit_context` field block, but stale `TierContext` / `tier_id` residue still survives nearby.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+      "line_in_shard": 149
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/Contracts_V0.md` still preserves forbidden `detached_window` in the closed `target_kind` enum.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "requirement",
+      "text": "- `Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+      "line_in_shard": 153
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`.",
+      "line_in_shard": 154
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 155
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 163
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092`",
+      "line_in_shard": 182
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2737-2739`",
+      "line_in_shard": 183
+    },
+    {
+      "type": "process_defect",
+      "text": "- This pass did not clear material blockers; it refined them into more exact unresolved items.",
+      "line_in_shard": 186
+    },
+    {
+      "type": "process_defect",
+      "text": "- The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence.",
+      "line_in_shard": 187
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 192
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.",
+      "line_in_shard": 193
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/storage-plan.md` already carries `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, `validation lineage`, `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`.",
+      "line_in_shard": 195
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md` already carries `account_pressure_episode`, `account_switch_event`, `projection_freshness`, and `projection_health`.",
+      "line_in_shard": 196
+    },
+    {
+      "type": "data_shape",
+      "text": "- `gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+      "line_in_shard": 198
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.",
+      "line_in_shard": 199
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+      "line_in_shard": 200
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-74a630316a",
+  "category": "process_only",
+  "family_key": "formalize_the_three_way_taxonomy_keep_panel_switch_and_source_control_switch_subview_as",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0065-006"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-74a630316a--SEED-shard-0065-006",
+      "seed_id": "SEED-shard-0065-006",
+      "source_shard_id": "shard-0065",
+      "batch_index": 17,
+      "obligation_type": "candidate_fix",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0065",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Formalize the three-way taxonomy; keep panel.switch and source_control.switch_subview as pure shell with controlled vocabularies; move object-targeting out of panel.switch; add Crosswalk primitive for route-target/open-subject ownership.",
+      "evidence_ledger_excerpt": "Formalize the three-way command taxonomy:\n  - pure shell/view-state commands\n  - route-consuming navigation commands\n  - domain mutation/runtime commands\n- Add a Crosswalk primitive boundary for route-target / open-subject ownership",
+      "related_paths": [
+        "Plans/Crosswalk.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Formalize the three-way taxonomy; keep panel.switch and source_control.switch_subview as pure shell with controlled vocabularies; move object-targeting out of panel.switch; add Crosswalk primitive for route-target/open-subject ownership.",
+          "kind": "candidate_fix",
+          "evidence_ledger_excerpt": "Formalize the three-way command taxonomy:\n  - pure shell/view-state commands\n  - route-consuming navigation commands\n  - domain mutation/runtime commands\n- Add a Crosswalk primitive boundary for route-target / open-subject ownership",
+          "related_paths": [
+            "Plans/Crosswalk.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        }
+      ],
+      "exact_items": [
+        "Formalize the three-way taxonomy",
+        "keep panel.switch and source_control.switch_subview as pure shell with controlled vocabularies",
+        "move object-targeting out of panel.switch",
+        "add Crosswalk primitive for route-target/open-subject ownership."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

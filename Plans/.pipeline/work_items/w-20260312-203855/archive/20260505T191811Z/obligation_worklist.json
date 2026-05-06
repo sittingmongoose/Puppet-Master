@@ -1,0 +1,130 @@
+{
+  "schema_id": "pm.obligation_worklist.v3.1",
+  "prompt_id": "D1",
+  "prompt_version": "pm.d1.v3.1.3",
+  "work_id": "w-20260312-203855",
+  "status": "BLOCKED",
+  "fanout_worklist_artifact": {
+    "required_subagent_tasks_total": 4,
+    "subagent_tasks_total": 4,
+    "tasks": [
+      {
+        "subagent_task_id": "d1-task-001",
+        "bounded_input_paths": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ],
+        "record_ranges": {
+          "covered_units": "1..25",
+          "seed_groups": "1..25"
+        },
+        "max_record_budget": 25,
+        "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-001",
+        "task_purpose": "Validate bounded seed slice for required grouping dimensions."
+      },
+      {
+        "subagent_task_id": "d1-task-002",
+        "bounded_input_paths": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ],
+        "record_ranges": {
+          "covered_units": "26..50",
+          "seed_groups": "26..50"
+        },
+        "max_record_budget": 25,
+        "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-002",
+        "task_purpose": "Validate bounded seed slice for required grouping dimensions."
+      },
+      {
+        "subagent_task_id": "d1-task-003",
+        "bounded_input_paths": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ],
+        "record_ranges": {
+          "covered_units": "51..75",
+          "seed_groups": "51..75"
+        },
+        "max_record_budget": 25,
+        "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-003",
+        "task_purpose": "Validate bounded seed slice for required grouping dimensions."
+      },
+      {
+        "subagent_task_id": "d1-task-004",
+        "bounded_input_paths": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ],
+        "record_ranges": {
+          "covered_units": "76..98",
+          "seed_groups": "76..98"
+        },
+        "max_record_budget": 23,
+        "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-004",
+        "task_purpose": "Validate bounded seed slice for required grouping dimensions."
+      }
+    ]
+  },
+  "subagent_results": [
+    {
+      "subagent_task_id": "d1-task-001",
+      "can_group_by_all_required_families": false,
+      "missing_family_dimensions": [
+        "obligation_type",
+        "doc_hint_family",
+        "process_only_family",
+        "open_decision_family",
+        "doc_discovery_family"
+      ]
+    },
+    {
+      "subagent_task_id": "d1-task-002",
+      "can_group_by_all_required_families": false,
+      "missing_family_dimensions": [
+        "obligation_type",
+        "doc_hint_family",
+        "process_only_family",
+        "open_decision_family",
+        "doc_discovery_family"
+      ]
+    },
+    {
+      "subagent_task_id": "d1-task-003",
+      "can_group_by_all_required_families": false,
+      "missing_family_dimensions": [
+        "obligation_type",
+        "doc_hint_family",
+        "process_only_family",
+        "open_decision_family",
+        "doc_discovery_family"
+      ]
+    },
+    {
+      "subagent_task_id": "d1-task-004",
+      "can_group_by_all_required_families": false,
+      "missing_family_dimensions": [
+        "obligation_type",
+        "doc_hint_family",
+        "process_only_family",
+        "open_decision_family",
+        "doc_discovery_family"
+      ]
+    }
+  ],
+  "grouping_result": {
+    "assigned_work_groups": [],
+    "excluded_with_reason": [
+      {
+        "seed_selector": "covered_units: shard-0001..shard-0098",
+        "excluded_count": 98,
+        "reason": "Seed shape invalid for D1 grouping: artifact provides shard pointers and aggregate totals only; required per-item family dimensions are absent."
+      }
+    ]
+  },
+  "final_gate": {
+    "every_seed_assigned_or_excluded": true,
+    "assigned_count": 0,
+    "excluded_count": 98
+  },
+  "blockers": [
+    "Seed shape invalid for required D1 grouping families; regenerate seed artifact with per-item grouping dimensions."
+  ],
+  "next_prompt_request": "C3 — Ledger Seed Extractor"
+}

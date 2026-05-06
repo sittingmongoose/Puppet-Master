@@ -1,0 +1,45 @@
+{
+  "schema_id": "pm.stage_report.F3.v3.1.12",
+  "prompt_id": "F3",
+  "prompt_version": "pm.f3.v3.1.12",
+  "timestamp_utc": "20260506T203426Z",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "required": false,
+    "reason": "Deterministic merge of nine gap classification JSON artifacts into pm.open_gaps.v3.1.12, row-count verification against open_gaps_worklist, SHA256 provenance, and reducer routing from enumerated counts only."
+  },
+  "required_subagent_tasks_total": 0,
+  "distinct_subagent_invocations_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification_proof": {
+    "open_gaps_worklist_sha256": "e0c44b210711de0f54a8f3876c1aa5686c28f02dae10c03cca1141ee4074ccc9",
+    "transfer_coverage_sha256": "31acb58214921cce5ab4837feba2d6e63bd37e64a6645c008da9a2e0c027dcb6",
+    "open_gaps_classification_files_read": 9,
+    "gap_record_total_merged": 393,
+    "obligation_ids_distinct_total": 393,
+    "reducer_counts_match_worklist_summary": true,
+    "selected_next_prompt_id": "F4",
+    "routing_rule_applied": "doc_discovery_required=203 and doc_discovery_exhaustion=0; route to F4 (not Doc Discovery Resolver for exhaustion-only handling)."
+  },
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json"
+  ],
+  "next_prompt_request": "Paste prompt F4 — Doc Discovery Exhaustion Gate v3.1.12."
+}

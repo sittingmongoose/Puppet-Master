@@ -1,0 +1,98 @@
+{
+  "subagent_task_id": "c3-shard-0022",
+  "shard_id": "shard-0022",
+  "source_start_line": 3765,
+  "source_end_line": 3962,
+  "seeds": [
+    {
+      "seed_id": "shard-0022-s01",
+      "title": "Split source, requested, and effective states",
+      "statement": "UI and data models should keep `source`, `requested`, and `effective` as separate concepts across settings, runtime, and history surfaces.",
+      "evidence": [
+        "Candidate fixes call for separating source, requested, and effective in UI language and models.",
+        "Contradictions note users currently confuse current settings winner, requested run state, and effective runtime result."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s02",
+      "title": "Freeze historical requested/effective state",
+      "statement": "Historical run views must render the frozen requested/effective state from that run and must not recompute from current settings or inheritance.",
+      "evidence": [
+        "Historical-run implication requires showing frozen requested/effective state from that run.",
+        "Do-not-forget details repeat that historical run views must stay frozen."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s03",
+      "title": "Extend override grammar to worker policy",
+      "statement": "The same override display grammar used for provider/model/persona/account should be extended to worker policy, including source, requested, effective, and reason fields.",
+      "evidence": [
+        "Worker-policy implication lists source, requested (`subagent`, `fresh_worker`), effective, and reason.",
+        "Candidate fixes explicitly say to extend the same model to worker policy."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s04",
+      "title": "Keep one global persona precedence chain",
+      "statement": "Auto Persona resolution should keep one global precedence chain while requiring deterministic, surface-specific resolver outputs with ranked candidates and explanation metadata.",
+      "evidence": [
+        "Recommended resolver shape says keep one global precedence chain.",
+        "The same section requires each surface auto resolver to emit deterministic ranked candidates plus explanation metadata."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s05",
+      "title": "Prioritize actor and operation signals",
+      "statement": "Inside auto resolution, actor type and operation type should dominate stack or repository hints to avoid role-inappropriate persona selection.",
+      "evidence": [
+        "Deterministic input priority lists actor-type and operation-type bias before language/framework hints.",
+        "Explicit examples say reviewer passes and seam overseers should not collapse into coding personas from repo traits alone."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s06",
+      "title": "Define explicit orchestrator actor mappings",
+      "statement": "Orchestrator auto mode should map each actor role to an explicit default persona family, even if exact persona IDs remain evolvable.",
+      "evidence": [
+        "Orchestrator-specific direction maps package/seam overseers, node workers, reviewers, corroborators, recovery actors, and graph patch planners.",
+        "The document states mapping policy should be explicit now even if IDs can evolve."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s07",
+      "title": "Use deterministic fallback, not hard block",
+      "statement": "If a preferred persona is unavailable after capability filtering, resolution should deterministically fall through to the next candidate and record requested/effective outcomes with reason metadata.",
+      "evidence": [
+        "Fallback direction says do not block solely because a preferred Persona is unavailable.",
+        "Fallback direction requires recording requested Persona, effective Persona, selection reason, and skipped controls."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s08",
+      "title": "Retain clarification when tie remains",
+      "statement": "When same-tier candidates remain non-deterministic, the system should ask for clarification rather than speculating, with this expected to be rare in Orchestrator due to actor+operation signals.",
+      "evidence": [
+        "Clarification rule keeps the Prompt Pipeline behavior of asking when deterministic choice is not possible.",
+        "Orchestrator note says ambiguity should usually be resolved by actor type plus operation type."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s09",
+      "title": "Provide concise reason with expandable detail",
+      "statement": "Auto selection output should include one short primary reason for compact UI and optional expanded supporting hints, without exposing noisy full candidate scoring by default.",
+      "evidence": [
+        "Explanation direction recommends concise structured reason text and provides compact examples.",
+        "Recommendation says one short primary reason plus optional expanded explanation, and not a noisy scored-all-candidates default."
+      ]
+    },
+    {
+      "seed_id": "shard-0022-s10",
+      "title": "Clarify account policy versus effective account",
+      "statement": "Runtime surfaces should separately display account policy, effective account, and switch reason to prevent confusion between manual preference, project policy snapshots, and live selection.",
+      "evidence": [
+        "Multi-account implication distinguishes requested account policy, manual preferred account, and effective account.",
+        "Recommended display shows separate fields for account policy, effective account, and switch reason."
+      ]
+    }
+  ]
+}

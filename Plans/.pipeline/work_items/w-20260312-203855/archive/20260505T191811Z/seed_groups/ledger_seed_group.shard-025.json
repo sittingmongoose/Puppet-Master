@@ -1,0 +1,296 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-025",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-025.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- Storage is already closer than the UI docs to a normalized record family model.",
+      "line_in_shard": 4
+    },
+    {
+      "type": "open_question",
+      "text": "- `detail_ref?`",
+      "line_in_shard": 15
+    },
+    {
+      "type": "data_shape",
+      "text": "- explicit identity fields",
+      "line_in_shard": 17
+    },
+    {
+      "type": "data_shape",
+      "text": "- canonical event fields instead of GUI-only aliases",
+      "line_in_shard": 18
+    },
+    {
+      "type": "process_defect",
+      "text": "- What is still missing is a shared envelope pattern that keeps those families structurally compatible.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "- add one shared governance/runtime record-envelope pattern, then let each family add its own payload block",
+      "line_in_shard": 30
+    },
+    {
+      "type": "data_shape",
+      "text": "- Good base envelope fields:",
+      "line_in_shard": 31
+    },
+    {
+      "type": "data_shape",
+      "text": "- `schema_version`",
+      "line_in_shard": 34
+    },
+    {
+      "type": "open_question",
+      "text": "- `run_id?`",
+      "line_in_shard": 36
+    },
+    {
+      "type": "data_shape",
+      "text": "- `scope_type`",
+      "line_in_shard": 37
+    },
+    {
+      "type": "open_question",
+      "text": "- `updated_at_utc?`",
+      "line_in_shard": 41
+    },
+    {
+      "type": "open_question",
+      "text": "- `summary_kind?`",
+      "line_in_shard": 43
+    },
+    {
+      "type": "open_question",
+      "text": "- `detail_ref?`",
+      "line_in_shard": 44
+    },
+    {
+      "type": "open_question",
+      "text": "- `actor_ref?`",
+      "line_in_shard": 49
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_effective_snapshot_refs?`",
+      "line_in_shard": 50
+    },
+    {
+      "type": "requirement",
+      "text": "- record and artifact must remain different objects",
+      "line_in_shard": 54
+    },
+    {
+      "type": "data_shape",
+      "text": "- structured canonical object used by projections, search, history, and ledger",
+      "line_in_shard": 57
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This matters because many current docs still talk loosely about \u201creview output\u201d or \u201cpatch output\u201d without separating:",
+      "line_in_shard": 60
+    },
+    {
+      "type": "data_shape",
+      "text": "### Family-specific payload direction",
+      "line_in_shard": 65
+    },
+    {
+      "type": "data_shape",
+      "text": "- shared envelope + family payload block",
+      "line_in_shard": 67
+    },
+    {
+      "type": "data_shape",
+      "text": "- Candidate payload examples:",
+      "line_in_shard": 68
+    },
+    {
+      "type": "data_shape",
+      "text": "- concern payload:",
+      "line_in_shard": 69
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- severity, category, owner, lifecycle, resolution_kind",
+      "line_in_shard": 70
+    },
+    {
+      "type": "data_shape",
+      "text": "- promotion payload:",
+      "line_in_shard": 71
+    },
+    {
+      "type": "data_shape",
+      "text": "- corroboration payload:",
+      "line_in_shard": 73
+    },
+    {
+      "type": "data_shape",
+      "text": "- graph patch payload:",
+      "line_in_shard": 75
+    },
+    {
+      "type": "data_shape",
+      "text": "- recovery payload:",
+      "line_in_shard": 77
+    },
+    {
+      "type": "data_shape",
+      "text": "- review payload:",
+      "line_in_shard": 79
+    },
+    {
+      "type": "data_shape",
+      "text": "- object-first search",
+      "line_in_shard": 84
+    },
+    {
+      "type": "routing_rule",
+      "text": "- deep-link routing",
+      "line_in_shard": 86
+    },
+    {
+      "type": "doc_hint",
+      "text": "- cross-tab inspectors",
+      "line_in_shard": 88
+    },
+    {
+      "type": "data_shape",
+      "text": "- Search can index the shared envelope fields while preserving family-specific filters.",
+      "line_in_shard": 89
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Ledger` can inspect exact record structure consistently across families without inventing a custom viewer for every new object.",
+      "line_in_shard": 90
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Some current docs are better at record identity than at record-family consistency.",
+      "line_in_shard": 104
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Without a shared envelope, search, export, ledger inspection, and cross-tab deep links will likely re-encode the same concepts repeatedly.",
+      "line_in_shard": 105
+    },
+    {
+      "type": "data_shape",
+      "text": "- Require new first-class Orchestrator object families to reuse the envelope and shared status/lineage conventions.",
+      "line_in_shard": 110
+    },
+    {
+      "type": "data_shape",
+      "text": "- Let family-specific payloads specialize under the shared envelope instead of inventing one-off top-level shapes.",
+      "line_in_shard": 111
+    },
+    {
+      "type": "requirement",
+      "text": "- canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records",
+      "line_in_shard": 115
+    },
+    {
+      "type": "routing_rule",
+      "text": "- the envelope should carry enough shared identity for search, export, and inspector routing without flattening family-specific meaning",
+      "line_in_shard": 116
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 120
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 125
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The existing docs already imply that cleanup cannot be treated as a trivial delete:",
+      "line_in_shard": 128
+    },
+    {
+      "type": "requirement",
+      "text": "- active-run ownership must be visible before prune/remove",
+      "line_in_shard": 130
+    },
+    {
+      "type": "requirement",
+      "text": "- worktree actions must preserve safe-point and remediation lineage",
+      "line_in_shard": 131
+    },
+    {
+      "type": "process_defect",
+      "text": "- `dirty_worktree` and `worktree_conflict` are explicit runtime blocked reasons",
+      "line_in_shard": 132
+    },
+    {
+      "type": "process_defect",
+      "text": "- unresolved conflict worktrees may need to survive until user resolution",
+      "line_in_shard": 134
+    },
+    {
+      "type": "requirement",
+      "text": "- safe-point restore must target the exact worktree/baseline",
+      "line_in_shard": 136
+    },
+    {
+      "type": "process_defect",
+      "text": "- What is still missing is a full lifecycle that separates:",
+      "line_in_shard": 137
+    },
+    {
+      "type": "doc_hint",
+      "text": "- a live worktree may be operationally suspect even while the lane remains active in orchestration terms",
+      "line_in_shard": 148
+    },
+    {
+      "type": "data_shape",
+      "text": "- lane = orchestration lineage object",
+      "line_in_shard": 150
+    },
+    {
+      "type": "data_shape",
+      "text": "- worktree = concrete Git/filesystem backing object",
+      "line_in_shard": 151
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `suspect`",
+      "line_in_shard": 157
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `suspect`",
+      "line_in_shard": 169
+    },
+    {
+      "type": "doc_hint",
+      "text": "- intentionally kept after completion/failure for inspection, compare, or delayed cleanup",
+      "line_in_shard": 174
+    },
+    {
+      "type": "data_shape",
+      "text": "- historical object retained in the model, but not an active live lane",
+      "line_in_shard": 178
+    },
+    {
+      "type": "process_defect",
+      "text": "- `conflict`",
+      "line_in_shard": 189
+    },
+    {
+      "type": "requirement",
+      "text": "- `recover`, `archive`, `prune`, and `remove` must not blur together",
+      "line_in_shard": 200
+    }
+  ]
+}

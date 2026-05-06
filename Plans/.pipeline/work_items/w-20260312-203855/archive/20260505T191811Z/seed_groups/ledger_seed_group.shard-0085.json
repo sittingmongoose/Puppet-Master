@@ -1,0 +1,1005 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0085",
+  "coverage": {
+    "shard_id": "shard-0085",
+    "start_line": 15873,
+    "end_line": 16053,
+    "line_count": 181,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0085.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 4,
+        "text": "`widget.current_task` = active tier title/objective/platform/model",
+        "tokens": [
+          "widget.current_task"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "worker/runtime detail should key from runtime identity, not only active-tier heuristics",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "`widget.current_task` = active tier title/objective/elapsed",
+        "tokens": [
+          "widget.current_task"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "widget.cta_stack` sourced from `PuppetMasterEvent::UserInteractionRequired",
+        "tokens": [
+          " sourced from "
+        ]
+      },
+      {
+        "line": 67,
+        "text": "PuppetMasterEvent::UserInteractionRequired",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and tier-targeted worker filters toward canonical runtime and attention projections.",
+        "tokens": [
+          "TierChanged",
+          "UserInteractionRequired"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "It sits in a cross-cutting SSOT and should be cleaned up during the same widget reconciliation tranche.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "`DRY_Rules.md` cross-checks surfaced duplicated canonical sections, malformed/uncategorized `ContractRef`s, lowercase normative text that evades traceability gates, and alias-canonicalization rules that now contradict owner docs.",
+        "tokens": [
+          "ContractRef",
+          "DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` is not just stale; its own command-coverage block is self-invalidating because it cites phantom or superseded IDs and points at the wrong catalog section ranges.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`Architecture_Invariants.md` needs explicit invariants for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust vs scheduler authority, and safe-point lineage exactness.",
+        "tokens": [
+          "Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 16,
+        "text": "So the widget layer is now lagging the rest of the page’s own rewrite direction.",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "That conflicts with the rewrite direction where:",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "This is one of the clearest remaining consumer-layer pockets where the old execution model still shapes the UI.",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "The later sections in the same doc already show the stronger direction, so this is a local reconciliation problem rather than a missing concept.",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "This conflicts directly with the rewrite direction already logged elsewhere:",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "only `Progress` remains widget-composed",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "keep `dashboard_layout:v1` as backup",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "keep `dashboard_layout:v1` as backup",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Keep the same rule in both:",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "Treat this as a persistence-contract decision, not as appendix-level wording trivia.",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaining partial tranche. This is not yet a convergence zone.",
+        "tokens": [
+          "GPT-5.4"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`Decision_Log.md` still lacks canonical entries for the very rewrite decisions that are currently only captured as addenda or ledger facts, which is now causing canon ambiguity rather than simple under-documentation.",
+        "tokens": [
+          "Decision_Log.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Shell / promoted-feature / UI owner drift remains active:",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 2,
+        "text": "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "blocked/recovery state",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "evidence summaries as record-backed surfaces",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "The Progress widget contracts still teach “active tier / phase-task-subtask progress / tier-targeted terminal” as the primary operational mental model.",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "`widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+        "tokens": [
+          "widget.completed_prose"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "lane/worktree state",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "record-backed summaries",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "This is one of the clearest remaining consumer-layer pockets where the old execution model still shapes the UI.",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "widget_layout:v1:orchestrator:tiers",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "widget_layout:v1:orchestrator:evidence",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "widget_layout:v1:orchestrator:history",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "widget_layout:v1:orchestrator:ledger",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "The widget data contract section is also still sourced from:",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and tier-targeted worker filters toward canonical runtime and attention projections.",
+        "tokens": [
+          "TierChanged",
+          "UserInteractionRequired"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "The widget layout migration contract now has an exact persistence-rule contradiction.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "convert `dashboard_layout:v1` to `widget_layout:v1:dashboard`",
+        "tokens": [
+          "dashboard_layout:v1",
+          "widget_layout:v1:dashboard"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "keep `dashboard_layout:v1` as backup",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "keep `dashboard_layout:v1` as backup",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "future reads use `widget_layout:v1:dashboard`",
+        "tokens": [
+          "widget_layout:v1:dashboard"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Treat this as a persistence-contract decision, not as appendix-level wording trivia.",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "This is a hard persistence-contract contradiction.",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "`DRY_Rules.md` cross-checks surfaced duplicated canonical sections, malformed/uncategorized `ContractRef`s, lowercase normative text that evades traceability gates, and alias-canonicalization rules that now contradict owner docs.",
+        "tokens": [
+          "ContractRef",
+          "DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "tokens": [
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "`Media_Generation_and_Capabilities.md` and `OpenCode_Coverage_Matrix.md` both show that caller-scoped identity and transient runtime capability state still lack proper request/event surfaces.",
+        "tokens": [
+          "Media_Generation_and_Capabilities.md",
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 2,
+        "text": "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "nodes are the executable unit",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "seams/packages/lanes are the higher-level operational objects",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "lane/worktree state",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "`Plans/Widget_System.md` is still carrying a broad pre-rewrite Orchestrator widget model.",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "The Dashboard / Orchestrator Progress widget catalog still says:",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "The doc also still exposes widgetized non-Progress Orchestrator tabs:",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "widget_layout:v1:orchestrator:tiers",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "widget_layout:v1:orchestrator:evidence",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "widget_layout:v1:orchestrator:history",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "widget_layout:v1:orchestrator:ledger",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native-purpose tabs",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Seams"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "`Widget_System.md` is still acting as if multiple Orchestrator tabs are widget canvases.",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Because this document is cross-cutting, its stale hostability rules can easily reintroduce drift into:",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "Orchestrator_Page.md",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Narrow Orchestrator widget hostability to `Progress` only.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+        "tokens": [
+          "Seams",
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "`Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled early.",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "`00-plans-index.md` still under-routes rewrite-critical owner docs, especially around Multi-Account, Provider, and Orchestrator packet ownership.",
+        "tokens": [
+          "00-plans-index.md"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "`LSPSupport.md` still lacks a normalized split between UI-only, internal-service, read-only tool, and mutation-capable LSP actions, especially in multi-project-tab routing.",
+        "tokens": [
+          "LSPSupport.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 15,
+        "text": "evidence summaries as record-backed surfaces",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "`widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+        "tokens": [
+          "widget.completed_prose"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "widget_layout:v1:orchestrator:evidence",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native-purpose tabs",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Seams"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+        "tokens": [
+          "Seams",
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` is not just stale; its own command-coverage block is self-invalidating because it cites phantom or superseded IDs and points at the wrong catalog section ranges.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "tokens": [
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "`Media_Generation_and_Capabilities.md` and `OpenCode_Coverage_Matrix.md` both show that caller-scoped identity and transient runtime capability state still lack proper request/event surfaces.",
+        "tokens": [
+          "Media_Generation_and_Capabilities.md",
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 19,
+        "text": "Primary stale consumer:",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "This is one of the clearest remaining consumer-layer pockets where the old execution model still shapes the UI.",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "Primary stale owner/consumer hybrid:",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaining partial tranche. This is not yet a convergence zone.",
+        "tokens": [
+          "GPT-5.4"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "`DRY_Rules.md` cross-checks surfaced duplicated canonical sections, malformed/uncategorized `ContractRef`s, lowercase normative text that evades traceability gates, and alias-canonicalization rules that now contradict owner docs.",
+        "tokens": [
+          "ContractRef",
+          "DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "tokens": [
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`Architecture_Invariants.md` needs explicit invariants for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust vs scheduler authority, and safe-point lineage exactness.",
+        "tokens": [
+          "Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Shell / promoted-feature / UI owner drift remains active:",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "`Section15_MVP_Promoted_Features_Spec.md` still points at missing command rows and unresolved shell-surface ownership for project/session browser and attention center.",
+        "tokens": [
+          "Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "`00-plans-index.md` still under-routes rewrite-critical owner docs, especially around Multi-Account, Provider, and Orchestrator packet ownership.",
+        "tokens": [
+          "00-plans-index.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 19,
+        "text": "Primary stale consumer:",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "Primary stale owner/consumer hybrid:",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Because this document is cross-cutting, its stale hostability rules can easily reintroduce drift into:",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs.",
+        "tokens": [
+          "Seams",
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "`Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled early.",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "after migration, the legacy key is deleted",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "preserve legacy backup",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "delete legacy key",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` is not just stale; its own command-coverage block is self-invalidating because it cites phantom or superseded IDs and points at the wrong catalog section ranges.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "tokens": [
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "`MiscPlan.md` and `FileSafe.md` continue to expose the same deep seam from different angles: deferred-run resume validity, pre-cleanup vs safe-point restore ordering, DAE/post-scan blocked phases, and orphan cleanup/remediation logic outside the canonical runtime lineage model.",
+        "tokens": [
+          "FileSafe.md",
+          "MiscPlan.md"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 149,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "tokens": [
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "OpenCode limitations are now source-verified enough that they should be treated as hard architectural constraints unless the bridge changes:",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "`OpenCode_Deep_Extraction.md` sharpens the server-global SSE / fixed working-directory / session-scoped compaction and approvals / ephemeral session identity issues into direct PM obligations.",
+        "tokens": [
+          "OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "`Media_Generation_and_Capabilities.md` and `OpenCode_Coverage_Matrix.md` both show that caller-scoped identity and transient runtime capability state still lack proper request/event surfaces.",
+        "tokens": [
+          "Media_Generation_and_Capabilities.md",
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 41,
+        "text": "The later sections in the same doc already show the stronger direction, so this is a local reconciliation problem rather than a missing concept.",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "This is a cross-cutting SSOT problem, not just a page-local doc issue.",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "`OpenCode_Coverage_Matrix.md` is now stale both structurally and procedurally: missing audit rows it claims to cover, stale fix-status entries, and matrix assumptions that no longer match current OpenCode / bridged-provider identity contracts.",
+        "tokens": [
+          "OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "`OpenCode_Deep_Extraction.md` sharpens the server-global SSE / fixed working-directory / session-scoped compaction and approvals / ephemeral session identity issues into direct PM obligations.",
+        "tokens": [
+          "OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "`Section15_MVP_Promoted_Features_Spec.md` still points at missing command rows and unresolved shell-surface ownership for project/session browser and attention center.",
+        "tokens": [
+          "Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "Tooling subsystems still have unresolved enforcement boundaries:",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "`Skills_System.md` still has unresolved bundling-off semantics, compaction behavior for bundled skill text, and HTE/DAE reachability rules.",
+        "tokens": [
+          "Skills_System.md"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 20,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "`Plans/Widget_System.md` is still carrying a broad pre-rewrite Orchestrator widget model.",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "`Plans/Widget_System.md` says in section 7.3:",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "`Plans/FinalGUISpec.md` appendix C.5 mirrors the backup-preserving version:",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/00-plans-index.md",
+        "tokens": [
+          "Plans/00-plans-index.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/BinaryLocator_Spec.md",
+        "tokens": [
+          "Plans/BinaryLocator_Spec.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/Containers_Registry_and_Unraid.md",
+        "tokens": [
+          "Plans/Containers_Registry_and_Unraid.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/DRY_Rules.md",
+        "tokens": [
+          "Plans/DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Document_Packaging_Policy.md",
+        "tokens": [
+          "Plans/Document_Packaging_Policy.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/FileSafe.md",
+        "tokens": [
+          "Plans/FileSafe.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/Formatters_System.md",
+        "tokens": [
+          "Plans/Formatters_System.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Plans/LSPSupport.md",
+        "tokens": [
+          "Plans/LSPSupport.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Plans/Media_Generation_and_Capabilities.md",
+        "tokens": [
+          "Plans/Media_Generation_and_Capabilities.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Plans/MiscPlan.md",
+        "tokens": [
+          "Plans/MiscPlan.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/Plugins_System.md",
+        "tokens": [
+          "Plans/Plugins_System.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/Skills_System.md",
+        "tokens": [
+          "Plans/Skills_System.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Plans/agent-rules-context.md",
+        "tokens": [
+          "Plans/agent-rules-context.md"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/newfeatures.md",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Plans/rewrite-tie-in-memo.md",
+        "tokens": [
+          "Plans/rewrite-tie-in-memo.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

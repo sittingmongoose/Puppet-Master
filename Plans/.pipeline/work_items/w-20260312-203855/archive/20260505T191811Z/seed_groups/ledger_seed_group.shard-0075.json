@@ -1,0 +1,519 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0075",
+  "coverage": {
+    "shard_id": "shard-0075",
+    "start_line": 13963,
+    "end_line": 14130,
+    "line_count": 168,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0075.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 7,
+        "text": "`thread_id = <thread_id>` when thread-scoped usage is required",
+        "tokens": [
+          "thread_id = <thread_id>"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "`thread_id = <thread_id>` when thread-scoped history is required",
+        "tokens": [
+          "thread_id = <thread_id>"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "`thread_id = <thread_id>` when the associated thread must be restored",
+        "tokens": [
+          "thread_id = <thread_id>"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "`node_id` remains object scope within the run and must not be dropped by the resolver",
+        "tokens": [
+          "node_id"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "run and node scope remain required resolver context",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 57,
+        "text": "`usage_event_ref` still appears in current docs as if it can remain a top-level route field.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "Keep wizard-step focus in serialized anchor detail, not in the base route contract.",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "`node_id` remains object scope within the run and must not be dropped by the resolver",
+        "tokens": [
+          "node_id"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Keep blocked-episode identity explicit:",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "run and node scope remain required resolver context",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` when the object is already selected.",
+        "tokens": [
+          "inspector_target = lineage"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "That change is necessary for blocked episodes, scheduler passes, and graph generations to remain intelligible.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 48,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "`usage_event_ref` still appears in current docs as if it can remain a top-level route field.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Some graph/detail pivots still read as tab switches plus local state instead of canonical route restoration.",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "Keep wizard-step focus in serialized anchor detail, not in the base route contract.",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "These examples are the pressure test for the contract.",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "`cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` already imply these route identities, but the general route contract still does not own the examples.",
+        "tokens": [
+          "cmd.runtime.open_queue_analysis",
+          "cmd.runtime.open_remediation_lineage",
+          "cmd.runtime.open_safe_point_history"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Add these lineage examples to the route contract owner docs.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 15,
+        "text": "tab_id = ledger",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "tab_id = node_graph",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "tab_id = node_graph",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "`usage_event_ref` still appears in current docs as if it can remain a top-level route field.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Wizard flows still look like specialized deep-link families instead of normalized object routes with serialized step anchors.",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Some graph/detail pivots still read as tab switches plus local state instead of canonical route restoration.",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "Rewrite surface docs so these flows use the normalized route patterns above.",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "Keep wizard-step focus in serialized anchor detail, not in the base route contract.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "If these normalize cleanly, the rest of the routing model will stay coherent.",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "The runtime lineage objects now need explicit route recipes so older `attempt_id`-only or `tier_id`-only pivots stop reappearing.",
+        "tokens": [
+          "attempt_id",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "tab_id = node_graph` or `tab_id = history",
+        "tokens": [
+          " or "
+        ]
+      },
+      {
+        "line": 93,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "tab_id = history",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "tab_id = history",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "tab_id = history",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "tab_id = node_graph",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "target_kind = page_tab",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "tab_id = history",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "`blocked_sequence` has canonical identity meaning, but current docs still tend to route blocked work through node/attempt views instead of treating blocked episodes as their own targetable object.",
+        "tokens": [
+          "blocked_sequence"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "`cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` already imply these route identities, but the general route contract still does not own the examples.",
+        "tokens": [
+          "cmd.runtime.open_queue_analysis",
+          "cmd.runtime.open_remediation_lineage",
+          "cmd.runtime.open_safe_point_history"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Add these lineage examples to the route contract owner docs.",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "Source Control and rewrite-era orchestration objects need equally explicit route recipes.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 36,
+        "text": "inspector_target = details | evidence | usage | history",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "inspector_target = details | evidence | usage | lineage",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "These examples are the pressure test for the contract.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 47,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Add these lineage examples to the route contract owner docs.",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [],
+    "open_questions": [
+      {
+        "line": 144,
+        "text": "`cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` already imply these route identities, but the general route contract still does not own the examples.",
+        "tokens": [
+          "cmd.runtime.open_queue_analysis",
+          "cmd.runtime.open_remediation_lineage",
+          "cmd.runtime.open_safe_point_history"
+        ]
+      }
+    ],
+    "process_defects": [],
+    "doc_hints": [
+      {
+        "line": 48,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-023",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-023.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- concern severity + blocking effect + owner + persistence decide escalation",
+      "line_in_shard": 1
+    },
+    {
+      "type": "requirement",
+      "text": "- `attention_required` and `blocked` must remain distinct everywhere",
+      "line_in_shard": 18
+    },
+    {
+      "type": "process_defect",
+      "text": "- the system should not silently demote a persistent blocker into history just because time passed",
+      "line_in_shard": 20
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 24
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 26
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The graph tab already has the strongest explicit scale contract in the current docs.",
+      "line_in_shard": 31
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The graph spec also already defines the right implementation direction:",
+      "line_in_shard": 37
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `FinalGUISpec.md` has scattered virtualization/pagination language for other surfaces, but not an Orchestrator-wide large-run policy.",
+      "line_in_shard": 48
+    },
+    {
+      "type": "requirement",
+      "text": "- That means the performance model must explicitly cover:",
+      "line_in_shard": 58
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Progress widgets and cross-tab inspectors",
+      "line_in_shard": 64
+    },
+    {
+      "type": "requirement",
+      "text": "- must use progressive disclosure rather than fully expanded seam/package/node trees",
+      "line_in_shard": 72
+    },
+    {
+      "type": "requirement",
+      "text": "- must be exact, but exact does not mean fully materialized at once",
+      "line_in_shard": 84
+    },
+    {
+      "type": "requirement",
+      "text": "- filtered query + paging + stable sort are required",
+      "line_in_shard": 85
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The graph patch model makes scale harder than the current graph spec assumes.",
+      "line_in_shard": 92
+    },
+    {
+      "type": "data_shape",
+      "text": "- minimap/search/focus-to-object remain generation-aware",
+      "line_in_shard": 99
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- When projections are stale or degraded:",
+      "line_in_shard": 113
+    },
+    {
+      "type": "decision",
+      "text": "- stale graph projection might still support focused inspection of selected nodes/generations",
+      "line_in_shard": 116
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- stale ledger/history slices remain usable because they are closer to canonical records",
+      "line_in_shard": 117
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The current docs do not yet define how thousands-of-node runs with many generations should remain readable by default without collapsing history away.",
+      "line_in_shard": 121
+    },
+    {
+      "type": "doc_hint",
+      "text": "- cross-tab inspector loading strategy",
+      "line_in_shard": 126
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Add an Orchestrator-wide scale contract that sits above individual tab docs.",
+      "line_in_shard": 130
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs.",
+      "line_in_shard": 131
+    },
+    {
+      "type": "doc_hint",
+      "text": "- exact record inspection in `Ledger` still needs paging; exactness does not require eager full materialization",
+      "line_in_shard": 137
+    },
+    {
+      "type": "requirement",
+      "text": "- historical graph generations must stay accessible without becoming the default visual density",
+      "line_in_shard": 138
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 143
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 144
+    },
+    {
+      "type": "process_defect",
+      "text": "- What is still missing is a rewrite-specific action policy for:",
+      "line_in_shard": 158
+    },
+    {
+      "type": "data_shape",
+      "text": "- jump to run/seam/package/node/lane/concern/review/patch/recovery object",
+      "line_in_shard": 171
+    },
+    {
+      "type": "doc_hint",
+      "text": "- open inspector/detail/history/ledger/evidence context",
+      "line_in_shard": 172
+    },
+    {
+      "type": "routing_rule",
+      "text": "- run search routes",
+      "line_in_shard": 173
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The current docs imply grouped navigation for affected nodes/attempts, but not a strong bulk mutation policy.",
+      "line_in_shard": 181
+    },
+    {
+      "type": "decision",
+      "text": "- navigate to selected nodes/concerns",
+      "line_in_shard": 186
+    },
+    {
+      "type": "decision",
+      "text": "- open selected items in `History`, `Evidence`, or `Ledger`",
+      "line_in_shard": 187
+    },
+    {
+      "type": "doc_hint",
+      "text": "- shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions",
+      "line_in_shard": 199
+    }
+  ]
+}

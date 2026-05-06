@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.stage_report.a4.v3.1.5",
+  "prompt_id": "A4",
+  "prompt_version": "pm.a4.v3.1.5",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260505T182335Z",
+  "status": "COMPLETE",
+  "summary": [
+    "Wrote Section A exit handoff artifact with locked work_id and run metadata.",
+    "Captured completed prompts and active outputs for downstream startup.",
+    "Set next section handoff to B0 \u2014 Section Entry: Research / Audit Intake."
+  ],
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A4.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+  ],
+  "subagents": {
+    "used": false,
+    "reason": "Skip gate satisfied: single work-item artifact family, minimal records, no broad search, one bounded patch group."
+  },
+  "next_prompt_request": "B0 \u2014 Section Entry: Research / Audit Intake"
+}

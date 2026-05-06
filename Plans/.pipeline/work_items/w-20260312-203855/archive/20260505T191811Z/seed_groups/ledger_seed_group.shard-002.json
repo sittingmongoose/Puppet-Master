@@ -1,0 +1,126 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-002",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-002.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "requirement",
+      "text": "- `Action Required`",
+      "line_in_shard": 12
+    },
+    {
+      "type": "decision",
+      "text": "- chat thread = only for situations that actually need user resolution/decision, not general warnings",
+      "line_in_shard": 15
+    },
+    {
+      "type": "requirement",
+      "text": "- chat-thread-worthy action-required cases",
+      "line_in_shard": 30
+    },
+    {
+      "type": "requirement",
+      "text": "- restore required / failed / completed",
+      "line_in_shard": 35
+    },
+    {
+      "type": "requirement",
+      "text": "- `Progress` badge should represent meaningful attention/action-required count",
+      "line_in_shard": 39
+    },
+    {
+      "type": "requirement",
+      "text": "- active blockers must not be dismissible in a way that makes the system appear unblocked",
+      "line_in_shard": 52
+    },
+    {
+      "type": "requirement",
+      "text": "- blockers requiring real action must not be acknowledgeable in place of resolution",
+      "line_in_shard": 57
+    },
+    {
+      "type": "data_shape",
+      "text": "- `concern` should be a first-class record, not just a field buried in review/alert logic",
+      "line_in_shard": 59
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- owner",
+      "line_in_shard": 65
+    },
+    {
+      "type": "requirement",
+      "text": "- resolution must track underlying truth changes, not mere presentation changes",
+      "line_in_shard": 84
+    },
+    {
+      "type": "routing_rule",
+      "text": "- route to remediation",
+      "line_in_shard": 100
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- severity/owner mutation",
+      "line_in_shard": 102
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Inspector vs full-record action split clarified:",
+      "line_in_shard": 105
+    },
+    {
+      "type": "doc_hint",
+      "text": "- side inspectors should remain summary/action-light",
+      "line_in_shard": 106
+    },
+    {
+      "type": "data_shape",
+      "text": "- widget identity/type",
+      "line_in_shard": 111
+    },
+    {
+      "type": "requirement",
+      "text": "- Required orchestrator projection families now identified:",
+      "line_in_shard": 115
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale`",
+      "line_in_shard": 137
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- what is stale",
+      "line_in_shard": 146
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Fallback path under stale projections is now clearer:",
+      "line_in_shard": 149
+    },
+    {
+      "type": "doc_hint",
+      "text": "- degrade from summary/projection surfaces to direct record-backed inspection",
+      "line_in_shard": 150
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked",
+      "line_in_shard": 175
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Orchestrator shows execution-specific provider/account pressure context",
+      "line_in_shard": 179
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Project` = main execution policy owner",
+      "line_in_shard": 192
+    }
+  ]
+}

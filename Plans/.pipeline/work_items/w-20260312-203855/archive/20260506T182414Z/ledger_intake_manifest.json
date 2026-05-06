@@ -1,0 +1,25 @@
+{
+  "schema_id": "pm.ledger_intake_manifest.v3.1.10",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.1.10",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260505T201800Z",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "requires_new_research": false,
+  "requires_condensation": false,
+  "requires_ledger_preparation": true,
+  "next_section": "C_Ledger_Preparation",
+  "next_preferred_prompt": "C0",
+  "intake_evidence": {
+    "selection_rule": "priority_1_working_ledger_non_empty",
+    "working_ledger_line_count": 18244,
+    "session_notes_present": false,
+    "research_findings_present": false,
+    "feature_spec_audit_report_present": false,
+    "issue_process_adjudication_report_present": false,
+    "notes": "No session_notes directory; other optional READ artifacts absent. Intake is the existing execution-memory ledger only."
+  }
+}

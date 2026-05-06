@@ -1,0 +1,603 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0029",
+  "coverage": {
+    "shard_id": "shard-0029",
+    "start_line": 5142,
+    "end_line": 5333,
+    "line_count": 192,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0029.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 6,
+        "text": "contextual help can simplify wording, but must not mutate the underlying semantics",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "The rewrite now needs a stronger cross-cutting copy discipline so the UI does not casually say:",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "when a more precise canonical term is required",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms where canonical terms are now required.",
+        "tokens": [
+          "FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "`Multi-Account.md` explicitly says the behavior applies to assistant, interviewer, requirements builder, PRD builder, overseers, node workers, and provider-backed chat/tool turns",
+        "tokens": [
+          "Multi-Account.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "The conversational/document-production surfaces already require runtime-identity visibility:",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "Interview activity pane and chat must show effective Persona, selection reason, effective platform/model, and skipped-control disclosure",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "Requirements Builder must show effective Persona, selection reason, effective platform/model, and skipped unsupported Persona controls for the active stage/pass",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "The docs imply multiple identity families that must stay distinct:",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "These can be linked, but should not be collapsed into one object model.",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "attention_required",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "This is useful because it means the shared runtime contract should stay broad.",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "But it also means reconciliation later must avoid accidentally renaming all blocked semantics as “Orchestrator” semantics.",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Search and record systems should be able to span these actors without flattening them into one type.",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "The current docs are stronger on visibility requirements than on naming this boundary explicitly.",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "`thread_id`, `wizard_id`, bundle/review ids, and orchestration `run_id`/attempt ids must remain linkable but distinct",
+        "tokens": [
+          "run_id",
+          "thread_id",
+          "wizard_id"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "chat blocked notices already prove shared blocked taxonomy does not require shared object ontology",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 152,
+        "text": "Good direction:",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "keep a shared runtime-identity field family",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "keep distinct actor/run kinds",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "but remain upstream conversational/document-production actors, not package/seam/node execution objects",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "Keep blocked/remediation taxonomy shared, while preserving actor-specific state machines and object identities.",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "`thread_id`, `wizard_id`, bundle/review ids, and orchestration `run_id`/attempt ids must remain linkable but distinct",
+        "tokens": [
+          "run_id",
+          "thread_id",
+          "wizard_id"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 49,
+        "text": "Expand `Glossary.md` to cover the rewrite-critical Orchestrator objects, states, and trust terms.",
+        "tokens": [
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "The shared provider-runtime contract is already broader than Orchestrator:",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "chat subagent blocks and interview activity panes are already expected to expose the same effective-runtime fields for active work blocks",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "wizard/interview blocked state is explicit and persistent, not a soft conversational inconvenience",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "an Interview run may have runtime identity and blocked/remediation state",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "but it is still an interview/document-production run, not an Orchestrator package/node execution record",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "Interview chat surface and Interview activity pane share the same active run state",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "blocked state is not Orchestrator-exclusive",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "This is useful because it means the shared runtime contract should stay broad.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "record envelopes",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Search and record systems should be able to span these actors without flattening them into one type.",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "keep a shared runtime-identity field family",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "Add an explicit shared-runtime boundary statement:",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "Preserve distinct actor/run kinds in record/search/routing contracts.",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "Keep blocked/remediation taxonomy shared, while preserving actor-specific state machines and object identities.",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "Builder/Interview activity panes already give a concrete model for “same runtime state, different surface”",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 13,
+        "text": "Lane vs Worktree",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "This means those docs are less likely to need conceptual rewrite than the Orchestrator and glossary/help surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "The bigger risk is copy drift in GUI/help text if Orchestrator starts using newer concepts without glossary/help coverage.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "`Glossary.md` is now materially behind the Orchestrator rewrite vocabulary.",
+        "tokens": [
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Orchestrator tabs",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "Source Control / lane/worktree language",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "Expand `Glossary.md` to cover the rewrite-critical Orchestrator objects, states, and trust terms.",
+        "tokens": [
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "glossary/help need to catch up to Orchestrator object semantics before UI copy starts crystallizing around weaker synonyms",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "`lane` vs `worktree`, `history` vs `ledger`, and `historical` vs `superseded` are especially drift-prone",
+        "tokens": [
+          "historical",
+          "history",
+          "lane",
+          "ledger",
+          "superseded",
+          "worktree"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "The shared provider-runtime contract is already broader than Orchestrator:",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "lane-pool objects",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "but it is still an interview/document-production run, not an Orchestrator package/node execution record",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "blocked state is not Orchestrator-exclusive",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "But it also means reconciliation later must avoid accidentally renaming all blocked semantics as “Orchestrator” semantics.",
+        "tokens": []
+      },
+      {
+        "line": 159,
+        "text": "orchestrator node/attempt/run",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "assistant/interviewer/builders share provider/account/runtime identity semantics with Orchestrator",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "Preserve distinct actor/run kinds in record/search/routing contracts.",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 27,
+        "text": "The bigger risk is copy drift in GUI/help text if Orchestrator starts using newer concepts without glossary/help coverage.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 19,
+        "text": "The shared provider/runtime docs already support the newer requested/effective language well.",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "`Multi-Account.md`, `Models_System.md`, and `Personas.md` already align on:",
+        "tokens": [
+          "Models_System.md",
+          "Multi-Account.md",
+          "Personas.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "The shared runtime/provider docs are stronger than the shared concept/glossary docs.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "the runtime/provider docs already provide a solid requested/effective foundation; do not reinvent that vocabulary",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "The shared provider-runtime contract is already broader than Orchestrator:",
+        "tokens": []
+      },
+      {
+        "line": 72,
+        "text": "`Multi-Account.md` explicitly says the behavior applies to assistant, interviewer, requirements builder, PRD builder, overseers, node workers, and provider-backed chat/tool turns",
+        "tokens": [
+          "Multi-Account.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "requested/effective provider/model/effort/persona/auth/account and selection reason are already shared runtime concepts",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "Interview activity pane and chat must show effective Persona, selection reason, effective platform/model, and skipped-control disclosure",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "Requirements Builder must show effective Persona, selection reason, effective platform/model, and skipped unsupported Persona controls for the active stage/pass",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "conversational actors and document-production actors share provider/runtime identity semantics, but they are not orchestration execution objects",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "requested/effective provider/model/persona/account/auth semantics",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "chat subagent blocks preserve persona/task/runtime identity in-thread rather than using a separate weaker model",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "shared provider runtime does not imply shared execution ontology",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "same provider/account/model/runtime machinery",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "duplicating provider/account/runtime identity logic for conversational flows",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "assistant/interviewer/builders share provider/account/runtime identity semantics with Orchestrator",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 16,
+        "text": "historical vs superseded vs revoked",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "`lane` vs `worktree`, `history` vs `ledger`, and `historical` vs `superseded` are especially drift-prone",
+        "tokens": [
+          "historical",
+          "history",
+          "lane",
+          "ledger",
+          "superseded",
+          "worktree"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "These can be linked, but should not be collapsed into one object model.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 7,
+        "text": "Good dedicated help-entry candidates now look even stronger for:",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "Candidate actor/run kinds:",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 27,
+        "text": "The bigger risk is copy drift in GUI/help text if Orchestrator starts using newer concepts without glossary/help coverage.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "Add explicit distinction guidance for the high-risk word pairs above.",
+        "tokens": []
+      },
+      {
+        "line": 78,
+        "text": "The shared failure/remediation taxonomy also already crosses the boundary:",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "Interview uses the shared `failure_class` / `blocked_reason_code` taxonomy",
+        "tokens": [
+          "blocked_reason_code",
+          "failure_class"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 62,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/Models_System.md",
+        "tokens": [
+          "Plans/Models_System.md"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 190,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 191,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

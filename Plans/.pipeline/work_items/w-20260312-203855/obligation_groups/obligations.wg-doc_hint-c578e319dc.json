@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-doc_hint-c578e319dc",
+  "category": "doc_hint",
+  "family_key": "export_seam_storage_plan_md_finalguispec_md_orchestrator_page_md_usage_feature_md_widget",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0018-L00138-doc_hint-a73c51835d"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-doc_hint-c578e319dc--SYNTH-shard-0018-L00138-doc_hint-a73c51835d",
+      "seed_id": "SYNTH-shard-0018-L00138-doc_hint-a73c51835d",
+      "source_shard_id": "shard-0018",
+      "batch_index": 5,
+      "obligation_type": "doc_hint",
+      "work_group_category": "doc_hint",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0018",
+        "line_in_shard": 138,
+        "line_in_source": null,
+        "source_line": 3538
+      },
+      "statement": "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md.",
+      "evidence_ledger_excerpt": "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md.",
+      "related_paths": [],
+      "doc_hints": [
+        {
+          "hint": "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md.",
+          "evidence_ledger_excerpt": "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md.",
+          "related_paths": []
+        }
+      ],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md."
+      ],
+      "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels."
+    }
+  ]
+}

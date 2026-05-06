@@ -1,0 +1,1112 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "c3-shard-0010",
+  "shard_id": "shard-0010",
+  "coverage": {
+    "shard_id": "shard-0010",
+    "start_line": 1508,
+    "end_line": 1692,
+    "line_count": 185,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0010.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 4,
+        "text": "Reconcile graph ordering rules, dependency representations, and blocked payload field names.",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "Add package/seam/lane/worktree/account identity fields to runtime/event/envelope/schema families.",
+        "tokens": []
+      },
+      {
+        "line": 13,
+        "text": "Replace tiers-first views and single-worktree assumptions with package/seam/lane-aware surfaces.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 132,
+        "text": "Priority 1 focuses on canonical contracts that cannot safely coexist with the new model.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "Priority 2 targets misleading UI/SCM/operator docs after contract cleanup.",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Priority 3 targets terminology, routing, and anti-drift docs.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 97,
+        "text": "Primary schemas model nodes/checks but not package, seam, lane, promotion class, contamination, resolution thread, or effective account identity.",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "Storage/event keys should include project_id, attempt_id, package_id, seam_id, lane_id, worktree_id, safe_point_id, promotion_class, and requested/effective account fields.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 34,
+        "text": "Unify attention routing across Dashboard, Orchestrator, chat-thread, and inline cards using shared blocked/HITL/runtime event families.",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "Tier-boundary HITL and blocked-node/runtime-overlay HITL route approvals and wake semantics differently and must be reconciled.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 85,
+        "text": "Validate scheduler contract alignment between lexicographic graph selection and scored ready-set scheduling.",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Normalize blocked payload fields (`allowed_actions` vs `allowed_action_ids[]`, `blocked_reason` vs `blocked_reason_code`).",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "Reconcile graph-local recovery commands with canonical `cmd.runtime.*` action families.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 45,
+        "text": "Runtime/UI SSOT docs must carry node/package/seam/lane/promotion identity and requested/effective execution identity including account.",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "Source Control and Orchestrator must share worktree visibility with package/lane ownership, contamination, and restore eligibility.",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 24,
+        "text": "Tier identifiers still key many UI/storage/envelope contracts where package/node/seam IDs are now needed.",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "Tiers tab and phase/task/subtask trees in UI specs should be retired for package/seam/lane/promotion/resolution-thread surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "Plan-node shards and project-local sidecars acting as mutable runtime sources should be retired in favor of runtime projections.",
+        "tokens": []
+      },
+      {
+        "line": 178,
+        "text": "Run/tier/subtask worktree model should be replaced by package-based lane pools.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 30,
+        "text": "What are the canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads?",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "How should requested/effective account, overseer role, and worktree/lane fields be represented in execution identity snapshots?",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "How should graph/evidence schemas link package, seam, promotion, account, lane, acceptance, coverage, and evidence?",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 22,
+        "text": "Automation-first direction conflicts with interactive defaults and mandatory review flows.",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Restore/checkpoint/rollback terminology remains overloaded and unsafe.",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "Approval-heavy UX defaults undermine automation-first behavior.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 133,
+        "text": "Update `Plans/Orchestrator_Page.md`, `Plans/Executor_Protocol.md`, `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/human-in-the-loop.md`, and graph schemas first.",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "Then align `Plans/FinalGUISpec.md`, `Plans/Run_Graph_View.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Widget_System.md`, and `Plans/UI_Command_Catalog.md`.",
+        "tokens": []
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0010",
+  "coverage": {
+    "shard_id": "shard-0010",
+    "start_line": 1508,
+    "end_line": 1692,
+    "line_count": 185,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0010.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 23,
+        "text": "3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers.",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Restore language is still dangerously overloaded.** Several docs still use rollback/checkpoint/revert wording where newer addenda require safe-point-aware retry and explicit “start fresh attempt” semantics.",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "`Executor_Protocol` addenda require scored ready-set scheduling with wake reasons, lane/capacity awareness, and blocked constraints.",
+        "tokens": [
+          "Executor_Protocol"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 9,
+        "text": "Extend `Glossary.md`, `Crosswalk.md`, and `Decision_Policy.md` with feature seam, work package, lane pool, contamination, safe point, promotion class, and effective execution identity.",
+        "tokens": [
+          "Crosswalk.md",
+          "Decision_Policy.md",
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Replace tiers-first views and single-worktree assumptions with package/seam/lane-aware surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction.",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "Why impacted:** These remain the practical runtime/UI SSOT for execution, blocked states, recovery actions, identity visibility, terminals, and event families.",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "What old assumption is present:** Tiers are still first-class UI and contract nouns; HITL still has tier-boundary ancestry; `AttemptJournal`/handoff payloads remain subtask/iteration-shaped; one Overseer still owns orchestration.",
+        "tokens": [
+          "AttemptJournal"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Requested vs effective runtime display remains incomplete.** Persona/platform/model are sometimes surfaced, but effective account, fallback reason, lane/worktree identity, package/seam ownership, and overseer role are generally absent.",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model.",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent if both models remain canonical.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 3,
+        "text": "Priority 1 — Fix canonical contracts and schemas**",
+        "tokens": []
+      },
+      {
+        "line": 4,
+        "text": "Reconcile graph ordering rules, dependency representations, and blocked payload field names.",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "Add package/seam/lane/worktree/account identity fields to runtime/event/envelope/schema families.",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule.",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction.",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "4. **Tier identifiers vs node/package/seam identity.** Many UI, storage, and envelope contracts still key execution to tier concepts where package/node/seam IDs are now needed.",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "6. **Requested/effective state vs requested/effective execution identity.** The model exists for persona/model/platform but not yet for account or runtime actor identity.",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "Model-wave synthesis from GPT-5.4 fleet sweep across `Plans/**`. This pass surfaced the strongest contradiction map so far: not just stale terminology, but multiple places where old tier-era contracts and newer node/safe-point/runtime addenda are simultaneously marked canonical.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "Why impacted:** These remain the practical runtime/UI SSOT for execution, blocked states, recovery actions, identity visibility, terminals, and event families.",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "What old assumption is present:** Tiers are still first-class UI and contract nouns; HITL still has tier-boundary ancestry; `AttemptJournal`/handoff payloads remain subtask/iteration-shaped; one Overseer still owns orchestration.",
+        "tokens": [
+          "AttemptJournal"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json`**",
+        "tokens": [
+          "Plans/plan_graph.schema.json",
+          "Plans/project_plan_node.schema.json",
+          "Plans/storage-plan.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Why impacted:** These define the canonical event/storage/schema backbone and are still consumed by many downstream docs.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "What old assumption is present:** Tier/phase/iteration events, `tier_runtime_record`, `tier_id`-based usage rollups, lexicographic graph dispatch, narrow node status enums, runtime state embedded in plan shards.",
+        "tokens": [
+          "tier_id",
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "What likely new model pressure is:** Need attempt-scoped runtime state, package/seam/lane/promotion fields, blocked lineage, safe-point/restore linkage, and separation between plan structure and mutable runtime projections.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Why impacted:** These still shape the user’s primary operational mental model.",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "Why impacted:** These own the hardest intersection: worktrees, SCM state, remote actions, and account resolution.",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "What likely new model pressure is:** Need package-based lane pools, worktree visibility shared between Source Control and Orchestrator, effective-account recording per hosted side effect, and package/seam-aware promotion boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "Why impacted:** These define approvals, blocked states, recovery, and artifact pathing.",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "Old and new scheduler contracts actively disagree.**",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "Graph schemas still fix lexicographic selection.",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "Blocked payload and recovery families are inconsistent.**",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "Runtime state is stored in the wrong places.**",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "Plan-node shards and project-local JSON sidecars still act like mutable runtime sources in several docs.",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "Primary schemas stop at node-level modeling.**",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields.",
+        "tokens": [
+          "attempt_id",
+          "lane_id",
+          "node_id",
+          "package_id",
+          "project_id",
+          "promotion_class",
+          "run_id",
+          "safe_point_id",
+          "seam_id",
+          "worktree_id"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts.",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.",
+        "tokens": [
+          "attempt_id",
+          "node_id"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Parallelism is modeled in outdated shapes.**",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts.",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "Priority 1 — Canonical contracts that cannot safely coexist with the new model**",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json",
+        "tokens": [
+          " / ",
+          "Plans/plan_graph.schema.json",
+          "Plans/project_plan_node.schema.json"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Docs involved: `plan_graph.schema.json`, `project_plan_graph_index.schema.json`, `Executor_Protocol.md`",
+        "tokens": [
+          "Executor_Protocol.md",
+          "plan_graph.schema.json",
+          "project_plan_graph_index.schema.json"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs",
+        "tokens": [
+          "Contracts_V0.md",
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Why it matters: persisted/runtime field drift is already visible and will worsen when account identity is added too.",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Why it matters: this changes default behavior, user expectations, and blocked-state routing.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 5,
+        "text": "Add package/seam/lane/worktree/account identity fields to runtime/event/envelope/schema families.",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "Extend `Glossary.md`, `Crosswalk.md`, and `Decision_Policy.md` with feature seam, work package, lane pool, contamination, safe point, promotion class, and effective execution identity.",
+        "tokens": [
+          "Crosswalk.md",
+          "Decision_Policy.md",
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Replace tiers-first views and single-worktree assumptions with package/seam/lane-aware surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "GPT-5.2 repeatedly found split-brain specs where addenda carry the correct modern model but anchor tables/body text still describe older rules.",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families.",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "What likely new model pressure is:** Need explicit node/package/seam/lane/promotion identity, package overseer + seam overseer authority, requested/effective execution identity including account, and package/lane-aware blocked/recovery semantics.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "What old assumption is present:** Tier/phase/iteration events, `tier_runtime_record`, `tier_id`-based usage rollups, lexicographic graph dispatch, narrow node status enums, runtime state embedded in plan shards.",
+        "tokens": [
+          "tier_id",
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "What likely new model pressure is:** Need attempt-scoped runtime state, package/seam/lane/promotion fields, blocked lineage, safe-point/restore linkage, and separation between plan structure and mutable runtime projections.",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "What old assumption is present:** Tiers tab, phase/task/subtask trees, graph-local retry/approve/deny actions, completed-work prose by phase/task, single-current-task widgets, restore/checkpoint wording.",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "What likely new model pressure is:** Need package/seam/lane/promotion/resolution-thread surfaces, runtime action families keyed by blocked classification, requested/effective identity including account, and separation of safe points from restore points.",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "What likely new model pressure is:** Need package-based lane pools, worktree visibility shared between Source Control and Orchestrator, effective-account recording per hosted side effect, and package/seam-aware promotion boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "Why impacted:** These define approvals, blocked states, recovery, and artifact pathing.",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "What likely new model pressure is:** Need node/package/seam/lane-bound optional HITL, canonical blocked episode actions, package/lane artifact pathing, and package/seam-aware recovery/promotion semantics.",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "Tiers are still productized even where node graph is supposed to be canonical.** GPT-5.4 repeatedly found `Tiers` as a primary tab, navigation target, widget namespace, and telemetry dimension.",
+        "tokens": [
+          "Tiers"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Requested vs effective runtime display remains incomplete.** Persona/platform/model are sometimes surfaced, but effective account, fallback reason, lane/worktree identity, package/seam ownership, and overseer role are generally absent.",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "`Executor_Protocol` addenda require scored ready-set scheduling with wake reasons, lane/capacity awareness, and blocked constraints.",
+        "tokens": [
+          "Executor_Protocol"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "Plan-node shards and project-local JSON sidecars still act like mutable runtime sources in several docs.",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields.",
+        "tokens": [
+          "attempt_id",
+          "lane_id",
+          "node_id",
+          "package_id",
+          "project_id",
+          "promotion_class",
+          "run_id",
+          "safe_point_id",
+          "seam_id",
+          "worktree_id"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Settings scopes are still too coarse.** Global/project toggles are common, but package/seam/lane/run/account-aware settings or policy scopes are mostly absent.",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model.",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture.",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "None of these cleanly map to package/seam promotion or lane-pool capacity.",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts.",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Priority 3 — Terminology, routing, and anti-drift docs**",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "Why it matters: approval ownership, wake semantics, and UI routing differ materially between these models.",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "Docs involved: `Executor_Protocol.md`, `Orchestrator_Page.md`, `Personas.md`, `Provider_Stream_Mapping_External_Reference_A2A.md`",
+        "tokens": [
+          "Executor_Protocol.md",
+          "Orchestrator_Page.md",
+          "Personas.md",
+          "Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs",
+        "tokens": [
+          "Contracts_V0.md",
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 178,
+        "text": "6. **Run/tier/subtask worktrees vs package-based lane pools**",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Why it matters: this changes default behavior, user expectations, and blocked-state routing.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 34,
+        "text": "5. **Reconcile automation-first with local execution UX.** Decide how `regular`, `visual_mode`, manual confirmations, and optional HITL boundaries map into one coherent mode policy.",
+        "tokens": [
+          "regular",
+          "visual_mode"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "Automation-first is still undermined by approval-heavy UX defaults.** GPT-5.4 repeatedly found phase-complete approvals, manual review steps, modal confirmations, and direct-click approvals that are not yet framed as optional HITL boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 6,
+        "text": "Define one execution identity snapshot that covers account as well as persona/model/platform.",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "6. **Requested/effective state vs requested/effective execution identity.** The model exists for persona/model/platform but not yet for account or runtime actor identity.",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "What likely new model pressure is:** Need explicit node/package/seam/lane/promotion identity, package overseer + seam overseer authority, requested/effective execution identity including account, and package/lane-aware blocked/recovery semantics.",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "What old assumption is present:** Worktree ownership is `run/tier/subtask`, branch-per-run or subtask-per-worktree flows, GitHub/project flows are wizard-centric, account switching is still mostly run/iteration-scoped.",
+        "tokens": [
+          "run/tier/subtask"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Attention flow is fragmented across surfaces and vocabularies.** Some docs use Dashboard CtAs and blocked cards, others still use modal/toast approvals, graph-local dialogs, or inline chat actions. Resolution-thread ownership is largely missing.",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "Requested vs effective runtime display remains incomplete.** Persona/platform/model are sometimes surfaced, but effective account, fallback reason, lane/worktree identity, package/seam ownership, and overseer role are generally absent.",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.",
+        "tokens": [
+          "attempt_id",
+          "node_id"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "Persona fallback is split between “bare-context run” and canonical fallback Persona.",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "Docker/media/provider flows usually stop at provider/model, not account-resolution lineage.",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture.",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "per-provider caps",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "Why it matters: approval ownership, wake semantics, and UI routing differ materially between these models.",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "Docs involved: `Executor_Protocol.md`, `Orchestrator_Page.md`, `Personas.md`, `Provider_Stream_Mapping_External_Reference_A2A.md`",
+        "tokens": [
+          "Executor_Protocol.md",
+          "Orchestrator_Page.md",
+          "Personas.md",
+          "Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "Why it matters: ownership of scheduling, review, recovery, and promotion becomes ambiguous if both persist.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "4. **`requested_persona_id` vs canonical `requested_persona`**",
+        "tokens": [
+          "requested_persona",
+          "requested_persona_id"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 32,
+        "text": "3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "Model-wave synthesis from GPT-5.4 fleet sweep across `Plans/**`. This pass surfaced the strongest contradiction map so far: not just stale terminology, but multiple places where old tier-era contracts and newer node/safe-point/runtime addenda are simultaneously marked canonical.",
+        "tokens": [
+          "Plans/**"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 90,
+        "text": "graph-local `Retry/Replan/Reopen/Approve/Deny` vs canonical `cmd.runtime.*` action families",
+        "tokens": [
+          "Retry/Replan/Reopen/Approve/Deny",
+          "cmd.runtime.*"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 73,
+        "text": "Attention flow is fragmented across surfaces and vocabularies.** Some docs use Dashboard CtAs and blocked cards, others still use modal/toast approvals, graph-local dialogs, or inline chat actions. Resolution-thread ownership is largely missing.",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model.",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 40,
+        "text": "Model-wave synthesis from GPT-5.4 fleet sweep across `Plans/**`. This pass surfaced the strongest contradiction map so far: not just stale terminology, but multiple places where old tier-era contracts and newer node/safe-point/runtime addenda are simultaneously marked canonical.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json`**",
+        "tokens": [
+          "Plans/plan_graph.schema.json",
+          "Plans/project_plan_node.schema.json",
+          "Plans/storage-plan.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "`Plans/FinalGUISpec.md` + `Plans/Run_Graph_View.md` + `Plans/Widget_System.md` + `Plans/UI_Command_Catalog.md`**",
+        "tokens": [
+          "Plans/FinalGUISpec.md",
+          "Plans/Run_Graph_View.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "`Plans/WorktreeGitImprovement.md` + `Plans/GitHub_Integration.md` + `Plans/Multi-Account.md`**",
+        "tokens": [
+          "Plans/GitHub_Integration.md",
+          "Plans/Multi-Account.md",
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "`Plans/human-in-the-loop.md` + `Plans/Permissions_System.md` + `Plans/Project_Output_Artifacts.md`**",
+        "tokens": [
+          "Plans/Permissions_System.md",
+          "Plans/Project_Output_Artifacts.md",
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.",
+        "tokens": [
+          "attempt_id",
+          "node_id"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json",
+        "tokens": [
+          " / ",
+          "Plans/plan_graph.schema.json",
+          "Plans/project_plan_node.schema.json"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/00-plans-index.md",
+        "tokens": [
+          "Plans/00-plans-index.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

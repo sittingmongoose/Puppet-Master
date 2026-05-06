@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-b25684eaea",
+  "category": "process_only",
+  "family_key": "put_route_target_and_opensubject_in_contracts_v0_add_crosswalk_primitive_keep_openfile_narrow",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0066-009"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-b25684eaea--SEED-shard-0066-009",
+      "seed_id": "SEED-shard-0066-009",
+      "source_shard_id": "shard-0066",
+      "batch_index": 17,
+      "obligation_type": "candidate_fix",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0066",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Put route_target and OpenSubject in Contracts_V0; add Crosswalk primitive; keep OpenFile narrow; anchor resume_url decoding to Contracts_V0; keep storage ownership to persisted refs only.",
+      "evidence_ledger_excerpt": "Put the canonical `route_target` and `OpenSubject` contract in `Contracts_V0.md`.\n- Add a new primitive boundary in `Crosswalk.md` for route-target / open-by-identity navigation.\n- Treat `resume_url` as a derived serialization of `route_target`, with decoding rules anchored back to `Contracts_V0.md`.",
+      "related_paths": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Put route_target and OpenSubject in Contracts_V0; add Crosswalk primitive; keep OpenFile narrow; anchor resume_url decoding to Contracts_V0; keep storage ownership to persisted refs only.",
+          "kind": "candidate_fix",
+          "evidence_ledger_excerpt": "Put the canonical `route_target` and `OpenSubject` contract in `Contracts_V0.md`.\n- Add a new primitive boundary in `Crosswalk.md` for route-target / open-by-identity navigation.\n- Treat `resume_url` as a derived serialization of `route_target`, with decoding rules anchored back to `Contracts_V0.md`.",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/Crosswalk.md"
+          ]
+        }
+      ],
+      "exact_items": [
+        "Put route_target and OpenSubject in Contracts_V0",
+        "add Crosswalk primitive",
+        "keep OpenFile narrow",
+        "anchor resume_url decoding to Contracts_V0",
+        "keep storage ownership to persisted refs only."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

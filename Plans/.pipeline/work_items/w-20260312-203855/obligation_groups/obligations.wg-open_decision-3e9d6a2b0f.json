@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-3e9d6a2b0f",
+  "category": "open_decision",
+  "family_key": "lane_becomes_primary_operational_object_in_orchestrator_worktree_remains_concrete_git_backing_lane_may",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0010-L00169-decision-2a5b552677"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-3e9d6a2b0f--SYNTH-shard-0010-L00169-decision-2a5b552677",
+      "seed_id": "SYNTH-shard-0010-L00169-decision-2a5b552677",
+      "source_shard_id": "shard-0010",
+      "batch_index": 3,
+      "obligation_type": "decision",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0010",
+        "line_in_shard": 169,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Lane becomes primary operational object in Orchestrator; Worktree remains concrete Git backing; lane may outlive removed worktrees.",
+      "evidence_ledger_excerpt": "Lane becomes primary operational object in Orchestrator; Worktree remains concrete Git backing; lane may outlive removed worktrees.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [
+        {
+          "decision": "Lane becomes primary operational object in Orchestrator; Worktree remains concrete Git backing; lane may outlive removed worktrees.",
+          "evidence_ledger_excerpt": "Lane becomes primary operational object in Orchestrator; Worktree remains concrete Git backing; lane may outlive removed worktrees.",
+          "related_paths": []
+        }
+      ],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Lane becomes primary operational object in Orchestrator",
+        "Worktree remains concrete Git backing",
+        "lane may outlive removed worktrees."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

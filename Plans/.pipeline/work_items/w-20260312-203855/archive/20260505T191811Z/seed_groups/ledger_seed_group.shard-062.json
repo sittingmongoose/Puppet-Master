@@ -1,0 +1,401 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-062",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-062.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = node` or `attempt`",
+      "line_in_shard": 3
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <id>`",
+      "line_in_shard": 4
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = evidence` / `history` / `reviews` / similar",
+      "line_in_shard": 5
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 9
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 10
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 12
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 15
+    },
+    {
+      "type": "data_shape",
+      "text": "- Several current docs still blur \u201cwhich object\u201d and \u201cwhat part of that object\u2019s UI should be shown.\u201d",
+      "line_in_shard": 21
+    },
+    {
+      "type": "data_shape",
+      "text": "- Without a sub-selection rule, route payloads will either bloat or every surface will go back to inventing custom anchor fields.",
+      "line_in_shard": 22
+    },
+    {
+      "type": "data_shape",
+      "text": "- `wizard_step` is a strong example of a field that matters operationally but should not force the base target object to become wizard-shaped.",
+      "line_in_shard": 23
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Define `inspector_target` narrowly in the contract layer as reusable detail/subsection focus.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "- Allow some object-family-specific anchors, but force them to justify themselves instead of defaulting every special case into the base route contract.",
+      "line_in_shard": 28
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The base routing model gets much cleaner once those layers stay separate.",
+      "line_in_shard": 32
+    },
+    {
+      "type": "routing_rule",
+      "text": "- This seam is what prevents the new route-target contract from immediately turning back into per-surface deep-link spaghetti.",
+      "line_in_shard": 33
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers",
+      "line_in_shard": 35
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 37
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 40
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- canonical event names with explicit legacy aliases in `Contracts_V0.md`",
+      "line_in_shard": 45
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- canonical runtime recovery command consolidation in `UI_Command_Catalog.md`, where legacy command families become deprecated aliases but consumers map to one shared namespace",
+      "line_in_shard": 46
+    },
+    {
+      "type": "data_shape",
+      "text": "- their payload semantics should normalize through `route_target` / `OpenSubject`",
+      "line_in_shard": 50
+    },
+    {
+      "type": "data_shape",
+      "text": "- older payload shapes can be accepted during migration",
+      "line_in_shard": 51
+    },
+    {
+      "type": "doc_hint",
+      "text": "- new producers/docs should emit the canonical normalized target model",
+      "line_in_shard": 52
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `route_target`",
+      "line_in_shard": 59
+    },
+    {
+      "type": "doc_hint",
+      "text": "- specialized `OpenFile`",
+      "line_in_shard": 61
+    },
+    {
+      "type": "decision",
+      "text": "- canonical wrapper family such as `cmd.nav.*` if adopted",
+      "line_in_shard": 62
+    },
+    {
+      "type": "doc_hint",
+      "text": "- surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_source_control` may remain user-facing wrappers",
+      "line_in_shard": 64
+    },
+    {
+      "type": "data_shape",
+      "text": "- docs should explicitly mark older/raw payload conventions as migration aliases where needed",
+      "line_in_shard": 66
+    },
+    {
+      "type": "requirement",
+      "text": "- new docs/producers MUST prefer canonical route-target forms",
+      "line_in_shard": 68
+    },
+    {
+      "type": "data_shape",
+      "text": "- consumers MAY accept older wrapper-local payloads during migration",
+      "line_in_shard": 69
+    },
+    {
+      "type": "requirement",
+      "text": "- migration aliases MUST NOT become permanent parallel canon",
+      "line_in_shard": 70
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 72
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 73
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 77
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 80
+    },
+    {
+      "type": "data_shape",
+      "text": "- Without that discipline, consumer docs may either freeze old payloads forever or overclaim an immediate canonical switch that downstream docs cannot actually absorb.",
+      "line_in_shard": 85
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Wrapper commands are currently real and useful, but the docs still lack a rule for when they are canonical UX affordances versus deprecated raw transport shapes.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add explicit migration notes when replacing raw local IDs with normalized `subject_id` or `object_kind/object_id` forms.",
+      "line_in_shard": 91
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just \u201ccommand id exists.\u201d",
+      "line_in_shard": 92
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The goal is not to delete every surface-specific command.",
+      "line_in_shard": 95
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The goal is to stop every surface-specific command from inventing its own private navigation semantics.",
+      "line_in_shard": 96
+    },
+    {
+      "type": "routing_rule",
+      "text": "- This seam is what makes the route-target work practical to reconcile across the existing doc set.",
+      "line_in_shard": 97
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 101
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Document_Packaging_Policy.md`",
+      "line_in_shard": 106
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 108
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 112
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This uncovered tranche produced real new synthesis, not filler. The remaining Gemini-only surface still hides several owner-level contradictions.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `UI_Command_Catalog.md` backfill plus adjacent docs sharpened command/event ownership further:",
+      "line_in_shard": 118
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- the catalog still has an unresolved split between legacy `cmd.graph.*` recovery commands and canonical `cmd.runtime.*` recovery families.",
+      "line_in_shard": 119
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Index / checklist / promoted-feature docs are now confirmed drift carriers, not just passive summaries:",
+      "line_in_shard": 121
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `00-plans-index.md` still misroutes or under-describes several rewrite-critical owners (`Orchestrator_Page`, `Widget_System`, `storage-plan`, `Executor_Protocol`) and does not surface Multi-Account/Crosswalk strongly enough.",
+      "line_in_shard": 122
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI/Orchestrator docs.",
+      "line_in_shard": 123
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.",
+      "line_in_shard": 124
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Several remaining docs are still structurally tied to old tier-era execution assumptions:",
+      "line_in_shard": 125
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation.",
+      "line_in_shard": 126
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still disagree on live capability re-checks vs frozen run snapshots, and `platform.capability_evaluated` remains outside Contracts_V0 event registration.",
+      "line_in_shard": 130
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Container / Docker / Unraid ownership is still more fragmented than the main owner set suggested:",
+      "line_in_shard": 133
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authority with the same event family.",
+      "line_in_shard": 135
+    },
+    {
+      "type": "doc_hint",
+      "text": "- DockerHub auth/account identity remains structurally isolated from Multi-Account and still lacks a coherent receipt/lineage bridge.",
+      "line_in_shard": 136
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states.",
+      "line_in_shard": 138
+    },
+    {
+      "type": "process_defect",
+      "text": "- `LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.",
+      "line_in_shard": 141
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 145
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Primary docs in this tranche:",
+      "line_in_shard": 146
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Document_Packaging_Policy.md`",
+      "line_in_shard": 151
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 153
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 157
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Repeatedly implicated adjacent owners:",
+      "line_in_shard": 160
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 161
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Remaining Gemini-only docs are not low-value leftovers; many still hide active owner gaps in indices/checklists/policies and subsystem plans.",
+      "line_in_shard": 175
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The broader rewrite still lacks a strong single source for several cross-cutting concerns: command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, and actor-scope/rules injection.",
+      "line_in_shard": 176
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Multiple supporting docs still silently inherit stale assumptions from earlier docs rather than independently reflecting the rewrite model.",
+      "line_in_shard": 177
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Treat these docs as real follow-on candidates for later-model continuation if the next coverage audit still shows too much unevenness.",
+      "line_in_shard": 180
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Highest-signal follow-on docs from this tranche appear to be:",
+      "line_in_shard": 181
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 188
+    },
+    {
+      "type": "verification_rule",
+      "text": "- with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.",
+      "line_in_shard": 190
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `UI_Command_Catalog.md` now has the missing Gemini pass, which removes a weird asymmetry from the most central command-owner doc.",
+      "line_in_shard": 194
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This tranche confirms that some of the remaining docs are not just \u201cless important\u201d \u2014 they were simply under-examined and still contain real contradictions.",
+      "line_in_shard": 195
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 199
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 200
+    }
+  ]
+}

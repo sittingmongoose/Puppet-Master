@@ -1,0 +1,41 @@
+{
+  "schema_id": "pm.stage_report.v3.1.10",
+  "prompt_id": "B0",
+  "prompt_version": "pm.b0.v3.1.10",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260505T195100Z",
+  "status": "COMPLETE",
+  "summary": "Locked work_id from latest section_exit_A.json. No explicit intake path; defaulted next Section B prompt to B4 (Ledger Intake Decision). Subagent fan-out not required for this gate.",
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B0.json"
+  ],
+  "subagents": {
+    "required": false,
+    "used": false,
+    "fan_out_worklist_path": null,
+    "required_subagent_tasks_total": 0
+  },
+  "fanout_proof": {
+    "required_subagent_tasks_total": 0,
+    "wave_artifacts_total": 0,
+    "wave_artifacts_expected_min": 0,
+    "wave_artifact_paths": [],
+    "completed_task_ids_from_wave_artifacts": [],
+    "pending_task_ids_from_wave_artifacts": [],
+    "blocked_task_ids_from_wave_artifacts": [],
+    "subagent_invocation_ids_from_wave_artifacts": [],
+    "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+    "task_to_invocation_map": {},
+    "invocation_to_task_map": {},
+    "omnibus_invocation_detected": false,
+    "main_agent_bulk_output_detected": false,
+    "fanout_proof_status": "pass",
+    "fanout_proof_note": "Subagents not required for B0; no bounded fan-out tasks. Proof fields reflect zero-task coverage with no pending work."
+  },
+  "next_prompt": {
+    "next_prompt_id": "B4",
+    "next_prompt_request": "B4 — Ledger Intake Decision v3.1.10."
+  },
+  "blockers": []
+}

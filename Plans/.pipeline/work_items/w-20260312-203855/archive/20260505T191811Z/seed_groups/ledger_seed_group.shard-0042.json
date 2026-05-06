@@ -1,0 +1,1339 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0042",
+  "coverage": {
+    "shard_id": "shard-0042",
+    "start_line": 7628,
+    "end_line": 7816,
+    "line_count": 189,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0042.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 13,
+        "text": "The rewrite now needs one explicit **operational identity** layer in addition to provider-account identity:",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "`storage-plan.md` already uses `trust_tier` for Preview semantics, so the broader rewrite now needs a distinct projection-freshness name to avoid vocabulary collision when trust/degraded state is generalized across Orchestrator surfaces",
+        "tokens": [
+          "storage-plan.md",
+          "trust_tier"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "still needs requested concrete-account ownership plus explicit role/actor semantics in the canonical runtime record",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "now clearly needs a binding path from operational identity and role-scoped pools into the shared runtime grammar",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "now clearly needs transport/upstream naming cleanup to keep requested/effective identity deterministic",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "`trust_tier` is already occupied by Preview, so projection-freshness trust needs a distinct name.",
+        "tokens": [
+          "trust_tier"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Operational identities must be displayable with provider/account identity but must not imply shared token ownership.",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "normalized envelopes remain minimal while later addenda require thread/node/attempt/lineage preservation",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "GPT-5.2 sharpened that this likely needs a distinct account-health / pressure event or record family instead of overloading auth-state",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing",
+        "tokens": [
+          "ask -> deny unless HITL at current tier boundary"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "the SSOT requires requested/effective capability truth",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "needs immediate correction of canonical `thread_id` semantics and explicit upstream-account opacity rules",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "now clearly needs a versioned correlation/context block and stronger account-health semantics",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "now clearly needs version governance for new actor/account/trust categories or fields",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "needs scope-keyed approval semantics, de-tiered gating language, and richer permission snapshots",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "A2A still forbids new categories while the rewrite needs actor/account/trust/governance semantics at the stream layer.",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "Permission snapshots still omit requested state and identity context despite rewrite-era requested/effective disclosure needs.",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "Permission approval state must not leak across lanes or accounts just because actors share a UI session.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 29,
+        "text": "GPT-5.2 reinforced that switch-history remains under-owned as an event family, not just a missing view:",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "now clearly needs transport/upstream naming cleanup to keep requested/effective identity deterministic",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "`usage_event_ref` + `attempt_id` remain safer pivots than `tier_id` for switch-aware usage/history views.",
+        "tokens": [
+          "attempt_id",
+          "tier_id",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "normalized envelopes remain minimal while later addenda require thread/node/attempt/lineage preservation",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`, which means reconnect/replay semantics remain under-specified even before account-switch history is added",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "If provider continuity remains opaque, the docs need an explicit opaque contract instead of silent omission.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "many core directions are stable enough",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "The remaining work splits cleanly into two buckets:",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "structural gaps still needing research decisions**",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "whenever a seam mainly depends on updating stale consumers to match an already-set direction, it is approaching reconciliation territory",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "one canonical decision for requested concrete-account representation",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "one canonical decision for operational identity / execution role disclosure",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "one canonical decision for projection-freshness vocabulary and owner doc",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 6,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "but the shared effective-resolution record still only models provider/model/persona/auth/account identity",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "but the effective runtime record, usage records, and page/graph identity projections still lack a canonical `execution_role` / `actor_role` field",
+        "tokens": [
+          "actor_role",
+          "execution_role"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "without it, role-based account choices cannot be explained after the fact even when requested/effective account fields exist",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "but there is still no canonical requested concrete-account field, so explicit account pinning cannot be shown truthfully when runtime falls back or switches",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "`storage-plan.md` already uses `trust_tier` for Preview semantics, so the broader rewrite now needs a distinct projection-freshness name to avoid vocabulary collision when trust/degraded state is generalized across Orchestrator surfaces",
+        "tokens": [
+          "storage-plan.md",
+          "trust_tier"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "still needs requested concrete-account ownership plus explicit role/actor semantics in the canonical runtime record",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "Plans/Contracts_V0.md` + `Plans/storage-plan.md",
+        "tokens": [
+          " + ",
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "likely owners for role-aware snapshots, operational-identity disclosure, and switch-history records",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "still consume stale persona names, tier-era pivots, and under-specified identity payloads",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "Role-scoped routing exists in policy/storage but not in effective-resolution or usage schemas.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "Switch history is still reason fields without a durable event/projection family.",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "Add a canonical requested concrete-account field distinct from `requested_account_policy`.",
+        "tokens": [
+          "requested_account_policy"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "Introduce `execution_role` / `actor_role` into effective-resolution, event, and usage contracts.",
+        "tokens": [
+          "actor_role",
+          "execution_role"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Cleanly separate transport host fields from upstream provider/model identity in `Models_System.md` and adjacent bridge docs.",
+        "tokens": [
+          "Models_System.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "If role-scoped routing is not surfaced in records, later projections will recreate it heuristically and drift immediately.",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "`Provider_OpenCode.md` contains a direct identity-mapping bug at the contract level:",
+        "tokens": [
+          "Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Bridge/event contracts are still too thin for rewrite-era correlation:",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "Provider/runtime boundaries still cannot express enough account-health state for shared account-pressure/degraded-trust UI:",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "GPT-5.2 sharpened that this likely needs a distinct account-health / pressure event or record family instead of overloading auth-state",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "but the schema only records resolved/effective values and still omits requested state, downgrade reason, effective account, and actor/surface context",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`, which means reconnect/replay semantics remain under-specified even before account-switch history is added",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "now clearly needs version governance for new actor/account/trust categories or fields",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "Plans/Contracts_V0.md` + `Plans/storage-plan.md",
+        "tokens": [
+          " + ",
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "Permission snapshots still omit requested state and identity context despite rewrite-era requested/effective disclosure needs.",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "Introduce a canonical account-health / pressure / degraded-trust family rather than overloading auth lifecycle states.",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "If provider continuity remains opaque, the docs need an explicit opaque contract instead of silent omission.",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "Permission approval state must not leak across lanes or accounts just because actors share a UI session.",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**",
+        "tokens": []
+      },
+      {
+        "line": 159,
+        "text": "route-payload normalization",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "concern record family and action policy",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "whenever a seam still depends on a missing canonical event/record family or a missing owner doc, it is not yet reconciliation-ready",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "`Contracts_V0.md` and `storage-plan.md` still contain live contradictions or unowned gaps that would force reconciliation to invent answers:",
+        "tokens": [
+          "Contracts_V0.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "missing role/actor dimension in effective/runtime records",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "missing shared route-payload schema",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "non-canonical persona field names",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "one canonical route-payload schema owner",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "one explicit reconciliation plan for contradictory event/record families already identified in SSOTs",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 8,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "this now creates a direct requested/effective identity rendering risk for Orchestrator, Chat, and History surfaces",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "The missing role dimension is now clearly the link between account routing and auditability:",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "but there is still no durable append-only switch/pressure timeline that History, Ledger, Usage, and Orchestrator can share",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "`storage-plan.md` already uses `trust_tier` for Preview semantics, so the broader rewrite now needs a distinct projection-freshness name to avoid vocabulary collision when trust/degraded state is generalized across Orchestrator surfaces",
+        "tokens": [
+          "storage-plan.md",
+          "trust_tier"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "now clearly needs a binding path from operational identity and role-scoped pools into the shared runtime grammar",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md",
+        "tokens": [
+          " + ",
+          "Plans/Orchestrator_Page.md",
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "Role-scoped routing exists in policy/storage but not in effective-resolution or usage schemas.",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "If role-scoped routing is not surfaced in records, later projections will recreate it heuristically and drift immediately.",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and separately allows provider-native identifiers",
+        "tokens": [
+          "CLI_Bridged_Providers.md",
+          "thread_id"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "there is still no canonical slot for actor kind, effective account, switch reason, lane/worktree identity, or pressure/trust context",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "but Multi-Account needs configuration/availability/pressure/cooldown state, and Usage/Orchestrator need confidence-aware account-health projections",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account scope key",
+        "tokens": [
+          "always"
+        ]
+      },
+      {
+        "line": 94,
+        "text": "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing",
+        "tokens": [
+          "ask -> deny unless HITL at current tier boundary"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Permissions still use session-scoped approval logic without defining the session/actor/lane scope key.",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context.",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "Permission approval state must not leak across lanes or accounts just because actors share a UI session.",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "many core directions are stable enough",
+        "tokens": []
+      },
+      {
+        "line": 159,
+        "text": "route-payload normalization",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "lane/worktree lifecycle split",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "missing shared route-payload schema",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "widget-era non-Progress Orchestrator assumptions",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "one canonical route-payload schema owner",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 21,
+        "text": "The missing role dimension is now clearly the link between account routing and auditability:",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "`origin` is still audit-only; do not turn it into behavior-driving actor identity.",
+        "tokens": [
+          "origin"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 4,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "The rewrite now needs one explicit **operational identity** layer in addition to provider-account identity:",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "but the shared effective-resolution record still only models provider/model/persona/auth/account identity",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "`Models_System.md` still contains a concrete naming collision between **transport host** and **upstream provider**:",
+        "tokens": [
+          "Models_System.md"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "canonical model IDs treat `provider_id` as upstream provider slug",
+        "tokens": [
+          "provider_id"
+        ]
+      },
+      {
+        "line": 19,
+        "text": "but the capability snapshot example uses `provider_id: cursor` while `model_id` already embeds `anthropic/...`",
+        "tokens": [
+          "anthropic/...",
+          "model_id",
+          "provider_id: cursor"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "still needs requested concrete-account ownership plus explicit role/actor semantics in the canonical runtime record",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "likely owners for role-aware snapshots, operational-identity disclosure, and switch-history records",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "still consume stale persona names, tier-era pivots, and under-specified identity payloads",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "`Models_System.md` still mixes transport host and upstream provider in one `provider_id` vocabulary.",
+        "tokens": [
+          "Models_System.md",
+          "provider_id"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Cleanly separate transport host fields from upstream provider/model identity in `Models_System.md` and adjacent bridge docs.",
+        "tokens": [
+          "Models_System.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Define an append-only account-switch / pressure-episode family with shared projection consumers.",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "Operational identities must be displayable with provider/account identity but must not imply shared token ownership.",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "`Provider_OpenCode.md` contains a direct identity-mapping bug at the contract level:",
+        "tokens": [
+          "Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and separately allows provider-native identifiers",
+        "tokens": [
+          "CLI_Bridged_Providers.md",
+          "thread_id"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in canonical `thread_id`",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Provider/runtime boundaries still cannot express enough account-health state for shared account-pressure/degraded-trust UI:",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "`CLI_Bridged_Providers.md` normalizes auth lifecycle only",
+        "tokens": [
+          "CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "GPT-5.2 also sharpened that bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`, which means reconnect/replay semantics remain under-specified even before account-switch history is added",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "OpenCode still repurposes canonical `thread_id` for provider-native session identity.",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "A2A’s “input_provided” resume semantics are unsafe without actor/thread binding once multiple conversational actors share provider runtime.",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "If provider continuity remains opaque, the docs need an explicit opaque contract instead of silent omission.",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "but several cross-doc authority gaps are still too sharp to call this ready for reconciliation yet",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "shared operational identity vs provider/account identity",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "requested concrete-account ownership",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "projection-freshness vocabulary and ownership distinct from Preview `trust_tier`",
+        "tokens": [
+          "trust_tier"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "exact authority rules for actor-driven vs user-driven concern transitions in some cases",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "native vs widget surface ownership",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "help/glossary term ownership",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "whenever a seam still depends on a missing canonical event/record family or a missing owner doc, it is not yet reconciliation-ready",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "whenever a seam mainly depends on updating stale consumers to match an already-set direction, it is approaching reconciliation territory",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Several docs still falsely claim “no open questions” while adjacent ledger work shows unresolved ownership.",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Multiple consumer docs still use stale forbidden or obsolete vocabulary:",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "non-canonical persona field names",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "one canonical decision for projection-freshness vocabulary and owner doc",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "one canonical route-payload schema owner",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "one canonical project-summary / project-attention projection owner",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 16,
+        "text": "GPT-5.2 sharpened that Orchestrator rewrite must not collapse provider account identity and operational side-effect identity into one field family",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "now clearly needs transport/upstream naming cleanup to keep requested/effective identity deterministic",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "still consume stale persona names, tier-era pivots, and under-specified identity payloads",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "whenever a seam mainly depends on updating stale consumers to match an already-set direction, it is approaching reconciliation territory",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Multiple consumer docs still use stale forbidden or obsolete vocabulary:",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 71,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "`Provider_OpenCode.md` contains a direct identity-mapping bug at the contract level:",
+        "tokens": [
+          "Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "it maps canonical `thread_id` to an OpenCode session ID",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in canonical `thread_id`",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "OpenCode still repurposes canonical `thread_id` for provider-native session identity.",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
+        "tokens": [
+          "thread_id"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "The strongest structural gaps still open appear to be:",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Several docs still falsely claim “no open questions” while adjacent ledger work shows unresolved ownership.",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 20,
+        "text": "this now creates a direct requested/effective identity rendering risk for Orchestrator, Chat, and History surfaces",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "The missing role dimension is now clearly the link between account routing and auditability:",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "GPT-5.2 reinforced that switch-history remains under-owned as an event family, not just a missing view:",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "but several cross-doc authority gaps are still too sharp to call this ready for reconciliation yet",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "structural gaps still needing research decisions**",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "The strongest structural gaps still open appear to be:",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "whenever a seam still depends on a missing canonical event/record family or a missing owner doc, it is not yet reconciliation-ready",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "`Contracts_V0.md` and `storage-plan.md` still contain live contradictions or unowned gaps that would force reconciliation to invent answers:",
+        "tokens": [
+          "Contracts_V0.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "requested concrete-account gap",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "missing role/actor dimension in effective/runtime records",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "missing shared route-payload schema",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "missing project-summary / project-attention projection family",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Several docs still falsely claim “no open questions” while adjacent ledger work shows unresolved ownership.",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "this is a reconciliation risk because it can hide live design seams inside supposedly locked SSOTs",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "Plans/Models_System.md",
+        "tokens": [
+          "Plans/Models_System.md"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 7,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/Models_System.md",
+        "tokens": [
+          "Plans/Models_System.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/Contracts_V0.md` + `Plans/storage-plan.md",
+        "tokens": [
+          " + ",
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md",
+        "tokens": [
+          " + ",
+          "Plans/Orchestrator_Page.md",
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Permissions_System.md",
+        "tokens": [
+          "Plans/Permissions_System.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Tools.md",
+        "tokens": [
+          "Plans/Tools.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "Plans/CLI_Bridged_Providers.md",
+        "tokens": [
+          "Plans/CLI_Bridged_Providers.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "tokens": [
+          "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "Plans/Permissions_System.md",
+        "tokens": [
+          "Plans/Permissions_System.md"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "Plans/Contracts_V0.md` + `Plans/storage-plan.md",
+        "tokens": [
+          " + ",
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "current `working_ledger.md`",
+        "tokens": [
+          "working_ledger.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

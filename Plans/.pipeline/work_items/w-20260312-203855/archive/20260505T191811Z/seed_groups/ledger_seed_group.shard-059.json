@@ -1,0 +1,411 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-059",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-059.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 1
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/evidence.schema.json`",
+      "line_in_shard": 4
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Several owner docs are still broken in ways that directly defeat the machine-verification/gate story they claim to support.",
+      "line_in_shard": 7
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Event/command naming and routing are still split enough that two \u201ccorrect\u201d implementations could disagree materially and still point at different local SSOTs.",
+      "line_in_shard": 8
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Glossary/Crosswalk still are not strong enough to absorb and normalize rewrite-era terms and primitives, which keeps downstream specs append-only and contradictory.",
+      "line_in_shard": 9
+    },
+    {
+      "type": "data_shape",
+      "text": "- Runtime-governance docs still lack a few critical ownership fields/rules (startup recovery handshake, blocked-owner attribution, DAE restart/intercept model).",
+      "line_in_shard": 10
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners.",
+      "line_in_shard": 11
+    },
+    {
+      "type": "doc_hint",
+      "text": "- After this final tranche, run closeout verification before claiming completion; Codex still found useful signal, but it also suggests the main remaining risk is uneven coverage on docs that never got the full ordered pass sequence.",
+      "line_in_shard": 14
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Use the next coverage audit to decide whether the remaining uncovered authored docs still need the same six-model treatment or whether this broader second sweep has reached sufficient high-signal closure.",
+      "line_in_shard": 15
+    },
+    {
+      "type": "data_shape",
+      "text": "- wiring/gate extraction/schema hardening,",
+      "line_in_shard": 18
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- startup/blocked/DAE governance ownership.",
+      "line_in_shard": 21
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Codex did not invalidate earlier findings; it mostly tightened them into more concrete, machine-verification-relevant failures.",
+      "line_in_shard": 24
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The owner-doc tranche now has the full requested multi-model sequence and is a strong reference set for what \u201cfully swept\u201d looks like.",
+      "line_in_shard": 25
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - Search, attention, and usage deep-links still route locally",
+      "line_in_shard": 28
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 30
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 31
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Search, attention, and usage/artifact pivots all preserve useful local identity, but they still do so in separate feature-specific ways rather than through a shared route-target model.",
+      "line_in_shard": 39
+    },
+    {
+      "type": "data_shape",
+      "text": "- `FinalGUISpec.md` thread search already says result clicks navigate to the exact message in its thread, but that behavior is still expressed as search-local prose rather than as one normalized route payload.",
+      "line_in_shard": 40
+    },
+    {
+      "type": "open_question",
+      "text": "- `usage_event_ref?`",
+      "line_in_shard": 44
+    },
+    {
+      "type": "open_question",
+      "text": "- `run_id?`",
+      "line_in_shard": 45
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 46
+    },
+    {
+      "type": "doc_hint",
+      "text": "but they still frame those as view-specific navigation instructions, not as a canonical target model.",
+      "line_in_shard": 48
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 52
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 53
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 54
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 59
+    },
+    {
+      "type": "data_shape",
+      "text": "- Search results, artifact pivots, and usage pivots all carry enough identity to benefit from a shared routing model, but they are still encoded as local behavior text or per-command payloads.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "decision",
+      "text": "- There is still no single place to say that a result should restore not just a destination surface, but also scope such as `project_id`, `focused_run_id`, `thread_id`, selected object, and inspector target.",
+      "line_in_shard": 67
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Route search-result activation, attention-item activation, artifact `Show in *` actions, and Usage pivots through the same canonical route-target model rather than separate ad hoc behaviors.",
+      "line_in_shard": 70
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Treat `resume_url` as one serialized transport for that same model so wizard attention is no longer a special stronger path.",
+      "line_in_shard": 71
+    },
+    {
+      "type": "data_shape",
+      "text": "- Let surface-specific commands remain as wrappers where helpful, but normalize their internal target payloads.",
+      "line_in_shard": 72
+    },
+    {
+      "type": "open_question",
+      "text": "- `focused_run_id?`",
+      "line_in_shard": 75
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 76
+    },
+    {
+      "type": "open_question",
+      "text": "- `artifact_id?`",
+      "line_in_shard": 77
+    },
+    {
+      "type": "open_question",
+      "text": "- `usage_event_ref?`",
+      "line_in_shard": 78
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind?`",
+      "line_in_shard": 79
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id?`",
+      "line_in_shard": 80
+    },
+    {
+      "type": "open_question",
+      "text": "- `tab_id?`",
+      "line_in_shard": 81
+    },
+    {
+      "type": "open_question",
+      "text": "- `inspector_target?`",
+      "line_in_shard": 82
+    },
+    {
+      "type": "process_defect",
+      "text": "- The issue here is less missing identity than missing normalization; the local docs already know what context they need.",
+      "line_in_shard": 85
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Usage/artifact/search/attention all now look like natural consumers of the same route-target contract.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 91
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 96
+    },
+    {
+      "type": "data_shape",
+      "text": "- JSONL mirror is derived",
+      "line_in_shard": 102
+    },
+    {
+      "type": "data_shape",
+      "text": "- packaged document sets already have explicit `manifest.json` ownership",
+      "line_in_shard": 104
+    },
+    {
+      "type": "doc_hint",
+      "text": "- User-facing export behavior is much looser. Across thread export, ledger/export, usage export, runtime artifact export, and history export, the docs still mostly describe:",
+      "line_in_shard": 105
+    },
+    {
+      "type": "data_shape",
+      "text": "- `storage-plan.md` mentions export of thread/run history to JSONL/JSON, but only at a coarse enhancement level.",
+      "line_in_shard": 110
+    },
+    {
+      "type": "data_shape",
+      "text": "- `usage-feature.md` and `FinalGUISpec.md` describe export surfaces such as Ledger/Usage CSV/JSON and thread export, but they do not yet require one stable manifest shape for non-trivial bundles.",
+      "line_in_shard": 111
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Project_Output_Artifacts.md` is ahead here because it already treats manifests and canonical artifact IDs/path rules seriously; that same discipline has not yet propagated to general app exports.",
+      "line_in_shard": 112
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 117
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 118
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 122
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 124
+    },
+    {
+      "type": "data_shape",
+      "text": "- Thread/run/history exports risk flattening rich object identity unless they explicitly preserve canonical refs like `thread_id`, `run_id`, `artifact_id`, `usage_event_ref`, and route/open hints.",
+      "line_in_shard": 132
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Require manifests for non-trivial bundle exports, and make those manifests preserve canonical IDs/refs rather than export-local surrogate identities.",
+      "line_in_shard": 139
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- For exports built from stale/degraded projections, carry trust disclosure or re-query canonical backing first.",
+      "line_in_shard": 141
+    },
+    {
+      "type": "data_shape",
+      "text": "- Bundle manifests and route/subject normalization fit together naturally; exports should preserve the same object vocabulary the UI uses.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - Attention/CtA surfaces still encode route context locally",
+      "line_in_shard": 149
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 151
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 152
+    },
+    {
+      "type": "data_shape",
+      "text": "- The problem is not lack of context. The problem is that these attention surfaces still encode it as card-local or notice-local fields instead of as one normalized route target.",
+      "line_in_shard": 165
+    },
+    {
+      "type": "data_shape",
+      "text": "- `FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they already define concrete actions like `Resume Wizard` and `View in Thread`, but those actions still resolve through special-case fields rather than a shared navigation object.",
+      "line_in_shard": 166
+    },
+    {
+      "type": "data_shape",
+      "text": "- `assistant-chat-design.md` likewise treats thread attention and blocked notices as persistent shell behaviors, but the activation path is still described behaviorally instead of via a reusable route payload.",
+      "line_in_shard": 167
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `storage-plan.md` preserves `resume_url?` on `thread_blocked_notice` and `wizard_runtime_state`, which is useful for recovery, but it also reinforces the current special-casing if no stronger route-target contract exists.",
+      "line_in_shard": 168
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 170
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 171
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 172
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 175
+    },
+    {
+      "type": "data_shape",
+      "text": "- Attention/CtA surfaces are some of the most operationally important navigation points in the app, yet they still rely on local field conventions rather than the generalized route-target model the rest of the rewrite increasingly wants.",
+      "line_in_shard": 182
+    },
+    {
+      "type": "data_shape",
+      "text": "- There is still no canonical statement that a CtA card or blocked notice should restore both destination and scope using the same internal payload model as search results, artifact pivots, and thread usage jumps.",
+      "line_in_shard": 184
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Treat CtA card actions and blocked-notice actions as first-class consumers of the canonical route-target model.",
+      "line_in_shard": 187
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize attention-surface target fields so they can restore:",
+      "line_in_shard": 189
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 192
+    },
+    {
+      "type": "open_question",
+      "text": "- `focused_run_id?`",
+      "line_in_shard": 193
+    },
+    {
+      "type": "open_question",
+      "text": "- `wizard_id?`",
+      "line_in_shard": 194
+    },
+    {
+      "type": "open_question",
+      "text": "- `wizard_step?`",
+      "line_in_shard": 195
+    },
+    {
+      "type": "open_question",
+      "text": "- `message_id?`",
+      "line_in_shard": 196
+    },
+    {
+      "type": "decision",
+      "text": "- selected object / inspector context",
+      "line_in_shard": 197
+    },
+    {
+      "type": "routing_rule",
+      "text": "- This is one of the highest-value consumers of the route-target work because attention/CtA actions are exactly where users most need precise restoration.",
+      "line_in_shard": 200
+    }
+  ]
+}

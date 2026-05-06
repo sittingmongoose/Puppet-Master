@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.stage_report.D0.v3.1.12",
+  "prompt_id": "D0",
+  "prompt_version": "pm.d0.v3.1.12",
+  "timestamp_utc": "20260506T191558Z",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "required": false,
+    "reason": "Task is deterministic section-entry verification of handoff presence and seed completeness pass status."
+  },
+  "required_subagent_tasks_total": 0,
+  "distinct_subagent_invocations_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification_proof": {
+    "active_section_exit_c_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+    "section_exit_c_exists": true,
+    "section_exit_c_status_complete": true,
+    "section_exit_c_work_id": "w-20260312-203855",
+    "section_exit_c_points_to_ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "section_exit_c_points_to_seed_completeness_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "ledger_obligation_seed_exists": true,
+    "ledger_obligation_seed_work_id_matches": true,
+    "ledger_seed_completeness_report_exists": true,
+    "ledger_seed_completeness_work_id_matches": true,
+    "ledger_seed_completeness_final_gate_passed": true,
+    "ledger_seed_completeness_blocking_high_severity_gaps_count": 0,
+    "active_seed_inputs_exist": true
+  },
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_D_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.D0.json"
+  ],
+  "next_prompt_request": "Paste prompt D1 — Obligation Worklist Builder v3.1.12."
+}

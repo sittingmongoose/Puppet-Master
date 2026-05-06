@@ -1,0 +1,386 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-044",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-044.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- The execution-core mismatch is now sharper than a generic \u201ctier drift\u201d note. The docs are split across two incompatible centers of gravity:",
+      "line_in_shard": 7
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Executor_Protocol.md` has newer scheduler addenda that move toward the rewrite direction, but the base protocol still frames role semantics, lifecycle wording, and dispatch in a singular overseer model with no first-class package/seam governance, corroboration, or concern authority. The addenda add node/lane vocabulary without replacing the stale top-level ontology.",
+      "line_in_shard": 10
+    },
+    {
+      "type": "doc_hint",
+      "text": "- old model: dynamic subagent selection \u201cfor each tier level,\u201d start/end verification at tier boundaries, `TierContext`, task/phase inspectors, tier-scoped crews, tier-keyed coordination",
+      "line_in_shard": 12
+    },
+    {
+      "type": "data_shape",
+      "text": "- newer model: scored ready set, `scheduler_lane`, `replan_generation`, runnable-unit fields like `attempt_id`, blocked reason codes, worktree conflict classification",
+      "line_in_shard": 13
+    },
+    {
+      "type": "doc_hint",
+      "text": "- result: the doc is effectively trying to consume a node/lane scheduler while still operationalizing execution via tier-native runtime structs",
+      "line_in_shard": 14
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `owner run/tier`",
+      "line_in_shard": 16
+    },
+    {
+      "type": "process_defect",
+      "text": "- that conflicts directly with the rewrite direction where lanes/package context/node attempts need to survive even after tier language stops being execution-canonical",
+      "line_in_shard": 20
+    },
+    {
+      "type": "doc_hint",
+      "text": "- A specific structural problem is emerging: execution identity is spread across incompatible keys:",
+      "line_in_shard": 21
+    },
+    {
+      "type": "data_shape",
+      "text": "- stale tier-native pieces: `tier_id`, `TierType`, `TierContext`, tier-level crews, tier worktree ownership",
+      "line_in_shard": 23
+    },
+    {
+      "type": "data_shape",
+      "text": "- without a canonical replacement execution-context object, downstream docs keep papering over the split locally",
+      "line_in_shard": 24
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 26
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- downstream consumers that depend on these execution assumptions:",
+      "line_in_shard": 30
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 33
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- runtime scheduler ownership",
+      "line_in_shard": 40
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `WorktreeGitImprovement.md` already recognizes Source Control vs Orchestrator surface separation, but its runtime ownership language is still `tier`-first rather than `lane/worktree` plus canonical execution-unit refs.",
+      "line_in_shard": 45
+    },
+    {
+      "type": "data_shape",
+      "text": "- The doc set still lacks one explicit replacement for `TierContext`. That absence is now a primary blocker because multiple seams need the same fields:",
+      "line_in_shard": 46
+    },
+    {
+      "type": "data_shape",
+      "text": "- Consolidate execution-core docs around a single node-native execution context object that replaces or wraps `TierContext` and is the canonical handoff between scheduler, worker spawn, verification, remediation, recovery, and UI projections.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Treat tier language as legacy decomposition/help/view terminology unless a specific derived UI surface still needs it. Stop letting tier IDs remain runtime ownership keys for worktrees, crews, or agent coordination.",
+      "line_in_shard": 56
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Rewrite `orchestrator-subagent-integration.md` so it becomes a consumer/worker-spawn document over canonical runnable units, not a competing tier-era execution model.",
+      "line_in_shard": 62
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Move worktree ownership to lane/worktree plus canonical run/node/attempt references, with Source Control remaining worktree-first at the UI level and Orchestrator remaining lane/package/seam/node-first operationally.",
+      "line_in_shard": 63
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- the problem is no longer just stale terminology; there is a real split-brain between execution context keys",
+      "line_in_shard": 66
+    },
+    {
+      "type": "doc_hint",
+      "text": "- scheduler addenda are not enough if the top-level docs still teach the old ontology",
+      "line_in_shard": 67
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- any reconciliation that touches UI/storage/help without first tightening execution-core ownership will keep reopening the same seams",
+      "line_in_shard": 68
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 73
+    },
+    {
+      "type": "data_shape",
+      "text": "- decomposition/view identity: `tier_type`, `tier_id`, `title`, `description`",
+      "line_in_shard": 82
+    },
+    {
+      "type": "verification_rule",
+      "text": "- live execution hints: code-review/testing/error flags",
+      "line_in_shard": 85
+    },
+    {
+      "type": "data_shape",
+      "text": "- That mixture is the core reason it cannot become the rewrite-era canonical execution context. It is trying to be both a planner/decomposition helper and a runtime/audit object.",
+      "line_in_shard": 87
+    },
+    {
+      "type": "data_shape",
+      "text": "- The cross-cutting canonical runtime fields already exist elsewhere:",
+      "line_in_shard": 88
+    },
+    {
+      "type": "data_shape",
+      "text": "- newer scheduler addenda already expect runnable-unit fields like `replan_generation`, `scheduler_lane`, and queue-analysis refs",
+      "line_in_shard": 91
+    },
+    {
+      "type": "data_shape",
+      "text": "- That means the replacement should not be \u201cTierContext but with more fields.\u201d The cleaner model is a split:",
+      "line_in_shard": 92
+    },
+    {
+      "type": "doc_hint",
+      "text": "- canonical `execution_unit_context` for runtime/scheduler/worker/governance/storage/UI inspection",
+      "line_in_shard": 93
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- optional derived `decomposition_context` or `view_context` for legacy prompt heuristics, decomposition labels, or UI help text",
+      "line_in_shard": 94
+    },
+    {
+      "type": "data_shape",
+      "text": "- `ActiveAgent`, crew structs, and coordination payloads are still tier-keyed and therefore inherit the same problem. They should key on canonical execution refs first, with tier/package/seam labels only as secondary metadata when still useful.",
+      "line_in_shard": 95
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 102
+    },
+    {
+      "type": "open_question",
+      "text": "- `feature_seam_id?`",
+      "line_in_shard": 103
+    },
+    {
+      "type": "open_question",
+      "text": "- `work_package_id?`",
+      "line_in_shard": 104
+    },
+    {
+      "type": "open_question",
+      "text": "- `manual_priority?`",
+      "line_in_shard": 111
+    },
+    {
+      "type": "open_question",
+      "text": "- `remediation_root_id?`",
+      "line_in_shard": 112
+    },
+    {
+      "type": "open_question",
+      "text": "- `remediation_parent_attempt_id?`",
+      "line_in_shard": 113
+    },
+    {
+      "type": "open_question",
+      "text": "- `safe_point_id?`",
+      "line_in_shard": 114
+    },
+    {
+      "type": "open_question",
+      "text": "- `lane_id?`",
+      "line_in_shard": 116
+    },
+    {
+      "type": "open_question",
+      "text": "- `worktree_id?`",
+      "line_in_shard": 117
+    },
+    {
+      "type": "open_question",
+      "text": "- `worktree_path?`",
+      "line_in_shard": 119
+    },
+    {
+      "type": "open_question",
+      "text": "- `snapshot_ref?`",
+      "line_in_shard": 120
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_policy?`",
+      "line_in_shard": 123
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_id?`",
+      "line_in_shard": 124
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_binding?`",
+      "line_in_shard": 125
+    },
+    {
+      "type": "open_question",
+      "text": "- `effective_account_id?`",
+      "line_in_shard": 126
+    },
+    {
+      "type": "open_question",
+      "text": "- `account_switch_reason?`",
+      "line_in_shard": 127
+    },
+    {
+      "type": "open_question",
+      "text": "- `operational_identity?`",
+      "line_in_shard": 128
+    },
+    {
+      "type": "open_question",
+      "text": "- `blocked_reason_code?`",
+      "line_in_shard": 130
+    },
+    {
+      "type": "open_question",
+      "text": "- `allowed_action_ids[]?`",
+      "line_in_shard": 131
+    },
+    {
+      "type": "open_question",
+      "text": "- `failure_class?`",
+      "line_in_shard": 132
+    },
+    {
+      "type": "open_question",
+      "text": "- `permission_snapshot_id?`",
+      "line_in_shard": 133
+    },
+    {
+      "type": "open_question",
+      "text": "- `model_snapshot_id?`",
+      "line_in_shard": 134
+    },
+    {
+      "type": "open_question",
+      "text": "- `provider_attempt_ref?`",
+      "line_in_shard": 135
+    },
+    {
+      "type": "doc_hint",
+      "text": "- language/domain/framework hints",
+      "line_in_shard": 139
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Recommended rule: worker spawn, verification, remediation, recovery, coordination state, history, ledger, receipts, and graph/detail inspectors should all anchor to `execution_unit_context`, not to decomposition context.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 144
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- downstream consumers:",
+      "line_in_shard": 150
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Prompt_Pipeline.md` still allows `persona_override_owner_id` scope values that include `tier_id`, which is increasingly a legacy ownership key for Orchestrator execution. That likely needs a migration path toward run/node/attempt/subagent-owned scopes.",
+      "line_in_shard": 158
+    },
+    {
+      "type": "data_shape",
+      "text": "- Coordination examples and crew creator payloads still treat `tier_id` as the canonical orchestrator ownership key; that will misalign with lane/package/node-first execution once the rewrite lands.",
+      "line_in_shard": 160
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define one canonical `execution_unit_context` owner doc, likely shared between `Executor_Protocol.md` and `Prompt_Pipeline.md`, then have storage/event/docs consume it by reference instead of cloning partial field sets.",
+      "line_in_shard": 163
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `legacy_decomposition_context`",
+      "line_in_shard": 165
+    },
+    {
+      "type": "open_question",
+      "text": "- `lane_id?`",
+      "line_in_shard": 172
+    },
+    {
+      "type": "open_question",
+      "text": "- `work_package_id?`",
+      "line_in_shard": 173
+    },
+    {
+      "type": "open_question",
+      "text": "- `feature_seam_id?`",
+      "line_in_shard": 174
+    },
+    {
+      "type": "data_shape",
+      "text": "- the replacement should inherit existing canonical runtime snapshot contracts, not create a parallel runtime-resolution schema",
+      "line_in_shard": 178
+    },
+    {
+      "type": "data_shape",
+      "text": "- `tier_runtime_record` may still survive, but only as a derived grouping/view object if execution ownership moves elsewhere",
+      "line_in_shard": 179
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- coordination state is one of the places where stale `tier_id` usage will quietly persist unless explicitly migrated",
+      "line_in_shard": 180
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 184
+    },
+    {
+      "type": "data_shape",
+      "text": "- older request-local contract: `HITLRequest` with `tier_id`, `tier_type`, and HITL-only `allowed_actions[]` like `approve_continue`",
+      "line_in_shard": 193
+    },
+    {
+      "type": "routing_rule",
+      "text": "- newer runtime-facing correction: `waiting_approval` is a blocked overlay, canonical action vocabulary is `allowed_action_ids[]`, and all actions route through `cmd.runtime.*`",
+      "line_in_shard": 194
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This is not just wording drift. It creates a real ownership split:",
+      "line_in_shard": 195
+    },
+    {
+      "type": "data_shape",
+      "text": "- older model treats approval as a tier-boundary pause object",
+      "line_in_shard": 196
+    }
+  ]
+}

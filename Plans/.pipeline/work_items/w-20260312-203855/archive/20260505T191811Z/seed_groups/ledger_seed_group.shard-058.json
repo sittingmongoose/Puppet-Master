@@ -1,0 +1,431 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-058",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-058.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- `generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs still need to guard against treating it like the durable identity.",
+      "line_in_shard": 1
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Keep `Plans/storage-plan.md` as the owner of persisted preview-subject identity and restore joins.",
+      "line_in_shard": 4
+    },
+    {
+      "type": "data_shape",
+      "text": "- Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.",
+      "line_in_shard": 5
+    },
+    {
+      "type": "doc_hint",
+      "text": "- subject kinds should at minimum include `doc:<document_id>` and `artifact:<artifact_id>`",
+      "line_in_shard": 7
+    },
+    {
+      "type": "routing_rule",
+      "text": "- resolution may end in a workspace path open, a transient `generated://` buffer, or a routed non-editor surface",
+      "line_in_shard": 8
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.",
+      "line_in_shard": 10
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This seam is one of the cleaner ones: storage already contains most of the right model; the lag is mainly in the universal-open/file-centric docs.",
+      "line_in_shard": 13
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `doc:` / `artifact:` should be treated as canonical persisted subject IDs, while `generated://` stays an implementation-level transient representation.",
+      "line_in_shard": 14
+    },
+    {
+      "type": "routing_rule",
+      "text": "- If this owner split is not made explicit, generated docs/artifacts and preview-backed opens will keep leaking path-based assumptions back into the routing model.",
+      "line_in_shard": 15
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - Missing canonical route-target contract in Contracts_V0",
+      "line_in_shard": 17
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 19
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 22
+    },
+    {
+      "type": "routing_rule",
+      "text": "- route target identity",
+      "line_in_shard": 33
+    },
+    {
+      "type": "routing_rule",
+      "text": "- wrapper-command routing to a canonical target",
+      "line_in_shard": 36
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`preview_subject_id`, `doc:<document_id>`, `artifact:<artifact_id>`), but that identity model has not been lifted into the cross-cutting contract layer.",
+      "line_in_shard": 38
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family.",
+      "line_in_shard": 39
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 41
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 42
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 45
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 48
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.",
+      "line_in_shard": 54
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Add a canonical route-target / subject-open contract family to `Plans/Contracts_V0.md`, above individual surface commands.",
+      "line_in_shard": 58
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Treat `resume_url` as one serialized transport form of the same canonical route-target model rather than a parallel stronger primitive.",
+      "line_in_shard": 60
+    },
+    {
+      "type": "open_question",
+      "text": "- `focused_run_id?`",
+      "line_in_shard": 63
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 64
+    },
+    {
+      "type": "open_question",
+      "text": "- `subject_id?`",
+      "line_in_shard": 65
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind?`",
+      "line_in_shard": 66
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id?`",
+      "line_in_shard": 67
+    },
+    {
+      "type": "open_question",
+      "text": "- `tab_id?`",
+      "line_in_shard": 68
+    },
+    {
+      "type": "open_question",
+      "text": "- `inspector_target?`",
+      "line_in_shard": 69
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This is now mostly an owner-doc problem, not a conceptual one; the identity vocabulary already exists in scattered places.",
+      "line_in_shard": 72
+    },
+    {
+      "type": "routing_rule",
+      "text": "- If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.",
+      "line_in_shard": 73
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `resume_url` should end up as a transport/serialization concern, not the hidden canonical route contract.",
+      "line_in_shard": 74
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 78
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 82
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The planning/output side is already closer to the subject-open model than the file-opening docs are.",
+      "line_in_shard": 85
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+      "line_in_shard": 87
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `FinalGUISpec.md` is especially explicit here:",
+      "line_in_shard": 88
+    },
+    {
+      "type": "doc_hint",
+      "text": "- deep-plan and embedded-document flows already expect source/preview/editor surfaces to work before final persist",
+      "line_in_shard": 90
+    },
+    {
+      "type": "doc_hint",
+      "text": "- That means the upstream planning/document systems are already implicitly subject-first:",
+      "line_in_shard": 91
+    },
+    {
+      "type": "doc_hint",
+      "text": "- filesystem path is a later materialization or backing-document assignment",
+      "line_in_shard": 93
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract.",
+      "line_in_shard": 94
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 96
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 97
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 101
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 102
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The subject-first behavior is present in practice, but still looks like a set of special-case prose pockets instead of one normalized identity rule.",
+      "line_in_shard": 111
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with subject-open routing.",
+      "line_in_shard": 114
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.",
+      "line_in_shard": 122
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-16 - GPT-5.3-Codex owner-doc tranche synthesis",
+      "line_in_shard": 124
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 126
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Policy.md`",
+      "line_in_shard": 134
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 136
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The final Codex pass still added meaningful last-mile contradictions instead of flattening into simple confirmation, especially where owner docs remain mechanically unverifiable or structurally inconsistent.",
+      "line_in_shard": 141
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Command/event ownership tightened at the end:",
+      "line_in_shard": 142
+    },
+    {
+      "type": "requirement",
+      "text": "- `/mode` is now a payload-shape contradiction because the current single `{ mode }` contract cannot carry the requested/effective overlay/runtime split already required elsewhere.",
+      "line_in_shard": 144
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.",
+      "line_in_shard": 145
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Wiring/gate trust failures are now very explicit:",
+      "line_in_shard": 146
+    },
+    {
+      "type": "data_shape",
+      "text": "- coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped `cmd.*.json` strings.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+      "line_in_shard": 149
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `UI_Wiring_Rules.md` still has no deterministic alias/deprecated-ID handling, no enforced stale revalidation handshake, and no inverse owner-doc-to-catalog coverage rule.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "routing_rule",
+      "text": "- open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.",
+      "line_in_shard": 154
+    },
+    {
+      "type": "routing_rule",
+      "text": "- receipt records are still the intended bridge, but runtime-artifact routing still lacks explicit receipt\u2192artifact linkage.",
+      "line_in_shard": 155
+    },
+    {
+      "type": "process_defect",
+      "text": "- Glossary/Crosswalk closeout findings remain structural blockers:",
+      "line_in_shard": 156
+    },
+    {
+      "type": "routing_rule",
+      "text": "- runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.",
+      "line_in_shard": 158
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Crosswalk and GitHub Integration both still place normative content after `References`, confirming append-after-references drift across owner docs.",
+      "line_in_shard": 159
+    },
+    {
+      "type": "routing_rule",
+      "text": "- PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.",
+      "line_in_shard": 160
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Runtime-governance closeout sharpened a few final owner gaps:",
+      "line_in_shard": 161
+    },
+    {
+      "type": "data_shape",
+      "text": "- startup recovery is still split not only by owner doc but by incompatible recovery objects and emission boundaries.",
+      "line_in_shard": 162
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked-governance attribution (`blocked_owner` or equivalent) is still absent from canonical blocked projection shape even though UX/governance needs it.",
+      "line_in_shard": 163
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Gate/evidence closeout stayed productive:",
+      "line_in_shard": 166
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `run-gates` still executes checks with no numbered gate mapping.",
+      "line_in_shard": 168
+    },
+    {
+      "type": "data_shape",
+      "text": "- `pm.evidence.schema.v1` still cannot represent the tri-state or structured payloads some gates already claim to require.",
+      "line_in_shard": 169
+    },
+    {
+      "type": "process_defect",
+      "text": "- the remaining missing orchestrator command gap set is now tight and explicit.",
+      "line_in_shard": 171
+    },
+    {
+      "type": "doc_hint",
+      "text": "- doctor-ID canonicalization is still broken internally.",
+      "line_in_shard": 172
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.",
+      "line_in_shard": 173
+    },
+    {
+      "type": "requirement",
+      "text": "- `memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+      "line_in_shard": 175
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 177
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 178
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Policy.md`",
+      "line_in_shard": 186
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 188
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Repeated cross-owner dependencies sharpened by Codex:",
+      "line_in_shard": 191
+    }
+  ]
+}

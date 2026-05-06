@@ -1,0 +1,128 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-obligation_core-2d77bdb6ae",
+  "category": "obligation_core",
+  "family_key": "stale_retirement",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0009-L00133-stale_retirement-a925d4260e",
+      "SYNTH-shard-0012-L00153-stale_retirement-87a909c669",
+      "SYNTH-shard-0017-L00127-stale_retirement-eb571e5383",
+      "SYNTH-shard-0020-L00163-stale_retirement-851aaf76c0"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-obligation_core-2d77bdb6ae--SYNTH-shard-0009-L00133-stale_retirement-a925d4260e",
+      "seed_id": "SYNTH-shard-0009-L00133-stale_retirement-a925d4260e",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "stale_retirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 133,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "human-in-the-loop.md and Project_Output_Artifacts.md still define tier-boundary HITL, legacy workspace paths, and lingering allowed_actions[] usage.",
+      "evidence_ledger_excerpt": "human-in-the-loop.md and Project_Output_Artifacts.md still define tier-boundary HITL, legacy workspace paths, and lingering allowed_actions[] usage.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "human-in-the-loop.md and Project_Output_Artifacts.md still define tier-boundary HITL, legacy workspace paths, and lingering allowed_actions[] usage."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-2d77bdb6ae--SYNTH-shard-0012-L00153-stale_retirement-87a909c669",
+      "seed_id": "SYNTH-shard-0012-L00153-stale_retirement-87a909c669",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "stale_retirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 153,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Deprecate or remove widget_layout keys for orchestrator:tiers/evidence/history/ledger in favor of per-tab native view-state persistence.",
+      "evidence_ledger_excerpt": "Deprecate or remove widget_layout keys for orchestrator:tiers/evidence/history/ledger in favor of per-tab native view-state persistence.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Deprecate or remove widget_layout keys for orchestrator:tiers/evidence/history/ledger in favor of per-tab native view-state persistence."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-2d77bdb6ae--SYNTH-shard-0017-L00127-stale_retirement-eb571e5383",
+      "seed_id": "SYNTH-shard-0017-L00127-stale_retirement-eb571e5383",
+      "source_shard_id": "shard-0017",
+      "batch_index": 5,
+      "obligation_type": "stale_retirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0017",
+        "line_in_shard": 127,
+        "line_in_source": null,
+        "source_line": 3327
+      },
+      "statement": "Destructive worktree and cleanup actions should preserve historical lineage in ledger/export metadata even when the live worktree or backing object is removed, so retired objects remain auditable.",
+      "evidence_ledger_excerpt": "Destructive worktree and cleanup actions should preserve historical lineage in ledger/export metadata even when the live worktree or backing object is removed, so retired objects remain auditable.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Destructive worktree and cleanup actions should preserve historical lineage in ledger/export metadata even when the live worktree or backing object is removed, so retired objects remain auditable."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-2d77bdb6ae--SYNTH-shard-0020-L00163-stale_retirement-851aaf76c0",
+      "seed_id": "SYNTH-shard-0020-L00163-stale_retirement-851aaf76c0",
+      "source_shard_id": "shard-0020",
+      "batch_index": 5,
+      "obligation_type": "stale_retirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0020",
+        "line_in_shard": 163,
+        "line_in_source": null,
+        "source_line": 3963
+      },
+      "statement": "Scoped overrides for task/run/subagent must prevent package defaults leaking across unrelated runs and subagent overrides becoming package defaults; historical runs retain frozen effective Persona independent of later config changes.",
+      "evidence_ledger_excerpt": "Scoped overrides for task/run/subagent must prevent package defaults leaking across unrelated runs and subagent overrides becoming package defaults; historical runs retain frozen effective Persona independent of later config changes.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Scoped overrides for task/run/subagent must prevent package defaults leaking across unrelated runs and subagent overrides becoming package defaults",
+        "historical runs retain frozen effective Persona independent of later config changes."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    }
+  ]
+}

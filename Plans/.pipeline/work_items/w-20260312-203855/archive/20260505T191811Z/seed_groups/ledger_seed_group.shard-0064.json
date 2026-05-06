@@ -1,0 +1,1022 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0064",
+  "coverage": {
+    "shard_id": "shard-0064",
+    "start_line": 11833,
+    "end_line": 12028,
+    "line_count": 196,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0064.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 17,
+        "text": "`OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner.",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "`FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "`subject_id` required",
+        "tokens": [
+          "subject_id"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "This should let current docs reconcile incrementally instead of forcing a single disruptive replacement of every existing open/navigation rule.",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "The app already uses many identifiers in navigation payloads, but most of them should not become top-level canonical `route_target` fields.",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "This means many existing ad hoc payloads should collapse into a smaller vocabulary rather than being copied verbatim into the new contract.",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "Required:",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "These should normally normalize into:",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "step selection should ride in a specialized subtarget/detail field or in serialized `resume_url`, not as a universal base field",
+        "tokens": [
+          "resume_url"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 26,
+        "text": "Keep `storage-plan.md` as the owner of persisted subject identity, projector-derived joins, and restore semantics.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "If Crosswalk does not absorb this, future reconciliation will likely keep slipping back into per-surface local routing prose.",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "`storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_id>`) and restore rules, which argues for an identity-native contract above path opening, not a replacement of path opening.",
+        "tokens": [
+          "artifact:<artifact_id>",
+          "doc:<document_id>",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "This should let current docs reconcile incrementally instead of forcing a single disruptive replacement of every existing open/navigation rule.",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "The stricter direction is:",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "keep the canonical target object small",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "keep path/line/range outside the base target object or in specialized open contracts",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 4,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization.",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "Make `Contracts_V0.md` the concrete shape owner for those primitives.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "The nearby owner docs point toward a layered design, not a single monolithic “open/navigation” contract.",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "`Contracts_V0.md` already wants a small reusable command envelope, which argues for a shared target object under `UICommand.args` rather than every command inventing its own payload.",
+        "tokens": [
+          "Contracts_V0.md",
+          "UICommand.args"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "`FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "`storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_id>`) and restore rules, which argues for an identity-native contract above path opening, not a replacement of path opening.",
+        "tokens": [
+          "artifact:<artifact_id>",
+          "doc:<document_id>",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "So the best model is not “two unrelated contracts” and not “one giant contract that does everything.” It is a layered contract family.",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "likely fields:",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "identity-native open contract",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "workspace-path contract only",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "`resume_url` still risks becoming the de facto stronger contract until the layered model is declared canonically.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Add concrete `route_target` and `OpenSubject` shapes to `Contracts_V0.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing every consumer doc to restate the model.",
+        "tokens": [
+          "cmd.nav.*",
+          "route_target"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "The app already uses many identifiers in navigation payloads, but most of them should not become top-level canonical `route_target` fields.",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "If `route_target` simply absorbs every current surface-local field (`artifact_id`, `usage_event_ref`, `wizard_step`, `message_id`, `workflow_run_id`, etc.), it will recreate the same drift problem in a new place.",
+        "tokens": [
+          "artifact_id",
+          "message_id",
+          "route_target",
+          "usage_event_ref",
+          "wizard_step",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "keep path/line/range outside the base target object or in specialized open contracts",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "This means many existing ad hoc payloads should collapse into a smaller vocabulary rather than being copied verbatim into the new contract.",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "Common scope fields:",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "specialized operation payloads (`OpenFile`, `OpenSubject`, or object-specific commands)",
+        "tokens": [
+          "OpenFile",
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`inspector_target` only when the field is really a detail-pane selection, not the main identity",
+        "tokens": [
+          "inspector_target"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "step selection should ride in a specialized subtarget/detail field or in serialized `resume_url`, not as a universal base field",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 12,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "The Crosswalk is supposed to prevent exactly this kind of ownership drift, but currently leaves the route/subject problem unclaimed.",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization.",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity, or make one primitive explicitly cover both layers if kept tight.",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "editor/tab/buffer behavior",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "path validation and path-target open behavior",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "This is one of the most actionable owner fixes found in this routing tranche.",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "If Crosswalk does not absorb this, future reconciliation will likely keep slipping back into per-surface local routing prose.",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "`FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "`storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_id>`) and restore rules, which argues for an identity-native contract above path opening, not a replacement of path opening.",
+        "tokens": [
+          "artifact:<artifact_id>",
+          "doc:<document_id>",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "one shared canonical `route_target` object",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "route_target",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "tab_id?",
+        "tokens": []
+      },
+      {
+        "line": 74,
+        "text": "may realize as workspace document, transient `generated://` buffer, or routed non-editor surface",
+        "tokens": [
+          "generated://"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "workspace-path contract only",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "serialized transport form of `route_target`, not a stronger parallel primitive",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 94,
+        "text": "`OpenFile` is currently overextended because the shared `route_target` / `OpenSubject` layer does not exist yet.",
+        "tokens": [
+          "OpenFile",
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Add `Primitive:RouteTarget` and likely `Primitive:OpenSubject` to `Crosswalk.md`.",
+        "tokens": [
+          "Crosswalk.md",
+          "Primitive:OpenSubject",
+          "Primitive:RouteTarget"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Add concrete `route_target` and `OpenSubject` shapes to `Contracts_V0.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Narrow `FileManager.md` so `OpenFile` is explicitly a workspace-document path operation, not the universal object-open primitive.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing every consumer doc to restate the model.",
+        "tokens": [
+          "cmd.nav.*",
+          "route_target"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "path-open as one specialization, not the only primitive",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "The app already uses many identifiers in navigation payloads, but most of them should not become top-level canonical `route_target` fields.",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "If `route_target` simply absorbs every current surface-local field (`artifact_id`, `usage_event_ref`, `wizard_step`, `message_id`, `workflow_run_id`, etc.), it will recreate the same drift problem in a new place.",
+        "tokens": [
+          "artifact_id",
+          "message_id",
+          "route_target",
+          "usage_event_ref",
+          "wizard_step",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "keep path/line/range outside the base target object or in specialized open contracts",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "tab_id?",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "object_id = <usage_event_ref or stable usage id>",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 25,
+        "text": "path validation and path-target open behavior",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 2,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "The Crosswalk is supposed to prevent exactly this kind of ownership drift, but currently leaves the route/subject problem unclaimed.",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization.",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "`OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner.",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "Make `Contracts_V0.md` the concrete shape owner for those primitives.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "Narrow `FileManager.md` to consumer/realization ownership:",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "Keep `storage-plan.md` as the owner of persisted subject identity, projector-derived joins, and restore semantics.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "This is one of the most actionable owner fixes found in this routing tranche.",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "The conceptual work is largely done; the missing piece is declaring the owner split in the docs that are supposed to stop duplication.",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "The nearby owner docs point toward a layered design, not a single monolithic “open/navigation” contract.",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing every consumer doc to restate the model.",
+        "tokens": [
+          "cmd.nav.*",
+          "route_target"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 130,
+        "text": "This means many existing ad hoc payloads should collapse into a smaller vocabulary rather than being copied verbatim into the new contract.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 16,
+        "text": "Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization.",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "`OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner.",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity, or make one primitive explicitly cover both layers if kept tight.",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "file-backed document opening",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "path validation and path-target open behavior",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "The nearby owner docs point toward a layered design, not a single monolithic “open/navigation” contract.",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "`FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "`storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_id>`) and restore rules, which argues for an identity-native contract above path opening, not a replacement of path opening.",
+        "tokens": [
+          "artifact:<artifact_id>",
+          "doc:<document_id>",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "OpenSubject",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "OpenFile",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "focus/open wrapper commands in `cmd.nav.*`",
+        "tokens": [
+          "cmd.nav.*"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "canonical target/scope object used by navigation/open/focus actions",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "OpenSubject",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "identity-native open contract",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "resolves through canonical subject/open rules",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "OpenFile",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "`OpenFile` is currently overextended because the shared `route_target` / `OpenSubject` layer does not exist yet.",
+        "tokens": [
+          "OpenFile",
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Add `Primitive:RouteTarget` and likely `Primitive:OpenSubject` to `Crosswalk.md`.",
+        "tokens": [
+          "Crosswalk.md",
+          "Primitive:OpenSubject",
+          "Primitive:RouteTarget"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Add concrete `route_target` and `OpenSubject` shapes to `Contracts_V0.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Narrow `FileManager.md` so `OpenFile` is explicitly a workspace-document path operation, not the universal object-open primitive.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "specialized open/navigation verbs above it",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "path-open as one specialization, not the only primitive",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "This should let current docs reconcile incrementally instead of forcing a single disruptive replacement of every existing open/navigation rule.",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "keep path/line/range outside the base target object or in specialized open contracts",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "specialized operation payloads (`OpenFile`, `OpenSubject`, or object-specific commands)",
+        "tokens": [
+          "OpenFile",
+          "OpenSubject"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 30,
+        "text": "The conceptual work is largely done; the missing piece is declaring the owner split in the docs that are supposed to stop duplication.",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "`resume_url` still risks becoming the de facto stronger contract until the layered model is declared canonically.",
+        "tokens": [
+          "resume_url"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 3,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 191,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 192,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 193,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 195,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

@@ -1,0 +1,883 @@
+{
+  "subagent_task_id": "c3-shard-0016",
+  "shard_id": "shard-0016",
+  "source_start_line": 2648,
+  "source_end_line": 2844,
+  "seeds": {
+    "facts": [
+      {
+        "id": "fact-001",
+        "text": "Current docs emphasize tab-local search/filtering in Run Graph, Evidence, and Ledger; History is list/table oriented.",
+        "evidence": "L2-L6"
+      },
+      {
+        "id": "fact-002",
+        "text": "Cross-surface navigation exists in fragments (Graph->Evidence/Usage, History->Graph/Evidence, Ledger->Usage).",
+        "evidence": "L7-L11"
+      },
+      {
+        "id": "fact-003",
+        "text": "Storage model already has canonical seglog, Tantivy as intended full-text layer, and project-scoped indices.",
+        "evidence": "L12-L15"
+      },
+      {
+        "id": "fact-004",
+        "text": "No unified Orchestrator search contract currently exists that is object-first rather than page-first.",
+        "evidence": "L16, L112-L115"
+      },
+      {
+        "id": "fact-005",
+        "text": "Final GUI spec already defines a global command palette.",
+        "evidence": "L79"
+      },
+      {
+        "id": "fact-006",
+        "text": "Historical semantics are explicit for attempts/block projections, but uneven for higher-level objects.",
+        "evidence": "L147-L155"
+      }
+    ],
+    "decisions": [
+      {
+        "id": "dec-001",
+        "text": "Distinguish global Orchestrator object search from tab-local filtering.",
+        "kind": "recommended",
+        "evidence": "L19-L25, L66-L77"
+      },
+      {
+        "id": "dec-002",
+        "text": "Make Orchestrator search object-first, run-aware, and route-aware.",
+        "kind": "recommended",
+        "evidence": "L23, L56-L65, L130"
+      },
+      {
+        "id": "dec-003",
+        "text": "Search result rows should carry canonical routing payload: focused_run_id, destination tab, selected object id, optional filter payload, optional detail target.",
+        "kind": "recommended",
+        "evidence": "L41-L47, L118-L124"
+      },
+      {
+        "id": "dec-004",
+        "text": "Command palette object results should reuse the same deep-link routing contract as Orchestrator search.",
+        "kind": "recommended",
+        "evidence": "L81-L83, L125-L129"
+      },
+      {
+        "id": "dec-005",
+        "text": "Backend search should prioritize stable identity matches before full-text hits.",
+        "kind": "recommended",
+        "evidence": "L87-L91"
+      },
+      {
+        "id": "dec-006",
+        "text": "Semantic state model should separate time status, replacement status, and validity status.",
+        "kind": "recommended",
+        "evidence": "L165-L183"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "con-001",
+        "text": "Search routing must preserve or intentionally change focused_run_id and never change run focus silently.",
+        "evidence": "L63-L65, L135"
+      },
+      {
+        "id": "con-002",
+        "text": "Search should identify objects even when user does not know owning tab first.",
+        "evidence": "L133"
+      },
+      {
+        "id": "con-003",
+        "text": "Historical lineage must remain visible even when live targets disappear.",
+        "evidence": "L150"
+      }
+    ],
+    "risks": [
+      {
+        "id": "risk-001",
+        "text": "Without a shared routing payload, search/deeplinks/cross-tab navigation can diverge into incompatible systems.",
+        "evidence": "L113, L125-L129"
+      },
+      {
+        "id": "risk-002",
+        "text": "Undefined run-scope behavior risks confusing result sets and accidental context shifts.",
+        "evidence": "L114, L58-L62"
+      },
+      {
+        "id": "risk-003",
+        "text": "Relying on full-text alone without object-side contract may produce weak relevance and unstable targeting.",
+        "evidence": "L115, L87-L91"
+      },
+      {
+        "id": "risk-004",
+        "text": "Collapsing historical states into a generic old state loses important operational semantics.",
+        "evidence": "L155-L163, L184-L197"
+      }
+    ],
+    "open_questions": [
+      {
+        "id": "q-001",
+        "text": "Which destination (Ledger vs History) should be canonical for promotion/review/corroboration/graph-patch/recovery records by default?",
+        "evidence": "L52"
+      },
+      {
+        "id": "q-002",
+        "text": "What exact object/record contract should combine redb projections with Tantivy for unified search ranking and retrieval?",
+        "evidence": "L87-L89, L115"
+      }
+    ],
+    "actions": [
+      {
+        "id": "act-001",
+        "text": "Define a canonical Orchestrator search result contract including identity, type, run implications, destination tab, and selection/filter payload.",
+        "priority": "high",
+        "evidence": "L118-L124"
+      },
+      {
+        "id": "act-002",
+        "text": "Implement explicit UX disclosure when focused run changes due to search result selection.",
+        "priority": "high",
+        "evidence": "L60-L62"
+      },
+      {
+        "id": "act-003",
+        "text": "Unify routing contract across search results, command palette results, deep links, and Show in actions.",
+        "priority": "high",
+        "evidence": "L125-L129"
+      },
+      {
+        "id": "act-004",
+        "text": "Adopt shared semantic vocabulary for historical/current status dimensions across promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle.",
+        "priority": "medium",
+        "evidence": "L153-L155, L165-L183"
+      }
+    ]
+  },
+  "exclusions": [
+    {
+      "category": "metrics",
+      "reason": "No quantitative KPIs, thresholds, or measured performance values are present in this shard."
+    },
+    {
+      "category": "owners",
+      "reason": "No explicit team/person ownership assignments are provided in this shard."
+    },
+    {
+      "category": "timeline",
+      "reason": "No explicit dates, milestones, or delivery schedule commitments are specified in this shard segment."
+    }
+  ]
+}
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0016",
+  "coverage": {
+    "shard_id": "shard-0016",
+    "start_line": 2648,
+    "end_line": 2844,
+    "line_count": 197,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0016.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 26,
+        "text": "Object-first search targets should include at minimum:",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "Search results should not merely highlight text.",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "Each result should carry a canonical route target:",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "Orchestrator search must be run-aware.",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "when a result belongs to another run, selecting it should explicitly switch the focused run",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "the UI should disclose that the focused run changed because of the search result",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "search result routing must preserve or intentionally change `focused_run_id`",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "it must never do so silently",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "selecting an object result should route through the same deep-link contract as Orchestrator search",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "search should prefer stable object identity matches first",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "Search should help the user find the right object, not force them to know which tab owns it first.",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "Historical results must preserve run context clearly so search does not create silent run-focus jumps.",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "historical lineage must remain visible even when live targets disappear",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_required`",
+        "tokens": [
+          "abandoned",
+          "fixed",
+          "replan_required",
+          "superseded"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "These should not collapse into a generic \"old\" state.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 45,
+        "text": "selected object id",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "node -> `Node Graph` with node selected and inspector open",
+        "tokens": [
+          "Node Graph"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "blocked projections remain historical after resolution",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "historical lineage must remain visible even when live targets disappear",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "separate `time status`, `replacement status`, and `validity status`",
+        "tokens": [
+          "replacement status",
+          "time status",
+          "validity status"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "replaced by a newer canonical successor for the same semantic slot",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "previously accepted/active decision or state was explicitly withdrawn",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "live backing object is gone, but history may remain",
+        "tokens": []
+      },
+      {
+        "line": 189,
+        "text": "`superseded` = replaced by newer truth",
+        "tokens": [
+          "superseded"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 16,
+        "text": "What is still missing is a unified Orchestrator search contract that is object-first rather than page-first.",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "optional filter payload",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "promotion/review/corroboration/graph patch/recovery record -> likely `Ledger` or `History` depending on whether exact-record or story context is primary",
+        "tokens": [
+          "History",
+          "Ledger"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Recommended contract:",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "selecting an object result should route through the same deep-link contract as Orchestrator search",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "exact structured object lookup from redb projections / record indices",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "historical records with long textual payloads",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "Good result row fields:",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "current state / severity when relevant",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "`Tantivy` is clearly intended for search, but the object/record side of Orchestrator search is not yet specified enough to rely on full-text alone.",
+        "tokens": [
+          "Tantivy"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "Define a canonical Orchestrator search result contract with:",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "selection/filter payload",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "Reuse the same routing contract for:",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "These should not collapse into a generic \"old\" state.",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "historical and specifically not resumable/reusable as live execution state",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "previously accepted/active decision or state was explicitly withdrawn",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "`historical` is record/time truth",
+        "tokens": [
+          "historical"
+        ]
+      },
+      {
+        "line": 195,
+        "text": "`removed` is backing-object or storage-presence state",
+        "tokens": [
+          "removed"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "`revoked` is semantic validity state",
+        "tokens": [
+          "revoked"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 2,
+        "text": "Existing docs mostly define local/tab-specific search and filtering:",
+        "tokens": []
+      },
+      {
+        "line": 6,
+        "text": "History is currently a list/table view",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "What is still missing is a unified Orchestrator search contract that is object-first rather than page-first.",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "distinguish `global object search` from `tab-local filtering`",
+        "tokens": [
+          "global object search",
+          "tab-local filtering"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "Orchestrator search",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "object-first, run-aware, cross-tab routing",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "tab-local search",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "local narrowing/filtering within the active tab/view",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "lane / worktree",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "Each result should carry a canonical route target:",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "destination tab",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "seam/package -> `Seams` tab with correct hierarchy expanded",
+        "tokens": [
+          "Seams"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "run -> switch `focused_run_id` and open the relevant tab/context",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Orchestrator search must be run-aware.",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "search result routing must preserve or intentionally change `focused_run_id`",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Search in this tab",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "Search Orchestrator",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "object-first, cross-tab, route-aware",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "tab-local search stays embedded in tabs like Graph/Evidence/Ledger",
+        "tokens": []
+      },
+      {
+        "line": 74,
+        "text": "Orchestrator search can be:",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "command palette can expose Orchestrator object results, not just commands/pages",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "selecting an object result should route through the same deep-link contract as Orchestrator search",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "search should prefer stable object identity matches first",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "target tab",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "package > lane",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "Current docs define many local filters but not a unified Orchestrator search object model.",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "`Tantivy` is clearly intended for search, but the object/record side of Orchestrator search is not yet specified enough to rely on full-text alone.",
+        "tokens": [
+          "Tantivy"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "Define a canonical Orchestrator search result contract with:",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "destination tab",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "Separate page-level Orchestrator search from tab-local filtering.",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "Reuse the same routing contract for:",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "cross-tab deep links",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "Search should help the user find the right object, not force them to know which tab owns it first.",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "A narrow Source Control panel reinforces that richer cross-object search belongs more naturally in Orchestrator / command-palette flows than in side-panel SCM UI.",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 4,
+        "text": "Evidence has local search/filter",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "graph detail can open Evidence",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "History rows can open Graph/Evidence",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "evidence/artifact when directly addressable",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "evidence/artifact -> `Evidence` with panes focused appropriately",
+        "tokens": [
+          "Evidence"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "tab-local search stays embedded in tabs like Graph/Evidence/Ledger",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "`revoked` = prior acceptance/approval/promotion was invalidated or withdrawn",
+        "tokens": [
+          "revoked"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [],
+    "stale_retirement_items": [
+      {
+        "line": 148,
+        "text": "attempts from older generations can become `stale_historical`",
+        "tokens": [
+          "stale_historical"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_required`",
+        "tokens": [
+          "abandoned",
+          "fixed",
+          "replan_required",
+          "superseded"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "stale_historical",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "superseded",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "deleted` / `removed",
+        "tokens": [
+          " / "
+        ]
+      },
+      {
+        "line": 163,
+        "text": "These should not collapse into a generic \"old\" state.",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "stale_historical",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "superseded",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "removed",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "historical` vs `superseded",
+        "tokens": [
+          " vs "
+        ]
+      },
+      {
+        "line": 186,
+        "text": "every superseded object is historical",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "not every historical object is superseded",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "superseded` vs `revoked",
+        "tokens": [
+          " vs "
+        ]
+      },
+      {
+        "line": 189,
+        "text": "`superseded` = replaced by newer truth",
+        "tokens": [
+          "superseded"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "removed` vs `revoked",
+        "tokens": [
+          " vs "
+        ]
+      },
+      {
+        "line": 195,
+        "text": "`removed` is backing-object or storage-presence state",
+        "tokens": [
+          "removed"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 8,
+        "text": "graph detail can open Evidence",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "graph can open Usage",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "History rows can open Graph/Evidence",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "Ledger can open Usage",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "node -> `Node Graph` with node selected and inspector open",
+        "tokens": [
+          "Node Graph"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "run -> switch `focused_run_id` and open the relevant tab/context",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "reopened",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "reopened",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 16,
+        "text": "What is still missing is a unified Orchestrator search contract that is object-first rather than page-first.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 140,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

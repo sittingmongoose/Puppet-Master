@@ -1,0 +1,226 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-016",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-016.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- `concern record` = canonical durable object with stable identity and lifecycle",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `concern projection` = surface-specific rendering for Progress / Seams / Evidence / History / Ledger",
+      "line_in_shard": 5
+    },
+    {
+      "type": "open_question",
+      "text": "- `run_id?`",
+      "line_in_shard": 11
+    },
+    {
+      "type": "data_shape",
+      "text": "- scope object refs:",
+      "line_in_shard": 12
+    },
+    {
+      "type": "open_question",
+      "text": "- `seam_id?`",
+      "line_in_shard": 13
+    },
+    {
+      "type": "open_question",
+      "text": "- `package_id?`",
+      "line_in_shard": 14
+    },
+    {
+      "type": "open_question",
+      "text": "- `node_id?`",
+      "line_in_shard": 15
+    },
+    {
+      "type": "open_question",
+      "text": "- `attempt_id?`",
+      "line_in_shard": 16
+    },
+    {
+      "type": "open_question",
+      "text": "- `lane_id?`",
+      "line_in_shard": 17
+    },
+    {
+      "type": "open_question",
+      "text": "- `worktree_id?`",
+      "line_in_shard": 18
+    },
+    {
+      "type": "open_question",
+      "text": "- `detail_ref?`",
+      "line_in_shard": 23
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `owner_kind`",
+      "line_in_shard": 24
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `owner_ref?`",
+      "line_in_shard": 25
+    },
+    {
+      "type": "open_question",
+      "text": "- `created_by_ref?`",
+      "line_in_shard": 27
+    },
+    {
+      "type": "open_question",
+      "text": "- `resolved_at_utc?`",
+      "line_in_shard": 30
+    },
+    {
+      "type": "open_question",
+      "text": "- `dismissed_at_utc?`",
+      "line_in_shard": 31
+    },
+    {
+      "type": "open_question",
+      "text": "- `acknowledged_at_utc?`",
+      "line_in_shard": 32
+    },
+    {
+      "type": "open_question",
+      "text": "- `parent_concern_id?`",
+      "line_in_shard": 42
+    },
+    {
+      "type": "open_question",
+      "text": "- `superseded_by_concern_id?`",
+      "line_in_shard": 43
+    },
+    {
+      "type": "open_question",
+      "text": "- `merged_into_concern_id?`",
+      "line_in_shard": 44
+    },
+    {
+      "type": "open_question",
+      "text": "- `split_from_concern_id?`",
+      "line_in_shard": 45
+    },
+    {
+      "type": "data_shape",
+      "text": "- attention fields:",
+      "line_in_shard": 46
+    },
+    {
+      "type": "open_question",
+      "text": "- `blocking_effect?`",
+      "line_in_shard": 50
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `invalidated`",
+      "line_in_shard": 90
+    },
+    {
+      "type": "data_shape",
+      "text": "- an older framing is replaced by a better/newer concern object:",
+      "line_in_shard": 106
+    },
+    {
+      "type": "verification_rule",
+      "text": "- downgrade/invalidate an existing concern",
+      "line_in_shard": 115
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Specific interaction rules:",
+      "line_in_shard": 116
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "### Concern ownership / authority direction",
+      "line_in_shard": 129
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- concern owner for follow-up",
+      "line_in_shard": 131
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Good owner kinds still look like:",
+      "line_in_shard": 134
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- A concern should be allowed to change owner over time without changing identity.",
+      "line_in_shard": 143
+    },
+    {
+      "type": "routing_rule",
+      "text": "### Search / routing direction",
+      "line_in_shard": 145
+    },
+    {
+      "type": "data_shape",
+      "text": "- Concern results should be object-first.",
+      "line_in_shard": 146
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Search result should route based on what the user likely needs:",
+      "line_in_shard": 147
+    },
+    {
+      "type": "decision",
+      "text": "- selected concern id",
+      "line_in_shard": 155
+    },
+    {
+      "type": "data_shape",
+      "text": "- related object context",
+      "line_in_shard": 156
+    },
+    {
+      "type": "doc_hint",
+      "text": "- There is no obvious current concern event family or concern record family in the local docs comparable to attempts/blocked/remediation.",
+      "line_in_shard": 172
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add explicit concern lineage fields for merge/split/supersession.",
+      "line_in_shard": 178
+    },
+    {
+      "type": "data_shape",
+      "text": "- concerns should remain shared objects across surfaces, not duplicated local alert rows",
+      "line_in_shard": 184
+    },
+    {
+      "type": "requirement",
+      "text": "- blockers requiring action must not be trivially dismissible into a false sense of health",
+      "line_in_shard": 185
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 190
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 191
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The docs already contain many action-specific confirmation rules:",
+      "line_in_shard": 199
+    }
+  ]
+}
