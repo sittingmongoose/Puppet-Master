@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.stage_report.E3.v3.1.12",
+  "prompt_id": "E3",
+  "prompt_version": "pm.e3.v3.1.12",
+  "timestamp_utc": "20260506T202652Z",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "required": false,
+    "reason": "Deterministic merge of 61 pm.coverage_classification.v3.1.12 files keyed by obligation_id, preservation of row_hash/candidate_doc_hints from prior transfer_coverage, application of F5 resolutions from doc_discovery_resolution.json (resolved live_doc_targets_union + present class; explicit f5_unresolved_explicit for 2 rows)."
+  },
+  "required_subagent_tasks_total": 0,
+  "distinct_subagent_invocations_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification_proof": {
+    "canonical_obligations_sha256": "fb1498de127b3bfee342f271dc2ba692d8347e937f925587d5ab8ecff733a1ce",
+    "coverage_worklist_sha256": "b0f397e6f6af21c8f3de2b91f0f7b4d8c1ceafe1c7a9d26ad2ab311dbf4c05d1",
+    "classification_files_read": 61,
+    "classification_obligation_ids_distinct": 337,
+    "doc_discovery_resolution_sha256": "4c641927ab7c9c0bb2d710740050c35caa447a2a057a386a398832486cb8c43a",
+    "transfer_coverage_sha256": "31acb58214921cce5ab4837feba2d6e63bd37e64a6645c008da9a2e0c027dcb6",
+    "coverage_rows_total": 393,
+    "f5_resolved_bindings_applied": 99,
+    "final_gate_passed": true
+  },
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_gate_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.E3.json"
+  ],
+  "next_prompt_request": "Paste prompt E4 — Section Exit: Coverage v3.1.12."
+}

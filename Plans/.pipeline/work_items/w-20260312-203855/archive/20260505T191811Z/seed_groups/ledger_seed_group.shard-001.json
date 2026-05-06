@@ -1,0 +1,156 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-001",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-001.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "stale_retirement_item",
+      "text": "- Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep.",
+      "line_in_shard": 10
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- legacy canon / same-file supersession risk",
+      "line_in_shard": 14
+    },
+    {
+      "type": "data_shape",
+      "text": "## Objective",
+      "line_in_shard": 17
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Preserve durable execution memory for the completed audit, blocked fidelity findings, and late-session handoffs.",
+      "line_in_shard": 18
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Keep the missed-transfer findings, legacy-canon hotspots, and recovery posture recoverable without relying on chat history.",
+      "line_in_shard": 19
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Support owner-first fidelity recovery from the existing packetized work item.",
+      "line_in_shard": 20
+    },
+    {
+      "type": "requirement",
+      "text": "- Ledger is execution memory only; it is not canonical and must not be cited in planning docs.",
+      "line_in_shard": 23
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Do not write planning-doc changes during work-item stewardship.",
+      "line_in_shard": 24
+    },
+    {
+      "type": "requirement",
+      "text": "- `Node Graph Display` tab remains, but must evolve to show graph-patch lineage:",
+      "line_in_shard": 33
+    },
+    {
+      "type": "verification_rule",
+      "text": "- old invalidated/superseded nodes remain visible",
+      "line_in_shard": 34
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Old composite-reference check confirms:",
+      "line_in_shard": 46
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Ledger` = structured record inspection",
+      "line_in_shard": 74
+    },
+    {
+      "type": "process_defect",
+      "text": "- Attention / Blockers",
+      "line_in_shard": 81
+    },
+    {
+      "type": "process_defect",
+      "text": "- Attention / Blockers -> `Node Graph`",
+      "line_in_shard": 95
+    },
+    {
+      "type": "doc_hint",
+      "text": "- graph canvas + right-side detail inspector",
+      "line_in_shard": 112
+    },
+    {
+      "type": "doc_hint",
+      "text": "- detail inspector should expose:",
+      "line_in_shard": 113
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Artifacts` pane for screenshots/recordings/diffs/reports/generated docs/etc.",
+      "line_in_shard": 124
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Ledger` = structured durable record inspection (attempts, reviews, corroboration, promotions, graph patches, recovery records, learnings, usage-linked receipts)",
+      "line_in_shard": 129
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Inspector/full-record split direction now exists:",
+      "line_in_shard": 130
+    },
+    {
+      "type": "doc_hint",
+      "text": "- right-side inspectors should stay summary/action oriented",
+      "line_in_shard": 131
+    },
+    {
+      "type": "data_shape",
+      "text": "- dense objects should open full-record views",
+      "line_in_shard": 132
+    },
+    {
+      "type": "doc_hint",
+      "text": "- especially:",
+      "line_in_shard": 133
+    },
+    {
+      "type": "routing_rule",
+      "text": "- attempt handoff artifacts",
+      "line_in_shard": 134
+    },
+    {
+      "type": "data_shape",
+      "text": "- object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+      "line_in_shard": 142
+    },
+    {
+      "type": "doc_hint",
+      "text": "- prefer precise canonical terms in docs/runtime model",
+      "line_in_shard": 146
+    },
+    {
+      "type": "data_shape",
+      "text": "- likely canonical tab/object labels:",
+      "line_in_shard": 147
+    },
+    {
+      "type": "doc_hint",
+      "text": "- keep expert/canonical terms stable in docs",
+      "line_in_shard": 168
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked owner",
+      "line_in_shard": 195
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked ownership should be normalized with stable labels:",
+      "line_in_shard": 198
+    }
+  ]
+}

@@ -1,0 +1,396 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-061",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-061.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- generated/staged document:",
+      "line_in_shard": 1
+    },
+    {
+      "type": "doc_hint",
+      "text": "- persisted workspace document:",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `subject_id = doc:<document_id>`",
+      "line_in_shard": 4
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = thread`",
+      "line_in_shard": 6
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <thread_id>`",
+      "line_in_shard": 7
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = wizard`",
+      "line_in_shard": 9
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <wizard_id>`",
+      "line_in_shard": 10
+    },
+    {
+      "type": "data_shape",
+      "text": "- step selection should ride in a specialized subtarget/detail field or in serialized `resume_url`, not as a universal base field",
+      "line_in_shard": 11
+    },
+    {
+      "type": "data_shape",
+      "text": "- prefer `object_kind = usage_event`",
+      "line_in_shard": 13
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <usage_event_ref or stable usage id>`",
+      "line_in_shard": 14
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 17
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 18
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 22
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 25
+    },
+    {
+      "type": "data_shape",
+      "text": "- Many current commands and deep-link descriptions still expose raw local IDs directly because there is no normalized target object yet.",
+      "line_in_shard": 30
+    },
+    {
+      "type": "data_shape",
+      "text": "- Some existing payloads probably carry both context and target in a way that should be split once `route_target` exists.",
+      "line_in_shard": 31
+    },
+    {
+      "type": "data_shape",
+      "text": "- `line`/`range` are useful, but they belong to path/document-open specialization much more than to the canonical base route object.",
+      "line_in_shard": 32
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep `route_target` intentionally small and force normalization pressure through `subject_id` and `object_kind/object_id`.",
+      "line_in_shard": 35
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Let specialized contracts carry specialized selectors:",
+      "line_in_shard": 36
+    },
+    {
+      "type": "data_shape",
+      "text": "- object-family commands may still carry family-specific anchors when they are truly not reusable",
+      "line_in_shard": 39
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Avoid adding a generic nested \u201cextra args\u201d bag to `route_target`; that would recreate the same drift under a different name.",
+      "line_in_shard": 40
+    },
+    {
+      "type": "data_shape",
+      "text": "- If the base target object grows too large, it stops being canonical and just becomes a new dumping ground.",
+      "line_in_shard": 44
+    },
+    {
+      "type": "data_shape",
+      "text": "- Most current navigation payloads can be normalized more aggressively than the existing docs currently do.",
+      "line_in_shard": 45
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-16 - Controlled vocabulary for `subject_id` families and `object_kind`",
+      "line_in_shard": 47
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 49
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 55
+    },
+    {
+      "type": "data_shape",
+      "text": "- The rewrite now has enough stable object families that `object_kind` can no longer stay informal.",
+      "line_in_shard": 58
+    },
+    {
+      "type": "data_shape",
+      "text": "- The key guardrail is to keep `subject_id` narrow and open-oriented, while `object_kind` covers non-subject domain objects that need navigation, focus, or inspection.",
+      "line_in_shard": 59
+    },
+    {
+      "type": "data_shape",
+      "text": "- `subject_id` should not become a second generic object taxonomy. It should stay for openable/renderable content subjects.",
+      "line_in_shard": 60
+    },
+    {
+      "type": "data_shape",
+      "text": "- Many current payloads already expose stable canonical IDs that can map directly into `object_kind/object_id` without inventing route-local IDs.",
+      "line_in_shard": 61
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `doc:<document_id>`",
+      "line_in_shard": 65
+    },
+    {
+      "type": "data_shape",
+      "text": "- avoid adding `thread:`, `run:`, `wizard:`, `safe_point:`, etc. as `subject_id` families when those are better modeled as `object_kind/object_id`",
+      "line_in_shard": 69
+    },
+    {
+      "type": "data_shape",
+      "text": "### Recommended early `object_kind` set",
+      "line_in_shard": 71
+    },
+    {
+      "type": "data_shape",
+      "text": "- rewrite-era orchestration objects:",
+      "line_in_shard": 85
+    },
+    {
+      "type": "data_shape",
+      "text": "### What should generally NOT be `object_kind`",
+      "line_in_shard": 95
+    },
+    {
+      "type": "data_shape",
+      "text": "- provider/runtime disclosure fields:",
+      "line_in_shard": 104
+    },
+    {
+      "type": "data_shape",
+      "text": "- effective model/account/persona values are attributes of objects, not usually target kinds by themselves",
+      "line_in_shard": 105
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id` should use the canonical domain identity already present in the docs:",
+      "line_in_shard": 108
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Avoid route-local surrogate IDs if a canonical domain ID already exists.",
+      "line_in_shard": 120
+    },
+    {
+      "type": "data_shape",
+      "text": "- If a target requires both identity and sub-selection, keep the main identity in `object_kind/object_id` and use `inspector_target` or a specialized verb for the sub-selection.",
+      "line_in_shard": 121
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 123
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 124
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 127
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 133
+    },
+    {
+      "type": "data_shape",
+      "text": "- Some current surfaces still behave as if every target kind needs its own bespoke payload shape.",
+      "line_in_shard": 136
+    },
+    {
+      "type": "data_shape",
+      "text": "- Several rewrite-era object families now clearly need stable target kinds even though older docs still mostly pivot by `run_id`, `tier_id`, or file path.",
+      "line_in_shard": 138
+    },
+    {
+      "type": "data_shape",
+      "text": "- Declare an early canonical `object_kind` enum family in the contract layer, with room for later controlled extension.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "data_shape",
+      "text": "- Prefer extending `object_kind` deliberately over adding new top-level route fields.",
+      "line_in_shard": 143
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Keep UI container state (`tab_id`, panel focus, inspector section) as view context around the target, not as the target taxonomy itself.",
+      "line_in_shard": 144
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The vocabulary split is what keeps the new routing model from collapsing back into \u201cjust pass whatever ids you have.\u201d",
+      "line_in_shard": 147
+    },
+    {
+      "type": "data_shape",
+      "text": "- `subject_id` should stay sparse; `object_kind` should do most of the cross-surface identity work.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "data_shape",
+      "text": "- Rewrite-era objects like `Feature Seam`, `Work Package`, `Concern`, and `Graph Patch` now deserve first-class target kinds, not just ad hoc filters.",
+      "line_in_shard": 149
+    },
+    {
+      "type": "doc_hint",
+      "text": "## Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary",
+      "line_in_shard": 151
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 153
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 155
+    },
+    {
+      "type": "data_shape",
+      "text": "- Several important surfaces need more than just \u201copen object X\u201d:",
+      "line_in_shard": 161
+    },
+    {
+      "type": "doc_hint",
+      "text": "- document pane restore wants history selection / approval-stage context",
+      "line_in_shard": 163
+    },
+    {
+      "type": "doc_hint",
+      "text": "- wizard resume wants a specific step / clarification focus",
+      "line_in_shard": 164
+    },
+    {
+      "type": "doc_hint",
+      "text": "- chat/thread search wants a specific message focused",
+      "line_in_shard": 165
+    },
+    {
+      "type": "data_shape",
+      "text": "- canonical target identity gets you to the right object/surface",
+      "line_in_shard": 169
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target` is still useful, but it should stay for reusable detail-pane or subsection focus, not as a universal dumping ground for all feature-local anchors.",
+      "line_in_shard": 171
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `route_target` owns the main identity/scope only.",
+      "line_in_shard": 174
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `OpenFile` specialization for `line` / `range`",
+      "line_in_shard": 176
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target` for reusable detail-surface focus",
+      "line_in_shard": 177
+    },
+    {
+      "type": "data_shape",
+      "text": "- object-family-specific anchor fields only when the anchor is truly domain-local and not reusable",
+      "line_in_shard": 178
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Good fits for `inspector_target`",
+      "line_in_shard": 180
+    },
+    {
+      "type": "decision",
+      "text": "- selected detail section / subsection",
+      "line_in_shard": 181
+    },
+    {
+      "type": "doc_hint",
+      "text": "- evidence tab vs history tab vs review tab within an inspector",
+      "line_in_shard": 182
+    },
+    {
+      "type": "decision",
+      "text": "- document pane view mode / selected pane subsection when that is a stable reusable UI concept",
+      "line_in_shard": 184
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Poor fits for `inspector_target`",
+      "line_in_shard": 186
+    },
+    {
+      "type": "data_shape",
+      "text": "- `wizard_step` as the primary object identity",
+      "line_in_shard": 187
+    },
+    {
+      "type": "data_shape",
+      "text": "- raw provider/account disclosure fields",
+      "line_in_shard": 190
+    },
+    {
+      "type": "data_shape",
+      "text": "- arbitrary per-feature payload blobs",
+      "line_in_shard": 191
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = message`",
+      "line_in_shard": 195
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <message_id>`",
+      "line_in_shard": 196
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = wizard`",
+      "line_in_shard": 199
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <wizard_id>`",
+      "line_in_shard": 200
+    }
+  ]
+}

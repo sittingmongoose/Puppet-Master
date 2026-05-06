@@ -1,0 +1,1193 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0034",
+  "coverage": {
+    "shard_id": "shard-0034",
+    "start_line": 6104,
+    "end_line": 6290,
+    "line_count": 187,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0034.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 47,
+        "text": "graph/page/artifact docs require identity disclosure but do not yet define a shared display/record contract",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "seam/package/lane/worktree lineage is not yet treated as first-class storage/usage attribution everywhere it needs to be",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "Rework storage/usage attribution to treat `seam_id`, `package_id`, `lane_id`, and `attempt_id` as first-class where the runtime model now requires them, instead of centering `tier_id`",
+        "tokens": [
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Source-qualified usage wording still matters for Gemini and other estimate-only providers; that requirement should survive the broader identity rewrite",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Dashboard portability should stay attached to the right widget set, not be used as a reason to widgetize every Orchestrator tab",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "`Architecture_Invariants.md` needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "tokens": [
+          "Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "the rewrite now needs seam/package overseer scopes, blocked-owner attribution, and clearer separation between runtime/system/user authority",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "Require requested/effective identity fields in decision/permission records, not just runtime event records.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "`blocked_reason_code` should remain the SSOT instead of ad hoc blocked strings",
+        "tokens": [
+          "blocked_reason_code"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "`attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "acknowledged concerns must reduce noise without suppressing true blockers",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "`attempt.started` / usage / storage / auth surfaces still lack one crisp contract for how requested/effective/provider/account identity propagates end to end",
+        "tokens": [
+          "attempt.started"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Opus strongly reinforces the ledger direction that only `Progress` should remain widget-heavy while Graph / Seams / Evidence / History / Ledger become stronger native surfaces",
+        "tokens": [
+          "Progress"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 49,
+        "text": "`tier_id` remains an important field in usage/storage thinking",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "newer ledger direction keeps `Progress` as the widget-heavy surface and pushes `Seams` / `Evidence` / `History` / `Ledger` toward stronger native ownership",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Progress",
+          "Seams"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Replace or deprecate tier-era event and widget assumptions:",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "`Decision_Policy.md` still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "tokens": [
+          "Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Requested/effective identity is canonical enough to affect policy and permissions now, but those docs still treat it as adjacent detail rather than core decision context.",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "`Decision_Policy.md` does not yet explain who can acknowledge concerns, revoke promotions, confirm corroboration outcomes, or own blocked states under the new overseer model.",
+        "tokens": [
+          "Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Extend `Decision_Policy.md` with first-class policy objects and transitions for:",
+        "tokens": [
+          "Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Require requested/effective identity fields in decision/permission records, not just runtime event records.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "`blocked_reason_code` should remain the SSOT instead of ad hoc blocked strings",
+        "tokens": [
+          "blocked_reason_code"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "`usage-feature.md` remains centered on `tier_id` and omits lane/package/remediation dimensions now present elsewhere",
+        "tokens": [
+          "tier_id",
+          "usage-feature.md"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Opus strongly reinforces the ledger direction that only `Progress` should remain widget-heavy while Graph / Seams / Evidence / History / Ledger become stronger native surfaces",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Run graph and Orchestrator page docs remain structurally tier-bound:",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 2,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "`Contracts_V0.md` is strong on canonical effective identity and envelope normalization",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 19,
+        "text": "Storage/usage contracts still carry tier-era runtime assumptions in places the broader second sweep now makes more obviously risky:",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "neither doc is yet explicit enough about graph-patch lineage or degraded projection-trust states",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "`FileManager.md` already wants identity-based artifact opening, but its open contract is still too path-first",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "graph/page/artifact docs require identity disclosure but do not yet define a shared display/record contract",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "`tier_id` remains an important field in usage/storage thinking",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "`Runtime_Artifacts_Panel.md` and related surfaces still need a tighter canonical id/trust/freshness contract",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "Define one shared requested/effective identity disclosure contract reusable across:",
+        "tokens": []
+      },
+      {
+        "line": 72,
+        "text": "Add explicit projection freshness / degraded-trust states to storage-driven UI docs rather than assuming silently fresh projections",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+        "tokens": [
+          "effective_provider_identity"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "`Permissions_System.md` does not yet integrate the stricter requested/effective identity model that `Contracts_V0.md` now makes canonical",
+        "tokens": [
+          "Contracts_V0.md",
+          "Permissions_System.md"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "adaptive phase planning and contract unification create a broader orchestration-mode matrix than older docs assume",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "`HITLRequest` / blocked-flow thinking still leans on `tier_id` / `tier_type` in places while the runtime increasingly uses `node_id` and attempt-scoped records as the canonical execution anchors.",
+        "tokens": [
+          "HITLRequest",
+          "node_id",
+          "tier_id",
+          "tier_type"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "`Decision_Policy.md` does not yet explain who can acknowledge concerns, revoke promotions, confirm corroboration outcomes, or own blocked states under the new overseer model.",
+        "tokens": [
+          "Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "Contract unification is treated as deterministic, but the conflict-resolution authority/rules are still underdefined for contradictory upstream phase outputs.",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "superseded/revoked/reopened states",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "Require requested/effective identity fields in decision/permission records, not just runtime event records.",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "Define intent-specific orchestration/worktree modes explicitly, including single-branch exceptions and contract-unification conflict policy.",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "recovery snapshots in wizard-driven flows need enough intent/wizard-step state to avoid restoring into the wrong execution mode",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "this cluster suggests reconciliation risk now lives in authority semantics as much as in storage/schema drift",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Canonical field-name and schema ownership drift is sharper than the earlier Gemini pass suggested:",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "Contracts_V0.md` prohibits canonical `requested_persona_id` / `effective_persona_id",
+        "tokens": [
+          " / ",
+          " prohibits canonical ",
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "`attempt.started` / usage / storage / auth surfaces still lack one crisp contract for how requested/effective/provider/account identity propagates end to end",
+        "tokens": [
+          "attempt.started"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`storage-plan.md` still lacks one shared governance-record envelope for concerns/reviews/promotions/corroboration/graph-patch/recovery records",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`provider_account_id` now looks like a real shadow-identity risk because it appears in usage/storage without canonical contract ownership",
+        "tokens": [
+          "provider_account_id"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "`Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 7,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "usage-feature.md` still treats `tier_id` as a core attribution dimension and does not yet pivot to `seam_id` / `package_id` / `lane_id",
+        "tokens": [
+          " / ",
+          " as a core attribution dimension and does not yet pivot to ",
+          " still treats ",
+          "usage-feature.md"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "Orchestrator_Page.md` still centers `Tiers",
+        "tokens": [
+          " still centers ",
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "`Widget_System.md` still widgetizes surfaces that the rewrite increasingly treats as native/specialized tabs",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "`FileManager.md` already wants identity-based artifact opening, but its open contract is still too path-first",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "Storage and usage docs already hold canonical-ish runtime data, but still encode obsolete routing/grouping terms:",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "seam/package/lane/worktree lineage is not yet treated as first-class storage/usage attribution everywhere it needs to be",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "The native-tab vs widget boundary is still inconsistent:",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "`Widget_System.md` implies broader widget portability",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "`Orchestrator_Page.md` still treats multiple tabs as widget containers",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "Rework storage/usage attribution to treat `seam_id`, `package_id`, `lane_id`, and `attempt_id` as first-class where the runtime model now requires them, instead of centering `tier_id`",
+        "tokens": [
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "`run.tier_*` -> seam/package/lane-aware runtime events",
+        "tokens": [
+          "run.tier_*"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Tighten artifact/file routing around stable object identity:",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+        "tokens": [
+          "effective_provider_identity"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Dashboard portability should stay attached to the right widget set, not be used as a reason to widgetize every Orchestrator tab",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "`Architecture_Invariants.md` needs to reflect newer runtime invariants like scheduler lane ordering and mutation-safe-point requirements",
+        "tokens": [
+          "Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "`node_id` / `attempt_id` / `blocked_reason_code` / lane dispatch order / safe points",
+        "tokens": [
+          "attempt_id",
+          "blocked_reason_code",
+          "node_id"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "lane scheduler integrity",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "`attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "`usage-feature.md` remains centered on `tier_id` and omits lane/package/remediation dimensions now present elsewhere",
+        "tokens": [
+          "tier_id",
+          "usage-feature.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "`Widget_System.md` and `Orchestrator_Page.md` continue to treat multiple Orchestrator tabs as widget-composed",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Run graph and Orchestrator page docs remain structurally tier-bound:",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "`Run_Graph_View.md` has near-zero awareness of concern/corroboration/promotion/graph-patch/lane/package object families",
+        "tokens": [
+          "Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "`Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "cross-surface pivots into Source Control/GitHub still do not carry lane/package/degraded-trust context cleanly",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 54,
+        "text": "newer ledger direction keeps `Progress` as the widget-heavy surface and pushes `Seams` / `Evidence` / `History` / `Ledger` toward stronger native ownership",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Progress",
+          "Seams"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+        "tokens": [
+          "effective_provider_identity"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "`Decision_Policy.md` does not yet explain who can acknowledge concerns, revoke promotions, confirm corroboration outcomes, or own blocked states under the new overseer model.",
+        "tokens": [
+          "Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Opus strongly reinforces the ledger direction that only `Progress` should remain widget-heavy while Graph / Seams / Evidence / History / Ledger become stronger native surfaces",
+        "tokens": [
+          "Progress"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 15,
+        "text": "Requested/effective identity pressure is now showing up across more than persona/runtime docs:",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "UI ownership drift is now clearly cross-doc rather than isolated:",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "GitHub_Integration.md` still frames worktree ownership around `run/tier",
+        "tokens": [
+          " still frames worktree ownership around ",
+          "GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "The rewrite now expects a stronger requested/effective/provider/account identity split than several non-runtime docs currently expose:",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "newer ledger direction keeps `Progress` as the widget-heavy surface and pushes `Seams` / `Evidence` / `History` / `Ledger` toward stronger native ownership",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Progress",
+          "Seams"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "`tier_tree` / `Tiers` ownership -> seam/worktree/package-native surfaces",
+        "tokens": [
+          "Tiers",
+          "tier_tree"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "`effective_provider_identity` / display labels are audit/display fields, not routing keys",
+        "tokens": [
+          "effective_provider_identity"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Source-qualified usage wording still matters for Gemini and other estimate-only providers; that requirement should survive the broader identity rewrite",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "`Decision_Policy.md` still lacks first-class concern/corroboration/promotion objects and their authority/lifecycle rules",
+        "tokens": [
+          "Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "Authority is still framed too monolithically in several places:",
+        "tokens": []
+      },
+      {
+        "line": 99,
+        "text": "policy docs still assume a stronger single \"Puppet Master\" authority center",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "the rewrite now needs seam/package overseer scopes, blocked-owner attribution, and clearer separation between runtime/system/user authority",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "but surrounding policy/HITL/permission docs still frequently reason through tier context and less precise ownership terms",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "Contract unification is treated as deterministic, but the conflict-resolution authority/rules are still underdefined for contradictory upstream phase outputs.",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "this cluster suggests reconciliation risk now lives in authority semantics as much as in storage/schema drift",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "Canonical field-name and schema ownership drift is sharper than the earlier Gemini pass suggested:",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "Contracts_V0.md` prohibits canonical `requested_persona_id` / `effective_persona_id",
+        "tokens": [
+          " / ",
+          " prohibits canonical ",
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "`attempt.started` / usage / storage / auth surfaces still lack one crisp contract for how requested/effective/provider/account identity propagates end to end",
+        "tokens": [
+          "attempt.started"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`provider_account_id` now looks like a real shadow-identity risk because it appears in usage/storage without canonical contract ownership",
+        "tokens": [
+          "provider_account_id"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "Native-surface ownership is still not reconciled:",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 130,
+        "text": "superseded/revoked/reopened states",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 29,
+        "text": "`FileManager.md` already wants identity-based artifact opening, but its open contract is still too path-first",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Artifact and file-opening semantics are not yet fully aligned with recovery/run-aware identity:",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "`FileManager.md` is moving toward identity-based opens",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "superseded/revoked/reopened states",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 19,
+        "text": "Storage/usage contracts still carry tier-era runtime assumptions in places the broader second sweep now makes more obviously risky:",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "`Runtime_Artifacts_Panel.md` is missing `attempt_id` in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md",
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "acknowledged concerns must reduce noise without suppressing true blockers",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "this cluster suggests reconciliation risk now lives in authority semantics as much as in storage/schema drift",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "`provider_account_id` now looks like a real shadow-identity risk because it appears in usage/storage without canonical contract ownership",
+        "tokens": [
+          "provider_account_id"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 7,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 34,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/Permissions_System.md",
+        "tokens": [
+          "Plans/Permissions_System.md"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "`Plans/chain-wizard-flexibility.md` (section 1)",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "Plans/Permissions_System.md",
+        "tokens": [
+          "Plans/Permissions_System.md"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "supporting references from `Prompt_Pipeline.md`, `Multi-Account.md`, `FinalGUISpec.md`, `Executor_Protocol.md`, and current ledger findings",
+        "tokens": [
+          "Executor_Protocol.md",
+          "FinalGUISpec.md",
+          "Multi-Account.md",
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 181,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 182,
+        "text": "Plans/GitHub_API_Auth_and_Flows.md",
+        "tokens": [
+          "Plans/GitHub_API_Auth_and_Flows.md"
+        ]
+      },
+      {
+        "line": 183,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-doc_discovery-cf685f62e9",
+  "category": "doc_discovery",
+  "family_key": "plans_multi_account_md_plans_cli_bridged_providers_md_normalized_provider_streams_need_account",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "c3-s035-005"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-doc_discovery-cf685f62e9--c3-s035-005",
+      "seed_id": "c3-s035-005",
+      "source_shard_id": "shard-0035",
+      "batch_index": 9,
+      "obligation_type": "data_shape",
+      "work_group_category": "doc_discovery",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0035",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Normalized provider streams need account attribution on usage/auth_state and actor_kind (and related context) for multi-account and failover correctness.",
+      "evidence_ledger_excerpt": "`usage` events carry no account attribution; `auth_state` carries no pool-member / account context for failover rotation",
+      "related_paths": [
+        "Plans/Multi-Account.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Normalized provider streams need account attribution on usage/auth_state and actor_kind (and related context) for multi-account and failover correctness."
+      ],
+      "required_action": "Bind this obligation to concrete canonical document paths (Plans/** targets), replacing discovery placeholders where appropriate."
+    }
+  ]
+}

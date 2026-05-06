@@ -1,0 +1,807 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0057",
+  "coverage": {
+    "shard_id": "shard-0057",
+    "start_line": 10494,
+    "end_line": 10679,
+    "line_count": 186,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0057.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 27,
+        "text": "none of these bridge fields should become a replacement primary key:",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "runtime artifacts that are derived from or emitted during an attempt should carry:",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "cost-bearing receipt-like artifacts should always prefer `usage_event_ref` for Usage/Ledger routing, not timestamp heuristics",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "tool traces that originate from a provider-backed attempt should carry `provider_attempt_ref?` whenever that provider/runtime handle exists",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "`usage-feature.md` correctly treats `usage_event_ref` as canonical when present, but still allows timestamp/run/thread fallback behavior that should probably be treated as degraded compatibility, not the preferred routing path.",
+        "tokens": [
+          "usage-feature.md",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`storage-plan.md` puts `provider_attempt_ref` on the attempt record and `usage_event_ref` on the receipt record, but does not yet explain how downstream surfaces should join them coherently.",
+        "tokens": [
+          "provider_attempt_ref",
+          "storage-plan.md",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Require runtime-artifact envelope support for `attempt_id` plus bridge refs where applicable.",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "`usage_event_ref` should be the preferred route for cost-bearing pivots whenever present.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "`FileManager.md` adds pressure on the envelope because it now needs open-by-identity behavior for:",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 94,
+        "text": "when materialized, they must use canonical runtime identities like `attempt_id`, `safe_point_id`, and `remediation_root_id`",
+        "tokens": [
+          "attempt_id",
+          "remediation_root_id",
+          "safe_point_id"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "they must not invent separate artifact-local identity",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "the runtime-artifact envelope should be attempt-native by default.",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "`attempt_id` should be present whenever the artifact came from a concrete execution attempt.",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "if there is no concrete attempt, the envelope should still carry the strongest available runtime anchor:",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "must carry `usage_event_ref` whenever available",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "should also carry `attempt_id?` and `provider_attempt_ref?` when traceable",
+        "tokens": [
+          "attempt_id?",
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "should carry `attempt_id?`, `provider_attempt_ref?`, and `execution_role?`",
+        "tokens": [
+          "attempt_id?",
+          "execution_role?",
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "should be attempt-native whenever produced by a node worker/verifier/reviewer flow",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "should carry external linkage refs but still anchor locally on `attempt_id`",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "FileManager’s future `OpenArtifact`-style flow should resolve by:",
+        "tokens": [
+          "OpenArtifact"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "that means the envelope, not ad hoc UI glue, should hold the minimum openable routing fields",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "`FileManager.md` needs stable identity and open-by-identity semantics, but the artifact docs still do not define enough envelope routing data to support that cleanly.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`Contracts_V0.md` explicitly declines to define runtime-artifact payloads, which is fine, but some owner doc still needs to define the common envelope strongly enough that per-type schemas do not drift.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model.",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "`artifact_id` should identify the artifact object, not the runtime attempt.",
+        "tokens": [
+          "artifact_id"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 13,
+        "text": "`attempt_id` remains the canonical local runtime execution anchor.",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "none of these bridge fields should become a replacement primary key:",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "provider_attempt_ref` does not replace `attempt_id",
+        "tokens": [
+          " does not replace "
+        ]
+      },
+      {
+        "line": 29,
+        "text": "`usage_event_ref` does not replace runtime identity",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "receipt refs do not replace artifact identity",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "`logical_artifact_id` and `linked_artifact_id` are lineage/navigation helpers, not replacements for runtime identity.",
+        "tokens": [
+          "linked_artifact_id",
+          "logical_artifact_id"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 2,
+        "text": "The bridge fields now want a precedence rule, not just a field inventory.",
+        "tokens": []
+      },
+      {
+        "line": 3,
+        "text": "`provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/runtime execution trace handle.",
+        "tokens": [
+          "attempt_record",
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "receipt records already carry the external-operation lineage:",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "receipt records are the canonical bridge to external side-effect lineage for that attempt.",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "none of these bridge fields should become a replacement primary key:",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "likely owner doc for formal field precedence:",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`storage-plan.md` puts `provider_attempt_ref` on the attempt record and `usage_event_ref` on the receipt record, but does not yet explain how downstream surfaces should join them coherently.",
+        "tokens": [
+          "provider_attempt_ref",
+          "storage-plan.md",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Add a bridge-field precedence note to the canonical runtime/storage owner docs:",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "Make cross-surface open actions resolve through these bridge fields instead of ad hoc feature-local joins.",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "spot-checks against `Plans/storage-plan.md` and `Plans/Contracts_V0.md`",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "The runtime-artifact docs now name an envelope file, but they still do not define the common envelope field family strongly enough in prose.",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "`EventRecord` wrapper",
+        "tokens": [
+          "EventRecord"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "per-type schemas",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "artifact payload metadata:",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "that means the envelope, not ad hoc UI glue, should hold the minimum openable routing fields",
+        "tokens": []
+      },
+      {
+        "line": 159,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "`Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, and `logical_artifact_id` the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields the rest of the rewrite now depends on.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md",
+          "artifact_id",
+          "linked_artifact_id",
+          "logical_artifact_id",
+          "run_id",
+          "task_id",
+          "thread_id"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`Contracts_V0.md` explicitly declines to define runtime-artifact payloads, which is fine, but some owner doc still needs to define the common envelope strongly enough that per-type schemas do not drift.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in `Runtime_Artifacts_Panel.md`.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "The missing piece is no longer “we need schemas”; it is “the common envelope contract is underspecified.”",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 38,
+        "text": "cost-bearing receipt-like artifacts should always prefer `usage_event_ref` for Usage/Ledger routing, not timestamp heuristics",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "`usage-feature.md` correctly treats `usage_event_ref` as canonical when present, but still allows timestamp/run/thread fallback behavior that should probably be treated as degraded compatibility, not the preferred routing path.",
+        "tokens": [
+          "usage-feature.md",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "`Orchestrator_Page.md` wants to pivot Evidence into workflow/Docker/Kubernetes detail, but still does not name the receipt/attempt join path explicitly enough.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "Treat timestamp/run/thread fallback routing as compatibility behavior only when canonical bridge refs are absent.",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "`usage_event_ref` should be the preferred route for cost-bearing pivots whenever present.",
+        "tokens": [
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "stable runtime identities",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "routing / side-effect linkage:",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "that means the envelope, not ad hoc UI glue, should hold the minimum openable routing fields",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "the docs still use `task_id` language in the artifact packet even though wider execution identity is moving toward node/package/seam/lane-native structures.",
+        "tokens": [
+          "task_id"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "`FileManager.md` needs stable identity and open-by-identity semantics, but the artifact docs still do not define enough envelope routing data to support that cleanly.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+        "tokens": [
+          "Plans/Orchestrator_Page.md",
+          "Plans/usage-feature.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 21,
+        "text": "follow `provider_attempt_ref` to provider/runtime trace and low-level execution evidence",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "follow `artifact_id` / `linked_artifact_id` for renderable outputs and evidence objects",
+        "tokens": [
+          "artifact_id",
+          "linked_artifact_id"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "`Orchestrator_Page.md` wants to pivot Evidence into workflow/Docker/Kubernetes detail, but still does not name the receipt/attempt join path explicitly enough.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "attempt-scoped evidence",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "evidence`, `validation_test`, `failed_attempts`, `before_after_snapshot",
+        "tokens": [
+          ", "
+        ]
+      },
+      {
+        "line": 151,
+        "text": "related runtime attempt/evidence lineage",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 3,
+        "text": "`provider_attempt_ref` appears on `attempt_record` and is the closest thing to a provider/runtime execution trace handle.",
+        "tokens": [
+          "attempt_record",
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "`provider_attempt_ref` is the canonical bridge to provider/runtime execution details for that attempt.",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "follow `provider_attempt_ref` to provider/runtime trace and low-level execution evidence",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "provider_attempt_ref` does not replace `attempt_id",
+        "tokens": [
+          " does not replace "
+        ]
+      },
+      {
+        "line": 35,
+        "text": "provider_attempt_ref?",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "tool traces that originate from a provider-backed attempt should carry `provider_attempt_ref?` whenever that provider/runtime handle exists",
+        "tokens": [
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "likely owner doc for formal field precedence:",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "`Runtime_Artifacts_Panel.md` insists receipt-like artifacts preserve canonical linkage, but it still does not spell out the precedence between `attempt_id`, `provider_attempt_ref`, and `usage_event_ref`.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md",
+          "attempt_id",
+          "provider_attempt_ref",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`storage-plan.md` puts `provider_attempt_ref` on the attempt record and `usage_event_ref` on the receipt record, but does not yet explain how downstream surfaces should join them coherently.",
+        "tokens": [
+          "provider_attempt_ref",
+          "storage-plan.md",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Add a bridge-field precedence note to the canonical runtime/storage owner docs:",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "provider/runtime bridge = `provider_attempt_ref`",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "`provider_attempt_ref` now looks like the missing link between runtime traces and renderable artifacts.",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "provider_attempt_ref?",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "should also carry `attempt_id?` and `provider_attempt_ref?` when traceable",
+        "tokens": [
+          "attempt_id?",
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "should carry `attempt_id?`, `provider_attempt_ref?`, and `execution_role?`",
+        "tokens": [
+          "attempt_id?",
+          "execution_role?",
+          "provider_attempt_ref?"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`Contracts_V0.md` explicitly declines to define runtime-artifact payloads, which is fine, but some owner doc still needs to define the common envelope strongly enough that per-type schemas do not drift.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 171,
+        "text": "Treat `task_id` as legacy/compatibility display metadata where necessary, not the main execution anchor.",
+        "tokens": [
+          "task_id"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 63,
+        "text": "Make cross-surface open actions resolve through these bridge fields instead of ad hoc feature-local joins.",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "`FileManager.md` adds pressure on the envelope because it now needs open-by-identity behavior for:",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "FileManager’s future `OpenArtifact`-style flow should resolve by:",
+        "tokens": [
+          "OpenArtifact"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "that means the envelope, not ad hoc UI glue, should hold the minimum openable routing fields",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "`FileManager.md` needs stable identity and open-by-identity semantics, but the artifact docs still do not define enough envelope routing data to support that cleanly.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Align FileManager open-by-identity requirements with the runtime-artifact envelope rather than inventing a parallel artifact-opening identity model.",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 66,
+        "text": "The big risk here is accidental “primary key drift,” where bridge refs start being treated like canonical local identity.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "`provider_attempt_ref` now looks like the missing link between runtime traces and renderable artifacts.",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "`Runtime_Artifacts_Panel.md` calls `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, and `logical_artifact_id` the canonical ID set, but that set is still missing the attempt-native/runtime attribution fields the rest of the rewrite now depends on.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md",
+          "artifact_id",
+          "linked_artifact_id",
+          "logical_artifact_id",
+          "run_id",
+          "task_id",
+          "thread_id"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "The missing piece is no longer “we need schemas”; it is “the common envelope contract is underspecified.”",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 42,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "spot-checks against `Plans/storage-plan.md` and `Plans/Contracts_V0.md`",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 182,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 183,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "spot-checks against `Plans/Orchestrator_Page.md` and `Plans/usage-feature.md`",
+        "tokens": [
+          "Plans/Orchestrator_Page.md",
+          "Plans/usage-feature.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

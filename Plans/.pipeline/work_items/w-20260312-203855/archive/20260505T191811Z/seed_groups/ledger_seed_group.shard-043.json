@@ -1,0 +1,321 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-043",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-043.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "### Highest-risk impacted docs",
+      "line_in_shard": 5
+    },
+    {
+      "type": "doc_hint",
+      "text": "- still the most contradicted orchestration doc and still structurally split-brain between body and addenda",
+      "line_in_shard": 7
+    },
+    {
+      "type": "data_shape",
+      "text": "- still needs CUP governance, handoff identity completeness, and explicit isolation/worktree policy fields",
+      "line_in_shard": 13
+    },
+    {
+      "type": "data_shape",
+      "text": "- Concern/corroboration/promotion objects remain absent from core runtime protocols.",
+      "line_in_shard": 18
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Wizard handoff still leaves identity/worktree policy implicit where the rewrite now needs them explicit.",
+      "line_in_shard": 19
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Worktree blocked reasons and historical lineage preservation still lack a single clear owner/emitter model.",
+      "line_in_shard": 20
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add explicit CUP governance and handoff fields (`execution_role`, requested/effective account, isolation/worktree mode) to wizard docs.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Move worktree docs onto node/lane-aware vocabulary and define projection authority between Source Control and Orchestrator receipt lineage.",
+      "line_in_shard": 27
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster",
+      "line_in_shard": 34
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 36
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- broader Orchestrator/UI research has been using \u201cprojection trust\u201d or \u201cdegraded trust\u201d for stale/degraded summary data",
+      "line_in_shard": 45
+    },
+    {
+      "type": "doc_hint",
+      "text": "- keeping one overloaded trust term will make later docs muddy",
+      "line_in_shard": 46
+    },
+    {
+      "type": "data_shape",
+      "text": "- That is better than one overloaded \u201ctrust\u201d enum because it separates:",
+      "line_in_shard": 50
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- freshness axis: `current | refreshing | stale`",
+      "line_in_shard": 55
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- projector lag and failure are not the same thing as stale-but-usable state",
+      "line_in_shard": 60
+    },
+    {
+      "type": "data_shape",
+      "text": "- Use `projection_freshness` as the canonical recency field.",
+      "line_in_shard": 63
+    },
+    {
+      "type": "data_shape",
+      "text": "- Use `projection_health` as the canonical reliability/usability field.",
+      "line_in_shard": 64
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Reserve `trust_tier` for preview/browser semantics only unless those docs are later explicitly renamed too.",
+      "line_in_shard": 65
+    },
+    {
+      "type": "data_shape",
+      "text": "- Recommended supporting fields:",
+      "line_in_shard": 66
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `source_seq?` or equivalent checkpoint/cursor",
+      "line_in_shard": 70
+    },
+    {
+      "type": "open_question",
+      "text": "- `degraded_reason_code?`",
+      "line_in_shard": 71
+    },
+    {
+      "type": "open_question",
+      "text": "- `refresh_in_progress?`",
+      "line_in_shard": 72
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 74
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 78
+    },
+    {
+      "type": "doc_hint",
+      "text": "- any docs currently using \u201cprojection trust\u201d as working language",
+      "line_in_shard": 82
+    },
+    {
+      "type": "data_shape",
+      "text": "- Freshness and degradation are currently discussed together often enough that later docs could collapse them into one field family by accident.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "data_shape",
+      "text": "- No owner doc yet explicitly defines projection freshness/health fields as a reusable cross-surface contract.",
+      "line_in_shard": 87
+    },
+    {
+      "type": "data_shape",
+      "text": "- Make `storage-plan.md` the owner of generic projection freshness/health projection fields.",
+      "line_in_shard": 90
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Let surface docs consume those terms instead of inventing local stale/degraded wording.",
+      "line_in_shard": 94
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- stale but healthy may allow read-only use with warning",
+      "line_in_shard": 96
+    },
+    {
+      "type": "verification_rule",
+      "text": "- degraded or unavailable should gate mutating actions much more aggressively",
+      "line_in_shard": 97
+    },
+    {
+      "type": "open_question",
+      "text": "- is this data old?",
+      "line_in_shard": 102
+    },
+    {
+      "type": "open_question",
+      "text": "- is this data trustworthy enough to act on?",
+      "line_in_shard": 103
+    },
+    {
+      "type": "doc_hint",
+      "text": "- current posture still favors exact record-backed fallback (`History`, `Ledger`, record inspectors) when projection health is degraded",
+      "line_in_shard": 104
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster",
+      "line_in_shard": 106
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 108
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The remaining unresolved seams now look less like \u201cmissing content\u201d and more like \u201cowner mismatch\u201d.",
+      "line_in_shard": 120
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- A consistent ownership pattern is emerging:",
+      "line_in_shard": 121
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Contracts_V0.md` should own cross-cutting persisted-envelope field families and stable event names",
+      "line_in_shard": 122
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Multi-Account.md` should own policy, selection rules, provider capability posture, and account-routing semantics",
+      "line_in_shard": 125
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `UI_Command_Catalog.md` should own stable command IDs and command argument families, but not the deeper route ontology by itself",
+      "line_in_shard": 126
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The highest-friction seams are the ones currently straddling too many owners:",
+      "line_in_shard": 129
+    },
+    {
+      "type": "data_shape",
+      "text": "- route payload vs command args",
+      "line_in_shard": 133
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The orchestration-core docs are still the biggest structural outlier.",
+      "line_in_shard": 136
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Executor_Protocol.md` and `orchestrator-subagent-integration.md` still behave like older tier-era execution owners",
+      "line_in_shard": 137
+    },
+    {
+      "type": "doc_hint",
+      "text": "- until those two docs are reconciled, some runtime seams will keep reappearing as \u201csurface problems\u201d even when they are really execution-core problems",
+      "line_in_shard": 139
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "### Recommended owner map",
+      "line_in_shard": 141
+    },
+    {
+      "type": "data_shape",
+      "text": "- add/own canonical snapshot field names such as:",
+      "line_in_shard": 143
+    },
+    {
+      "type": "data_shape",
+      "text": "- own route-payload envelope name only if it becomes a generic cross-cutting contract",
+      "line_in_shard": 151
+    },
+    {
+      "type": "data_shape",
+      "text": "- projection freshness/health fields on projections",
+      "line_in_shard": 157
+    },
+    {
+      "type": "data_shape",
+      "text": "- reference, but not redefine, the canonical runtime fields once added elsewhere",
+      "line_in_shard": 166
+    },
+    {
+      "type": "data_shape",
+      "text": "- align command args with canonical route payload vocabulary once that payload is owned elsewhere",
+      "line_in_shard": 169
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- need a consolidation pass as the eventual runtime owner for:",
+      "line_in_shard": 178
+    },
+    {
+      "type": "open_question",
+      "text": "- Several docs still claim \u201cno open questions\u201d while their supposed dependencies remain undecided elsewhere.",
+      "line_in_shard": 184
+    },
+    {
+      "type": "data_shape",
+      "text": "- `UI_Command_Catalog.md` is currently being used as a de facto navigation contract in places where a deeper route payload is still unowned.",
+      "line_in_shard": 185
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Executor_Protocol.md` and `orchestrator-subagent-integration.md` still trail the newer graph/package/seam/lane model enough that downstream docs keep compensating locally.",
+      "line_in_shard": 186
+    },
+    {
+      "type": "data_shape",
+      "text": "- Before reconciliation, define an explicit owner table for the remaining open contracts so downstream edits do not keep re-litigating field placement.",
+      "line_in_shard": 189
+    },
+    {
+      "type": "data_shape",
+      "text": "- Stop letting consumer docs fill owner gaps with \u201ccompatibility\u201d fields or local terminology when the canonical owner is still undecided.",
+      "line_in_shard": 191
+    },
+    {
+      "type": "data_shape",
+      "text": "- owner clarity matters as much as field choice now; otherwise the same seam will keep reopening under different names",
+      "line_in_shard": 194
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- runtime-core docs are still the biggest risk multiplier because stale tier-era execution assumptions leak into many downstream consumers",
+      "line_in_shard": 195
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- current status remains `active` because owner convergence is clearer, but not fully closed",
+      "line_in_shard": 196
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 200
+    }
+  ]
+}

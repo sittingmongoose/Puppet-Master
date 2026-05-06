@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.stage_report.D1.v3.1",
+  "prompt_id": "D1",
+  "prompt_version": "pm.d1.v3.1.3",
+  "work_id": "w-20260312-203855",
+  "status": "BLOCKED",
+  "task": "Group ledger seeds into bounded obligation conversion work items.",
+  "reads": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+  ],
+  "writes": [
+    "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.D1.json"
+  ],
+  "subagents": {
+    "required_by_gate": true,
+    "used": true,
+    "fanout_worklist_artifact": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#fanout_worklist_artifact",
+    "required_subagent_tasks_total": 4,
+    "subagent_tasks_total": 4,
+    "result_artifacts": [
+      "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-001",
+      "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-002",
+      "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-003",
+      "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#subagent_results/d1-task-004"
+    ]
+  },
+  "validation": {
+    "seed_completeness_report_status": "COMPLETE",
+    "seed_coverage_ok": true,
+    "seed_shape_supports_required_grouping_families": false,
+    "missing_dimensions": [
+      "obligation_type",
+      "doc_hint_family",
+      "process_only_family",
+      "open_decision_family",
+      "doc_discovery_family"
+    ],
+    "final_gate_every_seed_assigned_or_excluded": true
+  },
+  "blockers": [
+    "D1 grouping cannot proceed because ledger_obligation_seed lacks per-item dimensions required to build work groups."
+  ],
+  "next_prompt_request": "C3 — Ledger Seed Extractor"
+}

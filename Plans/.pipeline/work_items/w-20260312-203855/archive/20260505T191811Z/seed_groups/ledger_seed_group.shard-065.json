@@ -1,0 +1,381 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-065",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-065.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- with `Plans/DRY_Rules.md` important as a mechanical-integrity forcing function and `Plans/BinaryLocator_Spec.md` lower-risk but still non-zero.",
+      "line_in_shard": 1
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This tranche eliminates the remaining Gemini-only tail; the remaining partial-doc problem is now about continuing the ordered later-model sequence, not about coverage holes at the first pass boundary.",
+      "line_in_shard": 4
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The docs that looked most \"reference-like\" turned out to be some of the strongest drift multipliers.",
+      "line_in_shard": 5
+    },
+    {
+      "type": "requirement",
+      "text": "- `meta.json` must remain active; the broader sweep is still not ready for reconciliation.",
+      "line_in_shard": 6
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation",
+      "line_in_shard": 8
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 10
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 14
+    },
+    {
+      "type": "routing_rule",
+      "text": "- route-consuming navigation commands",
+      "line_in_shard": 23
+    },
+    {
+      "type": "requirement",
+      "text": "- Route-consuming navigation commands are the ones that must reveal a specific object or scope. They should normalize through the emerging `route_target` model even if the user-facing command name stays domain-specific.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "- `cmd.panel.switch` is the clearest pure shell command in the current catalog. It selects a side-panel destination. Its current optional `context` payload is the main drift risk because it makes a shell command look like an object-targeting navigation command.",
+      "line_in_shard": 28
+    },
+    {
+      "type": "decision",
+      "text": "- `cmd.source_control.switch_subview` is also a pure shell/view-state command. It chooses a Source Control subview; it should not become the carrier for repo/worktree/compare target identity.",
+      "line_in_shard": 29
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `cmd.chat.open_thread_usage` and `cmd.chat.focus_thread_usage` sit on the boundary. They should remain wrapper navigation commands, not pure shell toggles, because they are trying to reveal the Usage surface for a specific thread. They should normalize to canonical route context underneath.",
+      "line_in_shard": 30
+    },
+    {
+      "type": "data_shape",
+      "text": "- `cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-targeting selection command. If it remains canonical, it should resolve through normalized target identity rather than stay a one-off ad hoc selection primitive.",
+      "line_in_shard": 31
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `cmd.project.open` is already implicitly route-consuming navigation rather than shell-state mutation; the docs just do not say that in one shared place.",
+      "line_in_shard": 32
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `OpenFile { path... }` remains a legitimate specialized open contract, but only for real workspace documents. The surrounding command layer still lacks the parallel identity-native `OpenSubject` / `route_target` owner contract.",
+      "line_in_shard": 33
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 35
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 36
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 40
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 41
+    },
+    {
+      "type": "data_shape",
+      "text": "- `UI_Command_Catalog.md` currently mixes shell commands and object-targeting navigation commands in the same \"layout/UI state only\" bucket, even when payloads already carry object identity.",
+      "line_in_shard": 48
+    },
+    {
+      "type": "data_shape",
+      "text": "- `cmd.panel.switch` currently accepts contextual object refs (`repo_id`, `worktree_id`, `workflow_run_id`, `publish_result_id`, `k8s_ref`) even though the shell model increasingly wants object targeting to route through a shared target contract instead of the panel-switch primitive.",
+      "line_in_shard": 49
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.",
+      "line_in_shard": 50
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Contracts_V0.md` still has no canonical route-target/open-subject contract, which is why command docs keep improvising local payload semantics.",
+      "line_in_shard": 51
+    },
+    {
+      "type": "data_shape",
+      "text": "- `FinalGUISpec.md` correctly treats activity-bar navigation as a shell concern, but local docs elsewhere keep slipping object context into the same command family.",
+      "line_in_shard": 52
+    },
+    {
+      "type": "routing_rule",
+      "text": "- route-consuming navigation commands",
+      "line_in_shard": 57
+    },
+    {
+      "type": "data_shape",
+      "text": "- Move object-targeting payload semantics out of `cmd.panel.switch` and into canonical route-consuming commands or normalized `route_target` wrappers.",
+      "line_in_shard": 60
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Treat `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, `cmd.project.open`, `cmd.artifacts.show_in_*`, and cross-surface Orchestrator pivots as wrapper navigation commands over canonical route targeting rather than as generic layout toggles.",
+      "line_in_shard": 61
+    },
+    {
+      "type": "data_shape",
+      "text": "- Treat commands like `cmd.source_control.select_worktree` as object-selection/navigation commands that should normalize through canonical target identity if they remain first-class.",
+      "line_in_shard": 62
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Add a Crosswalk primitive boundary for route-target / open-subject ownership so the split between shell-state and canonical navigation is explicit.",
+      "line_in_shard": 63
+    },
+    {
+      "type": "data_shape",
+      "text": "- A panel being opened is not the same thing as an object being revealed.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "routing_rule",
+      "text": "- \"Focus Usage for thread X\" is route-consuming navigation even if the destination happens to be a side panel.",
+      "line_in_shard": 67
+    },
+    {
+      "type": "data_shape",
+      "text": "- Shell commands should not accumulate object identity until they quietly become undocumented route commands.",
+      "line_in_shard": 68
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 73
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 79
+    },
+    {
+      "type": "verification_rule",
+      "text": "- An explicit public `cmd.nav.*` family is possible, but it would add catalog surface area, wiring rows, handler registration burden, and alias/deprecation work across the gate machinery.",
+      "line_in_shard": 83
+    },
+    {
+      "type": "routing_rule",
+      "text": "- add canonical `route_target` / `OpenSubject` semantics underneath them",
+      "line_in_shard": 86
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This is consistent with how the docs already treat many surface verbs:",
+      "line_in_shard": 88
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `UI_Wiring_Rules.md` and `Wiring_Matrix.md` reinforce the cost of over-expanding the public command family: every stable command ID becomes part of handler coverage, dead-command detection, and gate expectations.",
+      "line_in_shard": 94
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 98
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 99
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 103
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 106
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The wiring/gate model is command-ID-centric, but it has no first-class notion of wrapper commands normalizing to one shared route primitive.",
+      "line_in_shard": 110
+    },
+    {
+      "type": "routing_rule",
+      "text": "- or domain wrappers each inventing their own private route args again",
+      "line_in_shard": 113
+    },
+    {
+      "type": "routing_rule",
+      "text": "- contract layer owns `route_target` and `OpenSubject`",
+      "line_in_shard": 118
+    },
+    {
+      "type": "routing_rule",
+      "text": "- wrappers normalize to canonical route semantics internally",
+      "line_in_shard": 120
+    },
+    {
+      "type": "routing_rule",
+      "text": "- for example an internal/shared `open_subject` or `focus_route` primitive",
+      "line_in_shard": 122
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Add explicit wrapper/alias guidance so the wiring system can understand \u201cdifferent command ID, same canonical route primitive\u201d without treating that as drift.",
+      "line_in_shard": 124
+    },
+    {
+      "type": "verification_rule",
+      "text": "## Research Progress - 2026-03-17 - Wrapper/alias contract in wiring and gates",
+      "line_in_shard": 131
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 133
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 137
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/evidence.schema.json`",
+      "line_in_shard": 138
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- The docs currently have one strong migration pattern for names: deprecated event aliases in `Contracts_V0.md`.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- deprecated command aliases during migration",
+      "line_in_shard": 144
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- a deprecated alias should eventually disappear",
+      "line_in_shard": 147
+    },
+    {
+      "type": "verification_rule",
+      "text": "- The current wiring and gate docs are too command-ID-centric to express that difference well. Right now they mostly understand:",
+      "line_in_shard": 149
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `GATE-010` and the wiring rules would currently treat a growing set of wrapper commands as fully independent commands, but they have no way to say \"these different public command IDs normalize to the same canonical route primitive.\"",
+      "line_in_shard": 155
+    },
+    {
+      "type": "data_shape",
+      "text": "- `evidence.schema.json` is also very generic here. It can store pass/fail checks, but it has no structured slot for wrapper-normalization or alias-resolution evidence.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- legacy namespaces are explicitly deprecated aliases",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 162
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 163
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/Progression_Gates.md`",
+      "line_in_shard": 167
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 168
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/evidence.schema.json`",
+      "line_in_shard": 171
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- deprecated command alias",
+      "line_in_shard": 175
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- or deprecated aliases stay alive forever because the system lacks a precise migration vocabulary",
+      "line_in_shard": 180
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `GATE-010` can verify command coverage, but it cannot yet verify wrapper normalization consistency.",
+      "line_in_shard": 181
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The evidence model is currently too generic to express route/wrapper/alias verification failures in a structured, machine-readable way.",
+      "line_in_shard": 182
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- deprecated alias metadata only where migration is actually intended",
+      "line_in_shard": 188
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Keep deprecated alias handling separate from stable wrappers:",
+      "line_in_shard": 189
+    },
+    {
+      "type": "routing_rule",
+      "text": "- wrapper commands should instead declare something like `normalizes_to` / `canonical_target_contract` / `canonical_route_kind`",
+      "line_in_shard": 191
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Extend wiring/gate thinking so multiple public commands may intentionally normalize to one primitive without being treated as duplicate drift.",
+      "line_in_shard": 192
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Extend `GATE-010` evidence/reporting to capture:",
+      "line_in_shard": 193
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- deprecated alias target when applicable",
+      "line_in_shard": 195
+    }
+  ]
+}

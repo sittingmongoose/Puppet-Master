@@ -1,0 +1,1143 @@
+{
+  "subagent_task_id": "c3-shard-0004",
+  "shard_id": "shard-0004",
+  "source_start_line": 428,
+  "source_end_line": 627,
+  "seeds": [
+    {
+      "seed_id": "shard-0004-s01",
+      "type": "usage_ledger_alignment",
+      "summary": "Multi-account failover/account-threshold/effective-account behavior extends existing usage projections; do not create a second pressure/quota subsystem.",
+      "evidence": [
+        "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections",
+        "do not invent a second independent \"account pressure\" or \"quota\" subsystem beside Usage"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s02",
+      "type": "account_health_control_loop_scope",
+      "summary": "Provider-account pre-send/post-send health loop applies to all provider-using actors, not only orchestrator nodes.",
+      "evidence": [
+        "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+        "this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s03",
+      "type": "conversational_actor_boundary",
+      "summary": "Assistant/interviewer/requirements-doc-builder/PRD-builder share identity-account-usage behavior but are conversational flows, not orchestration seam equivalents.",
+      "evidence": [
+        "they are not orchestration nodes/packages/seams",
+        "their primary mode is conversational/brainstorming and decision-forming, not orchestration-style HITL escalation routing",
+        "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal ... conversation in the same way"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s04",
+      "type": "artifact_handoff_chain",
+      "summary": "Upstream document-production chain is requirements-doc-builder -> interviewer -> PRD-builder -> graph-plan conversion -> orchestrator handoff, with human review at both doc stages.",
+      "evidence": [
+        "broader handoff chain ... requirements-doc-builder artifacts ... interview flow artifacts ... PRD-builder artifacts ... conversion into graph-plan inputs ... handoff to Orchestrator",
+        "human review exists at both document-production stages in that upstream flow"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s05",
+      "type": "retry_handoff_policy",
+      "summary": "Retain structured-attempt handoffs; default retries should use fresh workers with policy caps and non-retry routes for certain failures.",
+      "evidence": [
+        "each failed node attempt should leave a structured receipt/handoff artifact",
+        "default retry model should use a fresh agent/subagent for the next attempt",
+        "retries should remain policy-driven with budgets/caps; not blind infinite looping",
+        "some failures should route to remediation, graph patch, or block/HITL instead of simple retry"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s06",
+      "type": "fresh_iteration_pattern",
+      "summary": "Reusable loop pattern is fresh iterations with continuity via explicit artifacts, not hidden thread context.",
+      "evidence": [
+        "each iteration starts fresh",
+        "memory persists through explicit artifacts rather than hidden context",
+        "do not rely on one giant conversational thread as the only continuity mechanism"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s07",
+      "type": "handoff_payload_minimum",
+      "summary": "Attempt handoffs should include attempted action, changes/artifacts, checks outcomes, failure rationale, contamination/restore state, next action, and reusable learnings.",
+      "evidence": [
+        "each attempt should likely produce at least ... what was attempted ... what changed ... checks/tests/review outcome ... why it failed/blocked ... contamination / restore state ... recommended next action ... reusable learnings/patterns"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s08",
+      "type": "storage_mapping_open_seam",
+      "summary": "Canonical stack is documented (seglog/redb/Tantivy with JSONL mirrors), but mapping of new retry/handoff/learning/packet objects into that stack is still open.",
+      "evidence": [
+        "`seglog` = canonical append-only event source",
+        "`redb` = durable KV state / checkpoints / projections / rollups",
+        "`Tantivy` = search index",
+        "what is not yet nailed down is how the newly discussed objects map into that stack"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s09",
+      "type": "canonical_vs_export",
+      "summary": "Canonical orchestration artifacts should be runtime records in seglog/redb; JSON/JSONL should be export/inspection surfaces, not source of truth.",
+      "evidence": [
+        "canonical truth for these new orchestration artifacts should fit the documented stack",
+        "export/inspection views as JSON/JSONL only when the user requests them from UI surfaces like Orchestrator",
+        "avoid making loose JSON files the canonical source"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s10",
+      "type": "execution_policy_settings",
+      "summary": "Settings must separately expose worker kind (agent/subagent), retry context reuse (fresh/reused), delegation toggles, delegated policy, and requested-vs-effective identity display.",
+      "evidence": [
+        "worker kind and retry-context policy are separate settings, not one combined toggle",
+        "the next settings/UI seam must cover: agent vs subagent; fresh vs reused retry worker; overseer delegation on/off; delegated-worker provider/model/effort policy; consistent requested-vs-effective identity display"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s11",
+      "type": "default_execution_expectation",
+      "summary": "User expectation is subagents by default with optional full-agent override for node execution.",
+      "evidence": [
+        "default: use subagents",
+        "configurable override: use full agents for nodes instead of subagents"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s12",
+      "type": "terminology_and_path_bias",
+      "summary": "Prefer terminology `overseer-spawned node worker`; execution path likely defaults to overseer-spawned rather than direct-runtime dispatch.",
+      "evidence": [
+        "prefer `overseer-spawned node worker` over the vaguer term `delegated worker`",
+        "user expects most or nearly all node execution to likely be overseer-spawned rather than direct-runtime-dispatched"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s13",
+      "type": "usage_signal_constraints",
+      "summary": "Usage docs already imply heterogeneous provider semantics and incomplete API coverage, supporting mixed-signal quota/pressure detection.",
+      "evidence": [
+        "usage documentation already acknowledges heterogeneous provider semantics and incomplete live-API availability",
+        "quota/pressure detection will need mixed signal sources"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s14",
+      "type": "project_scope_alignment",
+      "summary": "Usage is currently project-scoped; multi-project aggregation is explicitly a later concern.",
+      "evidence": [
+        "usage is currently documented as primarily project-scoped, with multi-project aggregation explicitly treated as a separate later concern"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s15",
+      "type": "orchestrator_graph_execution",
+      "summary": "Orchestrator page is UI shell over six tabs; runtime stance is event-driven, contract-consumer, and graph-canonical with DAG-ready dispatch and worktree isolation.",
+      "evidence": [
+        "Orchestrator_Page ... six-tab Orchestrator surface: Progress, Tiers, Node Graph Display, Evidence, History, Ledger",
+        "event-driven wakeups, not steady-state polling, are the authoritative execution/update model",
+        "orchestrator consumes sharded-only plan graphs ... from ... plan_graph/index.json and node shards",
+        "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejected"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s16",
+      "type": "graph_plus_human_lens_rule",
+      "summary": "Hybrid graph+tier model is acceptable only if graph remains canonical execution authority and tiers remain derived human-facing lens.",
+      "evidence": [
+        "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens",
+        "hybrid becomes dangerous if tiers and graph both retain execution authority"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s17",
+      "type": "governance_model_direction",
+      "summary": "Replace single giant overseer with bounded work-package overseers under deterministic global orchestrator; keep graph canonical.",
+      "evidence": [
+        "single agent cannot \"walk the whole graph\" in one giant cognitive run without degrading badly",
+        "introduce bounded, coherent subgraph groupings (`work packages`)",
+        "assign local overseers to work packages",
+        "keep the global orchestrator runtime deterministic and above those overseers"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s18",
+      "type": "corroboration_safeguard",
+      "summary": "When overseer flags missing work/wiring/design issues, two additional subagents should corroborate concern validity before remediation/graph-change action.",
+      "evidence": [
+        "two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s19",
+      "type": "dual_oversight_layers",
+      "summary": "Model includes both work-package overseer and same-feature-seam overseer, reintroducing hierarchy over graph execution.",
+      "evidence": [
+        "there should be both a `work package overseer` and a `same-feature-seam overseer`",
+        "this intentionally reintroduces part of the older hierarchical oversight model, but now over graph-based execution rather than tier-based execution"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s20",
+      "type": "seam_completion_gate",
+      "summary": "Weak integration means seam incomplete; package completion is necessary but not sufficient for seam completion.",
+      "evidence": [
+        "if integration is weak, the feature seam is not complete",
+        "package completion is therefore necessary but not sufficient for seam completion"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s21",
+      "type": "persona_and_override_policy",
+      "summary": "Node personas auto-select by node type; override is global node-worker policy, not per-node.",
+      "evidence": [
+        "node personas should be auto-selected from node work/type",
+        "node persona override should exist as a global node-worker policy override, not a per-node setting"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s22",
+      "type": "multi_level_identity_settings",
+      "summary": "Feature seam, work package, and node each need independent provider/model/effort defaults and overrides.",
+      "evidence": [
+        "`feature seam`, `work package`, and `node` should each have independent provider/model/effort settings with defaults plus overrideability"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s23",
+      "type": "overseer_spawn_control",
+      "summary": "Settings must define whether work-package overseers can spawn subagents for node work and configure delegated provider/model/effort when enabled.",
+      "evidence": [
+        "settings should define whether work-package overseers may spawn subagents for node work",
+        "if overseer-spawned node subagents are enabled, their provider/model/effort must be configurable"
+      ]
+    },
+    {
+      "seed_id": "shard-0004-s24",
+      "type": "worktree_lane_risk",
+      "summary": "Package-based worktrees are preferred over per-node, but bounded mutable pools need lane/ordering rules so dependent nodes observe correct upstream state.",
+      "evidence": [
+        "package-based worktrees feel more manageable than per-node worktrees at expected node counts",
+        "dependent nodes inside the same package may require careful lane/ordering rules so downstream nodes see the right upstream state"
+      ]
+    }
+  ]
+}
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0004",
+  "coverage": {
+    "shard_id": "shard-0004",
+    "start_line": 428,
+    "end_line": 627,
+    "line_count": 200,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0004.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 3,
+        "text": "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams",
+        "tokens": []
+      },
+      {
+        "line": 13,
+        "text": "requirements-doc-builder flow is conversational first:",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "then generation of more traditional requirements documents/artifacts",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "requirements-doc-builder artifacts",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "the old structured-attempt-handoff pattern should be retained in the new model",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "each failed node attempt should leave a structured receipt/handoff artifact:",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "default retry model should use a fresh agent/subagent for the next attempt",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "retries should remain policy-driven with budgets/caps; not blind infinite looping",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "some failures should route to remediation, graph patch, or block/HITL instead of simple retry",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "our system needs richer handoff structure because retries may flow into:",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "each attempt should likely produce at least:",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "\"JSON-like\" is too vague; the design still needs to pin down:",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "canonical handoff/retry memory should be structured runtime records, not loose markdown logs",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "canonical truth for these new orchestration artifacts should fit the documented stack:",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "New execution-policy settings requirement:",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "GUI should let the user choose whether retries use:",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "GUI should also let the user choose whether node execution uses:",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "chat already acts as a requested-identity override surface for provider/model/effort/persona and should align with the same requested-vs-effective model used by Orchestrator actors",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "the next settings/UI seam must cover:",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "delegated-worker provider/model/effort policy",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "prefer `overseer-spawned node worker` over the vaguer term `delegated worker`",
+        "tokens": [
+          "delegated worker",
+          "overseer-spawned node worker"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "the primary node execution path should not be described as an edge-case if it is the common path",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "Existing work item `w-20260312-160857` is for a different packetized research topic and should not be reused for Orchestrator.",
+        "tokens": [
+          "w-20260312-160857"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "A new pre-packetize work item was required for this topic.",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejected",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "the same doc says required execution inputs include plan-graph index and node shard files",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "when an overseer finds missing work / wiring / design correctness issues, two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "there should be both a `work package overseer`",
+        "tokens": [
+          "work package overseer"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "settings / GUI must be updated for the new execution/governance model",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "provider/model resolution needs to be thought through across execution levels",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "worktree behavior needs explicit reconsideration under node/package/seam governance",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "persona assignment needs explicit rules: overseers configured, node workers dynamically assigned, overrides still possible",
+        "tokens": []
+      },
+      {
+        "line": 194,
+        "text": "node personas should be auto-selected from node work/type",
+        "tokens": []
+      },
+      {
+        "line": 195,
+        "text": "node persona override should exist as a global node-worker policy override, not a per-node setting",
+        "tokens": []
+      },
+      {
+        "line": 196,
+        "text": "`feature seam`, `work package`, and `node` should each have independent provider/model/effort settings with defaults plus overrideability",
+        "tokens": [
+          "feature seam",
+          "node",
+          "work package"
+        ]
+      },
+      {
+        "line": 197,
+        "text": "settings should define whether work-package overseers may spawn subagents for node work",
+        "tokens": []
+      },
+      {
+        "line": 198,
+        "text": "if overseer-spawned node subagents are enabled, their provider/model/effort must be configurable",
+        "tokens": []
+      },
+      {
+        "line": 200,
+        "text": "user raised a specific worktree concern: if a package uses a bounded pool of mutable worktrees, dependent nodes inside the same package may require careful lane/ordering rules so downstream nodes see the right upstream state",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 12,
+        "text": "their primary mode is conversational/brainstorming and decision-forming, not orchestration-style HITL escalation routing",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "then more structured questioning to close gaps and lock decisions",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "Clarified retry/worker identity direction:",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "retries should remain policy-driven with budgets/caps; not blind infinite looping",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "Translation direction for Puppet Master:",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "keep the value of fresh-worker retries with explicit handoff artifacts",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "current recommendation direction:",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "the broad canonical runtime storage model *has* been decided/documented at stack level",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Current recommended direction after checking docs:",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "this aligns with the current per-project orchestration storage/projection direction",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "Design discussion now has a concrete recommendation direction:",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "Emerging recommendation direction from the conversation:",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "keep the canonical graph as execution truth",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "keep the global orchestrator runtime deterministic and above those overseers",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "User accepted the direction of precomputed bounded packages rather than one giant overseer.",
+        "tokens": []
+      },
+      {
+        "line": 194,
+        "text": "node personas should be auto-selected from node work/type",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 17,
+        "text": "interviewer follows a similar conversational-to-structured pattern, but moves topic-by-topic and ultimately produces documents/artifacts shaped for the node/contract system",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "current task/plan state",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "repo state / git history",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "task state / completion truth",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "contamination / restore state if relevant",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "\"JSON-like\" is too vague; the design still needs to pin down:",
+        "tokens": []
+      },
+      {
+        "line": 78,
+        "text": "whether these artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "canonical handoff/retry memory should be structured runtime records, not loose markdown logs",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "`redb` = durable KV state / checkpoints / projections / rollups",
+        "tokens": [
+          "redb"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "JSONL mirror = disposable projector output, not canonical truth",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "layout/settings/state = redb",
+        "tokens": []
+      },
+      {
+        "line": 99,
+        "text": "reusable learning records",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "projected/current-state/read-optimized aspects in redb",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "export/inspection views as JSON/JSONL only when the user requests them from UI surfaces like Orchestrator",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "avoid making loose JSON files the canonical source",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "this has implications for settings, UI language, runtime contracts, and requested-vs-effective identity display:",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "event-driven wakeups, not steady-state polling, are the authoritative execution/update model",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards",
+        "tokens": [
+          ".puppet-master/project/plan_graph/index.json",
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 200,
+        "text": "user raised a specific worktree concern: if a package uses a bounded pool of mutable worktrees, dependent nodes inside the same package may require careful lane/ordering rules so downstream nodes see the right upstream state",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 6,
+        "text": "account selection / failover is not just an Orchestrator-node concern",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "Clarified non-Orchestrator conversational actor flow:",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "their primary mode is conversational/brainstorming and decision-forming, not orchestration-style HITL escalation routing",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "handoff to Orchestrator",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "those conversational actors already operate directly in chat, so they share runtime identity/account/usage behavior without needing the same Orchestrator-style resolution-thread pattern for ordinary interaction",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "some failures should route to remediation, graph patch, or block/HITL instead of simple retry",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "what concrete project-scoped paths or storage domains own them",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "export/inspection views as JSON/JSONL only when the user requests them from UI surfaces like Orchestrator",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "exportability from the Orchestrator page is desirable",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "chat already acts as a requested-identity override surface for provider/model/effort/persona and should align with the same requested-vs-effective model used by Orchestrator actors",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "Execution-path hypothesis now leaning stronger:",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "user expects most or nearly all node execution to likely be overseer-spawned rather than direct-runtime-dispatched",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "this suggests the \"overseer-spawned node worker\" path may be the normal/default operational path, while direct node-worker dispatch may become the rarer/special-case path",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "the primary node execution path should not be described as an edge-case if it is the common path",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "direct dispatch may need to be framed as an optimization/fallback/special policy mode rather than the baseline mental model",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "Topic is known: `Orchestrator`.",
+        "tokens": [
+          "Orchestrator"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Existing work item `w-20260312-160857` is for a different packetized research topic and should not be reused for Orchestrator.",
+        "tokens": [
+          "w-20260312-160857"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "question is whether that node graph is what Orchestrator uses",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`.",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph Display",
+          "Plans/Orchestrator_Page.md",
+          "Progress",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "Current docs do say Orchestrator consumes the plan/node graph for execution:",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards",
+        "tokens": [
+          ".puppet-master/project/plan_graph/index.json",
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "the scheduling model explicitly talks about runnable graph nodes, DAG readiness, and dispatch from a global ready set",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "keep the global orchestrator runtime deterministic and above those overseers",
+        "tokens": []
+      },
+      {
+        "line": 200,
+        "text": "user raised a specific worktree concern: if a package uses a bounded pool of mutable worktrees, dependent nodes inside the same package may require careful lane/ordering rules so downstream nodes see the right upstream state",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 71,
+        "text": "checks/tests/review outcome",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "User asked to hold off on substantive work until the follow-up prompt arrived; this initialization prompt is the first explicit action request after topic confirmation.",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`.",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph Display",
+          "Plans/Orchestrator_Page.md",
+          "Progress",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "User is now pressure-testing the missing runtime control pattern:",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 7,
+        "text": "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "any completed provider interaction can update account health and trigger the next message/attempt to resolve onto a different account",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "chat already acts as a requested-identity override surface for provider/model/effort/persona and should align with the same requested-vs-effective model used by Orchestrator actors",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "delegated-worker provider/model/effort policy",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "prefer `overseer-spawned node worker` over the vaguer term `delegated worker`",
+        "tokens": [
+          "delegated worker",
+          "overseer-spawned node worker"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "usage documentation already acknowledges heterogeneous provider semantics and incomplete live-API availability",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "this aligns with the current discussion that quota/pressure detection will need mixed signal sources (runtime outcomes, provider capabilities, heuristics/log-derived signals where necessary)",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`.",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph Display",
+          "Plans/Orchestrator_Page.md",
+          "Progress",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "hybrid becomes dangerous if tiers and graph both retain execution authority",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "provider/model resolution needs to be thought through across execution levels",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "persona assignment needs explicit rules: overseers configured, node workers dynamically assigned, overrides still possible",
+        "tokens": []
+      },
+      {
+        "line": 194,
+        "text": "node personas should be auto-selected from node work/type",
+        "tokens": []
+      },
+      {
+        "line": 195,
+        "text": "node persona override should exist as a global node-worker policy override, not a per-node setting",
+        "tokens": []
+      },
+      {
+        "line": 196,
+        "text": "`feature seam`, `work package`, and `node` should each have independent provider/model/effort settings with defaults plus overrideability",
+        "tokens": [
+          "feature seam",
+          "node",
+          "work package"
+        ]
+      },
+      {
+        "line": 198,
+        "text": "if overseer-spawned node subagents are enabled, their provider/model/effort must be configurable",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 109,
+        "text": "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 15,
+        "text": "then more structured questioning to close gaps and lock decisions",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "question is whether that node graph is what Orchestrator uses",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 15,
+        "text": "then more structured questioning to close gaps and lock decisions",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "some failures should route to remediation, graph patch, or block/HITL instead of simple retry",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "User is now pressure-testing the missing runtime control pattern:",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "key unresolved design seam: what is the governing intelligence/control loop in a graph-canonical system",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "when an overseer finds missing work / wiring / design correctness issues, two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 80,
+        "text": "how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fetched context, or mixed model)",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "`Plans/storage-plan.md` already declares:",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "`Plans/FinalGUISpec.md` aligns with this:",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "User asked to hold off on substantive work until the follow-up prompt arrived; this initialization prompt is the first explicit action request after topic confirmation.",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`.",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph Display",
+          "Plans/Orchestrator_Page.md",
+          "Progress",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards",
+        "tokens": [
+          ".puppet-master/project/plan_graph/index.json",
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

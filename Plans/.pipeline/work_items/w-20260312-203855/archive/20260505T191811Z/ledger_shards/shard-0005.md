@@ -1,0 +1,200 @@
+  - trim parent and child objects into must-persist vs cacheable vs derived fields
+- Settings/config gap is now explicit:
+  - current discussion implies provider/model settings at node, work package, feature seam, overseer, and delegated-subagent levels
+  - current docs under discussion have not yet been reconciled around that model
+- Worktree gap is now explicit:
+  - current orchestration discussion has not yet defined whether worktrees are allocated/owned primarily per node, per package, per seam, or per remediation branch of work
+  - current conversational preference is leaning toward package-based worktrees rather than per-node worktrees for scale/manageability reasons
+- Missing from the current conversation so far:
+  - whether the governing layer is an always-on planner/overseer agent, a deterministic scheduler plus short-lived agents, or a mixed model
+  - how graph decomposition preserves bounded agent context without recreating tier authority as a second execution model
+- New design seam now identified:
+  - whether overseer-raised concerns require quorum / corroboration before spawning remediation nodes or requesting graph patch / replan
+  - how expensive this corroboration path should be, and which issue classes should trigger it
+- New governance-boundary question:
+  - what distinct authority belongs to package overseer vs feature-seam overseer so they do not become redundant or conflicting co-governors
+- Current open design question is not just "what is Orchestrator" but "what is Orchestrator allowed to own":
+  - page layout and controls
+  - view-model / projections
+  - run control intents
+  - but probably not canonical runtime enums, event semantics, or scheduler truth
+- No decision yet on the primary discussion seam for this research pass:
+  - page/surface design
+  - runtime state model
+  - cross-surface lineage and receipts
+  - blocked/recovery/remediation UX
+
+## Candidate Fixes / Design Directions
+- Start the next phase by clarifying which Orchestrator seam is in scope first:
+  - UI surface / IA
+  - execution model / state machine
+  - cross-surface lineage and receipts
+  - recovery / rollback / blocked-state behavior
+- Use the ledger to capture terminology, precedence rules, effective-vs-requested state, and cross-doc ownership as they emerge.
+- Likely productive framing:
+  - treat Orchestrator as a projection-and-control surface over canonical runtime contracts
+  - keep scheduler semantics, attempt identity, blocked reasons, allowed actions, and remediation lineage owned by shared runtime docs
+  - let the Orchestrator page own tab structure, control affordances, and projection composition
+- Candidate reconciliation target:
+  - define a clean boundary between canonical runtime facts, orchestrator projections, and widget/page presentation
+  - explicitly distinguish requested state vs effective state wherever persona/provider/model fallback can occur
+- Candidate model clarification:
+  - "Orchestrator uses the node graph" is already documented as true for scheduling/execution inputs
+  - unresolved follow-up is whether tiers are just presentation/grouping over nodes or remain an independently meaningful orchestration layer
+- Candidate control-plane recommendation to explore:
+  - Orchestrator should likely be a deterministic scheduler/state machine, not one long-running super-agent
+  - graph nodes should dispatch bounded worker/reviewer/remediation agents with explicit context windows and attempt identities
+  - a lightweight planning/replan agent may still exist, but only at graph-construction or graph-patch boundaries, not as the continuous owner of all execution truth
+- Candidate governance model now favored:
+  - `run` = full canonical graph under deterministic runtime control
+  - `work package` = coherent precomputed subgraph with a local overseer
+  - `feature seam` = cross-package oversight scope for related packages within the same product area
+  - `node` = smallest executable work unit
+  - overseers may critique or challenge package outcomes, but newly discovered work must become explicit remediation nodes or graph-patch requests
+  - quorum/corroboration agents may be used before accepting an overseer challenge for high-impact gaps
+  - seam completion requires integration quality, not just package-local pass states
+- Promotion classes now emerging from the conversation:
+  - `lane_to_package` promotion: accepted lane result becomes package baseline
+  - `package_to_seam_available` promotion: package becomes available as a trusted seam contribution
+  - `seam_complete` promotion: seam is marked complete
+- Promotion model direction:
+  - promotions are explicit runtime state transitions, not implicit side effects
+  - automation-first default remains intact
+  - optional HITL boundaries may pause otherwise-valid promotion
+  - blocked/HITL/critical promotion states must surface on Dashboard, Orchestrator, and a spawned chat thread
+- Promotion gate direction now discussed:
+  - `lane_to_package` gates focus on local correctness, uncontaminated lane state, required automated verification/review, and promotable package outputs
+  - `package_to_seam_available` gates focus on trusted package baseline, package-level evidence, acceptable package-overseer verdict, and seam-consumable outputs
+  - `seam_complete` gates focus on integration review, absence of unresolved major/critical findings, seam evidence, workflow completeness, GUI/runtime alignment, and no pending corroboration/remediation
+- Next subtopic requested:
+  - define required evidence at node/package/seam levels so promotion gates are concrete
+- Emerging execution-settings direction:
+  - provider/model selection likely needs distinct defaults or overrides at:
+    - run/global context
+    - feature seam
+    - work package
+    - node
+    - work package overseer
+    - feature seam overseer
+    - overseer-delegated node worker
+  - requested vs effective provider/model must remain visible at all levels where fallback/override can occur
+- Clarified resolution direction:
+  - node persona selection should be dynamic-by-default from node scope/type
+  - node persona override should apply as node-worker policy, not per-node manual config
+  - seam/package/node each need independent provider/model/effort configuration surfaces
+- Emerging persona direction:
+  - overseer personas should be explicit settings-owned roles
+  - node worker personas should default dynamically from node scope/type
+  - node worker personas/provider/model should remain overrideable
+- Emerging delegation-policy direction:
+  - settings should define whether overseers may use subagents for node work
+  - if allowed, settings should define the provider/model policy for those delegated node workers
+- Candidate discussion order:
+  - first pin Orchestrator ownership boundaries
+  - then derive tab responsibilities and CTA behavior
+  - then map cross-links to Usage / Evidence / Graph / history / blocked outcomes
+  - then define provider/model/persona precedence
+  - then define worktree ownership/isolation rules
+
+## Impacted Docs
+- `Plans/usage-feature.md`
+- `Plans/storage-plan.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/Orchestrator_Page.md`
+- `Plans/Run_Graph_View.md`
+- `Plans/Orchestrator_Page.md`
+- `Plans/orchestrator-subagent-integration.md`
+- Likely adjacent owners if this expands:
+  - `Plans/Executor_Protocol.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/Run_Graph_View.md`
+  - `Plans/storage-plan.md`
+  - `Plans/usage-feature.md`
+  - `Plans/FinalGUISpec.md`
+
+## Decisions Already Resolved
+- Mode for this work item is `research`.
+- A new work item is being used rather than updating the unrelated existing packetized item.
+- Work item status should remain `active` until research is ready for reconciliation.
+- First targeted reading should stay narrow and centered on Orchestrator docs plus direct owner contracts, not a repo-wide sweep.
+- Current discussion should stay centered on the node-graph / Orchestrator relationship before expanding into other seams.
+- User explicitly wants to keep researching in this thread; prior readiness marker should not be treated as a handoff decision.
+- Current working focus is moving into projection ownership by surface rather than reconciliation.
+
+## Open Questions / Uncertainties
+- Corroboration disagreement handling has now been tightened conceptually:
+  - `2-of-3` accepts the high-impact claim as canonical
+  - no `2-of-3` means the high-impact claim is not accepted as blocking/canonical truth
+  - if disagreement still surfaces a credible lesser concern, runtime should always emit a non-blocking advisory/minor finding rather than dropping it
+  - that advisory/minor finding should be visible on the Orchestrator page
+- Graph-view direction is now materially clearer:
+  - the graph should show the full lineage, including historical branches and patched fork/rejoin paths
+  - the graph is expected to handle very large scale (thousands of nodes)
+  - zoom + pan + minimap are expected to be primary navigation tools; full-graph visibility should not be replaced by default collapsing of history
+  - seam and package boundaries should be visible as toggleable overlays
+  - node visuals should carry execution/governance state
+  - edge/path visuals should carry structure/lineage meaning
+  - boundaries should carry grouping only, not duplicate state/severity semantics
+- Graph readability direction now clarified:
+  - label density should be zoom-dependent:
+    - far zoom = structure/state only
+    - medium zoom = abbreviated/local labels
+    - near zoom = full labels and richer local annotations
+  - selected objects should still expose strong detail via the right-side inspector regardless of zoom
+- Graph navigation direction now clarified:
+  - graph search/focus should support:
+    - seam
+    - package
+    - node
+    - lane
+    - generation
+  - focus should pan/zoom to target regions while preserving full-graph context rather than replacing the graph with a separate local-only view
+- Remaining high-value Orchestrator blind spots / next seams:
+  - exact Orchestrator <-> Source Control / worktree handshake
+  - widget-system contract, hostability rules, persistence, and tab/widget filter interactions
+  - command palette / shortcut / context-menu / bulk-action integration
+  - scale/performance behavior for large graphs, many generations, many concerns/records
+  - multi-run behavior inside one project
+  - object/text search across Seams / Graph / Evidence / History / Ledger
+  - notification/escalation cadence beyond in-page alerts
+  - accessibility semantics for statuses, graph states, and dense panes
+  - safety/confirmation rules for user-facing Orchestrator actions
+  - exact artifact shapes for package review, seam review, corroboration packets, graph patch requests, and state transition reports
+- Is the desired mental model:
+  - Orchestrator executes the canonical node graph directly
+  - Orchestrator uses projections derived from the node graph plus runtime attempts
+  - or Orchestrator owns a higher-level tier model layered on top of graph nodes
+- In a graph-canonical design, what should own top-level governance:
+  - deterministic runtime scheduler only
+  - scheduler plus bounded "manager" agent for replan/escalation decisions
+  - or an overseer-style agent that remains in the loop continuously
+- How should bounded context be enforced so one agent never accumulates the whole graph as working memory?
+- Should overseer corroboration use:
+  - strict 2-of-3 quorum
+  - weighted recommendation with runtime policy thresholds
+  - or issue-class-specific escalation rules
+- What should the feature-seam overseer uniquely own:
+  - cross-package coherence
+  - integration correctness across package boundaries
+  - style/architecture consistency
+  - seam-level “did we actually build the intended thing” judgment
+  - authority to withhold seam completion when integration quality is weak even if constituent packages passed
+- Additional weak-integration candidates surfaced for follow-up discussion:
+  - missing or inconsistent state transitions across package boundaries
+  - partial feature completion that strands dead-end UI or unusable flows
+  - duplicated logic or contradictory contract interpretation across packages
+  - local acceptance satisfied while end-to-end behavior remains awkward, surprising, or brittle
+  - backend/runtime feature exists but is not surfaced in the GUI
+  - GUI still reflects an older model and does not expose the new runtime/governance objects
+  - logic is technically wired but not wired into the actual user workflow or operator control surface
+- Emerging weak-integration buckets to preserve:
+  - missing GUI representation of runtime/governance state
+  - state-model mismatch across package boundaries
+  - user-flow dead ends or partial affordances
+  - contract drift / duplicated interpretation across packages
+  - technically passing local checks while seam-level UX or architecture remains poor
+- Next discussion step requested by user:
+  - turn weak integration into explicit seam-level acceptance criteria and failure classes
+- Candidate seam-level acceptance dimensions to formalize:
+  - operability
+  - state coherence

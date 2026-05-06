@@ -1,0 +1,236 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-085",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-085.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:",
+      "line_in_shard": 8
+    },
+    {
+      "type": "process_defect",
+      "text": "- safe-point, remediation, worktree-conflict, and blocked/runtime state are already present",
+      "line_in_shard": 12
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+      "line_in_shard": 14
+    },
+    {
+      "type": "doc_hint",
+      "text": "- the doc title and role model still say `Overseer Protocol` with `Builder`, `Verifier`, and `Overseer` as the primary execution framing",
+      "line_in_shard": 15
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract",
+      "line_in_shard": 17
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+      "line_in_shard": 18
+    },
+    {
+      "type": "data_shape",
+      "text": "- still carries stale worker identity fields:",
+      "line_in_shard": 29
+    },
+    {
+      "type": "requirement",
+      "text": "- still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs",
+      "line_in_shard": 35
+    },
+    {
+      "type": "doc_hint",
+      "text": "- That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.",
+      "line_in_shard": 40
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 42
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Primary docs:",
+      "line_in_shard": 43
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Adjacent owners implicated:",
+      "line_in_shard": 46
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 49
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The execution core is now ahead of the main Orchestrator page spec, so the page doc is still teaching a surface model that the runtime core has already outgrown.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Orchestrator_Page.md` still turns stale ontology into tab structure, widget structure, event sources, filter keys, and worker identity fields.",
+      "line_in_shard": 57
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- explicit owner placement for the execution-unit context replacing `TierContext`",
+      "line_in_shard": 62
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Tiers` retired and replaced by `Seams`",
+      "line_in_shard": 65
+    },
+    {
+      "type": "data_shape",
+      "text": "- `tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime identity",
+      "line_in_shard": 68
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The page doc still contains enough lower aligned material that reconciliation should collapse same-file contradictions instead of replacing the whole thing blindly.",
+      "line_in_shard": 73
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-17 - remaining high-risk stale consumers: Run Graph, Widget System, Usage, Assistant Chat",
+      "line_in_shard": 76
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 78
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/Widget_System.md` remains a major stale hostability owner:",
+      "line_in_shard": 104
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- later says legacy key is deleted",
+      "line_in_shard": 114
+    },
+    {
+      "type": "data_shape",
+      "text": "- `usage.jsonl` and canonical usage discussion still center `tier_id`",
+      "line_in_shard": 117
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?`",
+      "line_in_shard": 119
+    },
+    {
+      "type": "data_shape",
+      "text": "- remaining drift is concentrated around compatibility-era fields like `resume_url?` in blocked-notice persistence rather than broad ontology problems",
+      "line_in_shard": 128
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 130
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Primary docs:",
+      "line_in_shard": 131
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Adjacent owners implicated:",
+      "line_in_shard": 136
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 140
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `assistant-chat-design.md` is not broadly stale in the same way. Its remaining drift is local and compatibility-oriented.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "routing_rule",
+      "text": "- historical/current usage navigation aligned to canonical route/open primitives",
+      "line_in_shard": 158
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- stale `hitl_request_id`, `View in Tiers`, and `tier_id`-centric event filtering removed",
+      "line_in_shard": 161
+    },
+    {
+      "type": "data_shape",
+      "text": "- worker/verifier identity fields aligned to canonical requested/effective runtime disclosure",
+      "line_in_shard": 162
+    },
+    {
+      "type": "routing_rule",
+      "text": "- blocked-thread messages tied cleanly to the shared route/runtime action model",
+      "line_in_shard": 169
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Run_Graph_View.md` and `usage-feature.md` are now the highest-risk remaining stale consumer pair because they still share the same old correlation key.",
+      "line_in_shard": 173
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 178
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 179
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 182
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+      "line_in_shard": 185
+    },
+    {
+      "type": "verification_rule",
+      "text": "- the main risk is not fresh contradictions here; it is stale pass/fail references if upstream specs move and this checklist is not updated",
+      "line_in_shard": 187
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Plans/feature-list.md` is still a broad stale-spec mirror:",
+      "line_in_shard": 188
+    },
+    {
+      "type": "data_shape",
+      "text": "- still enumerates stale widgets such as:",
+      "line_in_shard": 191
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- still mirrors worktree ownership through `tier_id`",
+      "line_in_shard": 196
+    }
+  ]
+}

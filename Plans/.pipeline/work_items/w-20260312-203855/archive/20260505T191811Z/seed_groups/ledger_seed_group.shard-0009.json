@@ -1,0 +1,1503 @@
+{
+  "subagent_task_id": "c3-shard-0009",
+  "shard_id": "shard-0009",
+  "source_start_line": 1315,
+  "source_end_line": 1507,
+  "seed_groups": [
+    {
+      "group_id": "contradictions-governance-and-execution-model",
+      "title": "Contradictions: Governance and execution model",
+      "seeds": [
+        "Tier permanence vs node-graph canon conflict",
+        "Single Overseer model conflicts with package + seam overseers",
+        "No-worktrees mode conflicts with mandatory per-subtask worktrees",
+        "Automation-first defaults conflict with tier-boundary manual review assumptions",
+        "NullMemoryProvider for Orchestrator conflicts with stateful orchestration expectations"
+      ]
+    },
+    {
+      "group_id": "contradictions-state-and-safety-contracts",
+      "title": "Contradictions: State, storage, and safety contracts",
+      "seeds": [
+        "active-agents.json as execution truth conflicts with seglog/redb event-sourced storage",
+        "FileSafe singular active-plan write scope conflicts with concurrent multi-node graph execution",
+        "Scored scheduler runtime conflicts with lexicographic selection_rule schema lock",
+        "Legacy blocked payload fields conflict with normalized blocked-state contract",
+        "One-project/one-worktree assumptions conflict with multi-project, multi-worktree orchestration"
+      ]
+    },
+    {
+      "group_id": "research-followups-runtime-and-ui",
+      "title": "Research follow-ups: Runtime and UI redesign",
+      "seeds": [
+        "Define dual-overseer runtime model with authority, spawning, review, and escalation",
+        "Refresh widget model to replace tier_tree/progress bars with package/seam/lane visualization",
+        "Specify Dashboard -> Orchestrator -> thread attention routing contract",
+        "Redesign HITL boundaries around package-complete and seam-complete events",
+        "Reconcile automation-first defaults with settings and gate behavior"
+      ]
+    },
+    {
+      "group_id": "identity-worktree-and-pathing",
+      "title": "Identity, worktree, and pathing contracts",
+      "seeds": [
+        "Define requested vs effective execution identity including provider/model/account/persona",
+        "Specify lane-to-worktree mapping strategy (1:1, pooled, or hybrid)",
+        "Define contamination detection and safe-point restore semantics for lane reuse",
+        "Migrate canonical pathing away from phase/task/subtask hierarchy",
+        "Generalize Docker requested/effective auth pattern into shared execution identity model"
+      ]
+    },
+    {
+      "group_id": "sonnet-gpt-consensus-priorities",
+      "title": "Model-wave consensus and cleanup priorities",
+      "seeds": [
+        "Highest-impact docs converge on runtime contracts, graph schemas, UI surfaces, storage/terminology owners",
+        "Consensus gap: package/seam/lane/work-package are conceptual but not first-class schema objects",
+        "Consensus gap: safe-point/restore/rollback/contamination terms are referenced but not canonically unified",
+        "Priority order: lock schema anchors -> establish terminology ownership -> rebuild package/seam/lane UI -> consolidate addenda and payload drift"
+      ]
+    }
+  ]
+}
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0009",
+  "coverage": {
+    "shard_id": "shard-0009",
+    "start_line": 1315,
+    "end_line": 1507,
+    "line_count": 193,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0009.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 18,
+        "text": "6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "7. **HITL boundary redesign.** Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries. Address automation-first default vs. the UX expectation of manual review.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "New model pressure:** Must visualize packages, seams, lanes, contamination state, promotion state, and multiple concurrent overseer/worker identities.",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "Optional HITL boundaries lack consistent UI treatment.** Existing approval surfaces assume mandatory or tier-boundary review; Sonnet found no unified contract for package-complete, seam-complete, or mandatory side-effect gates.",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Source Control / Orchestrator worktree visibility is underdefined.** Multiple docs assume one active worktree while the emerging model requires PM-owned worktrees, lane pools, and package-level worktree state to be visible and navigable.",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "`HandoffMessage`, graph breadcrumbs, and multiple payloads still use `phase_id` / `task_id` vocabulary where node/package/seam identity is now required.",
+        "tokens": [
+          "HandoffMessage",
+          "phase_id",
+          "task_id"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Automation-first default conflicts with existing settings defaults.** `regular`/HTE-by-default in `Run_Modes.md`, `visual_mode = auto` preferring visible runs locally, and mandatory manual gates in several flows all cut against the new automation-first posture.",
+        "tokens": [
+          "Run_Modes.md",
+          "regular",
+          "visual_mode = auto"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Per-project/per-package configuration scope is thin.** Multiple settings systems still assume global or single-project scope when the new model needs project, package, seam, node, overseer, and delegated-subagent override layers.",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "Per-subtask worktrees conflict with package-based lane pools.** Sonnet consistently found per-subtask worktree assumptions in worktree, FileSafe, cleanup, and evidence docs, while the new model needs persistent package-scoped lane/worktree behavior.",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "3. **Single Overseer vs package + seam overseers.** Runtime and UI docs still model one Overseer while the emerging design requires dual governance layers.",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "8. **Reconcile automation-first with existing settings and gates.** Classify which gates remain mandatory HITL, which are optional boundaries, and which defaults need to flip at the settings/schema layer.",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "New model pressure:** Must visualize work packages, seams, blocked episodes, safe-point restore, requested/effective identity, and cross-surface attention routing.",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "Mandatory vs optional HITL is not normalized.** Docker repo creation, FileSafe approvals, Multi-Pass review, wizard attention-required, and graph-level HITL all exist, but they are not consistently classified into one boundary model.",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "Base provider envelope/spec tables omit node/attempt/safe-point fields that later addenda require.",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "Per-project vs global settings remain mixed.** Several runtime-affecting settings are still assumed global or single-project where the emerging model needs project/package/seam/node layers.",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Docker auth is the clearest requested/effective example.** It should likely be generalized into the shared execution identity pattern instead of remaining a domain-specific one-off.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 6,
+        "text": "4. **Automation-first vs. manual HITL defaults.** `human-in-the-loop.md` defaults all HITL toggles to OFF (automation-first), but the approval model assumes tier-boundary pauses that imply manual review is the expected pattern at phase transitions. The default posture and the UX design pull in opposite directions.",
+        "tokens": [
+          "human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "2. **Widget catalog refresh.** Design replacements for `widget.tier_tree` and `widget.progress_bars` that visualize packages, seams, lanes, and parallel execution. Determine if the Tiers tab is renamed or replaced.",
+        "tokens": [
+          "widget.progress_bars",
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "5. **Pathing migration.** Design the replacement for `<phase>/<task>/<subtask>` canonical paths. Candidates: `<package_id>/<node_id>`, `<seam_id>/<package_id>/<node_id>`, or content-addressed.",
+        "tokens": [
+          "<package_id>/<node_id>",
+          "<phase>/<task>/<subtask>",
+          "<seam_id>/<package_id>/<node_id>"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "`Plans/Glossary.md` + `Plans/Crosswalk.md` + `Plans/Decision_Policy.md` + `Plans/00-plans-index.md`**",
+        "tokens": [
+          "Plans/00-plans-index.md",
+          "Plans/Crosswalk.md",
+          "Plans/Decision_Policy.md",
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "Relax or replace stale graph-schema constants (`selection_rule`, tier-rooted breadcrumbs).",
+        "tokens": [
+          "selection_rule"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "tokens": [
+          "00-plans-index.md",
+          "Crosswalk.md",
+          "Decision_Policy.md",
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Replace or demote tiers-first widgets and layouts.",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "Merge duplicated runtime, model, blocked-state, and worktree addenda into single authoritative sections.",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "4. **Tier authority vs node/package/seam authority.** Tiers remain first-class in widgets, breadcrumbs, HITL boundaries, and state displays even where the graph is already treated as the canonical execution input.",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "7. **Migrate the widget/tab model.** Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "tokens": [
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "8. **Reconcile automation-first with existing settings and gates.** Classify which gates remain mandatory HITL, which are optional boundaries, and which defaults need to flip at the settings/schema layer.",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "Package/seam/work-package remain schema ghosts.** The runtime increasingly assumes them conceptually, but core schemas, receipts, and event families still lack the objects and IDs.",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "Per-project vs global settings remain mixed.** Several runtime-affecting settings are still assumed global or single-project where the emerging model needs project/package/seam/node layers.",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Docker auth is the clearest requested/effective example.** It should likely be generalized into the shared execution identity pattern instead of remaining a domain-specific one-off.",
+        "tokens": []
+      },
+      {
+        "line": 189,
+        "text": "One-active-worktree assumptions remain widespread.** File trees, active repo indicators, evidence roots, and restore/revert UX still assume a scalar worktree.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 7,
+        "text": "5. **Memory prohibition vs. stateful orchestration.** `assistant-memory-subsystem.md` uses NullMemoryProvider for all non-Assistant agents including Orchestrator. `newfeatures.md` implies a system-prompt loop carrying state. If the Orchestrator has no memory, how does it maintain coherence across packages?",
+        "tokens": [
+          "assistant-memory-subsystem.md",
+          "newfeatures.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "6. **`active-agents.json` vs. seglog/redb.** Body of orchestrator doc uses a flat file. Storage plan and addenda use event-sourced stores. Both claim to be the source of truth for execution state.",
+        "tokens": [
+          "active-agents.json"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "3. **Effective identity contract.** Define how requested vs. effective execution identity (provider, model, account, persona) is tracked, stored, and displayed at each governance level (node, package, seam, lane).",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "8. **Dashboard → Orchestrator → Thread attention flow.** Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "Model-wave synthesis from Claude Sonnet 4.6 fleet sweep across `Plans/**`. Sonnet strongly reinforces the node-graph transition pressure already seen in earlier waves, but it surfaced especially sharp gaps in schema anchors, requested-vs-effective execution identity, worktree/lane visibility, and policy-layer terminology ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "Why impacted:** These are the runtime truth owners for scheduling, attempts, blocked states, safe points, and execution identity.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "New model pressure:** Must visualize packages, seams, lanes, contamination state, promotion state, and multiple concurrent overseer/worker identities.",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "New model pressure:** Need package/seam namespaces, lane/worktree state, contamination events, package-aware usage attribution, and clearer AutoRunBoundary semantics under node/package execution.",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "Attention routing is incomplete.** Sonnet repeatedly found missing or weak routing between Dashboard, Orchestrator, and chat-thread surfaces for blocked states, live-run status, Docker/registry side effects, FileSafe blocks, and optional HITL boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "Requested vs effective identity is only partially visible.** Persona/platform/model mismatches are sometimes surfaced, but effective account, lane/worktree, overseer class, and package/seam scope are generally absent from UI contracts.",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "Optional HITL boundaries lack consistent UI treatment.** Existing approval surfaces assume mandatory or tier-boundary review; Sonnet found no unified contract for package-complete, seam-complete, or mandatory side-effect gates.",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Source Control / Orchestrator worktree visibility is underdefined.** Multiple docs assume one active worktree while the emerging model requires PM-owned worktrees, lane pools, and package-level worktree state to be visible and navigable.",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "Schema contradictions are already live.**",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "`selection_rule = \"lexicographic_node_id\"` is hard-coded in graph schemas while runtime scheduler addenda define a scored tuple with lexicographic node ID only as the final tiebreak.",
+        "tokens": [
+          "selection_rule = \"lexicographic_node_id\""
+        ]
+      },
+      {
+        "line": 65,
+        "text": "`HandoffMessage`, graph breadcrumbs, and multiple payloads still use `phase_id` / `task_id` vocabulary where node/package/seam identity is now required.",
+        "tokens": [
+          "HandoffMessage",
+          "phase_id",
+          "task_id"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "`ProviderRequestEnvelope` and prompt-handoff contracts are split between older V0 anchor tables and newer addenda carrying node/attempt/safe-point fields.",
+        "tokens": [
+          "ProviderRequestEnvelope"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "Safe-point vs restore-point vs rollback is still not normalized.** Sonnet found the concepts referenced across runtime, policy, interview, and worktree docs, but rarely defined together in one canonical contract.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "Contamination is a major gap.** Worktree contamination, lane contamination, and restore scope are implied by blocked-reason codes and safe-point rules, but there is no shared event family or state object for contamination itself.",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "Package/seam/lane state is missing from storage.** No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs.",
+        "tokens": [
+          "packages",
+          "project_id"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Blocked payload normalization is inconsistent.** Legacy `reason_code` / `recovery_options[]` shapes still coexist with `blocked_reason_code` / `allowed_action_ids[]` normalization in multiple docs.",
+        "tokens": [
+          "allowed_action_ids[]",
+          "blocked_reason_code",
+          "reason_code",
+          "recovery_options[]"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Multi-account fallback is structurally under-specified.** Sonnet found no canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
+        "tokens": [
+          "effective_account",
+          "requested_account"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Overseer personas are not modeled cleanly.** Package overseer and seam overseer do not have canonical Persona registry treatment or runtime identity slots in the existing Persona/model-selection contracts.",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Docker auth is the best existing requested/effective pattern, but isolated.** `requested_auth_mode` / `effective_capabilities[]` / `effective_account_identity` in container flows point toward the right shape, but they are not generalized into the shared execution identity model.",
+        "tokens": [
+          "effective_account_identity",
+          "effective_capabilities[]",
+          "requested_auth_mode"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "One-active-worktree assumptions are everywhere.** File tree surfaces, current-worktree displays, artifact roots, and safe-point payloads frequently assume a scalar worktree, not a set of active package lanes.",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "PM-managed worktrees are invisible.** Managed Unraid template repos, live-run artifact directories, and other PM-owned git/file roots are not properly registered in Source Control / Orchestrator worktree visibility contracts.",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Parallelism controls are the wrong shape.** Flat global concurrency caps and provider-only limits do not express per-package lane ceilings, contamination-triggered shrink, or lane-pool allocation rules.",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "SCM lineage is incomplete for node/package execution.** Many contracts carry branch/worktree data only optionally or singularly, making package-level rollback, retry, or cross-surface navigation unreliable.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "Priority 1 — Lock the runtime schema anchors**",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "Relax or replace stale graph-schema constants (`selection_rule`, tier-rooted breadcrumbs).",
+        "tokens": [
+          "selection_rule"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts.",
+        "tokens": []
+      },
+      {
+        "line": 99,
+        "text": "Priority 3 — Rebuild UI contracts around packages/seams/lanes**",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "Priority 4 — Consolidate addenda and normalize payloads**",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "Merge duplicated runtime, model, blocked-state, and worktree addenda into single authoritative sections.",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "1. **Scored scheduler vs lexicographic schema lock.** Runtime docs define a scored ready-set; graph schemas still hard-code lexicographic node selection.",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "4. **Tier authority vs node/package/seam authority.** Tiers remain first-class in widgets, breadcrumbs, HITL boundaries, and state displays even where the graph is already treated as the canonical execution input.",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "6. **Legacy blocked payload fields vs normalized blocked-state contract.** Old and new field names coexist across Docker, runtime recovery, and policy docs.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "2. **Design the package/seam/lane schema family.** Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.",
+        "tokens": [
+          "lane",
+          "package",
+          "promotion",
+          "resolution_thread",
+          "review",
+          "seam"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "6. **Rebuild attention routing.** Specify the canonical event-to-surface path for blocked states, optional HITL boundaries, and side-effect approvals across Dashboard, Orchestrator, and chat-thread.",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "8. **Reconcile automation-first with existing settings and gates.** Classify which gates remain mandatory HITL, which are optional boundaries, and which defaults need to flip at the settings/schema layer.",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the same high-risk Orchestrator seams as prior waves, but it was especially strong at surfacing contract drift, schema inconsistencies, and places where the rewrite already partially assumes node-graph execution without fully retiring tier-centric ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "`Plans/Contracts_V0.md` + `Plans/Executor_Protocol.md` + `Plans/Orchestrator_Page.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Why impacted:** These are the closest thing to the runtime SSOT for attempts, scheduler passes, blocked outcomes, safe points, UI recovery actions, and requested/effective runtime state.",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "Old assumption:** Tier-rooted identifiers, one Overseer, HTE-by-default run modes, and partially split blocked/HITL contracts.",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "`Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json` + `Plans/project_plan_graph_index.schema.json`**",
+        "tokens": [
+          "Plans/plan_graph.schema.json",
+          "Plans/project_plan_graph_index.schema.json",
+          "Plans/project_plan_node.schema.json"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Why impacted:** These are the executable graph contracts.",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "New model pressure:** Need node/package/seam/lane/promotion/safe-point fields, multi-project scoping, and alignment with scored ready-set scheduling.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "New model pressure:** Need package-based lane pools, worktree-aware evidence roots, safe-point-aware live sessions, normalized blocked payloads, and PM-owned worktree visibility in Orchestrator/SCM.",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "Attention flow exists, but is fragmented.** GPT-5.2 found strong pieces of Dashboard CtAs, thread badges, blocked node CTAs, and live-run cards, but no single canonical routing contract across Dashboard → Orchestrator → chat-thread.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "Requested vs effective display is inconsistent.** Persona/model/platform mismatches are sometimes surfaced, but effective account, worktree lane, package/seam scope, and overseer role are usually missing from UI contracts.",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "Source Control / Orchestrator integration is only partially specified.** GPT-5.2 repeatedly found expectations that Orchestrator CTAs preserve worktree lineage while many UI/state docs still assume one active worktree or a single thread-scoped execution context.",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "Schema-level contradictions are active, not hypothetical.**",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "Graph schemas still hard-code lexicographic node ordering while runtime addenda describe scored scheduler tuples.",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "Base provider envelope/spec tables omit node/attempt/safe-point fields that later addenda require.",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "Acceptance/evidence/coverage schemas cannot yet express work-package/seam/promotion/account/lane identity cleanly.",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "Blocked-state normalization is incomplete.** GPT-5.2 repeatedly surfaced legacy `reason_code` / `recovery_options[]` drift against canonical `blocked_reason_code` / `allowed_action_ids[]` rules.",
+        "tokens": [
+          "allowed_action_ids[]",
+          "blocked_reason_code",
+          "reason_code",
+          "recovery_options[]"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "Safe-point policy is present but not fully modeled.** Safe-point, restore-point, rollback, and contamination are all referenced, but not unified into one canonical field/event/object family.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Runtime identity snapshots stop too early.** Requested/effective persona/platform/model fields exist; requested/effective account and execution identity do not.",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "Package/seam/work-package remain schema ghosts.** The runtime increasingly assumes them conceptually, but core schemas, receipts, and event families still lack the objects and IDs.",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "Multi-account fallback is still not a first-class contract.** GPT-5.2 found implicit multi-account surfaces and widgets, but no canonical `requested_account` / `effective_account` runtime shape.",
+        "tokens": [
+          "effective_account",
+          "requested_account"
+        ]
+      },
+      {
+        "line": 182,
+        "text": "Provider/persona contracts are closer to the target than account identity.** The existing requested/effective Persona/model rules are a good base, but they need extension rather than a parallel account-only system.",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "Package-based lane pools are the missing parallelism contract.** Many docs already discuss worktree isolation, per-run branches, or per-subtask worktrees, but GPT-5.2 found no stable lane-pool model that unifies them.",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "PM-owned SCM state is not fully visible.** Managed template repos, active git operations, live-run artifact roots, and worktree recovery state need stronger Orchestrator/Source Control registration.",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "Parallel caps are the wrong shape.** Thread caps, provider caps, and simple queue models exist, but package/lane-aware capacity and conflict models do not.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 4,
+        "text": "2. **Single Overseer vs. package + seam overseers.** `orchestrator-subagent-integration.md` body defines one Overseer role within the Orchestrator. Ledger research established package overseers + seam overseers as the target. No plan doc reflects the dual-overseer model.",
+        "tokens": [
+          "orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 7,
+        "text": "5. **Memory prohibition vs. stateful orchestration.** `assistant-memory-subsystem.md` uses NullMemoryProvider for all non-Assistant agents including Orchestrator. `newfeatures.md` implies a system-prompt loop carrying state. If the Orchestrator has no memory, how does it maintain coherence across packages?",
+        "tokens": [
+          "assistant-memory-subsystem.md",
+          "newfeatures.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "6. **`active-agents.json` vs. seglog/redb.** Body of orchestrator doc uses a flat file. Storage plan and addenda use event-sourced stores. Both claim to be the source of truth for execution state.",
+        "tokens": [
+          "active-agents.json"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "1. **Package/seam overseer spec.** Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc. Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "2. **Widget catalog refresh.** Design replacements for `widget.tier_tree` and `widget.progress_bars` that visualize packages, seams, lanes, and parallel execution. Determine if the Tiers tab is renamed or replaced.",
+        "tokens": [
+          "widget.progress_bars",
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "3. **Effective identity contract.** Define how requested vs. effective execution identity (provider, model, account, persona) is tracked, stored, and displayed at each governance level (node, package, seam, lane).",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "4. **Lane ↔ worktree mapping.** Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid. Define contamination detection and safe-point restore for cross-lane worktree reuse.",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "5. **Pathing migration.** Design the replacement for `<phase>/<task>/<subtask>` canonical paths. Candidates: `<package_id>/<node_id>`, `<seam_id>/<package_id>/<node_id>`, or content-addressed.",
+        "tokens": [
+          "<package_id>/<node_id>",
+          "<phase>/<task>/<subtask>",
+          "<seam_id>/<package_id>/<node_id>"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "8. **Dashboard → Orchestrator → Thread attention flow.** Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "Model-wave synthesis from Claude Sonnet 4.6 fleet sweep across `Plans/**`. Sonnet strongly reinforces the node-graph transition pressure already seen in earlier waves, but it surfaced especially sharp gaps in schema anchors, requested-vs-effective execution identity, worktree/lane visibility, and policy-layer terminology ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Old assumption:** Single Overseer, tier-rooted execution, phase/task/subtask framing, lexicographic or tier-centric dispatch inputs.",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "New model pressure:** Need explicit package/seam/lane/package-overseer/seam-overseer support, scored ready-set scheduling, requested/effective account identity, and package-safe remediation lineage.",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "Why impacted:** These define the Orchestrator-facing UI and its primary widgets.",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "Old assumption:** Tiers tab, `widget.tier_tree`, grouped-by-phase graph layouts, one current task/worker/worktree at a time.",
+        "tokens": [
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "New model pressure:** Must visualize packages, seams, lanes, contamination state, promotion state, and multiple concurrent overseer/worker identities.",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "New model pressure:** Need package/seam namespaces, lane/worktree state, contamination events, package-aware usage attribution, and clearer AutoRunBoundary semantics under node/package execution.",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "Old assumption:** Per-subtask worktrees, singular active worktree, project-root artifact paths, and ad-hoc runtime side effects.",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "New model pressure:** Need package-based lane pools, contamination classification, safe-point-aware live sessions, lane-scoped evidence roots, and Source Control visibility for PM-owned worktrees like template repos.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "New model pressure:** Missing canonical terms and owners for feature seam, work package, package/seam overseers, promotion classes, lane pools, contamination, safe points, and effective execution identity.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Tiers-first UI is now misleading.** The Tiers tab, `widget.tier_tree`, phase-grouped graph layouts, and single-current-task widgets all assume execution authority still lives in the tier hierarchy instead of the node/package/seam graph.",
+        "tokens": [
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Attention routing is incomplete.** Sonnet repeatedly found missing or weak routing between Dashboard, Orchestrator, and chat-thread surfaces for blocked states, live-run status, Docker/registry side effects, FileSafe blocks, and optional HITL boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "Requested vs effective identity is only partially visible.** Persona/platform/model mismatches are sometimes surfaced, but effective account, lane/worktree, overseer class, and package/seam scope are generally absent from UI contracts.",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Source Control / Orchestrator worktree visibility is underdefined.** Multiple docs assume one active worktree while the emerging model requires PM-owned worktrees, lane pools, and package-level worktree state to be visible and navigable.",
+        "tokens": []
+      },
+      {
+        "line": 66,
+        "text": "`ProviderRequestEnvelope` and prompt-handoff contracts are split between older V0 anchor tables and newer addenda carrying node/attempt/safe-point fields.",
+        "tokens": [
+          "ProviderRequestEnvelope"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Contamination is a major gap.** Worktree contamination, lane contamination, and restore scope are implied by blocked-reason codes and safe-point rules, but there is no shared event family or state object for contamination itself.",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "Package/seam/lane state is missing from storage.** No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs.",
+        "tokens": [
+          "packages",
+          "project_id"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Per-subtask worktrees conflict with package-based lane pools.** Sonnet consistently found per-subtask worktree assumptions in worktree, FileSafe, cleanup, and evidence docs, while the new model needs persistent package-scoped lane/worktree behavior.",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "One-active-worktree assumptions are everywhere.** File tree surfaces, current-worktree displays, artifact roots, and safe-point payloads frequently assume a scalar worktree, not a set of active package lanes.",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "PM-managed worktrees are invisible.** Managed Unraid template repos, live-run artifact directories, and other PM-owned git/file roots are not properly registered in Source Control / Orchestrator worktree visibility contracts.",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Parallelism controls are the wrong shape.** Flat global concurrency caps and provider-only limits do not express per-package lane ceilings, contamination-triggered shrink, or lane-pool allocation rules.",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Priority 2 — Establish terminology and ownership**",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "tokens": [
+          "00-plans-index.md",
+          "Crosswalk.md",
+          "Decision_Policy.md",
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Priority 3 — Rebuild UI contracts around packages/seams/lanes**",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Add package/seam/lane-aware identity, worktree, and attention surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than prose-only references.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "2. **Design the package/seam/lane schema family.** Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only.",
+        "tokens": [
+          "lane",
+          "package",
+          "promotion",
+          "resolution_thread",
+          "review",
+          "seam"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "3. **Unify requested vs effective execution identity.** Extend the existing requested/effective Persona/model pattern to include account, lane/worktree, and overseer class.",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "4. **Specify package-based worktree lane pools.** Define lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility for PM-owned worktrees.",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "6. **Rebuild attention routing.** Specify the canonical event-to-surface path for blocked states, optional HITL boundaries, and side-effect approvals across Dashboard, Orchestrator, and chat-thread.",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "7. **Migrate the widget/tab model.** Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "tokens": [
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the same high-risk Orchestrator seams as prior waves, but it was especially strong at surfacing contract drift, schema inconsistencies, and places where the rewrite already partially assumes node-graph execution without fully retiring tier-centric ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "`Plans/Contracts_V0.md` + `Plans/Executor_Protocol.md` + `Plans/Orchestrator_Page.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "New model pressure:** Need first-class package/seam/lane/work-package identity, effective account switching, optional HITL boundaries, and package/seam overseer roles with explicit lineage.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "Why impacted:** These are the executable graph contracts.",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "New model pressure:** Need node/package/seam/lane/promotion/safe-point fields, multi-project scoping, and alignment with scored ready-set scheduling.",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "New model pressure:** Must visualize work packages, seams, blocked episodes, safe-point restore, requested/effective identity, and cross-surface attention routing.",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Old assumption:** Per-subtask worktrees, project-root artifact paths, visible-mode-first local execution, ad-hoc side-effect steps, and weak contamination language.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "New model pressure:** Need package-based lane pools, worktree-aware evidence roots, safe-point-aware live sessions, normalized blocked payloads, and PM-owned worktree visibility in Orchestrator/SCM.",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "New model pressure:** Need explicit package/seam/lane/attempt/work-package objects, effective execution identity including account, and canonical ownership for contamination/safe-point/promotion concepts.",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "Attention flow exists, but is fragmented.** GPT-5.2 found strong pieces of Dashboard CtAs, thread badges, blocked node CTAs, and live-run cards, but no single canonical routing contract across Dashboard → Orchestrator → chat-thread.",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "Tiers-first UI is still deeply embedded.** Tiers tab assumptions, phase-grouped run-graph presets, and single-current-task widgets still act like execution authority lives in tier hierarchy rather than the node/package/seam graph.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "Requested vs effective display is inconsistent.** Persona/model/platform mismatches are sometimes surfaced, but effective account, worktree lane, package/seam scope, and overseer role are usually missing from UI contracts.",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "Source Control / Orchestrator integration is only partially specified.** GPT-5.2 repeatedly found expectations that Orchestrator CTAs preserve worktree lineage while many UI/state docs still assume one active worktree or a single thread-scoped execution context.",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "Base provider envelope/spec tables omit node/attempt/safe-point fields that later addenda require.",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "Acceptance/evidence/coverage schemas cannot yet express work-package/seam/promotion/account/lane identity cleanly.",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "Package-based lane pools are the missing parallelism contract.** Many docs already discuss worktree isolation, per-run branches, or per-subtask worktrees, but GPT-5.2 found no stable lane-pool model that unifies them.",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "PM-owned SCM state is not fully visible.** Managed template repos, active git operations, live-run artifact roots, and worktree recovery state need stronger Orchestrator/Source Control registration.",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "Cleanup and restore semantics are not lane-aware yet.** Broad cleanup, conflict worktrees, and revert-last-edit flows still underspecify contamination scope and safe-point prerequisites.",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "Parallel caps are the wrong shape.** Thread caps, provider caps, and simple queue models exist, but package/lane-aware capacity and conflict models do not.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 13,
+        "text": "1. **Package/seam overseer spec.** Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc. Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "New model pressure:** Need package-based lane pools, contamination classification, safe-point-aware live sessions, lane-scoped evidence roots, and Source Control visibility for PM-owned worktrees like template repos.",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "Package/seam/lane state is missing from storage.** No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs.",
+        "tokens": [
+          "packages",
+          "project_id"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Per-subtask worktrees conflict with package-based lane pools.** Sonnet consistently found per-subtask worktree assumptions in worktree, FileSafe, cleanup, and evidence docs, while the new model needs persistent package-scoped lane/worktree behavior.",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "Why impacted:** These are where live execution, evidence, cleanup, FileSafe, worktrees, and side-effect repos meet runtime policy.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "New model pressure:** Need package-based lane pools, worktree-aware evidence roots, safe-point-aware live sessions, normalized blocked payloads, and PM-owned worktree visibility in Orchestrator/SCM.",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "Acceptance/evidence/coverage schemas cannot yet express work-package/seam/promotion/account/lane identity cleanly.",
+        "tokens": []
+      },
+      {
+        "line": 189,
+        "text": "One-active-worktree assumptions remain widespread.** File trees, active repo indicators, evidence roots, and restore/revert UX still assume a scalar worktree.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 7,
+        "text": "5. **Memory prohibition vs. stateful orchestration.** `assistant-memory-subsystem.md` uses NullMemoryProvider for all non-Assistant agents including Orchestrator. `newfeatures.md` implies a system-prompt loop carrying state. If the Orchestrator has no memory, how does it maintain coherence across packages?",
+        "tokens": [
+          "assistant-memory-subsystem.md",
+          "newfeatures.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "1. **Package/seam overseer spec.** Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc. Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "3. **Effective identity contract.** Define how requested vs. effective execution identity (provider, model, account, persona) is tracked, stored, and displayed at each governance level (node, package, seam, lane).",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "Model-wave synthesis from Claude Sonnet 4.6 fleet sweep across `Plans/**`. Sonnet strongly reinforces the node-graph transition pressure already seen in earlier waves, but it surfaced especially sharp gaps in schema anchors, requested-vs-effective execution identity, worktree/lane visibility, and policy-layer terminology ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "Why impacted:** These are the runtime truth owners for scheduling, attempts, blocked states, safe points, and execution identity.",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "Why impacted:** These are the terminology and ownership authorities.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "New model pressure:** Missing canonical terms and owners for feature seam, work package, package/seam overseers, promotion classes, lane pools, contamination, safe points, and effective execution identity.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Tiers-first UI is now misleading.** The Tiers tab, `widget.tier_tree`, phase-grouped graph layouts, and single-current-task widgets all assume execution authority still lives in the tier hierarchy instead of the node/package/seam graph.",
+        "tokens": [
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "Requested vs effective identity is only partially visible.** Persona/platform/model mismatches are sometimes surfaced, but effective account, lane/worktree, overseer class, and package/seam scope are generally absent from UI contracts.",
+        "tokens": []
+      },
+      {
+        "line": 66,
+        "text": "`ProviderRequestEnvelope` and prompt-handoff contracts are split between older V0 anchor tables and newer addenda carrying node/attempt/safe-point fields.",
+        "tokens": [
+          "ProviderRequestEnvelope"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Multi-account fallback is structurally under-specified.** Sonnet found no canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
+        "tokens": [
+          "effective_account",
+          "requested_account"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Overseer personas are not modeled cleanly.** Package overseer and seam overseer do not have canonical Persona registry treatment or runtime identity slots in the existing Persona/model-selection contracts.",
+        "tokens": []
+      },
+      {
+        "line": 78,
+        "text": "Per-project/per-package configuration scope is thin.** Multiple settings systems still assume global or single-project scope when the new model needs project, package, seam, node, overseer, and delegated-subagent override layers.",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Parallelism controls are the wrong shape.** Flat global concurrency caps and provider-only limits do not express per-package lane ceilings, contamination-triggered shrink, or lane-pool allocation rules.",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Priority 2 — Establish terminology and ownership**",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "tokens": [
+          "00-plans-index.md",
+          "Crosswalk.md",
+          "Decision_Policy.md",
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "4. **Tier authority vs node/package/seam authority.** Tiers remain first-class in widgets, breadcrumbs, HITL boundaries, and state displays even where the graph is already treated as the canonical execution input.",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "1. **Define the dual-overseer runtime model canonically.** Lock package overseer vs seam overseer authority, spawning rules, corroboration/review responsibilities, and identity/model assignment.",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "3. **Unify requested vs effective execution identity.** Extend the existing requested/effective Persona/model pattern to include account, lane/worktree, and overseer class.",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "4. **Specify package-based worktree lane pools.** Define lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility for PM-owned worktrees.",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the same high-risk Orchestrator seams as prior waves, but it was especially strong at surfacing contract drift, schema inconsistencies, and places where the rewrite already partially assumes node-graph execution without fully retiring tier-centric ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Why impacted:** These anchor storage, telemetry, ownership, and terminology.",
+        "tokens": []
+      },
+      {
+        "line": 156,
+        "text": "Old assumption:** Run/tier/session/thread are sufficient scopes, and requested/effective mostly means persona/model/platform.",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "New model pressure:** Need explicit package/seam/lane/attempt/work-package objects, effective execution identity including account, and canonical ownership for contamination/safe-point/promotion concepts.",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "Tiers-first UI is still deeply embedded.** Tiers tab assumptions, phase-grouped run-graph presets, and single-current-task widgets still act like execution authority lives in tier hierarchy rather than the node/package/seam graph.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "Requested vs effective display is inconsistent.** Persona/model/platform mismatches are sometimes surfaced, but effective account, worktree lane, package/seam scope, and overseer role are usually missing from UI contracts.",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "Base provider envelope/spec tables omit node/attempt/safe-point fields that later addenda require.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Runtime identity snapshots stop too early.** Requested/effective persona/platform/model fields exist; requested/effective account and execution identity do not.",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "Provider/persona contracts are closer to the target than account identity.** The existing requested/effective Persona/model rules are a good base, but they need extension rather than a parallel account-only system.",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "Parallel caps are the wrong shape.** Thread caps, provider caps, and simple queue models exist, but package/lane-aware capacity and conflict models do not.",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 18,
+        "text": "6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "Blocked payload normalization is inconsistent.** Legacy `reason_code` / `recovery_options[]` shapes still coexist with `blocked_reason_code` / `allowed_action_ids[]` normalization in multiple docs.",
+        "tokens": [
+          "allowed_action_ids[]",
+          "blocked_reason_code",
+          "reason_code",
+          "recovery_options[]"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Per-subtask worktrees conflict with package-based lane pools.** Sonnet consistently found per-subtask worktree assumptions in worktree, FileSafe, cleanup, and evidence docs, while the new model needs persistent package-scoped lane/worktree behavior.",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "Relax or replace stale graph-schema constants (`selection_rule`, tier-rooted breadcrumbs).",
+        "tokens": [
+          "selection_rule"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "Remove legacy `reason_code` / `recovery_options[]` drift and older singular worktree assumptions.",
+        "tokens": [
+          "reason_code",
+          "recovery_options[]"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "6. **Legacy blocked payload fields vs normalized blocked-state contract.** Old and new field names coexist across Docker, runtime recovery, and policy docs.",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "Why impacted:** These are where live execution, evidence, cleanup, FileSafe, worktrees, and side-effect repos meet runtime policy.",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "Blocked-state normalization is incomplete.** GPT-5.2 repeatedly surfaced legacy `reason_code` / `recovery_options[]` drift against canonical `blocked_reason_code` / `allowed_action_ids[]` rules.",
+        "tokens": [
+          "allowed_action_ids[]",
+          "blocked_reason_code",
+          "reason_code",
+          "recovery_options[]"
+        ]
+      },
+      {
+        "line": 191,
+        "text": "Cleanup and restore semantics are not lane-aware yet.** Broad cleanup, conflict worktrees, and revert-last-edit flows still underspecify contamination scope and safe-point prerequisites.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 17,
+        "text": "5. **Pathing migration.** Design the replacement for `<phase>/<task>/<subtask>` canonical paths. Candidates: `<package_id>/<node_id>`, `<seam_id>/<package_id>/<node_id>`, or content-addressed.",
+        "tokens": [
+          "<package_id>/<node_id>",
+          "<phase>/<task>/<subtask>",
+          "<seam_id>/<package_id>/<node_id>"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "8. **Dashboard → Orchestrator → Thread attention flow.** Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 24,
+        "text": "Model-wave synthesis from Claude Sonnet 4.6 fleet sweep across `Plans/**`. Sonnet strongly reinforces the node-graph transition pressure already seen in earlier waves, but it surfaced especially sharp gaps in schema anchors, requested-vs-effective execution identity, worktree/lane visibility, and policy-layer terminology ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "New model pressure:** Missing canonical terms and owners for feature seam, work package, package/seam overseers, promotion classes, lane pools, contamination, safe points, and effective execution identity.",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "Attention routing is incomplete.** Sonnet repeatedly found missing or weak routing between Dashboard, Orchestrator, and chat-thread surfaces for blocked states, live-run status, Docker/registry side effects, FileSafe blocks, and optional HITL boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "Contamination is a major gap.** Worktree contamination, lane contamination, and restore scope are implied by blocked-reason codes and safe-point rules, but there is no shared event family or state object for contamination itself.",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "Package/seam/lane state is missing from storage.** No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs.",
+        "tokens": [
+          "packages",
+          "project_id"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the same high-risk Orchestrator seams as prior waves, but it was especially strong at surfacing contract drift, schema inconsistencies, and places where the rewrite already partially assumes node-graph execution without fully retiring tier-centric ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Old assumption:** Lexicographic node selection, weak dependency duality (`depends_on` vs `blockers/unblocks`), no package/seam/worktree/account identity.",
+        "tokens": [
+          "blockers/unblocks",
+          "depends_on"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Requested vs effective display is inconsistent.** Persona/model/platform mismatches are sometimes surfaced, but effective account, worktree lane, package/seam scope, and overseer role are usually missing from UI contracts.",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "Package-based lane pools are the missing parallelism contract.** Many docs already discuss worktree isolation, per-run branches, or per-subtask worktrees, but GPT-5.2 found no stable lane-pool model that unifies them.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 7,
+        "text": "5. **Memory prohibition vs. stateful orchestration.** `assistant-memory-subsystem.md` uses NullMemoryProvider for all non-Assistant agents including Orchestrator. `newfeatures.md` implies a system-prompt loop carrying state. If the Orchestrator has no memory, how does it maintain coherence across packages?",
+        "tokens": [
+          "assistant-memory-subsystem.md",
+          "newfeatures.md"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "Model-wave synthesis from Claude Sonnet 4.6 fleet sweep across `Plans/**`. Sonnet strongly reinforces the node-graph transition pressure already seen in earlier waves, but it surfaced especially sharp gaps in schema anchors, requested-vs-effective execution identity, worktree/lane visibility, and policy-layer terminology ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "`Plans/FinalGUISpec.md` + `Plans/Run_Graph_View.md` + `Plans/Widget_System.md`**",
+        "tokens": [
+          "Plans/FinalGUISpec.md",
+          "Plans/Run_Graph_View.md",
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/assistant-memory-subsystem.md`**",
+        "tokens": [
+          "Plans/assistant-memory-subsystem.md",
+          "Plans/storage-plan.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "`Plans/FileSafe.md` + `Plans/WorktreeGitImprovement.md` + `Plans/newtools.md`**",
+        "tokens": [
+          "Plans/FileSafe.md",
+          "Plans/WorktreeGitImprovement.md",
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "`Plans/Glossary.md` + `Plans/Crosswalk.md` + `Plans/Decision_Policy.md` + `Plans/00-plans-index.md`**",
+        "tokens": [
+          "Plans/00-plans-index.md",
+          "Plans/Crosswalk.md",
+          "Plans/Decision_Policy.md",
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "`ProviderRequestEnvelope` and prompt-handoff contracts are split between older V0 anchor tables and newer addenda carrying node/attempt/safe-point fields.",
+        "tokens": [
+          "ProviderRequestEnvelope"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the same high-risk Orchestrator seams as prior waves, but it was especially strong at surfacing contract drift, schema inconsistencies, and places where the rewrite already partially assumes node-graph execution without fully retiring tier-centric ownership.",
+        "tokens": [
+          "Plans/**"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "`Plans/Contracts_V0.md` + `Plans/Executor_Protocol.md` + `Plans/Orchestrator_Page.md`**",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "`Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json` + `Plans/project_plan_graph_index.schema.json`**",
+        "tokens": [
+          "Plans/plan_graph.schema.json",
+          "Plans/project_plan_graph_index.schema.json",
+          "Plans/project_plan_node.schema.json"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "`Plans/Run_Graph_View.md` + `Plans/FinalGUISpec.md` + `Plans/assistant-chat-design.md`**",
+        "tokens": [
+          "Plans/FinalGUISpec.md",
+          "Plans/Run_Graph_View.md",
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "`Plans/newtools.md` + `Plans/FileSafe.md` + `Plans/WorktreeGitImprovement.md` + `Plans/MiscPlan.md`**",
+        "tokens": [
+          "Plans/FileSafe.md",
+          "Plans/MiscPlan.md",
+          "Plans/WorktreeGitImprovement.md",
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/Crosswalk.md` + `Plans/Glossary.md`**",
+        "tokens": [
+          "Plans/Crosswalk.md",
+          "Plans/Glossary.md",
+          "Plans/storage-plan.md",
+          "Plans/usage-feature.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

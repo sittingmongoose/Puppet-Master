@@ -1,0 +1,994 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0090",
+  "coverage": {
+    "shard_id": "shard-0090",
+    "start_line": 16807,
+    "end_line": 16983,
+    "line_count": 177,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0090.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 29,
+        "text": "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs",
+        "tokens": [
+          "PuppetMasterEvent::TierChanged",
+          "PuppetMasterEvent::UserInteractionRequired"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Reconciliation should use `Executor_Protocol.md` as the stronger runtime baseline and pull `Orchestrator_Page.md` toward it, not the reverse.",
+        "tokens": [
+          "Executor_Protocol.md",
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "`Executor_Protocol.md` needs:",
+        "tokens": [
+          "Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "`Orchestrator_Page.md` needs:",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "The page doc still contains enough lower aligned material that reconciliation should collapse same-file contradictions instead of replacing the whole thing blindly.",
+        "tokens": []
+      },
+      {
+        "line": 80,
+        "text": "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+        "tokens": [
+          "PuppetMasterEvent::Output",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "canonical `UsageRecord` still requires `tier_id`",
+        "tokens": [
+          "UsageRecord",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?`",
+        "tokens": [
+          "attempt_id?",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Reconciliation order for this tranche should be:",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "`usage-feature.md` needs:",
+        "tokens": [
+          "usage-feature.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "`Run_Graph_View.md` needs:",
+        "tokens": [
+          "Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "`Widget_System.md` needs:",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "`assistant-chat-design.md` needs:",
+        "tokens": [
+          "assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`assistant-chat-design.md` should not be over-corrected. It is mostly aligned and is no longer one of the main drift multipliers.",
+        "tokens": [
+          "assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 11,
+        "text": "the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract",
+        "tokens": [
+          "TierContext"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Tiers` retired and replaced by `Seams",
+        "tokens": [
+          " retired and replaced by "
+        ]
+      },
+      {
+        "line": 62,
+        "text": "`tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime identity",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "`Plans/Widget_System.md` remains a major stale hostability owner:",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "keep `dashboard_layout:v1` as backup",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "remaining drift is concentrated around compatibility-era fields like `resume_url?` in blocked-notice persistence rather than broad ontology problems",
+        "tokens": [
+          "resume_url?"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "`Run_Graph_View.md` and `usage-feature.md` still reinforce each other through `tier_id`, which keeps the old usage/evidence/runtime correlation alive.",
+        "tokens": [
+          "Run_Graph_View.md",
+          "tier_id",
+          "usage-feature.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "`assistant-chat-design.md` is not broadly stale in the same way. Its remaining drift is local and compatibility-oriented.",
+        "tokens": [
+          "assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`Run_Graph_View.md` and `usage-feature.md` are now the highest-risk remaining stale consumer pair because they still share the same old correlation key.",
+        "tokens": [
+          "Run_Graph_View.md",
+          "usage-feature.md"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 6,
+        "text": "safe-point, remediation, worktree-conflict, and blocked/runtime state are already present",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract",
+        "tokens": [
+          "TierContext"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "still carries stale worker identity fields:",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs",
+        "tokens": [
+          "PuppetMasterEvent::TierChanged",
+          "PuppetMasterEvent::UserInteractionRequired"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "`Orchestrator_Page.md` still turns stale ontology into tab structure, widget structure, event sources, filter keys, and worker identity fields.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "`tier_id` filters and worker identity fields replaced with canonical node/attempt/runtime identity",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "`Plans/Run_Graph_View.md` is still strongly tier-era in its core surface contract:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "widget_layout:v1:orchestrator:tiers",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "widget_layout:v1:orchestrator:evidence",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "widget_layout:v1:orchestrator:history",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "widget_layout:v1:orchestrator:ledger",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "keep `dashboard_layout:v1` as backup",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "usage.jsonl` and canonical usage discussion still center `tier_id",
+        "tokens": [
+          " and canonical usage discussion still center ",
+          "usage.json"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "canonical `UsageRecord` still requires `tier_id`",
+        "tokens": [
+          "UsageRecord",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "thread blocked-state addenda already align to blocked/runtime actions",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "remaining drift is concentrated around compatibility-era fields like `resume_url?` in blocked-notice persistence rather than broad ontology problems",
+        "tokens": [
+          "resume_url?"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "worker/verifier identity fields aligned to canonical requested/effective runtime disclosure",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 3,
+        "text": "canonical dispatch already uses scored ready-set selection, not pure lexical `node_id`",
+        "tokens": [
+          "node_id"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "`scheduler_lane` is first-class",
+        "tokens": [
+          "scheduler_lane"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "still defines a six-tab page with `Tiers`",
+        "tokens": [
+          "Tiers"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "still says tabs `1, 2, 4, 5, 6` are widget-based",
+        "tokens": [
+          "1, 2, 4, 5, 6"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "still makes `Tiers` the second tab and centers `widget.tier_tree`",
+        "tokens": [
+          "Tiers",
+          "widget.tier_tree"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "The lower `Orchestrator_Page.md` addenda are closer to the rewrite:",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "lane/worktree, receipt, and cross-surface lineage concepts are present",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "That makes `Orchestrator_Page.md` another same-file supersession case, not just an outdated page spec.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "The execution core is now ahead of the main Orchestrator page spec, so the page doc is still teaching a surface model that the runtime core has already outgrown.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "`Orchestrator_Page.md` still turns stale ontology into tab structure, widget structure, event sources, filter keys, and worker identity fields.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Reconciliation should use `Executor_Protocol.md` as the stronger runtime baseline and pull `Orchestrator_Page.md` toward it, not the reverse.",
+        "tokens": [
+          "Executor_Protocol.md",
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "`Orchestrator_Page.md` needs:",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "`Executor_Protocol.md` is no longer the main source of tier-era drift. `Orchestrator_Page.md` is now the much larger multiplier.",
+        "tokens": [
+          "Executor_Protocol.md",
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Open that tier in the Tiers tab",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "scheduler_lane",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "`Plans/Widget_System.md` remains a major stale hostability owner:",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "still defines `Dashboard, Usage, Orchestrator widget tabs`",
+        "tokens": [
+          "Dashboard, Usage, Orchestrator widget tabs"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "widget_layout:v1:orchestrator:tiers",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "widget_layout:v1:orchestrator:evidence",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "widget_layout:v1:orchestrator:history",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "widget_layout:v1:orchestrator:ledger",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "data sources still rely on `PuppetMasterEvent::TierChanged`, `tier_id`, and phase/task/subtask framing for multiple Orchestrator widgets",
+        "tokens": [
+          "PuppetMasterEvent::TierChanged",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?`",
+        "tokens": [
+          "attempt_id?",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "`Widget_System.md` and `Orchestrator_Page.md` still reinforce each other through the old “all Orchestrator tabs are widget canvases” model.",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "historical/current usage navigation aligned to canonical route/open primitives",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "Orchestrator hostability narrowed to `Progress`",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "non-Progress Orchestrator tabs removed from widget layout persistence",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "blocked-thread messages tied cleanly to the shared route/runtime action model",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 16,
+        "text": "still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "`Evidence`, `History`, and `Ledger` treated as native tabs",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "widget_layout:v1:orchestrator:evidence",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "`Run_Graph_View.md` and `usage-feature.md` still reinforce each other through `tier_id`, which keeps the old usage/evidence/runtime correlation alive.",
+        "tokens": [
+          "Run_Graph_View.md",
+          "tier_id",
+          "usage-feature.md"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 8,
+        "text": "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract",
+        "tokens": [
+          "TierContext"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "requested_persona_id",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "effective_persona_id",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "provider",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "Adjacent owners implicated:",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "explicit owner placement for the execution-unit context replacing `TierContext`",
+        "tokens": [
+          "TierContext"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "worker_provider",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "verifier_provider",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "`Plans/Widget_System.md` remains a major stale hostability owner:",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Adjacent owners implicated:",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "`Run_Graph_View.md` and `usage-feature.md` are now the highest-risk remaining stale consumer pair because they still share the same old correlation key.",
+        "tokens": [
+          "Run_Graph_View.md",
+          "usage-feature.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 12,
+        "text": "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "still carries stale worker identity fields:",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "`Orchestrator_Page.md` still turns stale ontology into tab structure, widget structure, event sources, filter keys, and worker identity fields.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Tiers` retired and replaced by `Seams",
+        "tokens": [
+          " retired and replaced by "
+        ]
+      },
+      {
+        "line": 67,
+        "text": "The page doc still contains enough lower aligned material that reconciliation should collapse same-file contradictions instead of replacing the whole thing blindly.",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "`Plans/Widget_System.md` remains a major stale hostability owner:",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "later says legacy key is deleted",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "`assistant-chat-design.md` is not broadly stale in the same way. Its remaining drift is local and compatibility-oriented.",
+        "tokens": [
+          "assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "stale `hitl_request_id`, `View in Tiers`, and `tier_id`-centric event filtering removed",
+        "tokens": [
+          "View in Tiers",
+          "hitl_request_id",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "non-Progress Orchestrator tabs removed from widget layout persistence",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "`Run_Graph_View.md` and `usage-feature.md` are now the highest-risk remaining stale consumer pair because they still share the same old correlation key.",
+        "tokens": [
+          "Run_Graph_View.md",
+          "usage-feature.md"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 10,
+        "text": "the opening sections still teach node completion semantics without the newer `Package Overseer` / `Seam Overseer` governance split",
+        "tokens": [
+          "Package Overseer",
+          "Seam Overseer"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Open that tier in the Tiers tab",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "run/thread-based opens for `Show in Ledger` and `Show in Usage`",
+        "tokens": [
+          "Show in Ledger",
+          "Show in Usage"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "historical/current usage navigation aligned to canonical route/open primitives",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 167,
+        "text": "`Run_Graph_View.md` and `usage-feature.md` are now the highest-risk remaining stale consumer pair because they still share the same old correlation key.",
+        "tokens": [
+          "Run_Graph_View.md",
+          "usage-feature.md"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "`Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "But `Plans/Executor_Protocol.md` still has owner-level drift in the same file:",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "`Plans/Run_Graph_View.md` is still strongly tier-era in its core surface contract:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "`Plans/Widget_System.md` remains a major stale hostability owner:",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "`Plans/usage-feature.md` is still one of the main correlation drifts:",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "`Plans/assistant-chat-design.md` is healthier than the other three:",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "Plans/newfeatures.md",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

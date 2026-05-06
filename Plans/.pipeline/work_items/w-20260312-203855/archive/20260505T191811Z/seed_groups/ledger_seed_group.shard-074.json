@@ -1,0 +1,426 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-074",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-074.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "verification_rule",
+      "text": "- several future crew/message examples still propagate `tier_id` through git/worktree coordination",
+      "line_in_shard": 1
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The same document also contains rewrite-aligned operational direction:",
+      "line_in_shard": 2
+    },
+    {
+      "type": "requirement",
+      "text": "- `dirty_worktree` and `worktree_conflict` must route back to Source Control with the correct worktree in scope",
+      "line_in_shard": 5
+    },
+    {
+      "type": "requirement",
+      "text": "- historical runs must preserve historical worktree references after prune/remove",
+      "line_in_shard": 6
+    },
+    {
+      "type": "routing_rule",
+      "text": "- repo-state inspection routes to Source Control semantics",
+      "line_in_shard": 8
+    },
+    {
+      "type": "routing_rule",
+      "text": "- hosted workflow inspection routes to GitHub Actions semantics",
+      "line_in_shard": 9
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 12
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale consumer:",
+      "line_in_shard": 13
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong aligned adjacent consumer:",
+      "line_in_shard": 15
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Owner docs already implicated:",
+      "line_in_shard": 17
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The worktree doc correctly sets the Source Control versus Orchestrator surface boundary, but its identity model still hangs on `tier_id`.",
+      "line_in_shard": 24
+    },
+    {
+      "type": "doc_hint",
+      "text": "- That means the doc currently mixes:",
+      "line_in_shard": 25
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- rewrite-era surface ownership",
+      "line_in_shard": 26
+    },
+    {
+      "type": "verification_rule",
+      "text": "- The future crew/message examples are especially risky because they would propagate `tier_id` back into git/worktree coordination even after the broader execution-context rewrite.",
+      "line_in_shard": 28
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep Source Control worktree-first, but route by canonical worktree object identity rather than treating worktree selection as shell state or tier metadata.",
+      "line_in_shard": 32
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `WorktreeGitImprovement.md` already contains the correct surface boundary. The stale part is the identity anchor, not the product boundary.",
+      "line_in_shard": 36
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
+      "line_in_shard": 39
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 41
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/storage-plan.md` is already the strongest doc for subject identity:",
+      "line_in_shard": 48
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`",
+      "line_in_shard": 49
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `cost_usage` already routes to canonical Usage/Ledger identity",
+      "line_in_shard": 53
+    },
+    {
+      "type": "requirement",
+      "text": "- cross-surface receipt linkage already says runtime artifacts must stay on canonical runtime identity",
+      "line_in_shard": 54
+    },
+    {
+      "type": "doc_hint",
+      "text": "- but the doc still frames open/link behavior in artifact-panel terms and still uses a `task_id` rule that reflects older task-granularity language",
+      "line_in_shard": 55
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Plans/Crosswalk.md` still does not declare the routing/open-by-identity primitives that these behaviors require.",
+      "line_in_shard": 56
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/Contracts_V0.md` still has `resume_url`, `detail_ref`, and event-local linkage fields, but it still does not own a named `route_target` or `OpenSubject` contract.",
+      "line_in_shard": 57
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 59
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owner-gap docs:",
+      "line_in_shard": 60
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong aligned consumer:",
+      "line_in_shard": 63
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong implicated consumer:",
+      "line_in_shard": 65
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Runtime artifacts already require canonical cross-surface routing, but the shared contract is still missing from the owner docs.",
+      "line_in_shard": 70
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `task_id` language in the artifacts doc is lagging the broader node/package/seam/lane rewrite and will keep dragging artifact identity toward older decomposition terms unless reconciled.",
+      "line_in_shard": 71
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Put the named `route_target` and `OpenSubject` contracts in `Plans/Contracts_V0.md`.",
+      "line_in_shard": 74
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Put the primitive boundary declaration for route-target and subject-open navigation in `Plans/Crosswalk.md`.",
+      "line_in_shard": 75
+    },
+    {
+      "type": "routing_rule",
+      "text": "- runtime-artifact consumers route through those primitives",
+      "line_in_shard": 79
+    },
+    {
+      "type": "data_shape",
+      "text": "- Reconcile runtime-artifact identity language away from stale `task_id` framing and toward runtime/object identity.",
+      "line_in_shard": 80
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This is now a clear owner-doc gap, not a vague alignment issue.",
+      "line_in_shard": 83
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-17 - Routing tranche closure and reconciliation strata",
+      "line_in_shard": 86
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The routing/open-by-identity tranche is no longer a broad invention problem.",
+      "line_in_shard": 89
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- one owner-doc structural gap",
+      "line_in_shard": 91
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- a bounded set of stale consumer reconciliations",
+      "line_in_shard": 93
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `route_target`",
+      "line_in_shard": 97
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Plans/Crosswalk.md` still lacks the matching primitive-boundary declaration for route-target and subject-open navigation.",
+      "line_in_shard": 99
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Stratum 1: owner docs",
+      "line_in_shard": 102
+    },
+    {
+      "type": "decision",
+      "text": "- Stratum 2: command and shell adoption",
+      "line_in_shard": 105
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 107
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Stratum 3: source-open and preview consumers",
+      "line_in_shard": 108
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Stratum 4: runtime and orchestration consumers",
+      "line_in_shard": 113
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- If reconciliation starts in Stratum 3 or Stratum 4 before Stratum 1 is fixed, the consumer docs will keep restating local navigation semantics and drift will recur.",
+      "line_in_shard": 120
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `storage-plan.md` already contains subject identity that depends on owner-doc contracts that still do not exist by name.",
+      "line_in_shard": 121
+    },
+    {
+      "type": "data_shape",
+      "text": "- `UI_Command_Catalog.md` and `FinalGUISpec.md` are the pressure points that will either spread the canonical route/object vocabulary cleanly or re-fragment it.",
+      "line_in_shard": 122
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Treat the routing tranche as structurally closed after the owner-doc contracts are added.",
+      "line_in_shard": 125
+    },
+    {
+      "type": "data_shape",
+      "text": "- The route/object model is now sharp enough to reconcile.",
+      "line_in_shard": 130
+    },
+    {
+      "type": "decision",
+      "text": "- The blocker is owner adoption, not missing design direction.",
+      "line_in_shard": 131
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "line_in_shard": 133
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 135
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The document is still missing the canonical route/open contracts entirely.",
+      "line_in_shard": 144
+    },
+    {
+      "type": "routing_rule",
+      "text": "- add `route_target` and `OpenSubject` as new sibling contract sections inside chapter 7",
+      "line_in_shard": 147
+    },
+    {
+      "type": "routing_rule",
+      "text": "- keep `WiringEntry` after those sections so the wiring layer consumes, rather than owns, route/open semantics",
+      "line_in_shard": 148
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/Crosswalk.md` already has the adjacent primitive owners that expose the gap:",
+      "line_in_shard": 149
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Primitive:DocumentPane`",
+      "line_in_shard": 151
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Primitive:DocumentCheckpoint`",
+      "line_in_shard": 152
+    },
+    {
+      "type": "routing_rule",
+      "text": "- add a primitive for route-target / open-by-identity navigation near `Primitive:UICommand` and `Primitive:DocumentPane`",
+      "line_in_shard": 154
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Contracts_V0.md` owns route/open contract shapes",
+      "line_in_shard": 156
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- consumer docs only realize those primitives",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 161
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owner docs:",
+      "line_in_shard": 162
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Contracts_V0.md` chapter 7 still jumps directly from a thin `UICommand` envelope to `WiringEntry`, which leaves no canonical place for shared route/open payloads.",
+      "line_in_shard": 167
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Crosswalk.md` still names `UICommand`, `DocumentPane`, and `DocumentCheckpoint` ownership without naming the route-target / subject-open primitive that sits between them.",
+      "line_in_shard": 168
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Crosswalk.md` also still carries stale Orchestrator ownership text:",
+      "line_in_shard": 169
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- that stale primitive text will conflict with the rewrite tab model during reconciliation",
+      "line_in_shard": 171
+    },
+    {
+      "type": "routing_rule",
+      "text": "- add canonical `route_target` contract section under chapter 7",
+      "line_in_shard": 175
+    },
+    {
+      "type": "routing_rule",
+      "text": "- add a primitive boundary for route-target / open-by-identity navigation",
+      "line_in_shard": 179
+    },
+    {
+      "type": "routing_rule",
+      "text": "- update `UICommand` boundary text so command IDs stay stable while route/open semantics live in Contracts",
+      "line_in_shard": 180
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- update stale `OrchestratorPage` boundary text to the rewrite tab model",
+      "line_in_shard": 181
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This is not just a missing paragraph. The owner-doc section order already tells us where the contract belongs.",
+      "line_in_shard": 184
+    },
+    {
+      "type": "requirement",
+      "text": "- `WiringEntry` must consume route/open contracts, not become their surrogate owner.",
+      "line_in_shard": 185
+    },
+    {
+      "type": "decision",
+      "text": "## Research Progress - 2026-03-17 - Command catalog and GUI-shell adoption points",
+      "line_in_shard": 187
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 189
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 191
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/UI_Command_Catalog.md` is structurally ready for route/open adoption but still classifies several routed object actions as pure layout state:",
+      "line_in_shard": 194
+    },
+    {
+      "type": "data_shape",
+      "text": "- `cmd.panel.switch` with contextual object refs",
+      "line_in_shard": 198
+    },
+    {
+      "type": "process_defect",
+      "text": "- The catalog already has a stable command-entry contract and wiring hooks, so the missing piece is command classification and normalization metadata, not a new catalog structure.",
+      "line_in_shard": 199
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Plans/FinalGUISpec.md` is carrying two separate stale seams at once:",
+      "line_in_shard": 200
+    }
+  ]
+}

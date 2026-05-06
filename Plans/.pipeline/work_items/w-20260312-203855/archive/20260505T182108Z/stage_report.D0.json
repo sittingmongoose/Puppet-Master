@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.stage_report.D0.v3.1",
+  "prompt_id": "D0",
+  "prompt_version": "pm.d0.v3.1.3",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "task": "Derive work_id from section_exit_C and confirm seed completeness passed.",
+  "subagents": {
+    "required_by_gate": false,
+    "used": false,
+    "reason": "Single input artifact family, bounded checks only, no broad search or cross-doc comparison."
+  },
+  "reads": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+  ],
+  "writes": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_D_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.D0.json"
+  ],
+  "validation": {
+    "active_seed_inputs_exist": true,
+    "ledger_obligation_seed_coverage_ok": true,
+    "ledger_seed_completeness_report_status": "COMPLETE",
+    "all_checks_passed": true
+  },
+  "blockers": [],
+  "next_prompt_request": "D1 — Obligation Worklist Builder"
+}

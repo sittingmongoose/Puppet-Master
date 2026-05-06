@@ -1,0 +1,946 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0051",
+  "coverage": {
+    "shard_id": "shard-0051",
+    "start_line": 9332,
+    "end_line": 9524,
+    "line_count": 193,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0051.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 6,
+        "text": "required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `provider` / `model`",
+        "tokens": [
+          "model",
+          "pass_name",
+          "pass_number",
+          "pass_verdict",
+          "provider",
+          "verdict_reason"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "`requirements_quality_report_ref?` when relevant",
+        "tokens": [
+          "requirements_quality_report_ref?"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "These reports are upstream artifacts, not execution attempts, so they should not pretend to be run/node/attempt records. But they now need a stronger bridge so runtime/history/ledger/search can answer:",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records.",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "`workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.",
+        "tokens": [
+          "wizard_id",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "`requirements_quality_report_ref?` when applicable",
+        "tokens": [
+          "requirements_quality_report_ref?"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "validation-pass reports are one of the few upstream artifacts already treated as hard-gating canon, so weak identity here will propagate confusion downstream",
+        "tokens": []
+      },
+      {
+        "line": 74,
+        "text": "these reports should bridge into execution; they should not be mistaken for execution",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "This means several surfaces are currently leaning on the same narrow bridge object (`orchestrator.receipt`) to explain more than it should:",
+        "tokens": [
+          "orchestrator.receipt"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "The broader lesson is that storage ownership is lagging behind the rewrite’s stronger UI/runtime object model. Some downstream docs are not merely “too detailed”; they are revealing object families the storage plan now genuinely needs.",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "panel doc names required schema files",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Minimum indexed fields should include:",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "it must be rebuildable from seglog",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "missing/corrupt index rows must degrade to record-backed views rather than implying artifact loss",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 69,
+        "text": "Keep validation-pass reports distinct from runtime attempts, but stop leaving them as isolated artifacts with only local workflow identity.",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "they are not enough to replace durable worktree/lane lifecycle records",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "`WorktreeGitImprovement.md` and Orchestrator/Source Control docs now assume durable worktree identity and lineage, but storage only clearly owns surface state (`selected_worktree_id?`) and receipt linkage (`worktree_id?`), not full lifecycle records.",
+        "tokens": [
+          "WorktreeGitImprovement.md",
+          "selected_worktree_id?",
+          "worktree_id?"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees.",
+        "tokens": [
+          "orchestrator.receipt"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "Keep seglog `runtime_artifact.*` events as canonical source.",
+        "tokens": [
+          "runtime_artifact.*"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 7,
+        "text": "That contract is structurally better than many adjacent artifacts, but it still stops too early on identity:",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "but it still does not carry enough context to explain which wizard/runtime state produced the sweep and what later execution it seeded",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "wizard state elsewhere owns `wizard_id`, `phase_plan_ref`, staged bundle refs, and blocked report refs",
+        "tokens": [
+          "phase_plan_ref",
+          "wizard_id"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "no single pass-report contract currently ties those together cleanly",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "The missing fields are now fairly clear:",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "These reports are upstream artifacts, not execution attempts, so they should not pretend to be run/node/attempt records. But they now need a stronger bridge so runtime/history/ledger/search can answer:",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records.",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "`workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.",
+        "tokens": [
+          "wizard_id",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "The docs clearly state that the post-pass artifact tree is the canonical final set, but they do not define a strong receipt/reference object that binds that finality to the sweep reports and later execution handoff.",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "`storage-plan.md` is now fairly strong on runtime-core records:",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "attempt_record",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "scheduler_pass_record",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "wizard_runtime_state",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "But several downstream docs already assume additional record/projection families that `storage-plan.md` still does not actually own in concrete form.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}",
+        "tokens": [
+          " declares ",
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "declares envelope and per-type schema files",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "`storage-plan.md` still does not clearly register that artifacts index family alongside the other canonical keys, and the broader doc set still shows signs that the schema family itself may not yet exist",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "The other major missing family is worktree/lane lifecycle state:",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "`WorktreeGitImprovement.md` now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs",
+        "tokens": [
+          "WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "`storage-plan.md` currently has only adjacent state like `source_control.project_state.{project_id}` and `orchestrator.receipt.{run_id}.{attempt_id}`; it does not yet define a proper durable worktree record/projection family for lifecycle/history/audit",
+        "tokens": [
+          "orchestrator.receipt.{run_id}.{attempt_id}",
+          "source_control.project_state.{project_id}",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "they are not enough to replace durable worktree/lane lifecycle records",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "but the storage owner doc does not yet make it a first-class family with key registration, lifecycle, and failure/rebuild semantics at the same level as the newer runtime records",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "`Runtime_Artifacts_Panel.md` names `artifacts_index:v1:{project_id}` as canonical, but `storage-plan.md` does not appear to register/own that family at the same level as other redb families.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md",
+          "artifacts_index:v1:{project_id}",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Runtime artifact schema ownership is still split awkwardly:",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "panel doc names required schema files",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "storage doc refers to runtime-artifact payloads but does not fully anchor the family",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "this makes it unclear where authoritative schema registration and projector ownership actually live",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "`WorktreeGitImprovement.md` and Orchestrator/Source Control docs now assume durable worktree identity and lineage, but storage only clearly owns surface state (`selected_worktree_id?`) and receipt linkage (`worktree_id?`), not full lifecycle records.",
+        "tokens": [
+          "WorktreeGitImprovement.md",
+          "selected_worktree_id?",
+          "worktree_id?"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "clear schema ownership boundary",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "worktree record",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "lane/worktree projection for current state",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees.",
+        "tokens": [
+          "orchestrator.receipt"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "concern records/projections",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "projection freshness/health fields on projections",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "receipt linkage is necessary but not sufficient; it cannot carry the full weight of lifecycle/history/state projection",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "durable worktree/lane lifecycle state",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "artifacts_index.v1:{project_id}:{artifact_id}",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "artifacts_project_state.v1:{project_id}",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "projector checkpoint / rebuild state",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Minimum indexed fields should include:",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "projection freshness/health markers if projector state is degraded",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "missing/corrupt index rows must degrade to record-backed views rather than implying artifact loss",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 30,
+        "text": "stable ref from accepted/final sweep output into the launched execution run",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing:",
+        "tokens": [
+          "validation_pass_report"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "cross-surface `orchestrator.receipt.{run_id}.{attempt_id}`",
+        "tokens": [
+          "orchestrator.receipt.{run_id}.{attempt_id}"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "The other major missing family is worktree/lane lifecycle state:",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "`Orchestrator_Page.md` expects `worktree_id` and historical worktree context to survive",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "worktree_id"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "`storage-plan.md` currently has only adjacent state like `source_control.project_state.{project_id}` and `orchestrator.receipt.{run_id}.{attempt_id}`; it does not yet define a proper durable worktree record/projection family for lifecycle/history/audit",
+        "tokens": [
+          "orchestrator.receipt.{run_id}.{attempt_id}",
+          "source_control.project_state.{project_id}",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "This means several surfaces are currently leaning on the same narrow bridge object (`orchestrator.receipt`) to explain more than it should:",
+        "tokens": [
+          "orchestrator.receipt"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "they are not enough to replace durable worktree/lane lifecycle records",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "`WorktreeGitImprovement.md` and Orchestrator/Source Control docs now assume durable worktree identity and lineage, but storage only clearly owns surface state (`selected_worktree_id?`) and receipt linkage (`worktree_id?`), not full lifecycle records.",
+        "tokens": [
+          "WorktreeGitImprovement.md",
+          "selected_worktree_id?",
+          "worktree_id?"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "The current storage families are still more attempt/block/usage-centric than lane/worktree/concern/project-attention-centric, even though the rewrite now relies on those object families elsewhere.",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "Add explicit first-class storage families for durable worktree/lane lifecycle:",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "lane/worktree projection for current state",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees.",
+        "tokens": [
+          "orchestrator.receipt"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "durable worktree/lane lifecycle state",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 2,
+        "text": "Validation-pass reports are already treated as canonical first-class artifacts:",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "stored in seglog as `artifact_type: validation_pass_report`",
+        "tokens": [
+          "artifact_type: validation_pass_report"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing:",
+        "tokens": [
+          "validation_pass_report"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Keep validation-pass reports distinct from runtime attempts, but stop leaving them as isolated artifacts with only local workflow identity.",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "validation-pass reports are one of the few upstream artifacts already treated as hard-gating canon, so weak identity here will propagate confusion downstream",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "`storage-plan.md` currently has only adjacent state like `source_control.project_state.{project_id}` and `orchestrator.receipt.{run_id}.{attempt_id}`; it does not yet define a proper durable worktree record/projection family for lifecycle/history/audit",
+        "tokens": [
+          "orchestrator.receipt.{run_id}.{attempt_id}",
+          "source_control.project_state.{project_id}",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Audit `storage-plan.md` for other downstream-assumed families already discussed in research:",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 6,
+        "text": "required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `provider` / `model`",
+        "tokens": [
+          "model",
+          "pass_name",
+          "pass_number",
+          "pass_verdict",
+          "provider",
+          "verdict_reason"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "it links to provider/model settings",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "richer requested/effective runtime snapshot than provider/model alone",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "permission/runtime snapshot refs when a pass is provider-executed rather than purely structural",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "downstream consumers:",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Add the upstream subset of canonical runtime identity to pass reports when a provider/model actually executed the pass:",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "requested/effective persona/platform/model snapshot refs",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "`WorktreeGitImprovement.md` now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs",
+        "tokens": [
+          "WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "but the storage owner doc does not yet make it a first-class family with key registration, lifecycle, and failure/rebuild semantics at the same level as the newer runtime records",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "The broader lesson is that storage ownership is lagging behind the rewrite’s stronger UI/runtime object model. Some downstream docs are not merely “too detailed”; they are revealing object families the storage plan now genuinely needs.",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "downstream consumers:",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "Runtime artifact schema ownership is still split awkwardly:",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "this makes it unclear where authoritative schema registration and projector ownership actually live",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "projector ownership/checkpoint semantics",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "clear schema ownership boundary",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees.",
+        "tokens": [
+          "orchestrator.receipt"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "The missing storage-owner work is now specific enough to propose concrete families rather than leaving it as a generic gap.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "Add explicit redb/projector ownership in `storage-plan.md` for:",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 140,
+        "text": "historical lineage retention after archive/remove",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "conflict/suspect/restoring/archive/remove lifecycle support",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 187,
+        "text": "primary refs (`linked_artifact_id?`, `usage_event_ref?`, receipt/open refs)",
+        "tokens": [
+          "linked_artifact_id?",
+          "usage_event_ref?"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 16,
+        "text": "The missing fields are now fairly clear:",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "The clearest missing family is the runtime-artifact index side:",
+        "tokens": []
+      },
+      {
+        "line": 99,
+        "text": "The other major missing family is worktree/lane lifecycle state:",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "but the storage owner doc does not yet make it a first-class family with key registration, lifecycle, and failure/rebuild semantics at the same level as the newer runtime records",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "rebuild/failure semantics",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees.",
+        "tokens": [
+          "orchestrator.receipt"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "the storage gap is now about concrete missing object families, not just incomplete wording",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "artifacts index and worktree lifecycle look like the clearest missing families right now",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "The missing storage-owner work is now specific enough to propose concrete families rather than leaving it as a generic gap.",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "missing/corrupt index rows must degrade to record-backed views rather than implying artifact loss",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 39,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "current `working_ledger.md`",
+        "tokens": [
+          "working_ledger.md"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

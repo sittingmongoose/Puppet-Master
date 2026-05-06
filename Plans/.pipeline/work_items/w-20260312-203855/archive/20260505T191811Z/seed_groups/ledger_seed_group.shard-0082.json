@@ -1,0 +1,1271 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0082",
+  "coverage": {
+    "shard_id": "shard-0082",
+    "start_line": 15287,
+    "end_line": 15479,
+    "line_count": 193,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0082.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 35,
+        "text": "The next meaningful passes should stay in owner-doc cleanup territory rather than broadening scope again.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "The next reconciliation pass for graph and Orchestrator should fix field names and scope language together, not separately.",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "orchestration rules still say the prompt flow must not create new execution tiers",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 43,
+        "text": "remaining issues are increasingly exact structural mismatches rather than missing concepts",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "`Decision_Log.md` and rewrite-root routing gaps",
+        "tokens": [
+          "Decision_Log.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "Current thread priority stack remains correct, but the external audit sharpens the broader reconciliation order:",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "The external audit confirms that several remaining issues are no longer local document problems:",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "Keep the current research thread focused on owner cleanup and exact consumer drift that directly depends on those owners.",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "The external audit did not invalidate the current direction. It reinforced it.",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "The remaining work is now mostly about collapsing overlapping canon and fixing exact broken references, payloads, and command contracts.",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "`tier` is still present in owner-level prompt/runtime wording, which keeps leaking stale execution scope back into downstream docs.",
+        "tokens": [
+          "tier"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Keep any graph-local display structs derived from the canonical runtime snapshot rather than naming parallel canonical fields.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 2,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "route/open contracts missing by name",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "storage tables and record families from multiple execution eras coexisting",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "graph and Orchestrator command payloads",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "`Crosswalk.md` and `Contracts_V0.md` owner-routing integrity",
+        "tokens": [
+          "Contracts_V0.md",
+          "Crosswalk.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "duplicate numbering and `ContractRef` failures in owner docs",
+        "tokens": [
+          "ContractRef"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "The remaining work is now mostly about collapsing overlapping canon and fixing exact broken references, payloads, and command contracts.",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "The owner docs already settled the canonical requested/effective runtime identity field names:",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "`Plans/Contracts_V0.md` explicitly forbids parallel canonical fields:",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "usage and reasoning fields are split in the graph model without clearly tying back to the canonical requested/effective snapshot contract",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "`Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale scope wording:",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "field-name drift",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "`requested_persona_id` and `effective_persona_id` are still being named in consumer docs even though the owner contract already disallows them as canonical fields.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Reconcile worker/verifier identity consumers to the canonical requested/effective field set.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "Keep any graph-local display structs derived from the canonical runtime snapshot rather than naming parallel canonical fields.",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "This is now a direct owner-versus-consumer mismatch. The canonical field names already exist.",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "The next reconciliation pass for graph and Orchestrator should fix field names and scope language together, not separately.",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "The owner docs now have a split between modern canonical field names and stale canonical scope language.",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "`Plans/Contracts_V0.md` is mixed:",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 177,
+        "text": "it correctly locks canonical requested/effective runtime field names",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "several runtime events are still defined as tier-boundary or tier-start records",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "`tier_runtime_record` is still named as canonical",
+        "tokens": [
+          "tier_runtime_record"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 9,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "route/open contracts missing by name",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "storage tables and record families from multiple execution eras coexisting",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "graph and Orchestrator command payloads",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "legacy `PuppetMasterEvent::*` source tables",
+        "tokens": [
+          "PuppetMasterEvent::*"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "The strongest overlap between the external audit and the current Orchestrator-focused work is:",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "`Crosswalk.md` and `Contracts_V0.md` owner-routing integrity",
+        "tokens": [
+          "Contracts_V0.md",
+          "Crosswalk.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "`Decision_Log.md` and rewrite-root routing gaps",
+        "tokens": [
+          "Decision_Log.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "1. owner-doc integrity and routing",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "`Plans/Orchestrator_Page.md` still asks consumers to bind worker and verifier identity using stale/local names:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "The next reconciliation pass for graph and Orchestrator should fix field names and scope language together, not separately.",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "early canonical event table still centers `tier_id`",
+        "tokens": [
+          "tier_id"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 25,
+        "text": "tier-keyed usage/evidence correlation",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "The external six-pass audit confirms the same cleanup pattern that this thread has been converging on:",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "The strongest overlap between the external audit and the current Orchestrator-focused work is:",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "Current thread priority stack remains correct, but the external audit sharpens the broader reconciliation order:",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "The external audit confirms that several remaining issues are no longer local document problems:",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "Use the external audit as confirmation that broader repo coverage is complete; do not restart broad sweeps from scratch.",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "The external audit did not invalidate the current direction. It reinforced it.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 17,
+        "text": "owner-doc supersession cleanup",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "stale consumer cleanup",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "The next meaningful passes should stay in owner-doc cleanup territory rather than broadening scope again.",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "owner-doc supersession and traceability failures are now the dominant risk",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "stale consumers are mostly downstream reflections of those owner failures",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "`Crosswalk.md` and `Contracts_V0.md` owner-routing integrity",
+        "tokens": [
+          "Contracts_V0.md",
+          "Crosswalk.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "`FileSafe.md`, `MiscPlan.md`, and `Executor_Protocol.md` as adjacent runtime-lineage enforcement owners",
+        "tokens": [
+          "Executor_Protocol.md",
+          "FileSafe.md",
+          "MiscPlan.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "1. owner-doc integrity and routing",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "4. provider/runtime identity and bridge adjacencies",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "duplicate numbering and `ContractRef` failures in owner docs",
+        "tokens": [
+          "ContractRef"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "This means the branch is past the point where isolated consumer cleanup would be reliable.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "Keep the current research thread focused on owner cleanup and exact consumer drift that directly depends on those owners.",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "The owner docs already settled the canonical requested/effective runtime identity field names:",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "requested_persona",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "effective_persona",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "requested_persona_id",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "effective_persona_id",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "`Plans/Orchestrator_Page.md` still asks consumers to bind worker and verifier identity using stale/local names:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "requested_persona_id",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "effective_persona_id",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "provider",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "Provider / Model",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "worker_provider",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "verifier_provider",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "persona_override_owner_id` still allows `tier_id",
+        "tokens": [
+          " still allows "
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "Strong owner docs with residual stale scope wording:",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "Canonical owner:",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "Consumer docs are still asking for provider/model shorthand where the rewrite now expects requested/effective identity disclosure.",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "`requested_persona_id` and `effective_persona_id` are still being named in consumer docs even though the owner contract already disallows them as canonical fields.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "`tier` is still present in owner-level prompt/runtime wording, which keeps leaking stale execution scope back into downstream docs.",
+        "tokens": [
+          "tier"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Reconcile worker/verifier identity consumers to the canonical requested/effective field set.",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Reconcile Prompt Pipeline scope language so run-envelope and override-owner wording stop using `tier` / `tier_id` as canonical scope labels.",
+        "tokens": [
+          "tier",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "This is now a direct owner-versus-consumer mismatch. The canonical field names already exist.",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "The owner docs now have a split between modern canonical field names and stale canonical scope language.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "`Plans/Prompt_Pipeline.md` still uses tier-era scope in owner-level text:",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "Persona resolver text still refers to stage/tier/task context",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "persona_override_owner_id` still allows `tier_id",
+        "tokens": [
+          " still allows "
+        ]
+      },
+      {
+        "line": 178,
+        "text": "it still names `run.tier_started` / `run.tier_completed` and `run.persona_stage_changed`",
+        "tokens": [
+          "run.persona_stage_changed",
+          "run.tier_completed",
+          "run.tier_started"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Primary owner docs:",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "Strong adjacent owner:",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 17,
+        "text": "owner-doc supersession cleanup",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "stale consumer cleanup",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "legacy `PuppetMasterEvent::*` source tables",
+        "tokens": [
+          "PuppetMasterEvent::*"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "The next meaningful passes should stay in owner-doc cleanup territory rather than broadening scope again.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "The external six-pass audit confirms the same cleanup pattern that this thread has been converging on:",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "stale consumers are mostly downstream reflections of those owner failures",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "This means the branch is past the point where isolated consumer cleanup would be reliable.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "Keep the current research thread focused on owner cleanup and exact consumer drift that directly depends on those owners.",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "Continue documenting exact contradictions and retirement targets so reconciliation can be ordered mechanically rather than by intuition.",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "`Plans/Orchestrator_Page.md` still asks consumers to bind worker and verifier identity using stale/local names:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "`Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale scope wording:",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "Strong owner docs with residual stale scope wording:",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "`tier` is still present in owner-level prompt/runtime wording, which keeps leaking stale execution scope back into downstream docs.",
+        "tokens": [
+          "tier"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Remove `requested_persona_id` / `effective_persona_id` from consumer requirements.",
+        "tokens": [
+          "effective_persona_id",
+          "requested_persona_id"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "The owner docs now have a split between modern canonical field names and stale canonical scope language.",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "`Plans/storage-plan.md` is the strongest carrier of stale canonical scope:",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 18,
+        "text": "route/open contracts missing by name",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 18,
+        "text": "route/open contracts missing by name",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "spec-integrity defects",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "owner-doc supersession and traceability failures are now the dominant risk",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "stale consumers are mostly downstream reflections of those owner failures",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "remaining issues are increasingly exact structural mismatches rather than missing concepts",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "`Decision_Log.md` and rewrite-root routing gaps",
+        "tokens": [
+          "Decision_Log.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "The external audit confirms that several remaining issues are no longer local document problems:",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "duplicate numbering and `ContractRef` failures in owner docs",
+        "tokens": [
+          "ContractRef"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "unresolved command IDs and promoted-shell persistence contradictions",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "Plans/DRY_Rules.md",
+        "tokens": [
+          "Plans/DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "Plans/newfeatures.md",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/FileSafe.md",
+        "tokens": [
+          "Plans/FileSafe.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/MiscPlan.md",
+        "tokens": [
+          "Plans/MiscPlan.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Architecture_Invariants.md",
+        "tokens": [
+          "Plans/Architecture_Invariants.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/Provider_OpenCode.md",
+        "tokens": [
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/OpenCode_Deep_Extraction.md",
+        "tokens": [
+          "Plans/OpenCode_Deep_Extraction.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/OpenCode_Coverage_Matrix.md",
+        "tokens": [
+          "Plans/OpenCode_Coverage_Matrix.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/Media_Generation_and_Capabilities.md",
+        "tokens": [
+          "Plans/Media_Generation_and_Capabilities.md"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`Plans/Contracts_V0.md` explicitly forbids parallel canonical fields:",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "`Plans/Orchestrator_Page.md` still asks consumers to bind worker and verifier identity using stale/local names:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "`Plans/Run_Graph_View.md` still presents worker/verifier identity in older shorthand:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "`Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale scope wording:",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "`tier` is still present in owner-level prompt/runtime wording, which keeps leaking stale execution scope back into downstream docs.",
+        "tokens": [
+          "tier"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Reconcile Prompt Pipeline scope language so run-envelope and override-owner wording stop using `tier` / `tier_id` as canonical scope labels.",
+        "tokens": [
+          "tier",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "`Plans/Prompt_Pipeline.md` still uses tier-era scope in owner-level text:",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "orchestration rules still say the prompt flow must not create new execution tiers",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "`Plans/Contracts_V0.md` is mixed:",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "`Plans/storage-plan.md` is the strongest carrier of stale canonical scope:",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Plans/Run_Modes.md` is relatively less affected, but it still references `HITL tier-boundary approvals",
+        "tokens": [
+          " is relatively less affected, but it still references ",
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 190,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 192,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

@@ -1,0 +1,970 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0056",
+  "coverage": {
+    "shard_id": "shard-0056",
+    "start_line": 10297,
+    "end_line": 10493,
+    "line_count": 197,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0056.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 12,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "Runtime mutation/recovery surfaces now depend on preconditions (`allowed_action_ids[]`, freshness/trust state, account/runtime capability) that the wiring/schema/gate stack still cannot express or verify.",
+        "tokens": [
+          "allowed_action_ids[]"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "Artifact lineage now clearly requires project/run/thread/wizard/attempt/account anchors, but the project-artifact and memory/handoff surfaces still underspecify those joins.",
+        "tokens": []
+      },
+      {
+        "line": 30,
+        "text": "Runtime/governance verification is increasingly split between numbered gates and addendum prose, producing mandatory checks that are real in meaning but invisible to the gate registry and script-enforcement tables.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "Extend the wiring/gate contracts so runtime-era gating is machine-verifiable:",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "define an `OpenArtifact`-style FileManager contract plus required supporting projections,",
+        "tokens": [
+          "OpenArtifact"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "collapse duplicate runtime/gate addenda into one numbered canonical section per owner.",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs rather than leaving them implied across addenda.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "This tranche is no longer just “supporting docs need cleanup.” Several owner docs are currently making false or unverifiable claims that would mislead later reconciliation or gate implementation.",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "one shared attribution family should be available to:",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "every side-effect-bearing or evidence-bearing runtime object should be able to answer:",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 10,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "Highest-risk docs for immediate later-model continuation remain:",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "stop at tool-specific semantics and reference the shared runtime attribution packet instead of keeping tool events analytics-only",
+        "tokens": []
+      },
+      {
+        "line": 156,
+        "text": "keep artifact-family distinctions, but consume the shared attribution packet instead of relying on artifact-local identity alone",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "keep canonical Usage routing on shared usage identity, not feature-local cost or receipt notions",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "`tool.invoked` remains under-attributed compared with `tool.denied`; it is still documented mainly as analytics exhaust rather than as a first-class runtime trace record.",
+        "tokens": [
+          "tool.denied",
+          "tool.invoked"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "`usage_record` is closer to canonical runtime identity than several artifact and tool docs are, but it still keeps old `tier_id` joins alive.",
+        "tokens": [
+          "tier_id",
+          "usage_record"
+        ]
+      },
+      {
+        "line": 181,
+        "text": "Keep `cost_usage` and receipt views strictly canonical:",
+        "tokens": [
+          "cost_usage"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "If this packet is not normalized, each surface will keep rebuilding partial joins between tools, artifacts, receipts, and usage.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 17,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "Runtime mutation/recovery surfaces now depend on preconditions (`allowed_action_ids[]`, freshness/trust state, account/runtime capability) that the wiring/schema/gate stack still cannot express or verify.",
+        "tokens": [
+          "allowed_action_ids[]"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "reconcile `/compact`, `/mode`, override_builtin semantics, and stale/superseded command-state handling across command-system, chat, catalog, and wiring docs.",
+        "tokens": [
+          "/compact",
+          "/mode"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Extend the wiring/gate contracts so runtime-era gating is machine-verifiable:",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough.",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "Promote artifact/memory/live/runtime-observability records to full owner status:",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "align project-artifact events to EventRecord-level identity,",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "define an `OpenArtifact`-style FileManager contract plus required supporting projections,",
+        "tokens": [
+          "OpenArtifact"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "attempt_record` already has `provider_attempt_ref?",
+        "tokens": [
+          " already has "
+        ]
+      },
+      {
+        "line": 93,
+        "text": "`usage_record` already carries `run_id`, `attempt_id?`, `thread_id?`, and effective account/model/auth fields",
+        "tokens": [
+          "attempt_id?",
+          "run_id",
+          "thread_id?",
+          "usage_record"
+        ]
+      },
+      {
+        "line": 94,
+        "text": "`Contracts_V0.md` already tightens `tool.denied` when scheduler state is affected, but `tool.invoked` and runtime-artifact docs still lag behind that attribution level.",
+        "tokens": [
+          "Contracts_V0.md",
+          "tool.denied",
+          "tool.invoked"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "usage_record` / `cost_usage",
+        "tokens": [
+          " / "
+        ]
+      },
+      {
+        "line": 116,
+        "text": "requested/effective provider/model/auth/account disclosure fields by ref or normalized snapshot",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "Contracts_V0.md",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "own the shared cross-family attribution packet shape for runtime events",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "attempt_record",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "usage_record",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "receipt records",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "artifact index records",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "`tool.invoked` remains under-attributed compared with `tool.denied`; it is still documented mainly as analytics exhaust rather than as a first-class runtime trace record.",
+        "tokens": [
+          "tool.denied",
+          "tool.invoked"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "`usage_record` is closer to canonical runtime identity than several artifact and tool docs are, but it still keeps old `tier_id` joins alive.",
+        "tokens": [
+          "tier_id",
+          "usage_record"
+        ]
+      },
+      {
+        "line": 178,
+        "text": "Define one shared runtime attribution packet and make tool events, artifact envelopes, receipts, and usage records reference it.",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "`provider_attempt_ref` now looks like a key bridge field, not a niche detail.",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 20,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Runtime/governance verification is increasingly split between numbered gates and addendum prose, producing mandatory checks that are real in meaning but invisible to the gate registry and script-enforcement tables.",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough.",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "repair Crosswalk numbering/index/primitive routing,",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "The biggest repeated pattern is that runtime-era concepts already exist in adjacent docs, but the owner docs for registration/verification/routing still lag behind them.",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.",
+        "tokens": [
+          "Plans/Crosswalk.md",
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "spot-checks against `Plans/Orchestrator_Page.md`",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "`orchestrator.receipt.{run_id}.{attempt_id}` already bridges Source Control / GitHub Actions / Docker / Kubernetes / Usage",
+        "tokens": [
+          "orchestrator.receipt.{run_id}.{attempt_id}"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "keep canonical Usage routing on shared usage identity, not feature-local cost or receipt notions",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "`Orchestrator_Page.md` still describes worker identity and per-node usage in terms that lag the stronger runtime/account/attempt model.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 27,
+        "text": "Runtime mutation/recovery surfaces now depend on preconditions (`allowed_action_ids[]`, freshness/trust state, account/runtime capability) that the wiring/schema/gate stack still cannot express or verify.",
+        "tokens": [
+          "allowed_action_ids[]"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough.",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "give startup recovery, backoff, counter ceilings, DAE/jail lifecycle, account-switch strategy invalidation, and wizard blocked-escalation semantics explicit homes in the policy/run-mode/gate docs rather than leaving them implied across addenda.",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "relevant evidence / trace views",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "every side-effect-bearing or evidence-bearing runtime object should be able to answer:",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 2,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "Cross-owner docs repeatedly implicated by this tranche:",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "The repo still lacks a coherent owner for several rewrite-era operational nouns and primitives, so adjacent docs can cite terms (`Overseer`, `attempt`, `Seglog`, promotion senses, handoff kinds) that no SSOT doc actually defines.",
+        "tokens": [
+          "Overseer",
+          "Seglog",
+          "attempt"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "Promote artifact/memory/live/runtime-observability records to full owner status:",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "Repair structural owner docs before downstream reconciliation work depends on them:",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "collapse duplicate runtime/gate addenda into one numbered canonical section per owner.",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "Close the runtime-governance owner gaps:",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "This tranche is no longer just “supporting docs need cleanup.” Several owner docs are currently making false or unverifiable claims that would mislead later reconciliation or gate implementation.",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "The biggest repeated pattern is that runtime-era concepts already exist in adjacent docs, but the owner docs for registration/verification/routing still lag behind them.",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.",
+        "tokens": [
+          "Plans/Crosswalk.md",
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "attempt_record` already has `provider_attempt_ref?",
+        "tokens": [
+          " already has "
+        ]
+      },
+      {
+        "line": 112,
+        "text": "provider_attempt_ref?",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "requested/effective provider/model/auth/account disclosure fields by ref or normalized snapshot",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "which provider attempt and effective account/runtime identity it used",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "likely surface consumers:",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "runtime artifacts still have no normalized place for `attempt_id`, `node_id`, `execution_role`, `provider_attempt_ref`, or `operational_identity`, even though cross-surface receipt linkage already depends on that level of identity.",
+        "tokens": [
+          "attempt_id",
+          "execution_role",
+          "node_id",
+          "operational_identity",
+          "provider_attempt_ref"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "`provider_attempt_ref` now looks like a key bridge field, not a niche detail.",
+        "tokens": [
+          "provider_attempt_ref"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 26,
+        "text": "Command-system docs still allow ghost or stale IDs to survive across catalog, wiring, and chat surfaces without a canonical tombstone/deprecation model.",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "Register/fix the missing command families and remove false catalog/wiring claims:",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "add or explicitly retire `cmd.chat.run_user_command`, `cmd.chat.branch_from_restore`, preview/build/open-artifact commands, Assistant/HITL handoff commands, and any other normative ghost IDs.",
+        "tokens": [
+          "cmd.chat.branch_from_restore",
+          "cmd.chat.run_user_command"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "reconcile `/compact`, `/mode`, override_builtin semantics, and stale/superseded command-state handling across command-system, chat, catalog, and wiring docs.",
+        "tokens": [
+          "/compact",
+          "/mode"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough.",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "collapse duplicate runtime/gate addenda into one numbered canonical section per owner.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "This tranche is no longer just “supporting docs need cleanup.” Several owner docs are currently making false or unverifiable claims that would mislead later reconciliation or gate implementation.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 34,
+        "text": "add or explicitly retire `cmd.chat.run_user_command`, `cmd.chat.branch_from_restore`, preview/build/open-artifact commands, Assistant/HITL handoff commands, and any other normative ghost IDs.",
+        "tokens": [
+          "cmd.chat.branch_from_restore",
+          "cmd.chat.run_user_command"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "define an `OpenArtifact`-style FileManager contract plus required supporting projections,",
+        "tokens": [
+          "OpenArtifact"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 33,
+        "text": "Register/fix the missing command families and remove false catalog/wiring claims:",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "add reverse matrix-to-catalog coverage, precondition/freshness/mutation-risk fields, stale-blocking policy, and explicit dispatcher obligations around allowed-action membership and correlation passthrough.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "add missing artifact types,",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "add missing Glossary entries for rewrite-era terms,",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "Close the runtime-governance owner gaps:",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "Highest-risk docs for immediate later-model continuation remain:",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.",
+        "tokens": [
+          "Plans/Crosswalk.md",
+          "Plans/Glossary.md"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 3,
+        "text": "Plans/Commands_System.md",
+        "tokens": [
+          "Plans/Commands_System.md"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 7,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Plans/newtools.md",
+        "tokens": [
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "Plans/assistant-memory-subsystem.md",
+        "tokens": [
+          "Plans/assistant-memory-subsystem.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 19,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Plans/Commands_System.md",
+        "tokens": [
+          "Plans/Commands_System.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Plans/newtools.md",
+        "tokens": [
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Plans/assistant-memory-subsystem.md",
+        "tokens": [
+          "Plans/assistant-memory-subsystem.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.",
+        "tokens": [
+          "Plans/Crosswalk.md",
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/Tools.md",
+        "tokens": [
+          "Plans/Tools.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "spot-checks against `Plans/Orchestrator_Page.md`",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Plans/Tools.md",
+        "tokens": [
+          "Plans/Tools.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 193,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 195,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

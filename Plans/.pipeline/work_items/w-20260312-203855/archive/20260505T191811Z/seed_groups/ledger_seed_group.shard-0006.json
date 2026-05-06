@@ -1,0 +1,744 @@
+{
+  "subagent_task_id": "c3-shard-0006",
+  "shard_id": "shard-0006",
+  "source_start_line": 827,
+  "source_end_line": 923,
+  "seed_groups": [
+    {
+      "group_id": "candidate-fixes-design-directions",
+      "title": "Candidate Fixes / Design Directions",
+      "seeds": [
+        "Clarify first Orchestrator seam in scope: UI/IA, execution model/state machine, lineage/receipts, or recovery/rollback/blocked behavior.",
+        "Capture terminology, precedence, effective-vs-requested state, and ownership in ledger as decisions emerge.",
+        "Treat Orchestrator as projection/control surface over canonical runtime contracts.",
+        "Keep scheduler semantics, attempt identity, blocked reasons, actions, and remediation lineage in shared runtime docs.",
+        "Let Orchestrator page own tabs, control affordances, and projection composition.",
+        "Define canonical facts vs orchestrator projections vs widget/page presentation boundary.",
+        "Distinguish requested vs effective state wherever provider/model/persona fallback occurs.",
+        "Node graph is already source for scheduling/execution inputs.",
+        "Open question: tiers as presentation/grouping only vs independently meaningful orchestration layer.",
+        "Prefer deterministic scheduler/state machine orchestrator over monolithic long-running super-agent.",
+        "Dispatch bounded worker/reviewer/remediation agents with explicit context windows and attempt IDs.",
+        "Allow lightweight planning/replan agent only at graph construction/patch boundaries.",
+        "Governance model: run=canonical graph; work package=coherent subgraph with local overseer; feature seam=cross-package oversight scope; node=smallest unit.",
+        "Overseers can challenge package outcomes; newly discovered work must become remediation nodes or graph-patch requests.",
+        "Use quorum/corroboration agents before accepting high-impact overseer challenges.",
+        "Seam completion requires integration quality, not package-local pass status only.",
+        "Promotion classes: lane_to_package, package_to_seam_available, seam_complete.",
+        "Promotions should be explicit runtime transitions, not implicit side effects.",
+        "Maintain automation-first defaults with optional HITL pause boundaries.",
+        "Surface blocked/HITL/critical promotion states on Dashboard, Orchestrator, and spawned chat thread.",
+        "lane_to_package gates: local correctness, uncontaminated lane state, required automated verification/review, promotable outputs.",
+        "package_to_seam_available gates: trusted package baseline, package evidence, acceptable overseer verdict, seam-consumable outputs.",
+        "seam_complete gates: integration review, no unresolved major/critical findings, seam evidence, workflow completeness, GUI/runtime alignment, no pending corroboration/remediation.",
+        "Next requested subtopic: required evidence at node/package/seam levels for concrete promotion gates.",
+        "Execution settings likely need provider/model defaults or overrides at run, seam, package, node, package overseer, seam overseer, and overseer-delegated node worker levels.",
+        "Show requested vs effective provider/model at every level where fallback/override can occur.",
+        "Node persona should default dynamically from node scope/type.",
+        "Node persona override should be node-worker policy, not per-node manual config.",
+        "Seam/package/node each need independent provider/model/effort configuration surfaces.",
+        "Overseer personas should be explicit settings-owned roles.",
+        "Node worker personas/provider/model remain overrideable.",
+        "Settings should define whether overseers may delegate node work to subagents and provider/model policy for delegates.",
+        "Suggested discussion order: orchestrator ownership boundaries -> tab responsibilities/CTAs -> cross-links (Usage/Evidence/Graph/history/blocked outcomes) -> provider/model/persona precedence -> worktree ownership/isolation."
+      ]
+    },
+    {
+      "group_id": "impacted-docs",
+      "title": "Impacted Docs",
+      "seeds": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Potential adjacent owners if scope expands: Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/Run_Graph_View.md, Plans/storage-plan.md, Plans/usage-feature.md, Plans/FinalGUISpec.md."
+      ]
+    },
+    {
+      "group_id": "resolved-decisions",
+      "title": "Decisions Already Resolved",
+      "seeds": [
+        "Work item mode is research.",
+        "A new work item is used instead of updating an unrelated existing packetized item.",
+        "Work item status remains active until research is ready for reconciliation.",
+        "Initial reading should stay narrow around Orchestrator docs and direct owner contracts.",
+        "Current discussion stays centered on node-graph and Orchestrator relationship before expanding seams.",
+        "User wants to continue researching in this thread; prior readiness marker is not a handoff decision.",
+        "Working focus is now projection ownership by surface rather than reconciliation."
+      ]
+    }
+  ]
+}
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0006",
+  "coverage": {
+    "shard_id": "shard-0006",
+    "start_line": 827,
+    "end_line": 923,
+    "line_count": 97,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0006.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 19,
+        "text": "Orchestrator should likely be a deterministic scheduler/state machine, not one long-running super-agent",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "graph nodes should dispatch bounded worker/reviewer/remediation agents with explicit context windows and attempt identities",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "overseers may critique or challenge package outcomes, but newly discovered work must become explicit remediation nodes or graph-patch requests",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "seam completion requires integration quality, not just package-local pass states",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "blocked/HITL/critical promotion states must surface on Dashboard, Orchestrator, and a spawned chat thread",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "Promotion gate direction now discussed:",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "`lane_to_package` gates focus on local correctness, uncontaminated lane state, required automated verification/review, and promotable package outputs",
+        "tokens": [
+          "lane_to_package"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "`package_to_seam_available` gates focus on trusted package baseline, package-level evidence, acceptable package-overseer verdict, and seam-consumable outputs",
+        "tokens": [
+          "package_to_seam_available"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "`seam_complete` gates focus on integration review, absence of unresolved major/critical findings, seam evidence, workflow completeness, GUI/runtime alignment, and no pending corroboration/remediation",
+        "tokens": [
+          "seam_complete"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "define required evidence at node/package/seam levels so promotion gates are concrete",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "provider/model selection likely needs distinct defaults or overrides at:",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "overseer-delegated node worker",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "requested vs effective provider/model must remain visible at all levels where fallback/override can occur",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "node persona selection should be dynamic-by-default from node scope/type",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "node persona override should apply as node-worker policy, not per-node manual config",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "overseer personas should be explicit settings-owned roles",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "node worker personas should default dynamically from node scope/type",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "node worker personas/provider/model should remain overrideable",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "settings should define whether overseers may use subagents for node work",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "if allowed, settings should define the provider/model policy for those delegated node workers",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "Work item status should remain `active` until research is ready for reconciliation.",
+        "tokens": [
+          "active"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "First targeted reading should stay narrow and centered on Orchestrator docs plus direct owner contracts, not a repo-wide sweep.",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "Current discussion should stay centered on the node-graph / Orchestrator relationship before expanding into other seams.",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "User explicitly wants to keep researching in this thread; prior readiness marker should not be treated as a handoff decision.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 7,
+        "text": "Use the ledger to capture terminology, precedence rules, effective-vs-requested state, and cross-doc ownership as they emerge.",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "keep scheduler semantics, attempt identity, blocked reasons, allowed actions, and remediation lineage owned by shared runtime docs",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "unresolved follow-up is whether tiers are just presentation/grouping over nodes or remain an independently meaningful orchestration layer",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "Promotion model direction:",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "automation-first default remains intact",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "Promotion gate direction now discussed:",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "Emerging execution-settings direction:",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "requested vs effective provider/model must remain visible at all levels where fallback/override can occur",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Clarified resolution direction:",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Emerging persona direction:",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "node worker personas/provider/model should remain overrideable",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "Emerging delegation-policy direction:",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "Work item status should remain `active` until research is ready for reconciliation.",
+        "tokens": [
+          "active"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "User explicitly wants to keep researching in this thread; prior readiness marker should not be treated as a handoff decision.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 4,
+        "text": "execution model / state machine",
+        "tokens": []
+      },
+      {
+        "line": 6,
+        "text": "recovery / rollback / blocked-state behavior",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "Use the ledger to capture terminology, precedence rules, effective-vs-requested state, and cross-doc ownership as they emerge.",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "treat Orchestrator as a projection-and-control surface over canonical runtime contracts",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "explicitly distinguish requested state vs effective state wherever persona/provider/model fallback can occur",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "Orchestrator should likely be a deterministic scheduler/state machine, not one long-running super-agent",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "seam completion requires integration quality, not just package-local pass states",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "promotions are explicit runtime state transitions, not implicit side effects",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "blocked/HITL/critical promotion states must surface on Dashboard, Orchestrator, and a spawned chat thread",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "`lane_to_package` gates focus on local correctness, uncontaminated lane state, required automated verification/review, and promotable package outputs",
+        "tokens": [
+          "lane_to_package"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "First targeted reading should stay narrow and centered on Orchestrator docs plus direct owner contracts, not a repo-wide sweep.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 2,
+        "text": "Start the next phase by clarifying which Orchestrator seam is in scope first:",
+        "tokens": []
+      },
+      {
+        "line": 9,
+        "text": "treat Orchestrator as a projection-and-control surface over canonical runtime contracts",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "let the Orchestrator page own tab structure, control affordances, and projection composition",
+        "tokens": []
+      },
+      {
+        "line": 13,
+        "text": "define a clean boundary between canonical runtime facts, orchestrator projections, and widget/page presentation",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "\"Orchestrator uses the node graph\" is already documented as true for scheduling/execution inputs",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "Candidate control-plane recommendation to explore:",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "Orchestrator should likely be a deterministic scheduler/state machine, not one long-running super-agent",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "graph nodes should dispatch bounded worker/reviewer/remediation agents with explicit context windows and attempt identities",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "`node` = smallest executable work unit",
+        "tokens": [
+          "node"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "`lane_to_package` promotion: accepted lane result becomes package baseline",
+        "tokens": [
+          "lane_to_package"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "blocked/HITL/critical promotion states must surface on Dashboard, Orchestrator, and a spawned chat thread",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "`lane_to_package` gates focus on local correctness, uncontaminated lane state, required automated verification/review, and promotable package outputs",
+        "tokens": [
+          "lane_to_package"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "`package_to_seam_available` gates focus on trusted package baseline, package-level evidence, acceptable package-overseer verdict, and seam-consumable outputs",
+        "tokens": [
+          "package_to_seam_available"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "first pin Orchestrator ownership boundaries",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "then derive tab responsibilities and CTA behavior",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "First targeted reading should stay narrow and centered on Orchestrator docs plus direct owner contracts, not a repo-wide sweep.",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "Current discussion should stay centered on the node-graph / Orchestrator relationship before expanding into other seams.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 41,
+        "text": "`package_to_seam_available` gates focus on trusted package baseline, package-level evidence, acceptable package-overseer verdict, and seam-consumable outputs",
+        "tokens": [
+          "package_to_seam_available"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "`seam_complete` gates focus on integration review, absence of unresolved major/critical findings, seam evidence, workflow completeness, GUI/runtime alignment, and no pending corroboration/remediation",
+        "tokens": [
+          "seam_complete"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "define required evidence at node/package/seam levels so promotion gates are concrete",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "then map cross-links to Usage / Evidence / Graph / history / blocked outcomes",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 7,
+        "text": "Use the ledger to capture terminology, precedence rules, effective-vs-requested state, and cross-doc ownership as they emerge.",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "explicitly distinguish requested state vs effective state wherever persona/provider/model fallback can occur",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "a lightweight planning/replan agent may still exist, but only at graph-construction or graph-patch boundaries, not as the continuous owner of all execution truth",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "provider/model selection likely needs distinct defaults or overrides at:",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "overseer-delegated node worker",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "requested vs effective provider/model must remain visible at all levels where fallback/override can occur",
+        "tokens": []
+      },
+      {
+        "line": 56,
+        "text": "node persona selection should be dynamic-by-default from node scope/type",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "node persona override should apply as node-worker policy, not per-node manual config",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "seam/package/node each need independent provider/model/effort configuration surfaces",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "Emerging persona direction:",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "overseer personas should be explicit settings-owned roles",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "node worker personas should default dynamically from node scope/type",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "node worker personas/provider/model should remain overrideable",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "if allowed, settings should define the provider/model policy for those delegated node workers",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "first pin Orchestrator ownership boundaries",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "then define provider/model/persona precedence",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "then define worktree ownership/isolation rules",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "Likely adjacent owners if this expands:",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "First targeted reading should stay narrow and centered on Orchestrator docs plus direct owner contracts, not a repo-wide sweep.",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "Current working focus is moving into projection ownership by surface rather than reconciliation.",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [],
+    "open_questions": [
+      {
+        "line": 12,
+        "text": "Candidate reconciliation target:",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "Candidate model clarification:",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "Candidate control-plane recommendation to explore:",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "Candidate governance model now favored:",
+        "tokens": []
+      },
+      {
+        "line": 66,
+        "text": "Candidate discussion order:",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 17,
+        "text": "unresolved follow-up is whether tiers are just presentation/grouping over nodes or remain an independently meaningful orchestration layer",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "quorum/corroboration agents may be used before accepting an overseer challenge for high-impact gaps",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "`seam_complete` gates focus on integration review, absence of unresolved major/critical findings, seam evidence, workflow completeness, GUI/runtime alignment, and no pending corroboration/remediation",
+        "tokens": [
+          "seam_complete"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 74,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

@@ -1,0 +1,171 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-022",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-022.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked owner / attention owner when relevant",
+      "line_in_shard": 2
+    },
+    {
+      "type": "requirement",
+      "text": "- `Attention`: `none | attention_required | blocked | degraded`",
+      "line_in_shard": 7
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "### Blocked-owner direction",
+      "line_in_shard": 10
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The user specifically flagged this seam earlier and it still looks underdefined.",
+      "line_in_shard": 11
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- when a project is in blocked/attention state, the Projects page should show the dominant current owner of that state",
+      "line_in_shard": 13
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Owner kinds already align with prior ledger work:",
+      "line_in_shard": 14
+    },
+    {
+      "type": "open_question",
+      "text": "- \"who/what is the project waiting on?\"",
+      "line_in_shard": 24
+    },
+    {
+      "type": "requirement",
+      "text": "- `Graph patch required`",
+      "line_in_shard": 34
+    },
+    {
+      "type": "doc_hint",
+      "text": "- signal confidence if especially important",
+      "line_in_shard": 44
+    },
+    {
+      "type": "requirement",
+      "text": "- with `attention_required`",
+      "line_in_shard": 66
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- dominant concern/blocked owner",
+      "line_in_shard": 73
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- There is no obvious current project-level rollup for blocked-owner and primary attention reason.",
+      "line_in_shard": 80
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- primary blocked/attention owner",
+      "line_in_shard": 88
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- blocked ownership should describe the dominant current issue, not every issue in the project",
+      "line_in_shard": 95
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 101
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 102
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The docs already define many local attention behaviors:",
+      "line_in_shard": 108
+    },
+    {
+      "type": "requirement",
+      "text": "- Dashboard `Action Required` section",
+      "line_in_shard": 109
+    },
+    {
+      "type": "requirement",
+      "text": "- blocked and attention-required visual distinction",
+      "line_in_shard": 115
+    },
+    {
+      "type": "process_defect",
+      "text": "- What is still missing is a shared escalation ladder across concerns, blocked states, usage pressure, and persistent unresolved conditions.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "requirement",
+      "text": "- `attention_required`",
+      "line_in_shard": 124
+    },
+    {
+      "type": "requirement",
+      "text": "- `attention_required`",
+      "line_in_shard": 132
+    },
+    {
+      "type": "requirement",
+      "text": "- cannot continue meaningfully until required action/precondition changes",
+      "line_in_shard": 135
+    },
+    {
+      "type": "decision",
+      "text": "- only for things that genuinely need user decision/input",
+      "line_in_shard": 148
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- owner changes",
+      "line_in_shard": 161
+    },
+    {
+      "type": "process_defect",
+      "text": "### Persistent blocker direction",
+      "line_in_shard": 166
+    },
+    {
+      "type": "process_defect",
+      "text": "- Persistent blockers should not become invisible just because the user dismissed a nearby warning once.",
+      "line_in_shard": 167
+    },
+    {
+      "type": "doc_hint",
+      "text": "- advisory warnings may respect quiet/dismiss windows",
+      "line_in_shard": 169
+    },
+    {
+      "type": "requirement",
+      "text": "- active blockers must not be dismissible into fake health",
+      "line_in_shard": 173
+    },
+    {
+      "type": "requirement",
+      "text": "- HITL approval required",
+      "line_in_shard": 178
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "### Concern / blocked-owner implication",
+      "line_in_shard": 198
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.",
+      "line_in_shard": 199
+    }
+  ]
+}

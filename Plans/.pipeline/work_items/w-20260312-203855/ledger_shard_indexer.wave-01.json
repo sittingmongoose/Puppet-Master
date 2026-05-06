@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.ledger_shard_indexer.wave.v3.1.12",
+  "prompt_id": "C2",
+  "prompt_version": "pm.c2.v3.1.12",
+  "timestamp_utc": "20260506T183116Z",
+  "work_id": "w-20260312-203855",
+  "wave_index": 1,
+  "mechanical_tool_wave": true,
+  "note": "Single wave: deterministic shard writer executed in main shell; no subagent_invocation entries.",
+  "subagent_invocations": [],
+  "outputs": {
+    "ledger_shards_dir": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards",
+    "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+    "shard_count": 92,
+    "shard_id_examples": [
+      "shard-0001",
+      "shard-0002",
+      "shard-0091",
+      "shard-0092"
+    ]
+  },
+  "status": "complete"
+}

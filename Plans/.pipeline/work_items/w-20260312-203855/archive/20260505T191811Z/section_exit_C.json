@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.section_exit_C.v3.1",
+  "prompt_id": "C5",
+  "prompt_version": "pm.c5.v3.1",
+  "work_id": "w-20260312-203855",
+  "current_section": "C",
+  "status": "COMPLETE",
+  "section_outputs": {
+    "ledger_obligation_seed": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "ledger_seed_completeness_report": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+  },
+  "completion_evidence": {
+    "seed_coverage_ok": true,
+    "uncovered_units_count": 0,
+    "seed_group_count": 98,
+    "material_units_total": 98,
+    "material_units_covered": 98
+  },
+  "next_section": "D",
+  "next_prompt_request": "D0 — Section Entry: Obligation Conversion",
+  "blockers": [],
+  "timestamp_utc": "20260505T180200Z"
+}

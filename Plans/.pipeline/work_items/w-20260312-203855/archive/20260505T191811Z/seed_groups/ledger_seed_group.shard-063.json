@@ -1,0 +1,346 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-063",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-063.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- The current docs only define a concrete deep-link format for wizard clarification resume:",
+      "line_in_shard": 6
+    },
+    {
+      "type": "routing_rule",
+      "text": "- That is useful, but it should be treated as one serialized transport form of the broader routing model, not as the hidden canonical navigation contract.",
+      "line_in_shard": 8
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The internal `route_target` model can and should be richer than the serialized URL form.",
+      "line_in_shard": 9
+    },
+    {
+      "type": "routing_rule",
+      "text": "- deterministic decoding back into internal routing",
+      "line_in_shard": 13
+    },
+    {
+      "type": "doc_hint",
+      "text": "- every possible inspector subsection detail",
+      "line_in_shard": 18
+    },
+    {
+      "type": "routing_rule",
+      "text": "- canonical `route_target`",
+      "line_in_shard": 22
+    },
+    {
+      "type": "routing_rule",
+      "text": "- narrowed serializable form that decodes into `route_target`",
+      "line_in_shard": 24
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind`",
+      "line_in_shard": 29
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id`",
+      "line_in_shard": 30
+    },
+    {
+      "type": "open_question",
+      "text": "- `project_id?`",
+      "line_in_shard": 33
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 34
+    },
+    {
+      "type": "open_question",
+      "text": "- `focused_run_id?`",
+      "line_in_shard": 35
+    },
+    {
+      "type": "decision",
+      "text": "- selected usage record",
+      "line_in_shard": 39
+    },
+    {
+      "type": "doc_hint",
+      "text": "- panel dock state",
+      "line_in_shard": 42
+    },
+    {
+      "type": "doc_hint",
+      "text": "- broad ephemeral inspector/UI expansion state",
+      "line_in_shard": 45
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 48
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 49
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 51
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 52
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `resume_url` is currently concrete while the broader route-target contract is still implicit.",
+      "line_in_shard": 59
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Without an explicit narrowed-transport rule, future docs may try to serialize the entire internal target model or, conversely, keep inventing new one-off URL shapes.",
+      "line_in_shard": 60
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Define `resume_url` as a serialized route-target transport in the contract layer once `route_target` exists.",
+      "line_in_shard": 64
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep serialized forms intentionally narrower than the full internal object.",
+      "line_in_shard": 65
+    },
+    {
+      "type": "data_shape",
+      "text": "- Let object families define only the extra anchor material truly needed for recovery or exact resume.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Decode all supported deep-link forms into the same internal routing path rather than handling URL activation as a separate system.",
+      "line_in_shard": 67
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-16 - Shell/workspace state should remain adjacent to routing, not inside it",
+      "line_in_shard": 74
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 76
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 77
+    },
+    {
+      "type": "doc_hint",
+      "text": "- panel dock/floating state",
+      "line_in_shard": 84
+    },
+    {
+      "type": "doc_hint",
+      "text": "- browser/document pane/chat/editor shell state",
+      "line_in_shard": 90
+    },
+    {
+      "type": "routing_rule",
+      "text": "- That state is real and important, but it is not the same thing as canonical route identity.",
+      "line_in_shard": 91
+    },
+    {
+      "type": "decision",
+      "text": "- routing chooses the target object and any necessary destination surface/context",
+      "line_in_shard": 93
+    },
+    {
+      "type": "routing_rule",
+      "text": "- So route activation may legitimately include:",
+      "line_in_shard": 95
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Canonical routing may carry enough view intent to answer:",
+      "line_in_shard": 106
+    },
+    {
+      "type": "data_shape",
+      "text": "- what object",
+      "line_in_shard": 107
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Persisted shell state remains responsible for:",
+      "line_in_shard": 110
+    },
+    {
+      "type": "doc_hint",
+      "text": "- how the side panel is docked/floated",
+      "line_in_shard": 111
+    },
+    {
+      "type": "data_shape",
+      "text": "- If a route needs a panel or tab visible, that should be expressed as destination intent, not as raw shell-state restoration payload.",
+      "line_in_shard": 114
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 116
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 117
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 118
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 122
+    },
+    {
+      "type": "data_shape",
+      "text": "- Some current command payloads and surface docs still blur destination intent with shell-state realization.",
+      "line_in_shard": 129
+    },
+    {
+      "type": "data_shape",
+      "text": "- `project_state:v1:{project_id}` and surface-local project-state records are adjacent restore context, not the canonical route payload.",
+      "line_in_shard": 131
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.",
+      "line_in_shard": 134
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Allow the route model to name major destination surfaces/tabs/panels where operationally necessary.",
+      "line_in_shard": 135
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Explicitly state that workspace-tab selection, panel docking, and per-project layout restore are shell-state concerns layered underneath canonical routing.",
+      "line_in_shard": 136
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.",
+      "line_in_shard": 137
+    },
+    {
+      "type": "routing_rule",
+      "text": "- This seam prevents the route model from swallowing the whole shell.",
+      "line_in_shard": 140
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The right question for routing is \u201cwhere should the user land,\u201d not \u201chow should every panel be laid out when they get there.\u201d",
+      "line_in_shard": 141
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Shell persistence and route identity should cooperate, but they should not collapse into one contract.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 146
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 147
+    },
+    {
+      "type": "routing_rule",
+      "text": "- That is enough for routing intent. The route model does not need to encode every lower-level shell detail.",
+      "line_in_shard": 158
+    },
+    {
+      "type": "data_shape",
+      "text": "- object identity and scope stay separate from destination",
+      "line_in_shard": 161
+    },
+    {
+      "type": "doc_hint",
+      "text": "- examples: chat, files, source_control, github_actions, docker_manager, artifacts, run_debug",
+      "line_in_shard": 168
+    },
+    {
+      "type": "doc_hint",
+      "text": "- examples: document_pane, agent_activity",
+      "line_in_shard": 172
+    },
+    {
+      "type": "doc_hint",
+      "text": "- specific dock/floating realization",
+      "line_in_shard": 177
+    },
+    {
+      "type": "decision",
+      "text": "- exact subview state like selected repo or compare target",
+      "line_in_shard": 179
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 183
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 184
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 187
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-owner docs implicated by this seam:",
+      "line_in_shard": 188
+    },
+    {
+      "type": "data_shape",
+      "text": "- Some current commands still mix coarse destination choice with detailed shell/subview state in one payload.",
+      "line_in_shard": 195
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Side-panel and page-tab distinctions are already stable enough to use canonically, but the docs do not yet connect them cleanly to the routing work.",
+      "line_in_shard": 196
+    },
+    {
+      "type": "routing_rule",
+      "text": "- If destination vocabulary is too fine-grained, routing will start carrying shell implementation detail again.",
+      "line_in_shard": 197
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define a controlled coarse destination enum/family in the route contract layer.",
+      "line_in_shard": 200
+    }
+  ]
+}

@@ -1,0 +1,919 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-obligation_core-17d925b14f",
+  "category": "obligation_core",
+  "family_key": "routing_rule",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0001-006",
+      "SEED-shard-0001-008",
+      "SEED-shard-0001-014",
+      "SEED-shard-0002-003",
+      "SEED-shard-0002-009",
+      "SEED-shard-0002-011",
+      "SEED-shard-0002-014",
+      "SEED-shard-0002-017",
+      "SEED-shard-0003-004",
+      "SEED-shard-0037-007",
+      "SEED-shard-0037-008",
+      "SYNTH-shard-0009-L00039-routing_rule-e8601901e1",
+      "SYNTH-shard-0009-L00047-routing_rule-47cb6babc5",
+      "SYNTH-shard-0009-L00055-routing_rule-bc9042ace0",
+      "SYNTH-shard-0009-L00071-routing_rule-7d15a8b64f",
+      "SYNTH-shard-0009-L00083-routing_rule-252db61cd3",
+      "SYNTH-shard-0009-L00091-routing_rule-2d3ea55df2",
+      "SYNTH-shard-0010-L00008-routing_rule-b57dfc4f5c",
+      "SYNTH-shard-0010-L00159-routing_rule-a72b75e6c3",
+      "SYNTH-shard-0010-L00195-routing_rule-d1da13cd5b",
+      "SYNTH-shard-0011-L00119-routing_rule-0a3bc905e0",
+      "SYNTH-shard-0011-L00132-routing_rule-3ec6db4573",
+      "SYNTH-shard-0012-L00025-routing_rule-275598b57e",
+      "SYNTH-shard-0012-L00088-routing_rule-f67d1c8d42",
+      "SYNTH-shard-0012-L00122-routing_rule-e2b0d98695",
+      "SYNTH-shard-0012-L00138-routing_rule-eb9b969344",
+      "SYNTH-shard-0017-L00060-routing_rule-d81c34b222",
+      "SYNTH-shard-0018-L00113-routing_rule-b5aff204e9",
+      "SYNTH-shard-0018-L00175-routing_rule-475032621e",
+      "SYNTH-shard-0019-L00038-routing_rule-54cb21e75e",
+      "SYNTH-shard-0019-L00165-routing_rule-ded0b3d10e",
+      "SYNTH-shard-0020-L00113-routing_rule-1bc6169244"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0001-006",
+      "seed_id": "SEED-shard-0001-006",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Orchestrator widgets live in Progress; some may be hostable on Dashboard; non-Orchestrator widgets must not be hostable on Orchestrator page.",
+      "evidence_ledger_excerpt": "non-Orchestrator widgets should not be hostable on the Orchestrator page",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Orchestrator widgets live in Progress",
+        "some may be hostable on Dashboard",
+        "non-Orchestrator widgets must not be hostable on Orchestrator page."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0001-008",
+      "seed_id": "SEED-shard-0001-008",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Deterministic default Progress-widget drill targets (e.g. Run Status\u2192History, Seam Health\u2192Seams, Promotion Queue\u2192Ledger, Corroboration Queue\u2192Evidence).",
+      "evidence_ledger_excerpt": "Default Progress-widget drill targets were made deterministic: Run Status -> `History`... Corroboration Queue -> `Evidence`",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Deterministic default Progress-widget drill targets (e.g. Run Status\u2192History, Seam Health\u2192Seams, Promotion Queue\u2192Ledger, Corroboration Queue\u2192Evidence)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0001-014",
+      "seed_id": "SEED-shard-0001-014",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Cross-tab deep links must carry selection/filter/focus context; Seams and Node Graph share focus context without hyperactive live-sync.",
+      "evidence_ledger_excerpt": "deep links should carry selection/filter/focus context... `Seams` and `Node Graph` should share focus context without hyperactive live-sync",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Cross-tab deep links must carry selection/filter/focus context",
+        "Seams and Node Graph share focus context without hyperactive live-sync."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0002-003",
+      "seed_id": "SEED-shard-0002-003",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Operator visibility splits history-only vs badge-worthy vs attention-card vs chat-thread action-required; backbone events include block/completion/reopen/supersede, promotion and graph_patch lifecycle, restore, threshold/account events.",
+      "evidence_ledger_excerpt": "operator visibility should separate: history-only events... chat-thread-worthy action-required cases",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Operator visibility splits history-only vs badge-worthy vs attention-card vs chat-thread action-required",
+        "backbone events include block/completion/reopen/supersede, promotion and graph_patch lifecycle, restore, threshold/account events."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0002-009",
+      "seed_id": "SEED-shard-0002-009",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Canonical concerns minted by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic; workers nominate only.",
+      "evidence_ledger_excerpt": "workers may nominate findings but should not mint canonical concerns directly",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Canonical concerns minted by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic",
+        "workers nominate only."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0002-011",
+      "seed_id": "SEED-shard-0002-011",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "User concern actions narrow (open/focus/open evidence/history/ledger, acknowledge/dismiss where allowed, resolution thread, approve/reject on true HITL); overseer/runtime actions non-generic GUI.",
+      "evidence_ledger_excerpt": "user-facing concern actions should stay narrow... runtime/overseer actions should remain mostly non-generic GUI buttons",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "User concern actions narrow (open/focus/open evidence/history/ledger, acknowledge/dismiss where allowed, resolution thread, approve/reject on true HITL)",
+        "overseer/runtime actions non-generic GUI."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0002-014",
+      "seed_id": "SEED-shard-0002-014",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Run/Seam/Concern/Account pressure/Recent events projections broadly reusable Orchestrator/Dashboard/Projects; denser operational summaries primarily Orchestrator.",
+      "evidence_ledger_excerpt": "`Run Summary`, `Seam Summary`, `Concern Summary`... should be broadly reusable across Orchestrator / Dashboard / Projects",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Run/Seam/Concern/Account pressure/Recent events projections broadly reusable Orchestrator/Dashboard/Projects",
+        "denser operational summaries primarily Orchestrator."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0002-017",
+      "seed_id": "SEED-shard-0002-017",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Stale projection fallback: degrade to direct record-backed inspection; Ledger and direct record views as trust anchor; only generation-matched current direct records support action.",
+      "evidence_ledger_excerpt": "degrade from summary/projection surfaces to direct record-backed inspection... `Ledger` and direct record views become the trust anchor",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Stale projection fallback: degrade to direct record-backed inspection",
+        "Ledger and direct record views as trust anchor",
+        "only generation-matched current direct records support action."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0003-004",
+      "seed_id": "SEED-shard-0003-004",
+      "source_shard_id": "shard-0003",
+      "batch_index": 1,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0003",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Conversational actors share runtime identity/account/usage but are not orchestration nodes; Orchestrator-style resolution-thread projection not applied backward for ordinary chat.",
+      "evidence_ledger_excerpt": "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Conversational actors share runtime identity/account/usage but are not orchestration nodes",
+        "Orchestrator-style resolution-thread projection not applied backward for ordinary chat."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0037-007",
+      "seed_id": "SEED-shard-0037-007",
+      "source_shard_id": "shard-0037",
+      "batch_index": 10,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0037",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Rollup: project badge shows highest-severity active item plus count; attention center lists each active item separately; rows stay object-linked.",
+      "evidence_ledger_excerpt": "project badge/card shows highest-severity active item plus count; attention center shows each active item separately; rows remain object-linked",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Rollup: project badge shows highest-severity active item plus count",
+        "attention center lists each active item separately",
+        "rows stay object-linked."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SEED-shard-0037-008",
+      "seed_id": "SEED-shard-0037-008",
+      "source_shard_id": "shard-0037",
+      "batch_index": 10,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0037",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Project attention rows route through the same internal payload model as deep links, search, and palette results; URLs and in-app actions decode to the same route payload.",
+      "evidence_ledger_excerpt": "project attention rows should route through the same internal payload model as deep links/search/palette results",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Project attention rows route through the same internal payload model as deep links, search, and palette results",
+        "URLs and in-app actions decode to the same route payload."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0009-L00039-routing_rule-e8601901e1",
+      "seed_id": "SYNTH-shard-0009-L00039-routing_rule-e8601901e1",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 39,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Priority 1 cleanup targets canonical contracts that cannot coexist with the new model (Orchestrator_Page, Executor_Protocol, Contracts_V0, storage-plan, human-in-the-loop, plan graph schemas).",
+      "evidence_ledger_excerpt": "Priority 1 cleanup targets canonical contracts that cannot coexist with the new model (Orchestrator_Page, Executor_Protocol, Contracts_V0, storage-plan, human-in-the-loop, plan graph schemas).",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Priority 1 cleanup targets canonical contracts that cannot coexist with the new model (Orchestrator_Page, Executor_Protocol, Contracts_V0, storage-plan, human-in-the-loop, plan graph schemas)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0009-L00047-routing_rule-47cb6babc5",
+      "seed_id": "SYNTH-shard-0009-L00047-routing_rule-47cb6babc5",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 47,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Priority 2 addresses misleading UI/SCM/operator docs (FinalGUISpec, Run_Graph_View, WorktreeGitImprovement, GitHub_Integration, Widget_System, UI_Command_Catalog).",
+      "evidence_ledger_excerpt": "Priority 2 addresses misleading UI/SCM/operator docs (FinalGUISpec, Run_Graph_View, WorktreeGitImprovement, GitHub_Integration, Widget_System, UI_Command_Catalog).",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Priority 2 addresses misleading UI/SCM/operator docs (FinalGUISpec, Run_Graph_View, WorktreeGitImprovement, GitHub_Integration, Widget_System, UI_Command_Catalog)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0009-L00055-routing_rule-bc9042ace0",
+      "seed_id": "SYNTH-shard-0009-L00055-routing_rule-bc9042ace0",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 55,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Priority 3 covers terminology, routing, and anti-drift docs (00-plans-index, Crosswalk, Glossary, feature-list, OpenCode_Coverage_Matrix, Project_Output_Artifacts).",
+      "evidence_ledger_excerpt": "Priority 3 covers terminology, routing, and anti-drift docs (00-plans-index, Crosswalk, Glossary, feature-list, OpenCode_Coverage_Matrix, Project_Output_Artifacts).",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Priority 3 covers terminology, routing, and anti-drift docs (00-plans-index, Crosswalk, Glossary, feature-list, OpenCode_Coverage_Matrix, Project_Output_Artifacts)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0009-L00071-routing_rule-7d15a8b64f",
+      "seed_id": "SYNTH-shard-0009-L00071-routing_rule-7d15a8b64f",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 71,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Tier-boundary HITL vs blocked-node/runtime-overlay HITL splits approval ownership, wake semantics, and UI routing.",
+      "evidence_ledger_excerpt": "Tier-boundary HITL vs blocked-node/runtime-overlay HITL splits approval ownership, wake semantics, and UI routing.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Tier-boundary HITL vs blocked-node/runtime-overlay HITL splits approval ownership, wake semantics, and UI routing."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0009-L00083-routing_rule-252db61cd3",
+      "seed_id": "SYNTH-shard-0009-L00083-routing_rule-252db61cd3",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 83,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Graph-local recovery commands vs canonical runtime action families can expose different command families to users vs runtime/event contracts.",
+      "evidence_ledger_excerpt": "Graph-local recovery commands vs canonical runtime action families can expose different command families to users vs runtime/event contracts.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Graph-local recovery commands vs canonical runtime action families can expose different command families to users vs runtime/event contracts."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0009-L00091-routing_rule-2d3ea55df2",
+      "seed_id": "SYNTH-shard-0009-L00091-routing_rule-2d3ea55df2",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 91,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Manual review defaults vs automation-first optional HITL changes default behavior, expectations, and blocked-state routing.",
+      "evidence_ledger_excerpt": "Manual review defaults vs automation-first optional HITL changes default behavior, expectations, and blocked-state routing.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Manual review defaults vs automation-first optional HITL changes default behavior, expectations, and blocked-state routing."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0010-L00008-routing_rule-b57dfc4f5c",
+      "seed_id": "SYNTH-shard-0010-L00008-routing_rule-b57dfc4f5c",
+      "source_shard_id": "shard-0010",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0010",
+        "line_in_shard": 8,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Provider_Stream_Mapping A2A: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution.",
+      "evidence_ledger_excerpt": "Provider_Stream_Mapping A2A: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Provider_Stream_Mapping A2A: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0010-L00159-routing_rule-a72b75e6c3",
+      "seed_id": "SYNTH-shard-0010-L00159-routing_rule-a72b75e6c3",
+      "source_shard_id": "shard-0010",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0010",
+        "line_in_shard": 159,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Orchestrator CTAs should route into Source Control for Git-native operations with project/run/package/lane/worktree context preserved.",
+      "evidence_ledger_excerpt": "Orchestrator CTAs should route into Source Control for Git-native operations with project/run/package/lane/worktree context preserved.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Orchestrator CTAs should route into Source Control for Git-native operations with project/run/package/lane/worktree context preserved."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0010-L00195-routing_rule-d1da13cd5b",
+      "seed_id": "SYNTH-shard-0010-L00195-routing_rule-d1da13cd5b",
+      "source_shard_id": "shard-0010",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0010",
+        "line_in_shard": 195,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Orchestrator may initiate scoped lane/worktree actions from run context; Source Control executes Git-native mutations.",
+      "evidence_ledger_excerpt": "Orchestrator may initiate scoped lane/worktree actions from run context; Source Control executes Git-native mutations.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Orchestrator may initiate scoped lane/worktree actions from run context",
+        "Source Control executes Git-native mutations."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0011-L00119-routing_rule-0a3bc905e0",
+      "seed_id": "SYNTH-shard-0011-L00119-routing_rule-0a3bc905e0",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 119,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Recast Orchestrator tabs: Progress hosts widgets; seams/graph/evidence/history/ledger are native deep-inspection tabs; Source Control remains Git surface.",
+      "evidence_ledger_excerpt": "Recast Orchestrator tabs: Progress hosts widgets; seams/graph/evidence/history/ledger are native deep-inspection tabs; Source Control remains Git surface.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Recast Orchestrator tabs: Progress hosts widgets",
+        "seams/graph/evidence/history/ledger are native deep-inspection tabs",
+        "Source Control remains Git surface."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0011-L00132-routing_rule-3ec6db4573",
+      "seed_id": "SYNTH-shard-0011-L00132-routing_rule-3ec6db4573",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 132,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Split Orchestrator-owned initiation (inspect lane, request restore, open in Source Control) vs Source-Control-owned Git mutations.",
+      "evidence_ledger_excerpt": "Split Orchestrator-owned initiation (inspect lane, request restore, open in Source Control) vs Source-Control-owned Git mutations.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Split Orchestrator-owned initiation (inspect lane, request restore, open in Source Control) vs Source-Control-owned Git mutations."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0012-L00025-routing_rule-275598b57e",
+      "seed_id": "SYNTH-shard-0012-L00025-routing_rule-275598b57e",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 25,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Orchestrator shows lane/worktree summary and deep-links to Source Control; it does not mirror a raw worktree inventory table.",
+      "evidence_ledger_excerpt": "Orchestrator shows lane/worktree summary and deep-links to Source Control; it does not mirror a raw worktree inventory table.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Orchestrator shows lane/worktree summary and deep-links to Source Control",
+        "it does not mirror a raw worktree inventory table."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0012-L00088-routing_rule-f67d1c8d42",
+      "seed_id": "SYNTH-shard-0012-L00088-routing_rule-f67d1c8d42",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 88,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Widgets allowed on Dashboard, Usage, Orchestrator/Progress; not the composition model for non-Progress Orchestrator tabs.",
+      "evidence_ledger_excerpt": "Widgets allowed on Dashboard, Usage, Orchestrator/Progress; not the composition model for non-Progress Orchestrator tabs.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Widgets allowed on Dashboard, Usage, Orchestrator/Progress",
+        "not the composition model for non-Progress Orchestrator tabs."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0012-L00122-routing_rule-e2b0d98695",
+      "seed_id": "SYNTH-shard-0012-L00122-routing_rule-e2b0d98695",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 122,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Distinguish page/tab filters from widget presentation config; widgets must not invent alternate scoping semantics.",
+      "evidence_ledger_excerpt": "Distinguish page/tab filters from widget presentation config; widgets must not invent alternate scoping semantics.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Distinguish page/tab filters from widget presentation config",
+        "widgets must not invent alternate scoping semantics."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0012-L00138-routing_rule-eb9b969344",
+      "seed_id": "SYNTH-shard-0012-L00138-routing_rule-eb9b969344",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 138,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Hostability: Dashboard hosts curated Progress/Usage widgets; deep inspection tabs stay non-portable.",
+      "evidence_ledger_excerpt": "Hostability: Dashboard hosts curated Progress/Usage widgets; deep inspection tabs stay non-portable.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Hostability: Dashboard hosts curated Progress/Usage widgets",
+        "deep inspection tabs stay non-portable."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0017-L00060-routing_rule-d81c34b222",
+      "seed_id": "SYNTH-shard-0017-L00060-routing_rule-d81c34b222",
+      "source_shard_id": "shard-0017",
+      "batch_index": 5,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0017",
+        "line_in_shard": 60,
+        "line_in_source": null,
+        "source_line": 3260
+      },
+      "statement": "Map action families: none \u2014 open/focus/navigate/deep-link, evidence/history/ledger/source control, tab-local filter/sort/search; light \u2014 minor acknowledge/dismiss, switch focused run, open resolution thread; strong \u2014 pause/cancel run, retry from safe point, prune worktree/clean workspace, prune evidence, revoke promotion, merge/split concerns; hard_gate \u2014 HITL approve/reject, graph patch application affecting canonical graph generation, remote-side-effect actions under explicit non-bypassable policy.",
+      "evidence_ledger_excerpt": "Map action families: none \u2014 open/focus/navigate/deep-link, evidence/history/ledger/source control, tab-local filter/sort/search; light \u2014 minor acknowledge/dismiss, switch focused run, open resolution thread; strong \u2014 pause/cancel run, retry from safe point, prune worktree/clean workspace, prune evidence, revoke promotion, merge/split concerns; hard_gate \u2014 HITL approve/reject, graph patch application affecting canonical graph generation, remote-side-effect actions under explicit non-bypassable policy.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Map action families: none \u2014 open/focus/navigate/deep-link, evidence/history/ledger/source control, tab-local filter/sort/search",
+        "light \u2014 minor acknowledge/dismiss, switch focused run, open resolution thread",
+        "strong \u2014 pause/cancel run, retry from safe point, prune worktree/clean workspace, prune evidence, revoke promotion, merge/split concerns",
+        "hard_gate \u2014 HITL approve/reject, graph patch application affecting canonical graph generation, remote-side-effect actions under explicit non-bypassable policy."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0018-L00113-routing_rule-b5aff204e9",
+      "seed_id": "SYNTH-shard-0018-L00113-routing_rule-b5aff204e9",
+      "source_shard_id": "shard-0018",
+      "batch_index": 5,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0018",
+        "line_in_shard": 113,
+        "line_in_source": null,
+        "source_line": 3513
+      },
+      "statement": "Export contracts should use the record envelope as manifest backbone; artifact files attach by reference rather than replacing record structure.",
+      "evidence_ledger_excerpt": "Export contracts should use the record envelope as manifest backbone; artifact files attach by reference rather than replacing record structure.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Export contracts should use the record envelope as manifest backbone",
+        "artifact files attach by reference rather than replacing record structure."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0018-L00175-routing_rule-475032621e",
+      "seed_id": "SYNTH-shard-0018-L00175-routing_rule-475032621e",
+      "source_shard_id": "shard-0018",
+      "batch_index": 5,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0018",
+        "line_in_shard": 175,
+        "line_in_source": null,
+        "source_line": 3575
+      },
+      "statement": "Expected export families: Evidence, Artifact, Ledger, Run, and single exact-record export; Ledger record-shaped first with CSV/JSON as projections; Run export bundles run metadata, exact records, linked artifacts/evidence, and historical/superseded flags.",
+      "evidence_ledger_excerpt": "Expected export families: Evidence, Artifact, Ledger, Run, and single exact-record export; Ledger record-shaped first with CSV/JSON as projections; Run export bundles run metadata, exact records, linked artifacts/evidence, and historical/superseded flags.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Expected export families: Evidence, Artifact, Ledger, Run, and single exact-record export",
+        "Ledger record-shaped first with CSV/JSON as projections",
+        "Run export bundles run metadata, exact records, linked artifacts/evidence, and historical/superseded flags."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0019-L00038-routing_rule-54cb21e75e",
+      "seed_id": "SYNTH-shard-0019-L00038-routing_rule-54cb21e75e",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 38,
+        "line_in_source": null,
+        "source_line": 3638
+      },
+      "statement": "view export (filtered ledger CSV, concern table CSV, chart export) must be explicitly labeled non-canonical convenience; not treated as archival format.",
+      "evidence_ledger_excerpt": "view export (filtered ledger CSV, concern table CSV, chart export) must be explicitly labeled non-canonical convenience; not treated as archival format.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "view export (filtered ledger CSV, concern table CSV, chart export) must be explicitly labeled non-canonical convenience",
+        "not treated as archival format."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0019-L00165-routing_rule-ded0b3d10e",
+      "seed_id": "SYNTH-shard-0019-L00165-routing_rule-ded0b3d10e",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 165,
+        "line_in_source": null,
+        "source_line": 3765
+      },
+      "statement": "Surface routing: Settings \u2014 source-axis heavy (what will be requested from here); Orchestrator/graph/run detail \u2014 request and execution-axis heavy (what was asked vs what happened); Progress \u2014 compact requested/effective; History/Ledger \u2014 audit trail of requested/effective + reason + source snapshot refs; Authentication/Usage \u2014 effective account/auth emphasis with policy disclosure.",
+      "evidence_ledger_excerpt": "Surface routing: Settings \u2014 source-axis heavy (what will be requested from here); Orchestrator/graph/run detail \u2014 request and execution-axis heavy (what was asked vs what happened); Progress \u2014 compact requested/effective; History/Ledger \u2014 audit trail of requested/effective + reason + source snapshot refs; Authentication/Usage \u2014 effective account/auth emphasis with policy disclosure.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Surface routing: Settings \u2014 source-axis heavy (what will be requested from here)",
+        "Orchestrator/graph/run detail \u2014 request and execution-axis heavy (what was asked vs what happened)",
+        "Progress \u2014 compact requested/effective",
+        "History/Ledger \u2014 audit trail of requested/effective + reason + source snapshot refs",
+        "Authentication/Usage \u2014 effective account/auth emphasis with policy disclosure."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-17d925b14f--SYNTH-shard-0020-L00113-routing_rule-1bc6169244",
+      "seed_id": "SYNTH-shard-0020-L00113-routing_rule-1bc6169244",
+      "source_shard_id": "shard-0020",
+      "batch_index": 5,
+      "obligation_type": "routing_rule",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0020",
+        "line_in_shard": 113,
+        "line_in_source": null,
+        "source_line": 3913
+      },
+      "statement": "Bias Orchestrator defaults by role: package overseer toward package-local delivery/readiness; seam overseer toward cross-package integration truth; node worker toward implementation matched to stack; verifier/reviewer and corroborator toward distinct review/challenge personas; recovery toward troubleshooting; graph patch planner toward planning/architecture \u2014 exact persona ids may evolve but mapping policy should be explicit.",
+      "evidence_ledger_excerpt": "Bias Orchestrator defaults by role: package overseer toward package-local delivery/readiness; seam overseer toward cross-package integration truth; node worker toward implementation matched to stack; verifier/reviewer and corroborator toward distinct review/challenge personas; recovery toward troubleshooting; graph patch planner toward planning/architecture \u2014 exact persona ids may evolve but mapping policy should be explicit.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Bias Orchestrator defaults by role: package overseer toward package-local delivery/readiness",
+        "seam overseer toward cross-package integration truth",
+        "node worker toward implementation matched to stack",
+        "verifier/reviewer and corroborator toward distinct review/challenge personas",
+        "recovery toward troubleshooting",
+        "graph patch planner toward planning/architecture \u2014 exact persona ids may evolve but mapping policy should be explicit."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    }
+  ]
+}

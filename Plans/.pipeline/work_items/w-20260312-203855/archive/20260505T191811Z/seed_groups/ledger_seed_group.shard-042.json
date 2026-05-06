@@ -1,0 +1,336 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-042",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-042.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "open_question",
+      "text": "- `execution_role?`",
+      "line_in_shard": 4
+    },
+    {
+      "type": "open_question",
+      "text": "- `projected_remaining?`",
+      "line_in_shard": 8
+    },
+    {
+      "type": "open_question",
+      "text": "- `reset_at?`",
+      "line_in_shard": 9
+    },
+    {
+      "type": "open_question",
+      "text": "- `ended_at_utc?`",
+      "line_in_shard": 12
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `status` (`active | cooled_down | resolved | invalidated`)",
+      "line_in_shard": 13
+    },
+    {
+      "type": "open_question",
+      "text": "- `execution_role?`",
+      "line_in_shard": 18
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_id?`",
+      "line_in_shard": 19
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_binding?`",
+      "line_in_shard": 20
+    },
+    {
+      "type": "open_question",
+      "text": "- `from_account_id?`",
+      "line_in_shard": 21
+    },
+    {
+      "type": "open_question",
+      "text": "- `to_account_id?`",
+      "line_in_shard": 22
+    },
+    {
+      "type": "requirement",
+      "text": "- `decision_kind` (`switched | stayed | blocked_no_backup | blocked_required_account | failed`)",
+      "line_in_shard": 24
+    },
+    {
+      "type": "open_question",
+      "text": "- `source_episode_id?`",
+      "line_in_shard": 25
+    },
+    {
+      "type": "open_question",
+      "text": "- `run_id?`",
+      "line_in_shard": 26
+    },
+    {
+      "type": "open_question",
+      "text": "- `attempt_id?`",
+      "line_in_shard": 27
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 28
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 31
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 37
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- consumer docs for History / Ledger / Orchestrator runtime detail",
+      "line_in_shard": 38
+    },
+    {
+      "type": "data_shape",
+      "text": "- `account_switch_reason` currently does too much work as a single field.",
+      "line_in_shard": 41
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep `account_switch_reason` on effective/runtime snapshots as the current-run disclosure field.",
+      "line_in_shard": 48
+    },
+    {
+      "type": "decision",
+      "text": "- a failed or blocked switch decision is still historically important even when the effective account did not change",
+      "line_in_shard": 54
+    },
+    {
+      "type": "doc_hint",
+      "text": "- pressure episodes and switch events should support both provider-wide and account-specific views",
+      "line_in_shard": 55
+    },
+    {
+      "type": "requirement",
+      "text": "- this history must not become a second quota system; it should plug into the shared Usage/runtime pipeline",
+      "line_in_shard": 56
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 61
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 62
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Final GUI surface ownership is still materially behind the rewrite:",
+      "line_in_shard": 71
+    },
+    {
+      "type": "doc_hint",
+      "text": "- the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`",
+      "line_in_shard": 74
+    },
+    {
+      "type": "doc_hint",
+      "text": "- no first-class concern record/lifecycle/projection model appears in `FinalGUISpec.md`",
+      "line_in_shard": 76
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- the shared concern surface split across Progress/Seams/Evidence/History/Ledger still has no GUI contract owner",
+      "line_in_shard": 77
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Projection freshness and degraded-trust remain under-specified at the command/surface layer:",
+      "line_in_shard": 78
+    },
+    {
+      "type": "routing_rule",
+      "text": "- cross-surface route/open commands still do not carry the identity/trust context the ledger now recommends",
+      "line_in_shard": 80
+    },
+    {
+      "type": "data_shape",
+      "text": "- artifact panels and evidence flows still lack runtime-trust/provenance fields strong enough to support direct-record fallback behavior",
+      "line_in_shard": 81
+    },
+    {
+      "type": "data_shape",
+      "text": "- runtime-artifact payload ownership is still split across docs without an actually-populated canonical schema family",
+      "line_in_shard": 85
+    },
+    {
+      "type": "data_shape",
+      "text": "- account fields, requested concrete-account truth, role/actor identity, operational identity, switch-history, and trust-state are still missing from many user-facing surfaces that claim to show runtime truth",
+      "line_in_shard": 87
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Highest-risk impacted docs",
+      "line_in_shard": 89
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 90
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- still the broadest consumer doc and still missing concern, trust, switch/pressure, and rewrite-era widget/tab contracts",
+      "line_in_shard": 91
+    },
+    {
+      "type": "data_shape",
+      "text": "- still needs governance families, route-payload normalization, and projection-freshness gating",
+      "line_in_shard": 93
+    },
+    {
+      "type": "data_shape",
+      "text": "- still consume stale tier-era surface assumptions and incomplete identity payloads",
+      "line_in_shard": 97
+    },
+    {
+      "type": "doc_hint",
+      "text": "- No explicit concern model exists in the primary GUI specification.",
+      "line_in_shard": 101
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Commands that change execution truth still lack a shared stale/degraded-projection gate.",
+      "line_in_shard": 102
+    },
+    {
+      "type": "data_shape",
+      "text": "- Widget/page drill contracts still lack strong, typed route payloads tied to canonical identity/trust/linkage fields.",
+      "line_in_shard": 104
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Add a concern-model GUI contract and projection-health / degraded-trust contract to `FinalGUISpec.md`.",
+      "line_in_shard": 108
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add projection-freshness gating and typed route payloads to `UI_Command_Catalog.md`.",
+      "line_in_shard": 109
+    },
+    {
+      "type": "data_shape",
+      "text": "- Extend runtime-artifact envelopes and `cost_usage` linkage with canonical identity/trust/switch fields or refs.",
+      "line_in_shard": 110
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Normalize GUI consumers onto canonical persona/account/role naming and stop allowing stale local variants.",
+      "line_in_shard": 111
+    },
+    {
+      "type": "requirement",
+      "text": "- Preview `trust_tier` and runtime projection trust must stay distinct.",
+      "line_in_shard": 114
+    },
+    {
+      "type": "data_shape",
+      "text": "- The Orchestrator/Usage/GitHub deep-link story is now blocked more by missing route payload/trust contracts than by missing page chrome.",
+      "line_in_shard": 116
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 120
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Conversational actor docs still lag the shared runtime identity model in concrete ways:",
+      "line_in_shard": 130
+    },
+    {
+      "type": "doc_hint",
+      "text": "- assistant chat promises requested/effective auth/account visibility but still does not actually specify the disclosure surface",
+      "line_in_shard": 131
+    },
+    {
+      "type": "doc_hint",
+      "text": "- neither doc cleanly projects `execution_role` / `actor_kind` even though the broader runtime now needs it",
+      "line_in_shard": 133
+    },
+    {
+      "type": "data_shape",
+      "text": "- `mutation_capable` is declared as authoritative but still barely integrated into schema/event/policy surfaces",
+      "line_in_shard": 141
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Conversational and tooling docs also still lack a shared degraded-trust and concern-escalation path:",
+      "line_in_shard": 142
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- chat threads still have no natural place for switch events, concern notices, or trust-staleness explanation when runtime state is projection-derived",
+      "line_in_shard": 144
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Highest-risk impacted docs",
+      "line_in_shard": 146
+    },
+    {
+      "type": "data_shape",
+      "text": "- still needs richer event payloads, reconciled outcome taxonomy, and DAE tool-event reconstruction",
+      "line_in_shard": 152
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- still needs canonical persona naming, account visibility, stage-to-role mapping, and less stale tier vocabulary",
+      "line_in_shard": 154
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Conversational docs promise or imply requested/effective runtime truth but still omit account/auth details in their concrete sections.",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 179
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The core orchestration architecture docs are still structurally split between node-native ingest and tier-native execution:",
+      "line_in_shard": 189
+    },
+    {
+      "type": "data_shape",
+      "text": "- `orchestrator-subagent-integration.md` remediation lineage still has no true concern/corroboration object family to attach to",
+      "line_in_shard": 195
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Wizard/Builder handoff contracts are still incomplete for runtime identity and worktree policy:",
+      "line_in_shard": 196
+    },
+    {
+      "type": "routing_rule",
+      "text": "- downstream wizard handoff still lacks requested/effective account, actor/role, and explicit isolation/worktree mode",
+      "line_in_shard": 198
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- stale \u201cno change to tier/subtask execution\u201d language still appears in summary tables where it can mislead implementers",
+      "line_in_shard": 199
+    }
+  ]
+}

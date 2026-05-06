@@ -1,0 +1,391 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-087",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-087.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "requirement",
+      "text": "- This packet must be a canon-collapse pass, not a light additive pass.",
+      "line_in_shard": 2
+    },
+    {
+      "type": "requirement",
+      "text": "- Owner docs must go first, primary stale consumers second, mirrors and checklists after.",
+      "line_in_shard": 3
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md` remains verification-only unless upstream reconciliation reveals direct stale references that require edits.",
+      "line_in_shard": 4
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Goal of this pass: distinguish **ledger-to-plan transfer misses** from broader plan-doc quality gaps.",
+      "line_in_shard": 9
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Constraint for this pass: do **not** edit planning docs directly; use the existing work-item ledger plus current canonical docs.",
+      "line_in_shard": 10
+    },
+    {
+      "type": "verification_rule",
+      "text": "- 4 manual spot-check findings used to eliminate false positives",
+      "line_in_shard": 13
+    },
+    {
+      "type": "routing_rule",
+      "text": "- prior direct reads of current owner docs and late-straggler route/records slices",
+      "line_in_shard": 14
+    },
+    {
+      "type": "routing_rule",
+      "text": "- cross-doc consistency / precedence / terminology / routing ownership",
+      "line_in_shard": 19
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- project-summary, escalation, blocked-owner, and resurfacing rules",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "- governance record schemas and shared envelopes",
+      "line_in_shard": 28
+    },
+    {
+      "type": "data_shape",
+      "text": "- route/open-subject/bridge-field refinement and verification rules",
+      "line_in_shard": 30
+    },
+    {
+      "type": "doc_hint",
+      "text": "- glossary/help/cross-doc terminology collapse",
+      "line_in_shard": 31
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examples, and scoped-resolution rules are still missing.",
+      "line_in_shard": 36
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Owner docs were updated, but **consumer docs were not canon-collapsed**.",
+      "line_in_shard": 37
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Same-file supersession remains a major source of stale implementation guidance.",
+      "line_in_shard": 38
+    },
+    {
+      "type": "data_shape",
+      "text": "- Storage or key registration landed without the **field schema / value-shape contract**.",
+      "line_in_shard": 39
+    },
+    {
+      "type": "doc_hint",
+      "text": "- UI/behavior docs often contain the top-level statement, but not the **operational policy layer** implementation agents would need.",
+      "line_in_shard": 40
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Cross-doc primitives are referenced in prose but not elevated into **machine-verifiable contract owners**.",
+      "line_in_shard": 41
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Missing the fuller blocked-owner taxonomy, resurfacing/aging rules, concern action policy details, projection fallback ladder, saved-view / sort-default behavior, historical-mode behavior, search scope/switch disclosure, and dense-tab scale rules.",
+      "line_in_shard": 49
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 50
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure, and action-surface / shortcut / context-menu policy.",
+      "line_in_shard": 51
+    },
+    {
+      "type": "data_shape",
+      "text": "#### Cluster B - Storage / governance / record-schema transfer misses",
+      "line_in_shard": 53
+    },
+    {
+      "type": "data_shape",
+      "text": "- Still missing field schemas for `project_summary.v1`, `project_attention_item.v1`, `account_pressure_episode.v1`, `account_switch_event.v1`, and broader governance/runtime record-envelope families.",
+      "line_in_shard": 55
+    },
+    {
+      "type": "data_shape",
+      "text": "- Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified.",
+      "line_in_shard": 56
+    },
+    {
+      "type": "data_shape",
+      "text": "- Envelope fields landed, but per-family behavior rules and stronger bridge-governance semantics were not fully transferred.",
+      "line_in_shard": 58
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "#### Cluster C - Identity / attribution / owner-doc transfer misses",
+      "line_in_shard": 60
+    },
+    {
+      "type": "process_defect",
+      "text": "- Missing a unified execution-role and operational/account identity layer.",
+      "line_in_shard": 62
+    },
+    {
+      "type": "process_defect",
+      "text": "- Missing `execution_role` in attempt/runtime packet families and still incomplete around blocked-family minimums and ref-family separation.",
+      "line_in_shard": 64
+    },
+    {
+      "type": "data_shape",
+      "text": "#### Cluster D - Route / open-subject / bridge-field refinement misses",
+      "line_in_shard": 72
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Base route/open primitives landed, but missing:",
+      "line_in_shard": 74
+    },
+    {
+      "type": "routing_rule",
+      "text": "- concrete route examples",
+      "line_in_shard": 79
+    },
+    {
+      "type": "process_defect",
+      "text": "- Missing per-command `command_kind` / normalization metadata and still lacks the canonicalized navigation-family treatment implied by the ledger.",
+      "line_in_shard": 82
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `evidence.schema.json`",
+      "line_in_shard": 85
+    },
+    {
+      "type": "data_shape",
+      "text": "- Route-aware schema/gate/evidence extensions remain incomplete relative to the ledger's normalized routing model.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`",
+      "line_in_shard": 87
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Still preserve `resume_url` as a primary routing primitive in places that should treat it as derived transport only.",
+      "line_in_shard": 88
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Missing full lane/worktree lifecycle vocabularies, cleanup semantics, gating checks, and transition rules.",
+      "line_in_shard": 92
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md` / glossary/help surfaces",
+      "line_in_shard": 95
+    },
+    {
+      "type": "process_defect",
+      "text": "- Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs.",
+      "line_in_shard": 96
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+      "line_in_shard": 103
+    },
+    {
+      "type": "routing_rule",
+      "text": "- owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)",
+      "line_in_shard": 108
+    },
+    {
+      "type": "data_shape",
+      "text": "- evidence/gate schemas that cannot yet structurally prove the richer routing/normalization behavior",
+      "line_in_shard": 109
+    },
+    {
+      "type": "doc_hint",
+      "text": "- cases where a doc implies a stronger shared contract should exist but does not clearly own it",
+      "line_in_shard": 110
+    },
+    {
+      "type": "process_defect",
+      "text": "- Do **not** treat these as missing transfer:",
+      "line_in_shard": 114
+    },
+    {
+      "type": "data_shape",
+      "text": "- `route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` are already present in `Plans/Contracts_V0.md`.",
+      "line_in_shard": 115
+    },
+    {
+      "type": "data_shape",
+      "text": "- `account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missing transfer is the schema/detail layer.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "process_defect",
+      "text": "- `projection_freshness` and `projection_health` already exist; the missing transfer is the operational UI/gating/fallback layer, not simply \"invent trust states.\"",
+      "line_in_shard": 118
+    },
+    {
+      "type": "requirement",
+      "text": "- Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.",
+      "line_in_shard": 119
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "### Impacted docs and likely owner order",
+      "line_in_shard": 121
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owner docs for reconciliation:",
+      "line_in_shard": 122
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 127
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary consumer cleanup docs:",
+      "line_in_shard": 131
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Verification / mirror followers should remain downstream of owner reconciliation.",
+      "line_in_shard": 139
+    },
+    {
+      "type": "data_shape",
+      "text": "1. Reconcile owner contracts and schemas first.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "2. Collapse same-file mixed-era canon in primary consumers.",
+      "line_in_shard": 143
+    },
+    {
+      "type": "routing_rule",
+      "text": "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs.",
+      "line_in_shard": 144
+    },
+    {
+      "type": "verification_rule",
+      "text": "4. Update mirrors/checklists only after owner/consumer canon is stable.",
+      "line_in_shard": 145
+    },
+    {
+      "type": "data_shape",
+      "text": "- Missing field schemas will cause different implementation agents to invent incompatible shapes.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "data_shape",
+      "text": "- Missing route/ref-family boundaries will invite shadow routing and ad hoc payloads that gates cannot verify.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics.",
+      "line_in_shard": 151
+    },
+    {
+      "type": "process_defect",
+      "text": "- Missing cleanup/lifecycle rules will produce destructive ambiguity between archive/remove/prune/recover behaviors.",
+      "line_in_shard": 152
+    },
+    {
+      "type": "verification_rule",
+      "text": "## Chunked Transfer-Fidelity Recheck - 2026-04-06",
+      "line_in_shard": 154
+    },
+    {
+      "type": "verification_rule",
+      "text": "- This rerun was requested specifically to re-check the transfer audit with **smaller chunked subauditors**, because several owner/consumer docs are too large for one subauditor to read cleanly end-to-end.",
+      "line_in_shard": 157
+    },
+    {
+      "type": "doc_hint",
+      "text": "- **13 smaller baseline subauditors** over narrow ledger/doc seams",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This pass remained audit-only: no planning docs were edited; only the work ledger and work-item meta were updated.",
+      "line_in_shard": 162
+    },
+    {
+      "type": "process_defect",
+      "text": "- The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives.",
+      "line_in_shard": 165
+    },
+    {
+      "type": "verification_rule",
+      "text": "- The recheck confirms the earlier main pattern:",
+      "line_in_shard": 167
+    },
+    {
+      "type": "data_shape",
+      "text": "- detailed rules, examples, field schemas, or operational policies often did not",
+      "line_in_shard": 169
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The **13-widget Progress catalog** is not just \"underspecified\" - it is effectively absent as a named catalog.",
+      "line_in_shard": 175
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`",
+      "line_in_shard": 177
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md`",
+      "line_in_shard": 181
+    },
+    {
+      "type": "requirement",
+      "text": "- default search scope = focused run, widening to project/all-runs, and required disclosure when search changes focused run",
+      "line_in_shard": 187
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`",
+      "line_in_shard": 192
+    },
+    {
+      "type": "data_shape",
+      "text": "- The rerun makes it clear that the concern/action/governance tranche is missing not just \"some schemas\", but the following concrete families:",
+      "line_in_shard": 193
+    },
+    {
+      "type": "data_shape",
+      "text": "- concern record canonical field set",
+      "line_in_shard": 194
+    },
+    {
+      "type": "data_shape",
+      "text": "- concern owner-kind enum",
+      "line_in_shard": 197
+    }
+  ]
+}

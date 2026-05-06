@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.section_exit_A.v3.1.12",
+  "prompt_id": "A4",
+  "prompt_version": "pm.a4.v3.1.12",
+  "timestamp_utc": "20260506T182613Z",
+  "work_id": "w-20260312-203855",
+  "run_prefix": "r-20260312-203855",
+  "run_mode": "fresh_restart",
+  "active_artifact_root": "Plans/.pipeline/work_items/w-20260312-203855/active",
+  "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855",
+  "archive_root": "Plans/.pipeline/work_items/w-20260312-203855/archive",
+  "sanitizer_archive_timestamp_utc": "20260506T182414Z",
+  "section": "A",
+  "section_status": "COMPLETE",
+  "completed_prompts": [
+    {
+      "prompt_id": "A2",
+      "prompt_name": "Fresh Run Initializer / Artifact Sanitizer",
+      "prompt_version": "pm.a2.v3.1.12",
+      "stage_report_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json"
+    },
+    {
+      "prompt_id": "A3",
+      "prompt_name": "Route State Initializer",
+      "prompt_version": "pm.a3.v3.1.12",
+      "stage_report_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json"
+    }
+  ],
+  "completed_prompts_notes": [
+    "stage_report.A1.json was not present under the work item (optional resolve-work-item stage).",
+    "A0 section entry is not recorded as a work-item-local stage_report.* file."
+  ],
+  "active_outputs": [
+    "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "preserved_directory_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/active/",
+    "Plans/.pipeline/work_items/w-20260312-203855/archive/",
+    "Plans/.pipeline/work_items/w-20260312-203855/legacy_quarantine/"
+  ],
+  "next_section": "B",
+  "next_prompt_request": "B0 — Section Entry: Research / Audit Intake",
+  "next_prompt_id": "B0"
+}

@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.stage_report.F1.v3.1.12",
+  "prompt_id": "F1",
+  "prompt_version": "pm.f1.v3.1.12",
+  "timestamp_utc": "20260506T202939Z",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "required": false,
+    "reason": "Deterministic gap_group bucketing from transfer_coverage rows by transfer_row_kind and coverage_merge.effective_coverage_class; stable sort by obligation_id; doc_discovery_attempt_state copied verbatim."
+  },
+  "required_subagent_tasks_total": 0,
+  "distinct_subagent_invocations_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification_proof": {
+    "transfer_coverage_sha256": "31acb58214921cce5ab4837feba2d6e63bd37e64a6645c008da9a2e0c027dcb6",
+    "transfer_coverage_source_gate_report_sha256": "b108800b6d28ddc18c14ea2fdf001451c4c7b208b6bcee146feb9826782578ea",
+    "coverage_rows_total": 393,
+    "gap_group_counts": {
+      "no_gap": 118,
+      "concrete_fix_backlog": 16,
+      "concrete_missing_file_fix_backlog": 0,
+      "doc_discovery_required": 203,
+      "doc_discovery_exhaustion": 0,
+      "process_followup": 56,
+      "stale_token_resolution": 0,
+      "layout_repair": 0,
+      "source_lineage_check": 0
+    },
+    "partition_sum_equals_coverage_rows": true,
+    "open_gaps_worklist_sha256": "e0c44b210711de0f54a8f3876c1aa5686c28f02dae10c03cca1141ee4074ccc9",
+    "selected_next_prompt_id": "F2"
+  },
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F1.json"
+  ],
+  "next_prompt_request": "Paste prompt F2 — Open Gaps Classifier v3.1.12."
+}

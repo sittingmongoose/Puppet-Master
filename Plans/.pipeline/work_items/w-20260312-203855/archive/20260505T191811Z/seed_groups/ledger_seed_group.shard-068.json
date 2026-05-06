@@ -1,0 +1,361 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-068",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-068.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- Define `route_target` in `Contracts_V0.md` with the bounded field set above.",
+      "line_in_shard": 2
+    },
+    {
+      "type": "data_shape",
+      "text": "- or `object_kind` + `object_id`",
+      "line_in_shard": 5
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize legacy/special-case IDs into `subject_id` or `object_kind/object_id`.",
+      "line_in_shard": 7
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Keep all transport/open realization detail outside `route_target`.",
+      "line_in_shard": 8
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Keep all shell/view persistence detail outside `route_target`.",
+      "line_in_shard": 9
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `route_target` is now bounded.",
+      "line_in_shard": 12
+    },
+    {
+      "type": "data_shape",
+      "text": "- It does not carry event-specific payload noise.",
+      "line_in_shard": 14
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 20
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 22
+    },
+    {
+      "type": "requirement",
+      "text": "- `target_kind` must stay coarse and controlled.",
+      "line_in_shard": 27
+    },
+    {
+      "type": "data_shape",
+      "text": "- `target_kind` is not object identity and it is not shell persistence state.",
+      "line_in_shard": 35
+    },
+    {
+      "type": "requirement",
+      "text": "- `target_kind` tells the router what class of surface must host the target after scope restoration and target selection are applied.",
+      "line_in_shard": 36
+    },
+    {
+      "type": "doc_hint",
+      "text": "- examples: chat, files, source_control, github_actions, docker_manager, artifacts, run_debug",
+      "line_in_shard": 44
+    },
+    {
+      "type": "doc_hint",
+      "text": "- examples: document_pane, agent_activity",
+      "line_in_shard": 50
+    },
+    {
+      "type": "routing_rule",
+      "text": "- tab within a routed page that still needs explicit tab selection",
+      "line_in_shard": 52
+    },
+    {
+      "type": "doc_hint",
+      "text": "- docked vs floating",
+      "line_in_shard": 56
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 64
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 65
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 67
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 69
+    },
+    {
+      "type": "data_shape",
+      "text": "- Several command payloads and shell docs still mix destination class with lower-level shell realization details.",
+      "line_in_shard": 74
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `workspace_tab_id` and `browser_tab_id` exist in storage and command docs, but they are not `target_kind` values.",
+      "line_in_shard": 75
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define the canonical `target_kind` enum in `Contracts_V0.md`.",
+      "line_in_shard": 79
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep destination-local refinements outside the enum and outside the base route contract.",
+      "line_in_shard": 80
+    },
+    {
+      "type": "requirement",
+      "text": "- Use `page_tab` when the routed destination must land inside a known page and force a specific tab.",
+      "line_in_shard": 81
+    },
+    {
+      "type": "data_shape",
+      "text": "- It is not object taxonomy.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "routing_rule",
+      "text": "## Research Progress - 2026-03-17 - Selector precedence inside `route_target`",
+      "line_in_shard": 88
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 90
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 92
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `route_target` needs an explicit selector precedence rule.",
+      "line_in_shard": 97
+    },
+    {
+      "type": "data_shape",
+      "text": "- or `object_kind` + `object_id`",
+      "line_in_shard": 101
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind` + `object_id` wins for domain/runtime/governance objects.",
+      "line_in_shard": 103
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `tab_id`, `focused_run_id`, `thread_id`, and `inspector_target` never replace primary selector identity.",
+      "line_in_shard": 104
+    },
+    {
+      "type": "requirement",
+      "text": "- `project_id` is required scope, not selector identity.",
+      "line_in_shard": 105
+    },
+    {
+      "type": "routing_rule",
+      "text": "2. restore route scope:",
+      "line_in_shard": 109
+    },
+    {
+      "type": "data_shape",
+      "text": "- or `object_kind` + `object_id`",
+      "line_in_shard": 115
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target`",
+      "line_in_shard": 118
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `artifact_id` and `document_id` normalize to `subject_id`",
+      "line_in_shard": 121
+    },
+    {
+      "type": "data_shape",
+      "text": "- `wizard_id`, `message_id`, `usage_event` identity, `scheduler_pass_id`, `safe_point_id`, `remediation_root_id`, and similar canonical objects normalize to `object_kind` + `object_id`",
+      "line_in_shard": 122
+    },
+    {
+      "type": "data_shape",
+      "text": "- `usage_event_ref` is not a primary selector field",
+      "line_in_shard": 124
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 126
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 127
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 129
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 131
+    },
+    {
+      "type": "data_shape",
+      "text": "- Several existing payloads still imply multiple competing selectors in the same navigation action.",
+      "line_in_shard": 136
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `resume_url` flows still encode wizard-step detail more concretely than the general route contract.",
+      "line_in_shard": 137
+    },
+    {
+      "type": "data_shape",
+      "text": "- Usage/artifact flows still read as if `usage_event_ref` can stay a first-class top-level route selector instead of normalizing into object identity.",
+      "line_in_shard": 138
+    },
+    {
+      "type": "data_shape",
+      "text": "- Reject multi-selector route payloads as non-canonical.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize all special-case ids into `subject_id` or `object_kind` + `object_id` before they enter the canonical route layer.",
+      "line_in_shard": 143
+    },
+    {
+      "type": "routing_rule",
+      "text": "- One route, one primary selector.",
+      "line_in_shard": 146
+    },
+    {
+      "type": "data_shape",
+      "text": "- Scope and focus fields are not selector identity.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "routing_rule",
+      "text": "- If the route layer allows multiple competing selectors, drift returns immediately.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 152
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 153
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `resume_url` is a serialized transport of `route_target`.",
+      "line_in_shard": 159
+    },
+    {
+      "type": "requirement",
+      "text": "- `resume_url` must stay narrower than the internal route contract.",
+      "line_in_shard": 160
+    },
+    {
+      "type": "requirement",
+      "text": "- required scope when needed",
+      "line_in_shard": 163
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `route_target`",
+      "line_in_shard": 174
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `resume_url` decodes into `route_target`",
+      "line_in_shard": 177
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `resume_url` does not define a second routing ontology",
+      "line_in_shard": 178
+    },
+    {
+      "type": "data_shape",
+      "text": "### Good serialized fields",
+      "line_in_shard": 180
+    },
+    {
+      "type": "data_shape",
+      "text": "- or `object_kind` + `object_id`",
+      "line_in_shard": 183
+    },
+    {
+      "type": "requirement",
+      "text": "- `thread_id` when thread scope is required",
+      "line_in_shard": 184
+    },
+    {
+      "type": "requirement",
+      "text": "- `focused_run_id` when run scope is required",
+      "line_in_shard": 185
+    },
+    {
+      "type": "data_shape",
+      "text": "### Bad serialized fields",
+      "line_in_shard": 188
+    },
+    {
+      "type": "doc_hint",
+      "text": "- panel docking state",
+      "line_in_shard": 192
+    },
+    {
+      "type": "doc_hint",
+      "text": "- wide inspector expansion state",
+      "line_in_shard": 195
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 197
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 198
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 200
+    }
+  ]
+}

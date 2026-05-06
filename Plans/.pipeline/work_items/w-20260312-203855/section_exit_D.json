@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.section_exit.v3.1.12",
+  "section_id": "D",
+  "prompt_id": "D4",
+  "prompt_version": "pm.d4.v3.1.12",
+  "timestamp_utc": "20260506T192513Z",
+  "work_id": "w-20260312-203855",
+  "status": "complete",
+  "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+  "canonical_obligations_sha256": "fb1498de127b3bfee342f271dc2ba692d8347e937f925587d5ab8ecff733a1ce",
+  "canonical_obligations_source_gate_report_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_source_gate_report.json",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "obligation_count": 393,
+  "obligation_group_artifact_glob": "Plans/.pipeline/work_items/w-20260312-203855/obligation_groups/obligations.*.json",
+  "obligation_group_file_count": 240,
+  "coverage_active_source_for_section_e": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+  "final_gate": {
+    "passed": true,
+    "source_gate_final_gate_passed": true,
+    "canonical_obligations_status_complete": true,
+    "seed_coverage_full": true,
+    "doc_hint_promotion_check_passed": true,
+    "blocking_issues": []
+  },
+  "known_deficiencies": [
+    "Upstream ledger seed sampling is not line-exhaustive; obligations inherit that scope.",
+    "Reference defect noted in Section C for some shard line_in_source values may affect numeric lineage fields where present."
+  ],
+  "next_section": "E_Coverage",
+  "next_prompt_request": "Paste prompt E0 — Section Entry: Coverage v3.1.12."
+}

@@ -1,0 +1,881 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0036",
+  "coverage": {
+    "shard_id": "shard-0036",
+    "start_line": 6487,
+    "end_line": 6679,
+    "line_count": 193,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0036.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 2,
+        "text": "concern operations should likely be available from multiple surfaces (`Progress`, `Seams`, `Evidence`, `History`, `Ledger`, graph inspector), so the same action policy must survive different UI densities",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Progress",
+          "Seams"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "narrow surfaces must not compress `dismissed` and `resolved` into one generic \"closed\" action",
+        "tokens": [
+          "dismissed",
+          "resolved"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "if a concern is currently tied to active blocked status, acknowledgment alone must not clear the block",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "`FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings",
+        "tokens": [
+          "FinalGUISpec.md",
+          "Models_System.md",
+          "Personas.md"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer",
+        "tokens": [
+          "Feature Seam"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "clicking or hovering a term/badge/state should know whether to show a short tooltip, a richer side explanation, or route to a dedicated help entry",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "search results, deep links, and inspector panes should reuse the same canonical term labels as help entries",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "Progress` widgets must render against the current `focused_run_id",
+        "tokens": [
+          " widgets must render against the current "
+        ]
+      },
+      {
+        "line": 134,
+        "text": "moving between live and historical mode should not require per-widget manual retargeting",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "a widget must not drift into a stale prior run just because its own config persisted an old scope choice",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "`orchestrator:progress` likely needs project-scoped persistence, or a layered model of app-default plus project override",
+        "tokens": [
+          "orchestrator:progress"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "widget trust/freshness chrome should come from the same projection-trust model used elsewhere; individual widgets should not invent their own stale-state language",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "compact widget headers are not a good place to explain semantic scope; that needs page-level context and deep-link clarity",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 6,
+        "text": "structural concern actions (`merge`, `split`, `supersede`) likely need guided flows rather than one-click menus because they change search/history/ledger interpretation",
+        "tokens": [
+          "merge",
+          "split",
+          "supersede"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer",
+        "tokens": [
+          "Feature Seam"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "that no longer fits the current rewrite direction where only `Progress` is widget-composed and the other Orchestrator tabs are native surfaces",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "section 7.3 first says keep `dashboard_layout:v1` as backup and do not delete it",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "rewrite direction keeps converging on native `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Seams"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "but there is no explicit decision yet on app-global vs project-scoped widget layouts for Orchestrator `Progress`",
+        "tokens": [
+          "Progress"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 4,
+        "text": "the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "clicking or hovering a term/badge/state should know whether to show a short tooltip, a richer side explanation, or route to a dedicated help entry",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "Define a three-depth help contract:",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "`inline help`: short tooltip / badge explainer / field helper text",
+        "tokens": [
+          "inline help"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "trust-state chrome",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "widget-specific filter fields",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "The current widget contract mixes three different things that now need to stay separate:",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "semantic scope/filter state",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "page/run context such as `project_id`, `focused_run_id`, historical-run mode, and object focus belong to the page/router state",
+        "tokens": [
+          "focused_run_id",
+          "project_id"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "section 7.3 first says keep `dashboard_layout:v1` as backup and do not delete it",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "widget layout keys are page-global (`widget_layout:v1:orchestrator:progress`)",
+        "tokens": [
+          "widget_layout:v1:orchestrator:progress"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "but `FinalGUISpec.md` already has project-scoped state containers like `project_state:v1:{project_id}`",
+        "tokens": [
+          "FinalGUISpec.md",
+          "project_state:v1:{project_id}"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "no clear contract yet separates:",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "`dashboard_layout:v1` backup retention vs deletion rule conflicts inside the same section",
+        "tokens": [
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with their own state contracts",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Seams"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "widgets may consume stable projections and canonical records",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "widgets may not invent independent semantic scope such as their own run selection, their own lane universe, or their own concern-state semantics",
+        "tokens": []
+      },
+      {
+        "line": 178,
+        "text": "inherit `focused_run_id` and page trust state automatically",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Resolve the `dashboard_layout:v1` migration contradiction in one place and cross-reference it from `FinalGUISpec.md`",
+        "tokens": [
+          "FinalGUISpec.md",
+          "dashboard_layout:v1"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "widget trust/freshness chrome should come from the same projection-trust model used elsewhere; individual widgets should not invent their own stale-state language",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 13,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "`Glossary.md` is still too small and too pre-rewrite to anchor the newer Orchestrator vocabulary.",
+        "tokens": [
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "it does not yet carry the terms that now need stable cross-doc meaning in Orchestrator, Source Control, search, history, ledger, and help",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "`Orchestrator_Page.md` and `Run_Graph_View.md` still expose the older execution ontology directly in user-facing labels (`Tiers`, `Phase/Task/Subtask`, `Overseer` wording as foreman shorthand).",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "Overseer",
+          "Phase/Task/Subtask",
+          "Run_Graph_View.md",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "lane` vs `worktree",
+        "tokens": [
+          " vs "
+        ]
+      },
+      {
+        "line": 48,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 51,
+        "text": "future Orchestrator help-entry docs or copy inventories not yet written",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "clicking or hovering a term/badge/state should know whether to show a short tooltip, a richer side explanation, or route to a dedicated help entry",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "Lane",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "Expand `Glossary.md` so it becomes the owner for the stable term list, while longer help entries can explain:",
+        "tokens": [
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "`lane` and `worktree` need asymmetric help across surfaces:",
+        "tokens": [
+          "lane",
+          "worktree"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "Orchestrator emphasizes lane as operational object",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "`Widget_System.md` is still written for the earlier world where multiple Orchestrator tabs are widget pages.",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Orch/Evidence`, `Orch/History`, and `Orch/Ledger`",
+        "tokens": [
+          "Orch/Evidence",
+          "Orch/History",
+          "Orch/Ledger",
+          "Orch/Tiers"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "that no longer fits the current rewrite direction where only `Progress` is widget-composed and the other Orchestrator tabs are native surfaces",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "For Orchestrator specifically, semantic scope cannot be widget-owned.",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "page/run context such as `project_id`, `focused_run_id`, historical-run mode, and object focus belong to the page/router state",
+        "tokens": [
+          "focused_run_id",
+          "project_id"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "widget layout keys are page-global (`widget_layout:v1:orchestrator:progress`)",
+        "tokens": [
+          "widget_layout:v1:orchestrator:progress"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "that creates an unresolved question about whether Orchestrator `Progress` layout is app-global, project-scoped, or layered",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Native-tab contradiction:",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "page/tab/global filters",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "page-global widget layout keys may be too coarse for project/run-centric Orchestrator usage",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "but there is no explicit decision yet on app-global vs project-scoped widget layouts for Orchestrator `Progress`",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "Narrow the widget-hostable Orchestrator surface to `Progress` only.",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "`router/page scope`: `project_id`, `focused_run_id`, historical/live mode, deep-link target",
+        "tokens": [
+          "focused_run_id",
+          "project_id",
+          "router/page scope"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "`tab scope`: tab-native filters and object pivots for that surface",
+        "tokens": [
+          "tab scope"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "Add a hard anti-drift rule for Orchestrator widgets:",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "widgets may consume stable projections and canonical records",
+        "tokens": []
+      },
+      {
+        "line": 176,
+        "text": "widgets may not invent independent semantic scope such as their own run selection, their own lane universe, or their own concern-state semantics",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "Recommended default for Orchestrator `Progress` widgets:",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 182,
+        "text": "`orchestrator:progress` likely needs project-scoped persistence, or a layered model of app-default plus project override",
+        "tokens": [
+          "orchestrator:progress"
+        ]
+      },
+      {
+        "line": 190,
+        "text": "widget actions should route through the same command/deep-link payload model as search, inspectors, and palette actions",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 2,
+        "text": "concern operations should likely be available from multiple surfaces (`Progress`, `Seams`, `Evidence`, `History`, `Ledger`, graph inspector), so the same action policy must survive different UI densities",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Progress",
+          "Seams"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "its hostability, layout keys, widget caps, and catalog all still include `Orch/Tiers`, `Orch/Evidence`, `Orch/History`, and `Orch/Ledger`",
+        "tokens": [
+          "Orch/Evidence",
+          "Orch/History",
+          "Orch/Ledger",
+          "Orch/Tiers"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "widget docs still assume widgetized `Tiers`, `Evidence`, `History`, and `Ledger`",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "rewrite direction keeps converging on native `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Seams"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with their own state contracts",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Seams"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 15,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "`FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings",
+        "tokens": [
+          "FinalGUISpec.md",
+          "Models_System.md",
+          "Personas.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "The rewrite now depends on canonical terms that do not yet have canonical glossary ownership.",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "Expand `Glossary.md` so it becomes the owner for the stable term list, while longer help entries can explain:",
+        "tokens": [
+          "Glossary.md"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Scope ownership gap:",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "Define explicit filter/scope ownership layers:",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 28,
+        "text": "it is also a help/copy drift problem because the help system has no explicit rule for how legacy labels are retired or translated",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "historical` vs `superseded` vs `revoked",
+        "tokens": [
+          " vs "
+        ]
+      },
+      {
+        "line": 91,
+        "text": "historical vs superseded vs revoked vs reopened",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "`History` and `Ledger` especially need precise help because they are easy to collapse into one generic “past activity” concept",
+        "tokens": [
+          "History",
+          "Ledger"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "legacy `tier` wording still present in docs is now both a data-model risk and a user-copy/help migration risk",
+        "tokens": [
+          "tier"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "a widget must not drift into a stale prior run just because its own config persisted an old scope choice",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "then immediately defines SSOT precedence saying legacy keys are converted and the legacy key is deleted",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "allow only local presentational config like collapsed sections, chart style, sort, density, visible columns, or a safe subset filter that cannot escape the page scope",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "widget trust/freshness chrome should come from the same projection-trust model used elsewhere; individual widgets should not invent their own stale-state language",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 4,
+        "text": "the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "historical vs superseded vs revoked vs reopened",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "that creates an unresolved question about whether Orchestrator `Progress` layout is app-global, project-scoped, or layered",
+        "tokens": [
+          "Progress"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 33,
+        "text": "That missing depth model matters more now because several concepts are easy to misuse if reduced to a one-line tooltip:",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "ELI5/Expert currently risks becoming a synonym generator.",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "legacy `tier` wording still present in docs is now both a data-model risk and a user-copy/help migration risk",
+        "tokens": [
+          "tier"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "A second real issue surfaced inside `Widget_System.md` itself:",
+        "tokens": [
+          "Widget_System.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "that is a direct migration contradiction, not a minor wording issue",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "that creates an unresolved question about whether Orchestrator `Progress` layout is app-global, project-scoped, or layered",
+        "tokens": [
+          "Progress"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Scope ownership gap:",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "Persistence-scope gap:",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 11,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 15,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "Plans/Models_System.md",
+        "tokens": [
+          "Plans/Models_System.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

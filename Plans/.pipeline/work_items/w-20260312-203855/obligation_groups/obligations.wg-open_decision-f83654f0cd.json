@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-f83654f0cd",
+  "category": "open_decision",
+  "family_key": "orchestrator_auto_resolver_remains_qualitative_docs_list_project_language_domain_framework_tier_operation_inputs",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0020-L00189-open_question-d126eec6a5"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-f83654f0cd--SYNTH-shard-0020-L00189-open_question-d126eec6a5",
+      "seed_id": "SYNTH-shard-0020-L00189-open_question-d126eec6a5",
+      "source_shard_id": "shard-0020",
+      "batch_index": 5,
+      "obligation_type": "open_question",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0020",
+        "line_in_shard": 189,
+        "line_in_source": null,
+        "source_line": 3989
+      },
+      "statement": "Orchestrator auto-resolver remains qualitative: docs list project/language/domain/framework/tier/operation inputs but do not fully prioritize them relative to actor/work-type biases.",
+      "evidence_ledger_excerpt": "Orchestrator auto-resolver remains qualitative: docs list project/language/domain/framework/tier/operation inputs but do not fully prioritize them relative to actor/work-type biases.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [
+        {
+          "question": "Orchestrator auto-resolver remains qualitative: docs list project/language/domain/framework/tier/operation inputs but do not fully prioritize them relative to actor/work-type biases.",
+          "evidence_ledger_excerpt": "Orchestrator auto-resolver remains qualitative: docs list project/language/domain/framework/tier/operation inputs but do not fully prioritize them relative to actor/work-type biases.",
+          "related_paths": []
+        }
+      ],
+      "process_notes": [],
+      "exact_items": [
+        "Orchestrator auto-resolver remains qualitative: docs list project/language/domain/framework/tier/operation inputs but do not fully prioritize them relative to actor/work-type biases."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

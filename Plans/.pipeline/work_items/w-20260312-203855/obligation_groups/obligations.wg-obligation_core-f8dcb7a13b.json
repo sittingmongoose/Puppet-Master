@@ -1,0 +1,1056 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-obligation_core-f8dcb7a13b",
+  "category": "obligation_core",
+  "family_key": "requirement",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0001-005",
+      "SEED-shard-0001-009",
+      "SEED-shard-0001-010",
+      "SEED-shard-0001-011",
+      "SEED-shard-0001-013",
+      "SEED-shard-0001-016",
+      "SEED-shard-0001-018",
+      "SEED-shard-0002-001",
+      "SEED-shard-0002-004",
+      "SEED-shard-0002-012",
+      "SEED-shard-0002-018",
+      "SEED-shard-0002-021",
+      "SEED-shard-0003-003",
+      "SEED-shard-0003-005",
+      "SEED-shard-0003-011",
+      "SEED-shard-0004-003",
+      "SEED-shard-0004-004",
+      "SEED-shard-0004-006",
+      "SEED-shard-0004-007",
+      "SEED-shard-0004-016",
+      "SEED-shard-0039-003",
+      "SEED-shard-0066-005",
+      "SYNTH-shard-0009-L00096-requirement-98d5a454e9",
+      "SYNTH-shard-0009-L00154-requirement-4d56600f83",
+      "SYNTH-shard-0010-L00107-requirement-684c0882dd",
+      "SYNTH-shard-0011-L00053-requirement-fb082fe1d6",
+      "SYNTH-shard-0011-L00054-requirement-2f92b8ac43",
+      "SYNTH-shard-0011-L00055-requirement-41feb32a8e",
+      "SYNTH-shard-0011-L00154-requirement-f29a7c44e2",
+      "SYNTH-shard-0011-L00188-requirement-96b185aa78",
+      "SYNTH-shard-0012-L00018-requirement-3605a05c4d",
+      "SYNTH-shard-0012-L00048-requirement-2499013e66",
+      "SYNTH-shard-0012-L00178-requirement-dbef10d39a",
+      "SYNTH-shard-0017-L00014-requirement-bce31cfd53",
+      "SYNTH-shard-0019-L00011-requirement-2bbc6e63e9",
+      "SYNTH-shard-0019-L00086-requirement-7306c8f024",
+      "SYNTH-shard-0020-L00067-requirement-cac57d4c6d"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0001-005",
+      "seed_id": "SEED-shard-0001-005",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Node Graph tab must show graph-patch lineage: superseded nodes stay visible and clickable; generations branch; live path may rejoin downstream.",
+      "evidence_ledger_excerpt": "old invalidated/superseded nodes remain visible... patched generations branch from the old path... live path may later rejoin surviving downstream nodes",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Node Graph tab must show graph-patch lineage: superseded nodes stay visible and clickable",
+        "generations branch",
+        "live path may rejoin downstream."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0001-009",
+      "seed_id": "SEED-shard-0001-009",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Seams tab: top Feature Seams, second Work Packages; nodes as drill-in summaries; detail panel emphasizes governance/completion/integration truth.",
+      "evidence_ledger_excerpt": "top level = `Feature Seams`... second level = `Work Packages`... Seams detail panel should emphasize governance/completion/integration truth",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Seams tab: top Feature Seams, second Work Packages",
+        "nodes as drill-in summaries",
+        "detail panel emphasizes governance/completion/integration truth."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0001-010",
+      "seed_id": "SEED-shard-0001-010",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Node Graph: canvas plus right-side inspector exposing provider/model/effort/persona/account, usage/cost, worker policy, retry/review/promotion, lane/worktree/snapshot, linked evidence/artifacts; evidence links deep-link Evidence tab with selection/filter.",
+      "evidence_ledger_excerpt": "graph canvas + right-side detail inspector... clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Node Graph: canvas plus right-side inspector exposing provider/model/effort/persona/account, usage/cost, worker policy, retry/review/promotion, lane/worktree/snapshot, linked evidence/artifacts",
+        "evidence links deep-link Evidence tab with selection/filter."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0001-011",
+      "seed_id": "SEED-shard-0001-011",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Evidence tab: separate Evidence pane (verdicts/receipts/findings/reports) and Artifacts pane; bidirectional linkage; usage-linked receipts when relevant.",
+      "evidence_ledger_excerpt": "separate panes: evidence records pane... artifact pane... evidence and artifacts should remain linked bidirectionally",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Evidence tab: separate Evidence pane (verdicts/receipts/findings/reports) and Artifacts pane",
+        "bidirectional linkage",
+        "usage-linked receipts when relevant."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0001-013",
+      "seed_id": "SEED-shard-0001-013",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Inspectors stay summary/action-oriented; dense records open full-record views (attempt handoffs, reviews, corroboration, graph patch requests, state transitions, promotions, recovery).",
+      "evidence_ledger_excerpt": "dense objects should open full-record views... attempt handoff artifacts... promotion records... recovery records",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Inspectors stay summary/action-oriented",
+        "dense records open full-record views (attempt handoffs, reviews, corroboration, graph patch requests, state transitions, promotions, recovery)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0001-016",
+      "seed_id": "SEED-shard-0001-016",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Weak Integration surfaced in Seams under readable headings Wiring, Workflow, State, GUI, Design; package issues roll up to seam concerns per boundary rules.",
+      "evidence_ledger_excerpt": "group concerns under readable headings like: Wiring... Design... package issues should roll up to seam concerns only when they cross package/seam/user-visible boundaries",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Weak Integration surfaced in Seams under readable headings Wiring, Workflow, State, GUI, Design",
+        "package issues roll up to seam concerns per boundary rules."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0001-018",
+      "seed_id": "SEED-shard-0001-018",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Blocked states always expose blocked reason, blocked owner, time blocked, next step; blocked ownership uses stable labels beginning Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource.",
+      "evidence_ledger_excerpt": "blocked states should always expose: blocked reason... blocked owner... blocked ownership should be normalized with stable labels: `Runtime`... `External Resource`",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Blocked states always expose blocked reason, blocked owner, time blocked, next step",
+        "blocked ownership uses stable labels beginning Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0002-001",
+      "seed_id": "SEED-shard-0002-001",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Alert levels: Info, Warning, Attention, Action Required; Dashboard summary urgency; Orchestrator detailed context; chat only when user resolution/decision needed.",
+      "evidence_ledger_excerpt": "alert levels should roughly separate into: `Info`... `Action Required`... chat thread = only for situations that actually need user resolution/decision",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Alert levels: Info, Warning, Attention, Action Required",
+        "Dashboard summary urgency",
+        "Orchestrator detailed context",
+        "chat only when user resolution/decision needed."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0002-004",
+      "seed_id": "SEED-shard-0002-004",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Tab badges sparse; Progress badge = meaningful attention/action-required count; other tabs prefer targeted counts or dot badges.",
+      "evidence_ledger_excerpt": "badges should stay sparse and purposeful... `Progress` badge should represent meaningful attention/action-required count",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Tab badges sparse",
+        "Progress badge = meaningful attention/action-required count",
+        "other tabs prefer targeted counts or dot badges."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0002-012",
+      "seed_id": "SEED-shard-0002-012",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Orchestrator widgets consume stable shared projections with identity, scope, filter/sort/display config, projection ref\u2014not raw event streams or bespoke queries.",
+      "evidence_ledger_excerpt": "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Orchestrator widgets consume stable shared projections with identity, scope, filter/sort/display config, projection ref\u2014not raw event streams or bespoke queries."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0002-018",
+      "seed_id": "SEED-shard-0002-018",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Orchestrator supports saved views per project for tabs/filters/sort/grouping/widget layout; Seams default sort most operationally problematic first; History and Ledger newest first.",
+      "evidence_ledger_excerpt": "Orchestrator should support saved views (at least per project)... `Seams` default sort = most operationally problematic first",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Orchestrator supports saved views per project for tabs/filters/sort/grouping/widget layout",
+        "Seams default sort most operationally problematic first",
+        "History and Ledger newest first."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0002-021",
+      "seed_id": "SEED-shard-0002-021",
+      "source_shard_id": "shard-0002",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0002",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Override display must show Inherited, Overridden, Effective without separate modal for resolution understanding.",
+      "evidence_ledger_excerpt": "UI should explicitly show: `Inherited`... `Effective`... users should not need a separate modal just to understand resolution/inheritance/fallback",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Override display must show Inherited, Overridden, Effective without separate modal for resolution understanding."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0003-003",
+      "seed_id": "SEED-shard-0003-003",
+      "source_shard_id": "shard-0003",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0003",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Any provider-using actor participates in same pre-send and post-send account-health loop (assistant, interviewer, requirements builder, overseers, node workers, delegated workers).",
+      "evidence_ledger_excerpt": "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Any provider-using actor participates in same pre-send and post-send account-health loop (assistant, interviewer, requirements builder, overseers, node workers, delegated workers)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0003-005",
+      "seed_id": "SEED-shard-0003-005",
+      "source_shard_id": "shard-0003",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0003",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Retain structured attempt handoff per failed node attempt; default retry fresh agent/subagent; policy-driven budgets; failures route to remediation, graph patch, or HITL as appropriate.",
+      "evidence_ledger_excerpt": "each failed node attempt should leave a structured receipt/handoff artifact... default retry model should use a fresh agent/subagent for the next attempt",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Retain structured attempt handoff per failed node attempt",
+        "default retry fresh agent/subagent",
+        "policy-driven budgets",
+        "failures route to remediation, graph patch, or HITL as appropriate."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0003-011",
+      "seed_id": "SEED-shard-0003-011",
+      "source_shard_id": "shard-0003",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0003",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "GUI execution policy: user chooses fresh vs same agent/subagent on retry; subagents default for nodes with override to full agents; worker kind and retry-context separate settings.",
+      "evidence_ledger_excerpt": "GUI should let the user choose whether retries use: a fresh agent/subagent (default)... subagents by default... configurable override: use full agents for nodes",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "GUI execution policy: user chooses fresh vs same agent/subagent on retry",
+        "subagents default for nodes with override to full agents",
+        "worker kind and retry-context separate settings."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0004-003",
+      "seed_id": "SEED-shard-0004-003",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Node personas auto from work/type; global node-worker policy override only (not per-node); feature seam, work package, node each have independent provider/model/effort with defaults and overrides.",
+      "evidence_ledger_excerpt": "node personas should be auto-selected from node work/type... `feature seam`, `work package`, and `node` should each have independent provider/model/effort settings",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Node personas auto from work/type",
+        "global node-worker policy override only (not per-node)",
+        "feature seam, work package, node each have independent provider/model/effort with defaults and overrides."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0004-004",
+      "seed_id": "SEED-shard-0004-004",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Settings define whether work-package overseers may spawn subagents for node work; if yes, provider/model/effort configurable; package worktrees preferred over per-node at scale; dependent-node lane ordering for bounded mutable pool.",
+      "evidence_ledger_excerpt": "settings should define whether work-package overseers may spawn subagents for node work... package-based worktrees feel more manageable than per-node worktrees at expected node counts",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Settings define whether work-package overseers may spawn subagents for node work",
+        "if yes, provider/model/effort configurable",
+        "package worktrees preferred over per-node at scale",
+        "dependent-node lane ordering for bounded mutable pool."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0004-006",
+      "seed_id": "SEED-shard-0004-006",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Worktrees visible Orchestrator and likely Source Control; separate orchestrator-managed from user/assistant worktrees; multi-project concurrent with per-project data isolation.",
+      "evidence_ledger_excerpt": "worktrees should be visible in the Orchestrator page and likely also in Source Control... Orchestrator-managed worktrees should likely be separated from other worktrees... data/storage shape should be per-project",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Worktrees visible Orchestrator and likely Source Control",
+        "separate orchestrator-managed from user/assistant worktrees",
+        "multi-project concurrent with per-project data isolation."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0004-007",
+      "seed_id": "SEED-shard-0004-007",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Multi-account: switch accounts on exhaustion/prediction; model requested vs effective runtime identity including account selection/fallback at attempt level.",
+      "evidence_ledger_excerpt": "if a node exhausts usage or multi-account logic predicts imminent exhaustion, execution should be able to switch to another account... requested vs effective execution identity... persisted at attempt level",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Multi-account: switch accounts on exhaustion/prediction",
+        "model requested vs effective runtime identity including account selection/fallback at attempt level."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0004-016",
+      "seed_id": "SEED-shard-0004-016",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Design adjustments: effective_account_id and switch/fallback reason on attempts; multi-account policy with cooldown and retry budget; pool snapshot selection; supplemental log/heuristics not canonical quota truth.",
+      "evidence_ledger_excerpt": "add explicit `effective_account_id` and switch/fallback reason to attempt/runtime visibility... log parsing should not be treated as canonical quota truth",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Design adjustments: effective_account_id and switch/fallback reason on attempts",
+        "multi-account policy with cooldown and retry budget",
+        "pool snapshot selection",
+        "supplemental log/heuristics not canonical quota truth."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0039-003",
+      "seed_id": "SEED-shard-0039-003",
+      "source_shard_id": "shard-0039",
+      "batch_index": 10,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0039",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Attention-center items should store inline route payload or stable ref\u2014never depend on ambient UI state to open correctly.",
+      "evidence_ledger_excerpt": "attention-center items should likely store either an inline route payload or a stable ref to one; they should not depend on ambient current UI state to open correctly",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Attention-center items should store inline route payload or stable ref\u2014never depend on ambient UI state to open correctly."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SEED-shard-0066-005",
+      "seed_id": "SEED-shard-0066-005",
+      "source_shard_id": "shard-0066",
+      "batch_index": 17,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0066",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Research stream wording must be deterministic: no hedge words for canonical direction; unresolved points stated as unresolved.",
+      "evidence_ledger_excerpt": "Use deterministic wording in this research stream.\n- Do not use hedge words such as `optional`, `maybe`, or similar softeners when describing canonical design direction.\n- When a point is still unresolved, state that it is unresolved rather than softening the recommendation.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Research stream wording must be deterministic: no hedge words for canonical direction",
+        "unresolved points stated as unresolved."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0009-L00096-requirement-98d5a454e9",
+      "seed_id": "SYNTH-shard-0009-L00096-requirement-98d5a454e9",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 96,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Define the package/seam/lane/promotion object family canonically\u2014few owner docs define these objects despite downstream dependence.",
+      "evidence_ledger_excerpt": "Define the package/seam/lane/promotion object family canonically\u2014few owner docs define these objects despite downstream dependence.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Define the package/seam/lane/promotion object family canonically\u2014few owner docs define these objects despite downstream dependence."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0009-L00154-requirement-4d56600f83",
+      "seed_id": "SYNTH-shard-0009-L00154-requirement-4d56600f83",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 154,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "plan_graph and project_plan_graph_index schemas assume node-only lifecycle and lexicographic selection without blocked/contaminated/restore-required states.",
+      "evidence_ledger_excerpt": "plan_graph and project_plan_graph_index schemas assume node-only lifecycle and lexicographic selection without blocked/contaminated/restore-required states.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "plan_graph and project_plan_graph_index schemas assume node-only lifecycle and lexicographic selection without blocked/contaminated/restore-required states."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0010-L00107-requirement-684c0882dd",
+      "seed_id": "SYNTH-shard-0010-L00107-requirement-684c0882dd",
+      "source_shard_id": "shard-0010",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0010",
+        "line_in_shard": 107,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Define package-based lane-pool worktree policy end-to-end including contamination, safe-point, restore, and shared Orchestrator/Source Control visibility.",
+      "evidence_ledger_excerpt": "Define package-based lane-pool worktree policy end-to-end including contamination, safe-point, restore, and shared Orchestrator/Source Control visibility.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Define package-based lane-pool worktree policy end-to-end including contamination, safe-point, restore, and shared Orchestrator/Source Control visibility."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0011-L00053-requirement-fb082fe1d6",
+      "seed_id": "SYNTH-shard-0011-L00053-requirement-fb082fe1d6",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 53,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Unify bridged-provider envelopes around Contracts_V0 / Prompt_Pipeline auth/account fields.",
+      "evidence_ledger_excerpt": "Unify bridged-provider envelopes around Contracts_V0 / Prompt_Pipeline auth/account fields.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Unify bridged-provider envelopes around Contracts_V0 / Prompt_Pipeline auth/account fields."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0011-L00054-requirement-2f92b8ac43",
+      "seed_id": "SYNTH-shard-0011-L00054-requirement-2f92b8ac43",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 54,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Replace tier-bound identity wording in Prompt_Pipeline, Models_System, Personas with package/seam/lane-aware ownership.",
+      "evidence_ledger_excerpt": "Replace tier-bound identity wording in Prompt_Pipeline, Models_System, Personas with package/seam/lane-aware ownership.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Replace tier-bound identity wording in Prompt_Pipeline, Models_System, Personas with package/seam/lane-aware ownership."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0011-L00055-requirement-41feb32a8e",
+      "seed_id": "SYNTH-shard-0011-L00055-requirement-41feb32a8e",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 55,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover rules.",
+      "evidence_ledger_excerpt": "Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover rules.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover rules."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0011-L00154-requirement-f29a7c44e2",
+      "seed_id": "SYNTH-shard-0011-L00154-requirement-f29a7c44e2",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 154,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Historical run/package/node/lane references must survive live worktree cleanup; missing worktrees render as historical/retired/removed with lineage preserved.",
+      "evidence_ledger_excerpt": "Historical run/package/node/lane references must survive live worktree cleanup; missing worktrees render as historical/retired/removed with lineage preserved.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Historical run/package/node/lane references must survive live worktree cleanup",
+        "missing worktrees render as historical/retired/removed with lineage preserved."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0011-L00188-requirement-96b185aa78",
+      "seed_id": "SYNTH-shard-0011-L00188-requirement-96b185aa78",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 188,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Reword Source Control rows from owner run/tier toward owner package/lane (run reference secondary).",
+      "evidence_ledger_excerpt": "Reword Source Control rows from owner run/tier toward owner package/lane (run reference secondary).",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Reword Source Control rows from owner run/tier toward owner package/lane (run reference secondary)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0012-L00018-requirement-3605a05c4d",
+      "seed_id": "SYNTH-shard-0012-L00018-requirement-3605a05c4d",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 18,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Source Control rows stay filesystem/Git oriented but must show orchestration metadata (owning package/lane, run ref, lifecycle, blocked/recovery) to prevent isolation drift.",
+      "evidence_ledger_excerpt": "Source Control rows stay filesystem/Git oriented but must show orchestration metadata (owning package/lane, run ref, lifecycle, blocked/recovery) to prevent isolation drift.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Source Control rows stay filesystem/Git oriented but must show orchestration metadata (owning package/lane, run ref, lifecycle, blocked/recovery) to prevent isolation drift."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0012-L00048-requirement-2499013e66",
+      "seed_id": "SYNTH-shard-0012-L00048-requirement-2499013e66",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 48,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Source Control panel is narrow: information-dense rows, compact chips, expandable details, deep-link to wider surfaces when context overflows.",
+      "evidence_ledger_excerpt": "Source Control panel is narrow: information-dense rows, compact chips, expandable details, deep-link to wider surfaces when context overflows.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Source Control panel is narrow: information-dense rows, compact chips, expandable details, deep-link to wider surfaces when context overflows."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0012-L00178-requirement-dbef10d39a",
+      "seed_id": "SYNTH-shard-0012-L00178-requirement-dbef10d39a",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 178,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Rewrite widget catalog around operational summary widgets; move data contracts off legacy tier events onto projections.",
+      "evidence_ledger_excerpt": "Rewrite widget catalog around operational summary widgets; move data contracts off legacy tier events onto projections.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Rewrite widget catalog around operational summary widgets",
+        "move data contracts off legacy tier events onto projections."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0017-L00014-requirement-bce31cfd53",
+      "seed_id": "SYNTH-shard-0017-L00014-requirement-bce31cfd53",
+      "source_shard_id": "shard-0017",
+      "batch_index": 5,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0017",
+        "line_in_shard": 14,
+        "line_in_source": null,
+        "source_line": 3214
+      },
+      "statement": "Classify Orchestrator/runtime/UI actions by both confirmation level (none | light | strong | hard_gate) and reversibility (immediate_undo | compensating_action_only | non_reversible), replacing ad hoc per-surface confirmation behavior.",
+      "evidence_ledger_excerpt": "Classify Orchestrator/runtime/UI actions by both confirmation level (none | light | strong | hard_gate) and reversibility (immediate_undo | compensating_action_only | non_reversible), replacing ad hoc per-surface confirmation behavior.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Classify Orchestrator/runtime/UI actions by both confirmation level (none | light | strong | hard_gate) and reversibility (immediate_undo | compensating_action_only | non_reversible), replacing ad hoc per-surface confirmation behavior."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0019-L00011-requirement-2bbc6e63e9",
+      "seed_id": "SYNTH-shard-0019-L00011-requirement-2bbc6e63e9",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 11,
+        "line_in_source": null,
+        "source_line": 3611
+      },
+      "statement": "Exact-record surfaces must export canonical records, not UI-transformed rows: Ledger export preserves canonical ids and structured fields; JSON/JSONL stays close to canonical record shape; CSV is a convenience projection only.",
+      "evidence_ledger_excerpt": "Exact-record surfaces must export canonical records, not UI-transformed rows: Ledger export preserves canonical ids and structured fields; JSON/JSONL stays close to canonical record shape; CSV is a convenience projection only.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Exact-record surfaces must export canonical records, not UI-transformed rows: Ledger export preserves canonical ids and structured fields",
+        "JSON/JSONL stays close to canonical record shape",
+        "CSV is a convenience projection only."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0019-L00086-requirement-7306c8f024",
+      "seed_id": "SYNTH-shard-0019-L00086-requirement-7306c8f024",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 86,
+        "line_in_source": null,
+        "source_line": 3686
+      },
+      "statement": "Settings/runtime presentation must keep three axes distinct: source axis (inherit/override / where value came from), request axis (what the run asked for), execution/result axis (honored/skipped/clamped effective outcome).",
+      "evidence_ledger_excerpt": "Settings/runtime presentation must keep three axes distinct: source axis (inherit/override / where value came from), request axis (what the run asked for), execution/result axis (honored/skipped/clamped effective outcome).",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Settings/runtime presentation must keep three axes distinct: source axis (inherit/override / where value came from), request axis (what the run asked for), execution/result axis (honored/skipped/clamped effective outcome)."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    },
+    {
+      "obligation_id": "OBL-wg-obligation_core-f8dcb7a13b--SYNTH-shard-0020-L00067-requirement-cac57d4c6d",
+      "seed_id": "SYNTH-shard-0020-L00067-requirement-cac57d4c6d",
+      "source_shard_id": "shard-0020",
+      "batch_index": 5,
+      "obligation_type": "requirement",
+      "work_group_category": "obligation_core",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0020",
+        "line_in_shard": 67,
+        "line_in_source": null,
+        "source_line": 3867
+      },
+      "statement": "Preserve the global requested-Persona precedence chain while requiring each surface auto resolver to emit a deterministic ranked candidate set plus structured explanation metadata.",
+      "evidence_ledger_excerpt": "Preserve the global requested-Persona precedence chain while requiring each surface auto resolver to emit a deterministic ranked candidate set plus structured explanation metadata.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Preserve the global requested-Persona precedence chain while requiring each surface auto resolver to emit a deterministic ranked candidate set plus structured explanation metadata."
+      ],
+      "required_action": "Encode this as a durable, testable obligation in canonical planning documentation with traceable lineage to the working ledger."
+    }
+  ]
+}

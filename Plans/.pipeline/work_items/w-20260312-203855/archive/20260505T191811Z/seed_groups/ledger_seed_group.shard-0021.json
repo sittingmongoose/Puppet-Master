@@ -1,0 +1,206 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "c3-shard-0021",
+  "shard_id": "shard-0021",
+  "coverage": {
+    "shard_id": "shard-0021",
+    "start_line": 3575,
+    "end_line": 3764,
+    "line_count": 190,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0021.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 3583,
+        "text": "`Ledger export` should be record-shaped first, CSV/JSON second",
+        "tokens": [
+          "Ledger export"
+        ]
+      },
+      {
+        "line": 3584,
+        "text": "`Evidence export` should preserve evidence/artifact distinction",
+        "tokens": [
+          "Evidence export"
+        ]
+      },
+      {
+        "line": 3594,
+        "text": "every non-trivial Orchestrator export should include a manifest",
+        "tokens": []
+      },
+      {
+        "line": 3614,
+        "text": "exact-record surfaces should export canonical records, not UI-specific transformed rows",
+        "tokens": []
+      },
+      {
+        "line": 3649,
+        "text": "These should not be treated as canonical archival formats.",
+        "tokens": []
+      },
+      {
+        "line": 3670,
+        "text": "requested/effective Persona display requirements",
+        "tokens": []
+      },
+      {
+        "line": 3744,
+        "text": "Requested/effective must remain runtime-facing and auditable.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 3659,
+        "text": "Add a shared Orchestrator export manifest contract.",
+        "tokens": []
+      },
+      {
+        "line": 3661,
+        "text": "Keep CSV/table exports as convenience view exports, not as canonical archival exports.",
+        "tokens": []
+      },
+      {
+        "line": 3744,
+        "text": "Requested/effective must remain runtime-facing and auditable.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 3595,
+        "text": "Candidate manifest fields:",
+        "tokens": []
+      },
+      {
+        "line": 3604,
+        "text": "included_record_ids[]",
+        "tokens": []
+      },
+      {
+        "line": 3607,
+        "text": "schema_version",
+        "tokens": []
+      },
+      {
+        "line": 3618,
+        "text": "`Ledger` export should preserve canonical ids and structured fields",
+        "tokens": [
+          "Ledger"
+        ]
+      },
+      {
+        "line": 3620,
+        "text": "JSON/JSONL should remain close to canonical record structure",
+        "tokens": []
+      },
+      {
+        "line": 3633,
+        "text": "exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from",
+        "tokens": []
+      },
+      {
+        "line": 3656,
+        "text": "No shared export-manifest contract is obvious for Orchestrator record families.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 3594,
+        "text": "every non-trivial Orchestrator export should include a manifest",
+        "tokens": []
+      },
+      {
+        "line": 3610,
+        "text": "This makes exported bundles inspectable and auditable later.",
+        "tokens": []
+      },
+      {
+        "line": 3671,
+        "text": "requested/effective platform/model/variant/runtime controls",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 3584,
+        "text": "`Evidence export` should preserve evidence/artifact distinction",
+        "tokens": [
+          "Evidence export"
+        ]
+      },
+      {
+        "line": 3623,
+        "text": "Evidence export should likely include:",
+        "tokens": []
+      },
+      {
+        "line": 3666,
+        "text": "exact-record exports will depend on the record-envelope work from the previous seam",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 3679,
+        "text": "treat these as three separate axes:",
+        "tokens": []
+      },
+      {
+        "line": 3735,
+        "text": "UI should show the winning source, not force the user to reconstruct precedence from docs",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 3638,
+        "text": "removed worktree or retired graph path still exports as record metadata with historical status",
+        "tokens": []
+      },
+      {
+        "line": 3662,
+        "text": "Preserve historical/superseded/removed semantics in exported metadata.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 3595,
+        "text": "Candidate manifest fields:",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 3655,
+        "text": "Current Orchestrator usage/evidence export language is too UI-view-centric.",
+        "tokens": []
+      },
+      {
+        "line": 3675,
+        "text": "The main gap is presentation coherence.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 3660,
+        "text": "Define record-first exports for Ledger/History/concern/review/promotion/patch/recovery families.",
+        "tokens": []
+      },
+      {
+        "line": 3729,
+        "text": "manual override",
+        "tokens": []
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

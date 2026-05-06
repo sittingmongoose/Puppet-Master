@@ -1,0 +1,1337 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0062",
+  "coverage": {
+    "shard_id": "shard-0062",
+    "start_line": 11452,
+    "end_line": 11637,
+    "line_count": 186,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0062.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 23,
+        "text": "`resume_url` should end up as a transport/serialization concern, not the hidden canonical route contract.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "`/mode` is now a payload-shape contradiction because the current single `{ mode }` contract cannot carry the requested/effective overlay/runtime split already required elsewhere.",
+        "tokens": [
+          "/mode",
+          "{ mode }"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "Wiring/gate trust failures are now very explicit:",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "`Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+        "tokens": [
+          "Wiring_Matrix.schema.json"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "blocked-governance attribution (`blocked_owner` or equivalent) is still absent from canonical blocked projection shape even though UX/governance needs it.",
+        "tokens": [
+          "blocked_owner"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Gate/evidence closeout stayed productive:",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "`run-gates` still executes checks with no numbered gate mapping.",
+        "tokens": [
+          "run-gates"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "`pm.evidence.schema.v1` still cannot represent the tri-state or structured payloads some gates already claim to require.",
+        "tokens": [
+          "pm.evidence.schema.v1"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "`memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+        "tokens": [
+          "attention_required",
+          "memory.gist.*"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Several owner docs are still broken in ways that directly defeat the machine-verification/gate story they claim to support.",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "Any future reconciliation work should prioritize:",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "wiring/gate extraction/schema hardening,",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 8,
+        "text": "Keep `UICommand` as the dispatch envelope, but give `args` a normalized target model when the command is navigation/open/focus-oriented.",
+        "tokens": [
+          "UICommand",
+          "args"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract.",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "Keep `generated://<artifact_id>` as the transient editor/source realization for those subjects, not the durable identity.",
+        "tokens": [
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "The final Codex pass still added meaningful last-mile contradictions instead of flattening into simple confirmation, especially where owner docs remain mechanically unverifiable or structurally inconsistent.",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.",
+        "tokens": [
+          "/compact"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Project artifact/file-management closeout sharpened remaining deterministic gaps:",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "`workflow_run_id` vs `run_id` lineage remains unresolved.",
+        "tokens": [
+          "run_id",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Glossary/Crosswalk closeout findings remain structural blockers:",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.",
+        "tokens": [
+          "ArtifactStore",
+          "Seglog"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "account-aware strategy ordering remains underdefined when run-level DAE strategy and attempt-level account re-resolution disagree.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "the remaining missing orchestrator command gap set is now tight and explicit.",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "`live.*` remains plan-local instead of contract-registered.",
+        "tokens": [
+          "live.*"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Glossary/Crosswalk still are not strong enough to absorb and normalize rewrite-era terms and primitives, which keeps downstream specs append-only and contradictory.",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "After this final tranche, run closeout verification before claiming completion; Codex still found useful signal, but it also suggests the main remaining risk is uneven coverage on docs that never got the full ordered pass sequence.",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "Use the next coverage audit to decide whether the remaining uncovered authored docs still need the same six-model treatment or whether this broader second sweep has reached sufficient high-signal closure.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "tokens": [
+          "Plans/*.md"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 3,
+        "text": "The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.",
+        "tokens": []
+      },
+      {
+        "line": 4,
+        "text": "Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner.",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "Add a canonical route-target / subject-open contract family to `Plans/Contracts_V0.md`, above individual surface commands.",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "`resume_url` should end up as a transport/serialization concern, not the hidden canonical route contract.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "Upstream draft/generation flows already rely on artifact-first behavior, but there is still no single shared contract saying these surfaces open by subject identity first and path second.",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "`Project_Output_Artifacts.md` gets canonical persistence right, but does not itself own the GUI/open-resolution contract.",
+        "tokens": [
+          "Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "the chat event seam is now clearly split not only by phantom events but by canonical namespace (`chat.thread.created` vs `chat.thread_created`) and likely terminal-state naming (`run.cancelled` vs `run.completed`).",
+        "tokens": [
+          "chat.thread.created",
+          "chat.thread_created",
+          "run.cancelled",
+          "run.completed"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "`/mode` is now a payload-shape contradiction because the current single `{ mode }` contract cannot carry the requested/effective overlay/runtime split already required elsewhere.",
+        "tokens": [
+          "/mode",
+          "{ mode }"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped `cmd.*.json` strings.",
+        "tokens": [
+          "cmd.*.json"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "`Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+        "tokens": [
+          "Wiring_Matrix.schema.json"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "pass-report finality is still tied to `workflow_run_id` without that key being fully carried through the base artifact-event contract.",
+        "tokens": [
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "receipt records are still the intended bridge, but runtime-artifact routing still lacks explicit receipt→artifact linkage.",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "blocked-governance attribution (`blocked_owner` or equivalent) is still absent from canonical blocked projection shape even though UX/governance needs it.",
+        "tokens": [
+          "blocked_owner"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "`pm.evidence.schema.v1` still cannot represent the tri-state or structured payloads some gates already claim to require.",
+        "tokens": [
+          "pm.evidence.schema.v1"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "`CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.",
+        "tokens": [
+          "CustomHeadlessTool"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "`live.*` remains plan-local instead of contract-registered.",
+        "tokens": [
+          "live.*"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "STATE_FILES.md",
+        "tokens": [
+          "STATE_FILES.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/evidence.schema.json",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Runtime-governance docs still lack a few critical ownership fields/rules (startup recovery handshake, blocked-owner attribution, DAE restart/intercept model).",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners.",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "wiring/gate extraction/schema hardening,",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 3,
+        "text": "The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.",
+        "tokens": []
+      },
+      {
+        "line": 4,
+        "text": "Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner.",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "Add a canonical route-target / subject-open contract family to `Plans/Contracts_V0.md`, above individual surface commands.",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "Keep `UICommand` as the dispatch envelope, but give `args` a normalized target model when the command is navigation/open/focus-oriented.",
+        "tokens": [
+          "UICommand",
+          "args"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "Treat `resume_url` as one serialized transport form of the same canonical route-target model rather than a parallel stronger primitive.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "tab_id?",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "`resume_url` should end up as a transport/serialization concern, not the hidden canonical route contract.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "`chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "chain-wizard-flexibility.md",
+          "interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "filesystem path is a later materialization or backing-document assignment",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "Upstream draft/generation flows already rely on artifact-first behavior, but there is still no single shared contract saying these surfaces open by subject identity first and path second.",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with subject-open routing.",
+        "tokens": [
+          "Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "Make explicit that staged/generated planning outputs enter the UI as `artifact:<artifact_id>` subjects before any backing path exists.",
+        "tokens": [
+          "artifact:<artifact_id>"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "The planning side is already proving that path-first opening is too weak for the rewrite.",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "receipt records are still the intended bridge, but runtime-artifact routing still lacks explicit receipt→artifact linkage.",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.",
+        "tokens": [
+          "attempt_id",
+          "blocked_sequence",
+          "provider_attempt_ref",
+          "safe_point_id",
+          "scheduler_lane"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.",
+        "tokens": [
+          "ArtifactStore",
+          "Seglog"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce remote side-effect approval without a pre-dispatch intercept path.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "the remaining missing orchestrator command gap set is now tight and explicit.",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "`CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.",
+        "tokens": [
+          "CustomHeadlessTool"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Event/command naming and routing are still split enough that two “correct” implementations could disagree materially and still point at different local SSOTs.",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 69,
+        "text": "This seam is mostly confirming alignment, not exposing a major contradiction.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "The final Codex pass still added meaningful last-mile contradictions instead of flattening into simple confirmation, especially where owner docs remain mechanically unverifiable or structurally inconsistent.",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped `cmd.*.json` strings.",
+        "tokens": [
+          "cmd.*.json"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "`UI_Wiring_Rules.md` still has no deterministic alias/deprecated-ID handling, no enforced stale revalidation handshake, and no inverse owner-doc-to-catalog coverage rule.",
+        "tokens": [
+          "UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "Crosswalk and GitHub Integration both still place normative content after `References`, confirming append-after-references drift across owner docs.",
+        "tokens": [
+          "References"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Gate/evidence closeout stayed productive:",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "`pm.evidence.schema.v1` still cannot represent the tri-state or structured payloads some gates already claim to require.",
+        "tokens": [
+          "pm.evidence.schema.v1"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/evidence.schema.json",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "After this final tranche, run closeout verification before claiming completion; Codex still found useful signal, but it also suggests the main remaining risk is uneven coverage on docs that never got the full ordered pass sequence.",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "Use the next coverage audit to decide whether the remaining uncovered authored docs still need the same six-model treatment or whether this broader second sweep has reached sufficient high-signal closure.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "tokens": [
+          "Plans/*.md"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 4,
+        "text": "Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner.",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "This is now mostly an owner-doc problem, not a conceptual one; the identity vocabulary already exists in scattered places.",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      },
+      {
+        "line": 66,
+        "text": "Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "The final Codex pass still added meaningful last-mile contradictions instead of flattening into simple confirmation, especially where owner docs remain mechanically unverifiable or structurally inconsistent.",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "Command/event ownership tightened at the end:",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.",
+        "tokens": [
+          "/compact"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "`Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+        "tokens": [
+          "Wiring_Matrix.schema.json"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "`UI_Wiring_Rules.md` still has no deterministic alias/deprecated-ID handling, no enforced stale revalidation handshake, and no inverse owner-doc-to-catalog coverage rule.",
+        "tokens": [
+          "UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.",
+        "tokens": [
+          "attempt_id",
+          "blocked_sequence",
+          "provider_attempt_ref",
+          "safe_point_id",
+          "scheduler_lane"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "Crosswalk and GitHub Integration both still place normative content after `References`, confirming append-after-references drift across owner docs.",
+        "tokens": [
+          "References"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Runtime-governance closeout sharpened a few final owner gaps:",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "startup recovery is still split not only by owner doc but by incompatible recovery objects and emission boundaries.",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "blocked-governance attribution (`blocked_owner` or equivalent) is still absent from canonical blocked projection shape even though UX/governance needs it.",
+        "tokens": [
+          "blocked_owner"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "`CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.",
+        "tokens": [
+          "CustomHeadlessTool"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "`memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+        "tokens": [
+          "attention_required",
+          "memory.gist.*"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "Repeated cross-owner dependencies sharpened by Codex:",
+        "tokens": []
+      },
+      {
+        "line": 156,
+        "text": "Several owner docs are still broken in ways that directly defeat the machine-verification/gate story they claim to support.",
+        "tokens": []
+      },
+      {
+        "line": 159,
+        "text": "Runtime-governance docs still lack a few critical ownership fields/rules (startup recovery handshake, blocked-owner attribution, DAE restart/intercept model).",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "startup/blocked/DAE governance ownership.",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "The owner-doc tranche now has the full requested multi-model sequence and is a strong reference set for what “fully swept” looks like.",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 99,
+        "text": "`UI_Wiring_Rules.md` still has no deterministic alias/deprecated-ID handling, no enforced stale revalidation handshake, and no inverse owner-doc-to-catalog coverage rule.",
+        "tokens": [
+          "UI_Wiring_Rules.md"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 7,
+        "text": "Add a canonical route-target / subject-open contract family to `Plans/Contracts_V0.md`, above individual surface commands.",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "Keep `UICommand` as the dispatch envelope, but give `args` a normalized target model when the command is navigation/open/focus-oriented.",
+        "tokens": [
+          "UICommand",
+          "args"
+        ]
+      },
+      {
+        "line": 34,
+        "text": "The planning/output side is already closer to the subject-open model than the file-opening docs are.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "`chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "chain-wizard-flexibility.md",
+          "interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract.",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "Upstream draft/generation flows already rely on artifact-first behavior, but there is still no single shared contract saying these surfaces open by subject identity first and path second.",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "`Project_Output_Artifacts.md` gets canonical persistence right, but does not itself own the GUI/open-resolution contract.",
+        "tokens": [
+          "Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with subject-open routing.",
+        "tokens": [
+          "Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "The planning side is already proving that path-first opening is too weak for the rewrite.",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "tokens": [
+          "Plans/*.md"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 95,
+        "text": "Wiring/gate trust failures are now very explicit:",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "Project artifact/file-management closeout sharpened remaining deterministic gaps:",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "`workflow_run_id` vs `run_id` lineage remains unresolved.",
+        "tokens": [
+          "run_id",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Glossary/Crosswalk closeout findings remain structural blockers:",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.",
+        "tokens": [
+          "ArtifactStore",
+          "Seglog"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Runtime-governance closeout sharpened a few final owner gaps:",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "`newtools.md` and assistant-memory still ended with unresolved canonicalization gaps:",
+        "tokens": [
+          "newtools.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "the remaining missing orchestrator command gap set is now tight and explicit.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "After this final tranche, run closeout verification before claiming completion; Codex still found useful signal, but it also suggests the main remaining risk is uneven coverage on docs that never got the full ordered pass sequence.",
+        "tokens": []
+      },
+      {
+        "line": 173,
+        "text": "Codex did not invalidate earlier findings; it mostly tightened them into more concrete, machine-verification-relevant failures.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 7,
+        "text": "Add a canonical route-target / subject-open contract family to `Plans/Contracts_V0.md`, above individual surface commands.",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 50,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/Commands_System.md",
+        "tokens": [
+          "Plans/Commands_System.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Plans/newtools.md",
+        "tokens": [
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/assistant-memory-subsystem.md",
+        "tokens": [
+          "Plans/assistant-memory-subsystem.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/Commands_System.md",
+        "tokens": [
+          "Plans/Commands_System.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/Run_Modes.md",
+        "tokens": [
+          "Plans/Run_Modes.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/newtools.md",
+        "tokens": [
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/assistant-memory-subsystem.md",
+        "tokens": [
+          "Plans/assistant-memory-subsystem.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/Media_Generation_and_Capabilities.md",
+        "tokens": [
+          "Plans/Media_Generation_and_Capabilities.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/evidence.schema.json",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+        "tokens": [
+          "Plans/*.md"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 181,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 182,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 183,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

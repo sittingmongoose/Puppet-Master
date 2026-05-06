@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-012",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-012.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- project/dashboard interaction docs",
+      "line_in_shard": 1
+    },
+    {
+      "type": "decision",
+      "text": "## Research Progress - 2026-03-16 - Terminology Decision",
+      "line_in_shard": 5
+    },
+    {
+      "type": "decision",
+      "text": "### Confirmed decision",
+      "line_in_shard": 7
+    },
+    {
+      "type": "data_shape",
+      "text": "- Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.",
+      "line_in_shard": 11
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Source Control = concrete Git/worktree inspection and mutation surface",
+      "line_in_shard": 15
+    },
+    {
+      "type": "decision",
+      "text": "### Recommended UI contract from this decision",
+      "line_in_shard": 17
+    },
+    {
+      "type": "requirement",
+      "text": "- Source Control worktree rows remain concrete and filesystem/Git oriented, but must show enough orchestration metadata to prevent isolation drift:",
+      "line_in_shard": 18
+    },
+    {
+      "type": "data_shape",
+      "text": "- Do not rename Source Control objects so aggressively that `worktree` becomes hidden or secondary there.",
+      "line_in_shard": 31
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Lane` is important for runtime/governance modeling, but in Source Control it should appear as ownership/context metadata for a worktree, not replace worktree as the primary object.",
+      "line_in_shard": 32
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Follow-on doc impact",
+      "line_in_shard": 34
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- enrich row metadata with package/lane/run ownership and lifecycle state",
+      "line_in_shard": 37
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 41
+    },
+    {
+      "type": "requirement",
+      "text": "- Source Control rows and tabs must stay information-dense but selective.",
+      "line_in_shard": 51
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 64
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 67
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The doc still assumes multiple Orchestrator tabs are widget-composed pages:",
+      "line_in_shard": 76
+    },
+    {
+      "type": "process_defect",
+      "text": "- This now conflicts with current rewrite direction:",
+      "line_in_shard": 79
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `History` and `Ledger` stay distinct for chronology vs exact record inspection",
+      "line_in_shard": 84
+    },
+    {
+      "type": "requirement",
+      "text": "- widgets must consume stable orchestrator projections and canonical record/query contracts",
+      "line_in_shard": 104
+    },
+    {
+      "type": "requirement",
+      "text": "- widgets must not define meaning by subscribing directly to legacy event names or tier-specific objects",
+      "line_in_shard": 105
+    },
+    {
+      "type": "process_defect",
+      "text": "- attention/blocker projection",
+      "line_in_shard": 111
+    },
+    {
+      "type": "requirement",
+      "text": "- widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules",
+      "line_in_shard": 124
+    },
+    {
+      "type": "data_shape",
+      "text": "- custom object model",
+      "line_in_shard": 132
+    },
+    {
+      "type": "doc_hint",
+      "text": "- deep inspection surfaces remain non-hostable native tabs",
+      "line_in_shard": 144
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- likely remove or deprecate:",
+      "line_in_shard": 153
+    },
+    {
+      "type": "doc_hint",
+      "text": "- inspector state",
+      "line_in_shard": 162
+    },
+    {
+      "type": "data_shape",
+      "text": "- last-focused object",
+      "line_in_shard": 163
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 170
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Move all widget data contracts off legacy tier events and onto stable projections / canonical records.",
+      "line_in_shard": 180
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widget canvases.",
+      "line_in_shard": 181
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Node Graph` remains a fixed native surface with right-side inspector, not a widget.",
+      "line_in_shard": 186
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "## Research Progress - 2026-03-16 - Projection Freshness / Stale-Trust Model",
+      "line_in_shard": 189
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 191
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 194
+    }
+  ]
+}

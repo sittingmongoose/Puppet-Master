@@ -1,0 +1,1397 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0093",
+  "coverage": {
+    "shard_id": "shard-0093",
+    "start_line": 17380,
+    "end_line": 17540,
+    "line_count": 161,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0093.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 8,
+        "text": "default search scope = focused run, widening to project/all-runs, and required disclosure when search changes focused run",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          ", ",
+          "Plans/Contracts_V0.md",
+          "Plans/Crosswalk.md",
+          "Plans/FileManager.md",
+          "Plans/Progression_Gates.md",
+          "Plans/Project_Output_Artifacts.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/Wiring_Matrix.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "route primitive indexing / bridge precedence / gate schema follow-through",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "This rerun adds confidence that reconciliation should proceed as a **canon-collapse and owner-schema completion pass**, not as a generic polish pass.",
+        "tokens": []
+      },
+      {
+        "line": 128,
+        "text": "`Plans/FinalGUISpec.md:2737-2739` separately and correctly says safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2737-2739"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "`next_required_stage` remains `Audit Mode`.",
+        "tokens": [
+          "Audit Mode",
+          "next_required_stage"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 13,
+        "text": "Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md",
+        "tokens": [
+          ", ",
+          "Plans/Contracts_V0.md",
+          "Plans/Decision_Policy.md",
+          "Plans/FinalGUISpec.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "DAE jail / approval policy gaps remain untransferred",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+        "tokens": [
+          "OpenSubject",
+          "command_kind",
+          "inspector_target",
+          "normalizes_to_contract",
+          "object_kind",
+          "route_target",
+          "target_kind"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence.",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "Audit-stage handoff decision:",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "blocker inventory remains materially open",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "finding_type: decision",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "`next_required_stage` remains `Audit Mode`.",
+        "tokens": [
+          "Audit Mode",
+          "next_required_stage"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, and `restore points`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "detached_window",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+        "tokens": [
+          "canon_inventory.json"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+        "tokens": [
+          "open_gaps.json"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 5,
+        "text": "`orchestrator.project_state.{project_id}` persistence record",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md",
+        "tokens": [
+          ", ",
+          "Plans/Contracts_V0.md",
+          "Plans/Decision_Policy.md",
+          "Plans/FinalGUISpec.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "The rerun makes it clear that the concern/action/governance tranche is missing not just \"some schemas\", but the following concrete families:",
+        "tokens": []
+      },
+      {
+        "line": 15,
+        "text": "concern record canonical field set",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "concern owner-kind enum",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "review / corroboration / graph-patch / promotion / recovery record shapes",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "state transition report family",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "three-way export taxonomy (`record` / `bundle` / `view`)",
+        "tokens": [
+          "bundle",
+          "record",
+          "view"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "shared Orchestrator export manifest contract",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "export-family distinctions (Evidence / Artifact / Ledger / Run / Record)",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "explicit source-layer enumeration",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "resolver emit shape (ranked candidates, winner, fallback reason)",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts:",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "project `activity_state` enum",
+        "tokens": [
+          "activity_state"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "project `attention_state` enum",
+        "tokens": [
+          "attention_state"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "primary attention reason field",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "pressure-summary field",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          ", ",
+          "Plans/Contracts_V0.md",
+          "Plans/Crosswalk.md",
+          "Plans/FileManager.md",
+          "Plans/Progression_Gates.md",
+          "Plans/Project_Output_Artifacts.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/Wiring_Matrix.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "bridge-field precedence still missing from `Contracts_V0.md`",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "`Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields",
+        "tokens": [
+          "Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+        "tokens": [
+          "Contracts_V0.md",
+          "tab_id"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md",
+        "tokens": [
+          ", ",
+          "Plans/Architecture_Invariants.md",
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/GitHub_API_Auth_and_Flows.md",
+          "Plans/Prompt_Pipeline.md",
+          "Plans/Run_Modes.md",
+          "Plans/Tools.md",
+          "Plans/human-in-the-loop.md",
+          "Plans/orchestrator-subagent-integration.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "account-switch / pressure families named but still under-owned at the contract level",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+        "tokens": [
+          "OpenSubject",
+          "command_kind",
+          "inspector_target",
+          "normalizes_to_contract",
+          "object_kind",
+          "route_target",
+          "target_kind"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence.",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "some earlier baseline framing implied a fully new trust-state model was missing; the stronger reading is that the **operationalization** of trust states is missing, not the base freshness/health model itself.",
+        "tokens": []
+      },
+      {
+        "line": 91,
+        "text": "historical/search state handling",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "concern/governance record schemas",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "route primitive indexing / bridge precedence / gate schema follow-through",
+        "tokens": []
+      },
+      {
+        "line": 99,
+        "text": "schemas",
+        "tokens": []
+      },
+      {
+        "line": 100,
+        "text": "enums",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "This rerun adds confidence that reconciliation should proceed as a **canon-collapse and owner-schema completion pass**, not as a generic polish pass.",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "1. `Plans/Contracts_V0.md`",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+        "tokens": [
+          "Plans/storage-plan.md:879-910"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`",
+        "tokens": [
+          "detail_ref",
+          "provider_attempt_ref",
+          "report_ref",
+          "usage_event_ref"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain.",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "`meta.json` now uses `pm.work_item_meta.v2`.",
+        "tokens": [
+          "meta.json",
+          "pm.work_item_meta.v2"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "`current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.",
+        "tokens": [
+          "canon_inventory.json",
+          "current_state.md",
+          "open_gaps.json"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+        "tokens": [
+          "canon_inventory.json"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+        "tokens": [
+          "open_gaps.json"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 2,
+        "text": "Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md",
+        "tokens": [
+          " / ",
+          "Plans/FinalGUISpec.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "`orchestrator.project_state.{project_id}` persistence record",
+        "tokens": [
+          "orchestrator.project_state.{project_id}"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "page-wide shared `focused_run_id` coherence across tabs",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "global-vs-local Orchestrator search distinction",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md",
+        "tokens": [
+          ", ",
+          "Plans/FinalGUISpec.md",
+          "Plans/Models_System.md",
+          "Plans/Multi-Account.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/Personas.md",
+          "Plans/Prompt_Pipeline.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "shared Orchestrator export manifest contract",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "Orchestrator actor-type and operation-type resolver inputs",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md",
+        "tokens": [
+          ", ",
+          "Plans/FinalGUISpec.md",
+          "Plans/Glossary.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/storage-plan.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "The rerun reinforces earlier route findings and sharpens them:",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "`Crosswalk.md` still lacks `Primitive:RouteTarget` / `Primitive:OpenSubject` in the primitive index",
+        "tokens": [
+          "Crosswalk.md",
+          "Primitive:OpenSubject",
+          "Primitive:RouteTarget"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "`Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields",
+        "tokens": [
+          "Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+        "tokens": [
+          "Contracts_V0.md",
+          "tab_id"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md",
+        "tokens": [
+          ", ",
+          "Plans/Architecture_Invariants.md",
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/GitHub_API_Auth_and_Flows.md",
+          "Plans/Prompt_Pipeline.md",
+          "Plans/Run_Modes.md",
+          "Plans/Tools.md",
+          "Plans/human-in-the-loop.md",
+          "Plans/orchestrator-subagent-integration.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+        "tokens": [
+          "OpenSubject",
+          "command_kind",
+          "inspector_target",
+          "normalizes_to_contract",
+          "object_kind",
+          "route_target",
+          "target_kind"
+        ]
+      },
+      {
+        "line": 94,
+        "text": "route primitive indexing / bridge precedence / gate schema follow-through",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "routing/bridge refinement rules",
+        "tokens": []
+      },
+      {
+        "line": 111,
+        "text": "4. `Plans/Orchestrator_Page.md`",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 21,
+        "text": "4-level confirmation taxonomy",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "action-family → confirmation mapping",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "The rerun confirms additional concrete misses:",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "export-family distinctions (Evidence / Artifact / Ledger / Run / Record)",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts:",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "The rerun confirms additional concrete misses:",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+        "tokens": [
+          "OpenSubject",
+          "command_kind",
+          "inspector_target",
+          "normalizes_to_contract",
+          "object_kind",
+          "route_target",
+          "target_kind"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "confirm the highest-pressure owner/consumer docs still match the current blocker inventory",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "Exact findings confirmed from live docs:",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+        "tokens": [
+          "Plans/storage-plan.md:879-910"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Audit-stage handoff decision:",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "`next_required_stage` remains `Audit Mode`.",
+        "tokens": [
+          "Audit Mode",
+          "next_required_stage"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "evidence_refs:",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 18,
+        "text": "concern owner-kind enum",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md",
+        "tokens": [
+          ", ",
+          "Plans/FinalGUISpec.md",
+          "Plans/Models_System.md",
+          "Plans/Multi-Account.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/Personas.md",
+          "Plans/Prompt_Pipeline.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "deterministic resolver matrix and actor→persona defaults",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "blocked-owner 8-kind taxonomy",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "storage-plan still lacks the practical join model from attempt → provider → usage → receipt",
+        "tokens": []
+      },
+      {
+        "line": 66,
+        "text": "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "`execution_role` absent in many key owner/consumer docs",
+        "tokens": [
+          "execution_role"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "`blocked_sequence` minting ownership still missing",
+        "tokens": [
+          "blocked_sequence"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence.",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "blocked-sequence / startup-recovery / DAE policy ownership",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "This rerun adds confidence that reconciliation should proceed as a **canon-collapse and owner-schema completion pass**, not as a generic polish pass.",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "Owner-doc-first order still holds:",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "Then consumer cleanup and same-file supersession collapse.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "confirm the highest-pressure owner/consumer docs still match the current blocker inventory",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "this directly conflicts with still-open chat consumer gaps already tracked under `FIDELITY-049` through `FIDELITY-053`",
+        "tokens": [
+          "FIDELITY-049",
+          "FIDELITY-053"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`",
+        "tokens": [
+          "detail_ref",
+          "provider_attempt_ref",
+          "report_ref",
+          "usage_event_ref"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 66,
+        "text": "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "same-file canon collapse",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "This rerun adds confidence that reconciliation should proceed as a **canon-collapse and owner-schema completion pass**, not as a generic polish pass.",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "Then consumer cleanup and same-file supersession collapse.",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "capture any newly visible stale survivors or false-cognate cross-references that the current gap wording was not explicit enough about",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "`Plans/assistant-chat-design.md:1775-1784` still contains a stale self-verdict:",
+        "tokens": [
+          "Plans/assistant-chat-design.md:1775-1784"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, and `restore points`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "detached_window",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 38,
+        "text": "resolver emit shape (ranked candidates, winner, fallback reason)",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "`Crosswalk.md` still lacks `Primitive:RouteTarget` / `Primitive:OpenSubject` in the primitive index",
+        "tokens": [
+          "Crosswalk.md",
+          "Primitive:OpenSubject",
+          "Primitive:RouteTarget"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "The chunked recheck **did not** re-open the already-correct false-positive exclusions:",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` remain confirmed as already landed.",
+        "tokens": [
+          "OpenSubject",
+          "command_kind",
+          "inspector_target",
+          "normalizes_to_contract",
+          "object_kind",
+          "route_target",
+          "target_kind"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "this directly conflicts with still-open chat consumer gaps already tracked under `FIDELITY-049` through `FIDELITY-053`",
+        "tokens": [
+          "FIDELITY-049",
+          "FIDELITY-053"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "blocker inventory remains materially open",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "`current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.",
+        "tokens": [
+          "canon_inventory.json",
+          "current_state.md",
+          "open_gaps.json"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+        "tokens": [
+          "open_gaps.json"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 14,
+        "text": "The rerun makes it clear that the concern/action/governance tranche is missing not just \"some schemas\", but the following concrete families:",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts:",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "persistent-blocker semantics at the UI layer",
+        "tokens": []
+      },
+      {
+        "line": 59,
+        "text": "bridge-field precedence still missing from `Contracts_V0.md`",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "`blocked_sequence` minting ownership still missing",
+        "tokens": [
+          "blocked_sequence"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "DAE jail / approval policy gaps remain untransferred",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "`projection_freshness` / `projection_health` still exist; the missing transfer is the operational trust UI/gating/fallback layer.",
+        "tokens": [
+          "projection_freshness",
+          "projection_health"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "account-pressure and account-switch key families remain present; the missing transfer is schema and contract ownership, not simple existence.",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "some earlier baseline framing implied a fully new trust-state model was missing; the stronger reading is that the **operationalization** of trust states is missing, not the base freshness/health model itself.",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "major missing material is still concentrated in:",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "confirm the highest-pressure owner/consumer docs still match the current blocker inventory",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "capture any newly visible stale survivors or false-cognate cross-references that the current gap wording was not explicit enough about",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "this directly conflicts with still-open chat consumer gaps already tracked under `FIDELITY-049` through `FIDELITY-053`",
+        "tokens": [
+          "FIDELITY-049",
+          "FIDELITY-053"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "result: preserve this as an unresolved false-cognate / cross-reference survivor; the problem is not absence of safe-point canon, it is coexistence of a misleading alternate restore-point reference",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "blocker inventory remains materially open",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain.",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "`current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.",
+        "tokens": [
+          "canon_inventory.json",
+          "current_state.md",
+          "open_gaps.json"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, and `restore points`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "detached_window",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.",
+        "tokens": [
+          "canon_inventory.json"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.",
+        "tokens": [
+          "open_gaps.json"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md",
+        "tokens": [
+          " / ",
+          "Plans/FinalGUISpec.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md",
+        "tokens": [
+          ", ",
+          "Plans/Contracts_V0.md",
+          "Plans/Decision_Policy.md",
+          "Plans/FinalGUISpec.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md",
+        "tokens": [
+          ", ",
+          "Plans/FinalGUISpec.md",
+          "Plans/Models_System.md",
+          "Plans/Multi-Account.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/Personas.md",
+          "Plans/Prompt_Pipeline.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md",
+        "tokens": [
+          ", ",
+          "Plans/FinalGUISpec.md",
+          "Plans/Glossary.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/storage-plan.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          ", ",
+          "Plans/Contracts_V0.md",
+          "Plans/Crosswalk.md",
+          "Plans/FileManager.md",
+          "Plans/Progression_Gates.md",
+          "Plans/Project_Output_Artifacts.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/Wiring_Matrix.md",
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md",
+        "tokens": [
+          ", ",
+          "Plans/Architecture_Invariants.md",
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/GitHub_API_Auth_and_Flows.md",
+          "Plans/Prompt_Pipeline.md",
+          "Plans/Run_Modes.md",
+          "Plans/Tools.md",
+          "Plans/human-in-the-loop.md",
+          "Plans/orchestrator-subagent-integration.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "1. `Plans/Contracts_V0.md`",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "2. `Plans/storage-plan.md`",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "3. `Plans/Prompt_Pipeline.md`",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "4. `Plans/Orchestrator_Page.md`",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "5. `Plans/FinalGUISpec.md`",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "6. `Plans/UI_Command_Catalog.md`",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "7. `Plans/Glossary.md`",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "8. `Plans/WorktreeGitImprovement.md`",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "`Plans/assistant-chat-design.md:1775-1784` still contains a stale self-verdict:",
+        "tokens": [
+          "Plans/assistant-chat-design.md:1775-1784"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Plans/FinalGUISpec.md:2092` still references `restore points` through `Plans/newfeatures.md",
+        "tokens": [
+          " still references ",
+          " through ",
+          "Plans/FinalGUISpec.md:2092",
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "`Plans/FinalGUISpec.md:2737-2739` separately and correctly says safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2737-2739"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:",
+        "tokens": [
+          "Plans/storage-plan.md:879-910"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

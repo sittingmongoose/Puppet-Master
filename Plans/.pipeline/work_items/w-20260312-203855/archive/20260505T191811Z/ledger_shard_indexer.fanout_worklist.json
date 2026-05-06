@@ -1,0 +1,1301 @@
+{
+  "schema_id": "pm.ledger_shard_indexer.fanout_worklist.v3.1.7",
+  "prompt_id": "C2",
+  "prompt_version": "pm.c2.v3.1.7",
+  "work_id": "w-20260312-203855",
+  "source_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+  "source_line_count": 18244,
+  "required_subagent_tasks_total": 92,
+  "subagent_tasks_total": 92,
+  "max_lines_per_shard": 200,
+  "tasks": [
+    {
+      "subagent_task_id": "C2-SHARD-001",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 1,
+        "end": 200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-001.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-002",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 201,
+        "end": 400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-002.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-003",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 401,
+        "end": 600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-003.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-004",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 601,
+        "end": 800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-004.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-005",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 801,
+        "end": 1000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-005.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-006",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 1001,
+        "end": 1200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-006.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-007",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 1201,
+        "end": 1400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-007.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-008",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 1401,
+        "end": 1600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-008.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-009",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 1601,
+        "end": 1800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-009.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-010",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 1801,
+        "end": 2000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-010.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-011",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 2001,
+        "end": 2200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-011.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-012",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 2201,
+        "end": 2400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-012.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-013",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 2401,
+        "end": 2600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-013.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-014",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 2601,
+        "end": 2800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-014.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-015",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 2801,
+        "end": 3000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-015.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-016",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 3001,
+        "end": 3200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-016.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-017",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 3201,
+        "end": 3400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-017.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-018",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 3401,
+        "end": 3600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-018.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-019",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 3601,
+        "end": 3800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-019.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-020",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 3801,
+        "end": 4000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-020.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-021",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 4001,
+        "end": 4200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-021.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-022",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 4201,
+        "end": 4400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-022.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-023",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 4401,
+        "end": 4600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-023.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-024",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 4601,
+        "end": 4800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-024.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-025",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 4801,
+        "end": 5000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-025.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-026",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 5001,
+        "end": 5200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-026.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-027",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 5201,
+        "end": 5400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-027.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-028",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 5401,
+        "end": 5600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-028.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-029",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 5601,
+        "end": 5800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-029.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-030",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 5801,
+        "end": 6000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-030.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-031",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 6001,
+        "end": 6200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-031.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-032",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 6201,
+        "end": 6400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-032.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-033",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 6401,
+        "end": 6600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-033.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-034",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 6601,
+        "end": 6800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-034.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-035",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 6801,
+        "end": 7000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-035.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-036",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 7001,
+        "end": 7200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-036.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-037",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 7201,
+        "end": 7400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-037.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-038",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 7401,
+        "end": 7600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-038.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-039",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 7601,
+        "end": 7800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-039.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-040",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 7801,
+        "end": 8000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-040.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-041",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 8001,
+        "end": 8200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-041.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-042",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 8201,
+        "end": 8400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-042.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-043",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 8401,
+        "end": 8600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-043.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-044",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 8601,
+        "end": 8800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-044.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-045",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 8801,
+        "end": 9000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-045.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-046",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 9001,
+        "end": 9200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-046.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-047",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 9201,
+        "end": 9400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-047.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-048",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 9401,
+        "end": 9600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-048.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-049",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 9601,
+        "end": 9800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-049.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-050",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 9801,
+        "end": 10000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-050.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-051",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 10001,
+        "end": 10200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-051.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-052",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 10201,
+        "end": 10400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-052.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-053",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 10401,
+        "end": 10600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-053.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-054",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 10601,
+        "end": 10800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-054.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-055",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 10801,
+        "end": 11000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-055.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-056",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 11001,
+        "end": 11200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-056.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-057",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 11201,
+        "end": 11400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-057.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-058",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 11401,
+        "end": 11600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-058.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-059",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 11601,
+        "end": 11800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-059.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-060",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 11801,
+        "end": 12000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-060.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-061",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 12001,
+        "end": 12200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-061.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-062",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 12201,
+        "end": 12400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-062.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-063",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 12401,
+        "end": 12600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-063.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-064",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 12601,
+        "end": 12800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-064.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-065",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 12801,
+        "end": 13000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-065.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-066",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 13001,
+        "end": 13200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-066.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-067",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 13201,
+        "end": 13400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-067.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-068",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 13401,
+        "end": 13600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-068.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-069",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 13601,
+        "end": 13800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-069.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-070",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 13801,
+        "end": 14000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-070.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-071",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 14001,
+        "end": 14200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-071.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-072",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 14201,
+        "end": 14400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-072.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-073",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 14401,
+        "end": 14600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-073.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-074",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 14601,
+        "end": 14800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-074.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-075",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 14801,
+        "end": 15000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-075.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-076",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 15001,
+        "end": 15200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-076.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-077",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 15201,
+        "end": 15400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-077.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-078",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 15401,
+        "end": 15600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-078.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-079",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 15601,
+        "end": 15800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-079.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-080",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 15801,
+        "end": 16000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-080.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-081",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 16001,
+        "end": 16200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-081.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-082",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 16201,
+        "end": 16400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-082.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-083",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 16401,
+        "end": 16600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-083.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-084",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 16601,
+        "end": 16800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-084.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-085",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 16801,
+        "end": 17000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-085.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-086",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 17001,
+        "end": 17200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-086.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-087",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 17201,
+        "end": 17400
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-087.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-088",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 17401,
+        "end": 17600
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-088.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-089",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 17601,
+        "end": 17800
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-089.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-090",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 17801,
+        "end": 18000
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-090.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-091",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 18001,
+        "end": 18200
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-091.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    },
+    {
+      "subagent_task_id": "C2-SHARD-092",
+      "status": "complete",
+      "bounded_input_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+      ],
+      "line_range": {
+        "start": 18201,
+        "end": 18244
+      },
+      "max_line_budget": 200,
+      "output_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-092.md",
+      "task_purpose": "Extract bounded ledger line range into one shard file"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_id": "pm.stage_report.a3.v3.1.5",
+  "prompt_id": "A3",
+  "prompt_version": "pm.a3.v3.1.5",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260505T182230Z",
+  "status": "COMPLETE",
+  "summary": [
+    "Initialized route_state.json for fresh_restart.",
+    "Set single next prompt request to A4 \u2014 Section Exit: Run Control.",
+    "Updated meta and current_state to reflect A3 completion."
+  ],
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+  ],
+  "subagents": {
+    "used": false,
+    "reason": "Skip gate satisfied: single work-item input family, <=25 JSON records, no broad search, one bounded patch group."
+  },
+  "next_prompt_request": "A4 \u2014 Section Exit: Run Control"
+}

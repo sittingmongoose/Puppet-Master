@@ -1,0 +1,363 @@
+{
+  "schema_id": "pm.coverage_classification.v3.1.12",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.1.12",
+  "timestamp_utc": "20260506T194802Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-shard-0038-discovery-0001",
+  "doc_resolution_status": "doc_discovery",
+  "classifier": {
+    "engine": "deterministic_token_overlap_v1",
+    "present_threshold": 0.28,
+    "partial_threshold": 0.1,
+    "notes": "Heuristic coverage signal only; downstream human/source gate may revise."
+  },
+  "provenance": {
+    "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+    "coverage_worklist_sha256": "b0f397e6f6af21c8f3de2b91f0f7b4d8c1ceafe1c7a9d26ad2ab311dbf4c05d1",
+    "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "canonical_obligations_sha256": "fb1498de127b3bfee342f271dc2ba692d8347e937f925587d5ab8ecff733a1ce"
+  },
+  "windows_examined": 26,
+  "obligation_record_count": 9,
+  "obligation_classifications": [
+    {
+      "obligation_id": "OBL-wg-doc_discovery-0d99947d19--SEED-shard-0038-003",
+      "obligation_type": "requirement",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.5238,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 2401,
+        "line_end": 2800,
+        "window_index": 6
+      },
+      "matched_term_sample": [
+        "attention",
+        "project",
+        "project_id",
+        "projection",
+        "projects",
+        "registry",
+        "restore",
+        "rows",
+        "should",
+        "status",
+        "summary"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-11f1a7c297--SEED-shard-0038-006",
+      "obligation_type": "data_shape",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.6364,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 801,
+        "line_end": 1200,
+        "window_index": 2
+      },
+      "matched_term_sample": [
+        "counts",
+        "index",
+        "optional",
+        "ordering",
+        "project_id",
+        "projections",
+        "redb"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-27415073c3--SEED-shard-0038-008",
+      "obligation_type": "routing_rule",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.8,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 401,
+        "line_end": 800,
+        "window_index": 1
+      },
+      "matched_term_sample": [
+        "canonical",
+        "deep",
+        "form",
+        "instead",
+        "internal",
+        "links",
+        "model",
+        "one",
+        "payload",
+        "primary",
+        "resume_url",
+        "route"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-5d691f9b22--SEED-shard-0038-007",
+      "obligation_type": "requirement",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.8571,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/Contracts_V0.md",
+        "line_start": 2401,
+        "line_end": 2800,
+        "window_index": 6
+      },
+      "matched_term_sample": [
+        "active",
+        "attention",
+        "auth",
+        "blocked",
+        "canonical",
+        "invent",
+        "owners",
+        "project",
+        "records",
+        "rows",
+        "runtime",
+        "states"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-6e42cbcbfb--SEED-shard-0038-001",
+      "obligation_type": "requirement",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.8077,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/CLI_Bridged_Providers.md",
+        "line_start": 1,
+        "line_end": 240,
+        "window_index": 0
+      },
+      "matched_term_sample": [
+        "actor",
+        "add",
+        "attempt",
+        "bridged",
+        "bridged-provider",
+        "capability",
+        "correlation",
+        "direct",
+        "events",
+        "expose",
+        "lineage",
+        "metadata"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-79956adb38--SEED-shard-0038-004",
+      "obligation_type": "data_shape",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.7059,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 1,
+        "line_end": 400,
+        "window_index": 0
+      },
+      "matched_term_sample": [
+        "canonical",
+        "current",
+        "events",
+        "many",
+        "model",
+        "one",
+        "per",
+        "project",
+        "projectors",
+        "redb",
+        "rows",
+        "seglog"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-81d7c73cda--SEED-shard-0038-002",
+      "obligation_type": "routing_rule",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.5,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/Contracts_V0.md",
+        "line_start": 2401,
+        "line_end": 2800,
+        "window_index": 6
+      },
+      "matched_term_sample": [
+        "actor",
+        "bridged-provider",
+        "identity",
+        "keep",
+        "requests"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-a3abf920c3--SEED-shard-0038-010",
+      "obligation_type": "requirement",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 0.6667,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/Widget_System.md",
+        "line_start": 1,
+        "line_end": 340,
+        "window_index": 0
+      },
+      "matched_term_sample": [
+        "but",
+        "cmd",
+        "context",
+        "filters",
+        "focused",
+        "historical",
+        "identity",
+        "inspector",
+        "navigation",
+        "panel",
+        "run",
+        "still"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "obligation_id": "OBL-wg-doc_discovery-d1855fc6f6--SEED-shard-0038-012",
+      "obligation_type": "requirement",
+      "obligation_encoding": "doc_discovery",
+      "work_group_category": "doc_discovery",
+      "source_shard_id": "shard-0038",
+      "coverage_class": "partial",
+      "classifier_rationale": "doc_discovery_task_provisional_paths_checked_token_overlap",
+      "overlap_score": 1.0,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/Widget_System.md",
+        "line_start": 1,
+        "line_end": 340,
+        "window_index": 0
+      },
+      "matched_term_sample": [
+        "cmd",
+        "conflicts",
+        "generic",
+        "move",
+        "native-surface",
+        "now",
+        "page",
+        "routing",
+        "still",
+        "string",
+        "stronger",
+        "toward"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ]
+    }
+  ]
+}

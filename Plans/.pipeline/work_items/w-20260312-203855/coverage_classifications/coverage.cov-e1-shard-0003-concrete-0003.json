@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.coverage_classification.v3.1.12",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.1.12",
+  "timestamp_utc": "20260506T194802Z",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-shard-0003-concrete-0003",
+  "doc_resolution_status": "concrete_plans_targets",
+  "classifier": {
+    "engine": "deterministic_token_overlap_v1",
+    "present_threshold": 0.28,
+    "partial_threshold": 0.1,
+    "notes": "Heuristic coverage signal only; downstream human/source gate may revise."
+  },
+  "provenance": {
+    "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+    "coverage_worklist_sha256": "b0f397e6f6af21c8f3de2b91f0f7b4d8c1ceafe1c7a9d26ad2ab311dbf4c05d1",
+    "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "canonical_obligations_sha256": "fb1498de127b3bfee342f271dc2ba692d8347e937f925587d5ab8ecff733a1ce"
+  },
+  "windows_examined": 17,
+  "obligation_record_count": 1,
+  "obligation_classifications": [
+    {
+      "obligation_id": "OBL-wg-doc_hint-5f737f9d3b--SEED-shard-0003-019",
+      "obligation_type": "doc_hint",
+      "obligation_encoding": "doc_hint",
+      "work_group_category": "doc_hint",
+      "source_shard_id": "shard-0003",
+      "coverage_class": "present",
+      "classifier_rationale": "concrete_targets_token_overlap_against_scheduled_windows",
+      "overlap_score": 0.75,
+      "hint_overlap_score": 0.0,
+      "best_evidence_span": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line_start": 1,
+        "line_end": 400,
+        "window_index": 0
+      },
+      "matched_term_sample": [
+        "consumes",
+        "dag",
+        "global",
+        "index",
+        "json",
+        "node",
+        "orchestrator",
+        "plan",
+        "project",
+        "puppet-master",
+        "readiness",
+        "ready"
+      ],
+      "missing_detail_notes": "",
+      "live_doc_targets_union": [
+        "Plans/orchestrator-subagent-integration.md"
+      ]
+    }
+  ]
+}

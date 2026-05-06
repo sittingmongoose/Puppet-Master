@@ -1,0 +1,1075 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0077",
+  "coverage": {
+    "shard_id": "shard-0077",
+    "start_line": 14307,
+    "end_line": 14503,
+    "line_count": 197,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0077.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 3,
+        "text": "Some object identities are scoped and require resolver context.",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "resolver scope requires `focused_run_id`",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "resolver scope also requires node membership inside that run",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "resolver scope requires `focused_run_id`",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "resolver scope requires `focused_run_id`",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "resolver scope requires `focused_run_id`",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "resolver scope requires `focused_run_id`",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "Resolver logic must be responsible for applying the correct scoped lookup rules.",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "`blocked_episode` is the strongest example: the scope rule is real, but the contract should not expand into a blocked-episode-shaped payload family.",
+        "tokens": [
+          "blocked_episode"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Reconciliation should follow that owner chain or it will fragment again.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "cross-surface CTA language is newer and should normalize through object-first `route_target` behavior instead of tier-local pivots",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "`tier_id` is still treated as canonical execution and navigation identity in places where the rewrite now requires `run_id + node_id + attempt_id? + blocked_sequence?` with object-first routing.",
+        "tokens": [
+          "run_id + node_id + attempt_id? + blocked_sequence?",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Usage pivots still describe `tier_id` filters in graph/detail docs even though the routing and identity work now requires object-first `usage_event` and runtime-object pivots.",
+        "tokens": [
+          "tier_id",
+          "usage_event"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 41,
+        "text": "Keep scoped runtime families object-first and resolver-backed.",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "keep `OpenFile` narrow",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "keep deep-link step/message anchors secondary",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "Keep the routing tranche centralized in owner docs before touching broad consumer prose.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "`request_id` still appears as the HITL approval key in graph commands even though the runtime direction is `blocked_sequence` anchored to the blocked episode.",
+        "tokens": [
+          "blocked_sequence",
+          "request_id"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`Tiers` survives as a primary Orchestrator tab and as a primary GUI page concept in stale consumer docs even though the rewrite direction is `Seams` plus `Node Graph`, with tiers reduced to derived view context.",
+        "tokens": [
+          "Node Graph",
+          "Seams",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Replace stale `Tiers` tab/page assumptions with the rewrite tab model:",
+        "tokens": [
+          "Tiers"
+        ]
+      },
+      {
+        "line": 177,
+        "text": "Replace graph/detail uses of `tier_id` as navigation identity with object-first routing to:",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Replace graph HITL command payload identity from `request_id` to blocked-episode anchored identity.",
+        "tokens": [
+          "request_id"
+        ]
+      },
+      {
+        "line": 190,
+        "text": "`FinalGUISpec.md` will keep reintroducing stale page assumptions until the owner docs are reconciled first.",
+        "tokens": [
+          "FinalGUISpec.md"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 5,
+        "text": "base route contract stays small",
+        "tokens": []
+      },
+      {
+        "line": 6,
+        "text": "resolver context comes from existing scope fields such as `project_id`, `focused_run_id`, and the destination’s canonical object store",
+        "tokens": [
+          "focused_run_id",
+          "project_id"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "The route contract does not need to grow extra top-level scope ids for each of these families.",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Current docs still sometimes imply that scoped runtime identities need bespoke top-level route fields.",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "`blocked_episode` is the strongest example: the scope rule is real, but the contract should not expand into a blocked-episode-shaped payload family.",
+        "tokens": [
+          "blocked_episode"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "Add scoped-identity resolver rules to `Contracts_V0.md`.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Do not add family-specific top-level route fields just because some ids are only unique within run scope.",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "Small contract, strong resolver.",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "normalize command payloads toward `route_target` and `OpenSubject`",
+        "tokens": [
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "stop blurring tabs, subviews, shell state, and object identity",
+        "tokens": []
+      },
+      {
+        "line": 80,
+        "text": "persist route-adjacent state",
+        "tokens": []
+      },
+      {
+        "line": 96,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "The contract conclusions are now stronger than several owner docs, especially `Contracts_V0.md`, `Crosswalk.md`, `UI_Command_Catalog.md`, and `FinalGUISpec.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "Crosswalk.md",
+          "FinalGUISpec.md",
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Contracts_V0.md",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "`Plans/Run_Graph_View.md` has a direct internal contract split:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "`cmd.source_control.select_worktree` still claims `layout/UI state only`, which conflicts with object-first routing and worktree identity",
+        "tokens": [
+          "cmd.source_control.select_worktree",
+          "layout/UI state only"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "Source Control worktree selection is still described as UI state only even though worktree identity is now a first-class routed object in the broader model.",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Replace graph HITL command payload identity from `request_id` to blocked-episode anchored identity.",
+        "tokens": [
+          "request_id"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Reclassify worktree selection and open-in-SCM flows as object navigation, not pure layout state.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 5,
+        "text": "base route contract stays small",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "The route contract does not need to grow extra top-level scope ids for each of these families.",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Current docs still sometimes imply that scoped runtime identities need bespoke top-level route fields.",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "Do not add family-specific top-level route fields just because some ids are only unique within run scope.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "The routing tranche is now structurally complete enough to map directly onto owner docs.",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "own `route_target`",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "own route validation and rejection rules",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "declare primitive ownership for route-target / open-subject navigation",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "normalize command payloads toward `route_target` and `OpenSubject`",
+        "tokens": [
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "consume the route vocabulary",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "stop blurring tabs, subviews, shell state, and object identity",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "stop reading path-open as the universal navigation primitive",
+        "tokens": []
+      },
+      {
+        "line": 80,
+        "text": "persist route-adjacent state",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "normalize wizard/message routes to object-first forms",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "normalize scheduler/blocking/safe-point/remediation/attempt pivots through object-first route recipes",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "normalize seam/package/lane/worktree/concern/promotion/graph lineage pivots through object-first route recipes",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "consume worktree object routing rather than inventing a separate SCM-local navigation identity",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "If reconciliation starts from surface docs first instead of owner docs, drift will reappear immediately because the route vocabulary is now cross-cutting rather than page-local.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "Keep the routing tranche centralized in owner docs before touching broad consumer prose.",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "The routing model now has a clear owner chain.",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "The canonical routing model is now ahead of several high-traffic consumer docs.",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "`Plans/Orchestrator_Page.md` is still structurally tier-era:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "tab 2 is still `Tiers`",
+        "tokens": [
+          "Tiers"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "the page still describes a six-tab shell with `Progress`, `Tiers`, `Node Graph`, `Evidence`, `History`, and `Ledger`",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Progress",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "cross-surface CTA language is newer and should normalize through object-first `route_target` behavior instead of tier-local pivots",
+        "tokens": [
+          "route_target"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "`Plans/FinalGUISpec.md` still preserves `Tiers` as a primary page-level surface and still embeds older standalone-surface assumptions that conflict with the tab-first Orchestrator rewrite",
+        "tokens": [
+          "Plans/FinalGUISpec.md",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "`cmd.source_control.select_worktree` still claims `layout/UI state only`, which conflicts with object-first routing and worktree identity",
+        "tokens": [
+          "cmd.source_control.select_worktree",
+          "layout/UI state only"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Owner docs already identified in the routing tranche:",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "`tier_id` is still treated as canonical execution and navigation identity in places where the rewrite now requires `run_id + node_id + attempt_id? + blocked_sequence?` with object-first routing.",
+        "tokens": [
+          "run_id + node_id + attempt_id? + blocked_sequence?",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "`Tiers` survives as a primary Orchestrator tab and as a primary GUI page concept in stale consumer docs even though the rewrite direction is `Seams` plus `Node Graph`, with tiers reduced to derived view context.",
+        "tokens": [
+          "Node Graph",
+          "Seams",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Usage pivots still describe `tier_id` filters in graph/detail docs even though the routing and identity work now requires object-first `usage_event` and runtime-object pivots.",
+        "tokens": [
+          "tier_id",
+          "usage_event"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "Source Control worktree selection is still described as UI state only even though worktree identity is now a first-class routed object in the broader model.",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "Reconcile owner docs first, then update these four consumer docs to consume the canonical route/object model rather than invent page-local identity rules.",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "Replace stale `Tiers` tab/page assumptions with the rewrite tab model:",
+        "tokens": [
+          "Tiers"
+        ]
+      },
+      {
+        "line": 177,
+        "text": "Replace graph/detail uses of `tier_id` as navigation identity with object-first routing to:",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "`Orchestrator_Page.md` mixes newer blocked/remediation lineage work with older `TierChanged` / `active tier` assumptions.",
+        "tokens": [
+          "Orchestrator_Page.md",
+          "TierChanged",
+          "active tier"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 60,
+        "text": "own route validation and rejection rules",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "the page still describes a six-tab shell with `Progress`, `Tiers`, `Node Graph`, `Evidence`, `History`, and `Ledger`",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Node Graph",
+          "Progress",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "Evidence",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 25,
+        "text": "Resolver logic must be responsible for applying the correct scoped lookup rules.",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "The routing tranche is now structurally complete enough to map directly onto owner docs.",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "The owner-doc adoption split is:",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "declare primitive ownership for route-target / open-subject navigation",
+        "tokens": []
+      },
+      {
+        "line": 95,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "The contract conclusions are now stronger than several owner docs, especially `Contracts_V0.md`, `Crosswalk.md`, `UI_Command_Catalog.md`, and `FinalGUISpec.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "Crosswalk.md",
+          "FinalGUISpec.md",
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "If reconciliation starts from surface docs first instead of owner docs, drift will reappear immediately because the route vocabulary is now cross-cutting rather than page-local.",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "Reconcile owner docs in this order:",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "then consumer docs",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "Keep the routing tranche centralized in owner docs before touching broad consumer prose.",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "The routing model now has a clear owner chain.",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "Reconciliation should follow that owner chain or it will fragment again.",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "The canonical routing model is now ahead of several high-traffic consumer docs.",
+        "tokens": []
+      },
+      {
+        "line": 152,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 157,
+        "text": "Owner docs already identified in the routing tranche:",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "`Tiers` survives as a primary Orchestrator tab and as a primary GUI page concept in stale consumer docs even though the rewrite direction is `Seams` plus `Node Graph`, with tiers reduced to derived view context.",
+        "tokens": [
+          "Node Graph",
+          "Seams",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "Reconcile owner docs first, then update these four consumer docs to consume the canonical route/object model rather than invent page-local identity rules.",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "`FinalGUISpec.md` will keep reintroducing stale page assumptions until the owner docs are reconciled first.",
+        "tokens": [
+          "FinalGUISpec.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 152,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 164,
+        "text": "`Tiers` survives as a primary Orchestrator tab and as a primary GUI page concept in stale consumer docs even though the rewrite direction is `Seams` plus `Node Graph`, with tiers reduced to derived view context.",
+        "tokens": [
+          "Node Graph",
+          "Seams",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Replace stale `Tiers` tab/page assumptions with the rewrite tab model:",
+        "tokens": [
+          "Tiers"
+        ]
+      },
+      {
+        "line": 190,
+        "text": "`FinalGUISpec.md` will keep reintroducing stale page assumptions until the owner docs are reconciled first.",
+        "tokens": [
+          "FinalGUISpec.md"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 55,
+        "text": "own `OpenSubject`",
+        "tokens": [
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "declare primitive ownership for route-target / open-subject navigation",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "normalize command payloads toward `route_target` and `OpenSubject`",
+        "tokens": [
+          "OpenSubject",
+          "route_target"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "keep `OpenFile` narrow",
+        "tokens": [
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "consume `OpenSubject`",
+        "tokens": [
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "stop reading path-open as the universal navigation primitive",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "Reclassify worktree selection and open-in-SCM flows as object navigation, not pure layout state.",
+        "tokens": []
+      }
+    ],
+    "process_defects": [],
+    "doc_hints": [
+      {
+        "line": 29,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "`Plans/Orchestrator_Page.md` is still structurally tier-era:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "`Plans/Run_Graph_View.md` has a direct internal contract split:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "`Plans/FinalGUISpec.md` still preserves `Tiers` as a primary page-level surface and still embeds older standalone-surface assumptions that conflict with the tab-first Orchestrator rewrite",
+        "tokens": [
+          "Plans/FinalGUISpec.md",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "`Plans/UI_Command_Catalog.md` is internally split:",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

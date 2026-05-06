@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-doc_discovery-ae20851a89",
+  "category": "doc_discovery",
+  "family_key": "plans_contracts_v0_md_plans_ui_command_catalog_md_explicitly_excluded_from_base_route",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0067-008"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-doc_discovery-ae20851a89--SEED-shard-0067-008",
+      "seed_id": "SEED-shard-0067-008",
+      "source_shard_id": "shard-0067",
+      "batch_index": 17,
+      "obligation_type": "routing_rule",
+      "work_group_category": "doc_discovery",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0067",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Explicitly excluded from base route_target: usage_event_ref, wizard fields, message/artifact/document IDs as top-level, scheduler/safe_point/remediation IDs as flat fields, line/range, active_subview and other per-surface persistence\u2014normalize into subject_id or object_kind/object_id or OpenFile.",
+      "evidence_ledger_excerpt": "### What is NOT a base `route_target` field\n- `usage_event_ref`\n- `wizard_id`\n- `wizard_step`\n- `message_id`\n- `line`\n- `range`\n- per-surface state such as:\n  - `active_subview`",
+      "related_paths": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Explicitly excluded from base route_target: usage_event_ref, wizard fields, message/artifact/document IDs as top-level, scheduler/safe_point/remediation IDs as flat fields, line/range, active_subview and other per-surface persistence\u2014normalize into subject_id or object_kind/object_id or OpenFile."
+      ],
+      "required_action": "Bind this obligation to concrete canonical document paths (Plans/** targets), replacing discovery placeholders where appropriate."
+    }
+  ]
+}

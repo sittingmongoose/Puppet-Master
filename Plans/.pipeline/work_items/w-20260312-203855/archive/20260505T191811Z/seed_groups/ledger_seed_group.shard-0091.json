@@ -1,0 +1,1282 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0091",
+  "coverage": {
+    "shard_id": "shard-0091",
+    "start_line": 16984,
+    "end_line": 17181,
+    "line_count": 198,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0091.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 4,
+        "text": "the main risk is not fresh contradictions here; it is stale pass/fail references if upstream specs move and this checklist is not updated",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "`Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Reconciliation order for this tranche should be:",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` second as status repair",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts.",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` can create false confidence if stale upstream PASS conditions remain unchallenged.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Mirrors and summary/checklist followers:",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "mirror/checklist docs that will need revalidation after owner reconciliation",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "3. Mirror/checklist followers",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Reconciliation should not reopen the execution model unless a new contradiction appears that is stronger than the current graph/seam/package/attempt/lane model already established.",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "Mirror docs should be updated only after their owner docs are reconciled.",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 190,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 52,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` can create false confidence if stale upstream PASS conditions remain unchallenged.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "The remaining research backlog is now exhausted for the current rewrite scope.",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "No additional major design seams remain unidentified in the current scope.",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "The remaining work is now reconciliation-order work, not open-ended research or model invention.",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 8,
+        "text": "still enumerates stale widgets such as:",
+        "tokens": []
+      },
+      {
+        "line": 49,
+        "text": "These docs should be treated as mirrors and summaries, not as places to re-own runtime or surface contracts.",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 6,
+        "text": "still describes Dashboard/orchestrator layout in widget-card and tier terms",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "still lists `Orchestrator single-page with 6 tabs` including `Tiers`",
+        "tokens": [
+          "Orchestrator single-page with 6 tabs",
+          "Tiers"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "recovery/orchestrator snapshot language still uses phase/task/subtask ids",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "Orchestrator single page with 6 tabs including `Tiers`",
+        "tokens": [
+          "Tiers"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "cross-cutting widget system coverage for old Orchestrator widget tabs",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "it also lists command families that now need revalidation against the newer runtime recovery and route/open model",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "1. Owner docs and rewrite-root routing",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "The ledger contains enough owner-routing, contradiction, and cleanup-order detail for downstream reconciliation without restarting discovery.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Reconciliation should not reopen the execution model unless a new contradiction appears that is stronger than the current graph/seam/package/attempt/lane model already established.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 22,
+        "text": "cross-cutting widget system coverage for old Orchestrator widget tabs",
+        "tokens": []
+      },
+      {
+        "line": 23,
+        "text": "it also lists command families that now need revalidation against the newer runtime recovery and route/open model",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "mirror/checklist docs that will need revalidation after owner reconciliation",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 13,
+        "text": "still mirrors worktree ownership through `tier_id`",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "Git/worktree sections still use `tier_id` as worktree ownership glue",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "Adjacent owners implicated:",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "This tranche mostly inherits contradictions from stronger owner docs instead of inventing new ones.",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "upstream owner docs first",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "`Section15_MVP_Promoted_Features_Spec.md` last as a verification pass against the corrected upstream owners",
+        "tokens": [
+          "Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Owner stack:",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "mixed-canon owner docs",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "stale primary consumers",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "mirror/checklist docs that will need revalidation after owner reconciliation",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "1. Owner docs and rewrite-root routing",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "2. Primary stale consumers",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "The ledger contains enough owner-routing, contradiction, and cleanup-order detail for downstream reconciliation without restarting discovery.",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "Mirror docs should be updated only after their owner docs are reconciled.",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 178,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 4,
+        "text": "the main risk is not fresh contradictions here; it is stale pass/fail references if upstream specs move and this checklist is not updated",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "`Plans/feature-list.md` is still a broad stale-spec mirror:",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "still enumerates stale widgets such as:",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "it marks as PASS several things that are only PASS relative to stale upstream docs, such as:",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "That still makes it dangerous: once upstream reconciliation happens, these docs can continue to broadcast stale “PASS” status or outdated feature summaries unless they are explicitly rechecked.",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "`feature-list.md` and `newfeatures.md` third as summary cleanup",
+        "tokens": [
+          "feature-list.md",
+          "newfeatures.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`GUI_Rebuild_Requirements_Checklist.md` can create false confidence if stale upstream PASS conditions remain unchallenged.",
+        "tokens": [
+          "GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 86,
+        "text": "stale primary consumers",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "2. Primary stale consumers",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "The ledger contains enough owner-routing, contradiction, and cleanup-order detail for downstream reconciliation without restarting discovery.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 23,
+        "text": "it also lists command families that now need revalidation against the newer runtime recovery and route/open model",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "The remaining work is now reconciliation-order work, not open-ended research or model invention.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "Reconciliation should not reopen the execution model unless a new contradiction appears that is stronger than the current graph/seam/package/attempt/lane model already established.",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 4,
+        "text": "the main risk is not fresh contradictions here; it is stale pass/fail references if upstream specs move and this checklist is not updated",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "`Plans/feature-list.md` is still a broad stale-spec mirror:",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "`Plans/newfeatures.md` is also still mirroring older surface/runtime language:",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 19,
+        "text": "`Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "Plans/newfeatures.md",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 34,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "Plans/rewrite-tie-in-memo.md",
+        "tokens": [
+          "Plans/rewrite-tie-in-memo.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "Plans/DRY_Rules.md",
+        "tokens": [
+          "Plans/DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/newfeatures.md",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Plans/rewrite-tie-in-memo.md",
+        "tokens": [
+          "Plans/rewrite-tie-in-memo.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "Plans/DRY_Rules.md",
+        "tokens": [
+          "Plans/DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/00-plans-index.md",
+        "tokens": [
+          "Plans/00-plans-index.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/newfeatures.md",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/Models_System.md",
+        "tokens": [
+          "Plans/Models_System.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 144,
+        "text": "Plans/Permissions_System.md",
+        "tokens": [
+          "Plans/Permissions_System.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Plans/Tools.md",
+        "tokens": [
+          "Plans/Tools.md"
+        ]
+      },
+      {
+        "line": 149,
+        "text": "Plans/newtools.md",
+        "tokens": [
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Plans/Crosswalk.md",
+        "tokens": [
+          "Plans/Crosswalk.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "Plans/rewrite-tie-in-memo.md",
+        "tokens": [
+          "Plans/rewrite-tie-in-memo.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/Decision_Log.md",
+        "tokens": [
+          "Plans/Decision_Log.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Plans/DRY_Rules.md",
+        "tokens": [
+          "Plans/DRY_Rules.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 177,
+        "text": "Plans/00-plans-index.md",
+        "tokens": [
+          "Plans/00-plans-index.md"
+        ]
+      },
+      {
+        "line": 178,
+        "text": "Plans/Personas.md",
+        "tokens": [
+          "Plans/Personas.md"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "Plans/Models_System.md",
+        "tokens": [
+          "Plans/Models_System.md"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "Plans/Multi-Account.md",
+        "tokens": [
+          "Plans/Multi-Account.md"
+        ]
+      },
+      {
+        "line": 181,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 182,
+        "text": "Plans/GitHub_Integration.md",
+        "tokens": [
+          "Plans/GitHub_Integration.md"
+        ]
+      },
+      {
+        "line": 183,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "Plans/Permissions_System.md",
+        "tokens": [
+          "Plans/Permissions_System.md"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Plans/feature-list.md",
+        "tokens": [
+          "Plans/feature-list.md"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "Plans/newfeatures.md",
+        "tokens": [
+          "Plans/newfeatures.md"
+        ]
+      },
+      {
+        "line": 190,
+        "text": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "tokens": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ]
+      },
+      {
+        "line": 193,
+        "text": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "tokens": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Plans/Tools.md",
+        "tokens": [
+          "Plans/Tools.md"
+        ]
+      },
+      {
+        "line": 195,
+        "text": "Plans/newtools.md",
+        "tokens": [
+          "Plans/newtools.md"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 197,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

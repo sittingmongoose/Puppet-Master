@@ -1,0 +1,668 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "subagent_invocation_id": "c3-inv-010",
+  "subagent_task_id": "c3-task-010",
+  "work_id": "w-20260312-203855",
+  "batch_anchor_shard_id": "shard-0037",
+  "source_shard_ids": [
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040"
+  ],
+  "working_line_ranges": {
+    "shard-0037": {
+      "line_start": 7201,
+      "line_end": 7400
+    },
+    "shard-0038": {
+      "line_start": 7401,
+      "line_end": 7600
+    },
+    "shard-0039": {
+      "line_start": 7601,
+      "line_end": 7800
+    },
+    "shard-0040": {
+      "line_start": 7801,
+      "line_end": 8000
+    }
+  },
+  "status": "complete",
+  "per_shard": {
+    "shard-0037": {
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0037-001",
+          "kind": "requirement",
+          "summary": "Attention center is the canonical shell surface for background, blocked, or action-needed items outside the current active project or thread.",
+          "evidence_ledger_excerpt": "`attention center` is the canonical shell surface for background, blocked, or action-needed items outside the current active project/thread",
+          "related_paths": [
+            "Plans/Glossary.md",
+            "Plans/FinalGUISpec.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-002",
+          "kind": "data_shape",
+          "summary": "Multiple surfaces emit attention-like objects (wizard cards, thread badges, dashboard CTAs, blocked lists, auth badges, resume URLs) but docs lack one normalized object backing attention-center rows, project badges, title-bar badges, and palette entries.",
+          "evidence_ledger_excerpt": "multiple surfaces already emit attention-like objects: wizard cards, thread badges, dashboard CtAs, blocked-node lists, auth badges, and resume URLs",
+          "related_paths": [
+            "Plans/FinalGUISpec.md",
+            "Plans/assistant-chat-design.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-003",
+          "kind": "routing_rule",
+          "summary": "Generalize the resume_url deep-link pattern beyond wizards so project-level attention can route to Orchestrator, Chat, Source Control, GitHub, Usage, or Settings with the same internal payload model.",
+          "evidence_ledger_excerpt": "The existing `resume_url` pattern is a strong precedent... the rewrite should generalize that idea beyond wizards",
+          "related_paths": [
+            "Plans/storage-plan.md",
+            "Plans/assistant-chat-design.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-004",
+          "kind": "requirement",
+          "summary": "Project-level attention stays object-first: attention center points to the canonical owning object and next action path, not copied banner text.",
+          "evidence_ledger_excerpt": "Project-level attention should remain object-first, not notification-first",
+          "related_paths": [
+            "Plans/FinalGUISpec.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-005",
+          "kind": "verification_rule",
+          "summary": "Projection-derived attention rows must show reduced trust explicitly and avoid imperative copy that matches canonical blocked or approval-wait authority.",
+          "evidence_ledger_excerpt": "projection-derived warnings should still appear, but their rows need trust qualification and should not pretend to be equally authoritative",
+          "related_paths": [
+            "Plans/FinalGUISpec.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-006",
+          "kind": "data_shape",
+          "summary": "Recommended minimum project_attention_item shape: attention_item_id, project_id, severity, owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload, secondary_route_payload?, projection_trust_state, timestamps, dismissibility_kind, active.",
+          "evidence_ledger_excerpt": "Recommended minimum shape: `attention_item_id`... `projection_trust_state`... `dismissibility_kind` (`none | quiet_only | dismissible`)... `active`",
+          "related_paths": [
+            "Plans/Glossary.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-007",
+          "kind": "routing_rule",
+          "summary": "Rollup: project badge shows highest-severity active item plus count; attention center lists each active item separately; rows stay object-linked.",
+          "evidence_ledger_excerpt": "project badge/card shows highest-severity active item plus count; attention center shows each active item separately; rows remain object-linked",
+          "related_paths": []
+        },
+        {
+          "seed_id": "SEED-shard-0037-008",
+          "kind": "routing_rule",
+          "summary": "Project attention rows route through the same internal payload model as deep links, search, and palette results; URLs and in-app actions decode to the same route payload.",
+          "evidence_ledger_excerpt": "project attention rows should route through the same internal payload model as deep links/search/palette results",
+          "related_paths": []
+        },
+        {
+          "seed_id": "SEED-shard-0037-009",
+          "kind": "open_question",
+          "summary": "No explicit precedence rule yet for how multiple attention items collapse into one project badge while staying individually actionable in the attention center.",
+          "evidence_ledger_excerpt": "There is still no explicit precedence rule for how multiple attention items collapse into one project badge while remaining individually actionable in the attention center.",
+          "related_paths": []
+        },
+        {
+          "seed_id": "SEED-shard-0037-010",
+          "kind": "requirement",
+          "summary": "Missing requested-side concrete account field blocks truthful requested-vs-effective inspectors across Orchestrator, Run Graph, and conversational surfaces.",
+          "evidence_ledger_excerpt": "this now blocks truthful requested-vs-effective runtime inspectors for Orchestrator, Run Graph, and conversational actor surfaces",
+          "related_paths": [
+            "Plans/Multi-Account.md",
+            "Plans/Contracts_V0.md",
+            "Plans/Prompt_Pipeline.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-011",
+          "kind": "requirement",
+          "summary": "Introduce a first-class actor envelope (actor_kind / execution_role) and actor-scoped snapshots; storage-plan still keys provider account snapshots only by run_id in places.",
+          "evidence_ledger_excerpt": "The rewrite now needs a first-class actor envelope... `storage-plan.md` still keys provider account snapshots only by `run_id`",
+          "related_paths": [
+            "Plans/Models_System.md",
+            "Plans/storage-plan.md",
+            "Plans/Prompt_Pipeline.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-012",
+          "kind": "process_defect",
+          "summary": "Prompt Pipeline is split: §6.5 defines a rich runtime identity record while later handoff/addenda collapse the bundle and can drop thread_id—SSOT fracture across pipeline, bridged providers, and chat.",
+          "evidence_ledger_excerpt": "§6.5 defines a rich runtime identity record... later handoff/addenda collapse the bundle back to IDs + model/permission refs and even lose `thread_id`",
+          "related_paths": [
+            "Plans/Prompt_Pipeline.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-013",
+          "kind": "requirement",
+          "summary": "Replace stale _persona_id naming in worker identity fields; pivot graphs and usage on attempt_id and usage_event_ref rather than tier_id where receipts have moved.",
+          "evidence_ledger_excerpt": "stale `_persona_id` names remain in required worker identity fields... graph/use pivots still rely on `tier_id` where storage/receipts have moved to `attempt_id` + `usage_event_ref`",
+          "related_paths": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Run_Graph_View.md",
+            "Plans/usage-feature.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-014",
+          "kind": "requirement",
+          "summary": "Add append-only account_switch_event / account_pressure_episode families shared by History, Ledger, Usage, and Dashboard; recent_switch_reason alone is insufficient for audit surfaces.",
+          "evidence_ledger_excerpt": "there is still no append-only `account_switch_event` / `account_pressure_episode` family for History, Ledger, Usage, and Dashboard to share",
+          "related_paths": [
+            "Plans/storage-plan.md",
+            "Plans/Multi-Account.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-015",
+          "kind": "doc_hint",
+          "summary": "Multi-Account claims no design-open questions remain while requested-account, switch history, conversational actor fields, and trust ownership are still unresolved across adjacent SSOTs.",
+          "evidence_ledger_excerpt": "`Multi-Account.md` says there are no design-open questions left while cross-doc ownership is still unresolved",
+          "related_paths": [
+            "Plans/Multi-Account.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-016",
+          "kind": "requirement",
+          "summary": "Bridged-provider docs must reach capability parity with direct providers (multi-account, switch boundary, quota signals) or centralized shared capability blocks.",
+          "evidence_ledger_excerpt": "bridged-provider sections still do not expose equivalent capability blocks... multi-account routing and pressure interpretation are currently stronger on paper for direct providers",
+          "related_paths": [
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-017",
+          "kind": "process_defect",
+          "summary": "CLI_Bridged_Providers early envelope is only { run_id, seq, type, payload } while addenda require thread_id, attempt_id, node_id, generations, snapshots—no canonical slot satisfies preservation cleanly.",
+          "evidence_ledger_excerpt": "early envelope is only `{ run_id, seq, type, payload }`... there is still no canonical envelope slot for those fields",
+          "related_paths": [
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-018",
+          "kind": "requirement",
+          "summary": "A2A normalized stream still productizes tier_boundary and lacks normalized paths for account-switch, pressure, or actor-class disclosure; SelectSpeakerEvent stays raw_observation.",
+          "evidence_ledger_excerpt": "it still productizes `tier_boundary`... it still leaves no normalized path for account-switch, pressure/confidence, or actor-class disclosure",
+          "related_paths": [
+            "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-019",
+          "kind": "process_defect",
+          "summary": "Permissions base headless ask→deny language remains tier-era and conflicts with unified blocked-overlay contracts; snapshots omit effective auth/account context.",
+          "evidence_ledger_excerpt": "base headless `ask -> deny unless HITL at current tier boundary` language is still tier-era and conflicts with unified blocked-overlay contracts",
+          "related_paths": [
+            "Plans/Permissions_System.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0037-020",
+          "kind": "requirement",
+          "summary": "Degraded-trust and concern escalation need one reusable trust/concern contract across provider, permissions, Orchestrator, Usage, and widgets.",
+          "evidence_ledger_excerpt": "auth/account health, switch pressure, provider confidence, and projection freshness still do not flow through one reusable trust/concern contract",
+          "related_paths": [
+            "Plans/Widget_System.md",
+            "Plans/assistant-chat-design.md"
+          ]
+        }
+      ],
+      "excluded": [
+        "Repeated 'Targeted docs read' bullet lists without additional synthesis beyond filenames.",
+        "Narrative clause 'The shell already has the right high-level idea' without new normative fields."
+      ],
+      "open_decisions": [
+        "Exact owner doc and schema name for generalized attention-item / route-payload SSOT.",
+        "Whether attention-item dismissibility enums (none | quiet_only | dismissible) need expansion for governance-only dismissals."
+      ],
+      "process_defects": [
+        "Glossary names attention center without a concrete machine-readable item schema in SSOT.",
+        "Prompt Pipeline internal inconsistency between §6.5 runtime richness and later handoff shrinkage."
+      ],
+      "noise": [
+        "Rhetorical contrast 'The shell already has the right high-level idea' vs gaps below.",
+        "Duplicate listing of impacted docs that mirrors targeted docs lists."
+      ]
+    },
+    "shard-0038": {
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0038-001",
+          "kind": "requirement",
+          "summary": "Bridged normalized events need a versioned correlation block preserving actor/thread/attempt/lineage refs; bridged providers should expose the same capability metadata as direct providers or share one capability block.",
+          "evidence_ledger_excerpt": "Add a versioned correlation block to bridged-provider normalized events and require actor/thread/attempt/lineage refs there.",
+          "related_paths": [
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-002",
+          "kind": "routing_rule",
+          "summary": "Keep origin in bridged-provider requests audit-only; do not overload it into behavior-driving actor identity.",
+          "evidence_ledger_excerpt": "`origin` in bridged-provider requests is audit-only today; do not overload it into behavior-driving actor identity.",
+          "related_paths": [
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-003",
+          "kind": "requirement",
+          "summary": "Project summary and attention belong in dedicated projection rows, not overloaded into projects:v1 registry or project_state UI restore blobs.",
+          "evidence_ledger_excerpt": "project summary and project attention should NOT be jammed into either: `projects:v1` as overloaded status blobs... `project_state:v1:{project_id}` as UI-only convenience flags",
+          "related_paths": [
+            "Plans/storage-plan.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-004",
+          "kind": "data_shape",
+          "summary": "Model one current project_summary row per project and many project_attention_item rows; canonical events in seglog, projectors write redb current-state rows.",
+          "evidence_ledger_excerpt": "one current `project_summary` row per project; many `project_attention_item` rows per project",
+          "related_paths": [
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-005",
+          "kind": "process_defect",
+          "summary": "projects:v1 mixes registry fields with under-defined health status, inviting a junk drawer; project_state is explicitly UI-shaped and must not hold canonical blocked truth.",
+          "evidence_ledger_excerpt": "`projects:v1` currently mixes true registry fields with an under-defined `health status`... if project attention gets stored there, the app will blur operational truth",
+          "related_paths": [
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-006",
+          "kind": "data_shape",
+          "summary": "Recommended redb projections: project_summary.v1:{project_id}, project_attention_item.v1:{project_id}:{attention_item_id}, optional index for ordering/counts.",
+          "evidence_ledger_excerpt": "`project_summary.v1:{project_id}`... `project_attention_item.v1:{project_id}:{attention_item_id}`",
+          "related_paths": [
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-007",
+          "kind": "requirement",
+          "summary": "Projector derives summary from canonical runtime/thread/wizard/usage/auth/source-control records and active attention rows; it must not invent synthetic blocked states.",
+          "evidence_ledger_excerpt": "project summary derives from canonical runtime/thread/wizard/usage/auth/source-control records and from active attention rows; it must not invent synthetic blocked states unsupported by canonical owners",
+          "related_paths": [
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-008",
+          "kind": "routing_rule",
+          "summary": "Internal canonical route payload should be primary; resume_url is one serialized transport form; deep links and stored resume_url decode into the same model.",
+          "evidence_ledger_excerpt": "the app should instead have one internal canonical route payload, with `resume_url` as one transport/serialization form of it",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-009",
+          "kind": "doc_hint",
+          "summary": "UI_Command_Catalog already exposes stable cmd.* IDs and meaningful payloads, but navigation remains fragmented across resume_url, palette, thread jumps, and bespoke command args.",
+          "evidence_ledger_excerpt": "The command catalog is already stronger than most surface docs: stable `cmd.*` IDs exist... But the navigation model is still fragmented",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-010",
+          "kind": "requirement",
+          "summary": "cmd.panel.switch is a starting point for navigation but is too panel-centric for focused run restoration, inspector targets, tab filters, object identity, and trust/historical context.",
+          "evidence_ledger_excerpt": "`cmd.panel.switch`... is still too panel-centric and too shallow for: focused run restoration... trust/historical mode context",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-011",
+          "kind": "open_question",
+          "summary": "No canonical internal route_payload schema is named yet in Contracts despite cross-surface urgency from attention-center and search activation.",
+          "evidence_ledger_excerpt": "There is still no canonical internal `route_payload` or equivalent schema in the contracts docs.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0038-012",
+          "kind": "requirement",
+          "summary": "cmd.widget.* generic page:string conflicts with stronger native-surface vocabulary and typed routing.",
+          "evidence_ledger_excerpt": "`cmd.widget.*` still uses a generic `page: string`, which now conflicts with the move toward stronger native-surface vocabulary and typed routing.",
+          "related_paths": [
+            "Plans/Widget_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        }
+      ],
+      "excluded": [
+        "Verbatim field laundry lists inside recommended project_summary and project_attention_item blocks (captured selectively as seeds instead).",
+        "Duplicate 'Impacted docs' filename enumerations that add no new obligation beyond earlier clusters."
+      ],
+      "open_decisions": [
+        "Whether project_attention_index.v1 is required for ordering or counts vs querying items directly.",
+        "Exact naming for redb key families (suffix .v1 vs existing storage style)."
+      ],
+      "process_defects": [
+        "Navigation-style commands mix open/focus, object refs, filter state, and ambient UI reliance without a shared route grammar.",
+        "resume_url advanced relative to missing shared internal route model—documentation topology inverted vs desired architecture."
+      ],
+      "noise": [
+        "Parallel phrasing 'That means...' and 'It also preserves' that restates registry vs state distinction.",
+        "Reminder that A2A needs consolidation—already repeated across adjacent ledger clusters."
+      ]
+    },
+    "shard-0039": {
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0039-001",
+          "kind": "data_shape",
+          "summary": "Route payload minimum fields include project_id?, workspace_tab_id?, destination_surface, destination_tab?, focused_run_id?, historical_mode?, thread_id?, wizard_id?, object_kind?, object_id?, record_id?, artifact_id?, attempt_id?, lane_id?, worktree_id?, filter_payload?, inspector_target?, scroll_target?, focus_behavior?.",
+          "evidence_ledger_excerpt": "`project_id?`... `destination_surface`... `artifact_id?`... `focus_behavior?`",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-002",
+          "kind": "routing_rule",
+          "summary": "Historical-run mode is part of routing context, not only a local UI toggle; search and palette must restore the same target context as deep links.",
+          "evidence_ledger_excerpt": "historical-run mode is part of routing context, not just a local UI toggle",
+          "related_paths": [
+            "Plans/Run_Graph_View.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-003",
+          "kind": "requirement",
+          "summary": "Attention-center items should store inline route payload or stable ref—never depend on ambient UI state to open correctly.",
+          "evidence_ledger_excerpt": "attention-center items should likely store either an inline route payload or a stable ref to one; they should not depend on ambient current UI state to open correctly",
+          "related_paths": []
+        },
+        {
+          "seed_id": "SEED-shard-0039-004",
+          "kind": "requirement",
+          "summary": "Introduce explicit operational identity layer separate from provider-account identity; do not collapse side-effect identity into account fields in Orchestrator rewrite.",
+          "evidence_ledger_excerpt": "The rewrite now needs one explicit **operational identity** layer in addition to provider-account identity",
+          "related_paths": [
+            "Plans/Multi-Account.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-005",
+          "kind": "process_defect",
+          "summary": "Models_System naming collision: provider_id as upstream slug vs capability snapshot example using provider_id: cursor while model_id embeds anthropic/—breaks requested/effective rendering.",
+          "evidence_ledger_excerpt": "canonical model IDs treat `provider_id` as upstream provider slug... example uses `provider_id: cursor` while `model_id` already embeds `anthropic/...`",
+          "related_paths": [
+            "Plans/Models_System.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-006",
+          "kind": "requirement",
+          "summary": "Add execution_role / actor_role to effective runtime records and usage so role-scoped account choices remain auditable.",
+          "evidence_ledger_excerpt": "the effective runtime record, usage records, and page/graph identity projections still lack a canonical `execution_role` / `actor_role` field",
+          "related_paths": [
+            "Plans/storage-plan.md",
+            "Plans/usage-feature.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-007",
+          "kind": "requirement",
+          "summary": "Durable append-only switch/pressure timeline is missing; account_switch_reason fields alone cannot back History/Ledger/Usage/Orchestrator.",
+          "evidence_ledger_excerpt": "there is still no durable append-only switch/pressure timeline that History, Ledger, Usage, and Orchestrator can share",
+          "related_paths": [
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-008",
+          "kind": "requirement",
+          "summary": "Projection-freshness trust vocabulary must be distinct from Preview trust_tier to avoid collision when trust generalizes.",
+          "evidence_ledger_excerpt": "`storage-plan.md` already uses `trust_tier` for Preview semantics, so the broader rewrite now needs a distinct projection-freshness name",
+          "related_paths": [
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-009",
+          "kind": "process_defect",
+          "summary": "Provider_OpenCode maps canonical thread_id to OpenCode session ID while CLI_Bridged_Providers treats thread_id as stable PM correlation—contract-level identity bug.",
+          "evidence_ledger_excerpt": "it maps canonical `thread_id` to an OpenCode session ID while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id",
+          "related_paths": [
+            "Plans/Provider_OpenCode.md",
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-010",
+          "kind": "requirement",
+          "summary": "A2A hard 'no new categories' rule blocks introducing actor/account/trust semantics at the stream layer without version governance.",
+          "evidence_ledger_excerpt": "The A2A doc’s hard “no new categories” rule now blocks clean introduction of those semantics without version governance",
+          "related_paths": [
+            "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-011",
+          "kind": "process_defect",
+          "summary": "Session-scoped always approvals and reject cascades lack actor/lane/run/account scope keys; doom-loop 'three consecutive times' ambiguous under concurrency.",
+          "evidence_ledger_excerpt": "session-scoped `always` approvals and reject-cascade rules have no actor/lane/run/account scope key... ambiguous under interleaved concurrent execution",
+          "related_paths": [
+            "Plans/Permissions_System.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-012",
+          "kind": "requirement",
+          "summary": "Permission snapshots must carry requested/effective capability truth, downgrade reason, effective account, and actor/surface context for rewrite-era disclosure.",
+          "evidence_ledger_excerpt": "the schema only records resolved/effective values and still omits requested state, downgrade reason, effective account, and actor/surface context",
+          "related_paths": [
+            "Plans/Permissions_System.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-013",
+          "kind": "open_question",
+          "summary": "Provider continuity fields like provider_attempt_ref? lack a stable owning schema slot—reconnect/replay semantics underspecified.",
+          "evidence_ledger_excerpt": "bridged/provider docs still lack a legal place for opaque-but-real provider continuity fields like `provider_attempt_ref?`",
+          "related_paths": [
+            "Plans/CLI_Bridged_Providers.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-014",
+          "kind": "doc_hint",
+          "summary": "Remaining rewrite work splits into structural gaps needing research decisions vs reconciliation-heavy SSOT naming conflicts.",
+          "evidence_ledger_excerpt": "The remaining work splits cleanly into two buckets: **structural gaps still needing research decisions**... **reconciliation-heavy gaps**",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0039-015",
+          "kind": "requirement",
+          "summary": "Strongest structural gaps: operational vs provider identity, requested concrete account, switch-history family, projection-freshness ownership, concern transition authority edge cases.",
+          "evidence_ledger_excerpt": "shared operational identity vs provider/account identity... switch-history / pressure episode event family... exact authority rules for actor-driven vs user-driven concern transitions",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        }
+      ],
+      "excluded": [
+        "Continuation bullet lines that only repeat bridged/OpenCode findings already captured in shard-0037 seeds.",
+        "Targeted docs list for GPT-5.2 bridge cluster (filenames only)."
+      ],
+      "open_decisions": [
+        "Exact Approval Scope Key shape for permissions (single composite vs nested fields).",
+        "Whether account-health/pressure belongs in new event family vs extending auth lifecycle normalization."
+      ],
+      "process_defects": [
+        "OpenCode thread_id semantics contradict CLI bridged correlation story.",
+        "A2A schema governance blocks necessary stream-layer metadata without a versioned migration story.",
+        "Permission snapshots structurally cannot satisfy requested/effective disclosure requirements."
+      ],
+      "noise": [
+        "Signpost 'GPT-5.2 sharpened' repeated across multiple bullets.",
+        "Generic readiness metaphor 'moved from conceptual uncertainty into normalization work'."
+      ]
+    },
+    "shard-0040": {
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0040-001",
+          "kind": "requirement",
+          "summary": "Contracts_V0 and storage-plan still host live contradictions (e.g. remediation.resolved), requested-account gap, missing role dimension, missing shared route-payload schema, missing project-summary/attention projection family.",
+          "evidence_ledger_excerpt": "`remediation.resolved` conflict... requested concrete-account gap... missing shared route-payload schema... missing project-summary / project-attention projection family",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-002",
+          "kind": "verification_rule",
+          "summary": "Reconciliation is unsafe until: requested concrete-account representation, operational identity / execution role, projection-freshness vocabulary owner, route-payload schema owner, project-summary/attention projection owner, and explicit plan for contradictory event families.",
+          "evidence_ledger_excerpt": "one canonical decision for requested concrete-account representation... one canonical route-payload schema owner... one explicit reconciliation plan for contradictory event/record families",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-003",
+          "kind": "doc_hint",
+          "summary": "Classify seams: still needs research (concrete account, operational identity, switch history, projection-freshness, concern authority) vs primarily reconciliation (orchestrator retargeting, widget cleanup, command/route normalization).",
+          "evidence_ledger_excerpt": "**Still needs research decisions**... **Primarily reconciliation work after those decisions**",
+          "related_paths": []
+        },
+        {
+          "seed_id": "SEED-shard-0040-004",
+          "kind": "data_shape",
+          "summary": "Requested account model: requested_account_policy + requested_account_id? + requested_account_binding (none | preferred | required) + effective_account_id? + account_switch_reason?.",
+          "evidence_ledger_excerpt": "`requested_account_policy`... `requested_account_id?`... `requested_account_binding`... `none`... `preferred`... `required`",
+          "related_paths": [
+            "Plans/Prompt_Pipeline.md",
+            "Plans/Multi-Account.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-005",
+          "kind": "requirement",
+          "summary": "manual_preferred_account_id is policy/default input, not the per-run requested concrete account captured in attempt snapshots.",
+          "evidence_ledger_excerpt": "`manual_preferred_account_id` in project policy is not enough... it is not the same as the requested account on a particular run/attempt/message",
+          "related_paths": [
+            "Plans/Multi-Account.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-006",
+          "kind": "requirement",
+          "summary": "Extend effective-resolution/runtime snapshot family and attempt/tier runtime records with requested_account_id? and requested_account_binding?; GUI labels Requested account, Requested binding, Effective account, Switch reason.",
+          "evidence_ledger_excerpt": "Extend the effective-resolution/runtime snapshot family with: `requested_account_id?`... `requested_account_binding?`",
+          "related_paths": [
+            "Plans/FinalGUISpec.md",
+            "Plans/usage-feature.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-007",
+          "kind": "requirement",
+          "summary": "required binding must not silently degrade into ordinary switching; preferred binding stays visible when runtime legitimately switches; requested_account_id uses stable internal id.",
+          "evidence_ledger_excerpt": "`required` concrete-account requests should not silently degrade into ordinary switching behavior... `requested_account_id` must use the stable internal account id",
+          "related_paths": [
+            "Plans/Multi-Account.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-008",
+          "kind": "requirement",
+          "summary": "Codex closure: add execution_role/actor_kind to runtime, attempt, and usage records; introduce operational_identity block parallel to provider-account identity in shared runtime snapshot.",
+          "evidence_ledger_excerpt": "Add `execution_role` / `actor_kind` to canonical runtime, attempt, and usage records... Introduce an `operational_identity` block parallel to provider-account identity",
+          "related_paths": [
+            "Plans/storage-plan.md",
+            "Plans/Multi-Account.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-009",
+          "kind": "process_defect",
+          "summary": "UsageRecord contradiction: usage surfaces need switch explanations but canonical usage records omit account_switch_reason and durable switch pointer.",
+          "evidence_ledger_excerpt": "Usage surfaces want switch explanations... canonical usage records still omit `account_switch_reason` and any durable switch/signal pointer",
+          "related_paths": [
+            "Plans/usage-feature.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-010",
+          "kind": "requirement",
+          "summary": "Extend usage records with account_switch_reason? plus switch_event_ref? (or equivalent) for History/Ledger joins.",
+          "evidence_ledger_excerpt": "Extend canonical usage records with `account_switch_reason?` plus `switch_event_ref?` or equivalent durable linkage.",
+          "related_paths": [
+            "Plans/usage-feature.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-011",
+          "kind": "requirement",
+          "summary": "Prompt Pipeline needs explicit blocked/degraded behavior when no eligible account exists; effective-resolution record needs blocked/degraded reason family beyond singleton account_switch_reason.",
+          "evidence_ledger_excerpt": "requires explicit blocked/degraded behavior when no eligible account exists, but the canonical effective-resolution record still lacks a first-class blocked/degraded reason family",
+          "related_paths": [
+            "Plans/Prompt_Pipeline.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0040-012",
+          "kind": "requirement",
+          "summary": "Codex provider/permission closure targets: correct OpenCode session vs thread_id mapping, versioned bridged correlation, account-health family, approval scope keys, richer snapshots—aligns with prior clusters.",
+          "evidence_ledger_excerpt": "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
+          "related_paths": [
+            "Plans/Provider_OpenCode.md",
+            "Plans/Permissions_System.md"
+          ]
+        }
+      ],
+      "excluded": [
+        "Incomplete final section in shard file after '### Key findings' with no bullets (no extractable closure statements).",
+        "Purely repetitive 'Do-not-forget' lines already encoded as separate seeds in shard-0039."
+      ],
+      "open_decisions": [
+        "Current ledger posture says research is 'active' not handoff-ready—exact gate before reconciliation kickoff.",
+        "Final field names for operational_identity vs OperationalIdentity block casing in Contracts."
+      ],
+      "process_defects": [
+        "shard-0040.md truncates mid-cluster: GPT-5.3-Codex Provider/Permission section has heading and targeted docs but empty key findings.",
+        "Docs claiming 'no open questions' while adjacent ledger lists unresolved ownership creates hidden reconciliation risk."
+      ],
+      "noise": [
+        "Incomplete markdown section at EOF breaks reading flow for the last cluster.",
+        "Restatement that 'significant progress' exists alongside 'not handoff-ready' without new metrics."
+      ]
+    }
+  }
+}

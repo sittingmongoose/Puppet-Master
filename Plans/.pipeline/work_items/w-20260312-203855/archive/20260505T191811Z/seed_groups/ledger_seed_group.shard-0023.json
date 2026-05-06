@@ -1,0 +1,98 @@
+{
+  "subagent_task_id": "c3-shard-0023",
+  "shard_id": "shard-0023",
+  "source_start_line": 3963,
+  "source_end_line": 4161,
+  "seeds": [
+    {
+      "seed_id": "shard-0023-s01",
+      "title": "Harden orchestrator auto-resolution determinism",
+      "statement": "Define a deterministic Orchestrator auto-resolver matrix driven first by actor type and operation type, then scope and stack hints, with explicit fallback behavior.",
+      "evidence": [
+        "The shard calls out that Orchestrator auto-resolver specifics are still too qualitative.",
+        "Recommended fix is a deterministic matrix by actor type, operation type, scope, and stack/domain hints, while keeping actor-type defaults stronger than stack hints."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s02",
+      "title": "Emit resolver reasoning metadata consistently",
+      "statement": "Require each auto resolver to emit ranked candidates, selected winner, selection reason, and fallback reason whenever the preferred candidate is not effective.",
+      "evidence": [
+        "The shard explicitly lists ranked candidate(s), winning candidate, and concise selection reason as required emissions.",
+        "It also requires fallback reason disclosure when preferred and effective candidates differ."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s03",
+      "title": "Preserve historical effective persona records",
+      "statement": "Runtime history must preserve the resolved effective Persona and reason from execution time so historical views never recompute from current settings.",
+      "evidence": [
+        "Do-not-forget notes require historical runs to preserve resolved effective Persona and reason.",
+        "Scoped override lifecycle concern emphasizes preventing leakage across run/task/subagent boundaries."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s04",
+      "title": "Keep review personas distinct from implementation",
+      "statement": "Corroboration and review personas should remain distinct from original implementation personas to preserve independent governance and challenge roles.",
+      "evidence": [
+        "The shard states corroboration/review personas should remain distinct from the original implementation persona whenever possible.",
+        "It also warns that weak actor-type mapping makes auto-selection feel arbitrary in overseer-heavy workflows."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s05",
+      "title": "Separate canonical terms from help copy",
+      "statement": "Introduce a three-part help contract that keeps canonical term names stable while allowing Expert and ELI5 explanations to vary in phrasing only.",
+      "evidence": [
+        "Recommended split distinguishes canonical term system, help entry system, and contextual help system.",
+        "Core principle says simple help should simplify explanation, not rename the model."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s06",
+      "title": "Define fixed template for concept help entries",
+      "statement": "Concepts that are central to rewrite semantics should use a fixed help-entry template with definition, boundaries, related states/actions, and cross-links.",
+      "evidence": [
+        "The shard recommends dedicated help entries for core concepts like Feature Seam, Work Package, Corroboration, Graph Patch, and concern lifecycle terms.",
+        "It proposes template fields including canonical name, short definition, why it matters, what it is not, related concepts, and surface examples."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s07",
+      "title": "Add related-concept linking across surfaces",
+      "statement": "Help content should support explicit related-concept links so users can navigate coupled lifecycle concepts consistently across Settings, Orchestrator, History, and Ledger.",
+      "evidence": [
+        "The shard explicitly recommends related-concept linking and gives multi-term clusters such as Promotion/Revoked/Reopened and Lane/Worktree/Cleanup states.",
+        "It notes exact records in History/Ledger should still offer concept help links for unfamiliar terms."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s08",
+      "title": "Use glossary as canonical concept inventory",
+      "statement": "Treat Glossary as the canonical short-definition inventory and let richer help entries expand from that stable terminology base.",
+      "evidence": [
+        "The shard states that Plans/Glossary.md should become the canonical concept inventory backbone.",
+        "It recommends a split where Glossary holds canonical short definitions and help entries provide fuller examples and links."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s09",
+      "title": "Constrain ELI5 to semantic equivalence",
+      "statement": "Expert and ELI5 variants must share the same concept skeleton and runtime truth, differing only in language density and examples.",
+      "evidence": [
+        "The shard defines good Expert/ELI5 differences as phrasing density and assumptions, not substance.",
+        "It flags as bad any ELI5 wording that introduces alternate semantics or mutates contract truth."
+      ]
+    },
+    {
+      "seed_id": "shard-0023-s10",
+      "title": "Close help-system policy gaps in rewrite docs",
+      "statement": "Add explicit policy for which concepts require dedicated help entries versus contextual-only hints to prevent inconsistent redefinition across surfaces.",
+      "evidence": [
+        "The shard identifies a contradiction: strong dual-copy contract exists, but concept-help entry policy is not defined.",
+        "Candidate fixes call for explicit concept eligibility rules and a dedicated help-entry contract."
+      ]
+    }
+  ]
+}

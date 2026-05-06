@@ -1,0 +1,306 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-077",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-077.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owner-gap docs:",
+      "line_in_shard": 1
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong stale consumers:",
+      "line_in_shard": 4
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong aligned adjacent consumer:",
+      "line_in_shard": 7
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The docs currently try to do both:",
+      "line_in_shard": 11
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The result is that node-first routing and attempt-native runtime identity still cannot flow cleanly through Usage and Evidence without compatibility translation.",
+      "line_in_shard": 17
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Keep node/attempt identity primary for runtime and graph inspectors.",
+      "line_in_shard": 22
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Runtime_Artifacts_Panel.md` is now ahead of the main Usage and graph docs on identity rigor.",
+      "line_in_shard": 27
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 31
+    },
+    {
+      "type": "data_shape",
+      "text": "- `hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`",
+      "line_in_shard": 43
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_blocked_notice` / `wizard_runtime_state` with `resume_url?`",
+      "line_in_shard": 54
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 56
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owner doc:",
+      "line_in_shard": 57
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- This is no longer only \u201cstorage is stale in places.\u201d The document now carries multiple overlapping canonicality layers from different rewrite stages.",
+      "line_in_shard": 61
+    },
+    {
+      "type": "doc_hint",
+      "text": "- That makes the doc hard to reconcile mechanically because early tables, migration addenda, and canonical-record sections are not all pointing in the same direction.",
+      "line_in_shard": 62
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- The strongest runtime model is already present in the file; the problem is that older canon has not been retired.",
+      "line_in_shard": 63
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Treat `storage-plan.md` as a same-file reconciliation problem, not only a cross-doc mismatch.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Reconcile the document in this order:",
+      "line_in_shard": 67
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Retire or explicitly compatibility-label the older tier/HITL request-era tables instead of letting them stand as live canon beside the newer runtime sections.",
+      "line_in_shard": 72
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Later stronger sections already exist; the cleanup problem is retirement and unification, not invention.",
+      "line_in_shard": 76
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-17 - Current cleanup posture after extended owner-pass",
+      "line_in_shard": 78
+    },
+    {
+      "type": "process_defect",
+      "text": "- The remaining work on this research branch is now dominated by cleanup of overlapping canon, not missing concepts.",
+      "line_in_shard": 81
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- owner docs already contain stronger rewrite-era addenda",
+      "line_in_shard": 83
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- older base text still remains live and keeps teaching the stale model",
+      "line_in_shard": 84
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- consumer docs mirror whichever era they happened to read first",
+      "line_in_shard": 85
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "### Highest-priority owner cleanup set",
+      "line_in_shard": 87
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "### Highest-priority stale consumer set",
+      "line_in_shard": 94
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 99
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- owner-doc supersession cleanup",
+      "line_in_shard": 103
+    },
+    {
+      "type": "routing_rule",
+      "text": "- route/open contracts missing by name",
+      "line_in_shard": 104
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- stale consumer cleanup",
+      "line_in_shard": 108
+    },
+    {
+      "type": "data_shape",
+      "text": "- graph and Orchestrator command payloads",
+      "line_in_shard": 109
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- legacy `PuppetMasterEvent::*` source tables",
+      "line_in_shard": 112
+    },
+    {
+      "type": "doc_hint",
+      "text": "- spec-integrity defects",
+      "line_in_shard": 113
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The next meaningful passes should stay in owner-doc cleanup territory rather than broadening scope again.",
+      "line_in_shard": 121
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "## Research Progress - 2026-03-17 - External full-doc audit integrated into current owner-cleanup stack",
+      "line_in_shard": 123
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- owner-doc supersession and traceability failures are now the dominant risk",
+      "line_in_shard": 127
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- stale consumers are mostly downstream reflections of those owner failures",
+      "line_in_shard": 128
+    },
+    {
+      "type": "process_defect",
+      "text": "- remaining issues are increasingly exact structural mismatches rather than missing concepts",
+      "line_in_shard": 129
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Crosswalk.md` and `Contracts_V0.md` owner-routing integrity",
+      "line_in_shard": 131
+    },
+    {
+      "type": "decision",
+      "text": "- `Decision_Log.md` and rewrite-root routing gaps",
+      "line_in_shard": 133
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `FinalGUISpec.md`, `UI_Command_Catalog.md`, `Widget_System.md`, and promoted-shell docs as drift amplifiers",
+      "line_in_shard": 134
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `FileSafe.md`, `MiscPlan.md`, and `Executor_Protocol.md` as adjacent runtime-lineage enforcement owners",
+      "line_in_shard": 135
+    },
+    {
+      "type": "routing_rule",
+      "text": "1. owner-doc integrity and routing",
+      "line_in_shard": 139
+    },
+    {
+      "type": "decision",
+      "text": "- `Plans/Decision_Log.md`",
+      "line_in_shard": 145
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 149
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "line_in_shard": 151
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "line_in_shard": 154
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The external audit confirms that several remaining issues are no longer local document problems:",
+      "line_in_shard": 169
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- duplicate numbering and `ContractRef` failures in owner docs",
+      "line_in_shard": 170
+    },
+    {
+      "type": "doc_hint",
+      "text": "- mixed execution-era canon in storage and runtime docs",
+      "line_in_shard": 172
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This means the branch is past the point where isolated consumer cleanup would be reliable.",
+      "line_in_shard": 173
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Keep the current research thread focused on owner cleanup and exact consumer drift that directly depends on those owners.",
+      "line_in_shard": 176
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Continue documenting exact contradictions and retirement targets so reconciliation can be ordered mechanically rather than by intuition.",
+      "line_in_shard": 178
+    },
+    {
+      "type": "verification_rule",
+      "text": "- The external audit did not invalidate the current direction. It reinforced it.",
+      "line_in_shard": 181
+    },
+    {
+      "type": "data_shape",
+      "text": "- The remaining work is now mostly about collapsing overlapping canon and fixing exact broken references, payloads, and command contracts.",
+      "line_in_shard": 182
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-17 - Runtime identity field names still drift in worker and verifier consumers",
+      "line_in_shard": 184
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 186
+    },
+    {
+      "type": "data_shape",
+      "text": "- The owner docs already settled the canonical requested/effective runtime identity field names:",
+      "line_in_shard": 193
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Plans/Contracts_V0.md` explicitly forbids parallel canonical fields:",
+      "line_in_shard": 200
+    }
+  ]
+}

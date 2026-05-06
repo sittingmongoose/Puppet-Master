@@ -1,0 +1,51 @@
+{
+  "schema_id": "pm.ledger_intake_manifest.v3.1.6",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.1.6",
+  "timestamp_utc": "20260505T182944Z",
+  "work_id": "w-20260312-203855",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "excluded_sources": [],
+  "open_decisions": [],
+  "requires_new_research": false,
+  "requires_condensation": false,
+  "requires_ledger_preparation": true,
+  "next_section": "C_Ledger_Preparation",
+  "next_preferred_prompt": "C0",
+  "notes": "Accepted existing non-empty working_ledger.md as durable intake source."
+}
+{
+  "schema_id": "pm.ledger_intake_manifest.v3.1.2",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.1.2",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "requires_condensation": false,
+  "next_preferred_prompt": "B5",
+  "open_decisions_to_preserve": [],
+  "intentionally_excluded_non_material_items": [
+    "Plans/.pipeline/work_items/w-20260312-203855/session_notes/*.jsonl (none present)",
+    "Plans/.pipeline/work_items/w-20260312-203855/research_findings.json (not present)",
+    "Plans/.pipeline/work_items/w-20260312-203855/feature_spec_audit_report.json (not present)",
+    "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json (not present)"
+  ],
+  "source_ids_to_carry_forward": [
+    "working_ledger.md"
+  ],
+  "coverage": {
+    "working_ledger_present": true,
+    "working_ledger_non_empty": true,
+    "session_note_or_report_sources_discovered": 0,
+    "coverage_complete": true
+  },
+  "blockers": [],
+  "next_prompt_request": "B5 — Section Exit: Research / Audit Intake",
+  "timestamp_utc": "20260505T174650Z"
+}

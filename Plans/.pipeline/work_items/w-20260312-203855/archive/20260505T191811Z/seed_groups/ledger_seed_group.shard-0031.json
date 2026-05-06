@@ -1,0 +1,534 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0031",
+  "coverage": {
+    "shard_id": "shard-0031",
+    "start_line": 5520,
+    "end_line": 5717,
+    "line_count": 198,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0031.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 4,
+        "text": "stale or degraded projections must not generate overconfident notifications",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "local in-app indicators may still show, but wording should disclose possible staleness",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "a degraded concern rollup should not emit a fresh “3 new concerns” system notification unless canonical records support it",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "direct user-action path when the blocked owner or flow genuinely needs user input",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "This means many concern changes should remain in-app only unless:",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "The earlier “don’t spam on every heartbeat” rule still stands, but now it needs sharper triggers.",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "Because projection trust now matters, some notification copy needs qualification.",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "Allow quiet windows for advisory/pressure warnings, not for canonical blocked episodes that still require action.",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "Require degraded/stale disclosure or canonical revalidation before strong notification claims are emitted from projection-heavy surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "blocked owner is not just descriptive; it should help decide where and how the user is notified",
+        "tokens": []
+      },
+      {
+        "line": 80,
+        "text": "projection trust should affect notification confidence, not only action gating",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "acknowledged concerns can reduce noise, but they must not create fake health when the runtime is still blocked",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "This should apply across:",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Not every route uses every field, but the contract should make these composable rather than reinvented.",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Search results should not merely open a page; they should reconstruct context.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 25,
+        "text": "This means many concern changes should remain in-app only unless:",
+        "tokens": []
+      },
+      {
+        "line": 74,
+        "text": "Keep concern acknowledgment as a noise-control mechanism, not a blocked-state suppressor.",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "This fits the earlier search/object-first direction and the shared record-envelope work.",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "keep human-meaningful deep-link URLs for recovery/resume",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 10,
+        "text": "prefer notifications rooted in canonical events/blocked records rather than derived rollups",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "a degraded concern rollup should not emit a fresh “3 new concerns” system notification unless canonical records support it",
+        "tokens": []
+      },
+      {
+        "line": 24,
+        "text": "sparse summon layer for high-value action-needed states",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "trust state improves enough that previously suppressed actions become available",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "trust state degrades enough that prior assumptions are no longer safe",
+        "tokens": []
+      },
+      {
+        "line": 46,
+        "text": "blocked states and canonical action-needed episodes may not quietly disappear behind the same suppression rule",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "Current docs define many notification pieces, but not enough of the interaction policy between concern state, blocked ownership, and projection trust.",
+        "tokens": []
+      },
+      {
+        "line": 74,
+        "text": "Keep concern acknowledgment as a noise-control mechanism, not a blocked-state suppressor.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "open-file contract",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "What is still missing is one shared destination payload model that can span:",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "define one shared routing payload contract rather than separate ad hoc payloads per surface",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "Good common fields:",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "record_id?",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "filter_payload?",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Not every route uses every field, but the contract should make these composable rather than reinvented.",
+        "tokens": []
+      },
+      {
+        "line": 167,
+        "text": "recovery_record",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "usage_record",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "This fits the earlier search/object-first direction and the shared record-envelope work.",
+        "tokens": []
+      },
+      {
+        "line": 177,
+        "text": "`resume_url` is the clearest existing deep-link contract, but it is too narrow to carry the full cross-surface model by itself.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "but normalize their decoded payload into the same routing contract used by in-app search and command routing",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "That avoids a split world where URL-based navigation and in-app navigation speak different schemas.",
+        "tokens": []
+      },
+      {
+        "line": 191,
+        "text": "apply any filter payload",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 16,
+        "text": "Good emerging routing model:",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "direct user-action path when the blocked owner or flow genuinely needs user input",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "new actionable path becomes available",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "misroute blocked episodes to the wrong surface",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "Define notification routing using:",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "The docs already contain many navigation and routing mechanisms:",
+        "tokens": []
+      },
+      {
+        "line": 99,
+        "text": "Orchestrator pivots into Source Control / GitHub Actions / Docker Manager",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "local tab search and filter behavior",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "`UI_Command_Catalog.md` already gives several useful route-like commands:",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "cmd.orchestrator.open_in_source_control",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "cmd.orchestrator.open_in_github_actions",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "cmd.orchestrator.open_in_docker_manager",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "define one shared routing payload contract rather than separate ad hoc payloads per surface",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "Orchestrator",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "destination_tab?",
+        "tokens": []
+      },
+      {
+        "line": 144,
+        "text": "lane_id?",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "Not every route uses every field, but the contract should make these composable rather than reinvented.",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "Search and deep-link routing now need object-kind vocabulary to avoid ambiguity.",
+        "tokens": []
+      },
+      {
+        "line": 160,
+        "text": "lane",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "but normalize their decoded payload into the same routing contract used by in-app search and command routing",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "for historical Orchestrator objects:",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "switch to the correct tab",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 76,
+        "text": "Require degraded/stale disclosure or canonical revalidation before strong notification claims are emitted from projection-heavy surfaces.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 22,
+        "text": "direct user-action path when the blocked owner or flow genuinely needs user input",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "owner is effectively the user",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "blocked owner change",
+        "tokens": []
+      },
+      {
+        "line": 52,
+        "text": "Warning: provider pressure high",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "Current docs define many notification pieces, but not enough of the interaction policy between concern state, blocked ownership, and projection trust.",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "blocked owner",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "blocked owner is not just descriptive; it should help decide where and how the user is notified",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 4,
+        "text": "stale or degraded projections must not generate overconfident notifications",
+        "tokens": []
+      },
+      {
+        "line": 6,
+        "text": "if a summary surface is `stale`",
+        "tokens": [
+          "stale"
+        ]
+      },
+      {
+        "line": 7,
+        "text": "local in-app indicators may still show, but wording should disclose possible staleness",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "unchanged scheduler ticks or repeated identical stale summaries",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "View may be stale; refresh before acting",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "Require degraded/stale disclosure or canonical revalidation before strong notification claims are emitted from projection-heavy surfaces.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 101,
+        "text": "open-file contract",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "cmd.artifacts.open_panel",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "cmd.orchestrator.open_in_source_control",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "cmd.orchestrator.open_in_github_actions",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "cmd.orchestrator.open_in_docker_manager",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "chat usage focus/open commands",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "Candidate object kinds:",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "Search results should not merely open a page; they should reconstruct context.",
+        "tokens": []
+      },
+      {
+        "line": 192,
+        "text": "open inspector on the target object",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 110,
+        "text": "What is still missing is one shared destination payload model that can span:",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 86,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

@@ -1,0 +1,301 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-079",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-079.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong stale consumer:",
+      "line_in_shard": 1
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong aligned owner:",
+      "line_in_shard": 3
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The docs still leave it ambiguous whether approval acts on:",
+      "line_in_shard": 7
+    },
+    {
+      "type": "data_shape",
+      "text": "- a HITL request object",
+      "line_in_shard": 8
+    },
+    {
+      "type": "data_shape",
+      "text": "- That ambiguity is no longer harmless because command payloads, restart restore, graph actions, and blocked projections are now split across the two identities.",
+      "line_in_shard": 10
+    },
+    {
+      "type": "data_shape",
+      "text": "- Reconcile HITL restore/state docs so restart behavior restores blocked approval episodes rather than a competing tier-boundary request object.",
+      "line_in_shard": 17
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-17 - Graph and Orchestrator approval consumers still preserve HITL-request-era fields",
+      "line_in_shard": 23
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 25
+    },
+    {
+      "type": "requirement",
+      "text": "- blocked-state buttons across GUI, chat, graph, and orchestrator MUST map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands",
+      "line_in_shard": 34
+    },
+    {
+      "type": "doc_hint",
+      "text": "- But the same catalog still preserves graph-specific HITL commands:",
+      "line_in_shard": 35
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `Plans/human-in-the-loop.md` still feeds the older consumer side with:",
+      "line_in_shard": 46
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 51
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale consumers:",
+      "line_in_shard": 52
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Consumer docs now simultaneously claim:",
+      "line_in_shard": 60
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Orchestrator live-status documentation still uses `TierChanged` / `request_id` language beside newer blocked-projection contracts.",
+      "line_in_shard": 64
+    },
+    {
+      "type": "data_shape",
+      "text": "- Remove `request_id` as the primary action target from graph command payloads.",
+      "line_in_shard": 68
+    },
+    {
+      "type": "data_shape",
+      "text": "- Replace `hitl_request_id` in graph data requirements with blocked/runtime approval identity or explicit compatibility lineage-only fields.",
+      "line_in_shard": 69
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- This seam is now purely consumer-side. The runtime command layer already has the stronger model.",
+      "line_in_shard": 73
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 78
+    },
+    {
+      "type": "data_shape",
+      "text": "- canonical HITL request contract is `request_id` + `tier_id` + `tier_type` + `request_kind`",
+      "line_in_shard": 87
+    },
+    {
+      "type": "verification_rule",
+      "text": "- redb persists checkpoint/approval state keyed by request/tier/request_kind/allowed_actions",
+      "line_in_shard": 89
+    },
+    {
+      "type": "data_shape",
+      "text": "- canonical runtime-facing fields are `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, preserved-local-work, prerequisite metadata, and `detail_ref?`",
+      "line_in_shard": 93
+    },
+    {
+      "type": "requirement",
+      "text": "- deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas",
+      "line_in_shard": 94
+    },
+    {
+      "type": "requirement",
+      "text": "- visible labels must bind to the shared runtime recovery commands",
+      "line_in_shard": 96
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 98
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owner doc:",
+      "line_in_shard": 99
+    },
+    {
+      "type": "doc_hint",
+      "text": "- If the earlier text remains in place as ordinary prose, downstream readers will keep treating the document as endorsing two peer approval models.",
+      "line_in_shard": 104
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This is now a document-structure problem as much as a design problem: the later correction needs clear precedence over the earlier sections.",
+      "line_in_shard": 105
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- Treat the earlier request-centric text as retired or compatibility-only rather than leaving it as live canonical base prose.",
+      "line_in_shard": 108
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Reframe the doc around:",
+      "line_in_shard": 109
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This is not a subtle drift. The doc now states mutually incompatible canon in one file.",
+      "line_in_shard": 116
+    },
+    {
+      "type": "requirement",
+      "text": "- Reconciliation must retire or rewrite the earlier sections, not merely append another addendum.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "## Research Progress - 2026-03-17 - Graph approval command shapes are now internally inconsistent as well as stale",
+      "line_in_shard": 119
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 121
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- they are stale against the canonical runtime command model",
+      "line_in_shard": 127
+    },
+    {
+      "type": "doc_hint",
+      "text": "- they are internally inconsistent between the catalog and the graph spec",
+      "line_in_shard": 128
+    },
+    {
+      "type": "open_question",
+      "text": "- `cmd.graph.deny_hitl` args = `{ request_id, node_id, rationale, resolution? }`",
+      "line_in_shard": 131
+    },
+    {
+      "type": "open_question",
+      "text": "- `approve` -> `cmd.runtime.approve` -> `{ run_id, node_id, blocked_sequence, attempt_id? }`",
+      "line_in_shard": 136
+    },
+    {
+      "type": "open_question",
+      "text": "- `decline` -> `cmd.runtime.decline` -> `{ run_id, node_id, blocked_sequence, attempt_id? }`",
+      "line_in_shard": 137
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 139
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale/inconsistent consumers:",
+      "line_in_shard": 140
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The command catalog and the graph spec cannot both be correct.",
+      "line_in_shard": 146
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Remove the graph-specific approval command contract as a primary action model.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "requirement",
+      "text": "- If graph-local wrappers remain for UX readability, their normalization target and arg derivation must be explicit and consistent with `cmd.runtime.approve` / `cmd.runtime.decline`.",
+      "line_in_shard": 152
+    },
+    {
+      "type": "doc_hint",
+      "text": "- This is a hard spec-integrity defect, not a style issue.",
+      "line_in_shard": 155
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- It is one of the clearest examples where the stale approval model is now breaking exact command contracts.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "## Research Progress - 2026-03-17 - Live-status sourcing still mixes canonical runtime records with legacy `PuppetMasterEvent::*` streams",
+      "line_in_shard": 158
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 160
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/Orchestrator_Page.md` still documents live status primarily through:",
+      "line_in_shard": 170
+    },
+    {
+      "type": "requirement",
+      "text": "- `PuppetMasterEvent::UserInteractionRequired`",
+      "line_in_shard": 174
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `GateStart`",
+      "line_in_shard": 179
+    },
+    {
+      "type": "verification_rule",
+      "text": "- `GateComplete`",
+      "line_in_shard": 180
+    },
+    {
+      "type": "requirement",
+      "text": "- `UserInteractionRequired`",
+      "line_in_shard": 181
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- The owner docs already provide a stronger canonical runtime source set:",
+      "line_in_shard": 183
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Both consumer docs already consume some of the newer runtime lineage concepts in later sections, which makes the early event-source tables internally stale rather than merely incomplete.",
+      "line_in_shard": 192
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 194
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary stale consumers:",
+      "line_in_shard": 195
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Strong owner docs:",
+      "line_in_shard": 198
+    }
+  ]
+}

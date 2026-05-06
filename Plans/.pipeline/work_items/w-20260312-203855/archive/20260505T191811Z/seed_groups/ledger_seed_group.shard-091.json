@@ -1,0 +1,276 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-091",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-091.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092`",
+      "line_in_shard": 16
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2737-2739`",
+      "line_in_shard": 17
+    },
+    {
+      "type": "data_shape",
+      "text": "- Wave 1 and Wave 2 both count as zero-finding waves under the strict audit rule because they added no new exact missing field, command, heading, stale survivor, affected target, or blocker family.",
+      "line_in_shard": 20
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 26
+    },
+    {
+      "type": "routing_rule",
+      "text": "- summary: Ran a new bounded audit pass after the blocked Ready Check; the first wave produced exact refinements in the runtime-identity, route-target, glossary/help, and orchestrator cross-reference blocker families, and two bounded follow-up sweeps then produced zero new exact missing items.",
+      "line_in_shard": 27
+    },
+    {
+      "type": "requirement",
+      "text": "- `gap-001` sharpened: the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `Plans/Contracts_V0.md` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though the surrounding canon expects requested/effective identity carry-through.",
+      "line_in_shard": 29
+    },
+    {
+      "type": "decision",
+      "text": "- `gap-002` sharpened: `Plans/UI_Command_Catalog.md` still points at the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`, and `result_id` remains live in `cmd.search.open_result` / `cmd.search.replace_selected` args rather than appearing only as stale residue.",
+      "line_in_shard": 30
+    },
+    {
+      "type": "data_shape",
+      "text": "- `gap-005` downgraded: `report_ref` and `startup_recovered` are no longer kept in the unresolved exact-missing list; the remaining live defect is the skeletal `blocked_notice` payload, missing usage observability carry-through for `escalation_level`, missing `action_available` ownership, and the stale tuple / stale verdict survivors.",
+      "line_in_shard": 31
+    },
+    {
+      "type": "data_shape",
+      "text": "- `gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`).",
+      "line_in_shard": 32
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+      "line_in_shard": 33
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up Wave 2 rechecked the storage/receipt/usage cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+      "line_in_shard": 34
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up Wave 3 rechecked the blocked/chat/routing cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+      "line_in_shard": 35
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 36
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092`",
+      "line_in_shard": 59
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2737-2739`",
+      "line_in_shard": 60
+    },
+    {
+      "type": "process_defect",
+      "text": "- This invocation kept the blocker-family count at eight, raised the affected-doc count to twenty by pulling `Plans/WorktreeGitImprovement.md` into the unresolved blocker set, and raised the underlying evidence count to fifty-four.",
+      "line_in_shard": 64
+    },
+    {
+      "type": "data_shape",
+      "text": "- `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+      "line_in_shard": 66
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 71
+    },
+    {
+      "type": "verification_rule",
+      "text": "- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements.",
+      "line_in_shard": 72
+    },
+    {
+      "type": "process_defect",
+      "text": "- `gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.",
+      "line_in_shard": 74
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.",
+      "line_in_shard": 75
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.",
+      "line_in_shard": 76
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+      "line_in_shard": 77
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.",
+      "line_in_shard": 78
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 79
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 86
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2924-2928`",
+      "line_in_shard": 101
+    },
+    {
+      "type": "process_defect",
+      "text": "- This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence.",
+      "line_in_shard": 104
+    },
+    {
+      "type": "data_shape",
+      "text": "- `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+      "line_in_shard": 106
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 111
+    },
+    {
+      "type": "verification_rule",
+      "text": "- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items.",
+      "line_in_shard": 112
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading.",
+      "line_in_shard": 114
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+      "line_in_shard": 115
+    },
+    {
+      "type": "process_defect",
+      "text": "- `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.",
+      "line_in_shard": 116
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window`, `result_id`, `blocked_notice`, `action_available`, `No remaining gaps`) and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.",
+      "line_in_shard": 118
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 119
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 125
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2092-2092`",
+      "line_in_shard": 138
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md:2736-2739`",
+      "line_in_shard": 139
+    },
+    {
+      "type": "process_defect",
+      "text": "- This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two.",
+      "line_in_shard": 145
+    },
+    {
+      "type": "data_shape",
+      "text": "- `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "data_shape",
+      "text": "- finding_type: contract",
+      "line_in_shard": 152
+    },
+    {
+      "type": "requirement",
+      "text": "- summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`.",
+      "line_in_shard": 153
+    },
+    {
+      "type": "requirement",
+      "text": "- Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict.",
+      "line_in_shard": 155
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "verification_rule",
+      "text": "- Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.",
+      "line_in_shard": 157
+    },
+    {
+      "type": "verification_rule",
+      "text": "- A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced.",
+      "line_in_shard": 158
+    },
+    {
+      "type": "data_shape",
+      "text": "- Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family.",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "- impacted_docs:",
+      "line_in_shard": 160
+    },
+    {
+      "type": "process_defect",
+      "text": "- This invocation kept `planning_blockers = 0`, `fix_backlog_items = 8`, `total_gaps = 8`, `docs_affected = 20`, and `underlying_gap_evidence_count = 62`.",
+      "line_in_shard": 194
+    },
+    {
+      "type": "process_defect",
+      "text": "- The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.",
+      "line_in_shard": 195
+    },
+    {
+      "type": "process_defect",
+      "text": "- Because the inventory is stable and planning blockers remain zero, the next useful stage is `Ledger Condenser`.",
+      "line_in_shard": 196
+    }
+  ]
+}

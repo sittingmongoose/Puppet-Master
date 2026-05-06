@@ -1,0 +1,1792 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0094",
+  "coverage": {
+    "shard_id": "shard-0094",
+    "start_line": 17541,
+    "end_line": 17685,
+    "line_count": 145,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0094.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 13,
+        "text": "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004",
+          "pass_verdict",
+          "phase_plan_ref",
+          "requirements_quality_report_ref",
+          "run_id"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "tokens": [
+          "Audit Mode",
+          "open_gaps.json.next_required_stage"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+        "tokens": [
+          "artifact_kind",
+          "gap-003",
+          "task_id"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 5,
+        "text": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "cmd.search.open_result",
+          "cmd.search.replace_selected",
+          "result_id"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.",
+        "tokens": []
+      },
+      {
+        "line": 60,
+        "text": "`gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+        "tokens": [
+          "No remaining gaps",
+          "gap-005",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "detached_window",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "tokens": [
+          "8"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser.",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "`gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "detached_window",
+          "gap-002",
+          "result_id"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+        "tokens": [
+          "artifact_kind",
+          "gap-003",
+          "task_id"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 4,
+        "text": "finding_type: contract",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "`Plans/orchestrator-subagent-integration.md` already carries an `execution_unit_context` field block, but stale `TierContext` / `tier_id` residue still survives nearby.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md",
+          "TierContext",
+          "execution_unit_context",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+        "tokens": [
+          "### 5.1B Persona/Runtime Snapshot Payload Contract",
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "execution_unit_context"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "`Plans/Contracts_V0.md` still preserves forbidden `detached_window` in the closed `target_kind` enum.",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "detached_window",
+          "target_kind"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block.",
+        "tokens": [
+          "Plans/storage-plan.md",
+          "artifacts_index.v1:{project_id}:{artifact_id}",
+          "provider_attempt_ref",
+          "usage_event_ref",
+          "validation lineage",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "Plans/Contracts_V0.md:778-806",
+        "tokens": [
+          "Plans/Contracts_V0.md:778-806"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "finding_type: contract",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004",
+          "pass_verdict",
+          "phase_plan_ref",
+          "requirements_quality_report_ref",
+          "run_id"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "`gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.",
+        "tokens": [
+          "Plans/usage-feature.md",
+          "gap-008",
+          "missing_data_shape"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Plans/Contracts_V0.md:778-806",
+        "tokens": [
+          "Plans/Contracts_V0.md:778-806"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "tokens": [
+          "8"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "tokens": [
+          "Audit Mode",
+          "open_gaps.json.next_required_stage"
+        ]
+      },
+      {
+        "line": 109,
+        "text": "finding_type: contract",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "`gap-001` is no longer best described as `missing_data_shape`; the owner docs already carry `requested_account_binding`, `requested_account_policy`, and `tool_use_id`, so the live blocker is split owner anchors plus active `TierContext` / `tier_id` survivor residue.",
+        "tokens": [
+          "TierContext",
+          "gap-001",
+          "missing_data_shape",
+          "requested_account_binding",
+          "requested_account_policy",
+          "tier_id",
+          "tool_use_id"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+        "tokens": [
+          "artifact_kind",
+          "gap-003",
+          "task_id"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/Contracts_V0.md:778-806",
+        "tokens": [
+          "Plans/Contracts_V0.md:778-806"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 8,
+        "text": "`Plans/orchestrator-subagent-integration.md` already carries an `execution_unit_context` field block, but stale `TierContext` / `tier_id` residue still survives nearby.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md",
+          "TierContext",
+          "execution_unit_context",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Plans/orchestrator-subagent-integration.md:209-235",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md:209-235"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "Plans/orchestrator-subagent-integration.md:380-402",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md:380-402"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/Orchestrator_Page.md:16-43",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:16-43"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "Plans/Orchestrator_Page.md:451-474",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:451-474"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "Plans/Orchestrator_Page.md:258-266",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:258-266"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "Plans/Orchestrator_Page.md:358-377",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:358-377"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "Plans/Orchestrator_Page.md:428-475",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:428-475"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "`gap-005` through `gap-008` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `gap-007` still carries a live `restore points` contradiction in addition to missing structural headings.",
+        "tokens": [
+          "gap-005",
+          "gap-007",
+          "gap-008",
+          "restore points"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 3,
+        "text": "stage: Audit Mode",
+        "tokens": []
+      },
+      {
+        "line": 5,
+        "text": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block.",
+        "tokens": [
+          "Plans/storage-plan.md",
+          "artifacts_index.v1:{project_id}:{artifact_id}",
+          "provider_attempt_ref",
+          "usage_event_ref",
+          "validation lineage",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "evidence_refs:",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence.",
+        "tokens": []
+      },
+      {
+        "line": 51,
+        "text": "stage: Audit Mode",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "`Plans/storage-plan.md` already carries `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, `validation lineage`, `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`.",
+        "tokens": [
+          "Plans/storage-plan.md",
+          "account_pressure_episode",
+          "account_switch_event",
+          "account_switch_reason",
+          "docker_refs",
+          "effective_account_id",
+          "execution_role",
+          "kubernetes_refs",
+          "projection_freshness",
+          "projection_health",
+          "provider_attempt_ref",
+          "requested_account_id",
+          "usage_event_ref",
+          "validation lineage",
+          "workflow_refs",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "detached_window",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "evidence_refs:",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "tokens": [
+          "8"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "tokens": [
+          "Audit Mode",
+          "open_gaps.json.next_required_stage"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "stage: Audit Mode",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser.",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "`gap-005` through `gap-008` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `gap-007` still carries a live `restore points` contradiction in addition to missing structural headings.",
+        "tokens": [
+          "gap-005",
+          "gap-007",
+          "gap-008",
+          "restore points"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "evidence_refs:",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "The current unresolved set is sharp enough that another broad audit pass would mostly reconfirm existing evidence.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 5,
+        "text": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+        "tokens": []
+      },
+      {
+        "line": 7,
+        "text": "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "cmd.search.open_result",
+          "cmd.search.replace_selected",
+          "result_id"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+        "tokens": [
+          "### 5.1B Persona/Runtime Snapshot Payload Contract",
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "execution_unit_context"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block.",
+        "tokens": [
+          "Plans/storage-plan.md",
+          "artifacts_index.v1:{project_id}:{artifact_id}",
+          "provider_attempt_ref",
+          "usage_event_ref",
+          "validation lineage",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "`Plans/storage-plan.md` already carries `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, `validation lineage`, `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`.",
+        "tokens": [
+          "Plans/storage-plan.md",
+          "account_pressure_episode",
+          "account_switch_event",
+          "account_switch_reason",
+          "docker_refs",
+          "effective_account_id",
+          "execution_role",
+          "kubernetes_refs",
+          "projection_freshness",
+          "projection_health",
+          "provider_attempt_ref",
+          "requested_account_id",
+          "usage_event_ref",
+          "validation lineage",
+          "workflow_refs",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 58,
+        "text": "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004",
+          "pass_verdict",
+          "phase_plan_ref",
+          "requirements_quality_report_ref",
+          "run_id"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "`Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "gap-006",
+          "related concepts",
+          "what it is not",
+          "why it matters"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "`gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+        "tokens": [
+          "No remaining gaps",
+          "gap-005",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "`gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.",
+        "tokens": [
+          "Plans/usage-feature.md",
+          "gap-008",
+          "missing_data_shape"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "`gap-001` is no longer best described as `missing_data_shape`; the owner docs already carry `requested_account_binding`, `requested_account_policy`, and `tool_use_id`, so the live blocker is split owner anchors plus active `TierContext` / `tier_id` survivor residue.",
+        "tokens": [
+          "TierContext",
+          "gap-001",
+          "missing_data_shape",
+          "requested_account_binding",
+          "requested_account_policy",
+          "tier_id",
+          "tool_use_id"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "`gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "detached_window",
+          "gap-002",
+          "result_id"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+        "tokens": [
+          "artifact_kind",
+          "gap-003",
+          "task_id"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 5,
+        "text": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+        "tokens": []
+      },
+      {
+        "line": 8,
+        "text": "`Plans/orchestrator-subagent-integration.md` already carries an `execution_unit_context` field block, but stale `TierContext` / `tier_id` residue still survives nearby.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md",
+          "TierContext",
+          "execution_unit_context",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 14,
+        "text": "Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "`gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+        "tokens": [
+          "No remaining gaps",
+          "gap-005",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "detached_window",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "tokens": [
+          "8"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser.",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "`gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "detached_window",
+          "gap-002",
+          "result_id"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+        "tokens": [
+          "artifact_kind",
+          "gap-003",
+          "task_id"
+        ]
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 7,
+        "text": "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "cmd.search.open_result",
+          "cmd.search.replace_selected",
+          "result_id"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "tokens": [
+          "8"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "tokens": [
+          "Audit Mode",
+          "open_gaps.json.next_required_stage"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 5,
+        "text": "summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "This pass did not clear material blockers; it refined them into more exact unresolved items.",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence.",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.",
+        "tokens": []
+      },
+      {
+        "line": 58,
+        "text": "`gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004",
+          "pass_verdict",
+          "phase_plan_ref",
+          "requirements_quality_report_ref",
+          "run_id"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "`Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "gap-006",
+          "related concepts",
+          "what it is not",
+          "why it matters"
+        ]
+      },
+      {
+        "line": 60,
+        "text": "`gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.",
+        "tokens": [
+          "No remaining gaps",
+          "gap-005",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "`gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.",
+        "tokens": [
+          "Plans/usage-feature.md",
+          "gap-008",
+          "missing_data_shape"
+        ]
+      },
+      {
+        "line": 62,
+        "text": "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+        "tokens": [
+          "No remaining gaps",
+          "TierContext",
+          "artifact_kind",
+          "detached_window",
+          "restore points",
+          "result_id",
+          "task_id",
+          "tier_id",
+          "{ tool_name, invocation_summary, options }"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.",
+        "tokens": [
+          "8"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+        "tokens": [
+          "Audit Mode",
+          "open_gaps.json.next_required_stage"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser.",
+        "tokens": []
+      },
+      {
+        "line": 112,
+        "text": "`gap-001` is no longer best described as `missing_data_shape`; the owner docs already carry `requested_account_binding`, `requested_account_policy`, and `tool_use_id`, so the live blocker is split owner anchors plus active `TierContext` / `tier_id` survivor residue.",
+        "tokens": [
+          "TierContext",
+          "gap-001",
+          "missing_data_shape",
+          "requested_account_binding",
+          "requested_account_policy",
+          "tier_id",
+          "tool_use_id"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "`gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "detached_window",
+          "gap-002",
+          "result_id"
+        ]
+      },
+      {
+        "line": 114,
+        "text": "`gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.",
+        "tokens": [
+          "artifact_kind",
+          "gap-003",
+          "task_id"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.",
+        "tokens": [
+          "### Cross-surface receipt record",
+          "gap-004"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "`gap-005` through `gap-008` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `gap-007` still carries a live `restore points` contradiction in addition to missing structural headings.",
+        "tokens": [
+          "gap-005",
+          "gap-007",
+          "gap-008",
+          "restore points"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "The current unresolved set is sharp enough that another broad audit pass would mostly reconfirm existing evidence.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 7,
+        "text": "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "cmd.search.open_result",
+          "cmd.search.replace_selected",
+          "result_id"
+        ]
+      },
+      {
+        "line": 8,
+        "text": "`Plans/orchestrator-subagent-integration.md` already carries an `execution_unit_context` field block, but stale `TierContext` / `tier_id` residue still survives nearby.",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md",
+          "TierContext",
+          "execution_unit_context",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+        "tokens": [
+          "### 5.1B Persona/Runtime Snapshot Payload Contract",
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "execution_unit_context"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "`Plans/Contracts_V0.md` still preserves forbidden `detached_window` in the closed `target_kind` enum.",
+        "tokens": [
+          "Plans/Contracts_V0.md",
+          "detached_window",
+          "target_kind"
+        ]
+      },
+      {
+        "line": 11,
+        "text": "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block.",
+        "tokens": [
+          "Plans/storage-plan.md",
+          "artifacts_index.v1:{project_id}:{artifact_id}",
+          "provider_attempt_ref",
+          "usage_event_ref",
+          "validation lineage",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "`Plans/human-in-the-loop.md` already carries `blocked_sequence` and `approval_scope_key`.",
+        "tokens": [
+          "Plans/human-in-the-loop.md",
+          "approval_scope_key",
+          "blocked_sequence"
+        ]
+      },
+      {
+        "line": 13,
+        "text": "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 16,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 19,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 21,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "Plans/UI_Command_Catalog.md:67-91",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md:67-91"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "Plans/UI_Command_Catalog.md:224-246",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md:224-246"
+        ]
+      },
+      {
+        "line": 27,
+        "text": "Plans/UI_Command_Catalog.md:617-622",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md:617-622"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "Plans/Contracts_V0.md:778-806",
+        "tokens": [
+          "Plans/Contracts_V0.md:778-806"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "Plans/Executor_Protocol.md:110-130",
+        "tokens": [
+          "Plans/Executor_Protocol.md:110-130"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "Plans/orchestrator-subagent-integration.md:209-235",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md:209-235"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "Plans/orchestrator-subagent-integration.md:380-402",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md:380-402"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "Plans/storage-plan.md:325",
+        "tokens": [
+          "Plans/storage-plan.md:325"
+        ]
+      },
+      {
+        "line": 33,
+        "text": "Plans/storage-plan.md:894-897",
+        "tokens": [
+          "Plans/storage-plan.md:894-897"
+        ]
+      },
+      {
+        "line": 34,
+        "text": "Plans/storage-plan.md:1335-1383",
+        "tokens": [
+          "Plans/storage-plan.md:1335-1383"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "Plans/human-in-the-loop.md:29-33",
+        "tokens": [
+          "Plans/human-in-the-loop.md:29-33"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "Plans/human-in-the-loop.md:96",
+        "tokens": [
+          "Plans/human-in-the-loop.md:96"
+        ]
+      },
+      {
+        "line": 37,
+        "text": "Plans/Glossary.md:34-67",
+        "tokens": [
+          "Plans/Glossary.md:34-67"
+        ]
+      },
+      {
+        "line": 38,
+        "text": "Plans/Glossary.md:102-126",
+        "tokens": [
+          "Plans/Glossary.md:102-126"
+        ]
+      },
+      {
+        "line": 39,
+        "text": "Plans/Orchestrator_Page.md:16-43",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:16-43"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "Plans/Orchestrator_Page.md:451-474",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:451-474"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/assistant-chat-design.md:1784",
+        "tokens": [
+          "Plans/assistant-chat-design.md:1784"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/FinalGUISpec.md:2092",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2092"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/FinalGUISpec.md:2737-2739",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2737-2739"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "`Plans/storage-plan.md` already carries `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, `validation lineage`, `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`.",
+        "tokens": [
+          "Plans/storage-plan.md",
+          "account_pressure_episode",
+          "account_switch_event",
+          "account_switch_reason",
+          "docker_refs",
+          "effective_account_id",
+          "execution_role",
+          "kubernetes_refs",
+          "projection_freshness",
+          "projection_health",
+          "provider_attempt_ref",
+          "requested_account_id",
+          "usage_event_ref",
+          "validation lineage",
+          "workflow_refs",
+          "workflow_run_id"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "`Plans/FinalGUISpec.md` already carries `account_pressure_episode`, `account_switch_event`, `projection_freshness`, and `projection_health`.",
+        "tokens": [
+          "Plans/FinalGUISpec.md",
+          "account_pressure_episode",
+          "account_switch_event",
+          "projection_freshness",
+          "projection_health"
+        ]
+      },
+      {
+        "line": 57,
+        "text": "`Plans/interview-subagent-integration.md` already carries requested/effective runtime visibility and `operational_identity`.",
+        "tokens": [
+          "Plans/interview-subagent-integration.md",
+          "operational_identity"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "`Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.",
+        "tokens": [
+          "Plans/Glossary.md",
+          "gap-006",
+          "related concepts",
+          "what it is not",
+          "why it matters"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "`gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.",
+        "tokens": [
+          "Plans/usage-feature.md",
+          "gap-008",
+          "missing_data_shape"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 66,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 67,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/Glossary.md",
+        "tokens": [
+          "Plans/Glossary.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/Tools.md",
+        "tokens": [
+          "Plans/Tools.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 74,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/storage-plan.md:330-337",
+        "tokens": [
+          "Plans/storage-plan.md:330-337"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/storage-plan.md:468-590",
+        "tokens": [
+          "Plans/storage-plan.md:468-590"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/storage-plan.md:788-817",
+        "tokens": [
+          "Plans/storage-plan.md:788-817"
+        ]
+      },
+      {
+        "line": 79,
+        "text": "Plans/storage-plan.md:1330-1391",
+        "tokens": [
+          "Plans/storage-plan.md:1330-1391"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/FinalGUISpec.md:1842-1845",
+        "tokens": [
+          "Plans/FinalGUISpec.md:1842-1845"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "Plans/FinalGUISpec.md:2092",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2092"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/FinalGUISpec.md:2737-2739",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2737-2739"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/FinalGUISpec.md:2924-2925",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2924-2925"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/interview-subagent-integration.md:257",
+        "tokens": [
+          "Plans/interview-subagent-integration.md:257"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Plans/interview-subagent-integration.md:1692-1698",
+        "tokens": [
+          "Plans/interview-subagent-integration.md:1692-1698"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Plans/interview-subagent-integration.md:1966",
+        "tokens": [
+          "Plans/interview-subagent-integration.md:1966"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/usage-feature.md:234-239",
+        "tokens": [
+          "Plans/usage-feature.md:234-239"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "Plans/usage-feature.md:715-717",
+        "tokens": [
+          "Plans/usage-feature.md:715-717"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "Plans/Glossary.md:34-67",
+        "tokens": [
+          "Plans/Glossary.md:34-67"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Plans/Glossary.md:102-126",
+        "tokens": [
+          "Plans/Glossary.md:102-126"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "Plans/Tools.md:866-916",
+        "tokens": [
+          "Plans/Tools.md:866-916"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "Plans/Tools.md:1262-1284",
+        "tokens": [
+          "Plans/Tools.md:1262-1284"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "Plans/assistant-chat-design.md:1784",
+        "tokens": [
+          "Plans/assistant-chat-design.md:1784"
+        ]
+      },
+      {
+        "line": 94,
+        "text": "Plans/assistant-chat-design.md:2240",
+        "tokens": [
+          "Plans/assistant-chat-design.md:2240"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "Plans/Orchestrator_Page.md:258-266",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:258-266"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "Plans/Orchestrator_Page.md:358-377",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:358-377"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "Plans/Orchestrator_Page.md:428-475",
+        "tokens": [
+          "Plans/Orchestrator_Page.md:428-475"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "Plans/UI_Command_Catalog.md:617-622",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md:617-622"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Plans/Contracts_V0.md:778-806",
+        "tokens": [
+          "Plans/Contracts_V0.md:778-806"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Plans/Executor_Protocol.md:110-175",
+        "tokens": [
+          "Plans/Executor_Protocol.md:110-175"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "`gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md",
+          "detached_window",
+          "gap-002",
+          "result_id"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 121,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+        "tokens": [
+          "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/Contracts_V0.md:778-806",
+        "tokens": [
+          "Plans/Contracts_V0.md:778-806"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "Plans/Executor_Protocol.md:110-175",
+        "tokens": [
+          "Plans/Executor_Protocol.md:110-175"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/UI_Command_Catalog.md:617-622",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md:617-622"
+        ]
+      },
+      {
+        "line": 133,
+        "text": "Plans/storage-plan.md:330-337",
+        "tokens": [
+          "Plans/storage-plan.md:330-337"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Plans/storage-plan.md:468-590",
+        "tokens": [
+          "Plans/storage-plan.md:468-590"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/storage-plan.md:1330-1391",
+        "tokens": [
+          "Plans/storage-plan.md:1330-1391"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/assistant-chat-design.md:2213-2240",
+        "tokens": [
+          "Plans/assistant-chat-design.md:2213-2240"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/usage-feature.md:104-127",
+        "tokens": [
+          "Plans/usage-feature.md:104-127"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/usage-feature.md:714-717",
+        "tokens": [
+          "Plans/usage-feature.md:714-717"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "Plans/FinalGUISpec.md:2092",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2092"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/FinalGUISpec.md:2737-2739",
+        "tokens": [
+          "Plans/FinalGUISpec.md:2737-2739"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

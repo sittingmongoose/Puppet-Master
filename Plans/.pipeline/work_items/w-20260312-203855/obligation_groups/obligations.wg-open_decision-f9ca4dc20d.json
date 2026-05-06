@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-f9ca4dc20d",
+  "category": "open_decision",
+  "family_key": "governing_control_loop_in_graph_canonical_system_bounded_work_packages_and_local_overseers_vs",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0003-017"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-f9ca4dc20d--SEED-shard-0003-017",
+      "seed_id": "SEED-shard-0003-017",
+      "source_shard_id": "shard-0003",
+      "batch_index": 1,
+      "obligation_type": "open_question",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0003",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Governing control loop in graph-canonical system: bounded work packages and local overseers vs single global overseer (direction emerging).",
+      "evidence_ledger_excerpt": "key unresolved design seam: what is the governing intelligence/control loop in a graph-canonical system",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [
+        {
+          "question": "Governing control loop in graph-canonical system: bounded work packages and local overseers vs single global overseer (direction emerging).",
+          "evidence_ledger_excerpt": "key unresolved design seam: what is the governing intelligence/control loop in a graph-canonical system",
+          "related_paths": []
+        }
+      ],
+      "process_notes": [],
+      "exact_items": [
+        "Governing control loop in graph-canonical system: bounded work packages and local overseers vs single global overseer (direction emerging)."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

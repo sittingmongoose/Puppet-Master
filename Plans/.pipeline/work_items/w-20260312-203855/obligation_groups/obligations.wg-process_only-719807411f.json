@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-719807411f",
+  "category": "process_only",
+  "family_key": "config_bundle_export_import_is_explicit_while_orchestrator_usage_evidence_export_language_is_too",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0019-L00046-process_defect-4b5b17ff44"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-719807411f--SYNTH-shard-0019-L00046-process_defect-4b5b17ff44",
+      "seed_id": "SYNTH-shard-0019-L00046-process_defect-4b5b17ff44",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "obligation_type": "process_defect",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 46,
+        "line_in_source": null,
+        "source_line": 3646
+      },
+      "statement": "Config bundle export/import is explicit while Orchestrator usage/evidence export language is too UI-view-centric; no obvious shared Orchestrator export-manifest contract.",
+      "evidence_ledger_excerpt": "Config bundle export/import is explicit while Orchestrator usage/evidence export language is too UI-view-centric; no obvious shared Orchestrator export-manifest contract.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Config bundle export/import is explicit while Orchestrator usage/evidence export language is too UI-view-centric; no obvious shared Orchestrator export-manifest contract.",
+          "kind": "process_defect",
+          "evidence_ledger_excerpt": "Config bundle export/import is explicit while Orchestrator usage/evidence export language is too UI-view-centric; no obvious shared Orchestrator export-manifest contract.",
+          "related_paths": []
+        }
+      ],
+      "exact_items": [
+        "Config bundle export/import is explicit while Orchestrator usage/evidence export language is too UI-view-centric",
+        "no obvious shared Orchestrator export-manifest contract."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

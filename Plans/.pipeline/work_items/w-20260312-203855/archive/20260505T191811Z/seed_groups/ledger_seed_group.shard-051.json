@@ -1,0 +1,386 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-051",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-051.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- artifact ownership",
+      "line_in_shard": 1
+    },
+    {
+      "type": "routing_rule",
+      "text": "### Practical routing/correlation rule",
+      "line_in_shard": 3
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Canonical mutation and audit actions should route by:",
+      "line_in_shard": 4
+    },
+    {
+      "type": "open_question",
+      "text": "- `attempt_id?`",
+      "line_in_shard": 7
+    },
+    {
+      "type": "open_question",
+      "text": "- `blocked_sequence?`",
+      "line_in_shard": 8
+    },
+    {
+      "type": "data_shape",
+      "text": "- Tier-shaped surfaces may still display and group by `tier_id`, but they should resolve through pointers to canonical execution objects rather than using `tier_id` as if it were the durable execution key.",
+      "line_in_shard": 9
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 11
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Orchestrator_Page.md` still describes tab 2 as `Tiers` and uses tier-keyed widgets/event rows even though the rewrite direction is now `Seams` plus node/package/seam/lane-native execution objects.",
+      "line_in_shard": 20
+    },
+    {
+      "type": "data_shape",
+      "text": "- `human-in-the-loop.md` still stores approval state as `request_id + tier_id + tier_type`, which conflicts with the newer blocked-episode identity model.",
+      "line_in_shard": 21
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Evidence and terminal routing are still described as tier-keyed, which will be increasingly wrong once multiple attempts, blocked episodes, and graph generations are first-class.",
+      "line_in_shard": 22
+    },
+    {
+      "type": "data_shape",
+      "text": "- Update surface specs so tier/group views carry pointers to canonical execution objects instead of using `tier_id` as the primary mutation/audit key.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-16 - Concrete executor-facing `execution_unit_context` field contract",
+      "line_in_shard": 35
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 37
+    },
+    {
+      "type": "verification_rule",
+      "text": "- spot-checks against `Plans/orchestrator-subagent-integration.md`",
+      "line_in_shard": 42
+    },
+    {
+      "type": "data_shape",
+      "text": "- The concrete field family is already present, but split across three owner docs:",
+      "line_in_shard": 45
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Contracts_V0.md` already owns the canonical runtime event field packets for `scheduler.pass`, `attempt.started`, `attempt.completed`, `node.blocked`, `safe_point.*`, and remediation events.",
+      "line_in_shard": 46
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Prompt_Pipeline.md` already owns the immutable runtime handoff bundle captured at attempt start.",
+      "line_in_shard": 47
+    },
+    {
+      "type": "data_shape",
+      "text": "- The missing contract is not \u201cwhich fields exist somewhere\u201d; it is the executor-facing statement of which fields are mandatory for correctness at dispatch time versus optional disclosure/overlay fields.",
+      "line_in_shard": 49
+    },
+    {
+      "type": "routing_rule",
+      "text": "- immutable attempt handoff identity",
+      "line_in_shard": 51
+    },
+    {
+      "type": "requirement",
+      "text": "- workspace/isolation refs required for side effects and recovery",
+      "line_in_shard": 53
+    },
+    {
+      "type": "doc_hint",
+      "text": "- UI inspection/audit",
+      "line_in_shard": 60
+    },
+    {
+      "type": "data_shape",
+      "text": "### Recommended executor-facing field classes",
+      "line_in_shard": 62
+    },
+    {
+      "type": "requirement",
+      "text": "- must exist for any dispatched attempt:",
+      "line_in_shard": 65
+    },
+    {
+      "type": "decision",
+      "text": "- these fields identify the concrete execution unit and the scheduler decision that produced it",
+      "line_in_shard": 73
+    },
+    {
+      "type": "requirement",
+      "text": "- required when applicable, but canonical field names must exist in the contract:",
+      "line_in_shard": 76
+    },
+    {
+      "type": "open_question",
+      "text": "- `safe_point_id?`",
+      "line_in_shard": 77
+    },
+    {
+      "type": "open_question",
+      "text": "- `remediation_root_id?`",
+      "line_in_shard": 78
+    },
+    {
+      "type": "open_question",
+      "text": "- `remediation_parent_attempt_id?`",
+      "line_in_shard": 79
+    },
+    {
+      "type": "open_question",
+      "text": "- `blocked_sequence?`",
+      "line_in_shard": 80
+    },
+    {
+      "type": "open_question",
+      "text": "- `failure_class?`",
+      "line_in_shard": 81
+    },
+    {
+      "type": "open_question",
+      "text": "- `blocked_reason_code?`",
+      "line_in_shard": 82
+    },
+    {
+      "type": "data_shape",
+      "text": "- these fields are what make retry, blocked recovery, remediation, and restart behavior deterministic instead of heuristic",
+      "line_in_shard": 84
+    },
+    {
+      "type": "requirement",
+      "text": "- required for all provider-executed attempts:",
+      "line_in_shard": 87
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_auth_mode?`",
+      "line_in_shard": 91
+    },
+    {
+      "type": "open_question",
+      "text": "- `effective_auth_mode?`",
+      "line_in_shard": 92
+    },
+    {
+      "type": "open_question",
+      "text": "- `requested_account_policy?`",
+      "line_in_shard": 93
+    },
+    {
+      "type": "open_question",
+      "text": "- `effective_account_id?`",
+      "line_in_shard": 94
+    },
+    {
+      "type": "open_question",
+      "text": "- `account_switch_reason?`",
+      "line_in_shard": 95
+    },
+    {
+      "type": "requirement",
+      "text": "- required whenever execution can touch repo/worktree or external side effects:",
+      "line_in_shard": 100
+    },
+    {
+      "type": "open_question",
+      "text": "- `lane_id?`",
+      "line_in_shard": 102
+    },
+    {
+      "type": "open_question",
+      "text": "- `worktree_id?`",
+      "line_in_shard": 103
+    },
+    {
+      "type": "open_question",
+      "text": "- `provider_attempt_ref?`",
+      "line_in_shard": 105
+    },
+    {
+      "type": "data_shape",
+      "text": "### 5. Optional but strongly recommended disclosure fields",
+      "line_in_shard": 109
+    },
+    {
+      "type": "requirement",
+      "text": "- useful for UI/ledger/history/debuggability, but not required to make dispatch valid:",
+      "line_in_shard": 110
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 111
+    },
+    {
+      "type": "open_question",
+      "text": "- `feature_seam_id?`",
+      "line_in_shard": 112
+    },
+    {
+      "type": "open_question",
+      "text": "- `work_package_id?`",
+      "line_in_shard": 113
+    },
+    {
+      "type": "open_question",
+      "text": "- `manual_priority?`",
+      "line_in_shard": 115
+    },
+    {
+      "type": "open_question",
+      "text": "- `allowed_action_ids[]?`",
+      "line_in_shard": 116
+    },
+    {
+      "type": "open_question",
+      "text": "- `operational_identity?`",
+      "line_in_shard": 117
+    },
+    {
+      "type": "open_question",
+      "text": "- `effective_project_id?`",
+      "line_in_shard": 118
+    },
+    {
+      "type": "routing_rule",
+      "text": "- these improve explanation, routing, and cross-surface joins, but the executor can still be correct without all of them being present on every attempt snapshot",
+      "line_in_shard": 120
+    },
+    {
+      "type": "data_shape",
+      "text": "- `attempt.started` and the immutable provider handoff bundle should be isomorphic enough that one can be projected from the other without inventing new fields.",
+      "line_in_shard": 127
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 129
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- likely consumers:",
+      "line_in_shard": 134
+    },
+    {
+      "type": "data_shape",
+      "text": "- `Prompt_Pipeline.md` captures the immutable handoff bundle, but its later packet omits some fields that executor/runtime surfaces now want to inspect, such as blocked/recovery anchors when a resumed flow launches.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `storage-plan.md` keeps `tier_runtime_record` alive next to `attempt_record`, which increases the risk that consumers keep binding to the looser tier-shaped projection instead of the stricter attempt-shaped context.",
+      "line_in_shard": 143
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `EventEnvelopeV1` still says writers only \u201cshould\u201d include `run_id` / `thread_id`; that is fine for compatibility, but executor-facing docs should not inherit that looseness for runtime dispatch contracts.",
+      "line_in_shard": 144
+    },
+    {
+      "type": "data_shape",
+      "text": "- mandatory dispatch fields",
+      "line_in_shard": 148
+    },
+    {
+      "type": "data_shape",
+      "text": "- conditional recovery/blocked fields",
+      "line_in_shard": 149
+    },
+    {
+      "type": "data_shape",
+      "text": "- optional disclosure fields",
+      "line_in_shard": 150
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Align the immutable prompt handoff bundle with the `attempt.started` packet so they differ only by storage/event framing, not by identity content.",
+      "line_in_shard": 152
+    },
+    {
+      "type": "data_shape",
+      "text": "- The executor-facing contract is now mostly a normalization task across existing owner docs, not a greenfield schema invention.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "data_shape",
+      "text": "- The most important missing field in the current runtime packet set is `execution_role`.",
+      "line_in_shard": 157
+    },
+    {
+      "type": "routing_rule",
+      "text": "- attempt handoff bundle is immutable",
+      "line_in_shard": 159
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 165
+    },
+    {
+      "type": "verification_rule",
+      "text": "- spot-checks against `Plans/Orchestrator_Page.md`",
+      "line_in_shard": 171
+    },
+    {
+      "type": "doc_hint",
+      "text": "- The docs are already consistent on one important point: provider/account identity is shared across assistant, interviewer, builders, overseers, and node workers, but that does not by itself explain what the actor was doing.",
+      "line_in_shard": 174
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `Multi-Account.md` already makes execution-role-aware routing canonical through role-by-provider and role-by-account policy, but the runtime event/attempt packets still do not carry an explicit `execution_role`.",
+      "line_in_shard": 175
+    },
+    {
+      "type": "data_shape",
+      "text": "- `effective_provider_identity` / `provider_identity` / `effective_project_id` are already treated as optional non-secret disclosure fields. That makes them the wrong place to encode actor role or side-effect target identity.",
+      "line_in_shard": 176
+    },
+    {
+      "type": "data_shape",
+      "text": "- `orchestrator.receipt.{run_id}.{attempt_id}` in `storage-plan.md` is already the bridge object for external operational surfaces:",
+      "line_in_shard": 177
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Docker refs",
+      "line_in_shard": 179
+    },
+    {
+      "type": "routing_rule",
+      "text": "- immutable prompt handoff bundle",
+      "line_in_shard": 186
+    },
+    {
+      "type": "doc_hint",
+      "text": "- usage/worker-inspection projections when relevant",
+      "line_in_shard": 189
+    },
+    {
+      "type": "doc_hint",
+      "text": "- history/ledger/detail inspectors",
+      "line_in_shard": 194
+    }
+  ]
+}

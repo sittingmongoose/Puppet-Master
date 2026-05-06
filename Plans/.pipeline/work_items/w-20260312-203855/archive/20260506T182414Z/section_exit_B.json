@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.section_exit.v3.1.10",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.1.10",
+  "section_id": "B",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260505T201800Z",
+  "status": "complete",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "requires_new_research": false,
+  "requires_condensation": false,
+  "requires_ledger_preparation": true,
+  "next_section": "C_Ledger_Preparation",
+  "next_prompt_id": "C0",
+  "next_prompt_request": "Paste prompt C0 — Section Entry: Ledger Preparation v3.1.10.",
+  "ledger_intake_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+  "blockers": []
+}

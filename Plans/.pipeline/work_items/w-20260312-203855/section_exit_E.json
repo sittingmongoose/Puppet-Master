@@ -1,0 +1,43 @@
+{
+  "schema_id": "pm.section_exit.v3.1.12",
+  "section_id": "E",
+  "prompt_id": "E4",
+  "prompt_version": "pm.e4.v3.1.12",
+  "timestamp_utc": "20260506T202739Z",
+  "work_id": "w-20260312-203855",
+  "status": "complete",
+  "transfer_coverage_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+  "transfer_coverage_sha256": "31acb58214921cce5ab4837feba2d6e63bd37e64a6645c008da9a2e0c027dcb6",
+  "transfer_coverage_source_gate_report_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_gate_report.json",
+  "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+  "canonical_obligations_sha256": "fb1498de127b3bfee342f271dc2ba692d8347e937f925587d5ab8ecff733a1ce",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "coverage_row_total": 393,
+  "classified_row_total": 337,
+  "excluded_process_followup_total": 56,
+  "classification_artifact_count": 61,
+  "gaps_routing_active_source_for_section_f": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+  "effective_coverage_class_histogram_rows": {
+    "needs_doc_discovery": 161,
+    "open_decision": 42,
+    "partial": 16,
+    "present": 118,
+    "excluded_process_followup": 56
+  },
+  "final_gate": {
+    "passed": true,
+    "transfer_coverage_source_gate_passed": true,
+    "transfer_coverage_final_gate_passed": true,
+    "row_count_matches_canonical_obligations": true,
+    "blocking_issues": []
+  },
+  "known_deficiencies": [
+    "Coverage classifications use deterministic token overlap (E2); downstream Gaps/Routing should treat signals as heuristic until human or richer fidelity passes revise them.",
+    "Upstream ledger seed sampling is not line-exhaustive; obligations and coverage inherit that scope.",
+    "Reference defect noted in Section C for some shard line_in_source values may affect numeric lineage fields where present.",
+    "Post-E3 transfer_coverage includes 99 mechanical F5 resolved bindings (doc_discovery_resolution.json); two doc_discovery rows carry f5_unresolved_explicit (no classifier live_doc_targets_union).",
+    "Treat F5 bindings as evidence-bound pipeline promotion, not semantic doc audit."
+  ],
+  "next_section": "F_Gaps_Routing_Doc_Discovery",
+  "next_prompt_request": "Paste prompt F0 — Section Entry: Gaps / Routing / Doc Discovery v3.1.12."
+}

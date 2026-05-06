@@ -1,0 +1,341 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-069",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-069.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 1
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The concrete wizard deep-link format is defined, but there is still no owner doc that states what class of route data is allowed into serialized transport.",
+      "line_in_shard": 6
+    },
+    {
+      "type": "data_shape",
+      "text": "- Stored `resume_url` fields in `storage-plan.md` remain valid, but they still look stronger than the general route contract because the owner contract is not written yet.",
+      "line_in_shard": 7
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Wizard flows still have the clearest deep-link path in the product, which continues to make generic in-app routing feel under-specified.",
+      "line_in_shard": 8
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`.",
+      "line_in_shard": 11
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field.",
+      "line_in_shard": 13
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `route_target` is canonical identity.",
+      "line_in_shard": 18
+    },
+    {
+      "type": "requirement",
+      "text": "- Serialization must stay narrower than the internal route model.",
+      "line_in_shard": 19
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-17 - Refreshed canonical `object_kind` vocabulary",
+      "line_in_shard": 21
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 23
+    },
+    {
+      "type": "data_shape",
+      "text": "- The earlier `object_kind` list is directionally correct, but it now needs a firmer canonical refresh against the rewrite-era object set and the newer runtime lineage objects.",
+      "line_in_shard": 33
+    },
+    {
+      "type": "data_shape",
+      "text": "- The canonical `object_kind` set is:",
+      "line_in_shard": 34
+    },
+    {
+      "type": "requirement",
+      "text": "- `object_id` must use existing canonical ids:",
+      "line_in_shard": 58
+    },
+    {
+      "type": "data_shape",
+      "text": "- `tier`, `tier_id`, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`.",
+      "line_in_shard": 71
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 73
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 74
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 76
+    },
+    {
+      "type": "data_shape",
+      "text": "- Older docs still pivot by `tier_id` in places where `node`, `attempt`, `scheduler_pass`, `blocked_episode`, or rewrite-era objects should now be first-class navigation targets.",
+      "line_in_shard": 86
+    },
+    {
+      "type": "data_shape",
+      "text": "- `usage_event_ref` still appears as a special-case route concept in some docs instead of being normalized into `object_kind = usage_event`.",
+      "line_in_shard": 87
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- `blocked_sequence` has canonical runtime meaning, but there is still no explicit owner text saying it is the identity component for `blocked_episode` inside `{ run_id, node_id }` scope.",
+      "line_in_shard": 88
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define the canonical `object_kind` enum in `Contracts_V0.md`.",
+      "line_in_shard": 91
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Normalize older route/pivot docs away from `tier_id` and one-off special-case ids.",
+      "line_in_shard": 93
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = blocked_episode`",
+      "line_in_shard": 95
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = blocked_sequence`",
+      "line_in_shard": 98
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object scope = node_id within run`",
+      "line_in_shard": 99
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind` now carries almost all non-subject navigation identity in the rewrite.",
+      "line_in_shard": 102
+    },
+    {
+      "type": "requirement",
+      "text": "- If new object families appear, they must be added deliberately, not ad hoc in surface docs.",
+      "line_in_shard": 103
+    },
+    {
+      "type": "doc_hint",
+      "text": "## Research Progress - 2026-03-17 - Exact `inspector_target` vocabulary",
+      "line_in_shard": 105
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 107
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 111
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target` needs a controlled vocabulary.",
+      "line_in_shard": 114
+    },
+    {
+      "type": "data_shape",
+      "text": "- `inspector_target` is not object identity.",
+      "line_in_shard": 125
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target` is not a per-surface arbitrary bag.",
+      "line_in_shard": 126
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target` does not replace `tab_id`.",
+      "line_in_shard": 127
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `wizard_step`, `message_id`, `line`, `range`, and compare-target state are not `inspector_target` values.",
+      "line_in_shard": 128
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Use `inspector_target` only after primary selector identity is already established.",
+      "line_in_shard": 131
+    },
+    {
+      "type": "requirement",
+      "text": "- Use `inspector_target = evidence` when the target object is already selected and the detail focus must land on evidence.",
+      "line_in_shard": 132
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Use `inspector_target = lineage` for scheduler/remediation/safe-point/patch lineage drill-ins.",
+      "line_in_shard": 133
+    },
+    {
+      "type": "data_shape",
+      "text": "- Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.",
+      "line_in_shard": 134
+    },
+    {
+      "type": "decision",
+      "text": "- Use `inspector_target = history` for chronological/detail-history focus inside an already-selected object.",
+      "line_in_shard": 135
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 137
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 138
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 140
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 143
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Current docs still imply free-form subsection focus in a few places, especially around graph detail, wizard resume, and usage pivots.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "data_shape",
+      "text": "- Without a closed vocabulary, `inspector_target` will become a second untyped extension bag.",
+      "line_in_shard": 148
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define the closed `inspector_target` enum in `Contracts_V0.md`.",
+      "line_in_shard": 151
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Keep all message-step-line-range style anchors out of `inspector_target`.",
+      "line_in_shard": 152
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Use domain-local serialized anchor detail only when the target cannot be expressed through the closed inspector vocabulary.",
+      "line_in_shard": 153
+    },
+    {
+      "type": "data_shape",
+      "text": "- `inspector_target` is a reusable detail-focus enum.",
+      "line_in_shard": 156
+    },
+    {
+      "type": "requirement",
+      "text": "- It must stay small.",
+      "line_in_shard": 157
+    },
+    {
+      "type": "requirement",
+      "text": "- It must never become a fallback bag for unresolved route design.",
+      "line_in_shard": 158
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-17 - Hard rule for `subject_id` vs `object_kind`",
+      "line_in_shard": 160
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 162
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 164
+    },
+    {
+      "type": "data_shape",
+      "text": "- Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects.",
+      "line_in_shard": 172
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `doc:<document_id>`",
+      "line_in_shard": 174
+    },
+    {
+      "type": "data_shape",
+      "text": "- Everything else routes through `object_kind` + `object_id`.",
+      "line_in_shard": 176
+    },
+    {
+      "type": "doc_hint",
+      "text": "- document or artifact content identity",
+      "line_in_shard": 181
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind` + `object_id`:",
+      "line_in_shard": 183
+    },
+    {
+      "type": "data_shape",
+      "text": "- seam / package / lane / worktree / concern / promotion / graph objects",
+      "line_in_shard": 190
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = usage_event`",
+      "line_in_shard": 194
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <canonical usage event id>`",
+      "line_in_shard": 195
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = message`",
+      "line_in_shard": 197
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <message_id>`",
+      "line_in_shard": 198
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = wizard`",
+      "line_in_shard": 200
+    }
+  ]
+}

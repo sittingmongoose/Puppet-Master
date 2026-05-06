@@ -1,0 +1,200 @@
+  - workflow completeness
+  - UX coherence
+  - architectural coherence
+- Candidate seam-level failure classes to formalize:
+  - GUI/runtime mismatch
+  - incomplete end-to-end flow
+  - cross-package state mismatch
+  - contract drift
+  - technically wired but operationally unusable
+  - local-pass/global-fail composition
+  - missing degraded/recovery behavior
+  - inconsistent UX semantics
+  - cross-seam architecture drift
+  - invisible governance / missing operator affordances
+- New requested discussion step:
+  - define concrete seam review loop behavior
+  - include trigger points, checks performed, corroboration thresholds, and emitted artifacts
+- Candidate seam review loop shape to preserve:
+  - review at package-completion boundaries
+  - review at integration-edge / cross-package boundary crossings
+  - review before seam completion
+  - review when package overseer raises a high-impact challenge
+- Candidate seam review outputs:
+  - seam review verdict
+  - failure classes with severity
+  - evidence bundle / rationale
+  - remediation-node recommendation or graph-patch recommendation
+  - corroboration requirement and outcome when invoked
+- New unresolved model/config questions from the conversation:
+  - what is the provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels
+  - are seam/package/node provider-model settings hard constraints, defaults, or hints
+  - can an overseer do direct node work, or only delegate/review
+  - if an overseer can do node work directly, does it use overseer-effective settings or node-effective settings
+  - how do dynamic node personas interact with explicit node overrides and overseer-controlled delegation
+  - how are worktrees assigned for parallel nodes within the same package or seam
+  - what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work
+- Additional clarified questions:
+  - should overseer-spawned node workers default to node-effective provider/model/effort, or to a distinct delegated-worker policy
+  - how many parallel mutable worktrees can safely exist within one package before package-level coherence breaks down
+  - for package-based worktree pools, when two nodes in the same package have dependency ordering, should the downstream node reuse the same worktree lane, or start a fresh lane from the promoted upstream result
+  - current conversational preference is to choose the simpler default for dependent-node execution lanes; current recommendation is same-lane continuation by default, with promote-then-fork reserved for cases where it materially improves safe parallelism
+  - how should snapshots / safe points / restore points relate to graph execution:
+    - runtime-only artifacts keyed to attempts / lanes / packages
+    - graph-declared checkpoints or restore boundaries
+    - or a hybrid where graph requests policy and runtime materializes concrete snapshots
+  - next seam to define: concrete snapshot policy, restore policy, trigger classes, and scope boundaries across lane/package/seam/remediation
+  - next subtopic: map failure classes to restore behavior, remediation/escalation posture, and what must be surfaced in UI/settings versus kept runtime-internal
+  - next likely subtopic after restore matrix: contamination rules that decide lane restore vs package restore
+  - promotion/review policy must account for both:
+    - automation-first default behavior
+    - optional HITL boundaries configurable at package/seam/other governance levels
+  - blocking/HITL/critical-decision events need multi-surface notification and a chat-thread-based resolution flow
+  - next subtopic: exact automated gate checks for each promotion class
+- What should remain package-overseer-only:
+  - bounded local execution supervision
+  - package-level worker dispatch / review cadence
+  - package-local remediation recommendations
+- Which issue classes require corroboration:
+  - missing wiring
+  - implementation quality concerns
+  - unmet intent despite passing tests
+  - missing spec / hidden dependency
+  - graph structure insufficiency
+- Which Orchestrator seam should lead the discussion:
+  - runtime ownership boundary
+  - page/tab IA
+  - blocked/remediation UX
+  - lineage across graph/evidence/history/usage
+- Is `Overseer` still an intended user-visible / doc-visible concept, or legacy phrasing that should be collapsed into Orchestrator/runtime language?
+- Should Orchestrator be understood primarily as:
+  - a run control tower
+  - a scheduler projection surface
+  - a cross-artifact navigation hub
+  - or all three with explicit boundaries?
+- How much authority should the page layer have for live-status field naming versus binding directly to canonical runtime/storage contracts?
+- Do-not-forget downstream topics introduced by the user:
+  - settings GUI must surface execution-object-level provider/model and overseer policies
+  - worktree behavior is central, not peripheral
+  - persona assignment has to distinguish explicit overseer roles from dynamic node-worker selection
+- Immediate next design seam:
+  - projection ownership by surface:
+    - Project page
+    - Dashboard
+    - Orchestrator
+    - Source Control
+    - chat resolution thread
+- Additional projection/UI constraints from the user:
+  - Source Control worktree area likely needs top-level partitioning:
+    - `Orchestrator Owned`
+    - `Other`
+  - the `Orchestrator Owned` section likely needs further subdivision because of worktree volume; breaking by `feature seam` is a plausible direction
+  - Orchestrator page is a very high-density information surface across many tabs, so projection design must assume very large detail volume rather than a small/simple inspector
+- Additional settings-spec concern from the user:
+  - multi-account support likely exists conceptually/runtime-side but the settings GUI/concept may be under-specced or missing necessary configuration surfaces for it
+  - treat multi-account as both a runtime-policy seam and a settings/GUI coverage gap
+- User added a specific multi-account settings requirement:
+  - there likely needs to be a user-configurable threshold that determines when automatic account switching occurs
+  - user clarified that multi-account auto-switch should be on by default for every execution role that uses a provider:
+    - node workers
+    - overseers
+    - assistant
+    - interviewer
+    - requirements-doc builder
+    - effectively any provider-using execution actor
+  - user wants thresholding/policy granularity by:
+    - provider
+    - account
+    - execution role
+  - user highlighted real-world account heterogeneity even within the same provider:
+    - different accounts can have different quotas, rate limits, and policy constraints
+    - same-provider accounts may not be fungible and may need distinct switching rules/thresholds
+- Immediate next design seam:
+  - define multi-account settings structure across:
+    - project settings
+    - run snapshot
+    - attempt record
+    - precedence between provider/account/execution-role rules
+
+## Packetization Notes
+- Work item is currently `packetized` for run `r-20260312-203855-07`; reuse it for recovery and post-audit work instead of creating a new work item.
+- Section Fidelity Audit completed for that run and found 85 live fidelity gaps, so the current blocked state is a recovery problem, not a work-item continuity problem.
+- `ledger_fidelity_report.txt` and `fidelity_recovery_plan.txt` now provide the durable audit and recovery handoff for fresh agents.
+- Earlier packet-plan contradiction history is still useful context, but it is not the current authoritative blocker set.
+- Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.
+- 2026-04-14 stewardship refresh:
+  - refreshed `meta.json`, `mode_rules.md`, and `mode_status.md` for fresh-agent durability
+  - preserved packetized state and existing run metadata in place
+- Supporting work-item artifacts already exist:
+  - `canonical_obligations.json`
+  - `section_obligation_map.json`
+  - `coverage_collection.json`
+  - `bucket_plan.json`
+  - `packet_plan.json`
+- If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.
+
+## Do-Not-Forget Details
+- Later GUI help/tooltip generation will need:
+  - stable canonical terminology
+  - clear object vs state vs action distinctions
+  - enough explicit “why this exists” language in the planning model to support Simple/Expert/ELI5 derivation
+- Reuse this `work_id` for continued Orchestrator audit and fidelity-recovery work unless scope changes into a separate work item.
+- Do not downgrade or reset the packetized work-item state during stewardship refreshes.
+- Do not create a new work item just to continue the blocked-audit recovery for the current run.
+- Update this ledger after meaningful discovery clusters, design decisions, or contradictions are found.
+- If recovery work resumes, start from the blocked fidelity report and the recovery plan rather than reconstructing missing obligations from chat history.
+- Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.
+- Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics.
+- Treat the highest-risk same-file supersession hotspots as canon-collapse targets:
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/human-in-the-loop.md`
+  - `Plans/usage-feature.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/storage-plan.md`
+
+## Gemini Sweep Findings
+
+## Highest-Impact Docs
+- `Plans/orchestrator-subagent-integration.md`
+  - **Why impacted:** Defines the core execution model which is being replaced.
+  - **Old assumption:** Strong legacy tier hierarchy (`TierContext`/`TierType`), active-agents.json state file, hardcoded subagent registries.
+  - **New model pressure:** Needs to support dynamic packages/seams, distributed state (seglog/redb), and flexible overseer lanes.
+- `Plans/FinalGUISpec.md`
+  - **Why impacted:** The UI is tightly coupled to the tiered execution model.
+  - **Old assumption:** Tiers tab, linear phase progress bars, rigid phase/task navigation.
+  - **New model pressure:** Visualizing parallel lanes, package boundaries, seams, and effective identities instead of just "tasks".
+- `Plans/FileSafe.md`
+  - **Why impacted:** Defines the structure of the active plan and write scopes.
+  - **Old assumption:** `Phase/Task/Subtask/Iteration` hierarchy is the only way to organize work; single active plan.
+  - **New model pressure:** Needs to support "Pack" or "Seam" based scopes and potentially concurrent active contexts.
+- `Plans/WorktreeGitImprovement.md`
+  - **Why impacted:** Git worktree strategy is based on the old hierarchy.
+  - **Old assumption:** One worktree per subtask, tier-based branch naming.
+  - **New model pressure:** Lanes likely need persistent worktrees that span multiple "tasks" or are allocated dynamically from a pool.
+
+## GUI / UX Impacts
+- `Plans/FinalGUISpec.md`
+  - **Impacted surface:** Dashboard, Settings, Interview, Wizard, Tiers Tab.
+  - **Likely issue:** The "Tiers" tab is obsolete. "Phases" might still exist but "Lanes" are the new operational unit. Missing visualizations for "Overseers" and "Packages".
+- `Plans/chain-wizard-flexibility.md`
+  - **Impacted surface:** Wizard / Project Creation.
+  - **Likely issue:** Monolithic wizard state doesn't fit the modular "Contract Pack" approach.
+- `Plans/assistant-chat-design.md`
+  - **Impacted surface:** Chat interface.
+  - **Likely issue:** Assumes a single thread/queue. Needs to handle multi-lane concurrency and effective identity display (which overseer is talking?).
+- `Plans/Run_Graph_View.md`
+  - **Impacted surface:** Execution visualization.
+  - **Likely issue:** Grouped-by-phase layouts are rigid. Needs a graph or swimlane view to show parallel work packages and dependencies.
+
+## Runtime / Storage / Contract Impacts
+- `Plans/orchestrator-subagent-integration.md`
+  - **Impacted area:** Orchestrator state management.
+  - **Likely issue:** `active-agents.json` and regex extraction are fragile and incompatible with a distributed/event-sourced model (seglog).
+- `Plans/Contracts_V0.md` / `Plans/Executor_Protocol.md`
+  - **Impacted area:** Pathing and addressing.
+  - **Likely issue:** Canonical paths `<phase>/<task>/<subtask>` are too rigid for package/seam architecture.
+- `Plans/Permissions_System.md`
+  - **Impacted area:** Permission scopes.
+  - **Likely issue:** Scopes likely need to be "Package" or "Seam" aware, not just Phase/Task.
+- `Plans/Progression_Gates.md`

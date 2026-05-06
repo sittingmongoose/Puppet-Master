@@ -5,784 +5,86 @@
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 35,
-  "status": "sanitized",
+  "status": "route_initialized",
   "run_id": null,
-  "resolve_currentness_hygiene_gate_v3": {
-    "schema_id": "pm.resolve_currentness_hygiene_gate_summary.v3",
-    "prompt_version": "pm.resolve_currentness_hygiene_gate.v3.0",
-    "currentness_status": "pass",
-    "path_hygiene_status": "blocked",
-    "report_path": "Plans/.pipeline/work_items/w-20260312-203855/resolve_currentness_hygiene_report.json",
-    "stage_report_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.01.json",
-    "mirror_verification": {
-      "change_manifest_root_vs_run034": "byte_identical",
-      "research_packet_root_vs_run034": "byte_identical"
-    },
-    "next_required_stage": "14 Completion / Process Defect Handler"
+  "next_required_stage": "A4 \u2014 Section Exit: Run Control",
+  "a2_fresh_run_initializer_v3_1": {
+    "schema_id": "pm.a2.fresh_run_initializer.v3.1",
+    "prompt_version": "pm.a2.v3.1",
+    "timestamp_utc": "20260505T170909Z",
+    "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260505T170909Z",
+    "archived_files_count": 2506,
+    "archived_from_root_count": 2506,
+    "archived_from_active_count": 0,
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
-  "completion_process_defect_handler_v3": {
-    "schema_id": "pm.completion_process_defect_handler_summary.v3",
-    "prompt_version": "pm.completion_process_defect_handler.v3.0",
-    "certification_status": "blocked",
-    "active_run_id": "r-20260312-203855-run-034",
-    "blocker_summary": "Transfer mirror chain + scribe/normalize/verify/fidelity proof current; completion blocked solely on open_gaps gap-00077 path pollution (path_hygiene_status blocked in resolve_currentness_hygiene_gate_v3).",
-    "reports": {
-      "run_integrity": "Plans/.pipeline/work_items/w-20260312-203855/run_integrity_report.json",
-      "completion_certifier": "Plans/.pipeline/work_items/w-20260312-203855/completion_certifier_report.json",
-      "process_defect": "Plans/.pipeline/work_items/w-20260312-203855/process_defect_report.json",
-      "prompt_recommendations": "Plans/.pipeline/work_items/w-20260312-203855/prompt_packet_update_recommendations.md",
-      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.14.json"
-    },
-    "next_required_stage": "manual_decision"
+  "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+  "a3_route_state_initializer_v3_1": {
+    "schema_id": "pm.a3.route_state_initializer.v3.1",
+    "prompt_version": "pm.a3.v3.1",
+    "run_mode": "fresh_restart",
+    "current_section": "A",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
+    "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "timestamp_utc": "20260505T171219Z"
   },
-  "packet_builder_v3": {
-    "schema_id": "pm.packet_builder_summary.v3",
-    "prompt_version": "pm.packet_builder.v3.0",
-    "run_id": "r-20260312-203855-run-034",
-    "build_mode": "span_repair_merge",
-    "research_packet_schema": "pm.research_packet.v2",
-    "anchors_patched": 492,
-    "reconciliation_plan_present": false,
-    "reports": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/packet_builder.worklist.json",
-      "wave_001": "Plans/.pipeline/work_items/w-20260312-203855/packet_builder.wave-001.json",
-      "content_group": "Plans/.pipeline/work_items/w-20260312-203855/packet_content_group.span_repair.v3.json",
-      "research_packet": "Plans/.pipeline/work_items/w-20260312-203855/research_packet.json",
-      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.09.json"
-    },
-    "next_required_stage": "13 Fidelity Audit / Recovery"
+  "a2_fresh_run_initializer_v3_1_5": {
+    "schema_id": "pm.a2.fresh_run_initializer.v3.1.5",
+    "prompt_version": "pm.a2.v3.1.5",
+    "timestamp_utc": "20260505T182108Z",
+    "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260505T182108Z",
+    "archived_files_count": 14,
+    "archived_from_root_count": 14,
+    "archived_from_active_count": 0,
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
-  "packet_validator_v3": {
-    "schema_id": "pm.packet_validator_summary.v3",
-    "prompt_version": "pm.packet_validator.v3.0",
-    "run_id": "r-20260312-203855-run-034",
-    "validation_status": "pass",
-    "anchors_total": 555,
-    "anchors_valid": 555,
-    "mechanical_repairs_pending": 0,
-    "non_mechanical_duplicate_heading": 0,
-    "built_from_reconciliation_plan_missing": true,
-    "advisory": "reconciliation_plan.json still absent at built_from path; span/anchor gate pass",
-    "reports": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/packet_validator.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/packet_validator.wave-001.json … wave-003.json",
-      "packet_shape_report_json": "Plans/.pipeline/work_items/w-20260312-203855/packet_shape_report.json",
-      "packet_span_conflicts": "Plans/.pipeline/work_items/w-20260312-203855/packet_span_conflicts.json",
-      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.10.json"
-    },
-    "next_required_stage": "13 Fidelity Audit / Recovery"
+  "a3_route_state_initializer_v3_1_5": {
+    "schema_id": "pm.a3.route_state_initializer.v3.1.5",
+    "prompt_version": "pm.a3.v3.1.5",
+    "run_mode": "fresh_restart",
+    "current_section": "A",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
+    "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "timestamp_utc": "20260505T182230Z"
   },
-  "scribe_apply_v3": {
-    "schema_id": "pm.scribe_apply_summary.v3",
-    "prompt_version": "pm.scribe_apply.v3.0",
-    "run_id": "r-20260312-203855-run-034",
-    "apply_status": "applied",
-    "insert_after_anchors_total": 555,
-    "inserts_written_to_disk": 0,
-    "inserts_idempotent_skipped": 555,
-    "anchor_heading_mismatches": 0,
-    "reports": {
-      "preflight": "Plans/.pipeline/work_items/w-20260312-203855/scribe_preflight_report.json",
-      "plan": "Plans/.pipeline/work_items/w-20260312-203855/scribe_apply_plan.json",
-      "apply": "Plans/.pipeline/work_items/w-20260312-203855/scribe_apply_report.json",
-      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.11.json"
-    },
-    "next_required_stage": "13 Fidelity Audit / Recovery"
+  "a2_fresh_run_initializer_v3_1_10": {
+    "schema_id": "pm.a2.fresh_run_initializer.v3.1.10",
+    "prompt_version": "pm.a2.v3.1.10",
+    "timestamp_utc": "20260505T191811Z",
+    "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260505T191811Z",
+    "archived_files_count": 512,
+    "archived_from_root_file_count": 136,
+    "archived_from_moved_directory_trees_file_count": 376,
+    "archived_from_active_count": 0,
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
-  "normalize_verify_v3": {
-    "schema_id": "pm.normalize_verify_summary.v3",
-    "prompt_version": "pm.normalize_verify.v3.0",
-    "run_id": "r-20260312-203855-run-034",
-    "verifier_exit_code": 0,
-    "verifier_classification": "pass",
-    "pm_shard_plans_check_exit_code": 0,
-    "pm_plans_verify_run_gates_exit_code": 0,
-    "spec_lock_refreshed_this_stage": false,
-    "reports": {
-      "normalizer": "Plans/.pipeline/work_items/w-20260312-203855/normalizer_report.json",
-      "verifier_report": "Plans/.pipeline/work_items/w-20260312-203855/verifier_report.txt",
-      "verifier_exit_code": "Plans/.pipeline/work_items/w-20260312-203855/verifier_exit_code.txt",
-      "verifier_classification": "Plans/.pipeline/work_items/w-20260312-203855/verifier_classification.json",
-      "change_manifest": "Plans/.pipeline/work_items/w-20260312-203855/change_manifest.json",
-      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.12.json"
-    },
-    "next_required_stage": "13 Fidelity Audit / Recovery"
+  "a3_route_state_initializer_v3_1_10": {
+    "schema_id": "pm.a3.route_state_initializer.v3.1.10",
+    "prompt_version": "pm.a3.v3.1.10",
+    "run_mode": "fresh_restart",
+    "current_section": "A",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
+    "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "timestamp_utc": "20260505T192307Z"
   },
-  "fidelity_audit_recovery_v3": {
-    "schema_id": "pm.fidelity_audit_recovery_summary.v3",
-    "prompt_version": "pm.fidelity_audit_recovery.v3.0",
-    "run_id": "r-20260312-203855-run-034",
-    "fidelity_status": "pass",
-    "acceptance_checks_total": 1731,
-    "false_positives_adjudicated": 1,
-    "recovery_plan_emitted": false,
-    "reports": {
-      "evidence_worklist": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_evidence.worklist.json",
-      "evidence_waves": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_evidence.wave-001.json … wave-023.json",
-      "evidence_index": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_evidence_index.json",
-      "audit_waves": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_audit.wave-001.json … wave-023.json",
-      "ledger_fidelity_report": "Plans/.pipeline/work_items/w-20260312-203855/ledger_fidelity_report.txt",
-      "reducer_report": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_audit_reducer_report.json",
-      "stage_report": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.13.json"
-    },
-    "next_required_stage": "14 Completion / Process Defect Handler"
+  "a2_fresh_run_initializer_v3_1_12": {
+    "schema_id": "pm.a2.fresh_run_initializer.v3.1.12",
+    "prompt_version": "pm.a2.v3.1.12",
+    "timestamp_utc": "20260506T182414Z",
+    "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260506T182414Z",
+    "archived_files_count": 53,
+    "archived_from_root_file_count": 0,
+    "archived_from_moved_directory_trees_file_count": 35,
+    "archived_from_active_count": 0,
+    "next_required_stage": "A3 \u2014 Route State Initializer"
   },
-  "target_path_hygiene_audit_v2_3": {
-    "schema_id": "pm.target_path_hygiene_report.v2.3",
-    "report_path": "Plans/.pipeline/work_items/w-20260312-203855/target_path_hygiene_report.json",
-    "polluted_fields_total": 5,
-    "delta_repair_safe": false,
-    "repair_plan_next_required_stage": "Prompt Packet Update / Process Defect Repair",
-    "note": "Superseded for routing by resolve_currentness_hygiene_gate_v3 (2026-05-04): top-level next_required_stage now 14 Completion / Process Defect Handler until gap-00077 hygiene addressed; Doc Discovery queue remains downstream after process defect"
-  },
-  "next_required_stage": "manual_decision",
-  "ledger_shards": {
-    "status": "generated_current",
-    "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
-    "source_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
-    "shard_line_size": 200
-  },
-  "target_document_existence": {
-    "status": "not_checked",
-    "report_path": null
-  },
-  "stage_transition_log": [],
-  "open_gaps_reducer_ready_routing_gate_summary": {
-    "schema_id": "pm.open_gaps_reducer_ready_routing_gate_summary.v2.2",
-    "open_gaps_total": 77,
-    "planning_blockers": 76,
-    "fix_backlog_items": 0,
-    "process_followup_items": 1,
-    "doc_discovery_required": 76,
-    "path_quarantine_violations": 0,
-    "next_required_stage": "Doc Discovery Worklist Builder",
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "reducer_attestation_agent": "10dd9d22-43c7-4918-8776-8049bfbb7ab3"
-    },
-    "artifacts": {
-      "open_gaps": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.noise.json",
-      "reducer_worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.wave-001.json … wave-012.json"
-    }
-  },
-  "open_gaps_classifier_summary": {
-    "schema_id": "pm.open_gaps_classifier_summary.v2.2",
-    "gap_tasks_classified": 77,
-    "result_files": 77,
-    "concrete_fix_backlog_gaps": 0,
-    "planning_blocker_gaps": 76,
-    "process_followup_gaps": 1,
-    "wave_files": 12,
-    "noise_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "classifier_attestation_agent": "af1ce028-9970-4298-bb91-01ade19863b3"
-    },
-    "artifacts": {
-      "results": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_result.ogtask-###.json (77 files)",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.wave-001.json … wave-012.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.noise-001.json … noise-012.json"
-    },
-    "next_required_stage": "Open Gaps Reducer / Ready-Routing Gate"
-  },
-  "open_gaps_worklist_builder_summary": {
-    "schema_id": "pm.open_gaps_worklist_builder_summary.v2.2",
-    "actionable_rows_total": 1896,
-    "gap_tasks_total": 77,
-    "doc_discovery_task_chunks": 76,
-    "process_only_task_chunks": 1,
-    "concrete_fix_backlog_tasks": 0,
-    "doc_discovery_tasks": 76,
-    "process_only_tasks": 1,
-    "known_target_files_missing": 0,
-    "path_quarantine_status": "pass",
-    "placeholder_path_status": "pass",
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "worklist_attestation_agent": "18605f4e-4ffc-4615-80c0-503963593688"
-    },
-    "artifacts": {
-      "open_gaps_worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.worklist.json",
-      "builder_worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Open Gaps Classifier"
-  },
-  "transfer_coverage_reducer_source_gate_summary": {
-    "schema_id": "pm.transfer_coverage_reducer_source_gate_summary.v2.2",
-    "coverage_rows_total": 1896,
-    "obligations_total": 1896,
-    "obligations_without_rows": 0,
-    "doc_discovery_rows": 1891,
-    "process_only_rows": 5,
-    "known_target_files_missing": 0,
-    "path_quarantine_status": "pass",
-    "placeholder_path_status": "pass",
-    "source_coverage_status": "pass",
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "reducer_attestation_agent": "c6464b92-3fab-4bc5-ba2a-52d4911137e3"
-    },
-    "artifacts": {
-      "transfer_coverage": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-      "source_coverage_report": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_coverage_report.json",
-      "reducer_worklist": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Open Gaps Worklist Builder"
-  },
-  "coverage_evidence_classifier_summary": {
-    "schema_id": "pm.coverage_evidence_classifier_summary.v2.2",
-    "coverage_rows_total": 1896,
-    "evidence_groups_total": 190,
-    "doc_discovery_groups": 187,
-    "process_only_touching_groups": 3,
-    "mixed_sentinel_groups": 3,
-    "path_quarantine_violations": 0,
-    "placeholder_path_violations": 0,
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "classifier_attestation_agent": "6a8c7c2a-444c-4ac9-b682-36cdb0992b7e"
-    },
-    "artifacts": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.wave-001.json … wave-012.json",
-      "results": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_results.ceg-###.json (190 files)"
-    },
-    "next_required_stage": "Coverage Matrix Reducer / Source Gate"
-  },
-  "coverage_row_inventory_builder_summary": {
-    "schema_id": "pm.coverage_row_inventory_builder_summary.v2.2",
-    "obligations_total": 1896,
-    "coverage_rows_total": 1896,
-    "doc_discovery_rows": 1891,
-    "process_only_rows": 5,
-    "concrete_path_rows": 0,
-    "known_target_files_missing": 0,
-    "path_quarantine_violations": 0,
-    "placeholder_path_violations": 0,
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "row_inventory_attestation_agent": "5455ee6f-7a17-4e66-9e59-bf57aef3c2b1"
-    },
-    "artifacts": {
-      "row_inventory": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.wave-001.json … wave-012.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.noise.json"
-    },
-    "next_required_stage": "Coverage Evidence Classifier"
-  },
-  "canonical_obligations_reducer_source_gate_summary": {
-    "schema_id": "pm.canonical_obligations_reducer_source_gate_summary.v2.2",
-    "raw_obligations_total": 2667,
-    "merged_obligations_total": 1896,
-    "source_seed_ids_total": 2667,
-    "source_seed_ids_represented": 2667,
-    "source_shard_ids_total": 92,
-    "source_shard_ids_represented": 92,
-    "path_quarantine_status": "pass",
-    "placeholder_path_status": "pass",
-    "source_coverage_status": "pass",
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "reducer_attestation_agent": "230a5c5e-3559-4c68-a0f6-7005040aadb9"
-    },
-    "artifacts": {
-      "canonical_obligations": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-      "source_coverage_report": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_source_coverage_report.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.noise.json",
-      "reducer_worklist": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_reducer.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations_reducer.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Coverage Row Inventory Builder"
-  },
-  "canonical_obligation_converter_summary": {
-    "schema_id": "pm.canonical_obligation_converter_summary.v2.2",
-    "work_groups_total": 1947,
-    "obligations_total": 2667,
-    "group_file_prefix": "canonical_obligations.group-",
-    "path_quarantine_violations": 0,
-    "placeholder_path_violations": 0,
-    "wave_files": 12,
-    "noise_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "converter_output_attestation_agent": "6828504e-31d1-49a6-a782-f98ce391cbcd"
-    },
-    "artifacts": {
-      "groups": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.group-canongrp-####.json (1947 files)",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_converter.wave-001.json … wave-012.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_converter.noise-001.json … noise-012.json"
-    },
-    "next_required_stage": "Canonical Obligations Reducer / Source Gate"
-  },
-  "canonical_obligation_worklist_builder_summary": {
-    "schema_id": "pm.canonical_obligation_worklist_builder_summary.v2.2",
-    "seed_items_total": 2667,
-    "work_groups_total": 1947,
-    "source_shards_represented": 92,
-    "path_quarantine_violations": 0,
-    "placeholder_path_violations": 0,
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "worklist_coverage_attestation_agent": "5b526f2f-8dd2-438b-9fa3-0b46bcbb69f3"
-    },
-    "artifacts": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligation_worklist_builder.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Canonical Obligation Converter"
-  },
-  "ledger_obligation_seed_summary": {
-    "seed_items_total": 2912,
-    "owner_seed_items": 1932,
-    "prompt_process_obligation_seed_items": 12,
-    "consumer_seed_items": 227,
-    "stale_retirement_seed_items": 179,
-    "layout_blocker_seed_items": 482,
-    "docs_affected": 66,
-    "source_shards_total": 92,
-    "source_shards_covered": 92,
-    "source_line_ranges_covered": 92,
-    "verification_passes_completed": 1,
-    "material_findings_deferred": 0
-  },
-  "canonical_obligations_summary": {
-    "obligations_total": 4510,
-    "owner_obligations": 2774,
-    "consumer_obligations": 310,
-    "stale_retirement_obligations": 383,
-    "layout_blocker_obligations": 884,
-    "missing_doc_reference_obligations": 55,
-    "stale_token_replacement_obligations": 104,
-    "docs_affected": 66,
-    "seed_items_represented": 2912,
-    "seed_items_deferred": 0,
-    "seed_items_noise": 0,
-    "source_shards_represented": 92
-  },
-  "canonical_obligations_source_coverage_summary": {
-    "status": "pass",
-    "seed_items_total": 2912,
-    "seed_items_represented": 2912,
-    "seed_items_deferred": 0,
-    "seed_items_noise": 0,
-    "source_shards_total": 92,
-    "source_shards_represented": 92
-  },
-  "doc_discovery_resolution_summary": {
-    "schema_id": "pm.doc_discovery_resolution_summary.v2.2",
-    "rows_considered": 1010,
-    "rows_resolved_to_existing_docs": 125,
-    "rows_unresolved_need_audit": 885,
-    "path_quarantine_violations": 0,
-    "source_seed_ids_preserved": 1358,
-    "source_shard_ids_preserved": 92
-  },
-  "doc_discovery_resolver_summary": {
-    "schema_id": "pm.doc_discovery_resolver_summary.v2.2",
-    "discovery_tasks_total": 124,
-    "resolver_wave_files": 12,
-    "coverage_rows_resolved_existing_owner": 125,
-    "coverage_rows_unresolved_owner": 885,
-    "evidence_rule": "verbatim_exact_item_or_whitespace_normalized_min_score_3_unique_winner",
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "resolver_wave_attestation_agents": [
-        "16ac8a27-6937-42d1-91cb-681e097bbc79",
-        "b1b5b146-1812-4cfc-9d93-7f44f2315dcf",
-        "4d09a029-0c40-43bc-9445-eeff8f0d065f"
-      ]
-    },
-    "artifacts": {
-      "resolution": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolution.noise.json",
-      "resolver_worklist": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Coverage Evidence Delta Classifier"
-  },
-  "open_gaps_delta_reducer_ready_routing_gate_summary": {
-    "schema_id": "pm.open_gaps_delta_reducer_ready_routing_gate_summary.v2.2",
-    "delta_wave": 2,
-    "gaps_removed": 7,
-    "gaps_updated_doc_discovery": 62,
-    "new_fix_backlog_gaps": 5,
-    "open_gaps_total_after": 95,
-    "remaining_planning_blockers": 62,
-    "remaining_doc_discovery_rows": 885,
-    "fix_backlog_rows": 772,
-    "path_quarantine_status": "pass",
-    "placeholder_path_status": "pass",
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "delta_wave_attestation_agents": [
-        "209f9a65-7f23-4510-b58f-6a4deb481f63",
-        "78241b6a-4f70-4641-a41d-6cecbb2d7caf"
-      ]
-    },
-    "artifacts": {
-      "report": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_delta_reducer_report.json",
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_delta_reducer.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_delta_reducer.wave-001.json … wave-012.json",
-      "open_gaps": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.noise.json"
-    },
-    "next_required_stage": "Doc Discovery Worklist Builder"
-  },
-  "coverage_evidence_delta_classifier_summary": {
-    "schema_id": "pm.coverage_evidence_delta_classifier_summary.v2.2",
-    "delta_tasks_total": 15,
-    "coverage_rows_updated": 125,
-    "doc_discovery_rows_after": 885,
-    "rows_present_after": 234,
-    "rows_partial_after": 0,
-    "rows_missing_after": 1657,
-    "path_quarantine_status": "pass",
-    "placeholder_path_status": "pass",
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "delta_wave_attestation_agents": [
-        "a8a74c3c-6ea2-43c7-8fe3-18d510eeb355",
-        "a1884954-2ee8-428a-b797-fc82114292f8"
-      ]
-    },
-    "artifacts": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_delta_classifier.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_delta_classifier.wave-001.json … wave-012.json",
-      "delta_result": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_delta_result.json"
-    },
-    "next_required_stage": "Open Gaps Delta Reducer / Ready-Routing Gate"
-  },
-  "coverage_evidence_classifier_summary": {
-    "schema_id": "pm.coverage_evidence_classifier_worklist.v2",
-    "evidence_groups_total": 362,
-    "inventory_rows_total": 3249,
-    "status_present": 1339,
-    "status_partial": 673,
-    "status_missing": 1231,
-    "path_field_blocked_rows_inventory_paths": 7,
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "explore_wave_attestation_agent": "5a34a169-3ecd-4283-a402-870cf80b7faf",
-      "explore_plan_scan_attestation_agent": "5a34a169-3ecd-4283-a402-870cf80b7faf",
-      "explore_schema_attestation_agent": "5a34a169-3ecd-4283-a402-870cf80b7faf"
-    },
-    "artifacts": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.wave-001.json … wave-012.json",
-      "results": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_results.ceg-####.json (362 files)"
-    },
-    "next_required_stage": "Coverage Matrix Reducer / Source Gate"
-  },
-  "transfer_coverage_summary": {
-    "schema_id": "pm.transfer_coverage.v2.1",
-    "obligations_total": 2078,
-    "coverage_rows_total": 3249,
-    "obligations_with_rows": 2078,
-    "obligations_without_rows": 0,
-    "rows_present": 1339,
-    "rows_partial": 673,
-    "rows_missing": 1231,
-    "rows_process_only": 6,
-    "doc_discovery_rows": 963,
-    "known_target_files_missing": 2,
-    "path_quarantine_violations": 0,
-    "coverage_rows_deferred": 0,
-    "source_seed_ids_preserved": 2912,
-    "source_shard_ids_preserved": 92,
-    "next_required_stage": "Coverage Matrix Reducer / Source Gate"
-  },
-  "transfer_coverage_source_coverage_summary": {
-    "schema_id": "pm.transfer_coverage_source_coverage_report.v2.1",
-    "status": "pass",
-    "obligations_total": 2078,
-    "obligations_with_rows": 2078,
-    "obligations_without_rows": 0,
-    "path_quarantine_status": "pass",
-    "doc_discovery_rows": 963,
-    "process_only_rows": 6,
-    "known_target_files_missing": 2
-  },
-  "open_gaps_worklist_builder_summary": {
-    "schema_id": "pm.open_gaps_worklist.v2.1",
-    "actionable_rows_total": 2260,
-    "row_groups_total": 540,
-    "doc_discovery_rows": 963,
-    "known_target_files_missing": 2,
-    "process_only_rows": 6,
-    "stale_token_replacement_unknown_rows": 77,
-    "path_quarantine_violations": 0,
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "explore_wave_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_plan_scan_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_schema_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c"
-    },
-    "artifacts": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Open Gaps Classifier"
-  },
-  "open_gaps_classifier_summary": {
-    "schema_id": "pm.open_gaps_classifier_summary.v2.1",
-    "candidate_groups_total": 540,
-    "coverage_rows_represented": 2260,
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "explore_wave_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_plan_scan_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_schema_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c"
-    },
-    "artifacts": {
-      "candidate_groups": "Plans/.pipeline/work_items/w-20260312-203855/open_gap_candidates.gapgrp-####.json (540 files)",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.wave-001.json … wave-012.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.noise-001.json … noise-012.json"
-    },
-    "next_required_stage": "Open Gaps Reducer / Ready-Routing Gate"
-  },
-  "open_gaps_summary": {
-    "schema_id": "pm.open_gaps.v2.1",
-    "planning_blockers": 255,
-    "fix_backlog_items": 285,
-    "total_gaps": 540,
-    "docs_affected": 58,
-    "coverage_rows_represented": 2260,
-    "source_seed_ids_represented": 2035,
-    "source_shard_ids_represented": 91,
-    "path_quarantine_violations": 0,
-    "missing_doc_reference_items": 29,
-    "missing_target_files_observed": 2,
-    "doc_discovery_required_items": 98,
-    "stale_token_replacement_unknown_items": 12,
-    "packetizable_layout_defects": 142,
-    "prompt_packet_update_required_items": 1,
-    "process_only_items": 6,
-    "unclassified_planning_blockers": 0,
-    "planning_blocker_route_breakdown": {
-      "doc_discovery_required": 98,
-      "stale_token_replacement_unknown": 12,
-      "owner_unknown_no_candidate": 0,
-      "open_decision": 0,
-      "path_field_defect": 2,
-      "packetizable_layout_defect": 142,
-      "unsafe_layout_blocker": 0,
-      "unresolved_external_research_required": 0,
-      "prompt_packet_update_required": 1,
-      "unclassified_planning_blocker": 0
-    },
-    "artifacts": {
-      "open_gaps": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.noise.json",
-      "reducer_worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.worklist.json",
-      "reducer_waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Coverage Matrix Reducer / Source Gate"
-  },
-  "reconciliation_plan_summary": {
-    "targets_total": 705,
-    "docs_targeted": 63,
-    "coverage_rows_represented": 5610,
-    "coverage_rows_unrepresented": 0,
-    "source_seed_ids_represented": 6747,
-    "source_shard_ids_represented": 92,
-    "span_conflict_risk_groups": 0,
-    "layout_blockers": 150,
-    "observe_only_targets": 150,
-    "active_mutation_targets": 555,
-    "non_packetizable_targets_converted_to_observe_only": 40
-  },
-  "packet_builder_summary": {
-    "status": "pass",
-    "run_id": "r-20260312-203855-run-034",
-    "packet_targets_total": 705,
-    "doc_intents_total": 63,
-    "reconciliation_targets_represented": 705,
-    "coverage_row_ids_preserved": 5610,
-    "source_obligation_ids_preserved": 5237,
-    "source_seed_ids_preserved": 6747,
-    "source_shard_ids_preserved": 92,
-    "fidelity_gap_refs_preserved": 0,
-    "exact_acceptance_checks_preserved": 4,
-    "exact_required_items_preserved": 6876,
-    "span_conflicts_found": 0,
-    "span_conflicts_resolved": 0,
-    "unresolved_span_conflicts": 0,
-    "next_required_stage": "Scribe"
-  },
-  "transfer_coverage_matrix_reducer_summary": {
-    "coverage_rows_total": 8266,
-    "path_quarantine_violations": 0,
-    "non_concrete_paths_normalized_to_doc_discovery": 7
-  },
-  "open_gaps_reducer_summary": {
-    "schema_id": "pm.open_gaps_reducer_summary.v2.1",
-    "candidate_groups_input": 540,
-    "open_gaps_emitted": 540,
-    "actionable_rows_total": 2260,
-    "noise_rows_total": 0,
-    "dedup_mode": "conservative_signature",
-    "total_gaps": 540,
-    "planning_blockers": 255,
-    "fix_backlog_items": 285,
-    "unclassified_planning_blockers": 0,
-    "next_route": "Coverage Matrix Reducer / Source Gate",
-    "path_field_defect_gap_ids": [
-      "gap-0001",
-      "gap-0002"
-    ],
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "explore_wave_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_plan_scan_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_schema_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c"
-    },
-    "artifacts": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.wave-001.json … wave-012.json",
-      "open_gaps": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
-      "noise": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.noise.json"
-    },
-    "next_required_stage": "Coverage Matrix Reducer / Source Gate"
-  },
-  "doc_discovery_worklist_builder_summary": {
-    "schema_id": "pm.doc_discovery_worklist_builder_summary.v2.2",
-    "doc_discovery_rows_total": 1010,
-    "discovery_tasks_total": 124,
-    "candidate_docs_total": 63,
-    "doc_discovery_gap_chunks": 69,
-    "path_quarantine_violations": 0,
-    "placeholder_path_violations": 0,
-    "wave_files": 12,
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "worklist_wave_attestation_agents": [
-        "4366b7e9-efc6-45e8-9e19-c0a25a9d8361",
-        "8a7aa920-b938-43d9-8e18-79b64846da4a",
-        "3fa5f257-bed2-4356-8c62-aa2c2516a40c"
-      ],
-      "worklist_row_sum_verified_local": true,
-      "worklist_row_sum": 1010
-    },
-    "artifacts": {
-      "builder_worklist": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_worklist_builder.worklist.json",
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_worklist_builder.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Doc Discovery Resolver"
-  },
-  "coverage_row_inventory_builder_summary": {
-    "schema_id": "pm.transfer_coverage_row_inventory.v2",
-    "rows_total": 8266,
-    "obligations_total": 4510,
-    "doc_discovery_rows": 1511,
-    "known_target_files_missing": 7,
-    "path_quarantine_violations": 0,
-    "wave_files": 12,
-    "source_sha256": "5af3d717781ce43bd0b79acfb694ad980bc1213af5811b4c8195f56c5b00efbb",
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "explore_wave_attestation_agent": "a1e10b3b-c515-4583-a08d-843d3cdf4377",
-      "explore_plan_scan_attestation_agent": "a1e10b3b-c515-4583-a08d-843d3cdf4377",
-      "explore_schema_attestation_agent": "a1e10b3b-c515-4583-a08d-843d3cdf4377"
-    },
-    "artifacts": {
-      "row_inventory": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.row_inventory.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/coverage_row_inventory_builder.wave-001.json … wave-012.json"
-    },
-    "next_required_stage": "Coverage Evidence Classifier"
-  },
-  "transfer_coverage_matrix_reducer_source_gate_summary": {
-    "schema_id": "pm.transfer_coverage_source_coverage_report.v2.1",
-    "coverage_rows_total": 3249,
-    "evidence_groups_total": 362,
-    "source_coverage_report_status": "pass",
-    "path_quarantine_violations": 0,
-    "doc_discovery_rows": 963,
-    "process_only_rows": 6,
-    "known_target_files_missing": 2,
-    "missing_obligation_ids_sample": [],
-    "subagent_execution": {
-      "required": true,
-      "used": true,
-      "wave_files_valid": true,
-      "skip_reason": null,
-      "explore_wave_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_plan_scan_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c",
-      "explore_schema_attestation_agent": "f2d5ab35-a6be-4bdc-be17-3efb78e9d37c"
-    },
-    "artifacts": {
-      "worklist": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.worklist.json",
-      "waves": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_reducer.wave-001.json … wave-012.json",
-      "transfer_coverage": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-      "source_coverage_report": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage_source_coverage_report.json"
-    },
-    "next_required_stage": "Open Gaps Worklist Builder"
+  "a3_route_state_initializer_v3_1_12": {
+    "schema_id": "pm.a3.route_state_initializer.v3.1.12",
+    "prompt_version": "pm.a3.v3.1.12",
+    "run_mode": "fresh_restart",
+    "current_section": "A",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
+    "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "timestamp_utc": "20260506T182511Z"
   }
 }

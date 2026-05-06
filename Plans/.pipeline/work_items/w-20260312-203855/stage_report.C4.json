@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.stage_report.C4.v3.1.12",
+  "prompt_id": "C4",
+  "prompt_version": "pm.c4.v3.1.12",
+  "timestamp_utc": "20260506T191331Z",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "execution_type_rationale": "C4 implemented as deterministic manifest/shard-text anchoring checks (normalized markdown/excerpt matching) over 23 bounded batches; no full-ledger semantic reinterpretation.",
+  "subagents": {
+    "used": false,
+    "required": false,
+    "note": "Exploratory subagent wave was not used as proof: outputs mixed schema and optional READ scope; final gate uses deterministic verifier."
+  },
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification_proof": {
+    "bounded_batches_verified": 23,
+    "subagent_task_ids_enumerated": [
+      "c4-task-001",
+      "c4-task-002",
+      "c4-task-003",
+      "c4-task-004",
+      "c4-task-005",
+      "c4-task-006",
+      "c4-task-007",
+      "c4-task-008",
+      "c4-task-009",
+      "c4-task-010",
+      "c4-task-011",
+      "c4-task-012",
+      "c4-task-013",
+      "c4-task-014",
+      "c4-task-015",
+      "c4-task-016",
+      "c4-task-017",
+      "c4-task-018",
+      "c4-task-019",
+      "c4-task-020",
+      "c4-task-021",
+      "c4-task-022",
+      "c4-task-023"
+    ],
+    "batch_pass_true_count": 23,
+    "working_ledger_sha256_verified": true,
+    "shard_count": 92,
+    "line_in_source_defect_files": [
+      "ledger_seed_group.shard-0081.json"
+    ]
+  },
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C4.json"
+  ],
+  "next_prompt_request": "Paste prompt C5 \u2014 Section Exit: Ledger Preparation v3.1.12."
+}

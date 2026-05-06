@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-doc_hint-dfb48e421a",
+  "category": "doc_hint",
+  "family_key": "prefer_canonical_terms_tab_object_labels_seams_feature_seam_work_package_package_overseer_seam",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0001-015"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-doc_hint-dfb48e421a--SEED-shard-0001-015",
+      "seed_id": "SEED-shard-0001-015",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "obligation_type": "doc_hint",
+      "work_group_category": "doc_hint",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Prefer canonical terms: tab/object labels Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer; state labels Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, etc.",
+      "evidence_ledger_excerpt": "likely canonical tab/object labels: `Seams`... `Weak Integration`... `Graph Patch Applied`... `Generation Updated`",
+      "related_paths": [],
+      "doc_hints": [
+        {
+          "hint": "Prefer canonical terms: tab/object labels Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer; state labels Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, etc.",
+          "evidence_ledger_excerpt": "likely canonical tab/object labels: `Seams`... `Weak Integration`... `Graph Patch Applied`... `Generation Updated`",
+          "related_paths": []
+        }
+      ],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Prefer canonical terms: tab/object labels Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer",
+        "state labels Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, etc."
+      ],
+      "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels."
+    }
+  ]
+}

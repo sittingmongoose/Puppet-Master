@@ -1,0 +1,54 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-baa95d13fc",
+  "category": "open_decision",
+  "family_key": "fully_automated_by_default_hitl_configurable_off_by_default_on_critical_failure_decision_surface",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0004-005"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-baa95d13fc--SEED-shard-0004-005",
+      "seed_id": "SEED-shard-0004-005",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "decision",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Fully automated by default; HITL configurable off by default; on critical failure/decision surface Dashboard, Orchestrator, and chat thread with chat presenting resolution.",
+      "evidence_ledger_excerpt": "HITL is explicitly off by default; automation is the normal system behavior... issue must surface in: Dashboard... Orchestrator page... spawned agent/thread in the chat window",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [
+        {
+          "decision": "Fully automated by default; HITL configurable off by default; on critical failure/decision surface Dashboard, Orchestrator, and chat thread with chat presenting resolution.",
+          "evidence_ledger_excerpt": "HITL is explicitly off by default; automation is the normal system behavior... issue must surface in: Dashboard... Orchestrator page... spawned agent/thread in the chat window",
+          "related_paths": []
+        }
+      ],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Fully automated by default",
+        "HITL configurable off by default",
+        "on critical failure/decision surface Dashboard, Orchestrator, and chat thread with chat presenting resolution."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

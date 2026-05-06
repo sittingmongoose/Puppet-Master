@@ -1,0 +1,1140 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0050",
+  "coverage": {
+    "shard_id": "shard-0050",
+    "start_line": 9165,
+    "end_line": 9331,
+    "line_count": 167,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0050.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 17,
+        "text": "requirements/scope/codebase summaries and refs",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "requested/effective account fields are not carried through the concrete handoff/provenance requirements",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, `timestamp`, which is useful but still weaker than the shared runtime identity grammar elsewhere",
+        "tokens": [
+          "model",
+          "persona_id",
+          "provider",
+          "source_phase_ids[]",
+          "source_stage",
+          "timestamp"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`chain-wizard-flexibility.md` already carries `project_id` in the assistant-to-wizard payload, but `interview-subagent-integration.md` still shows `thread_id: None` in concrete orchestration/crew paths that should likely preserve thread correlation.",
+        "tokens": [
+          "chain-wizard-flexibility.md",
+          "interview-subagent-integration.md",
+          "project_id",
+          "thread_id: None"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough canonical identity for downstream consumers to remain truthful without reconstructing context heuristically.",
+        "tokens": []
+      },
+      {
+        "line": 150,
+        "text": "Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/project/run/attempt identity families already required elsewhere.",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 19,
+        "text": "That is directionally good, but still thin relative to the rewrite:",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "but even here the payload remains too wizard-local and still does not connect cleanly to the broader execution-unit / account / role model",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "wizard, builder, interview remain conversational/document-production actors, not orchestration nodes/packages/seams",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough canonical identity for downstream consumers to remain truthful without reconstructing context heuristically.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "The Codex pass mostly closed the loop by turning several remaining downstream issues into exact spec-integrity failures.",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "GUI / command ownership remains split in concrete, machine-breaking ways:",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries.",
+        "tokens": []
+      },
+      {
+        "line": 107,
+        "text": "Artifact / HITL / tool contracts remain under-owned at the exact file/field level:",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "`human-in-the-loop.md` still contains an intra-doc contradiction on `allowed_actions` vs `allowed_action_ids`, still leaves `request_id <-> blocked_sequence` mapping unowned, and still keeps approval-scope/session semantics under-keyed while neighboring docs cascade approvals broadly.",
+        "tokens": [
+          "allowed_action_ids",
+          "allowed_actions",
+          "human-in-the-loop.md",
+          "request_id <-> blocked_sequence"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "Execution-core and runtime coordination gaps remain exact rather than abstract:",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "schema-family authority, missing storage key owner, and missing attempt/project identity remain unresolved.",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "duplicate canonical sections plus unowned mint/handshake rules remain an execution-core risk multiplier.",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "runtime identity parity and routing-key correctness remain visibly incomplete.",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "durable worktree lineage, base-branch authority, and canonical blocked emitters remain unresolved.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "Reconcile all remaining command/template/example drift so `UI_Command_Catalog.md` is the sole stable action owner and every referenced command actually exists.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "Add the missing canonical record/projection families to `storage-plan.md` for worktree lifecycle and artifact index state before downstream docs keep inventing them implicitly.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/project/run/attempt identity families already required elsewhere.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 5,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 9,
+        "text": "Wizard/interview docs are increasingly explicit about lineage and blocked-state handling, but their concrete handoff payloads still stop short of the shared runtime identity model.",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "`chain-wizard-flexibility.md` has a reasonably solid assistant-to-wizard handoff payload:",
+        "tokens": [
+          "chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "`interview-subagent-integration.md` explicitly claims shared runtime alignment and has separate requested/effective interview contract pieces, but still drops the same execution-governance fields in practice:",
+        "tokens": [
+          "interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "requested/effective account fields are not carried through the concrete handoff/provenance requirements",
+        "tokens": []
+      },
+      {
+        "line": 33,
+        "text": "wizard blocked state carries `wizard_step`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, and `replan_generation?`",
+        "tokens": [
+          "blocked_reason_code",
+          "clarification_round_count",
+          "replan_generation?",
+          "report_ref",
+          "wizard_step"
+        ]
+      },
+      {
+        "line": 35,
+        "text": "but even here the payload remains too wizard-local and still does not connect cleanly to the broader execution-unit / account / role model",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "but their handoff payloads still need to carry enough canonical identity and lineage so downstream runtime, history, ledger, search, and audit can explain how execution began",
+        "tokens": []
+      },
+      {
+        "line": 44,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`chain-wizard-flexibility.md` already carries `project_id` in the assistant-to-wizard payload, but `interview-subagent-integration.md` still shows `thread_id: None` in concrete orchestration/crew paths that should likely preserve thread correlation.",
+        "tokens": [
+          "chain-wizard-flexibility.md",
+          "interview-subagent-integration.md",
+          "project_id",
+          "thread_id: None"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "`Prompt_Pipeline.md` owns the canonical requested/effective runtime record, but the wizard/interview handoff payloads only expose a thin subset of it.",
+        "tokens": [
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 59,
+        "text": "Extend wizard/interview handoff payloads so they can carry the upstream subset of canonical runtime identity:",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "Add an explicit lineage bridge from wizard/interview artifacts and handoff payloads into the eventual execution run:",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "adjacent owner docs pulled for contradiction checks (`Orchestrator_Page.md`, `Run_Graph_View.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Commands_System.md`, `Project_Output_Artifacts.md`, `GitHub_Integration.md`, `Contracts_V0.md`, `storage-plan.md`, `Permissions_System.md`)",
+        "tokens": [
+          "Commands_System.md",
+          "Contracts_V0.md",
+          "GitHub_Integration.md",
+          "Orchestrator_Page.md",
+          "Permissions_System.md",
+          "Project_Output_Artifacts.md",
+          "Run_Graph_View.md",
+          "UI_Wiring_Rules.md",
+          "Wiring_Matrix.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "Artifact / HITL / tool contracts remain under-owned at the exact file/field level:",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "`Runtime_Artifacts_Panel.md` still sits in a three-way ownership contradiction with `Contracts_V0.md` and `storage-plan.md` over payload schema authority; it still points at missing schema files and still lacks a concrete artifact-projection key family in `storage-plan.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "Runtime_Artifacts_Panel.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "`Tools.md` is now a fully visible three-way SSOT split (`Tools.md` / `Contracts_V0.md` / `storage-plan.md`) for `tool.denied`, still allows `pending-HITL` without a legal persisted tool-approval contract, and still lacks durable event families for unavailable/degraded tool truth.",
+        "tokens": [
+          "Contracts_V0.md",
+          "Tools.md",
+          "pending-HITL",
+          "storage-plan.md",
+          "tool.denied"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "`orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `TierContext` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.",
+        "tokens": [
+          "TierContext",
+          "orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key.",
+        "tokens": [
+          "interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "`chain-wizard-flexibility.md` still leaves the normalized downstream payload too lineage-thin, still conflicts with interview ownership on where pre-run quality/CUP correction lives, and still contains a self-contradictory Contribute(PR) worktree policy.",
+        "tokens": [
+          "chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "`WorktreeGitImprovement.md` still lacks a durable `worktree_record` / `worktree_projection` family, still has no explicit precedence rule between persisted runtime lineage and filesystem rediscovery, and still treats git-hook blocks and state files as if they could substitute for canonical blocked/runtime events.",
+        "tokens": [
+          "WorktreeGitImprovement.md",
+          "worktree_projection",
+          "worktree_record"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "schema-family authority, missing storage key owner, and missing attempt/project identity remain unresolved.",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "approval identity, field-family normalization, and persistence semantics are still split across incompatible shapes.",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "Storage-plan is now clearly missing several record/projection families that downstream docs already treat as if they exist (`runtime_artifact` payload schemas, worktree records/projections, artifact index registration).",
+        "tokens": [
+          "runtime_artifact"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Resolve the payload-owner triangle for runtime artifacts and either add the missing schema family/registration or soften the mandate explicitly.",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance.",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Add the missing canonical record/projection families to `storage-plan.md` for worktree lifecycle and artifact index state before downstream docs keep inventing them implicitly.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "`Runtime_Artifacts_Panel.md` still points at schema files that do not exist and an index key not registered in storage-plan.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "`allowed_actions` is still alive in canonical-looking HITL/storage shapes even after the deprecation addendum.",
+        "tokens": [
+          "allowed_actions"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 16,
+        "text": "`project_id` / `project_path` when available",
+        "tokens": [
+          "project_id",
+          "project_path"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "CrewCreator::Orchestrator { tier_id: format!(\\\"interview-phase-...\\\") }",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`chain-wizard-flexibility.md` already carries `project_id` in the assistant-to-wizard payload, but `interview-subagent-integration.md` still shows `thread_id: None` in concrete orchestration/crew paths that should likely preserve thread correlation.",
+        "tokens": [
+          "chain-wizard-flexibility.md",
+          "interview-subagent-integration.md",
+          "project_id",
+          "thread_id: None"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "plus stable refs from validation pass reports and staged bundles into the launched run",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough canonical identity for downstream consumers to remain truthful without reconstructing context heuristically.",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "validation pass reports need richer runtime identity than provider/model alone if they are meant to be auditable later",
+        "tokens": []
+      },
+      {
+        "line": 94,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "adjacent owner docs pulled for contradiction checks (`Orchestrator_Page.md`, `Run_Graph_View.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Commands_System.md`, `Project_Output_Artifacts.md`, `GitHub_Integration.md`, `Contracts_V0.md`, `storage-plan.md`, `Permissions_System.md`)",
+        "tokens": [
+          "Commands_System.md",
+          "Contracts_V0.md",
+          "GitHub_Integration.md",
+          "Orchestrator_Page.md",
+          "Permissions_System.md",
+          "Project_Output_Artifacts.md",
+          "Run_Graph_View.md",
+          "UI_Wiring_Rules.md",
+          "Wiring_Matrix.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 103,
+        "text": "`FinalGUISpec.md` now shows a second internal navigation contradiction beyond the already-known Orchestrator-page drift (`§4.1` vs `§5.1`), and `Orchestrator_Page.md` itself is structurally incomplete because its TOC advertises a missing `UICommand IDs` section.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "Orchestrator_Page.md",
+          "UICommand IDs",
+          "§4.1",
+          "§5.1"
+        ]
+      },
+      {
+        "line": 104,
+        "text": "`Wiring_Matrix.md` still references `cmd.orchestrator.switch_tab`, but `UI_Command_Catalog.md` does not define it.",
+        "tokens": [
+          "UI_Command_Catalog.md",
+          "Wiring_Matrix.md",
+          "cmd.orchestrator.switch_tab"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries.",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "`orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `TierContext` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.",
+        "tokens": [
+          "TierContext",
+          "orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key.",
+        "tokens": [
+          "interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "runtime identity parity and routing-key correctness remain visibly incomplete.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "Reconcile all remaining command/template/example drift so `UI_Command_Catalog.md` is the sole stable action owner and every referenced command actually exists.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "`Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity problem, not only a content gap.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "`cmd.orchestrator.switch_tab` is still referenced without existing in the catalog.",
+        "tokens": [
+          "cmd.orchestrator.switch_tab"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "The coordination-canon contradiction in `orchestrator-subagent-integration.md` is now explicit in the same file.",
+        "tokens": [
+          "orchestrator-subagent-integration.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 38,
+        "text": "but their handoff payloads still need to carry enough canonical identity and lineage so downstream runtime, history, ledger, search, and audit can explain how execution began",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "plus stable refs from validation pass reports and staged bundles into the launched run",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "validation pass reports need richer runtime identity than provider/model alone if they are meant to be auditable later",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "pre-run lineage and worktree/isolation policy are still too ambiguous for deterministic audit.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "The same owner docs still claim both file-based canon and event-sourced canon for runtime coordination/audit.",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "Cross-surface lineage still weakens exactly at the planning->wizard->validation->run and runtime->SCM->PR boundaries where audit now matters most.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 18,
+        "text": "optional effective persona/platform/model",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, `timestamp`, which is useful but still weaker than the shared runtime identity grammar elsewhere",
+        "tokens": [
+          "model",
+          "persona_id",
+          "provider",
+          "source_phase_ids[]",
+          "source_stage",
+          "timestamp"
+        ]
+      },
+      {
+        "line": 28,
+        "text": "Interview still reintroduces tier-era coordination/ownership in several concrete examples:",
+        "tokens": []
+      },
+      {
+        "line": 45,
+        "text": "downstream consumers:",
+        "tokens": []
+      },
+      {
+        "line": 54,
+        "text": "`persona_override_owner_id` still allows `tier_id`-style ownership in shared runtime docs, while wizard/interview are simultaneously trying to align with newer non-tier execution semantics.",
+        "tokens": [
+          "persona_override_owner_id",
+          "tier_id"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+        "tokens": [
+          "model",
+          "provider"
+        ]
+      },
+      {
+        "line": 63,
+        "text": "requested_persona?` / `effective_persona?",
+        "tokens": [
+          " / "
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough canonical identity for downstream consumers to remain truthful without reconstructing context heuristically.",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "validation pass reports need richer runtime identity than provider/model alone if they are meant to be auditable later",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "adjacent owner docs pulled for contradiction checks (`Orchestrator_Page.md`, `Run_Graph_View.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Commands_System.md`, `Project_Output_Artifacts.md`, `GitHub_Integration.md`, `Contracts_V0.md`, `storage-plan.md`, `Permissions_System.md`)",
+        "tokens": [
+          "Commands_System.md",
+          "Contracts_V0.md",
+          "GitHub_Integration.md",
+          "Orchestrator_Page.md",
+          "Permissions_System.md",
+          "Project_Output_Artifacts.md",
+          "Run_Graph_View.md",
+          "UI_Wiring_Rules.md",
+          "Wiring_Matrix.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "GUI / command ownership remains split in concrete, machine-breaking ways:",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "`Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved slash commands may be overridden, while `UI_Command_Catalog.md` still lacks the corresponding `cmd.chat.run_user_command` owner row.",
+        "tokens": [
+          "Commands_System.md",
+          "UI_Command_Catalog.md",
+          "assistant-chat-design.md",
+          "cmd.chat.run_user_command"
+        ]
+      },
+      {
+        "line": 108,
+        "text": "`Runtime_Artifacts_Panel.md` still sits in a three-way ownership contradiction with `Contracts_V0.md` and `storage-plan.md` over payload schema authority; it still points at missing schema files and still lacks a concrete artifact-projection key family in `storage-plan.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "Runtime_Artifacts_Panel.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "`Executor_Protocol.md` contains byte-identical duplicated canonical scheduler sections and still leaves `blocked_sequence` minting, startup recovery handshake, `execution_role` ownership, and reviewer/corroboration lifecycle unowned.",
+        "tokens": [
+          "Executor_Protocol.md",
+          "blocked_sequence",
+          "execution_role"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key.",
+        "tokens": [
+          "interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "`chain-wizard-flexibility.md` still leaves the normalized downstream payload too lineage-thin, still conflicts with interview ownership on where pre-run quality/CUP correction lives, and still contains a self-contradictory Contribute(PR) worktree policy.",
+        "tokens": [
+          "chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "schema-family authority, missing storage key owner, and missing attempt/project identity remain unresolved.",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "durable worktree lineage, base-branch authority, and canonical blocked emitters remain unresolved.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "The same owner docs still claim both file-based canon and event-sourced canon for runtime coordination/audit.",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "Reconcile all remaining command/template/example drift so `UI_Command_Catalog.md` is the sole stable action owner and every referenced command actually exists.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Resolve the payload-owner triangle for runtime artifacts and either add the missing schema family/registration or soften the mandate explicitly.",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "Collapse duplicated executor canon and explicitly assign owners for `blocked_sequence`, `startup_recovered` handshake, `execution_role`, and reviewer/corroboration lifecycle.",
+        "tokens": [
+          "blocked_sequence",
+          "execution_role",
+          "startup_recovered"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 76,
+        "text": "Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.",
+        "tokens": [
+          "tier_id"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "`interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key.",
+        "tokens": [
+          "interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance.",
+        "tokens": []
+      },
+      {
+        "line": 149,
+        "text": "Collapse duplicated executor canon and explicitly assign owners for `blocked_sequence`, `startup_recovered` handshake, `execution_role`, and reviewer/corroboration lifecycle.",
+        "tokens": [
+          "blocked_sequence",
+          "execution_role",
+          "startup_recovered"
+        ]
+      }
+    ],
+    "open_questions": [],
+    "process_defects": [
+      {
+        "line": 101,
+        "text": "The Codex pass mostly closed the loop by turning several remaining downstream issues into exact spec-integrity failures.",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "`FinalGUISpec.md` now shows a second internal navigation contradiction beyond the already-known Orchestrator-page drift (`§4.1` vs `§5.1`), and `Orchestrator_Page.md` itself is structurally incomplete because its TOC advertises a missing `UICommand IDs` section.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "Orchestrator_Page.md",
+          "UICommand IDs",
+          "§4.1",
+          "§5.1"
+        ]
+      },
+      {
+        "line": 106,
+        "text": "catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries.",
+        "tokens": []
+      },
+      {
+        "line": 108,
+        "text": "`Runtime_Artifacts_Panel.md` still sits in a three-way ownership contradiction with `Contracts_V0.md` and `storage-plan.md` over payload schema authority; it still points at missing schema files and still lacks a concrete artifact-projection key family in `storage-plan.md`.",
+        "tokens": [
+          "Contracts_V0.md",
+          "Runtime_Artifacts_Panel.md",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "Execution-core and runtime coordination gaps remain exact rather than abstract:",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "schema-family authority, missing storage key owner, and missing attempt/project identity remain unresolved.",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "duplicate canonical sections plus unowned mint/handshake rules remain an execution-core risk multiplier.",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "durable worktree lineage, base-branch authority, and canonical blocked emitters remain unresolved.",
+        "tokens": []
+      },
+      {
+        "line": 141,
+        "text": "Storage-plan is now clearly missing several record/projection families that downstream docs already treat as if they exist (`runtime_artifact` payload schemas, worktree records/projections, artifact index registration).",
+        "tokens": [
+          "runtime_artifact"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "Resolve the payload-owner triangle for runtime artifacts and either add the missing schema family/registration or soften the mandate explicitly.",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "Add the missing canonical record/projection families to `storage-plan.md` for worktree lifecycle and artifact index state before downstream docs keep inventing them implicitly.",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "`Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity problem, not only a content gap.",
+        "tokens": [
+          "Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 6,
+        "text": "current `working_ledger.md`",
+        "tokens": [
+          "working_ledger.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Plans/Prompt_Pipeline.md",
+        "tokens": [
+          "Plans/Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 44,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 49,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "`Prompt_Pipeline.md` owns the canonical requested/effective runtime record, but the wizard/interview handoff payloads only expose a thin subset of it.",
+        "tokens": [
+          "Prompt_Pipeline.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "Plans/Tools.md",
+        "tokens": [
+          "Plans/Tools.md"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 94,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 95,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "Plans/Executor_Protocol.md",
+        "tokens": [
+          "Plans/Executor_Protocol.md"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "Plans/orchestrator-subagent-integration.md",
+        "tokens": [
+          "Plans/orchestrator-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "Plans/interview-subagent-integration.md",
+        "tokens": [
+          "Plans/interview-subagent-integration.md"
+        ]
+      },
+      {
+        "line": 132,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/chain-wizard-flexibility.md",
+        "tokens": [
+          "Plans/chain-wizard-flexibility.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 164,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 165,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "current `working_ledger.md`",
+        "tokens": [
+          "working_ledger.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

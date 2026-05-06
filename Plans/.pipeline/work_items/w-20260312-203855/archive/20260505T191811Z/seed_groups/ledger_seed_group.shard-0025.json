@@ -1,0 +1,671 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "subagent_task_id": "c3-shard-0025",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0025",
+  "coverage": {
+    "shard_id": "shard-0025",
+    "start_line": 4352,
+    "end_line": 4549,
+    "line_count": 198,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0025.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 4,
+        "text": "unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "Persistent blockers should not become invisible just because the user dismissed a nearby warning once.",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "real blocked states should remain represented until underlying truth changes",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "active blockers must not be dismissible into fake health",
+        "tokens": []
+      },
+      {
+        "line": 25,
+        "text": "System/tray notifications should stay narrow.",
+        "tokens": []
+      },
+      {
+        "line": 27,
+        "text": "HITL approval required",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "`attention_required` and `blocked` must remain distinct everywhere",
+        "tokens": [
+          "attention_required",
+          "blocked"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "resurfacing should respond to meaningful change, not spam the user on every scheduler tick",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "the system should not silently demote a persistent blocker into history just because time passed",
+        "tokens": []
+      },
+      {
+        "line": 93,
+        "text": "`storage-plan.md` already supports the broader pattern the rewrite needs:",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 107,
+        "text": "That means the performance model must explicitly cover:",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "must use progressive disclosure rather than fully expanded seam/package/node trees",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "top-level seam rows should load compact rollups first",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "package lists and node problem lists should expand lazily",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "heavy artifacts should stay metadata-first until opened",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "artifact previews should be demand-loaded, not pre-rendered for long lists",
+        "tokens": []
+      },
+      {
+        "line": 129,
+        "text": "should be chronological but windowed",
+        "tokens": []
+      },
+      {
+        "line": 130,
+        "text": "initial load should show a recent slice, with explicit load-older / jump controls",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport",
+        "tokens": []
+      },
+      {
+        "line": 133,
+        "text": "must be exact, but exact does not mean fully materialized at once",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "filtered query + paging + stable sort are required",
+        "tokens": []
+      },
+      {
+        "line": 135,
+        "text": "export can retrieve more than the viewport, but normal browsing should stay slice-based",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "widgets should consume compact projections, not live-scan huge record sets per widget",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "a widget should deep-link to the native tab when the user wants dense detail",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "generations should remain historically visible and clickable, but the UI should default to a focused generation plus nearby lineage context, not a fully expanded all-generations wall",
+        "tokens": []
+      },
+      {
+        "line": 156,
+        "text": "So the rewrite should not assume the graph is the only heavy surface.",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "every dense Orchestrator tab needs first-class summarization, filtering, and paging before it needs more visual chrome",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "large surfaces should degrade toward smaller, record-backed slices instead of trying to fake full live fidelity",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "The current docs do not yet define how thousands-of-node runs with many generations should remain readable by default without collapsing history away.",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "Require widgets to use compact projections only, with deep links to native dense tabs.",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "exact record inspection in `Ledger` still needs paging; exactness does not require eager full materialization",
+        "tokens": [
+          "Ledger"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "historical graph generations must stay accessible without becoming the default visual density",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 19,
+        "text": "real blocked states should remain represented until underlying truth changes",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "Keep blocked-state persistence semantically stronger than dismissible warning surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 67,
+        "text": "`attention_required` and `blocked` must remain distinct everywhere",
+        "tokens": [
+          "attention_required",
+          "blocked"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "The graph spec also already defines the right implementation direction:",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "incremental row/item updates instead of full replacement",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "keep the current culling + caching + throttled-update model",
+        "tokens": []
+      },
+      {
+        "line": 143,
+        "text": "generations should remain historically visible and clickable, but the UI should default to a focused generation plus nearby lineage context, not a fully expanded all-generations wall",
+        "tokens": []
+      },
+      {
+        "line": 148,
+        "text": "minimap/search/focus-to-object remain generation-aware",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "stale graph projection might still support focused inspection of selected nodes/generations",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "stale ledger/history slices remain usable because they are closer to canonical records",
+        "tokens": []
+      },
+      {
+        "line": 170,
+        "text": "The current docs do not yet define how thousands-of-node runs with many generations should remain readable by default without collapsing history away.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 19,
+        "text": "real blocked states should remain represented until underlying truth changes",
+        "tokens": []
+      },
+      {
+        "line": 20,
+        "text": "This aligns with earlier concern and blocked-state work:",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "`dismissed` is presentation state, not semantic resolution",
+        "tokens": [
+          "dismissed"
+        ]
+      },
+      {
+        "line": 56,
+        "text": "There is no one explicit cross-surface escalation contract yet.",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "Keep blocked-state persistence semantically stronger than dismissible warning surfaces.",
+        "tokens": []
+      },
+      {
+        "line": 80,
+        "text": "The graph tab already has the strongest explicit scale contract in the current docs.",
+        "tokens": []
+      },
+      {
+        "line": 101,
+        "text": "treat scale as a cross-tab contract, not just a graph-tab concern",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "many concerns, reviews, promotions, patches, recovery records, and usage records",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "evidence records and artifacts need independent virtualization/paging",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport",
+        "tokens": []
+      },
+      {
+        "line": 137,
+        "text": "widgets should consume compact projections, not live-scan huge record sets per widget",
+        "tokens": []
+      },
+      {
+        "line": 154,
+        "text": "many corroboration/review/promotion/recovery records",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "large surfaces should degrade toward smaller, record-backed slices instead of trying to fake full live fidelity",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "stale ledger/history slices remain usable because they are closer to canonical records",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "Current graph-scale guidance is much stronger than the scale contract for `Seams`, `Evidence`, `History`, and `Ledger`.",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Seams"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "Add an Orchestrator-wide scale contract that sits above individual tab docs.",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "Tie scale behavior to projection-trust state so degraded projections fail gracefully instead of pretending to be fully current.",
+        "tokens": []
+      },
+      {
+        "line": 186,
+        "text": "exact record inspection in `Ledger` still needs paging; exactness does not require eager full materialization",
+        "tokens": [
+          "Ledger"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 2,
+        "text": "The ledger already established some aging behavior for operational items.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "path to Usage/config",
+        "tokens": []
+      },
+      {
+        "line": 61,
+        "text": "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.",
+        "tokens": []
+      },
+      {
+        "line": 77,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "The graph tab already has the strongest explicit scale contract in the current docs.",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "table virtualization",
+        "tokens": []
+      },
+      {
+        "line": 97,
+        "text": "`FinalGUISpec.md` has scattered virtualization/pagination language for other surfaces, but not an Orchestrator-wide large-run policy.",
+        "tokens": [
+          "FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "treat scale as a cross-tab contract, not just a graph-tab concern",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "many retained/historical lanes and worktrees",
+        "tokens": []
+      },
+      {
+        "line": 113,
+        "text": "Progress widgets and cross-tab inspectors",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "preserve old generations in the data model, but do not render every historical path at full fidelity all the time",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "use generation visibility controls, focus mode, and density-aware overlays so historical branches stay available without overwhelming the live path",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "filtered query + paging + stable sort are required",
+        "tokens": []
+      },
+      {
+        "line": 138,
+        "text": "a widget should deep-link to the native tab when the user wants dense detail",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "many retained or cleanup-eligible lanes/worktrees",
+        "tokens": []
+      },
+      {
+        "line": 158,
+        "text": "every dense Orchestrator tab needs first-class summarization, filtering, and paging before it needs more visual chrome",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "There is no explicit Orchestrator-wide rule yet for:",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "cross-tab inspector loading strategy",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "Add an Orchestrator-wide scale contract that sits above individual tab docs.",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs.",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "Require widgets to use compact projections only, with deep links to native dense tabs.",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "non-graph tabs may become the actual scaling bottleneck sooner than the graph canvas",
+        "tokens": []
+      },
+      {
+        "line": 195,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 110,
+        "text": "Evidence",
+        "tokens": []
+      },
+      {
+        "line": 124,
+        "text": "Evidence",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "evidence records and artifacts need independent virtualization/paging",
+        "tokens": []
+      },
+      {
+        "line": 169,
+        "text": "Current graph-scale guidance is much stronger than the scale contract for `Seams`, `Evidence`, `History`, and `Ledger`.",
+        "tokens": [
+          "Evidence",
+          "History",
+          "Ledger",
+          "Seams"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 10,
+        "text": "owner changes",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "concern severity + blocking effect + owner + persistence decide escalation",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 131,
+        "text": "dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "superseded branches visually muted",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "many retained or cleanup-eligible lanes/worktrees",
+        "tokens": []
+      },
+      {
+        "line": 162,
+        "text": "When projections are stale or degraded:",
+        "tokens": []
+      },
+      {
+        "line": 165,
+        "text": "stale graph projection might still support focused inspection of selected nodes/generations",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "stale ledger/history slices remain usable because they are closer to canonical records",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 5,
+        "text": "Candidate cadence idea:",
+        "tokens": []
+      },
+      {
+        "line": 26,
+        "text": "Good candidates:",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "Poor candidates:",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "heavy artifacts should stay metadata-first until opened",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 4,
+        "text": "unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "Persistent blockers should not become invisible just because the user dismissed a nearby warning once.",
+        "tokens": []
+      },
+      {
+        "line": 22,
+        "text": "active blockers must not be dismissible into fake health",
+        "tokens": []
+      },
+      {
+        "line": 29,
+        "text": "major failure requiring attention",
+        "tokens": []
+      },
+      {
+        "line": 34,
+        "text": "repeated unresolved reminders without new information",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "the system should not silently demote a persistent blocker into history just because time passed",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 74,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 193,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 195,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "Plans/Widget_System.md",
+        "tokens": [
+          "Plans/Widget_System.md"
+        ]
+      },
+      {
+        "line": 197,
+        "text": "Plans/WorktreeGitImprovement.md",
+        "tokens": [
+          "Plans/WorktreeGitImprovement.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

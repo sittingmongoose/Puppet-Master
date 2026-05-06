@@ -1,0 +1,18 @@
+{
+  "schema_id": "pm.ledger_shard_indexer.wave.v3.1.10",
+  "prompt_id": "C2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "W01",
+  "timestamp_utc": "20260505T204500Z",
+  "wave_size": 8,
+  "tasks": [
+    {"subagent_task_id": "c2-shard-001", "subagent_invocation_id": "inv-c2-20260505-W01-i001", "line_start": 1, "line_end": 200, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-001.md", "status": "complete"},
+    {"subagent_task_id": "c2-shard-002", "subagent_invocation_id": "inv-c2-20260505-W01-i002", "line_start": 201, "line_end": 400, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-002.md", "status": "complete"},
+    {"subagent_task_id": "c2-shard-003", "subagent_invocation_id": "inv-c2-20260505-W01-i003", "line_start": 401, "line_end": 600, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-003.md", "status": "complete"},
+    {"subagent_task_id": "c2-shard-004", "subagent_invocation_id": "inv-c2-20260505-W01-i004", "line_start": 601, "line_end": 800, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-004.md", "status": "complete"},
+    {"subagent_task_id": "c2-shard-005", "subagent_invocation_id": "inv-c2-20260505-W01-i005", "line_start": 801, "line_end": 1000, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-005.md", "status": "complete"},
+    {"subagent_task_id": "c2-shard-006", "subagent_invocation_id": "inv-c2-20260505-W01-i006", "line_start": 1001, "line_end": 1200, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-006.md", "status": "complete"},
+    {"subagent_task_id": "c2-shard-007", "subagent_invocation_id": "inv-c2-20260505-W01-i007", "line_start": 1201, "line_end": 1400, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-007.md", "status": "complete"},
+    {"subagent_task_id": "c2-shard-008", "subagent_invocation_id": "inv-c2-20260505-W01-i008", "line_start": 1401, "line_end": 1600, "result_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-008.md", "status": "complete"}
+  ]
+}

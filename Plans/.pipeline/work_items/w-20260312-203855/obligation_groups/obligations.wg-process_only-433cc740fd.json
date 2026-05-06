@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-433cc740fd",
+  "category": "process_only",
+  "family_key": "packet_plan_json_survivor_stale_contradictions_same_tokens_in_required_survivor_and_stale_retire",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0004-010"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-433cc740fd--SEED-shard-0004-010",
+      "seed_id": "SEED-shard-0004-010",
+      "source_shard_id": "shard-0004",
+      "batch_index": 1,
+      "obligation_type": "process_defect",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0004",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "packet_plan.json survivor/stale contradictions: same tokens in required-survivor and stale-retire sets for Executor_Protocol TierContext/tier_id, GitHub_API_Auth github_api:github.com/<login>, UI_Command_Catalog approve_continue, orchestrator-subagent-integration tier_id.",
+      "evidence_ledger_excerpt": "`packet_plan.json` currently contains at least four survivor/residue contradictions... `Plans/Executor_Protocol.md#5. Node execution fields` -> `TierContext`, `tier_id`... `approve_continue`...",
+      "related_paths": [
+        "Plans/Executor_Protocol.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "packet_plan.json survivor/stale contradictions: same tokens in required-survivor and stale-retire sets for Executor_Protocol TierContext/tier_id, GitHub_API_Auth github_api:github.com/<login>, UI_Command_Catalog approve_continue, orchestrator-subagent-integration tier_id.",
+          "kind": "process_defect",
+          "evidence_ledger_excerpt": "`packet_plan.json` currently contains at least four survivor/residue contradictions... `Plans/Executor_Protocol.md#5. Node execution fields` -> `TierContext`, `tier_id`... `approve_continue`...",
+          "related_paths": [
+            "Plans/Executor_Protocol.md",
+            "Plans/GitHub_API_Auth_and_Flows.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/orchestrator-subagent-integration.md"
+          ]
+        }
+      ],
+      "exact_items": [
+        "packet_plan.json survivor/stale contradictions: same tokens in required-survivor and stale-retire sets for Executor_Protocol TierContext/tier_id, GitHub_API_Auth github_api:github.com/<login>, UI_Command_Catalog approve_continue, orchestrator-subagent-integration tier_id."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

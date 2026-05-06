@@ -1,0 +1,1450 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0061",
+  "coverage": {
+    "shard_id": "shard-0061",
+    "start_line": 11253,
+    "end_line": 11451,
+    "line_count": 199,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0061.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 2,
+        "text": "`GATE-010` is still written around the original wiring model: schema validation, entry uniqueness, command coverage, handler resolution, expected-event tests, unknown-command rejection, and architectural lints.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 4,
+        "text": "`GATE-010` has no explicit notion of:",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "stale/degraded projection revalidation requirements before mutation",
+        "tokens": []
+      },
+      {
+        "line": 12,
+        "text": "This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers.",
+        "tokens": []
+      },
+      {
+        "line": 13,
+        "text": "There is also a pattern mismatch with later gates: `GATE-011` and `GATE-012` already want machine-readable failure arrays for specific conditions, while `GATE-010` still relies on broad generic check rows.",
+        "tokens": [
+          "GATE-010",
+          "GATE-011",
+          "GATE-012"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "`GATE-010` claims the wiring matrix is “complete, valid, and testable,” but completeness is currently defined too narrowly for route/subject-aware navigation.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "The gate stack is inconsistent about structured failure detail: some later gates demand named machine-readable arrays, but `GATE-010` still has only freeform `details`.",
+        "tokens": [
+          "GATE-010",
+          "details"
+        ]
+      },
+      {
+        "line": 32,
+        "text": "There is still no canonical gate-level place to express revalidation obligations when UI actions depend on stale or degraded projections.",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "Expand `GATE-010` so route-aware verification is first-class if `cmd.nav.*` / `OpenSubject` becomes canonical, including checks for:",
+        "tokens": [
+          "GATE-010",
+          "OpenSubject",
+          "cmd.nav.*"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "Align `GATE-010` with the machine-readable-detail pattern already used by `GATE-011` / `GATE-012` instead of relying on text-heavy `details`.",
+        "tokens": [
+          "GATE-010",
+          "GATE-011",
+          "GATE-012",
+          "details"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Decide whether route-aware verification remains part of `GATE-010` or becomes a sibling gate, but stop leaving that boundary implicit.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "This is now the gate-side version of the same drift pattern seen in the matrix/schema seam: the prose is expanding faster than the verifiable contract.",
+        "tokens": []
+      },
+      {
+        "line": 47,
+        "text": "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 90,
+        "text": "Navigation-related commands are described as layout/UI-state only, but the docs still lack a shared rule for when those commands must carry `project_id`, `focused_run_id`, `thread_id`, or other context needed to restore scope correctly.",
+        "tokens": [
+          "focused_run_id",
+          "project_id",
+          "thread_id"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "routing should target the subject identity first, then resolve to the best openable representation",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "`generated://<artifact_id>` should remain an ephemeral source buffer transport, not become the canonical persisted identity. The canonical identity is still `artifact:<artifact_id>`.",
+        "tokens": [
+          "artifact:<artifact_id>",
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "subject kinds should at minimum include `doc:<document_id>` and `artifact:<artifact_id>`",
+        "tokens": [
+          "artifact:<artifact_id>",
+          "doc:<document_id>"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "`doc:` / `artifact:` should be treated as canonical persisted subject IDs, while `generated://` stays an implementation-level transient representation.",
+        "tokens": [
+          "artifact:",
+          "doc:",
+          "generated://"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 26,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 43,
+        "text": "Decide whether route-aware verification remains part of `GATE-010` or becomes a sibling gate, but stop leaving that boundary implicit.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 89,
+        "text": "There is still no canonical command family for subject-open or generalized route focus, so cross-surface pivots keep accreting as one-off commands.",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "Without a wrapper/alias model, the catalog, wiring matrix, and route payload work will keep diverging independently.",
+        "tokens": []
+      },
+      {
+        "line": 131,
+        "text": "`generated://<artifact_id>` should remain an ephemeral source buffer transport, not become the canonical persisted identity. The canonical identity is still `artifact:<artifact_id>`.",
+        "tokens": [
+          "artifact:<artifact_id>",
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Keep `Plans/storage-plan.md` as the owner of persisted preview-subject identity and restore joins.",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Add or normalize a distinct identity-native open contract above it, consistent with the earlier `OpenSubject` direction:",
+        "tokens": [
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "If this owner split is not made explicit, generated docs/artifacts and preview-backed opens will keep leaking path-based assumptions back into the routing model.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 2,
+        "text": "`GATE-010` is still written around the original wiring model: schema validation, entry uniqueness, command coverage, handler resolution, expected-event tests, unknown-command rejection, and architectural lints.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+        "tokens": [
+          "element -> command -> handler"
+        ]
+      },
+      {
+        "line": 7,
+        "text": "route-payload completeness",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "The evidence side is similarly underspecified. `Plans/evidence.schema.json` only gives a generic `checks[]` array with `name`, `result`, `details`, and optional `contract_refs`. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text.",
+        "tokens": [
+          "Plans/evidence.schema.json",
+          "checks[]",
+          "contract_refs",
+          "details",
+          "name",
+          "result"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers.",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "Plans/evidence.schema.json",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "Plans/Wiring_Matrix.schema.json",
+        "tokens": [
+          "Plans/Wiring_Matrix.schema.json"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "correlation/route payload passthrough",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "This is now the gate-side version of the same drift pattern seen in the matrix/schema seam: the prose is expanding faster than the verifiable contract.",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "But the catalog still models them as flat peer commands with ad hoc payload tables. There is no stronger notion of:",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "shared route-payload contract",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "shared subject-open/open-by-identity contract",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "The document does have some migration vocabulary in isolated places, for example superseded chat usage commands and deprecated recovery namespaces, and `Contracts_V0.md` has explicit alias handling for several runtime events. But that migration/alias discipline has not been elevated into a general command-catalog pattern.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Because of that, navigation semantics are drifting into prose notes and payload examples instead of being normalized the way event aliasing already is elsewhere.",
+        "tokens": []
+      },
+      {
+        "line": 78,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Event contracts already have a recognizable alias/migration pattern, but command contracts do not.",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "The catalog can list payload keys, but it cannot currently say whether two commands are different user-facing wrappers over one canonical route target.",
+        "tokens": []
+      },
+      {
+        "line": 90,
+        "text": "Navigation-related commands are described as layout/UI-state only, but the docs still lack a shared rule for when those commands must carry `project_id`, `focused_run_id`, `thread_id`, or other context needed to restore scope correctly.",
+        "tokens": [
+          "focused_run_id",
+          "project_id",
+          "thread_id"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Reuse the event-side alias discipline from `Contracts_V0.md` as the template for command deprecation/migration rules rather than inventing a weaker prose-only pattern.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes.",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "Without a wrapper/alias model, the catalog, wiring matrix, and route payload work will keep diverging independently.",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "project-scoped preview state keyed by that subject",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "`FileManager.md` is now the main lagging owner. It still presents `OpenFile { path... }` as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "`Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "The storage/UI model already admits identity-native preview subjects, but the universal open contract in `FileManager.md` still assumes everything meaningful is a path.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "`Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the resolver contract, so the open-by-identity behavior still risks being re-invented per surface.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.",
+        "tokens": [
+          "OpenFile { path... }",
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Add or normalize a distinct identity-native open contract above it, consistent with the earlier `OpenSubject` direction:",
+        "tokens": [
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.",
+        "tokens": []
+      },
+      {
+        "line": 168,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "`Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 180,
+        "text": "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:",
+        "tokens": []
+      },
+      {
+        "line": 185,
+        "text": "The only stronger navigation-like primitive visible at the contract layer today is `resume_url`, primarily in wizard-blocked / clarification flows. That makes `resume_url` more semantically powerful than the general UI command contract, which is the wrong layering for the rewrite.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "`storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`preview_subject_id`, `doc:<document_id>`, `artifact:<artifact_id>`), but that identity model has not been lifted into the cross-cutting contract layer.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "artifact:<artifact_id>",
+          "doc:<document_id>",
+          "preview_subject_id",
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "`UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 191,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 3,
+        "text": "That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+        "tokens": [
+          "element -> command -> handler"
+        ]
+      },
+      {
+        "line": 7,
+        "text": "route-payload completeness",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "The evidence side is similarly underspecified. `Plans/evidence.schema.json` only gives a generic `checks[]` array with `name`, `result`, `details`, and optional `contract_refs`. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text.",
+        "tokens": [
+          "Plans/evidence.schema.json",
+          "checks[]",
+          "contract_refs",
+          "details",
+          "name",
+          "result"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "`GATE-010` claims the wiring matrix is “complete, valid, and testable,” but completeness is currently defined too narrowly for route/subject-aware navigation.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "Expand `GATE-010` so route-aware verification is first-class if `cmd.nav.*` / `OpenSubject` becomes canonical, including checks for:",
+        "tokens": [
+          "GATE-010",
+          "OpenSubject",
+          "cmd.nav.*"
+        ]
+      },
+      {
+        "line": 36,
+        "text": "subject/route arg completeness",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "correlation/route payload passthrough",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "Decide whether route-aware verification remains part of `GATE-010` or becomes a sibling gate, but stop leaving that boundary implicit.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 47,
+        "text": "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "cmd.orchestrator.open_in_source_control",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "cmd.orchestrator.open_in_github_actions",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "cmd.orchestrator.open_in_docker_manager",
+        "tokens": []
+      },
+      {
+        "line": 65,
+        "text": "But the catalog still models them as flat peer commands with ad hoc payload tables. There is no stronger notion of:",
+        "tokens": []
+      },
+      {
+        "line": 69,
+        "text": "shared route-payload contract",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "The catalog can list payload keys, but it cannot currently say whether two commands are different user-facing wrappers over one canonical route target.",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "There is still no canonical command family for subject-open or generalized route focus, so cross-surface pivots keep accreting as one-off commands.",
+        "tokens": []
+      },
+      {
+        "line": 98,
+        "text": "If the route/subject model stays on track, introduce a small canonical family such as `cmd.nav.*` and let surface-specific commands either wrap it or be declared as typed specializations.",
+        "tokens": [
+          "cmd.nav.*"
+        ]
+      },
+      {
+        "line": 105,
+        "text": "Without a wrapper/alias model, the catalog, wiring matrix, and route payload work will keep diverging independently.",
+        "tokens": []
+      },
+      {
+        "line": 116,
+        "text": "`storage-plan.md` is already substantially ahead of the routing docs on subject identity. It defines:",
+        "tokens": [
+          "storage-plan.md"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "`FileManager.md` is now the main lagging owner. It still presents `OpenFile { path... }` as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "`Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 129,
+        "text": "transient source realization = workspace `path` or `generated://<artifact_id>`",
+        "tokens": [
+          "generated://<artifact_id>",
+          "path"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "routing should target the subject identity first, then resolve to the best openable representation",
+        "tokens": []
+      },
+      {
+        "line": 142,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 146,
+        "text": "The storage/UI model already admits identity-native preview subjects, but the universal open contract in `FileManager.md` still assumes everything meaningful is a path.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+        "tokens": [
+          "subject_id -> backing document or transient generated buffer -> routed surface"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.",
+        "tokens": [
+          "OpenFile { path... }",
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "resolution may end in a workspace path open, a transient `generated://` buffer, or a routed non-editor surface",
+        "tokens": [
+          "generated://"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "If this owner split is not made explicit, generated docs/artifacts and preview-backed opens will keep leaking path-based assumptions back into the routing model.",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:",
+        "tokens": []
+      },
+      {
+        "line": 181,
+        "text": "route target identity",
+        "tokens": []
+      },
+      {
+        "line": 184,
+        "text": "wrapper-command routing to a canonical target",
+        "tokens": []
+      },
+      {
+        "line": 187,
+        "text": "`UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 2,
+        "text": "`GATE-010` is still written around the original wiring model: schema validation, entry uniqueness, command coverage, handler resolution, expected-event tests, unknown-command rejection, and architectural lints.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "stale/degraded projection revalidation requirements before mutation",
+        "tokens": []
+      },
+      {
+        "line": 11,
+        "text": "The evidence side is similarly underspecified. `Plans/evidence.schema.json` only gives a generic `checks[]` array with `name`, `result`, `details`, and optional `contract_refs`. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text.",
+        "tokens": [
+          "Plans/evidence.schema.json",
+          "checks[]",
+          "contract_refs",
+          "details",
+          "name",
+          "result"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers.",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "Plans/evidence.schema.json",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 29,
+        "text": "`GATE-010` claims the wiring matrix is “complete, valid, and testable,” but completeness is currently defined too narrowly for route/subject-aware navigation.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "There is still no canonical gate-level place to express revalidation obligations when UI actions depend on stale or degraded projections.",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "deprecated alias coverage",
+        "tokens": []
+      },
+      {
+        "line": 41,
+        "text": "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "The `allowed_action_ids[]` and stale/degraded revalidation issues are not just runtime concerns; they also need a verification home.",
+        "tokens": [
+          "allowed_action_ids[]"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "`Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 16,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 21,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      },
+      {
+        "line": 76,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      },
+      {
+        "line": 125,
+        "text": "`FileManager.md` is now the main lagging owner. It still presents `OpenFile { path... }` as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+        "tokens": [
+          "subject_id -> backing document or transient generated buffer -> routed surface"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Keep `Plans/storage-plan.md` as the owner of persisted preview-subject identity and restore joins.",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "If this owner split is not made explicit, generated docs/artifacts and preview-backed opens will keep leaking path-based assumptions back into the routing model.",
+        "tokens": []
+      },
+      {
+        "line": 190,
+        "text": "Primary owners:",
+        "tokens": []
+      },
+      {
+        "line": 193,
+        "text": "Cross-owner docs implicated by this seam:",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 10,
+        "text": "stale/degraded projection revalidation requirements before mutation",
+        "tokens": []
+      },
+      {
+        "line": 32,
+        "text": "There is still no canonical gate-level place to express revalidation obligations when UI actions depend on stale or degraded projections.",
+        "tokens": []
+      },
+      {
+        "line": 38,
+        "text": "deprecated alias coverage",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "The `allowed_action_ids[]` and stale/degraded revalidation issues are not just runtime concerns; they also need a verification home.",
+        "tokens": [
+          "allowed_action_ids[]"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "deprecated alias/wrapper relationship",
+        "tokens": []
+      },
+      {
+        "line": 71,
+        "text": "The document does have some migration vocabulary in isolated places, for example superseded chat usage commands and deprecated recovery namespaces, and `Contracts_V0.md` has explicit alias handling for several runtime events. But that migration/alias discipline has not been elevated into a general command-catalog pattern.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 96,
+        "text": "deprecated alias",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 2,
+        "text": "`GATE-010` is still written around the original wiring model: schema validation, entry uniqueness, command coverage, handler resolution, expected-event tests, unknown-command rejection, and architectural lints.",
+        "tokens": [
+          "GATE-010"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "subject-open commands",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "Expand `GATE-010` so route-aware verification is first-class if `cmd.nav.*` / `OpenSubject` becomes canonical, including checks for:",
+        "tokens": [
+          "GATE-010",
+          "OpenSubject",
+          "cmd.nav.*"
+        ]
+      },
+      {
+        "line": 61,
+        "text": "cmd.orchestrator.open_in_source_control",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "cmd.orchestrator.open_in_github_actions",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "cmd.orchestrator.open_in_docker_manager",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "shared subject-open/open-by-identity contract",
+        "tokens": []
+      },
+      {
+        "line": 89,
+        "text": "There is still no canonical command family for subject-open or generalized route focus, so cross-surface pivots keep accreting as one-off commands.",
+        "tokens": []
+      },
+      {
+        "line": 120,
+        "text": "artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet",
+        "tokens": [
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 124,
+        "text": "artifact-backed content may open source in transient `generated://<artifact_id>` buffers",
+        "tokens": [
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "`FileManager.md` is now the main lagging owner. It still presents `OpenFile { path... }` as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects.",
+        "tokens": [
+          "FileManager.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 126,
+        "text": "`Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 130,
+        "text": "routing should target the subject identity first, then resolve to the best openable representation",
+        "tokens": []
+      },
+      {
+        "line": 146,
+        "text": "The storage/UI model already admits identity-native preview subjects, but the universal open contract in `FileManager.md` still assumes everything meaningful is a path.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 147,
+        "text": "Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+        "tokens": [
+          "subject_id -> backing document or transient generated buffer -> routed surface"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "`Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the resolver contract, so the open-by-identity behavior still risks being re-invented per surface.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.",
+        "tokens": [
+          "OpenFile { path... }",
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 154,
+        "text": "Add or normalize a distinct identity-native open contract above it, consistent with the earlier `OpenSubject` direction:",
+        "tokens": [
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "resolution may end in a workspace path open, a transient `generated://` buffer, or a routed non-editor surface",
+        "tokens": [
+          "generated://"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Make `Runtime_Artifacts_Panel.md` and other artifact-bearing surfaces consume the same subject-open resolver rather than bespoke artifact-opening rules.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "This seam is one of the cleaner ones: storage already contains most of the right model; the lag is mainly in the universal-open/file-centric docs.",
+        "tokens": []
+      },
+      {
+        "line": 163,
+        "text": "If this owner split is not made explicit, generated docs/artifacts and preview-backed opens will keep leaking path-based assumptions back into the routing model.",
+        "tokens": []
+      },
+      {
+        "line": 182,
+        "text": "subject-open identity",
+        "tokens": []
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 13,
+        "text": "There is also a pattern mismatch with later gates: `GATE-011` and `GATE-012` already want machine-readable failure arrays for specific conditions, while `GATE-010` still relies on broad generic check rows.",
+        "tokens": [
+          "GATE-010",
+          "GATE-011",
+          "GATE-012"
+        ]
+      },
+      {
+        "line": 30,
+        "text": "The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.",
+        "tokens": []
+      },
+      {
+        "line": 31,
+        "text": "The gate stack is inconsistent about structured failure detail: some later gates demand named machine-readable arrays, but `GATE-010` still has only freeform `details`.",
+        "tokens": [
+          "GATE-010",
+          "details"
+        ]
+      },
+      {
+        "line": 48,
+        "text": "The `allowed_action_ids[]` and stale/degraded revalidation issues are not just runtime concerns; they also need a verification home.",
+        "tokens": [
+          "allowed_action_ids[]"
+        ]
+      },
+      {
+        "line": 73,
+        "text": "`Commands_System.md` is useful mainly as a boundary reminder: user-authored slash/palette commands are a separate concept. The current gap is inside internal `UICommand` modeling, not user command presets.",
+        "tokens": [
+          "Commands_System.md",
+          "UICommand"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "`Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the resolver contract, so the open-by-identity behavior still risks being re-invented per surface.",
+        "tokens": [
+          "Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 176,
+        "text": "issued_at",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 11,
+        "text": "The evidence side is similarly underspecified. `Plans/evidence.schema.json` only gives a generic `checks[]` array with `name`, `result`, `details`, and optional `contract_refs`. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text.",
+        "tokens": [
+          "Plans/evidence.schema.json",
+          "checks[]",
+          "contract_refs",
+          "details",
+          "name",
+          "result"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "Plans/Progression_Gates.md",
+        "tokens": [
+          "Plans/Progression_Gates.md"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "Plans/evidence.schema.json",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 19,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 20,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 22,
+        "text": "Plans/Wiring_Matrix.schema.json",
+        "tokens": [
+          "Plans/Wiring_Matrix.schema.json"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 24,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 25,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 26,
+        "text": "Plans/Decision_Policy.md",
+        "tokens": [
+          "Plans/Decision_Policy.md"
+        ]
+      },
+      {
+        "line": 41,
+        "text": "Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+        "tokens": [
+          "Plans/evidence.schema.json"
+        ]
+      },
+      {
+        "line": 53,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 54,
+        "text": "Plans/Commands_System.md",
+        "tokens": [
+          "Plans/Commands_System.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 80,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      },
+      {
+        "line": 82,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 83,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 111,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 136,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 137,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 140,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 141,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 142,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 143,
+        "text": "Plans/Project_Output_Artifacts.md",
+        "tokens": [
+          "Plans/Project_Output_Artifacts.md"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "Keep `Plans/storage-plan.md` as the owner of persisted preview-subject identity and restore joins.",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 153,
+        "text": "Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.",
+        "tokens": [
+          "OpenFile { path... }",
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 169,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 170,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 191,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 192,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 195,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 196,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 197,
+        "text": "Plans/UI_Wiring_Rules.md",
+        "tokens": [
+          "Plans/UI_Wiring_Rules.md"
+        ]
+      },
+      {
+        "line": 198,
+        "text": "Plans/Wiring_Matrix.md",
+        "tokens": [
+          "Plans/Wiring_Matrix.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

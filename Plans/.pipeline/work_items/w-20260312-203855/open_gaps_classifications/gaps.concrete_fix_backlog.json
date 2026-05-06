@@ -1,0 +1,1292 @@
+{
+  "schema_id": "pm.open_gaps_group_classification.v3.1.12",
+  "prompt_id": "F2",
+  "prompt_version": "pm.f2.v3.1.12",
+  "timestamp_utc": "20260506T203129Z",
+  "work_id": "w-20260312-203855",
+  "gap_group_kind": "concrete_fix_backlog",
+  "provenance": {
+    "open_gaps_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+    "open_gaps_worklist_sha256": "e0c44b210711de0f54a8f3876c1aa5686c28f02dae10c03cca1141ee4074ccc9",
+    "transfer_coverage_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+    "transfer_coverage_sha256": "31acb58214921cce5ab4837feba2d6e63bd37e64a6645c008da9a2e0c027dcb6"
+  },
+  "summary": {
+    "gap_record_total": 16
+  },
+  "gap_records": [
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-03cd444997--SYNTH-shard-0011-L00035-doc_hint-b069e1b382",
+      "obligation_id": "OBL-wg-doc_hint-03cd444997--SYNTH-shard-0011-L00035-doc_hint-b069e1b382",
+      "row_hash": "02559b03f244616c62cc4c85e086d611ea5cd0fdfc767b51bd07ec9df17c6aa8",
+      "seed_id": "SYNTH-shard-0011-L00035-doc_hint-b069e1b382",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 35,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "CLI_Bridged_Providers.md too weak for canonical account identity and conversational routing through provider facade.",
+          "evidence_ledger_excerpt": "CLI_Bridged_Providers.md too weak for canonical account identity and conversational routing through provider facade.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "CLI_Bridged_Providers.md too weak for canonical account identity and conversational routing through provider facade.",
+        "related_paths": [],
+        "exact_items": [
+          "CLI_Bridged_Providers.md too weak for canonical account identity and conversational routing through provider facade."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-03cd444997--SYNTH-shard-0011-L00035-doc_hint-b069e1b382",
+        "row_hash": "02559b03f244616c62cc4c85e086d611ea5cd0fdfc767b51bd07ec9df17c6aa8",
+        "seed_id": "SYNTH-shard-0011-L00035-doc_hint-b069e1b382",
+        "source_shard_id": "shard-0011",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0011-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-53f8076bd5--SYNTH-shard-0017-L00157-doc_hint-a24566f700",
+      "obligation_id": "OBL-wg-doc_hint-53f8076bd5--SYNTH-shard-0017-L00157-doc_hint-a24566f700",
+      "row_hash": "3a6dccd52c22ea4beaaa0561bc3daf367c2111f1587f36aed180e1fe2c6b6549",
+      "seed_id": "SYNTH-shard-0017-L00157-doc_hint-a24566f700",
+      "source_shard_id": "shard-0017",
+      "batch_index": 5,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0017",
+        "line_in_shard": 157,
+        "line_in_source": null,
+        "source_line": 3357
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions.",
+          "evidence_ledger_excerpt": "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0017-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions.",
+        "related_paths": [],
+        "exact_items": [
+          "Cross-check action/confirmation work against Plans/storage-plan.md, Orchestrator_Page.md, Contracts_V0.md, FinalGUISpec.md, Run_Graph_View.md for evidence vs artifact vs record distinctions."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0017-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-53f8076bd5--SYNTH-shard-0017-L00157-doc_hint-a24566f700",
+        "row_hash": "3a6dccd52c22ea4beaaa0561bc3daf367c2111f1587f36aed180e1fe2c6b6549",
+        "seed_id": "SYNTH-shard-0017-L00157-doc_hint-a24566f700",
+        "source_shard_id": "shard-0017",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0017-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0017-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-72e56e8c67--SYNTH-shard-0009-L00108-doc_hint-8e02a03ad6",
+      "obligation_id": "OBL-wg-doc_hint-72e56e8c67--SYNTH-shard-0009-L00108-doc_hint-8e02a03ad6",
+      "row_hash": "6c3b5fa178df7b08d7dc36b9eac820986de71a26c04c9f34fcb1a0377bfa8123",
+      "seed_id": "SYNTH-shard-0009-L00108-doc_hint-8e02a03ad6",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 108,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Specify package-based worktree lane pools end-to-end—no single canonical lane-pool model exists yet.",
+          "evidence_ledger_excerpt": "Specify package-based worktree lane pools end-to-end—no single canonical lane-pool model exists yet.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Specify package-based worktree lane pools end-to-end—no single canonical lane-pool model exists yet.",
+        "related_paths": [],
+        "exact_items": [
+          "Specify package-based worktree lane pools end-to-end—no single canonical lane-pool model exists yet."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-72e56e8c67--SYNTH-shard-0009-L00108-doc_hint-8e02a03ad6",
+        "row_hash": "6c3b5fa178df7b08d7dc36b9eac820986de71a26c04c9f34fcb1a0377bfa8123",
+        "seed_id": "SYNTH-shard-0009-L00108-doc_hint-8e02a03ad6",
+        "source_shard_id": "shard-0009",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-8fd12b30ea--SYNTH-shard-0012-L00171-doc_hint-49df43ca01",
+      "obligation_id": "OBL-wg-doc_hint-8fd12b30ea--SYNTH-shard-0012-L00171-doc_hint-49df43ca01",
+      "row_hash": "16a60e08b91791ad0511ec820f1feeea894b34f14b894d7bc9dbd30cb8633ced",
+      "seed_id": "SYNTH-shard-0012-L00171-doc_hint-49df43ca01",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 171,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "FinalGUISpec needs explicit cross-reference on which pages/tabs are widget-composed.",
+          "evidence_ledger_excerpt": "FinalGUISpec needs explicit cross-reference on which pages/tabs are widget-composed.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0012-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "FinalGUISpec needs explicit cross-reference on which pages/tabs are widget-composed.",
+        "related_paths": [],
+        "exact_items": [
+          "FinalGUISpec needs explicit cross-reference on which pages/tabs are widget-composed."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0012-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-8fd12b30ea--SYNTH-shard-0012-L00171-doc_hint-49df43ca01",
+        "row_hash": "16a60e08b91791ad0511ec820f1feeea894b34f14b894d7bc9dbd30cb8633ced",
+        "seed_id": "SYNTH-shard-0012-L00171-doc_hint-49df43ca01",
+        "source_shard_id": "shard-0012",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0012-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0012-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-94eb5725b7--SYNTH-shard-0020-L00037-doc_hint-95b55c3ff4",
+      "obligation_id": "OBL-wg-doc_hint-94eb5725b7--SYNTH-shard-0020-L00037-doc_hint-95b55c3ff4",
+      "row_hash": "97afe6ab3f1d0b5c816f6ff116b29935f783401f03f11ba8beffa913b14efab9",
+      "seed_id": "SYNTH-shard-0020-L00037-doc_hint-95b55c3ff4",
+      "source_shard_id": "shard-0020",
+      "batch_index": 5,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0020",
+        "line_in_shard": 37,
+        "line_in_source": null,
+        "source_line": 3837
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Persona resolution seam: Personas.md, Prompt_Pipeline.md, interview-subagent-integration.md, Models_System.md, orchestrator-subagent-integration.md, FinalGUISpec.md.",
+          "evidence_ledger_excerpt": "Persona resolution seam: Personas.md, Prompt_Pipeline.md, interview-subagent-integration.md, Models_System.md, orchestrator-subagent-integration.md, FinalGUISpec.md.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0020-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Persona resolution seam: Personas.md, Prompt_Pipeline.md, interview-subagent-integration.md, Models_System.md, orchestrator-subagent-integration.md, FinalGUISpec.md.",
+        "related_paths": [],
+        "exact_items": [
+          "Persona resolution seam: Personas.md, Prompt_Pipeline.md, interview-subagent-integration.md, Models_System.md, orchestrator-subagent-integration.md, FinalGUISpec.md."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0020-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-94eb5725b7--SYNTH-shard-0020-L00037-doc_hint-95b55c3ff4",
+        "row_hash": "97afe6ab3f1d0b5c816f6ff116b29935f783401f03f11ba8beffa913b14efab9",
+        "seed_id": "SYNTH-shard-0020-L00037-doc_hint-95b55c3ff4",
+        "source_shard_id": "shard-0020",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0020-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0020-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-95eef715e2--SYNTH-shard-0011-L00031-doc_hint-f2cd3d4415",
+      "obligation_id": "OBL-wg-doc_hint-95eef715e2--SYNTH-shard-0011-L00031-doc_hint-f2cd3d4415",
+      "row_hash": "3a68c493dbb73709796cad188bea79622561a15b3f5212530c86879d5b6e1e11",
+      "seed_id": "SYNTH-shard-0011-L00031-doc_hint-f2cd3d4415",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 31,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Multi-Account.md is strongest for switch pressure but lacks durable switch-history storage and clean scheduler alignment.",
+          "evidence_ledger_excerpt": "Multi-Account.md is strongest for switch pressure but lacks durable switch-history storage and clean scheduler alignment.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Multi-Account.md is strongest for switch pressure but lacks durable switch-history storage and clean scheduler alignment.",
+        "related_paths": [],
+        "exact_items": [
+          "Multi-Account.md is strongest for switch pressure but lacks durable switch-history storage and clean scheduler alignment."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-95eef715e2--SYNTH-shard-0011-L00031-doc_hint-f2cd3d4415",
+        "row_hash": "3a68c493dbb73709796cad188bea79622561a15b3f5212530c86879d5b6e1e11",
+        "seed_id": "SYNTH-shard-0011-L00031-doc_hint-f2cd3d4415",
+        "source_shard_id": "shard-0011",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0011-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-9b6edca381--SYNTH-shard-0011-L00033-doc_hint-129a14d81e",
+      "obligation_id": "OBL-wg-doc_hint-9b6edca381--SYNTH-shard-0011-L00033-doc_hint-129a14d81e",
+      "row_hash": "b7acbc303981a1cebae1960f532780525209045fcf880e00328564c35bc8e266",
+      "seed_id": "SYNTH-shard-0011-L00033-doc_hint-129a14d81e",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 33,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Prompt_Pipeline.md should lock requested/effective semantics but stops short of requested concrete-account identity.",
+          "evidence_ledger_excerpt": "Prompt_Pipeline.md should lock requested/effective semantics but stops short of requested concrete-account identity.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Prompt_Pipeline.md should lock requested/effective semantics but stops short of requested concrete-account identity.",
+        "related_paths": [],
+        "exact_items": [
+          "Prompt_Pipeline.md should lock requested/effective semantics but stops short of requested concrete-account identity."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-9b6edca381--SYNTH-shard-0011-L00033-doc_hint-129a14d81e",
+        "row_hash": "b7acbc303981a1cebae1960f532780525209045fcf880e00328564c35bc8e266",
+        "seed_id": "SYNTH-shard-0011-L00033-doc_hint-129a14d81e",
+        "source_shard_id": "shard-0011",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0011-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0011-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-afc3c8164a--SEED-shard-0003-012",
+      "obligation_id": "OBL-wg-doc_hint-afc3c8164a--SEED-shard-0003-012",
+      "row_hash": "1906ff02ad8eeb52f5d946f1f93a3496d71c3b1a0498299278cc0320ab541265",
+      "seed_id": "SEED-shard-0003-012",
+      "source_shard_id": "shard-0003",
+      "batch_index": 1,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0003",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Terminology: prefer overseer-spawned node worker over delegated worker; chat aligns requested-vs-effective identity with Orchestrator actors.",
+          "evidence_ledger_excerpt": "prefer `overseer-spawned node worker` over the vaguer term `delegated worker`",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0003-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Terminology: prefer overseer-spawned node worker over delegated worker; chat aligns requested-vs-effective identity with Orchestrator actors.",
+        "related_paths": [],
+        "exact_items": [
+          "Terminology: prefer overseer-spawned node worker over delegated worker",
+          "chat aligns requested-vs-effective identity with Orchestrator actors."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0003-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 0.8667,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-afc3c8164a--SEED-shard-0003-012",
+        "row_hash": "1906ff02ad8eeb52f5d946f1f93a3496d71c3b1a0498299278cc0320ab541265",
+        "seed_id": "SEED-shard-0003-012",
+        "source_shard_id": "shard-0003",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0003-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0003-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-c30f390eb2--SEED-shard-0040-003",
+      "obligation_id": "OBL-wg-doc_hint-c30f390eb2--SEED-shard-0040-003",
+      "row_hash": "0513b162bcf81247e2c93f2abc7efc9276c8fd40f6b455a05baf1117250b323e",
+      "seed_id": "SEED-shard-0040-003",
+      "source_shard_id": "shard-0040",
+      "batch_index": 10,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0040",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Classify seams: still needs research (concrete account, operational identity, switch history, projection-freshness, concern authority) vs primarily reconciliation (orchestrator retargeting, widget cleanup, command/route normalization).",
+          "evidence_ledger_excerpt": "**Still needs research decisions**... **Primarily reconciliation work after those decisions**",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0040-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Classify seams: still needs research (concrete account, operational identity, switch history, projection-freshness, concern authority) vs primarily reconciliation (orchestrator retargeting, widget cleanup, command/route normalization).",
+        "related_paths": [],
+        "exact_items": [
+          "Classify seams: still needs research (concrete account, operational identity, switch history, projection-freshness, concern authority) vs primarily reconciliation (orchestrator retargeting, widget cleanup, command/route normalization)."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0040-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 0.8519,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-c30f390eb2--SEED-shard-0040-003",
+        "row_hash": "0513b162bcf81247e2c93f2abc7efc9276c8fd40f6b455a05baf1117250b323e",
+        "seed_id": "SEED-shard-0040-003",
+        "source_shard_id": "shard-0040",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0040-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0040-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-c578e319dc--SYNTH-shard-0018-L00138-doc_hint-a73c51835d",
+      "obligation_id": "OBL-wg-doc_hint-c578e319dc--SYNTH-shard-0018-L00138-doc_hint-a73c51835d",
+      "row_hash": "cb4d4213b42f319af7e10b38a59db4923a018e30f6ea32d6d667f012afe25573",
+      "seed_id": "SYNTH-shard-0018-L00138-doc_hint-a73c51835d",
+      "source_shard_id": "shard-0018",
+      "batch_index": 5,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0018",
+        "line_in_shard": 138,
+        "line_in_source": null,
+        "source_line": 3538
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md.",
+          "evidence_ledger_excerpt": "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0018-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md.",
+        "related_paths": [],
+        "exact_items": [
+          "Export seam: storage-plan.md, FinalGUISpec.md, Orchestrator_Page.md, usage-feature.md, Widget_System.md."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0018-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-c578e319dc--SYNTH-shard-0018-L00138-doc_hint-a73c51835d",
+        "row_hash": "cb4d4213b42f319af7e10b38a59db4923a018e30f6ea32d6d667f012afe25573",
+        "seed_id": "SYNTH-shard-0018-L00138-doc_hint-a73c51835d",
+        "source_shard_id": "shard-0018",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0018-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0018-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-c8144f190f--SYNTH-shard-0012-L00031-doc_hint-9e94817dfe",
+      "obligation_id": "OBL-wg-doc_hint-c8144f190f--SYNTH-shard-0012-L00031-doc_hint-9e94817dfe",
+      "row_hash": "a9523f832d97edc2448b9f82b368c4a08aab604e1d96f5f2ec153634b2e8127f",
+      "seed_id": "SYNTH-shard-0012-L00031-doc_hint-9e94817dfe",
+      "source_shard_id": "shard-0012",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0012",
+        "line_in_shard": 31,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Terminology guardrail: do not hide worktree in Source Control; lane is ownership context there, not the primary listed object.",
+          "evidence_ledger_excerpt": "Terminology guardrail: do not hide worktree in Source Control; lane is ownership context there, not the primary listed object.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0012-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Terminology guardrail: do not hide worktree in Source Control; lane is ownership context there, not the primary listed object.",
+        "related_paths": [],
+        "exact_items": [
+          "Terminology guardrail: do not hide worktree in Source Control",
+          "lane is ownership context there, not the primary listed object."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0012-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-c8144f190f--SYNTH-shard-0012-L00031-doc_hint-9e94817dfe",
+        "row_hash": "a9523f832d97edc2448b9f82b368c4a08aab604e1d96f5f2ec153634b2e8127f",
+        "seed_id": "SYNTH-shard-0012-L00031-doc_hint-9e94817dfe",
+        "source_shard_id": "shard-0012",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0012-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0012-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-de3251b1e3--SYNTH-shard-0009-L00118-doc_hint-07e42e9900",
+      "obligation_id": "OBL-wg-doc_hint-de3251b1e3--SYNTH-shard-0009-L00118-doc_hint-07e42e9900",
+      "row_hash": "a19763182698475dd7d624c80d21486a67ec61935352c146336d39362511e1dd",
+      "seed_id": "SYNTH-shard-0009-L00118-doc_hint-07e42e9900",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 118,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Orchestrator_Page remains a primary runtime owner for orchestration UX but still encodes Tiers, Phase/Task/Subtask, singular Overseer, and legacy persona_id fields.",
+          "evidence_ledger_excerpt": "Orchestrator_Page remains a primary runtime owner for orchestration UX but still encodes Tiers, Phase/Task/Subtask, singular Overseer, and legacy persona_id fields.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Orchestrator_Page remains a primary runtime owner for orchestration UX but still encodes Tiers, Phase/Task/Subtask, singular Overseer, and legacy persona_id fields.",
+        "related_paths": [],
+        "exact_items": [
+          "Orchestrator_Page remains a primary runtime owner for orchestration UX but still encodes Tiers, Phase/Task/Subtask, singular Overseer, and legacy persona_id fields."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-de3251b1e3--SYNTH-shard-0009-L00118-doc_hint-07e42e9900",
+        "row_hash": "a19763182698475dd7d624c80d21486a67ec61935352c146336d39362511e1dd",
+        "seed_id": "SYNTH-shard-0009-L00118-doc_hint-07e42e9900",
+        "source_shard_id": "shard-0009",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-dfb48e421a--SEED-shard-0001-015",
+      "obligation_id": "OBL-wg-doc_hint-dfb48e421a--SEED-shard-0001-015",
+      "row_hash": "adb886634e17a3020b2bc3a7c21a68fcd471a332dae64a5d9da2b7f0ec460a91",
+      "seed_id": "SEED-shard-0001-015",
+      "source_shard_id": "shard-0001",
+      "batch_index": 1,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0001",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Prefer canonical terms: tab/object labels Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer; state labels Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, etc.",
+          "evidence_ledger_excerpt": "likely canonical tab/object labels: `Seams`... `Weak Integration`... `Graph Patch Applied`... `Generation Updated`",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0001-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Prefer canonical terms: tab/object labels Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer; state labels Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, etc.",
+        "related_paths": [],
+        "exact_items": [
+          "Prefer canonical terms: tab/object labels Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer",
+          "state labels Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, etc."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0001-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 0.7778,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-dfb48e421a--SEED-shard-0001-015",
+        "row_hash": "adb886634e17a3020b2bc3a7c21a68fcd471a332dae64a5d9da2b7f0ec460a91",
+        "seed_id": "SEED-shard-0001-015",
+        "source_shard_id": "shard-0001",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0001-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0001-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-e1407eaee7--SYNTH-shard-0019-L00064-doc_hint-8028e13c3d",
+      "obligation_id": "OBL-wg-doc_hint-e1407eaee7--SYNTH-shard-0019-L00064-doc_hint-8028e13c3d",
+      "row_hash": "35e2cd4f0d9cc439a8fe3fcd286ff2005b4832f8cd55cf439831dc1d18ab7a8f",
+      "seed_id": "SYNTH-shard-0019-L00064-doc_hint-8028e13c3d",
+      "source_shard_id": "shard-0019",
+      "batch_index": 5,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0019",
+        "line_in_shard": 64,
+        "line_in_source": null,
+        "source_line": 3664
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Settings override seam: Multi-Account.md, Models_System.md, Prompt_Pipeline.md, Personas.md, FinalGUISpec.md, Orchestrator_Page.md, storage-plan.md.",
+          "evidence_ledger_excerpt": "Settings override seam: Multi-Account.md, Models_System.md, Prompt_Pipeline.md, Personas.md, FinalGUISpec.md, Orchestrator_Page.md, storage-plan.md.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0019-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Settings override seam: Multi-Account.md, Models_System.md, Prompt_Pipeline.md, Personas.md, FinalGUISpec.md, Orchestrator_Page.md, storage-plan.md.",
+        "related_paths": [],
+        "exact_items": [
+          "Settings override seam: Multi-Account.md, Models_System.md, Prompt_Pipeline.md, Personas.md, FinalGUISpec.md, Orchestrator_Page.md, storage-plan.md."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0019-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-e1407eaee7--SYNTH-shard-0019-L00064-doc_hint-8028e13c3d",
+        "row_hash": "35e2cd4f0d9cc439a8fe3fcd286ff2005b4832f8cd55cf439831dc1d18ab7a8f",
+        "seed_id": "SYNTH-shard-0019-L00064-doc_hint-8028e13c3d",
+        "source_shard_id": "shard-0019",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0019-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0019-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-ebb7cecf6e--SYNTH-shard-0009-L00015-doc_hint-229f1d6ea9",
+      "obligation_id": "OBL-wg-doc_hint-ebb7cecf6e--SYNTH-shard-0009-L00015-doc_hint-229f1d6ea9",
+      "row_hash": "913c188f5edc4b09dbaf950f1aab9c7d24c1af7f40db6abbe5d0b971548869ac",
+      "seed_id": "SYNTH-shard-0009-L00015-doc_hint-229f1d6ea9",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 15,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Fallback behavior is contradictory across core docs (persona fallback split; GitHub vs multi-account; Docker/media stopping at provider/model).",
+          "evidence_ledger_excerpt": "Fallback behavior is contradictory across core docs (persona fallback split; GitHub vs multi-account; Docker/media stopping at provider/model).",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Fallback behavior is contradictory across core docs (persona fallback split; GitHub vs multi-account; Docker/media stopping at provider/model).",
+        "related_paths": [],
+        "exact_items": [
+          "Fallback behavior is contradictory across core docs (persona fallback split",
+          "GitHub vs multi-account",
+          "Docker/media stopping at provider/model)."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-ebb7cecf6e--SYNTH-shard-0009-L00015-doc_hint-229f1d6ea9",
+        "row_hash": "913c188f5edc4b09dbaf950f1aab9c7d24c1af7f40db6abbe5d0b971548869ac",
+        "seed_id": "SYNTH-shard-0009-L00015-doc_hint-229f1d6ea9",
+        "source_shard_id": "shard-0009",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    },
+    {
+      "gap_record_id": "gr-concrete_fix_backlog--OBL-wg-doc_hint-f8dd77befe--SYNTH-shard-0009-L00018-doc_hint-3caa566b7f",
+      "obligation_id": "OBL-wg-doc_hint-f8dd77befe--SYNTH-shard-0009-L00018-doc_hint-3caa566b7f",
+      "row_hash": "6819544581b0fabe0dc670cfec89aa18afe471b79c3a8b190bf66753572e1ac5",
+      "seed_id": "SYNTH-shard-0009-L00018-doc_hint-3caa566b7f",
+      "source_shard_id": "shard-0009",
+      "batch_index": 3,
+      "transfer_row_kind": "classified",
+      "ledger_lineage": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0009",
+        "line_in_shard": 18,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "candidate_doc_hints": [
+        {
+          "hint": "Docker/media/provider flows usually stop at provider/model, not account-resolution lineage.",
+          "evidence_ledger_excerpt": "Docker/media/provider flows usually stop at provider/model, not account-resolution lineage.",
+          "related_paths": []
+        }
+      ],
+      "doc_discovery_attempt_state": {
+        "state": "e2_classified",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "classifier_engine": "deterministic_token_overlap_v1"
+      },
+      "concrete_target_paths_union": [],
+      "canonical_obligation_snapshot_projection": {
+        "obligation_type": "doc_hint",
+        "work_group_category": "doc_hint",
+        "statement": "Docker/media/provider flows usually stop at provider/model, not account-resolution lineage.",
+        "related_paths": [],
+        "exact_items": [
+          "Docker/media/provider flows usually stop at provider/model, not account-resolution lineage."
+        ],
+        "required_action": "Apply terminology and documentation-structure guidance when updating canonical planning artifacts; ensure cross-references match hinted canonical labels.",
+        "source_gate": {
+          "obligation_encoding": "doc_hint",
+          "doc_hint_promotion_blocked": true,
+          "open_questions_preserved": [],
+          "open_questions_count": 0
+        }
+      },
+      "coverage_merge_projection": {
+        "effective_coverage_class": "partial",
+        "worklist_doc_resolution_status": "doc_hint_only",
+        "e2_coverage_class": "partial",
+        "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+        "overlap_score": 0.0,
+        "hint_overlap_score": 1.0,
+        "missing_detail_notes": "",
+        "classifier_rationale": "doc_hint_only_task_used_hint_and_any_available_windows"
+      },
+      "worklist_row_projection": {
+        "obligation_id": "OBL-wg-doc_hint-f8dd77befe--SYNTH-shard-0009-L00018-doc_hint-3caa566b7f",
+        "row_hash": "6819544581b0fabe0dc670cfec89aa18afe471b79c3a8b190bf66753572e1ac5",
+        "seed_id": "SYNTH-shard-0009-L00018-doc_hint-3caa566b7f",
+        "source_shard_id": "shard-0009",
+        "transfer_row_kind": "classified",
+        "doc_discovery_attempt_state": {
+          "state": "e2_classified",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001",
+          "classifier_engine": "deterministic_token_overlap_v1"
+        },
+        "coverage_class_projection": {
+          "effective_coverage_class": "partial",
+          "worklist_doc_resolution_status": "doc_hint_only",
+          "e2_coverage_class": "partial",
+          "coverage_task_id": "cov-e1-shard-0009-hint_only-0001"
+        }
+      },
+      "f2_classification": {
+        "schema": "pm.open_gaps_gap_record.v3.1.12",
+        "gap_group_kind": "concrete_fix_backlog",
+        "materialization_only": true,
+        "doc_discovery_resolution_forbidden": true
+      }
+    }
+  ],
+  "final_gate": {
+    "passed": true,
+    "every_worklist_row_materialized": true
+  }
+}

@@ -1,0 +1,978 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0058",
+  "coverage": {
+    "shard_id": "shard-0058",
+    "start_line": 10680,
+    "end_line": 10869,
+    "line_count": 190,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0058.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 4,
+        "text": "But its later addenda already require a second category of opens:",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "UI callers should not reconstruct file paths heuristically when a stable identity exists",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "`FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already requires identity-native opens that cannot be expressed as safe path opens.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "`generated://<artifact_id>` is already the proof that the system needs non-path editor targets.",
+        "tokens": [
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 117,
+        "text": "`resume_url` should be one serialized transport form of that payload",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "command palette, search, artifact deep-links, blocked notices, and FileManager/Editor opens should all resolve through the same internal target model",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "`FinalGUISpec.md` still overstates the scope of `OpenFile` by claiming all file-open actions across the app use that one contract, even though the app now needs identity-native subject opens.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "`resume_url` is already more precise than many in-app jumps, which is backwards; in-app routing should be at least as strong as serialized resume links.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "`resume_url` should not stay the most expressive navigation mechanism in the product.",
+        "tokens": [
+          "resume_url"
+        ]
+      }
+    ],
+    "decisions": [
+      {
+        "line": 17,
+        "text": "keep `OpenFile { path... }` for canonical workspace-file opens",
+        "tokens": [
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "path-based open remains for repo/workspace files",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "it keeps attempt/safe-point/remediation opens stable across cleanup/archive/remove flows",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "Orchestrator with `focused_run_id`, selected node/attempt, tab, inspector target",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 151,
+        "text": "it keeps `resume_url`, search jumps, palette entries, and artifact pivots semantically aligned",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 175,
+        "text": "Update `FinalGUISpec.md` so `OpenFile` remains true for workspace files, while identity-native opens route through `OpenSubject` under the same higher-level routing model.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile",
+          "OpenSubject"
+        ]
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 2,
+        "text": "`FileManager.md` still states one canonical open contract:",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 10,
+        "text": "That means the docs have already outgrown a path-only open contract, even though the main body still acts as if all opens resolve to a workspace file path first.",
+        "tokens": []
+      },
+      {
+        "line": 14,
+        "text": "That preview contract is effectively the model FileManager now wants more broadly.",
+        "tokens": []
+      },
+      {
+        "line": 18,
+        "text": "add a second canonical open contract for identity-native objects, e.g.:",
+        "tokens": []
+      },
+      {
+        "line": 37,
+        "text": "detail record",
+        "tokens": []
+      },
+      {
+        "line": 72,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "`FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already requires identity-native opens that cannot be expressed as safe path opens.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "there is currently no canonical `OpenArtifact`/`OpenSubject` contract even though multiple docs implicitly need it.",
+        "tokens": [
+          "OpenArtifact",
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 81,
+        "text": "Split FileManager’s canonical open contract into:",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "the file-open contract in `FinalGUISpec.md`",
+        "tokens": [
+          "FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "`FinalGUISpec.md` still states one unified `OpenFile { path... }` contract for all file-open actions across the app.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "`UI_Command_Catalog.md` is mostly action-oriented, not target-model-oriented. It has strong runtime action IDs, but no generalized subject-open/routing payload family.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "define one canonical internal route/target payload for navigation",
+        "tokens": []
+      },
+      {
+        "line": 117,
+        "text": "`resume_url` should be one serialized transport form of that payload",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 166,
+        "text": "`FinalGUISpec.md` still overstates the scope of `OpenFile` by claiming all file-open actions across the app use that one contract, even though the app now needs identity-native subject opens.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`UI_Command_Catalog.md` has many action IDs but no explicit generalized subject-open command family or route payload contract.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Add a canonical route payload / target model owner section, likely in `Contracts_V0.md` or an equivalent routing owner doc.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "Recast `resume_url` as one serialized representation of that internal route payload, not a separate special-case mechanism.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 178,
+        "text": "The system now wants a routing contract, not just more command IDs.",
+        "tokens": []
+      },
+      {
+        "line": 180,
+        "text": "The clean model is one navigation payload with multiple target kinds, not multiple parallel deep-link systems.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 3,
+        "text": "OpenFile { path: PathBuf, line?, range?, target_group? }",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "That means the docs have already outgrown a path-only open contract, even though the main body still acts as if all opens resolve to a workspace file path first.",
+        "tokens": []
+      },
+      {
+        "line": 17,
+        "text": "keep `OpenFile { path... }` for canonical workspace-file opens",
+        "tokens": [
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 42,
+        "text": "path-based open remains for repo/workspace files",
+        "tokens": []
+      },
+      {
+        "line": 48,
+        "text": "UI callers should not reconstruct file paths heuristically when a stable identity exists",
+        "tokens": []
+      },
+      {
+        "line": 57,
+        "text": "route to that surface with exact identity context preserved",
+        "tokens": []
+      },
+      {
+        "line": 62,
+        "text": "it prevents runtime artifacts from being forced through fake repo paths",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "it keeps attempt/safe-point/remediation opens stable across cleanup/archive/remove flows",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "it lets FileManager/editor/Artifacts/Orchestrator share one identity model instead of ad hoc open handlers",
+        "tokens": []
+      },
+      {
+        "line": 70,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 71,
+        "text": "likely routing owner:",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "`FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already requires identity-native opens that cannot be expressed as safe path opens.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "current “Open in Editor” wording in Orchestrator/Evidence surfaces risks implying raw-path opens even when the correct target is an artifact-backed or report-backed subject.",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "workspace path open",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Let runtime lineage IDs resolve through indexes/projections to the best openable target rather than forcing every caller to know file paths.",
+        "tokens": []
+      },
+      {
+        "line": 88,
+        "text": "`Open Artifact` / `Open Report` / routed open when the target is identity-native",
+        "tokens": [
+          "Open Artifact",
+          "Open Report"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "The real seam is no longer “path vs not path”; it is “workspace document open vs subject/identity open.”",
+        "tokens": []
+      },
+      {
+        "line": 92,
+        "text": "`generated://<artifact_id>` is already the proof that the system needs non-path editor targets.",
+        "tokens": [
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "This seam now looks tightly connected to routing/deep-link normalization, not just FileManager UX.",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "The routing model is now split across at least four partially overlapping mechanisms:",
+        "tokens": []
+      },
+      {
+        "line": 110,
+        "text": "`FinalGUISpec.md` still states one unified `OpenFile { path... }` contract for all file-open actions across the app.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "`UI_Command_Catalog.md` is mostly action-oriented, not target-model-oriented. It has strong runtime action IDs, but no generalized subject-open/routing payload family.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "`assistant-chat-design.md` already expects jump-to-message, canonical runtime action routing, and persistence of `resume_url?` on blocked notices. That is closer to object-first routing than to path-first opening.",
+        "tokens": [
+          "assistant-chat-design.md",
+          "resume_url?"
+        ]
+      },
+      {
+        "line": 116,
+        "text": "define one canonical internal route/target payload for navigation",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "path-based target:",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "uses `OpenFile { path, line?, range?, target_group? }`",
+        "tokens": [
+          "OpenFile { path, line?, range?, target_group? }"
+        ]
+      },
+      {
+        "line": 128,
+        "text": "route to a specific page/tab/inspector with context",
+        "tokens": []
+      },
+      {
+        "line": 132,
+        "text": "Orchestrator with `focused_run_id`, selected node/attempt, tab, inspector target",
+        "tokens": [
+          "focused_run_id"
+        ]
+      },
+      {
+        "line": 138,
+        "text": "workspace_tab_id?",
+        "tokens": []
+      },
+      {
+        "line": 145,
+        "text": "tab_id?",
+        "tokens": []
+      },
+      {
+        "line": 147,
+        "text": "`line?` / `range?` when path-based",
+        "tokens": [
+          "line?",
+          "range?"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "it lets `OpenSubject` and `OpenFile` live inside one routing model instead of becoming separate navigation stacks",
+        "tokens": [
+          "OpenFile",
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`UI_Command_Catalog.md` has many action IDs but no explicit generalized subject-open command family or route payload contract.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "`resume_url` is already more precise than many in-app jumps, which is backwards; in-app routing should be at least as strong as serialized resume links.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Add a canonical route payload / target model owner section, likely in `Contracts_V0.md` or an equivalent routing owner doc.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 173,
+        "text": "Recast `resume_url` as one serialized representation of that internal route payload, not a separate special-case mechanism.",
+        "tokens": [
+          "resume_url"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Update `FinalGUISpec.md` so `OpenFile` remains true for workspace files, while identity-native opens route through `OpenSubject` under the same higher-level routing model.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile",
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 178,
+        "text": "The system now wants a routing contract, not just more command IDs.",
+        "tokens": []
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 5,
+        "text": "attempt-scoped evidence by `attempt_id`",
+        "tokens": [
+          "attempt_id"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "attempt/evidence/safe-point/remediation reports",
+        "tokens": []
+      },
+      {
+        "line": 78,
+        "text": "current “Open in Editor” wording in Orchestrator/Evidence surfaces risks implying raw-path opens even when the correct target is an artifact-backed or report-backed subject.",
+        "tokens": []
+      },
+      {
+        "line": 174,
+        "text": "Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere.",
+        "tokens": []
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 71,
+        "text": "likely routing owner:",
+        "tokens": []
+      },
+      {
+        "line": 161,
+        "text": "likely owner docs:",
+        "tokens": []
+      },
+      {
+        "line": 172,
+        "text": "Add a canonical route payload / target model owner section, likely in `Contracts_V0.md` or an equivalent routing owner doc.",
+        "tokens": [
+          "Contracts_V0.md"
+        ]
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 63,
+        "text": "it keeps attempt/safe-point/remediation opens stable across cleanup/archive/remove flows",
+        "tokens": []
+      }
+    ],
+    "open_questions": [
+      {
+        "line": 2,
+        "text": "`FileManager.md` still states one canonical open contract:",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 3,
+        "text": "OpenFile { path: PathBuf, line?, range?, target_group? }",
+        "tokens": []
+      },
+      {
+        "line": 4,
+        "text": "But its later addenda already require a second category of opens:",
+        "tokens": []
+      },
+      {
+        "line": 10,
+        "text": "That means the docs have already outgrown a path-only open contract, even though the main body still acts as if all opens resolve to a workspace file path first.",
+        "tokens": []
+      },
+      {
+        "line": 13,
+        "text": "artifact-backed restore opens `generated://<artifact_id>` unless a backing document exists",
+        "tokens": [
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "keep `OpenFile { path... }` for canonical workspace-file opens",
+        "tokens": [
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "add a second canonical open contract for identity-native objects, e.g.:",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "OpenSubject { subject_id, target_group?, open_mode?, location? }",
+        "tokens": []
+      },
+      {
+        "line": 35,
+        "text": "these resolve through projections/indexes to the strongest openable target:",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "related surface pivot when file-open is not the right UX",
+        "tokens": []
+      },
+      {
+        "line": 42,
+        "text": "path-based open remains for repo/workspace files",
+        "tokens": []
+      },
+      {
+        "line": 43,
+        "text": "identity-based open is the canonical entrypoint for:",
+        "tokens": []
+      },
+      {
+        "line": 53,
+        "text": "open/focus workspace buffer",
+        "tokens": []
+      },
+      {
+        "line": 55,
+        "text": "open transient `generated://...` or specialized viewer",
+        "tokens": [
+          "generated://..."
+        ]
+      },
+      {
+        "line": 59,
+        "text": "fail explicitly with a typed open error, not silent fallback",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "it keeps attempt/safe-point/remediation opens stable across cleanup/archive/remove flows",
+        "tokens": []
+      },
+      {
+        "line": 64,
+        "text": "it lets FileManager/editor/Artifacts/Orchestrator share one identity model instead of ad hoc open handlers",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "`FileManager.md` still describes one internal open-file contract while its own runtime-artifact addendum already requires identity-native opens that cannot be expressed as safe path opens.",
+        "tokens": [
+          "FileManager.md"
+        ]
+      },
+      {
+        "line": 76,
+        "text": "there is currently no canonical `OpenArtifact`/`OpenSubject` contract even though multiple docs implicitly need it.",
+        "tokens": [
+          "OpenArtifact",
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 77,
+        "text": "`generated://<artifact_id>` exists in preview restore behavior, but that identity pattern has not yet been generalized for other artifact/report opens.",
+        "tokens": [
+          "generated://<artifact_id>"
+        ]
+      },
+      {
+        "line": 78,
+        "text": "current “Open in Editor” wording in Orchestrator/Evidence surfaces risks implying raw-path opens even when the correct target is an artifact-backed or report-backed subject.",
+        "tokens": []
+      },
+      {
+        "line": 81,
+        "text": "Split FileManager’s canonical open contract into:",
+        "tokens": []
+      },
+      {
+        "line": 82,
+        "text": "workspace path open",
+        "tokens": []
+      },
+      {
+        "line": 83,
+        "text": "identity-native subject open",
+        "tokens": []
+      },
+      {
+        "line": 85,
+        "text": "Let runtime lineage IDs resolve through indexes/projections to the best openable target rather than forcing every caller to know file paths.",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "`Open in Editor` for file/document-backed targets",
+        "tokens": [
+          "Open in Editor"
+        ]
+      },
+      {
+        "line": 88,
+        "text": "`Open Artifact` / `Open Report` / routed open when the target is identity-native",
+        "tokens": [
+          "Open Artifact",
+          "Open Report"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "The real seam is no longer “path vs not path”; it is “workspace document open vs subject/identity open.”",
+        "tokens": []
+      },
+      {
+        "line": 109,
+        "text": "the file-open contract in `FinalGUISpec.md`",
+        "tokens": [
+          "FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 110,
+        "text": "`FinalGUISpec.md` still states one unified `OpenFile { path... }` contract for all file-open actions across the app.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile { path... }"
+        ]
+      },
+      {
+        "line": 112,
+        "text": "`UI_Command_Catalog.md` is mostly action-oriented, not target-model-oriented. It has strong runtime action IDs, but no generalized subject-open/routing payload family.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "`assistant-chat-design.md` already expects jump-to-message, canonical runtime action routing, and persistence of `resume_url?` on blocked notices. That is closer to object-first routing than to path-first opening.",
+        "tokens": [
+          "assistant-chat-design.md",
+          "resume_url?"
+        ]
+      },
+      {
+        "line": 118,
+        "text": "command palette, search, artifact deep-links, blocked notices, and FileManager/Editor opens should all resolve through the same internal target model",
+        "tokens": []
+      },
+      {
+        "line": 122,
+        "text": "open_file",
+        "tokens": []
+      },
+      {
+        "line": 123,
+        "text": "uses `OpenFile { path, line?, range?, target_group? }`",
+        "tokens": [
+          "OpenFile { path, line?, range?, target_group? }"
+        ]
+      },
+      {
+        "line": 125,
+        "text": "open_subject",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "uses `OpenSubject { subject_id, target_group?, open_mode?, location? }`",
+        "tokens": [
+          "OpenSubject { subject_id, target_group?, open_mode?, location? }"
+        ]
+      },
+      {
+        "line": 150,
+        "text": "it lets `OpenSubject` and `OpenFile` live inside one routing model instead of becoming separate navigation stacks",
+        "tokens": [
+          "OpenFile",
+          "OpenSubject"
+        ]
+      },
+      {
+        "line": 152,
+        "text": "it avoids a bad outcome where file opens are one model, wizard resumes another, usage/artifact pivots a third, and runtime CTAs a fourth",
+        "tokens": []
+      },
+      {
+        "line": 166,
+        "text": "`FinalGUISpec.md` still overstates the scope of `OpenFile` by claiming all file-open actions across the app use that one contract, even though the app now needs identity-native subject opens.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile"
+        ]
+      },
+      {
+        "line": 167,
+        "text": "`UI_Command_Catalog.md` has many action IDs but no explicit generalized subject-open command family or route payload contract.",
+        "tokens": [
+          "UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 174,
+        "text": "Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere.",
+        "tokens": []
+      },
+      {
+        "line": 175,
+        "text": "Update `FinalGUISpec.md` so `OpenFile` remains true for workspace files, while identity-native opens route through `OpenSubject` under the same higher-level routing model.",
+        "tokens": [
+          "FinalGUISpec.md",
+          "OpenFile",
+          "OpenSubject"
+        ]
+      }
+    ],
+    "process_defects": [
+      {
+        "line": 78,
+        "text": "current “Open in Editor” wording in Orchestrator/Evidence surfaces risks implying raw-path opens even when the correct target is an artifact-backed or report-backed subject.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 67,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 69,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 70,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 72,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 98,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "Plans/Commands_System.md",
+        "tokens": [
+          "Plans/Commands_System.md"
+        ]
+      },
+      {
+        "line": 100,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 101,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 102,
+        "text": "spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md",
+          "Plans/storage-plan.md",
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 155,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 156,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 157,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 158,
+        "text": "Plans/FileManager.md",
+        "tokens": [
+          "Plans/FileManager.md"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 160,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      },
+      {
+        "line": 162,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 163,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 185,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 186,
+        "text": "Plans/FinalGUISpec.md",
+        "tokens": [
+          "Plans/FinalGUISpec.md"
+        ]
+      },
+      {
+        "line": 187,
+        "text": "Plans/assistant-chat-design.md",
+        "tokens": [
+          "Plans/assistant-chat-design.md"
+        ]
+      },
+      {
+        "line": 188,
+        "text": "Plans/Runtime_Artifacts_Panel.md",
+        "tokens": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ]
+      },
+      {
+        "line": 189,
+        "text": "Plans/usage-feature.md",
+        "tokens": [
+          "Plans/usage-feature.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

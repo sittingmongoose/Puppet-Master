@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.section_entry_D_report.v3.1.12",
+  "prompt_id": "D0",
+  "prompt_version": "pm.d0.v3.1.12",
+  "timestamp_utc": "20260506T191558Z",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "source_section_exit_c_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+  "seed_inputs": {
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "ledger_obligation_seed_exists": true,
+    "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "ledger_seed_completeness_report_exists": true
+  },
+  "deterministic_verification": {
+    "section_exit_c_status": "complete",
+    "section_exit_c_final_gate_passed": true,
+    "seed_completeness_final_gate_passed": true,
+    "seed_completeness_blocking_high_severity_gaps_count": 0,
+    "work_id_consistency_passed": true,
+    "seed_work_id_matches_section_exit_c_work_id": true
+  },
+  "final_gate": {
+    "passed": true,
+    "reason": "Active Section C handoff resolved and required seed inputs exist with seed completeness pass=true."
+  },
+  "next_prompt_request": "Paste prompt D1 — Obligation Worklist Builder v3.1.12."
+}

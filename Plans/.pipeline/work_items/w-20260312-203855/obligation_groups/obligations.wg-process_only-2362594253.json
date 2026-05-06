@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-2362594253",
+  "category": "process_only",
+  "family_key": "provider_opencode_and_provider_stream_mapping_assume_disclosure_obligations_their_mappings_cannot_satisfy",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0011-L00046-process_defect-807321c3cd"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-2362594253--SYNTH-shard-0011-L00046-process_defect-807321c3cd",
+      "seed_id": "SYNTH-shard-0011-L00046-process_defect-807321c3cd",
+      "source_shard_id": "shard-0011",
+      "batch_index": 3,
+      "obligation_type": "process_defect",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0011",
+        "line_in_shard": 46,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Provider_OpenCode and Provider_Stream_Mapping assume disclosure obligations their mappings cannot satisfy.",
+      "evidence_ledger_excerpt": "Provider_OpenCode and Provider_Stream_Mapping assume disclosure obligations their mappings cannot satisfy.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Provider_OpenCode and Provider_Stream_Mapping assume disclosure obligations their mappings cannot satisfy.",
+          "kind": "process_defect",
+          "evidence_ledger_excerpt": "Provider_OpenCode and Provider_Stream_Mapping assume disclosure obligations their mappings cannot satisfy.",
+          "related_paths": []
+        }
+      ],
+      "exact_items": [
+        "Provider_OpenCode and Provider_Stream_Mapping assume disclosure obligations their mappings cannot satisfy."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-process_only-580a3da785",
+  "category": "process_only",
+  "family_key": "downstream_docs_still_imply_special_case_top_level_navigation_fields_resume_url_more_concrete",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SEED-shard-0067-009"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-process_only-580a3da785--SEED-shard-0067-009",
+      "seed_id": "SEED-shard-0067-009",
+      "source_shard_id": "shard-0067",
+      "batch_index": 17,
+      "obligation_type": "process_defect",
+      "work_group_category": "process_only",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0067",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Downstream docs still imply special-case top-level navigation fields; resume_url more concrete than general route contract; catalog payloads remain ad hoc versus bounded field set.",
+      "evidence_ledger_excerpt": "Several downstream docs still imply special-case top-level fields such as `usage_event_ref`, `wizard_step`, or direct artifact/document IDs in navigation flows.\n- `resume_url` flows are still more concrete than the general route contract\n- `UI_Command_Catalog.md` still presents many navigation commands with ad hoc payload shapes",
+      "related_paths": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [],
+      "process_notes": [
+        {
+          "note": "Downstream docs still imply special-case top-level navigation fields; resume_url more concrete than general route contract; catalog payloads remain ad hoc versus bounded field set.",
+          "kind": "process_defect",
+          "evidence_ledger_excerpt": "Several downstream docs still imply special-case top-level fields such as `usage_event_ref`, `wizard_step`, or direct artifact/document IDs in navigation flows.\n- `resume_url` flows are still more concrete than the general route contract\n- `UI_Command_Catalog.md` still presents many navigation commands with ad hoc payload shapes",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/storage-plan.md"
+          ]
+        }
+      ],
+      "exact_items": [
+        "Downstream docs still imply special-case top-level navigation fields",
+        "resume_url more concrete than general route contract",
+        "catalog payloads remain ad hoc versus bounded field set."
+      ],
+      "required_action": "Track as process or extraction defect follow-up; resolve or explicitly defer with owner and evidence; do not silently drop."
+    }
+  ]
+}

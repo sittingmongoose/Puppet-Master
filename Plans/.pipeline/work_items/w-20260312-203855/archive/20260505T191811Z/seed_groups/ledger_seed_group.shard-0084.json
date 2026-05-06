@@ -1,0 +1,701 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0084",
+  "coverage": {
+    "shard_id": "shard-0084",
+    "start_line": 15678,
+    "end_line": 15872,
+    "line_count": 195,
+    "source_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0084.md"
+  },
+  "categories": {
+    "requirements": [
+      {
+        "line": 17,
+        "text": "deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas",
+        "tokens": [
+          "allowed_actions[]"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "persistence should be through canonical blocked/runtime records",
+        "tokens": []
+      },
+      {
+        "line": 19,
+        "text": "visible labels must bind to the shared runtime recovery commands",
+        "tokens": []
+      },
+      {
+        "line": 28,
+        "text": "This is now a document-structure problem as much as a design problem: the later correction needs clear precedence over the earlier sections.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "Reconciliation must retire or rewrite the earlier sections, not merely append another addendum.",
+        "tokens": []
+      },
+      {
+        "line": 75,
+        "text": "If graph-local wrappers remain for UX readability, their normalization target and arg derivation must be explicit and consistent with `cmd.runtime.approve` / `cmd.runtime.decline`.",
+        "tokens": [
+          "cmd.runtime.approve",
+          "cmd.runtime.decline"
+        ]
+      },
+      {
+        "line": 97,
+        "text": "PuppetMasterEvent::UserInteractionRequired",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "GateStart",
+        "tokens": []
+      },
+      {
+        "line": 103,
+        "text": "GateComplete",
+        "tokens": []
+      },
+      {
+        "line": 104,
+        "text": "UserInteractionRequired",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families.",
+        "tokens": [
+          "TierChanged",
+          "UserInteractionRequired"
+        ]
+      },
+      {
+        "line": 161,
+        "text": "Later addenda already require the stronger model:",
+        "tokens": []
+      }
+    ],
+    "decisions": [
+      {
+        "line": 27,
+        "text": "If the earlier text remains in place as ordinary prose, downstream readers will keep treating the document as endorsing two peer approval models.",
+        "tokens": []
+      },
+      {
+        "line": 36,
+        "text": "Keep any surviving `request_id` text explicitly labeled as compatibility lineage or historical replay support only.",
+        "tokens": [
+          "request_id"
+        ]
+      },
+      {
+        "line": 75,
+        "text": "If graph-local wrappers remain for UX readability, their normalization target and arg derivation must be explicit and consistent with `cmd.runtime.approve` / `cmd.runtime.decline`.",
+        "tokens": [
+          "cmd.runtime.approve",
+          "cmd.runtime.decline"
+        ]
+      },
+      {
+        "line": 127,
+        "text": "That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families.",
+        "tokens": [
+          "TierChanged",
+          "UserInteractionRequired"
+        ]
+      },
+      {
+        "line": 135,
+        "text": "Keep any surviving `PuppetMasterEvent::*` references explicitly marked as compatibility transport or migration notes, not as the primary operational source.",
+        "tokens": [
+          "PuppetMasterEvent::*"
+        ]
+      },
+      {
+        "line": 179,
+        "text": "`tier_type` still appears as a core node UI field even though the broader rewrite direction is to demote tier/phase labels to derived or compatibility-only view context.",
+        "tokens": [
+          "tier_type"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Keep any surviving tier labels explicitly as derived display/grouping metadata, not as the core runtime identity shape.",
+        "tokens": []
+      },
+      {
+        "line": 189,
+        "text": "The later addenda already define the stronger direction; the base model has not caught up.",
+        "tokens": []
+      }
+    ],
+    "data_shapes": [
+      {
+        "line": 10,
+        "text": "canonical HITL request contract is `request_id` + `tier_id` + `tier_type` + `request_kind`",
+        "tokens": [
+          "request_id",
+          "request_kind",
+          "tier_id",
+          "tier_type"
+        ]
+      },
+      {
+        "line": 12,
+        "text": "redb persists checkpoint/approval state keyed by request/tier/request_kind/allowed_actions",
+        "tokens": []
+      },
+      {
+        "line": 16,
+        "text": "canonical runtime-facing fields are `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, preserved-local-work, prerequisite metadata, and `detail_ref?`",
+        "tokens": [
+          "allowed_action_ids[]",
+          "blocked_reason_code",
+          "blocked_sequence",
+          "detail_ref?"
+        ]
+      },
+      {
+        "line": 17,
+        "text": "deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas",
+        "tokens": [
+          "allowed_actions[]"
+        ]
+      },
+      {
+        "line": 18,
+        "text": "persistence should be through canonical blocked/runtime records",
+        "tokens": []
+      },
+      {
+        "line": 39,
+        "text": "This is not a subtle drift. The doc now states mutually incompatible canon in one file.",
+        "tokens": []
+      },
+      {
+        "line": 68,
+        "text": "The graph approval commands do not currently have one stable args contract even before considering the broader runtime-model rewrite.",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "Remove the graph-specific approval command contract as a primary action model.",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "It is one of the clearest examples where the stale approval model is now breaking exact command contracts.",
+        "tokens": []
+      },
+      {
+        "line": 87,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 91,
+        "text": "newer canonical runtime records and projections",
+        "tokens": []
+      },
+      {
+        "line": 114,
+        "text": "attempt records keyed by `run_id`, `node_id`, `attempt_id`",
+        "tokens": [
+          "attempt_id",
+          "node_id",
+          "run_id"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 134,
+        "text": "Reconcile the live-status source tables in graph and Orchestrator docs so they consume canonical runtime records/projections first.",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state.",
+        "tokens": [
+          "TierChanged"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem.",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "The base `GraphNode` struct still preserves stale fields as if they were core model state:",
+        "tokens": [
+          "GraphNode"
+        ]
+      },
+      {
+        "line": 159,
+        "text": "`tier_type` string in UI state",
+        "tokens": [
+          "tier_type"
+        ]
+      },
+      {
+        "line": 168,
+        "text": "queue-analysis and blocked-state rendering rules keyed to canonical runtime records",
+        "tokens": []
+      },
+      {
+        "line": 179,
+        "text": "`tier_type` still appears as a core node UI field even though the broader rewrite direction is to demote tier/phase labels to derived or compatibility-only view context.",
+        "tokens": [
+          "tier_type"
+        ]
+      },
+      {
+        "line": 182,
+        "text": "Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model.",
+        "tokens": [
+          "GraphNode",
+          "GraphNodeUI"
+        ]
+      },
+      {
+        "line": 184,
+        "text": "Keep any surviving tier labels explicitly as derived display/grouping metadata, not as the core runtime identity shape.",
+        "tokens": []
+      }
+    ],
+    "routing_rules": [
+      {
+        "line": 11,
+        "text": "replay/restore and command dispatch are deterministic across `request_id`",
+        "tokens": [
+          "request_id"
+        ]
+      },
+      {
+        "line": 68,
+        "text": "The graph approval commands do not currently have one stable args contract even before considering the broader runtime-model rewrite.",
+        "tokens": []
+      },
+      {
+        "line": 84,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 92,
+        "text": "older `PuppetMasterEvent::*` streams from the tier-era orchestrator model",
+        "tokens": [
+          "PuppetMasterEvent::*"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "`Plans/Orchestrator_Page.md` still documents live status primarily through:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "`Plans/Run_Graph_View.md` does the same in its event-update table:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 115,
+        "text": "Both consumer docs already consume some of the newer runtime lineage concepts in later sections, which makes the early event-source tables internally stale rather than merely incomplete.",
+        "tokens": []
+      },
+      {
+        "line": 119,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 131,
+        "text": "graph/orchestrator live-status bindings that bypass canonical blocked projections",
+        "tokens": []
+      },
+      {
+        "line": 134,
+        "text": "Reconcile the live-status source tables in graph and Orchestrator docs so they consume canonical runtime records/projections first.",
+        "tokens": []
+      },
+      {
+        "line": 188,
+        "text": "This is a base-struct problem, not only a prose-table problem.",
+        "tokens": []
+      },
+      {
+        "line": 194,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ],
+    "verification_rules": [
+      {
+        "line": 98,
+        "text": "PuppetMasterEvent::EvidenceStored",
+        "tokens": []
+      },
+      {
+        "line": 102,
+        "text": "GateStart",
+        "tokens": []
+      },
+      {
+        "line": 105,
+        "text": "EvidenceStored",
+        "tokens": []
+      },
+      {
+        "line": 136,
+        "text": "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state.",
+        "tokens": [
+          "TierChanged"
+        ]
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "line": 22,
+        "text": "Primary owner doc:",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "Primary stale/inconsistent consumers:",
+        "tokens": []
+      },
+      {
+        "line": 106,
+        "text": "The owner docs already provide a stronger canonical runtime source set:",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "Both consumer docs already consume some of the newer runtime lineage concepts in later sections, which makes the early event-source tables internally stale rather than merely incomplete.",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 121,
+        "text": "Strong owner docs:",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another.",
+        "tokens": []
+      },
+      {
+        "line": 127,
+        "text": "That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families.",
+        "tokens": [
+          "TierChanged",
+          "UserInteractionRequired"
+        ]
+      },
+      {
+        "line": 139,
+        "text": "This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem.",
+        "tokens": []
+      },
+      {
+        "line": 140,
+        "text": "The owner docs already have the stronger source model.",
+        "tokens": []
+      },
+      {
+        "line": 153,
+        "text": "worker_provider",
+        "tokens": []
+      },
+      {
+        "line": 155,
+        "text": "verifier_provider",
+        "tokens": []
+      },
+      {
+        "line": 171,
+        "text": "Primary stale consumer:",
+        "tokens": []
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "line": 17,
+        "text": "deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas",
+        "tokens": [
+          "allowed_actions[]"
+        ]
+      },
+      {
+        "line": 31,
+        "text": "Treat the earlier request-centric text as retired or compatibility-only rather than leaving it as live canonical base prose.",
+        "tokens": []
+      },
+      {
+        "line": 40,
+        "text": "Reconciliation must retire or rewrite the earlier sections, not merely append another addendum.",
+        "tokens": []
+      },
+      {
+        "line": 50,
+        "text": "they are stale against the canonical runtime command model",
+        "tokens": []
+      },
+      {
+        "line": 63,
+        "text": "Primary stale/inconsistent consumers:",
+        "tokens": []
+      },
+      {
+        "line": 73,
+        "text": "Remove the graph-specific approval command contract as a primary action model.",
+        "tokens": []
+      },
+      {
+        "line": 79,
+        "text": "It is one of the clearest examples where the stale approval model is now breaking exact command contracts.",
+        "tokens": []
+      },
+      {
+        "line": 115,
+        "text": "Both consumer docs already consume some of the newer runtime lineage concepts in later sections, which makes the early event-source tables internally stale rather than merely incomplete.",
+        "tokens": []
+      },
+      {
+        "line": 118,
+        "text": "Primary stale consumers:",
+        "tokens": []
+      },
+      {
+        "line": 126,
+        "text": "The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another.",
+        "tokens": []
+      },
+      {
+        "line": 151,
+        "text": "The base `GraphNode` struct still preserves stale fields as if they were core model state:",
+        "tokens": [
+          "GraphNode"
+        ]
+      },
+      {
+        "line": 171,
+        "text": "Primary stale consumer:",
+        "tokens": []
+      },
+      {
+        "line": 183,
+        "text": "Remove request-centric approval identity from the base graph model.",
+        "tokens": []
+      }
+    ],
+    "open_questions": [],
+    "process_defects": [
+      {
+        "line": 78,
+        "text": "This is a hard spec-integrity defect, not a style issue.",
+        "tokens": []
+      },
+      {
+        "line": 139,
+        "text": "This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem.",
+        "tokens": []
+      }
+    ],
+    "doc_hints": [
+      {
+        "line": 2,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 5,
+        "text": "`Plans/human-in-the-loop.md` now has a sharp internal split between:",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 23,
+        "text": "Plans/human-in-the-loop.md",
+        "tokens": [
+          "Plans/human-in-the-loop.md"
+        ]
+      },
+      {
+        "line": 45,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 46,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 52,
+        "text": "`Plans/UI_Command_Catalog.md` says:",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 55,
+        "text": "`Plans/Run_Graph_View.md` says:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 64,
+        "text": "Plans/UI_Command_Catalog.md",
+        "tokens": [
+          "Plans/UI_Command_Catalog.md"
+        ]
+      },
+      {
+        "line": 65,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 84,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 85,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 86,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 87,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 93,
+        "text": "`Plans/Orchestrator_Page.md` still documents live status primarily through:",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 99,
+        "text": "`Plans/Run_Graph_View.md` does the same in its event-update table:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 119,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      },
+      {
+        "line": 120,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 122,
+        "text": "Plans/storage-plan.md",
+        "tokens": [
+          "Plans/storage-plan.md"
+        ]
+      },
+      {
+        "line": 123,
+        "text": "Plans/Contracts_V0.md",
+        "tokens": [
+          "Plans/Contracts_V0.md"
+        ]
+      },
+      {
+        "line": 145,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 148,
+        "text": "`Plans/Run_Graph_View.md` now has a clear split between:",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 172,
+        "text": "Plans/Run_Graph_View.md",
+        "tokens": [
+          "Plans/Run_Graph_View.md"
+        ]
+      },
+      {
+        "line": 194,
+        "text": "Plans/Orchestrator_Page.md",
+        "tokens": [
+          "Plans/Orchestrator_Page.md"
+        ]
+      }
+    ]
+  },
+  "explicit_exclusion": null
+}

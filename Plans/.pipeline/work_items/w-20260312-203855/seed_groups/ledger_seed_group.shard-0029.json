@@ -1,0 +1,456 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
+  "work_id": "w-20260312-203855",
+  "inventory_id": "c3-inv-008",
+  "task_id": "c3-task-008",
+  "anchor_shard_id": "shard-0029",
+  "working_ledger_line_start": 5601,
+  "working_ledger_line_end": 6400,
+  "status": "complete",
+  "per_shard": [
+    {
+      "shard_id": "shard-0029",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0029.md",
+      "line_start_in_source": 5601,
+      "line_end_in_source": 5800,
+      "source_sha256": "6f82f75eb9761f5d0246ae2025e85c0211eed9ddc5ac87c5cb8db10e91997b7c",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Search Routing and Deep-Link Payload Normalization",
+          "line_in_shard": 2,
+          "line_in_source": 5602
+        },
+        {
+          "type": "doc_hint",
+          "text": "Targeted docs: FinalGUISpec, Orchestrator_Page, UI_Command_Catalog, usage-feature, Runtime_Artifacts_Panel, assistant-chat-design, chain-wizard-flexibility",
+          "line_in_shard": 4,
+          "line_in_source": 5604
+        },
+        {
+          "type": "data_shape",
+          "text": "Docs already contain many navigation mechanisms: command palette, resume_url deep links, Show in Ledger/Usage, Orchestrator pivots (Source Control, GitHub Actions, Docker Manager), chat/thread navigation, open-file contract, local tab search/filter",
+          "line_in_shard": 14,
+          "line_in_source": 5614
+        },
+        {
+          "type": "routing_rule",
+          "text": "UI_Command_Catalog.md exposes route-like commands: cmd.artifacts.open_panel, cmd.orchestrator.open_in_source_control, cmd.orchestrator.open_in_github_actions, cmd.orchestrator.open_in_docker_manager, graph focus/filter, chat usage focus/open",
+          "line_in_shard": 22,
+          "line_in_source": 5622
+        },
+        {
+          "type": "process_defect",
+          "text": "Still missing: one shared destination payload model spanning search results, command palette, widget drill-downs, deep links, resume URLs, cross-surface Show in pivots",
+          "line_in_shard": 29,
+          "line_in_source": 5629
+        },
+        {
+          "type": "requirement",
+          "text": "Define one shared routing payload contract rather than separate ad hoc payloads per surface; object model is too broad for accidental consistency",
+          "line_in_shard": 38,
+          "line_in_source": 5638
+        },
+        {
+          "type": "requirement",
+          "text": "Shared routing contract should apply across Orchestrator, Source Control, Usage/Ledger, Artifacts, chat/Interview/Builder recovery links",
+          "line_in_shard": 42,
+          "line_in_source": 5642
+        },
+        {
+          "type": "data_shape",
+          "text": "Candidate shared routing fields: project_id, actor_run_kind?, focused_run_id?, thread_id?, wizard_id?, destination_surface, destination_tab?, object_kind?, object_id?, record_id?, artifact_id?, attempt_id?, lane_id?, worktree_id?, usage_event_ref?, filter_payload?, inspector_target?, scroll_target?, focus_behavior? — composable, not all required per route",
+          "line_in_shard": 50,
+          "line_in_source": 5650
+        },
+        {
+          "type": "data_shape",
+          "text": "Candidate object_kind vocabulary: run, feature_seam, work_package, node, lane, worktree, concern, promotion, review, corroboration, graph_patch, recovery_record, blocked_episode, usage_record, artifact, thread, wizard, bundle",
+          "line_in_shard": 74,
+          "line_in_source": 5674
+        },
+        {
+          "type": "routing_rule",
+          "text": "resume_url stays human-meaningful for recovery; decoded payload must normalize into same routing contract as in-app search and command routing",
+          "line_in_shard": 96,
+          "line_in_source": 5696
+        },
+        {
+          "type": "requirement",
+          "text": "Search result activation must reconstruct context (scope before target): e.g. focused_run_id, correct tab, filter payload, inspector on target; same for Show in Ledger/Usage, Resume Wizard, thread deep links",
+          "line_in_shard": 103,
+          "line_in_source": 5703
+        },
+        {
+          "type": "routing_rule",
+          "text": "Open in / Show in actions should be thin wrappers over shared routing payload; preserve canonical usage identity and run/thread/attempt/worktree linkage",
+          "line_in_shard": 119,
+          "line_in_source": 5719
+        },
+        {
+          "type": "decision",
+          "text": "Persistence-aware routing: some activations update stored view state (e.g. search to historical run updates focused_run_id); hover/compare pivots may stay transient",
+          "line_in_shard": 127,
+          "line_in_source": 5727
+        },
+        {
+          "type": "routing_rule",
+          "text": "Degraded projection trust: route to canonical fallback representation when possible (e.g. concern deep link to Ledger-backed inspector vs rollup tab)",
+          "line_in_shard": 135,
+          "line_in_source": 5735
+        },
+        {
+          "type": "contradiction",
+          "text": "Route mechanisms are per-feature; risks inconsistent activation, duplicate context reconstruction, palette/search/widget/deep-link mismatches; resume_url more specific than some Orchestrator pivots",
+          "line_in_shard": 142,
+          "line_in_source": 5742
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Define shared routing/deep-link payload; stable object_kind/object_id; restore scope not just surface; normalize Open/Show commands as adapters",
+          "line_in_shard": 150,
+          "line_in_source": 5750
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: payloads restore focused_run_id etc.; URL and in-app decode to same model; degraded surfaces routable to canonical fallbacks",
+          "line_in_shard": 156,
+          "line_in_source": 5756
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Historical Semantic Consistency Across Record Families",
+          "line_in_shard": 160,
+          "line_in_source": 5760
+        },
+        {
+          "type": "data_shape",
+          "text": "Strong historical/lineage rules already: blocked projections stay historical after resolution; stale_historical attempts never resumable; safe-point restore mints new attempt; worktree refs survive prune; archived vs deleted threads distinct",
+          "line_in_shard": 172,
+          "line_in_source": 5772
+        },
+        {
+          "type": "decision",
+          "text": "Consistency goal: separate cross-family semantic words from family-local lifecycle vocabularies (not one universal enum)",
+          "line_in_shard": 184,
+          "line_in_source": 5784
+        },
+        {
+          "type": "data_shape",
+          "text": "Cross-family historical core terms: historical, stale_historical, superseded, revoked, reopened, archived, removed",
+          "line_in_shard": 190,
+          "line_in_source": 5790
+        },
+        {
+          "type": "data_shape",
+          "text": "historical: queryable past state no longer active focus",
+          "line_in_shard": 199,
+          "line_in_source": 5799
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0030",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0030.md",
+      "line_start_in_source": 5801,
+      "line_end_in_source": 6000,
+      "source_sha256": "89603c0b247309013588ec6f13b302eb844630231a0fb9686961ae9426461ce7",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "stale_historical: not resumable for live execution; superseded: replaced by canonical successor; revoked: withdrawn promoted/active state; reopened: closed path back to active; archived: retained off default UI; removed: live backing gone, identity may persist",
+          "line_in_shard": 1,
+          "line_in_source": 5801
+        },
+        {
+          "type": "requirement",
+          "text": "Do not force family-local workflows into cross-family core; keep annotation, concern, wizard status lifecycles family-specific with cross-family overlays where relevant",
+          "line_in_shard": 15,
+          "line_in_source": 5815
+        },
+        {
+          "type": "contradiction",
+          "text": "Contracts_V0.md remediation.resolved conflict: one section enum fixed/superseded/abandoned/replan_required vs another success/failed/ceiling_exceeded — semantic conflict at remediation lineage intersection",
+          "line_in_shard": 27,
+          "line_in_source": 5827
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Remediation should use one canonical resolution family; richer lineage-aware enum preferred over coarse success/failed",
+          "line_in_shard": 41,
+          "line_in_source": 5841
+        },
+        {
+          "type": "requirement",
+          "text": "resolved does not always mean problem disappeared; needs family-local payload (blocked historical, concern accepted_risk/superseded, annotation workflow completion)",
+          "line_in_shard": 49,
+          "line_in_source": 5849
+        },
+        {
+          "type": "requirement",
+          "text": "Preserve distinct meanings: archived vs removed vs deleted; removed live backing ≠ erased canonical history",
+          "line_in_shard": 58,
+          "line_in_source": 5858
+        },
+        {
+          "type": "requirement",
+          "text": "reopened/revoked/superseded reserved for true lineage-changing transitions (promotions, seam truth, graph generations, recovery)",
+          "line_in_shard": 71,
+          "line_in_source": 5871
+        },
+        {
+          "type": "requirement",
+          "text": "Search/ledger must distinguish current vs historical, superseded vs revoked, archived vs removed, stale_historical vs historical",
+          "line_in_shard": 81,
+          "line_in_source": 5881
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Shared overlay vocabulary; family-local states stay distinct; reconcile remediation.resolved; ledger/search preserve distinctions",
+          "line_in_shard": 95,
+          "line_in_source": 5895
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Concern Record Structure and Interaction Rules",
+          "line_in_shard": 112,
+          "line_in_source": 5912
+        },
+        {
+          "type": "process_defect",
+          "text": "No canonical concern record family in docs comparable to attempts/blocked/usage/evidence/wizard; concerns need identity, lineage, sources, interaction rules — not just badges",
+          "line_in_shard": 124,
+          "line_in_source": 5924
+        },
+        {
+          "type": "requirement",
+          "text": "Keep concern distinct from review finding, annotation, blocked episode, graph patch request, recovery record; cross-link but separate families",
+          "line_in_shard": 139,
+          "line_in_source": 5939
+        },
+        {
+          "type": "data_shape",
+          "text": "Recommended concern fields: concern_id, project_id, run_id?, scope_type, scope_id, status, severity, category, summary, description?, owner_kind?, origin_kind, timestamps, resolution_kind?, rationale, ack/dismiss actors+times, source_refs, evidence_refs, related_record_refs, lineage_refs, blocked_episode_refs?, promotion_refs?, graph_patch_refs?, recovery_refs?",
+          "line_in_shard": 158,
+          "line_in_source": 5958
+        },
+        {
+          "type": "requirement",
+          "text": "Concern lifecycle: active/acknowledged/resolved/dismissed — ack/dismiss are governance; resolved must carry exact resolution semantics",
+          "line_in_shard": 191,
+          "line_in_source": 5991
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0031",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0031.md",
+      "line_start_in_source": 6001,
+      "line_end_in_source": 6200,
+      "source_sha256": "79d4a9f32afc04cbaa86e42abb66bd08593ad338584cd9f832c4b49caa8be940",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "requirement",
+          "text": "resolved must not be bare; resolution_kind candidates: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery; dismissed ≠ resolved; accepted_risk is resolution not dismissal",
+          "line_in_shard": 2,
+          "line_in_source": 6002
+        },
+        {
+          "type": "data_shape",
+          "text": "Merge: collapse concerns with lineage refs; split: original resolves resolution_kind split; superseded: replaced by newer concern; old ids stay queryable",
+          "line_in_shard": 18,
+          "line_in_source": 6018
+        },
+        {
+          "type": "routing_rule",
+          "text": "Repeated sightings should update existing concern vs duplicates; no auto-merge on similar summary — use scope/category/lineage heuristics or governance",
+          "line_in_shard": 30,
+          "line_in_source": 6030
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "Interactions: reviews nominate concerns; corroboration validates/downgrades/minority; graph patch resolves/obsoletes/splits; recovery resolves or spawns follow-on; blocked episodes reference concerns but are not replaced by them",
+          "line_in_shard": 41,
+          "line_in_source": 6041
+        },
+        {
+          "type": "data_shape",
+          "text": "UI mapping: Progress summaries, Seams rollups, Evidence linkage, History timeline, Ledger exact record/lineage/ack-dismiss rationale; search: active/ack/dismissed + lineage by prior id",
+          "line_in_shard": 59,
+          "line_in_source": 6059
+        },
+        {
+          "type": "routing_rule",
+          "text": "Notifications: acknowledged reduces noise; active+execution impact escalates; dismissed suppresses concern UI but not active blocked episodes; blocked_owner ≠ concern owner",
+          "line_in_shard": 77,
+          "line_in_source": 6077
+        },
+        {
+          "type": "process_defect",
+          "text": "No concern event/record family in local SSOT; semantics distributed in ledger; absence riskier given adjacent durable-record rigor",
+          "line_in_shard": 87,
+          "line_in_source": 6087
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Canonical concern record + projection; explicit merge/split/supersession lineage; resolution_kind + rationale on resolve/dismiss paths; keep separation from adjacent families",
+          "line_in_shard": 92,
+          "line_in_source": 6092
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (identity, storage, UI ownership)",
+          "line_in_shard": 102,
+          "line_in_source": 6102
+        },
+        {
+          "type": "contradiction",
+          "text": "Requested identity under-modeled downstream; tier_id/run.tier_* still central in storage-plan and usage-feature vs seam_id/package_id/lane_id; graph-patch lineage and degraded projection trust under-specified",
+          "line_in_shard": 118,
+          "line_in_source": 6118
+        },
+        {
+          "type": "contradiction",
+          "text": "Orchestrator_Page centers Tiers; Widget_System widgetizes surfaces trending native; Run_Graph_View lacks concern/corroboration/promotion/patch lineage",
+          "line_in_shard": 126,
+          "line_in_source": 6126
+        },
+        {
+          "type": "process_defect",
+          "text": "GitHub_Integration worktree ownership run/tier-framed; FileManager open contract path-first; Runtime_Artifacts_Panel missing attempt_id in canonical id set; weak degraded-artifact semantics",
+          "line_in_shard": 130,
+          "line_in_source": 6130
+        },
+        {
+          "type": "doc_hint",
+          "text": "Impacted docs: storage-plan, usage-feature, Contracts_V0, GitHub_API_Auth_and_Flows, GitHub_Integration, Run_Graph_View, Orchestrator_Page, Widget_System, FileManager, Runtime_Artifacts_Panel",
+          "line_in_shard": 135,
+          "line_in_source": 6135
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Shared requested/effective identity disclosure; first-class seam_id, package_id, lane_id, attempt_id attribution; deprecate tier-era events/widgets; artifact routing on stable ids; explicit projection freshness/degraded trust in UI docs",
+          "line_in_shard": 163,
+          "line_in_source": 6163
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: effective_provider_identity is display not routing key; source-qualified usage for estimate-only providers; dashboard widgets ≠ widgetize all tabs; attempt_id cross-surface anchor; cluster is early delta",
+          "line_in_shard": 177,
+          "line_in_source": 6177
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (policy, invariants, authority drift)",
+          "line_in_shard": 184,
+          "line_in_source": 6184
+        },
+        {
+          "type": "process_defect",
+          "text": "Governance lag: Decision_Policy lacks concern/corroboration/promotion authority rules; Permissions_System lags requested/effective model; Architecture_Invariants needs lane ordering and mutation-safe-point rules",
+          "line_in_shard": 197,
+          "line_in_source": 6197
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0032",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0032.md",
+      "line_start_in_source": 6201,
+      "line_end_in_source": 6400,
+      "source_sha256": "724cf0c74139db5a92b1702f54e5fd9fa9e97b9590204fa1554aaa8be7b5eed3",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "contradiction",
+          "text": "Authority framed monolithically vs seam/package overseer scopes, blocked-owner, runtime/system/user split; worktree rules not globally uniform (chain-wizard intent modes, ContributePr single-branch); policy still tier-context while invariants are node_id/attempt_id/blocked_reason_code-first",
+          "line_in_shard": 1,
+          "line_in_source": 6201
+        },
+        {
+          "type": "doc_hint",
+          "text": "Impacted: Decision_Policy, Permissions_System, Architecture_Invariants, chain-wizard-flexibility, orchestrator-subagent-integration, Executor_Protocol, human-in-the-loop",
+          "line_in_shard": 12,
+          "line_in_source": 6212
+        },
+        {
+          "type": "contradiction",
+          "text": "HITL/blocked still tier_id/tier_type in places vs node_id/attempt anchors; Decision_Policy silent on who acknowledges concerns, revokes promotions, confirms corroboration, owns blocked under overseer model; contract unification conflict resolution underdefined",
+          "line_in_shard": 22,
+          "line_in_source": 6222
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Extend Decision_Policy for concerns/corroboration/promotions and superseded/revoked/reopened; identity fields in decision/permission records; invariants for runtime object families, lane scheduler integrity, safe points; intent-specific worktree modes + contract-unification conflicts",
+          "line_in_shard": 28,
+          "line_in_source": 6228
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: blocked_reason_code SSOT; attempt_id unique per dispatch; ack concerns reduce noise not true blockers; recovery snapshots need intent/wizard-step to avoid wrong execution mode",
+          "line_in_shard": 42,
+          "line_in_source": 6242
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)",
+          "line_in_shard": 49,
+          "line_in_source": 6249
+        },
+        {
+          "type": "contradiction",
+          "text": "requested_persona_id/effective_persona_id drift vs Contracts_V0 prohibition; provider_account_id shadow-identity risk; usage/storage lack shared governance-record envelope; widget/native contradiction for non-Progress tabs",
+          "line_in_shard": 63,
+          "line_in_source": 6263
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Normalize to canonical requested_*/effective_* names; shared identity disclosure pattern; governance-record template; seam/package/attempt attribution; only Progress widget-composed",
+          "line_in_shard": 106,
+          "line_in_source": 6306
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: relate provider_account_id to effective_account_id/effective_provider_identity; historical-run for widgets/graph; GitHub realm isolation (github_api vs copilot_github)",
+          "line_in_shard": 118,
+          "line_in_source": 6318
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)",
+          "line_in_shard": 125,
+          "line_in_source": 6325
+        },
+        {
+          "type": "contradiction",
+          "text": "requested_account_policy without canonical requested_account_id; event tables under-spec vs prose for run.started, usage.event, hitl.*; GitHub login as stable key vs account_id; addendum drift on safe_point.created, scheduler.pass, remediation.resolved",
+          "line_in_shard": 139,
+          "line_in_source": 6339
+        },
+        {
+          "type": "process_defect",
+          "text": "Widget_System lacks trust chrome; Dashboard push widgets lack no-active-run/historical contract; Orchestrator_Page tier-era tables; Run Graph missing governance fields/commands/trust",
+          "line_in_shard": 150,
+          "line_in_source": 6350
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Add requested-side concrete account anchor; reconcile event rows with prose MUSTs; stable internal account ids not login; trust/idle/historical contracts in widget specs; tighten graph/page schemas on node_id, attempt_id, lane_id, seam_id, package_id + governance hooks",
+          "line_in_shard": 184,
+          "line_in_source": 6384
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: constrain generic page/tier command payloads; keep GitHub realm split; make addendum supersession explicit; Sonnet confirms hotspot doc focus for GPT passes",
+          "line_in_shard": 195,
+          "line_in_source": 6395
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-0b184037d2",
+  "category": "open_decision",
+  "family_key": "treat_acknowledge_as_noise_ownership_signaling_dismiss_as_durable_semantic_judgment_with_strong_confirmation",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "c3-s033-003"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-0b184037d2--c3-s033-003",
+      "seed_id": "c3-s033-003",
+      "source_shard_id": "shard-0033",
+      "batch_index": 9,
+      "obligation_type": "decision",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0033",
+        "line_in_shard": null,
+        "line_in_source": null,
+        "source_line": null
+      },
+      "statement": "Treat acknowledge as noise/ownership signaling; dismiss as durable semantic judgment with strong confirmation; resolve requires resolution_kind; structural edits are merge/split/supersede\u2014not generic toggles.",
+      "evidence_ledger_excerpt": "`acknowledge` is closest to noise-control / ownership-signaling; `dismiss` is a durable semantic judgment and must not look like closing a toast; `resolve` is not one generic operation; it needs `resolution_kind`.",
+      "related_paths": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_hints": [],
+      "decisions": [
+        {
+          "decision": "Treat acknowledge as noise/ownership signaling; dismiss as durable semantic judgment with strong confirmation; resolve requires resolution_kind; structural edits are merge/split/supersede\u2014not generic toggles.",
+          "evidence_ledger_excerpt": "`acknowledge` is closest to noise-control / ownership-signaling; `dismiss` is a durable semantic judgment and must not look like closing a toast; `resolve` is not one generic operation; it needs `resolution_kind`.",
+          "related_paths": [
+            "Plans/FinalGUISpec.md"
+          ]
+        }
+      ],
+      "open_questions": [],
+      "process_notes": [],
+      "exact_items": [
+        "Treat acknowledge as noise/ownership signaling",
+        "dismiss as durable semantic judgment with strong confirmation",
+        "resolve requires resolution_kind",
+        "structural edits are merge/split/supersede\u2014not generic toggles."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

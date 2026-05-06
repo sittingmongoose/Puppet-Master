@@ -1,0 +1,71 @@
+{
+  "subagent_task_id": "c3-shard-0017",
+  "shard_id": "shard-0017",
+  "source_start_line": 2845,
+  "source_end_line": 3006,
+  "seeds": [
+    {
+      "seed_id": "semantic-vocabulary-cross-records",
+      "title": "Cross-record historical semantics vocabulary",
+      "summary": "Define and apply one shared glossary for historical state semantics across attempts, promotions, concerns, graph patches, recovery records, and lane/worktree objects.",
+      "evidence": [
+        "Attempts already distinguish stale_historical, but other record families have uneven semantics.",
+        "Promotion, concern, graph patch, and recovery objects need explicit distinctions among current, historical, superseded, revoked, reopened, archived, and removed states.",
+        "UI behavior should expose semantic reasons directly instead of inferring status from dimming, disappearance, or storage/archive behavior."
+      ],
+      "proposed_actions": [
+        "Create a canonical semantic glossary and apply it consistently to all listed record families.",
+        "Add successor/predecessor links where supersession can occur.",
+        "Separate visibility policy (archived/hidden) from validity semantics (historical/revoked/superseded)."
+      ],
+      "tags": [
+        "semantics",
+        "ledger",
+        "history",
+        "ui-contract"
+      ]
+    },
+    {
+      "seed_id": "run-relationship-clarification",
+      "title": "Project run chronology versus explicit relationships",
+      "summary": "Same-project runs must not imply lineage; run-to-run relationships should be explicit metadata, while historical run state remains a focus/time classification.",
+      "evidence": [
+        "Multiple runs in one project may be unrelated and should not imply predecessor/successor or supersession semantics.",
+        "Chronological order, shared repo, or naming similarity are insufficient to infer lineage.",
+        "Search and routing must preserve exact run identity and avoid cross-run collapse."
+      ],
+      "proposed_actions": [
+        "Keep history views chronological-first by default.",
+        "Introduce explicit relationship labels only when metadata exists (e.g., derived from, retry of, continuation of).",
+        "Avoid UI copy that claims supersession by newer run unless explicit relationship metadata supports it."
+      ],
+      "tags": [
+        "run-model",
+        "history",
+        "search-routing",
+        "metadata"
+      ]
+    },
+    {
+      "seed_id": "concern-record-shape-and-lifecycle",
+      "title": "Concern record model hardening",
+      "summary": "Concern handling needs a stronger canonical record contract with explicit lifecycle semantics and relationships to source events, projections, and adjacent systems.",
+      "evidence": [
+        "Current docs capture concern lifecycle states and canonical creators but remain sparse on exact record shape.",
+        "Concerns lag behind attempts/blocked/remediation in schema precision, merge/split/supersession rules, and linkage to corroboration/review/patch/recovery.",
+        "A useful split emerges: concern record (durable identity), concern source event/ref (supporting evidence), concern projection (surface-specific rendering)."
+      ],
+      "proposed_actions": [
+        "Define an explicit concern schema with stable identity, lifecycle, and lineage semantics.",
+        "Codify merge/split/supersession and reopened behavior for concern records.",
+        "Specify relationship contracts from concern records to reviews, corroboration outcomes, graph patches, and recovery outcomes."
+      ],
+      "tags": [
+        "concerns",
+        "schema",
+        "lifecycle",
+        "contracts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,411 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-071",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-071.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = attempt`",
+      "line_in_shard": 3
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <attempt_id>`",
+      "line_in_shard": 4
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = details | evidence | usage | lineage`",
+      "line_in_shard": 6
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 8
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 9
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 11
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 14
+    },
+    {
+      "type": "data_shape",
+      "text": "- `usage_event_ref` still appears in current docs as if it can remain a top-level route field.",
+      "line_in_shard": 19
+    },
+    {
+      "type": "data_shape",
+      "text": "- Wizard flows still look like specialized deep-link families instead of normalized object routes with serialized step anchors.",
+      "line_in_shard": 20
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Some graph/detail pivots still read as tab switches plus local state instead of canonical route restoration.",
+      "line_in_shard": 21
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Rewrite surface docs so these flows use the normalized route patterns above.",
+      "line_in_shard": 24
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize `usage_event_ref` into `object_kind = usage_event`.",
+      "line_in_shard": 25
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Keep wizard-step focus in serialized anchor detail, not in the base route contract.",
+      "line_in_shard": 26
+    },
+    {
+      "type": "verification_rule",
+      "text": "- These examples are the pressure test for the contract.",
+      "line_in_shard": 29
+    },
+    {
+      "type": "routing_rule",
+      "text": "- If these normalize cleanly, the rest of the routing model will stay coherent.",
+      "line_in_shard": 30
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-17 - Concrete route normalization for runtime lineage objects",
+      "line_in_shard": 32
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 34
+    },
+    {
+      "type": "data_shape",
+      "text": "- The runtime lineage objects now need explicit route recipes so older `attempt_id`-only or `tier_id`-only pivots stop reappearing.",
+      "line_in_shard": 42
+    },
+    {
+      "type": "routing_rule",
+      "text": "### Canonical route examples",
+      "line_in_shard": 44
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = blocked_episode`",
+      "line_in_shard": 49
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <blocked_sequence>`",
+      "line_in_shard": 50
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = details | history`",
+      "line_in_shard": 52
+    },
+    {
+      "type": "requirement",
+      "text": "- `node_id` remains object scope within the run and must not be dropped by the resolver",
+      "line_in_shard": 53
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = scheduler_pass`",
+      "line_in_shard": 58
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <scheduler_pass_id>`",
+      "line_in_shard": 59
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = lineage | details`",
+      "line_in_shard": 61
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = safe_point`",
+      "line_in_shard": 66
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <safe_point_id>`",
+      "line_in_shard": 67
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = lineage | history`",
+      "line_in_shard": 69
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = remediation`",
+      "line_in_shard": 74
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <remediation_root_id>`",
+      "line_in_shard": 75
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = lineage`",
+      "line_in_shard": 77
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = graph_generation`",
+      "line_in_shard": 82
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <graph_generation_id>`",
+      "line_in_shard": 83
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = lineage`",
+      "line_in_shard": 85
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = graph_patch`",
+      "line_in_shard": 90
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <graph_patch_id>`",
+      "line_in_shard": 91
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = lineage | details`",
+      "line_in_shard": 93
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 95
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 96
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 98
+    },
+    {
+      "type": "data_shape",
+      "text": "- `blocked_sequence` has canonical identity meaning, but current docs still tend to route blocked work through node/attempt views instead of treating blocked episodes as their own targetable object.",
+      "line_in_shard": 105
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` already imply these route identities, but the general route contract still does not own the examples.",
+      "line_in_shard": 106
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Older docs still assume history pivots can be attempt-only, which is insufficient for scheduler, blocked, and remediation lineage.",
+      "line_in_shard": 107
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Add these lineage examples to the route contract owner docs.",
+      "line_in_shard": 110
+    },
+    {
+      "type": "requirement",
+      "text": "- run and node scope remain required resolver context",
+      "line_in_shard": 113
+    },
+    {
+      "type": "decision",
+      "text": "- Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` when the object is already selected.",
+      "line_in_shard": 114
+    },
+    {
+      "type": "data_shape",
+      "text": "- Runtime lineage is now object-first, not attempt-first.",
+      "line_in_shard": 117
+    },
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-17 - Concrete route normalization for Source Control and orchestration work objects",
+      "line_in_shard": 120
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 122
+    },
+    {
+      "type": "data_shape",
+      "text": "- Source Control and rewrite-era orchestration objects need equally explicit route recipes.",
+      "line_in_shard": 129
+    },
+    {
+      "type": "routing_rule",
+      "text": "### Canonical route examples",
+      "line_in_shard": 131
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = worktree`",
+      "line_in_shard": 135
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <worktree_id>`",
+      "line_in_shard": 136
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = lane`",
+      "line_in_shard": 141
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <lane_id>`",
+      "line_in_shard": 142
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = details | lineage`",
+      "line_in_shard": 144
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = feature_seam`",
+      "line_in_shard": 149
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <feature_seam_id>`",
+      "line_in_shard": 150
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = summary | history | reviews`",
+      "line_in_shard": 152
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = work_package`",
+      "line_in_shard": 157
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <work_package_id>`",
+      "line_in_shard": 158
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = summary | history | reviews | lineage`",
+      "line_in_shard": 160
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = concern`",
+      "line_in_shard": 165
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <concern_id>`",
+      "line_in_shard": 166
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = details | history`",
+      "line_in_shard": 168
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind = promotion`",
+      "line_in_shard": 173
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id = <promotion_id>`",
+      "line_in_shard": 174
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `inspector_target = details | history | reviews`",
+      "line_in_shard": 176
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Impacted docs",
+      "line_in_shard": 178
+    },
+    {
+      "type": "owner_consumer_obligation",
+      "text": "- Primary owners:",
+      "line_in_shard": 179
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Strongly implicated adjacent docs:",
+      "line_in_shard": 181
+    },
+    {
+      "type": "data_shape",
+      "text": "- `cmd.source_control.select_worktree` is still described like a local selection command even though it is now clearly an object-targeting route action.",
+      "line_in_shard": 188
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Lane, seam, package, concern, and promotion routes are still mostly implied by UI prose instead of declared as canonical navigation identities.",
+      "line_in_shard": 189
+    },
+    {
+      "type": "data_shape",
+      "text": "- The old tier-era surfaces still encourage route descriptions based on containers and filters instead of object-first targeting.",
+      "line_in_shard": 190
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize Source Control worktree selection through `object_kind = worktree`.",
+      "line_in_shard": 193
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize lane/seam/package/concern/promotion pivots through `object_kind` routes, not filter-shaped payloads.",
+      "line_in_shard": 194
+    },
+    {
+      "type": "data_shape",
+      "text": "- Keep tab selection and inspector focus secondary to the object route.",
+      "line_in_shard": 195
+    },
+    {
+      "type": "data_shape",
+      "text": "- Orchestrator remains object-first.",
+      "line_in_shard": 199
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The route model supports both without forcing them into the same list or surface model.",
+      "line_in_shard": 200
+    }
+  ]
+}

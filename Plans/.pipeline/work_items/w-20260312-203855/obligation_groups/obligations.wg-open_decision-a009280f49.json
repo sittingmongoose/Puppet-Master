@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.obligations_group.v3.1.12",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.1.12",
+  "timestamp_utc": "20260506T192051Z",
+  "work_id": "w-20260312-203855",
+  "work_group_id": "wg-open_decision-a009280f49",
+  "category": "open_decision",
+  "family_key": "manual_override_lifecycle_is_explicit_for_persona_but_similar_presentation_rules_are_less_explicit",
+  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "lineage": {
+    "obligation_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "seed_ids": [
+      "SYNTH-shard-0020-L00017-open_question-b344a7781f"
+    ]
+  },
+  "obligation_records": [
+    {
+      "obligation_id": "OBL-wg-open_decision-a009280f49--SYNTH-shard-0020-L00017-open_question-b344a7781f",
+      "seed_id": "SYNTH-shard-0020-L00017-open_question-b344a7781f",
+      "source_shard_id": "shard-0020",
+      "batch_index": 5,
+      "obligation_type": "open_question",
+      "work_group_category": "open_decision",
+      "source_ledger": {
+        "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "shard_id": "shard-0020",
+        "line_in_shard": 17,
+        "line_in_source": null,
+        "source_line": 3817
+      },
+      "statement": "Manual override lifecycle is explicit for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides.",
+      "evidence_ledger_excerpt": "Manual override lifecycle is explicit for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides.",
+      "related_paths": [],
+      "doc_hints": [],
+      "decisions": [],
+      "open_questions": [
+        {
+          "question": "Manual override lifecycle is explicit for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides.",
+          "evidence_ledger_excerpt": "Manual override lifecycle is explicit for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides.",
+          "related_paths": []
+        }
+      ],
+      "process_notes": [],
+      "exact_items": [
+        "Manual override lifecycle is explicit for Persona, but similar presentation rules are less explicit for provider/model/account/worker-policy overrides."
+      ],
+      "required_action": "Finalize the recorded decision in canonical documentation, including alternatives considered and downstream impacts."
+    }
+  ]
+}

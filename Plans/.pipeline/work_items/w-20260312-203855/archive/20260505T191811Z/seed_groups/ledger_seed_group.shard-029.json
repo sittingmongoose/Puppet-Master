@@ -1,0 +1,321 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.9",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.9",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-029",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-029.md",
+  "extraction_status": "complete",
+  "extracted_items": [
+    {
+      "type": "data_shape",
+      "text": "## Research Progress - 2026-03-16 - Search Routing and Deep-Link Payload Normalization",
+      "line_in_shard": 2
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 4
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 5
+    },
+    {
+      "type": "routing_rule",
+      "text": "- The docs already contain many navigation and routing mechanisms:",
+      "line_in_shard": 14
+    },
+    {
+      "type": "doc_hint",
+      "text": "- Orchestrator pivots into Source Control / GitHub Actions / Docker Manager",
+      "line_in_shard": 18
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `UI_Command_Catalog.md` already gives several useful route-like commands:",
+      "line_in_shard": 22
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `cmd.orchestrator.open_in_docker_manager`",
+      "line_in_shard": 26
+    },
+    {
+      "type": "data_shape",
+      "text": "- What is still missing is one shared destination payload model that can span:",
+      "line_in_shard": 29
+    },
+    {
+      "type": "data_shape",
+      "text": "- define one shared routing payload contract rather than separate ad hoc payloads per surface",
+      "line_in_shard": 39
+    },
+    {
+      "type": "data_shape",
+      "text": "- the object model is now too broad for loosely similar navigation conventions to stay consistent by accident",
+      "line_in_shard": 41
+    },
+    {
+      "type": "data_shape",
+      "text": "### Candidate shared payload fields",
+      "line_in_shard": 49
+    },
+    {
+      "type": "data_shape",
+      "text": "- Good common fields:",
+      "line_in_shard": 50
+    },
+    {
+      "type": "open_question",
+      "text": "- `actor_run_kind?`",
+      "line_in_shard": 52
+    },
+    {
+      "type": "open_question",
+      "text": "- `focused_run_id?`",
+      "line_in_shard": 53
+    },
+    {
+      "type": "open_question",
+      "text": "- `thread_id?`",
+      "line_in_shard": 54
+    },
+    {
+      "type": "open_question",
+      "text": "- `wizard_id?`",
+      "line_in_shard": 55
+    },
+    {
+      "type": "open_question",
+      "text": "- `destination_tab?`",
+      "line_in_shard": 57
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_kind?`",
+      "line_in_shard": 58
+    },
+    {
+      "type": "data_shape",
+      "text": "- `object_id?`",
+      "line_in_shard": 59
+    },
+    {
+      "type": "open_question",
+      "text": "- `record_id?`",
+      "line_in_shard": 60
+    },
+    {
+      "type": "open_question",
+      "text": "- `artifact_id?`",
+      "line_in_shard": 61
+    },
+    {
+      "type": "open_question",
+      "text": "- `attempt_id?`",
+      "line_in_shard": 62
+    },
+    {
+      "type": "open_question",
+      "text": "- `lane_id?`",
+      "line_in_shard": 63
+    },
+    {
+      "type": "open_question",
+      "text": "- `worktree_id?`",
+      "line_in_shard": 64
+    },
+    {
+      "type": "open_question",
+      "text": "- `usage_event_ref?`",
+      "line_in_shard": 65
+    },
+    {
+      "type": "data_shape",
+      "text": "- `filter_payload?`",
+      "line_in_shard": 66
+    },
+    {
+      "type": "open_question",
+      "text": "- `inspector_target?`",
+      "line_in_shard": 67
+    },
+    {
+      "type": "open_question",
+      "text": "- `scroll_target?`",
+      "line_in_shard": 68
+    },
+    {
+      "type": "open_question",
+      "text": "- `focus_behavior?`",
+      "line_in_shard": 69
+    },
+    {
+      "type": "data_shape",
+      "text": "- Not every route uses every field, but the contract should make these composable rather than reinvented.",
+      "line_in_shard": 70
+    },
+    {
+      "type": "data_shape",
+      "text": "### Object-kind direction",
+      "line_in_shard": 72
+    },
+    {
+      "type": "data_shape",
+      "text": "- Search and deep-link routing now need object-kind vocabulary to avoid ambiguity.",
+      "line_in_shard": 73
+    },
+    {
+      "type": "data_shape",
+      "text": "- Candidate object kinds:",
+      "line_in_shard": 74
+    },
+    {
+      "type": "data_shape",
+      "text": "- This fits the earlier search/object-first direction and the shared record-envelope work.",
+      "line_in_shard": 93
+    },
+    {
+      "type": "data_shape",
+      "text": "- but normalize their decoded payload into the same routing contract used by in-app search and command routing",
+      "line_in_shard": 99
+    },
+    {
+      "type": "data_shape",
+      "text": "- That avoids a split world where URL-based navigation and in-app navigation speak different schemas.",
+      "line_in_shard": 100
+    },
+    {
+      "type": "data_shape",
+      "text": "- for historical Orchestrator objects:",
+      "line_in_shard": 107
+    },
+    {
+      "type": "data_shape",
+      "text": "- apply any filter payload",
+      "line_in_shard": 110
+    },
+    {
+      "type": "data_shape",
+      "text": "- open inspector on the target object",
+      "line_in_shard": 111
+    },
+    {
+      "type": "routing_rule",
+      "text": "- do not invent feature-local routing semantics",
+      "line_in_shard": 122
+    },
+    {
+      "type": "data_shape",
+      "text": "- all \u201cOpen in \u2026\u201d / \u201cShow in \u2026\u201d actions should become thin wrappers over the shared routing payload",
+      "line_in_shard": 124
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:",
+      "line_in_shard": 127
+    },
+    {
+      "type": "routing_rule",
+      "text": "- some route activations should update stored view state",
+      "line_in_shard": 128
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "### Trust / stale-data implication",
+      "line_in_shard": 134
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Routing also intersects with projection trust.",
+      "line_in_shard": 135
+    },
+    {
+      "type": "routing_rule",
+      "text": "- if the target surface is degraded, the route should still land on the canonical fallback representation when possible rather than fail opaque",
+      "line_in_shard": 137
+    },
+    {
+      "type": "routing_rule",
+      "text": "- deep link to a concern during projection degradation might route to exact record view / Ledger-backed inspector instead of the normal rollup tab presentation",
+      "line_in_shard": 139
+    },
+    {
+      "type": "data_shape",
+      "text": "- Current docs have several route-like mechanisms, but they are still defined per feature rather than by one shared navigation payload.",
+      "line_in_shard": 142
+    },
+    {
+      "type": "routing_rule",
+      "text": "- `resume_url` is currently stronger than some Orchestrator pivots in terms of specificity, which suggests the more generic routing layer is still underdefined.",
+      "line_in_shard": 147
+    },
+    {
+      "type": "data_shape",
+      "text": "- Define one shared routing/deep-link payload for search, command palette, widget drill-downs, recovery links, and cross-surface pivots.",
+      "line_in_shard": 150
+    },
+    {
+      "type": "data_shape",
+      "text": "- Add stable `object_kind` / `object_id` vocabulary for the newer Orchestrator object model and adjacent runtime actors.",
+      "line_in_shard": 151
+    },
+    {
+      "type": "routing_rule",
+      "text": "- Make route activation restore scope, not just surface.",
+      "line_in_shard": 152
+    },
+    {
+      "type": "data_shape",
+      "text": "- Normalize \u201cOpen in \u2026\u201d and \u201cShow in \u2026\u201d commands as adapters over the same routing payload.",
+      "line_in_shard": 153
+    },
+    {
+      "type": "data_shape",
+      "text": "- route payloads need to restore context like `focused_run_id`, not merely switch tabs",
+      "line_in_shard": 156
+    },
+    {
+      "type": "routing_rule",
+      "text": "- URL deep links and in-app search routes should decode to the same internal navigation model",
+      "line_in_shard": 157
+    },
+    {
+      "type": "doc_hint",
+      "text": "### Targeted docs read",
+      "line_in_shard": 162
+    },
+    {
+      "type": "doc_hint",
+      "text": "- `Plans/FinalGUISpec.md`",
+      "line_in_shard": 165
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- attempts from older generations become `stale_historical` and are never resumable",
+      "line_in_shard": 174
+    },
+    {
+      "type": "requirement",
+      "text": "- historical worktree references must survive live prune/retire operations",
+      "line_in_shard": 176
+    },
+    {
+      "type": "data_shape",
+      "text": "- That means the consistency problem is not \u201cmake every object use one lifecycle enum.\u201d",
+      "line_in_shard": 184
+    },
+    {
+      "type": "stale_retirement_item",
+      "text": "- `stale_historical`",
+      "line_in_shard": 192
+    },
+    {
+      "type": "data_shape",
+      "text": "- queryable past object/state that is no longer the currently active focus",
+      "line_in_shard": 200
+    }
+  ]
+}
