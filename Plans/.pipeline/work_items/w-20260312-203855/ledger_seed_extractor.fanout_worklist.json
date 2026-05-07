@@ -1,0 +1,1016 @@
+{
+  "schema_id": "pm.fanout_worklist.v3.1.15",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "execution_type": "semantic_chunk_processing",
+  "stage_mode": "semantic_extraction_mode",
+  "subagents_required": true,
+  "skip_gate_satisfied": false,
+  "skip_gate_reason": "Job exceeds skip-gate budgets: 92 ledger shards / 18244 lines / multiple categories \u2014 far above 800 ledger-line and 25-record limits.",
+  "batch_size_default": 4,
+  "hard_max_lines_per_task": 800,
+  "required_subagent_tasks_total": 23,
+  "tasks": [
+    {
+      "task_id": "c3-extract-task-001",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-001",
+      "batch_anchor_shard_id": "shard-0001",
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0003",
+        "shard-0004"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0002.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0004.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0001": {
+          "start_line": 1,
+          "end_line": 200
+        },
+        "shard-0002": {
+          "start_line": 201,
+          "end_line": 400
+        },
+        "shard-0003": {
+          "start_line": 401,
+          "end_line": 600
+        },
+        "shard-0004": {
+          "start_line": 601,
+          "end_line": 800
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0001.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0001.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-002",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-002",
+      "batch_anchor_shard_id": "shard-0005",
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006",
+        "shard-0007",
+        "shard-0008"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0005.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0006.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0007.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0008.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0005": {
+          "start_line": 801,
+          "end_line": 1000
+        },
+        "shard-0006": {
+          "start_line": 1001,
+          "end_line": 1200
+        },
+        "shard-0007": {
+          "start_line": 1201,
+          "end_line": 1400
+        },
+        "shard-0008": {
+          "start_line": 1401,
+          "end_line": 1600
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0005.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0005.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-003",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-003",
+      "batch_anchor_shard_id": "shard-0009",
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0009.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0010.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0011.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0012.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0009": {
+          "start_line": 1601,
+          "end_line": 1800
+        },
+        "shard-0010": {
+          "start_line": 1801,
+          "end_line": 2000
+        },
+        "shard-0011": {
+          "start_line": 2001,
+          "end_line": 2200
+        },
+        "shard-0012": {
+          "start_line": 2201,
+          "end_line": 2400
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0009.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0009.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-004",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-004",
+      "batch_anchor_shard_id": "shard-0013",
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0014",
+        "shard-0015",
+        "shard-0016"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0013.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0014.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0015.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0016.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0013": {
+          "start_line": 2401,
+          "end_line": 2600
+        },
+        "shard-0014": {
+          "start_line": 2601,
+          "end_line": 2800
+        },
+        "shard-0015": {
+          "start_line": 2801,
+          "end_line": 3000
+        },
+        "shard-0016": {
+          "start_line": 3001,
+          "end_line": 3200
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0013.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0013.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-005",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-005",
+      "batch_anchor_shard_id": "shard-0017",
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0018",
+        "shard-0019",
+        "shard-0020"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0017.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0018.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0019.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0020.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0017": {
+          "start_line": 3201,
+          "end_line": 3400
+        },
+        "shard-0018": {
+          "start_line": 3401,
+          "end_line": 3600
+        },
+        "shard-0019": {
+          "start_line": 3601,
+          "end_line": 3800
+        },
+        "shard-0020": {
+          "start_line": 3801,
+          "end_line": 4000
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0017.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0017.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-006",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-006",
+      "batch_anchor_shard_id": "shard-0021",
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0022",
+        "shard-0023",
+        "shard-0024"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0021.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0022.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0023.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0024.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0021": {
+          "start_line": 4001,
+          "end_line": 4200
+        },
+        "shard-0022": {
+          "start_line": 4201,
+          "end_line": 4400
+        },
+        "shard-0023": {
+          "start_line": 4401,
+          "end_line": 4600
+        },
+        "shard-0024": {
+          "start_line": 4601,
+          "end_line": 4800
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0021.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0021.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-007",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-007",
+      "batch_anchor_shard_id": "shard-0025",
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0026",
+        "shard-0027",
+        "shard-0028"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0025.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0026.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0027.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0028.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0025": {
+          "start_line": 4801,
+          "end_line": 5000
+        },
+        "shard-0026": {
+          "start_line": 5001,
+          "end_line": 5200
+        },
+        "shard-0027": {
+          "start_line": 5201,
+          "end_line": 5400
+        },
+        "shard-0028": {
+          "start_line": 5401,
+          "end_line": 5600
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0025.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0025.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-008",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-008",
+      "batch_anchor_shard_id": "shard-0029",
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0030",
+        "shard-0031",
+        "shard-0032"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0029.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0030.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0031.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0032.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0029": {
+          "start_line": 5601,
+          "end_line": 5800
+        },
+        "shard-0030": {
+          "start_line": 5801,
+          "end_line": 6000
+        },
+        "shard-0031": {
+          "start_line": 6001,
+          "end_line": 6200
+        },
+        "shard-0032": {
+          "start_line": 6201,
+          "end_line": 6400
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0029.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0029.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-009",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-009",
+      "batch_anchor_shard_id": "shard-0033",
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0033.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0034.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0035.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0036.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0033": {
+          "start_line": 6401,
+          "end_line": 6600
+        },
+        "shard-0034": {
+          "start_line": 6601,
+          "end_line": 6800
+        },
+        "shard-0035": {
+          "start_line": 6801,
+          "end_line": 7000
+        },
+        "shard-0036": {
+          "start_line": 7001,
+          "end_line": 7200
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0033.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0033.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-010",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-010",
+      "batch_anchor_shard_id": "shard-0037",
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0040"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0037.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0038.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0039.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0040.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0037": {
+          "start_line": 7201,
+          "end_line": 7400
+        },
+        "shard-0038": {
+          "start_line": 7401,
+          "end_line": 7600
+        },
+        "shard-0039": {
+          "start_line": 7601,
+          "end_line": 7800
+        },
+        "shard-0040": {
+          "start_line": 7801,
+          "end_line": 8000
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0037.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0037.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-011",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-011",
+      "batch_anchor_shard_id": "shard-0041",
+      "source_shard_ids": [
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0041.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0042.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0043.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0044.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0041": {
+          "start_line": 8001,
+          "end_line": 8200
+        },
+        "shard-0042": {
+          "start_line": 8201,
+          "end_line": 8400
+        },
+        "shard-0043": {
+          "start_line": 8401,
+          "end_line": 8600
+        },
+        "shard-0044": {
+          "start_line": 8601,
+          "end_line": 8800
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0041.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0041.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-012",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-012",
+      "batch_anchor_shard_id": "shard-0045",
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0045.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0046.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0047.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0048.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0045": {
+          "start_line": 8801,
+          "end_line": 9000
+        },
+        "shard-0046": {
+          "start_line": 9001,
+          "end_line": 9200
+        },
+        "shard-0047": {
+          "start_line": 9201,
+          "end_line": 9400
+        },
+        "shard-0048": {
+          "start_line": 9401,
+          "end_line": 9600
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0045.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0045.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-013",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-013",
+      "batch_anchor_shard_id": "shard-0049",
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0050",
+        "shard-0051",
+        "shard-0052"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0049.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0050.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0051.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0052.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0049": {
+          "start_line": 9601,
+          "end_line": 9800
+        },
+        "shard-0050": {
+          "start_line": 9801,
+          "end_line": 10000
+        },
+        "shard-0051": {
+          "start_line": 10001,
+          "end_line": 10200
+        },
+        "shard-0052": {
+          "start_line": 10201,
+          "end_line": 10400
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0049.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0049.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-014",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-014",
+      "batch_anchor_shard_id": "shard-0053",
+      "source_shard_ids": [
+        "shard-0053",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0053.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0054.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0055.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0056.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0053": {
+          "start_line": 10401,
+          "end_line": 10600
+        },
+        "shard-0054": {
+          "start_line": 10601,
+          "end_line": 10800
+        },
+        "shard-0055": {
+          "start_line": 10801,
+          "end_line": 11000
+        },
+        "shard-0056": {
+          "start_line": 11001,
+          "end_line": 11200
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0053.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0053.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-015",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-015",
+      "batch_anchor_shard_id": "shard-0057",
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0057.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0058.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0059.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0060.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0057": {
+          "start_line": 11201,
+          "end_line": 11400
+        },
+        "shard-0058": {
+          "start_line": 11401,
+          "end_line": 11600
+        },
+        "shard-0059": {
+          "start_line": 11601,
+          "end_line": 11800
+        },
+        "shard-0060": {
+          "start_line": 11801,
+          "end_line": 12000
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0057.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0057.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-016",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-016",
+      "batch_anchor_shard_id": "shard-0061",
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0061.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0062.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0063.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0064.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0061": {
+          "start_line": 12001,
+          "end_line": 12200
+        },
+        "shard-0062": {
+          "start_line": 12201,
+          "end_line": 12400
+        },
+        "shard-0063": {
+          "start_line": 12401,
+          "end_line": 12600
+        },
+        "shard-0064": {
+          "start_line": 12601,
+          "end_line": 12800
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0061.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0061.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-017",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-017",
+      "batch_anchor_shard_id": "shard-0065",
+      "source_shard_ids": [
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0065.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0066.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0067.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0068.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0065": {
+          "start_line": 12801,
+          "end_line": 13000
+        },
+        "shard-0066": {
+          "start_line": 13001,
+          "end_line": 13200
+        },
+        "shard-0067": {
+          "start_line": 13201,
+          "end_line": 13400
+        },
+        "shard-0068": {
+          "start_line": 13401,
+          "end_line": 13600
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0065.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0065.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-018",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-018",
+      "batch_anchor_shard_id": "shard-0069",
+      "source_shard_ids": [
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0069.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0070.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0071.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0072.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0069": {
+          "start_line": 13601,
+          "end_line": 13800
+        },
+        "shard-0070": {
+          "start_line": 13801,
+          "end_line": 14000
+        },
+        "shard-0071": {
+          "start_line": 14001,
+          "end_line": 14200
+        },
+        "shard-0072": {
+          "start_line": 14201,
+          "end_line": 14400
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0069.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0069.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-019",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-019",
+      "batch_anchor_shard_id": "shard-0073",
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0076"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0073.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0074.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0075.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0076.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0073": {
+          "start_line": 14401,
+          "end_line": 14600
+        },
+        "shard-0074": {
+          "start_line": 14601,
+          "end_line": 14800
+        },
+        "shard-0075": {
+          "start_line": 14801,
+          "end_line": 15000
+        },
+        "shard-0076": {
+          "start_line": 15001,
+          "end_line": 15200
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0073.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0073.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-020",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-020",
+      "batch_anchor_shard_id": "shard-0077",
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0077.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0078.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0079.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0080.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0077": {
+          "start_line": 15201,
+          "end_line": 15400
+        },
+        "shard-0078": {
+          "start_line": 15401,
+          "end_line": 15600
+        },
+        "shard-0079": {
+          "start_line": 15601,
+          "end_line": 15800
+        },
+        "shard-0080": {
+          "start_line": 15801,
+          "end_line": 16000
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0077.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0077.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-021",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-021",
+      "batch_anchor_shard_id": "shard-0081",
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0081.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0082.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0083.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0084.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0081": {
+          "start_line": 16001,
+          "end_line": 16200
+        },
+        "shard-0082": {
+          "start_line": 16201,
+          "end_line": 16400
+        },
+        "shard-0083": {
+          "start_line": 16401,
+          "end_line": 16600
+        },
+        "shard-0084": {
+          "start_line": 16601,
+          "end_line": 16800
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0081.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0081.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-022",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-022",
+      "batch_anchor_shard_id": "shard-0085",
+      "source_shard_ids": [
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0085.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0086.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0087.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0088.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0085": {
+          "start_line": 16801,
+          "end_line": 17000
+        },
+        "shard-0086": {
+          "start_line": 17001,
+          "end_line": 17200
+        },
+        "shard-0087": {
+          "start_line": 17201,
+          "end_line": 17400
+        },
+        "shard-0088": {
+          "start_line": 17401,
+          "end_line": 17600
+        }
+      },
+      "total_input_lines": 800,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0085.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0085.raw.json",
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-extract-task-023",
+      "task_type": "semantic_chunk_processing.bounded_shard_batch",
+      "subagent_task_id": "c3-extract-task-023",
+      "batch_anchor_shard_id": "shard-0089",
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0089.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0090.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0091.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0092.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0089": {
+          "start_line": 17601,
+          "end_line": 17800
+        },
+        "shard-0090": {
+          "start_line": 17801,
+          "end_line": 18000
+        },
+        "shard-0091": {
+          "start_line": 18001,
+          "end_line": 18200
+        },
+        "shard-0092": {
+          "start_line": 18201,
+          "end_line": 18244
+        }
+      },
+      "total_input_lines": 644,
+      "max_lines_per_shard": 200,
+      "input_size_under_budget": true,
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0089.json",
+      "output_raw_draft_path_optional": "Plans/.pipeline/work_items/w-20260312-203855/seed_group_raw_drafts/ledger_seed_group.shard-0089.raw.json",
+      "status": "pending"
+    }
+  ],
+  "wave_plan": {
+    "wave_size": 8,
+    "waves_expected_min": 3,
+    "wave_1_task_ids": [
+      "c3-extract-task-001",
+      "c3-extract-task-002",
+      "c3-extract-task-003",
+      "c3-extract-task-004",
+      "c3-extract-task-005",
+      "c3-extract-task-006",
+      "c3-extract-task-007",
+      "c3-extract-task-008"
+    ],
+    "wave_2_task_ids": [
+      "c3-extract-task-009",
+      "c3-extract-task-010",
+      "c3-extract-task-011",
+      "c3-extract-task-012",
+      "c3-extract-task-013",
+      "c3-extract-task-014",
+      "c3-extract-task-015",
+      "c3-extract-task-016"
+    ],
+    "wave_3_task_ids": [
+      "c3-extract-task-017",
+      "c3-extract-task-018",
+      "c3-extract-task-019",
+      "c3-extract-task-020",
+      "c3-extract-task-021",
+      "c3-extract-task-022",
+      "c3-extract-task-023"
+    ]
+  },
+  "generated_at_utc": "20260507T170400Z"
+}

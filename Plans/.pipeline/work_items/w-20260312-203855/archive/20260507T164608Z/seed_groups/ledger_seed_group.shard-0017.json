@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.ledger_seed_group.c3.v1",
+  "prompt_id": "C3",
+  "prompt_version": "1.0",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "task-005",
+  "source_shard_ids": [
+    "shard-0017",
+    "shard-0018",
+    "shard-0019",
+    "shard-0020"
+  ],
+  "shard_line_ranges": {
+    "shard-0017": "1-201",
+    "shard-0018": "1-201",
+    "shard-0019": "1-201",
+    "shard-0020": "1-201"
+  },
+  "extracted": {
+    "requirements": [
+      "Adopt a unified action-class policy across Orchestrator/runtime surfaces, classified by confirmation level (none, light, strong, hard_gate) and reversibility (immediate_undo, compensating_action_only, non_reversible).",
+      "Keep records and artifacts distinct: canonical structured records in Ledger/export/search, with files/blobs linked as artifacts.",
+      "Use record-first exports for exact-record surfaces; treat CSV/table exports as convenience view exports, not archival canon.",
+      "Separate settings semantics into three axes: source (inherit/override), requested (run intent), and execution/result (effective plus honored/skipped/clamped).",
+      "Keep global requested-Persona precedence while requiring deterministic auto-resolver outputs per surface."
+    ],
+    "decisions": [
+      "Strong vs hard_gate confirms are distinct: hard_gate actions must follow runtime-defined non-bypassable allowed-action contracts, not generic modals.",
+      "Standardize terminology so Undo is used only for true immediate undo; use Restore/Reopen/Retry for compensating flows.",
+      "Define Orchestrator export modes explicitly as record export, bundle export, and view export.",
+      "In Persona auto-resolution, actor type and operation type should outrank stack hints."
+    ],
+    "data_shapes": [
+      "Shared record envelope: record_id, record_kind, project_id, optional run_id, scoped refs, status, created metadata, supersession link, source_refs, artifact_refs, evidence_refs, summary, optional detail_ref.",
+      "Minimum explicit record families: review, corroboration request/result, graph patch request/result, promotion, recovery, and state transition report.",
+      "Orchestrator export manifest fields include ids/kind/project/run context, generation timestamp, source surface, filter summary, counts, included ids, status notes, and schema version.",
+      "Settings/runtime display grammar fields: Inherited from, Overridden by, Requested, Effective, Reason, Support."
+    ],
+    "routing_rules": [
+      "Action family routing: none for safe navigation/read-only UI actions; light for moderate accidental actions; strong for state-destructive or live-execution-changing actions; hard_gate for HITL/runtime-governed approvals and canonical graph-changing gates.",
+      "Surface routing for settings data: Settings is source-axis heavy; Orchestrator/inspectors are requested-vs-effective heavy; History/Ledger is immutable audit-heavy.",
+      "Auto Persona routing should map role-specific defaults across package/seam overseer, node worker, verifier/reviewer, corroborator, recovery actor, and graph patch planner."
+    ],
+    "verification_rules": [
+      "Strong confirmations must include concrete consequences and reversibility class; hard_gate confirmations must include runtime-defined allowed actions and no hidden bypass.",
+      "Historical exports/runs must preserve truth even when live backing objects are removed or superseded.",
+      "Historical run views must remain frozen to historical requested/effective values.",
+      "If same-tier Persona candidates cannot be deterministically resolved, require clarification instead of speculative selection."
+    ],
+    "owner_consumer_obligations": [
+      "Expose winning source/origin for effective settings (persona/model/auth/account/worker policy) so users do not reconstruct precedence manually.",
+      "Record requested Persona, effective Persona, and selection reason when fallback occurs due to capability/provider constraints.",
+      "Preserve lineage metadata when destructive cleanup actions remove live objects."
+    ],
+    "stale_retirement_items": [
+      "Retire ambiguous mixed use of revert/rollback/restore/undo and normalize to precise recovery semantics.",
+      "Retire implicit assumptions that deleted/pruned objects can be treated as non-historical; keep retired-object metadata exportable."
+    ],
+    "open_questions": [
+      "Delete Run semantics remain unresolved (authorization boundary, reversibility, and lineage guarantees).",
+      "Orchestrator export contracts still need canonical specificity for packaging records/artifacts/references under superseded or removed backing objects.",
+      "Presentation parity for non-Persona manual overrides (provider/model/account/worker policy) is still underdefined.",
+      "Orchestrator auto Persona prioritization is still too qualitative without a fully explicit matrix."
+    ],
+    "process_defects": [
+      "Confirmation behavior is fragmented across subsystems without one shared action policy matrix.",
+      "Exact record families are referenced but incompletely normalized compared with attempts/blocked/usage envelopes.",
+      "Orchestrator export language is more UI-view-centric than canonical-contract-centric.",
+      "Override presentation consistency is weaker across settings/runtime surfaces than requested/effective runtime recording."
+    ],
+    "doc_hints": [
+      "Align action policy and record/export semantics with storage-plan, Orchestrator page, contracts, GUI spec, and run graph documents.",
+      "Align settings override and Persona resolution rules across Multi-Account, Models System, Prompt Pipeline, Personas, and Orchestrator integration docs."
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0017": [
+      "Excluded repetitive examples when equivalent policy class was already captured."
+    ],
+    "shard-0018": [
+      "Excluded duplicate mention of source/artifact/evidence refs already represented in shared envelope."
+    ],
+    "shard-0019": [
+      "Excluded repeated export caveats that restate canonical-vs-view distinction."
+    ],
+    "shard-0020": [
+      "Excluded repeated candidate-fix bullets duplicating resolver requirements."
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0017": [
+      "seed-0017-action-policy-matrix",
+      "seed-0017-confirmation-payload-rules",
+      "seed-0017-reversibility-terminology"
+    ],
+    "shard-0018": [
+      "seed-0018-record-envelope-shape",
+      "seed-0018-governance-record-families",
+      "seed-0018-export-mode-split"
+    ],
+    "shard-0019": [
+      "seed-0019-export-manifest-shape",
+      "seed-0019-record-first-export-rule",
+      "seed-0019-settings-three-axis-grammar"
+    ],
+    "shard-0020": [
+      "seed-0020-persona-resolver-input-matrix",
+      "seed-0020-persona-priority-order",
+      "seed-0020-role-biased-default-routing"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
+}

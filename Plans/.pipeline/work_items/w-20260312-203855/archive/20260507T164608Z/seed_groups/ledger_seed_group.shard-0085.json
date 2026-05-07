@@ -1,0 +1,232 @@
+{
+  "schema_id": "pm.ledger_seed_group.v1",
+  "prompt_id": "c3_recovery_extraction",
+  "prompt_version": "1.0",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "task-022",
+  "source_shard_ids": [
+    "shard-0085",
+    "shard-0086",
+    "shard-0087",
+    "shard-0088"
+  ],
+  "shard_line_ranges": {
+    "shard-0085": [
+      "L1-L201"
+    ],
+    "shard-0086": [
+      "L1-L201"
+    ],
+    "shard-0087": [
+      "L1-L201"
+    ],
+    "shard-0088": [
+      "L1-L201"
+    ]
+  },
+  "requirements": [
+    {
+      "seed_id": "seed-022-rq-001",
+      "source_shard_id": "shard-0085",
+      "source_lines": "L60-L69",
+      "detail": "Reconciliation must use Executor_Protocol as runtime baseline, retire Tiers in Orchestrator page, keep only Progress widget-composed, and migrate tier_id-centric identity and filtering to canonical node/attempt/runtime identity."
+    },
+    {
+      "seed_id": "seed-022-rq-002",
+      "source_shard_id": "shard-0086",
+      "source_lines": "L141-L145",
+      "detail": "Reconciliation direction is owner contracts/schemas first, same-file canon collapse second, cross-owner routing and blocked-family consistency third, mirrors/checklists last."
+    }
+  ],
+  "decisions": [
+    {
+      "seed_id": "seed-022-dec-001",
+      "source_shard_id": "shard-0085",
+      "source_lines": "L150-L154",
+      "detail": "Locked reconciliation order for stale consumers: usage-feature, then Run_Graph_View, then Widget_System, then assistant-chat-design."
+    },
+    {
+      "seed_id": "seed-022-dec-002",
+      "source_shard_id": "shard-0085",
+      "source_lines": "L74-L77",
+      "detail": "Reconciliation order is fixed to owner docs first, primary stale consumers second, mirrors/checklists third."
+    }
+  ],
+  "data_shapes": [
+    {
+      "seed_id": "seed-022-shape-001",
+      "source_shard_id": "shard-0086",
+      "source_lines": "L54-L57",
+      "detail": "Storage plan still needs explicit field schemas for project_summary.v1, project_attention_item.v1, account_pressure_episode.v1, and account_switch_event.v1, including bridge precedence/join semantics."
+    },
+    {
+      "seed_id": "seed-022-shape-002",
+      "source_shard_id": "shard-0087",
+      "source_lines": "L193-L201",
+      "detail": "Concern/governance tranche still missing concrete families including concern canonical field set, resolution_kind, concern owner-kind enum, review/corroboration/graph-patch/promotion/recovery records, and confirmation/reversibility taxonomies."
+    }
+  ],
+  "routing_rules": [
+    {
+      "seed_id": "seed-022-route-001",
+      "source_shard_id": "shard-0086",
+      "source_lines": "L73-L80",
+      "detail": "Contracts_V0 route/open layer exists but still lacks required selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, and resume_url serialization constraints."
+    },
+    {
+      "seed_id": "seed-022-route-002",
+      "source_shard_id": "shard-0087",
+      "source_lines": "L35-L45",
+      "detail": "Routing refinement remains incomplete across owner docs and gates: missing bridge-field precedence, compatibility-only fallback guidance, primitive index completion, and route-aware evidence/schema wiring."
+    }
+  ],
+  "verification_rules": [
+    {
+      "seed_id": "seed-022-ver-001",
+      "source_shard_id": "shard-0085",
+      "source_lines": "L175-L180",
+      "detail": "MUST VERIFY bucket should remain out of packet unless final reconciliation inspection confirms direct stale references requiring edits."
+    },
+    {
+      "seed_id": "seed-022-ver-002",
+      "source_shard_id": "shard-0086",
+      "source_lines": "L113-L119",
+      "detail": "Verification must preserve exclusions for already-landed primitives and reject false positives that claim total primitive absence when the actual gap is operationalization/refinement."
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "seed_id": "seed-022-own-001",
+      "source_shard_id": "shard-0086",
+      "source_lines": "L121-L139",
+      "detail": "Owner docs to reconcile first: Contracts_V0, storage-plan, Prompt_Pipeline, Orchestrator_Page, FinalGUISpec, UI_Command_Catalog, Glossary, WorktreeGitImprovement; consumer cleanup follows on human-in-the-loop, usage-feature, FileManager, orchestrator-subagent-integration, Runtime_Artifacts_Panel, chain-wizard-flexibility, assistant-chat-design."
+    },
+    {
+      "seed_id": "seed-022-own-002",
+      "source_shard_id": "shard-0085",
+      "source_lines": "L183-L185",
+      "detail": "Packetization requires stale sections in MUST CHANGE docs to be replaced or retired, not lightly annotated."
+    }
+  ],
+  "stale_retirement_items": [
+    {
+      "seed_id": "seed-022-stale-001",
+      "source_shard_id": "shard-0087",
+      "source_lines": "L102-L108",
+      "detail": "Retire stale contradictory survivors including assistant-chat 'No remaining gaps' verdict and FinalGUISpec/newfeatures restore points phrasing that conflicts with safe-point canon."
+    },
+    {
+      "seed_id": "seed-022-stale-002",
+      "source_shard_id": "shard-0087",
+      "source_lines": "L147-L155",
+      "detail": "Confirmed stale survivors to retire include TierContext, tier_id, detached_window, result_id, artifact_kind, task_id, and composite ask tuple { tool_name, invocation_summary, options }."
+    }
+  ],
+  "open_questions": [
+    {
+      "seed_id": "seed-022-oq-001",
+      "source_shard_id": "shard-0087",
+      "source_lines": "L198-L200",
+      "detail": "Gap-004 unresolved scope needs closure on missing Cross-surface receipt record anchor and unresolved fields run_id, pass_verdict, phase_plan_ref, requirements_quality_report_ref plus missing consumer anchors."
+    },
+    {
+      "seed_id": "seed-022-oq-002",
+      "source_shard_id": "shard-0087",
+      "source_lines": "L199-L200",
+      "detail": "Gap-006 and gap-005 are narrowed but still open pending explicit owner headings/help-entry instantiation and blocked-packet/escalation/composite-ask carry-through."
+    }
+  ],
+  "process_defects": [
+    {
+      "seed_id": "seed-022-proc-001",
+      "source_shard_id": "shard-0086",
+      "source_lines": "L35-L41",
+      "detail": "Recurring process defect: primitive transfer lands without refinement layer, allowing mixed-era guidance to persist and causing implementation divergence."
+    },
+    {
+      "seed_id": "seed-022-proc-002",
+      "source_shard_id": "shard-0086",
+      "source_lines": "L37-L40",
+      "detail": "Same-file supersession and partial schema ownership remain unresolved process defects that block machine-verifiable contract execution."
+    }
+  ],
+  "doc_hints": [
+    {
+      "seed_id": "seed-022-hint-001",
+      "source_shard_id": "shard-0085",
+      "source_lines": "L59-L69",
+      "detail": "Use Executor_Protocol as stronger baseline and pull Orchestrator_Page toward runtime canon; preserve lower aligned addenda while collapsing contradictory legacy sections."
+    },
+    {
+      "seed_id": "seed-022-hint-002",
+      "source_shard_id": "shard-0087",
+      "source_lines": "L85-L95",
+      "detail": "Execute canon-collapse and owner-schema completion pass before consumer cleanup; avoid generic polish-only edits."
+    }
+  ],
+  "exclusions_by_shard": {
+    "shard-0085": [
+      {
+        "seed_id": "seed-022-excl-0085-001",
+        "source_lines": "L42-L53",
+        "detail": "Excluded full impacted-doc enumerations as standalone seeds because they are supportive inventory lists; extracted only actionable obligations and ordering rules."
+      }
+    ],
+    "shard-0086": [
+      {
+        "seed_id": "seed-022-excl-0086-001",
+        "source_lines": "L8-L20",
+        "detail": "Excluded audit scope/method prose because it is methodological context, not a durable requirement or contract item for downstream reconciliation."
+      }
+    ],
+    "shard-0087": [
+      {
+        "seed_id": "seed-022-excl-0087-001",
+        "source_lines": "L67-L83",
+        "detail": "Excluded rerun net-result recap lines where they duplicated already extracted requirement/process-defect content; retained only new concrete unresolved items."
+      }
+    ],
+    "shard-0088": [
+      {
+        "seed_id": "seed-022-excl-0088-001",
+        "source_lines": "L1-L201",
+        "detail": "No distinct additional content beyond shard-0087 continuation in this bounded read; shard included for provenance continuity and explicit no-new-seed rationale."
+      }
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0085": [
+      "seed-022-rq-001",
+      "seed-022-dec-001",
+      "seed-022-ver-001",
+      "seed-022-own-002",
+      "seed-022-hint-001",
+      "seed-022-excl-0085-001"
+    ],
+    "shard-0086": [
+      "seed-022-rq-002",
+      "seed-022-shape-001",
+      "seed-022-route-001",
+      "seed-022-ver-002",
+      "seed-022-own-001",
+      "seed-022-proc-001",
+      "seed-022-proc-002",
+      "seed-022-excl-0086-001"
+    ],
+    "shard-0087": [
+      "seed-022-shape-002",
+      "seed-022-route-002",
+      "seed-022-stale-001",
+      "seed-022-stale-002",
+      "seed-022-oq-001",
+      "seed-022-oq-002",
+      "seed-022-hint-002",
+      "seed-022-excl-0087-001"
+    ],
+    "shard-0088": [
+      "seed-022-excl-0088-001"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": "none"
+}

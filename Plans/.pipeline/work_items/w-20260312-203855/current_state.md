@@ -18,4 +18,4 @@
 - `Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json`
 
 ## Next prompt
-- Paste prompt **B0** — Section Entry: Research / Audit Intake v3.1.14.
+- Paste prompt **B0** — Section Entry: Research / Audit Intake v3.1.15.

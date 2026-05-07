@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.ledger_seed_group.c3.v1",
+  "prompt_id": "C3",
+  "prompt_version": "1.0",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "task-015",
+  "source_shard_ids": [
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060"
+  ],
+  "shard_line_ranges": {
+    "shard-0057": "1-201",
+    "shard-0058": "1-201",
+    "shard-0059": "1-201",
+    "shard-0060": "1-201"
+  },
+  "extracted": {
+    "requirements": [
+      "Define a canonical layered navigation contract with a shared `route_target` object, identity-native `OpenSubject`, and path-native `OpenFile` semantics.",
+      "Normalize cross-surface navigation (search activations, attention/CtA actions, artifact and usage pivots, deep links) through one internal route-target model.",
+      "Treat `resume_url` as a serialized transport of canonical route-target semantics rather than a stronger parallel navigation primitive.",
+      "Strengthen wiring and gate verification to cover route-aware command semantics including wrappers, aliases/deprecations, argument completeness, and passthrough obligations.",
+      "Preserve subject-first identity (`doc:`/`artifact:`) with `generated://` as transient realization only, and keep open-resolution ownership explicit across contracts/storage/file manager docs.",
+      "Apply identity-preserving export discipline with manifest requirements for non-trivial bundles while keeping lightweight view exports simple."
+    ],
+    "decisions": [
+      "Adopt a layered model rather than a monolithic open contract: shared target object plus specialized operations.",
+      "Keep `OpenFile` scoped to workspace-path document opens; do not use it as the universal object-open primitive.",
+      "Use event-side alias/migration discipline as the template for command wrapper/alias/deprecation modeling.",
+      "Constrain canonical `route_target` to a small stable minimum field set and push domain-specific identifiers into subject/object normalization or specialized payloads.",
+      "Treat ownership drift as a Crosswalk/Contracts-level defect and resolve by declaring explicit primitive owners and consumer boundaries."
+    ],
+    "data_shapes": [
+      "Canonical `route_target` minimum shape: required `target_kind`; optional scope pivots (`project_id`, `focused_run_id`, `thread_id`, `tab_id`); target selector (`subject_id` or `object_kind` + `object_id`); optional `inspector_target`.",
+      "`OpenSubject` contract: required `subject_id`, optional mode/location hints, resolver output as workspace-path open, transient `generated://` buffer, or non-editor routed surface.",
+      "`OpenFile` contract remains path-first and editor-realization specific, including optional line/range navigation where a workspace path is already canonical.",
+      "Wiring/gate evidence needs structured route-aware verification payloads beyond generic freeform check detail rows."
+    ],
+    "routing_rules": [
+      "Resolve identity opens by canonical subject first, then backing document/transient buffer/surface focus without losing identity context.",
+      "Route wrappers and surface-specific commands through canonical target semantics and keep deprecated aliases explicitly mapped.",
+      "Require routing/passthrough continuity for correlation and contextual scope fields across command dispatch and downstream events.",
+      "Use one route-target restoration model for attention recovery, search hits, artifact/usage pivots, and orchestrator links."
+    ],
+    "verification_rules": [
+      "GATE-010 and wiring schema checks must verify route/subject argument completeness, wrapper-to-canonical consistency, alias/deprecation handling, and passthrough obligations.",
+      "Evidence schemas should support machine-readable route-aware failures instead of depending on text-only details.",
+      "Verification must resist stale extraction hazards (ghost IDs, wildcard ambiguity, filename-like false positives) in wiring and catalog artifacts.",
+      "Coverage rules should ensure owner-doc and catalog parity for canonical command families and route primitives."
+    ],
+    "owner_consumer_obligations": [
+      "Crosswalk should declare primitives for route-target and subject-open ownership boundaries.",
+      "Contracts docs should own concrete canonical shapes and serialization mapping (`resume_url` transport form).",
+      "Storage docs should own persisted subject identity and restore joins; File Manager should own file-path open realization only.",
+      "Surface docs (GUI, artifacts, usage, orchestrator, assistant chat) should consume shared routing primitives rather than redefine local navigation contracts."
+    ],
+    "stale_retirement_items": [
+      "Retire path-only universal-open assumptions for runtime/generated/preview-backed artifacts.",
+      "Retire flat peer-command navigation modeling where wrappers/aliases and canonical targets are required.",
+      "Retire generic `UICommand.args` navigation payload drift without a normalized target object.",
+      "Retire export definitions that flatten identity for bundle-class outputs."
+    ],
+    "open_questions": [
+      "Should route-aware verification remain inside expanded GATE-010 or split into a dedicated sibling gate?",
+      "Which exact schema owns structured wiring-evidence detail for route-target checks (`evidence.schema.json` extension vs dedicated wiring evidence schema)?",
+      "How should wildcard command-family rows be represented in wiring schema while remaining machine-checkable and drift-safe?",
+      "What exact boundary between `subject_id` and `object_kind/object_id` should be normative for catalog and command payload authors?"
+    ],
+    "process_defects": [
+      "Routing semantics are still distributed across local feature prose, producing repeat drift between catalog, wiring, gates, and surface docs.",
+      "Machine-verifiable contracts lag behind expanded prose claims for route-aware behavior and governance preconditions.",
+      "Crosswalk-level primitive ownership gaps allow repeated redefinition of open/navigation identity boundaries.",
+      "Export and deep-link contracts are inconsistent about preserving canonical IDs and context."
+    ],
+    "doc_hints": [
+      "Introduce and reference canonical `route_target` + `OpenSubject` primitives from Crosswalk and Contracts owners.",
+      "Refactor FileManager language so `OpenFile` is explicitly path/document scoped and downstream consumers use subject-first routing.",
+      "Upgrade wiring matrix/schema/rules and GATE-010 evidence to route-aware, alias-aware, and passthrough-aware machine checks.",
+      "Normalize search, attention, artifact, usage, and orchestrator pivots as wrappers over canonical route-target payloads.",
+      "Adopt export taxonomy and manifest discipline for bundle exports with canonical identity preservation."
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0057": [],
+    "shard-0058": [],
+    "shard-0059": [],
+    "shard-0060": []
+  },
+  "seed_ids_by_shard": {
+    "shard-0057": [
+      "seed-0057-route-aware-wiring-gate-gap",
+      "seed-0057-command-wrapper-alias-pattern",
+      "seed-0057-subject-open-storage-handshake"
+    ],
+    "shard-0058": [
+      "seed-0058-missing-canonical-route-contract",
+      "seed-0058-subject-first-output-alignment",
+      "seed-0058-attention-search-usage-route-normalization"
+    ],
+    "shard-0059": [
+      "seed-0059-export-manifest-identity-discipline",
+      "seed-0059-crosswalk-route-subject-ownership",
+      "seed-0059-layered-routetarget-opensubject-openfile"
+    ],
+    "shard-0060": [
+      "seed-0060-routetarget-minimum-field-set",
+      "seed-0060-canonical-normalization-boundaries"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
+}

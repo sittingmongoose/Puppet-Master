@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.ledger_seed_completeness_check.v3.1.15",
+  "prompt_id": "C4",
+  "prompt_version": "pm.c4.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "c4-r3-task-014",
+  "batch_anchor_shard_id": "shard-0053",
+  "source_shard_ids": [
+    "shard-0053",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056"
+  ],
+  "shard_line_ranges": {
+    "shard-0053": {
+      "start_line": 10401,
+      "end_line": 10600
+    },
+    "shard-0054": {
+      "start_line": 10601,
+      "end_line": 10800
+    },
+    "shard-0055": {
+      "start_line": 10801,
+      "end_line": 11000
+    },
+    "shard-0056": {
+      "start_line": 11001,
+      "end_line": 11200
+    }
+  },
+  "round2_repaired": false,
+  "checks": {
+    "structure_check": {
+      "passed": true
+    },
+    "coverage_check": {
+      "passed": true,
+      "missing_material_items_per_shard": {
+        "shard-0053": [],
+        "shard-0054": [],
+        "shard-0055": [],
+        "shard-0056": []
+      },
+      "missing_material_total": 0,
+      "per_shard_material_counts": {
+        "shard-0053": 18,
+        "shard-0054": 14,
+        "shard-0055": 13,
+        "shard-0056": 15
+      }
+    },
+    "lineage_check": {
+      "passed": true,
+      "lineage_failures_per_shard": {
+        "shard-0053": [],
+        "shard-0054": [],
+        "shard-0055": [],
+        "shard-0056": []
+      },
+      "lineage_failures_total": 0
+    },
+    "doc_hint_preservation_check": {
+      "passed": true,
+      "unreferenced_doc_hints_per_shard": {
+        "shard-0053": [],
+        "shard-0054": [],
+        "shard-0055": [],
+        "shard-0056": []
+      },
+      "doc_hints_unreferenced_total": 0
+    },
+    "open_question_preservation_check": {
+      "passed": true,
+      "unrepresented_open_questions_per_shard": {
+        "shard-0053": [],
+        "shard-0054": [],
+        "shard-0055": [],
+        "shard-0056": []
+      },
+      "open_questions_unrepresented_total": 0
+    }
+  },
+  "summary": {
+    "totals": {
+      "material_items_total": 60,
+      "missing_material_total": 0,
+      "lineage_failures_total": 0,
+      "doc_hints_unreferenced_total": 0,
+      "open_questions_unrepresented_total": 0
+    },
+    "all_checks_passed": true,
+    "status": "pass",
+    "issues_found_categories": []
+  },
+  "blocking_reason": null,
+  "generated_at_utc": "2026-05-07T19:21:00Z"
+}

@@ -1,0 +1,353 @@
+{
+  "schema_id": "pm.ledger_seed_group.v2",
+  "prompt_id": "c3_recovery_extraction",
+  "prompt_version": "1.0",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "task-018",
+  "source_shard_ids": [
+    "shard-0069",
+    "shard-0070",
+    "shard-0071",
+    "shard-0072"
+  ],
+  "shard_line_ranges": {
+    "shard-0069": {
+      "source_range": "L013601-L013800",
+      "local_range": "1-201"
+    },
+    "shard-0070": {
+      "source_range": "L013801-L014000",
+      "local_range": "1-201"
+    },
+    "shard-0071": {
+      "source_range": "L014001-L014200",
+      "local_range": "1-201"
+    },
+    "shard-0072": {
+      "source_range": "L014201-L014400",
+      "local_range": "1-201"
+    }
+  },
+  "extracted": {
+    "requirements": [
+      {
+        "seed_id": "seed-0069-route-target-canonicality",
+        "shard_id": "shard-0069",
+        "detail": "Treat route_target as canonical navigation identity and keep serialized transport narrower than internal route model."
+      },
+      {
+        "seed_id": "seed-0069-object-kind-canonical-set",
+        "shard_id": "shard-0069",
+        "detail": "Use a controlled object_kind enum spanning conversational, runtime, and orchestration-rewrite objects."
+      },
+      {
+        "seed_id": "seed-0069-inspector-target-closed-enum",
+        "shard_id": "shard-0069",
+        "detail": "inspector_target must be a small closed vocabulary and never a free-form extension bag."
+      },
+      {
+        "seed_id": "seed-0070-subject-vs-object-classification",
+        "shard_id": "shard-0070",
+        "detail": "subject_id is only for doc/artifact renderable subjects; all other routed identities use object_kind plus object_id."
+      },
+      {
+        "seed_id": "seed-0070-route-normalization-high-pressure-flows",
+        "shard_id": "shard-0070",
+        "detail": "Normalize usage, wizard resume, chat search, node detail, and attempt detail into canonical object-first route recipes."
+      },
+      {
+        "seed_id": "seed-0071-route-normalization-runtime-lineage",
+        "shard_id": "shard-0071",
+        "detail": "Normalize blocked_episode, scheduler_pass, safe_point, remediation, graph_generation, and graph_patch through object-first routes."
+      },
+      {
+        "seed_id": "seed-0071-route-normalization-orchestration-scm",
+        "shard_id": "shard-0071",
+        "detail": "Normalize worktree, lane, feature_seam, work_package, concern, and promotion pivots through object-first routing."
+      },
+      {
+        "seed_id": "seed-0072-route-validation-rejections",
+        "shard_id": "shard-0072",
+        "detail": "Route contract must include invalid-combination rejection rules (missing project, competing selectors, incomplete object selector, invalid inspector/tab/state fields)."
+      },
+      {
+        "seed_id": "seed-0072-tab-id-role",
+        "shard_id": "shard-0072",
+        "detail": "tab_id is stable page-tab focus only, not object identity and not shell/panel/workspace/browser tab identity."
+      },
+      {
+        "seed_id": "seed-0072-scoped-resolver-balance",
+        "shard_id": "shard-0072",
+        "detail": "Keep base contract small and handle scoped identity resolution through resolver context (project_id, focused_run_id, canonical stores)."
+      }
+    ],
+    "decisions": [
+      {
+        "seed_id": "seed-0069-decide-resume-url-transport",
+        "shard_id": "shard-0069",
+        "decision": "resume_url is serialized transport; route_target remains canonical identity."
+      },
+      {
+        "seed_id": "seed-0069-decide-object-kind-vocabulary",
+        "shard_id": "shard-0069",
+        "decision": "Adopt canonical object_kind enum including thread/message/wizard/usage_event/run-lineage and rewrite orchestration objects."
+      },
+      {
+        "seed_id": "seed-0069-decide-inspector-target-enum",
+        "shard_id": "shard-0069",
+        "decision": "Adopt closed inspector_target enum: summary, evidence, artifacts, history, reviews, usage, lineage, details."
+      },
+      {
+        "seed_id": "seed-0070-decide-selector-precedence",
+        "shard_id": "shard-0070",
+        "decision": "Freeze subject_id to doc/artifact and route everything else through object_kind/object_id."
+      },
+      {
+        "seed_id": "seed-0072-decide-rejection-rules",
+        "shard_id": "shard-0072",
+        "decision": "Treat invalid route payload combinations as contract failures rather than best-effort fallbacks."
+      }
+    ],
+    "data_shapes": [
+      {
+        "seed_id": "seed-0069-shape-object-kind",
+        "shard_id": "shard-0069",
+        "shape": "object_kind enum includes thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation."
+      },
+      {
+        "seed_id": "seed-0069-shape-inspector-target",
+        "shard_id": "shard-0069",
+        "shape": "inspector_target enum includes summary, evidence, artifacts, history, reviews, usage, lineage, details."
+      },
+      {
+        "seed_id": "seed-0070-shape-subject-id",
+        "shard_id": "shard-0070",
+        "shape": "subject_id families are restricted to doc:<document_id> and artifact:<artifact_id>."
+      },
+      {
+        "seed_id": "seed-0072-shape-tab-id",
+        "shard_id": "shard-0072",
+        "shape": "tab_id role is stable page-tab focus with Orchestrator family values: progress, seams, node_graph, evidence, history, ledger."
+      }
+    ],
+    "routing_rules": [
+      {
+        "seed_id": "seed-0070-rule-usage-event-route",
+        "shard_id": "shard-0070",
+        "rule": "usage routes normalize through object_kind=usage_event and canonical object_id, with inspector_target or tab selection as secondary."
+      },
+      {
+        "seed_id": "seed-0070-rule-wizard-message-route",
+        "shard_id": "shard-0070",
+        "rule": "wizard/message navigation is object-first; deep-link step/message anchors stay serialized secondary detail."
+      },
+      {
+        "seed_id": "seed-0071-rule-runtime-lineage-route",
+        "shard_id": "shard-0071",
+        "rule": "Runtime lineage objects route by object identity with focused_run_id scope; avoid attempt-only or tier-era pivots."
+      },
+      {
+        "seed_id": "seed-0071-rule-worktree-orchestrator-route",
+        "shard_id": "shard-0071",
+        "rule": "Source control and orchestration pivots route by worktree/lane/seam/package/concern/promotion object identity."
+      },
+      {
+        "seed_id": "seed-0072-rule-selector-validity",
+        "shard_id": "shard-0072",
+        "rule": "A valid route has project_id and one primary selector; reject competing subject and object selectors."
+      }
+    ],
+    "verification_rules": [
+      {
+        "seed_id": "seed-0072-verify-required-project",
+        "shard_id": "shard-0072",
+        "rule": "Reject route payloads missing project_id."
+      },
+      {
+        "seed_id": "seed-0072-verify-object-pairing",
+        "shard_id": "shard-0072",
+        "rule": "Reject object_kind without object_id and object_id without object_kind."
+      },
+      {
+        "seed_id": "seed-0072-verify-inspector-context",
+        "shard_id": "shard-0072",
+        "rule": "Reject inspector_target when no object selector exists."
+      },
+      {
+        "seed_id": "seed-0072-verify-tab-conflict",
+        "shard_id": "shard-0072",
+        "rule": "Reject tab_id values that conflict with target_kind or non-page-tab contexts."
+      },
+      {
+        "seed_id": "seed-0072-verify-local-state-leakage",
+        "shard_id": "shard-0072",
+        "rule": "Reject line/range and per-surface local state in route_target."
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "seed_id": "seed-0072-obligation-contracts-owner",
+        "shard_id": "shard-0072",
+        "owner": "Plans/Contracts_V0.md",
+        "obligation": "Own route_target primitives, selector precedence, validation/rejection rules, scoped resolver rules, and resume_url serialization rule."
+      },
+      {
+        "seed_id": "seed-0072-obligation-crosswalk",
+        "shard_id": "shard-0072",
+        "owner": "Plans/Crosswalk.md",
+        "obligation": "Declare primitive ownership and mark storage/surface docs as consumers of navigation identity."
+      },
+      {
+        "seed_id": "seed-0072-obligation-ui-command-catalog",
+        "shard_id": "shard-0072",
+        "owner": "Plans/UI_Command_Catalog.md",
+        "obligation": "Classify commands and normalize wrappers/aliases to route_target and OpenSubject payloads."
+      },
+      {
+        "seed_id": "seed-0072-obligation-surface-docs",
+        "shard_id": "shard-0072",
+        "owner": "FinalGUISpec, storage-plan, usage-feature, assistant-chat-design, Run_Graph_View, Orchestrator_Page",
+        "obligation": "Consume canonical route vocabulary and stop introducing stronger local deep-link or ad hoc identity fields."
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "seed_id": "seed-0069-retire-tier-id",
+        "shard_id": "shard-0069",
+        "item": "Retire tier_id-led route pivots in favor of canonical object_kind identities."
+      },
+      {
+        "seed_id": "seed-0070-retire-usage-event-ref",
+        "shard_id": "shard-0070",
+        "item": "Retire usage_event_ref as special top-level route field; normalize to object_kind=usage_event."
+      },
+      {
+        "seed_id": "seed-0071-retire-attempt-only-history",
+        "shard_id": "shard-0071",
+        "item": "Retire attempt-only history assumptions for scheduler/blocked/remediation lineage flows."
+      },
+      {
+        "seed_id": "seed-0072-retire-any-tab-anywhere",
+        "shard_id": "shard-0072",
+        "item": "Retire conflation of page tabs, panel subviews, and shell/workspace/browser tabs under route tab_id."
+      }
+    ],
+    "open_questions": [
+      {
+        "seed_id": "seed-0069-open-blocked-scope-wording",
+        "shard_id": "shard-0069",
+        "question": "Should blocked_episode scope semantics be codified as explicit resolver algorithm text in Contracts_V0 or delegated to runtime docs?"
+      },
+      {
+        "seed_id": "seed-0072-open-tab-id-expansion",
+        "shard_id": "shard-0072",
+        "question": "Beyond the Orchestrator tab family, which additional tab enums are stable enough for canonical tab_id expansion?"
+      }
+    ],
+    "process_defects": [
+      {
+        "seed_id": "seed-0069-defect-owner-contract-lag",
+        "shard_id": "shard-0069",
+        "defect": "Core route ownership text lagged behind concrete wizard and runtime flow behavior, causing stronger implicit contracts outside owner docs."
+      },
+      {
+        "seed_id": "seed-0072-defect-positive-only-contract",
+        "shard_id": "shard-0072",
+        "defect": "Prior route guidance emphasized positive examples without hard rejection rules, enabling payload drift."
+      }
+    ],
+    "doc_hints": [
+      {
+        "seed_id": "seed-0069-hint-contracts-v0",
+        "shard_id": "shard-0069",
+        "hint": "Add canonical object_kind and inspector_target enums with explicit non-goals."
+      },
+      {
+        "seed_id": "seed-0070-hint-usage-chat",
+        "shard_id": "shard-0070",
+        "hint": "Update usage-feature and assistant-chat-design to use object-first route examples."
+      },
+      {
+        "seed_id": "seed-0071-hint-runtime-orchestration",
+        "shard_id": "shard-0071",
+        "hint": "Embed runtime-lineage and orchestration route recipes in Run_Graph_View and Orchestrator_Page."
+      },
+      {
+        "seed_id": "seed-0072-hint-validation",
+        "shard_id": "shard-0072",
+        "hint": "Document validator rejection cases and resolver scope rules in Contracts_V0 and Crosswalk."
+      }
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0069": [
+      "Excluded repeated 'Targeted docs read' lists as provenance context rather than durable contract seeds."
+    ],
+    "shard-0070": [
+      "Excluded repeated impacted-doc inventories where they duplicated unchanged owner lists already captured in obligations."
+    ],
+    "shard-0071": [
+      "Excluded duplicated route template scaffolding syntax where identical field patterns repeated without new semantic rules."
+    ],
+    "shard-0072": [
+      "Excluded trailing adoption-map continuation marker without substantive content (blank terminal lines)."
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0069": [
+      "seed-0069-route-target-canonicality",
+      "seed-0069-object-kind-canonical-set",
+      "seed-0069-inspector-target-closed-enum",
+      "seed-0069-decide-resume-url-transport",
+      "seed-0069-decide-object-kind-vocabulary",
+      "seed-0069-decide-inspector-target-enum",
+      "seed-0069-shape-object-kind",
+      "seed-0069-shape-inspector-target",
+      "seed-0069-retire-tier-id",
+      "seed-0069-open-blocked-scope-wording",
+      "seed-0069-defect-owner-contract-lag",
+      "seed-0069-hint-contracts-v0"
+    ],
+    "shard-0070": [
+      "seed-0070-subject-vs-object-classification",
+      "seed-0070-route-normalization-high-pressure-flows",
+      "seed-0070-decide-selector-precedence",
+      "seed-0070-shape-subject-id",
+      "seed-0070-rule-usage-event-route",
+      "seed-0070-rule-wizard-message-route",
+      "seed-0070-retire-usage-event-ref",
+      "seed-0070-hint-usage-chat"
+    ],
+    "shard-0071": [
+      "seed-0071-route-normalization-runtime-lineage",
+      "seed-0071-route-normalization-orchestration-scm",
+      "seed-0071-rule-runtime-lineage-route",
+      "seed-0071-rule-worktree-orchestrator-route",
+      "seed-0071-retire-attempt-only-history",
+      "seed-0071-hint-runtime-orchestration"
+    ],
+    "shard-0072": [
+      "seed-0072-route-validation-rejections",
+      "seed-0072-tab-id-role",
+      "seed-0072-scoped-resolver-balance",
+      "seed-0072-decide-rejection-rules",
+      "seed-0072-shape-tab-id",
+      "seed-0072-rule-selector-validity",
+      "seed-0072-verify-required-project",
+      "seed-0072-verify-object-pairing",
+      "seed-0072-verify-inspector-context",
+      "seed-0072-verify-tab-conflict",
+      "seed-0072-verify-local-state-leakage",
+      "seed-0072-obligation-contracts-owner",
+      "seed-0072-obligation-crosswalk",
+      "seed-0072-obligation-ui-command-catalog",
+      "seed-0072-obligation-surface-docs",
+      "seed-0072-retire-any-tab-anywhere",
+      "seed-0072-open-tab-id-expansion",
+      "seed-0072-defect-positive-only-contract",
+      "seed-0072-hint-validation"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
+}

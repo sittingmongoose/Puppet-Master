@@ -1,0 +1,281 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.14",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "task-008",
+  "source_shard_ids": [
+    "shard-0029",
+    "shard-0030",
+    "shard-0031",
+    "shard-0032"
+  ],
+  "shard_line_ranges": {
+    "shard-0029": {
+      "start_line": 1,
+      "end_line": 201
+    },
+    "shard-0030": {
+      "start_line": 1,
+      "end_line": 201
+    },
+    "shard-0031": {
+      "start_line": 1,
+      "end_line": 201
+    },
+    "shard-0032": {
+      "start_line": 1,
+      "end_line": 201
+    }
+  },
+  "extracted": {
+    "requirements": [
+      {
+        "seed_id": "SEED-shard-0029-001",
+        "source_shard_id": "shard-0029",
+        "source_lines": "149-153",
+        "detail": "Define one shared routing and deep-link payload across search, command palette, widget drill-downs, recovery links, and cross-surface pivots."
+      },
+      {
+        "seed_id": "SEED-shard-0030-001",
+        "source_shard_id": "shard-0030",
+        "source_lines": "95-105",
+        "detail": "Establish cross-family historical semantics while preserving family-local workflows; reconcile the remediation.resolved enum conflict to a single canonical lineage-aware model."
+      },
+      {
+        "seed_id": "SEED-shard-0031-001",
+        "source_shard_id": "shard-0031",
+        "source_lines": "92-95",
+        "detail": "Add a canonical concern record family with durable identity, explicit lineage, and required resolution semantics."
+      },
+      {
+        "seed_id": "SEED-shard-0032-001",
+        "source_shard_id": "shard-0032",
+        "source_lines": "107-117",
+        "detail": "Normalize requested/effective identity contracts and retire tier-era assumptions in storage, usage, graph, and orchestrator routing surfaces."
+      }
+    ],
+    "decisions": [
+      {
+        "seed_id": "SEED-shard-0029-002",
+        "source_shard_id": "shard-0029",
+        "source_lines": "97-100",
+        "detail": "Keep human-readable resume/deep-link URLs, but always decode them into the same internal shared routing payload."
+      },
+      {
+        "seed_id": "SEED-shard-0030-002",
+        "source_shard_id": "shard-0030",
+        "source_lines": "62-67",
+        "detail": "Preserve explicit semantic differences among archived, removed, and deleted states; do not collapse historical retention into deletion."
+      },
+      {
+        "seed_id": "SEED-shard-0031-002",
+        "source_shard_id": "shard-0031",
+        "source_lines": "3-14",
+        "detail": "Treat concern dismissed and concern resolved as different outcomes; accepted_risk belongs to resolution, not dismissal."
+      },
+      {
+        "seed_id": "SEED-shard-0032-002",
+        "source_shard_id": "shard-0032",
+        "source_lines": "29-40",
+        "detail": "Extend decision and permission policy to first-class concern/corroboration/promotion transitions with canonical node/attempt anchors."
+      }
+    ],
+    "data_shapes": [
+      {
+        "seed_id": "SEED-shard-0029-003",
+        "source_shard_id": "shard-0029",
+        "source_lines": "50-69",
+        "detail": "Shared route payload should include project scope, destination surface/tab, object_kind/object_id, focused run, and optional filter/inspector/focus behavior fields."
+      },
+      {
+        "seed_id": "SEED-shard-0031-003",
+        "source_shard_id": "shard-0031",
+        "source_lines": "158-188",
+        "detail": "Concern minimum shape needs concern_id, scope, status/severity/category, owner/origin, timestamps, source/evidence refs, related/lineage refs, and optional blocked/promotion/patch/recovery refs."
+      },
+      {
+        "seed_id": "SEED-shard-0032-003",
+        "source_shard_id": "shard-0032",
+        "source_lines": "163-170",
+        "detail": "Identity disclosure model should be reusable across auth, usage, graph details, artifacts, and blocked/recovery records."
+      }
+    ],
+    "routing_rules": [
+      {
+        "seed_id": "SEED-shard-0029-004",
+        "source_shard_id": "shard-0029",
+        "source_lines": "103-112",
+        "detail": "Route activation must restore context (focused_run_id, tab, filters, inspector target), not only open a destination page."
+      },
+      {
+        "seed_id": "SEED-shard-0029-005",
+        "source_shard_id": "shard-0029",
+        "source_lines": "123-125",
+        "detail": "All Open in / Show in pivots should be thin adapters over the shared payload contract."
+      },
+      {
+        "seed_id": "SEED-shard-0032-004",
+        "source_shard_id": "shard-0032",
+        "source_lines": "191-193",
+        "detail": "Mutating actions on stale or degraded projections must be trust-gated with explicit required payload and revalidation behavior."
+      }
+    ],
+    "verification_rules": [
+      {
+        "seed_id": "SEED-shard-0030-003",
+        "source_shard_id": "shard-0030",
+        "source_lines": "49-55",
+        "detail": "Validate that resolved semantics remain family-specific and do not imply identical runtime disappearance across blocked episodes, concerns, and annotations."
+      },
+      {
+        "seed_id": "SEED-shard-0031-004",
+        "source_shard_id": "shard-0031",
+        "source_lines": "26-27",
+        "detail": "After concern merge/split/supersession, prior concern IDs must remain queryable in ledger/history via lineage links."
+      },
+      {
+        "seed_id": "SEED-shard-0032-005",
+        "source_shard_id": "shard-0032",
+        "source_lines": "172-174",
+        "detail": "Verify routing and storage stop using mutable display identities like login as durable keys."
+      }
+    ],
+    "owner_consumer_obligations": [
+      {
+        "seed_id": "SEED-shard-0029-006",
+        "source_shard_id": "shard-0029",
+        "source_lines": "142-147",
+        "detail": "Search, command palette, deep links, and widget pivots must consume a single normalized routing contract to avoid behavior drift."
+      },
+      {
+        "seed_id": "SEED-shard-0032-006",
+        "source_shard_id": "shard-0032",
+        "source_lines": "13-20",
+        "detail": "Decision policy, permissions, architecture invariants, wizard flexibility, and HITL docs all need synchronized governance updates for the new object model."
+      }
+    ],
+    "stale_retirement_items": [
+      {
+        "seed_id": "SEED-shard-0032-007",
+        "source_shard_id": "shard-0032",
+        "source_lines": "151-157",
+        "detail": "Retire tier-centric usage/storage attribution and broad widgetization of non-Progress orchestrator surfaces."
+      },
+      {
+        "seed_id": "SEED-shard-0032-008",
+        "source_shard_id": "shard-0032",
+        "source_lines": "172-174",
+        "detail": "Retire login-keyed durable identity in GitHub-facing flows and replace with stable internal account identity."
+      }
+    ],
+    "open_questions": [
+      {
+        "seed_id": "SEED-shard-0032-OQ-001",
+        "source_shard_id": "shard-0032",
+        "source_lines": "185-193",
+        "detail": "What is the canonical requested-side concrete account field that pairs with requested_account_policy across contracts and consumers?"
+      },
+      {
+        "seed_id": "SEED-shard-0030-OQ-002",
+        "source_shard_id": "shard-0030",
+        "source_lines": "90-92",
+        "detail": "How should cross-family overlays be codified so family-local lifecycles remain distinct while historical semantics stay consistent?"
+      },
+      {
+        "seed_id": "SEED-shard-0031-OQ-003",
+        "source_shard_id": "shard-0031",
+        "source_lines": "87-89",
+        "detail": "Which doc should become the canonical concern SSOT equivalent to attempts/blocked/remediation families?"
+      }
+    ],
+    "process_defects": [
+      {
+        "seed_id": "SEED-shard-0030-PD-001",
+        "source_shard_id": "shard-0030",
+        "source_lines": "27-37",
+        "detail": "Contracts contain a direct remediation.resolved enum contradiction (fixed/superseded/abandoned/replan_required vs success/failed/ceiling_exceeded)."
+      },
+      {
+        "seed_id": "SEED-shard-0032-PD-002",
+        "source_shard_id": "shard-0032",
+        "source_lines": "175-177",
+        "detail": "Event tables remain weaker than surrounding prose MUST requirements, creating implementation ambiguity."
+      }
+    ],
+    "doc_hints": [
+      {
+        "seed_id": "SEED-shard-0029-DH-001",
+        "source_shard_id": "shard-0029",
+        "source_lines": "150-154",
+        "detail": "Add one shared routing/deep-link payload section and make all route-like commands consume it."
+      },
+      {
+        "seed_id": "SEED-shard-0030-DH-002",
+        "source_shard_id": "shard-0030",
+        "source_lines": "103-105",
+        "detail": "Document cross-family historical vocabulary and explicitly preserve family-local lifecycle models."
+      },
+      {
+        "seed_id": "SEED-shard-0031-DH-003",
+        "source_shard_id": "shard-0031",
+        "source_lines": "92-95",
+        "detail": "Publish canonical concern record schema with lineage and required resolution_kind/rationale semantics."
+      },
+      {
+        "seed_id": "SEED-shard-0032-DH-004",
+        "source_shard_id": "shard-0032",
+        "source_lines": "184-193",
+        "detail": "Reconcile requested/effective identity fields and trust-gating requirements directly in contract tables for run/usage/hitl and related events."
+      }
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0029": [],
+    "shard-0030": [],
+    "shard-0031": [],
+    "shard-0032": []
+  },
+  "seed_ids_by_shard": {
+    "shard-0029": [
+      "SEED-shard-0029-001",
+      "SEED-shard-0029-002",
+      "SEED-shard-0029-003",
+      "SEED-shard-0029-004",
+      "SEED-shard-0029-005",
+      "SEED-shard-0029-006",
+      "SEED-shard-0029-DH-001"
+    ],
+    "shard-0030": [
+      "SEED-shard-0030-001",
+      "SEED-shard-0030-002",
+      "SEED-shard-0030-003",
+      "SEED-shard-0030-OQ-002",
+      "SEED-shard-0030-PD-001",
+      "SEED-shard-0030-DH-002"
+    ],
+    "shard-0031": [
+      "SEED-shard-0031-001",
+      "SEED-shard-0031-002",
+      "SEED-shard-0031-003",
+      "SEED-shard-0031-004",
+      "SEED-shard-0031-OQ-003",
+      "SEED-shard-0031-DH-003"
+    ],
+    "shard-0032": [
+      "SEED-shard-0032-001",
+      "SEED-shard-0032-002",
+      "SEED-shard-0032-003",
+      "SEED-shard-0032-004",
+      "SEED-shard-0032-005",
+      "SEED-shard-0032-006",
+      "SEED-shard-0032-007",
+      "SEED-shard-0032-008",
+      "SEED-shard-0032-OQ-001",
+      "SEED-shard-0032-PD-002",
+      "SEED-shard-0032-DH-004"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
+}

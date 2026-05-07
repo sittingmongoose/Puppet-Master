@@ -1,0 +1,1443 @@
+{
+  "schema_id": "pm.fanout_worklist.v3.1.15",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "execution_type": "semantic_chunk_processing",
+  "stage_mode": "targeted_repair",
+  "subagents_required": true,
+  "skip_gate_satisfied": false,
+  "skip_gate_reason": "20 bounded shard batches \u00d7 ~800 lines each + per-batch defect lists; far above 800-ledger-line / 25-record skip-gate budgets.",
+  "routed_from": "C4",
+  "routed_from_artifact": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+  "repair_modes_in_play": [
+    "targeted_lineage_canonicalization",
+    "targeted_semantic_repair_missing_material",
+    "targeted_semantic_repair_doc_hint_preservation",
+    "targeted_semantic_repair_open_question_preservation"
+  ],
+  "structure_only_canonicalization_required": false,
+  "structure_only_canonicalization_rationale": "All 23 seed-group files passed C4's deterministic structure-first gate (canonical pm.ledger_seed_group.v3.1.15 shape). Defects are content-level: missing material, unreferenced doc hints, unrepresented open questions, and per-seed source_line_range out-of-bounds citations. Targeted semantic repair required.",
+  "preserved_unchanged_anchors": [
+    "shard-0049",
+    "shard-0053",
+    "shard-0089"
+  ],
+  "preserved_unchanged_anchors_rationale": "C4 reported these batches as fully complete (status=complete, material_coverage_status=complete, lineage within bounds). Per the targeted-repair rule, these MUST NOT be touched.",
+  "batch_size_default": 4,
+  "hard_max_lines_per_task": 800,
+  "required_subagent_tasks_total": 20,
+  "tasks": [
+    {
+      "task_id": "c3-repair-task-001",
+      "subagent_task_id": "c3-repair-task-001",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0001",
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0003",
+        "shard-0004"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0002.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0004.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0001": {
+          "start_line": 1,
+          "end_line": 200
+        },
+        "shard-0002": {
+          "start_line": 201,
+          "end_line": 400
+        },
+        "shard-0003": {
+          "start_line": 401,
+          "end_line": 600
+        },
+        "shard-0004": {
+          "start_line": 601,
+          "end_line": 800
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0001.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0001.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0001.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0001",
+        "subagent_task_id": "c4-check-task-001",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0001.json",
+        "result_artifact_sha256": "4ec9b5a82df36e0fa43643ece0231900f0cca4be1d45a4bf01b644aef32ebded",
+        "source_shard_ids": [
+          "shard-0001",
+          "shard-0002",
+          "shard-0003",
+          "shard-0004"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "gaps_found",
+        "missing_material_items_count": 11,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 5,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 1,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-002",
+      "subagent_task_id": "c3-repair-task-002",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0005",
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006",
+        "shard-0007",
+        "shard-0008"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0005.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0006.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0007.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0008.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0005": {
+          "start_line": 801,
+          "end_line": 1000
+        },
+        "shard-0006": {
+          "start_line": 1001,
+          "end_line": 1200
+        },
+        "shard-0007": {
+          "start_line": 1201,
+          "end_line": 1400
+        },
+        "shard-0008": {
+          "start_line": 1401,
+          "end_line": 1600
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0005.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0005.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0005.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0005",
+        "subagent_task_id": "c4-check-task-002",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0005.json",
+        "result_artifact_sha256": "e25dc52304a58c21649694e94c77cd032cac2c4db98281480075ee70d87eba95",
+        "source_shard_ids": [
+          "shard-0005",
+          "shard-0006",
+          "shard-0007",
+          "shard-0008"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 7,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 33,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 6,
+        "issues_count": 4,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-003",
+      "subagent_task_id": "c3-repair-task-003",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0009",
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0009.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0010.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0011.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0012.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0009": {
+          "start_line": 1601,
+          "end_line": 1800
+        },
+        "shard-0010": {
+          "start_line": 1801,
+          "end_line": 2000
+        },
+        "shard-0011": {
+          "start_line": 2001,
+          "end_line": 2200
+        },
+        "shard-0012": {
+          "start_line": 2201,
+          "end_line": 2400
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0009.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0009.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0009.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0009",
+        "subagent_task_id": "c4-check-task-003",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0009.json",
+        "result_artifact_sha256": "06788faff130765649f62be103400a4a284daea4a3ebb0fc27b1979b63bea665",
+        "source_shard_ids": [
+          "shard-0009",
+          "shard-0010",
+          "shard-0011",
+          "shard-0012"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 12,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 29,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 4,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-004",
+      "subagent_task_id": "c3-repair-task-004",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0013",
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0014",
+        "shard-0015",
+        "shard-0016"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0013.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0014.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0015.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0016.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0013": {
+          "start_line": 2401,
+          "end_line": 2600
+        },
+        "shard-0014": {
+          "start_line": 2601,
+          "end_line": 2800
+        },
+        "shard-0015": {
+          "start_line": 2801,
+          "end_line": 3000
+        },
+        "shard-0016": {
+          "start_line": 3001,
+          "end_line": 3200
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0013.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0013.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0013.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0013",
+        "subagent_task_id": "c4-check-task-004",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0013.json",
+        "result_artifact_sha256": "c09e1cbc12b2310252764219b909f99e3f025db786d9e1f661aeaa40a1e0e62a",
+        "source_shard_ids": [
+          "shard-0013",
+          "shard-0014",
+          "shard-0015",
+          "shard-0016"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 1,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 20,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 1,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-005",
+      "subagent_task_id": "c3-repair-task-005",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0017",
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0018",
+        "shard-0019",
+        "shard-0020"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0017.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0018.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0019.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0020.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0017": {
+          "start_line": 3201,
+          "end_line": 3400
+        },
+        "shard-0018": {
+          "start_line": 3401,
+          "end_line": 3600
+        },
+        "shard-0019": {
+          "start_line": 3601,
+          "end_line": 3800
+        },
+        "shard-0020": {
+          "start_line": 3801,
+          "end_line": 4000
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0017.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0017.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0017.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0017",
+        "subagent_task_id": "c4-check-task-005",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0017.json",
+        "result_artifact_sha256": "15cd7d607c6e97705bae8cb0b408eccfbb37c46a398d424f54e1ba814ddc690f",
+        "source_shard_ids": [
+          "shard-0017",
+          "shard-0018",
+          "shard-0019",
+          "shard-0020"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": false,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 2,
+        "lineage_failure_seeds_count": 3,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 15,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 4,
+        "issues_count": 4,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": true,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-006",
+      "subagent_task_id": "c3-repair-task-006",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0021",
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0022",
+        "shard-0023",
+        "shard-0024"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0021.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0022.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0023.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0024.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0021": {
+          "start_line": 4001,
+          "end_line": 4200
+        },
+        "shard-0022": {
+          "start_line": 4201,
+          "end_line": 4400
+        },
+        "shard-0023": {
+          "start_line": 4401,
+          "end_line": 4600
+        },
+        "shard-0024": {
+          "start_line": 4601,
+          "end_line": 4800
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0021.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0021.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0021.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0021",
+        "subagent_task_id": "c4-check-task-006",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0021.json",
+        "result_artifact_sha256": "da95a78d4bbc47f41be38d1376a368b9b47b5da23baaf6e687763145309371fb",
+        "source_shard_ids": [
+          "shard-0021",
+          "shard-0022",
+          "shard-0023",
+          "shard-0024"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": false,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 4,
+        "lineage_failure_seeds_count": 7,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 17,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 4,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": true,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-007",
+      "subagent_task_id": "c3-repair-task-007",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0025",
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0026",
+        "shard-0027",
+        "shard-0028"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0025.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0026.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0027.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0028.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0025": {
+          "start_line": 4801,
+          "end_line": 5000
+        },
+        "shard-0026": {
+          "start_line": 5001,
+          "end_line": 5200
+        },
+        "shard-0027": {
+          "start_line": 5201,
+          "end_line": 5400
+        },
+        "shard-0028": {
+          "start_line": 5401,
+          "end_line": 5600
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0025.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0025.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0025.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0025",
+        "subagent_task_id": "c4-check-task-007",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0025.json",
+        "result_artifact_sha256": "c127d08b205005f008fc49f49d965476af0c3928b00cb2abfd31635331075356",
+        "source_shard_ids": [
+          "shard-0025",
+          "shard-0026",
+          "shard-0027",
+          "shard-0028"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 17,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 16,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 2,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-008",
+      "subagent_task_id": "c3-repair-task-008",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0029",
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0030",
+        "shard-0031",
+        "shard-0032"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0029.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0030.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0031.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0032.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0029": {
+          "start_line": 5601,
+          "end_line": 5800
+        },
+        "shard-0030": {
+          "start_line": 5801,
+          "end_line": 6000
+        },
+        "shard-0031": {
+          "start_line": 6001,
+          "end_line": 6200
+        },
+        "shard-0032": {
+          "start_line": 6201,
+          "end_line": 6400
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0029.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0029.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0029.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0029",
+        "subagent_task_id": "c4-check-task-008",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0029.json",
+        "result_artifact_sha256": "bb04fba1ce56b91ddfdb731198e6f0c0bad1858c1a48601c25114c2cd29adc54",
+        "source_shard_ids": [
+          "shard-0029",
+          "shard-0030",
+          "shard-0031",
+          "shard-0032"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 6,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 21,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 2,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-009",
+      "subagent_task_id": "c3-repair-task-009",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0033",
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0033.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0034.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0035.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0036.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0033": {
+          "start_line": 6401,
+          "end_line": 6600
+        },
+        "shard-0034": {
+          "start_line": 6601,
+          "end_line": 6800
+        },
+        "shard-0035": {
+          "start_line": 6801,
+          "end_line": 7000
+        },
+        "shard-0036": {
+          "start_line": 7001,
+          "end_line": 7200
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0033.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0033.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0033.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0033",
+        "subagent_task_id": "c4-check-task-009",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0033.json",
+        "result_artifact_sha256": "cec712028a5120d443ad21f30ead1497fe5003a00be41cd9fcdd9a1db6d75e75",
+        "source_shard_ids": [
+          "shard-0033",
+          "shard-0034",
+          "shard-0035",
+          "shard-0036"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 0,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 10,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 4,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": false,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-010",
+      "subagent_task_id": "c3-repair-task-010",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0037",
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0040"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0037.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0038.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0039.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0040.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0037": {
+          "start_line": 7201,
+          "end_line": 7400
+        },
+        "shard-0038": {
+          "start_line": 7401,
+          "end_line": 7600
+        },
+        "shard-0039": {
+          "start_line": 7601,
+          "end_line": 7800
+        },
+        "shard-0040": {
+          "start_line": 7801,
+          "end_line": 8000
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0037.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0037.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0037.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0037",
+        "subagent_task_id": "c4-check-task-010",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0037.json",
+        "result_artifact_sha256": "c02fb56b2fa38eaadb4c12ab194043e55f313da9993d01efe551e5b02bd81d48",
+        "source_shard_ids": [
+          "shard-0037",
+          "shard-0038",
+          "shard-0039",
+          "shard-0040"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 19,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 45,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-011",
+      "subagent_task_id": "c3-repair-task-011",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0041",
+      "source_shard_ids": [
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0041.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0042.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0043.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0044.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0041": {
+          "start_line": 8001,
+          "end_line": 8200
+        },
+        "shard-0042": {
+          "start_line": 8201,
+          "end_line": 8400
+        },
+        "shard-0043": {
+          "start_line": 8401,
+          "end_line": 8600
+        },
+        "shard-0044": {
+          "start_line": 8601,
+          "end_line": 8800
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0041.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0041.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0041.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0041",
+        "subagent_task_id": "c4-check-task-011",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0041.json",
+        "result_artifact_sha256": "cf512b559a98b4e63883b9582a8d09ce2cee19610e57481e920ffd52186f196f",
+        "source_shard_ids": [
+          "shard-0041",
+          "shard-0042",
+          "shard-0043",
+          "shard-0044"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 6,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 14,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 2,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-012",
+      "subagent_task_id": "c3-repair-task-012",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0045",
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0045.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0046.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0047.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0048.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0045": {
+          "start_line": 8801,
+          "end_line": 9000
+        },
+        "shard-0046": {
+          "start_line": 9001,
+          "end_line": 9200
+        },
+        "shard-0047": {
+          "start_line": 9201,
+          "end_line": 9400
+        },
+        "shard-0048": {
+          "start_line": 9401,
+          "end_line": 9600
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0045.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0045.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0045.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0045",
+        "subagent_task_id": "c4-check-task-012",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0045.json",
+        "result_artifact_sha256": "7f228dcd08329d3fa9a812c5980f6a99af4f281a7a511d0c384d9e43000d57a6",
+        "source_shard_ids": [
+          "shard-0045",
+          "shard-0046",
+          "shard-0047",
+          "shard-0048"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 4,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 28,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 2,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-013",
+      "subagent_task_id": "c3-repair-task-013",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0057",
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0057.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0058.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0059.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0060.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0057": {
+          "start_line": 11201,
+          "end_line": 11400
+        },
+        "shard-0058": {
+          "start_line": 11401,
+          "end_line": 11600
+        },
+        "shard-0059": {
+          "start_line": 11601,
+          "end_line": 11800
+        },
+        "shard-0060": {
+          "start_line": 11801,
+          "end_line": 12000
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0057.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0057.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0057.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0057",
+        "subagent_task_id": "c4-check-task-015",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0057.json",
+        "result_artifact_sha256": "c820a01b86f1370283ba178b52716ee4cf8a4b769e0e63c48365f6b9d9e1e203",
+        "source_shard_ids": [
+          "shard-0057",
+          "shard-0058",
+          "shard-0059",
+          "shard-0060"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": false,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 2,
+        "lineage_failure_seeds_count": 2,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 8,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": true,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-014",
+      "subagent_task_id": "c3-repair-task-014",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0061",
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0061.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0062.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0063.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0064.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0061": {
+          "start_line": 12001,
+          "end_line": 12200
+        },
+        "shard-0062": {
+          "start_line": 12201,
+          "end_line": 12400
+        },
+        "shard-0063": {
+          "start_line": 12401,
+          "end_line": 12600
+        },
+        "shard-0064": {
+          "start_line": 12601,
+          "end_line": 12800
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0061.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0061.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0061.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0061",
+        "subagent_task_id": "c4-check-task-016",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0061.json",
+        "result_artifact_sha256": "19b66509b77edaebaf8d907d7ab66aa5bc58a4cc0932eb0470365a432b9b9632",
+        "source_shard_ids": [
+          "shard-0061",
+          "shard-0062",
+          "shard-0063",
+          "shard-0064"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 2,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 10,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 1,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-015",
+      "subagent_task_id": "c3-repair-task-015",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0065",
+      "source_shard_ids": [
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0065.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0066.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0067.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0068.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0065": {
+          "start_line": 12801,
+          "end_line": 13000
+        },
+        "shard-0066": {
+          "start_line": 13001,
+          "end_line": 13200
+        },
+        "shard-0067": {
+          "start_line": 13201,
+          "end_line": 13400
+        },
+        "shard-0068": {
+          "start_line": 13401,
+          "end_line": 13600
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0065.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0065.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0065.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0065",
+        "subagent_task_id": "c4-check-task-017",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0065.json",
+        "result_artifact_sha256": "c45181a2f21b61d0174e528e59e0489e276bba62e1f436e2057ae70c91321e3c",
+        "source_shard_ids": [
+          "shard-0065",
+          "shard-0066",
+          "shard-0067",
+          "shard-0068"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 2,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 2,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 2,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-016",
+      "subagent_task_id": "c3-repair-task-016",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0069",
+      "source_shard_ids": [
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0069.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0070.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0071.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0072.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0069": {
+          "start_line": 13601,
+          "end_line": 13800
+        },
+        "shard-0070": {
+          "start_line": 13801,
+          "end_line": 14000
+        },
+        "shard-0071": {
+          "start_line": 14001,
+          "end_line": 14200
+        },
+        "shard-0072": {
+          "start_line": 14201,
+          "end_line": 14400
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0069.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0069.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0069.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0069",
+        "subagent_task_id": "c4-check-task-018",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0069.json",
+        "result_artifact_sha256": "4983cc977c7cd2b9f6445783b64aede201e1507a377e2bda53b1b40c57b6eee1",
+        "source_shard_ids": [
+          "shard-0069",
+          "shard-0070",
+          "shard-0071",
+          "shard-0072"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 4,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 45,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 2,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-017",
+      "subagent_task_id": "c3-repair-task-017",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0073",
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0076"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0073.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0074.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0075.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0076.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0073": {
+          "start_line": 14401,
+          "end_line": 14600
+        },
+        "shard-0074": {
+          "start_line": 14601,
+          "end_line": 14800
+        },
+        "shard-0075": {
+          "start_line": 14801,
+          "end_line": 15000
+        },
+        "shard-0076": {
+          "start_line": 15001,
+          "end_line": 15200
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0073.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0073.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0073.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0073",
+        "subagent_task_id": "c4-check-task-019",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0073.json",
+        "result_artifact_sha256": "26be47f2d965d33ab7bab2865d5c01eb4e2696be7f5ef473946fb6c5f0113636",
+        "source_shard_ids": [
+          "shard-0073",
+          "shard-0074",
+          "shard-0075",
+          "shard-0076"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 5,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 12,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 7,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-018",
+      "subagent_task_id": "c3-repair-task-018",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0077",
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0077.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0078.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0079.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0080.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0077": {
+          "start_line": 15201,
+          "end_line": 15400
+        },
+        "shard-0078": {
+          "start_line": 15401,
+          "end_line": 15600
+        },
+        "shard-0079": {
+          "start_line": 15601,
+          "end_line": 15800
+        },
+        "shard-0080": {
+          "start_line": 15801,
+          "end_line": 16000
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0077.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0077.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0077.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0077",
+        "subagent_task_id": "c4-check-task-020",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0077.json",
+        "result_artifact_sha256": "5c9e3fd6fa1266997d0b8418476ba8756760ec034687a1d97091a3ce34a564f0",
+        "source_shard_ids": [
+          "shard-0077",
+          "shard-0078",
+          "shard-0079",
+          "shard-0080"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 5,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 18,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 6,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-019",
+      "subagent_task_id": "c3-repair-task-019",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0081",
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0081.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0082.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0083.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0084.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0081": {
+          "start_line": 16001,
+          "end_line": 16200
+        },
+        "shard-0082": {
+          "start_line": 16201,
+          "end_line": 16400
+        },
+        "shard-0083": {
+          "start_line": 16401,
+          "end_line": 16600
+        },
+        "shard-0084": {
+          "start_line": 16601,
+          "end_line": 16800
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0081.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0081.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0081.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0081",
+        "subagent_task_id": "c4-check-task-021",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0081.json",
+        "result_artifact_sha256": "ae0e46b6395a8f642b2cc565c1f99f2e1d65c4423d54d74f6baf1a3a0005639e",
+        "source_shard_ids": [
+          "shard-0081",
+          "shard-0082",
+          "shard-0083",
+          "shard-0084"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": false,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 7,
+        "lineage_failure_seeds_count": 1,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 10,
+        "open_questions_preserved": false,
+        "open_questions_unrepresented_count": 2,
+        "issues_count": 4,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": true,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": true
+      },
+      "status": "pending"
+    },
+    {
+      "task_id": "c3-repair-task-020",
+      "subagent_task_id": "c3-repair-task-020",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair",
+      "batch_anchor_shard_id": "shard-0085",
+      "source_shard_ids": [
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "source_shard_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0085.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0086.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0087.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0088.md"
+      ],
+      "shard_line_ranges": {
+        "shard-0085": {
+          "start_line": 16801,
+          "end_line": 17000
+        },
+        "shard-0086": {
+          "start_line": 17001,
+          "end_line": 17200
+        },
+        "shard-0087": {
+          "start_line": 17201,
+          "end_line": 17400
+        },
+        "shard-0088": {
+          "start_line": 17401,
+          "end_line": 17600
+        }
+      },
+      "total_input_lines": 800,
+      "input_size_under_budget": true,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0085.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0085.json",
+      "output_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0085.json",
+      "repair_scope_summary": {
+        "batch_anchor_shard_id": "shard-0085",
+        "subagent_task_id": "c4-check-task-022",
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0085.json",
+        "result_artifact_sha256": "fbe34bda46747c821e5e4fbef41aaf0922b227826875ac786557353592d007b9",
+        "source_shard_ids": [
+          "shard-0085",
+          "shard-0086",
+          "shard-0087",
+          "shard-0088"
+        ],
+        "structure_check_pass": true,
+        "lineage_within_bounds": true,
+        "material_coverage_status": "partial",
+        "missing_material_items_count": 19,
+        "lineage_failure_seeds_count": 0,
+        "doc_hints_preserved": false,
+        "doc_hints_unreferenced_count": 26,
+        "open_questions_preserved": true,
+        "open_questions_unrepresented_count": 0,
+        "issues_count": 3,
+        "subagent_status": "issues_found",
+        "needs_lineage_repair": false,
+        "needs_material_repair": true,
+        "needs_doc_hint_repair": true,
+        "needs_open_question_repair": false
+      },
+      "status": "pending"
+    }
+  ],
+  "wave_plan": {
+    "wave_size": 8,
+    "waves_expected_min": 3,
+    "wave_1_task_ids": [
+      "c3-repair-task-001",
+      "c3-repair-task-002",
+      "c3-repair-task-003",
+      "c3-repair-task-004",
+      "c3-repair-task-005",
+      "c3-repair-task-006",
+      "c3-repair-task-007",
+      "c3-repair-task-008"
+    ],
+    "wave_2_task_ids": [
+      "c3-repair-task-009",
+      "c3-repair-task-010",
+      "c3-repair-task-011",
+      "c3-repair-task-012",
+      "c3-repair-task-013",
+      "c3-repair-task-014",
+      "c3-repair-task-015",
+      "c3-repair-task-016"
+    ],
+    "wave_3_task_ids": [
+      "c3-repair-task-017",
+      "c3-repair-task-018",
+      "c3-repair-task-019",
+      "c3-repair-task-020"
+    ]
+  },
+  "generated_at_utc": "20260507T182000Z"
+}

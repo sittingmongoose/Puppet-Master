@@ -1,746 +1,469 @@
 {
-  "schema_id": "pm.ledger_seed_group.v3.1.14",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
   "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.1.14",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "subagent_task_id": "task-001",
-  "source_shard_ids": [
-    "shard-0001",
-    "shard-0002",
-    "shard-0003",
-    "shard-0004"
-  ],
+  "subagent_task_id": "c3-repair2-task-001",
+  "batch_anchor_shard_id": "shard-0001",
+  "source_shard_ids": ["shard-0001", "shard-0002", "shard-0003", "shard-0004"],
   "shard_line_ranges": {
-    "shard-0001": { "start_line": 1, "end_line": 200 },
-    "shard-0002": { "start_line": 1, "end_line": 200 },
-    "shard-0003": { "start_line": 1, "end_line": 200 },
-    "shard-0004": { "start_line": 1, "end_line": 200 }
+    "shard-0001": {"start_line": 1, "end_line": 200},
+    "shard-0002": {"start_line": 201, "end_line": 400},
+    "shard-0003": {"start_line": 401, "end_line": 600},
+    "shard-0004": {"start_line": 601, "end_line": 800}
   },
-  "extracted": {
-    "requirements": [
-      {
-        "seed_id": "SEED-shard-0001-005",
-        "source_shard_id": "shard-0001",
-        "source_lines": [33, 34, 35, 36, 37],
-        "text": "Node Graph tab must show graph-patch lineage: superseded nodes remain visible and clickable for historical detail, patched generations branch from the old path, and the live path may rejoin surviving downstream nodes."
-      },
-      {
-        "seed_id": "SEED-shard-0001-009",
-        "source_shard_id": "shard-0001",
-        "source_lines": [106, 107, 108, 109, 110],
-        "text": "Seams tab is hierarchical: top level Feature Seams, second level Work Packages, with nodes appearing as drill-in summaries; detail panel emphasizes governance/completion/integration truth rather than raw node execution churn."
-      },
-      {
-        "seed_id": "SEED-shard-0001-010",
-        "source_shard_id": "shard-0001",
-        "source_lines": [111, 112, 113, 114, 115, 116, 117, 118, 119, 120],
-        "text": "Node Graph tab provides a graph canvas plus right-side detail inspector exposing requested/effective provider/model/effort/persona/account, usage/token/cost, worker policy, retry/review/promotion state, lane/worktree/snapshot state, and linked evidence/artifacts; evidence/artifact links deep-link to the Evidence tab with target selection/filter applied."
-      },
-      {
-        "seed_id": "SEED-shard-0001-011",
-        "source_shard_id": "shard-0001",
-        "source_lines": [121, 122, 123, 124, 125, 126],
-        "text": "Evidence tab uses separate panes: Evidence pane (verdicts/receipts/findings/reports) and Artifacts pane (screenshots/recordings/diffs/reports/generated docs); the two remain bidirectionally linked, with usage-linked receipts when relevant."
-      },
-      {
-        "seed_id": "SEED-shard-0001-013",
-        "source_shard_id": "shard-0001",
-        "source_lines": [130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140],
-        "text": "Right-side inspectors stay summary/action oriented; dense objects (attempt handoff artifacts, review records, corroboration records, graph patch requests, state transition reports, promotion records, recovery records) open full-record views."
-      },
-      {
-        "seed_id": "SEED-shard-0001-016",
-        "source_shard_id": "shard-0001",
-        "source_lines": [171, 172, 173, 174, 175, 176, 177, 178],
-        "text": "Weak Integration must be summarized visibly in Seams under readable headings (Wiring, Workflow, State, GUI, Design); package issues roll up to seam concerns only when they cross package/seam/user-visible boundaries or affect seam completion truth."
-      },
-      {
-        "seed_id": "SEED-shard-0001-018",
-        "source_shard_id": "shard-0001",
-        "source_lines": [193, 194, 195, 196, 197, 198, 199, 200],
-        "text": "Blocked states must always expose blocked reason, blocked owner, time blocked, and next step; blocked ownership uses stable labels (Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource)."
-      },
-      {
-        "seed_id": "SEED-shard-0002-004",
-        "source_shard_id": "shard-0002",
-        "source_lines": [7, 8, 9, 10, 11, 12, 13, 14, 15],
-        "text": "Alert levels separate into Info, Warning, Attention, Action Required; Dashboard surfaces summary/urgency, Orchestrator surfaces detailed operational alert context, and chat-thread is reserved for situations that actually need user resolution/decision."
-      },
-      {
-        "seed_id": "SEED-shard-0002-009",
-        "source_shard_id": "shard-0002",
-        "source_lines": [37, 38, 39, 40],
-        "text": "Tab badges stay sparse and purposeful: Progress badge represents meaningful attention/action-required count; other tabs prefer targeted counts or simple dot-badges over noisy unread-like counters."
-      },
-      {
-        "seed_id": "SEED-shard-0002-014",
-        "source_shard_id": "shard-0002",
-        "source_lines": [108, 109, 110, 111, 112, 113, 114],
-        "text": "Orchestrator widgets consume stable shared projections rather than raw event streams or bespoke queries; the widget shell needs widget identity/type, scope, filter/sort/display config, and a projection ref."
-      },
-      {
-        "seed_id": "SEED-shard-0002-019",
-        "source_shard_id": "shard-0002",
-        "source_lines": [164, 165, 166],
-        "text": "Each tab needs role-appropriate filters; Orchestrator must support saved views (at least per project) covering tabs, filters, sort, grouping, and widget layout."
-      },
-      {
-        "seed_id": "SEED-shard-0002-024",
-        "source_shard_id": "shard-0002",
-        "source_lines": [198, 199, 200],
-        "text": "Override display must explicitly show Inherited, Overridden, and Effective values without requiring a separate modal to understand resolution/inheritance/fallback."
-      },
-      {
-        "seed_id": "SEED-shard-0003-005",
-        "source_shard_id": "shard-0003",
-        "source_lines": [32, 33, 34, 35, 36],
-        "text": "Any provider-using actor (assistant chat, interviewer, requirements-doc builder, overseers, node workers, delegated workers) must participate in the same pre-send and post-send account-health loop; completed interactions can update account health and route the next message/attempt to a different account."
-      },
-      {
-        "seed_id": "SEED-shard-0003-009",
-        "source_shard_id": "shard-0003",
-        "source_lines": [56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
-        "text": "Each failed node attempt leaves a structured receipt/handoff artifact (what was done, what changed, why it failed/blocked, what to try next); default retry uses a fresh agent/subagent under policy-driven budgets/caps; some failures route to remediation, graph patch, or block/HITL instead of plain retry."
-      },
-      {
-        "seed_id": "SEED-shard-0003-019",
-        "source_shard_id": "shard-0003",
-        "source_lines": [137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155],
-        "text": "GUI exposes execution-policy controls: fresh vs same-context retry worker (default fresh), subagents-by-default for nodes with override to full agents, overseer delegation on/off, delegated-worker provider/model/effort policy, and consistent requested-vs-effective identity across chat actors and orchestration actors; worker kind and retry-context are separate settings."
-      },
-      {
-        "seed_id": "SEED-shard-0004-003",
-        "source_shard_id": "shard-0004",
-        "source_lines": [21, 22, 23, 24, 25, 26],
-        "text": "Node personas auto-select from node work/type with a global node-worker-policy override (not per-node); feature seam, work package, and node each carry independent provider/model/effort settings with defaults plus overrideability."
-      },
-      {
-        "seed_id": "SEED-shard-0004-004",
-        "source_shard_id": "shard-0004",
-        "source_lines": [24, 25, 26, 27, 28, 29],
-        "text": "Settings define whether work-package overseers may spawn subagents for node work; if enabled, those subagents' provider/model/effort must be configurable; package-based worktrees are preferred over per-node at expected scale, with explicit lane/ordering rules so dependent nodes inside the same package see correct upstream state."
-      },
-      {
-        "seed_id": "SEED-shard-0004-008",
-        "source_shard_id": "shard-0004",
-        "source_lines": [47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
-        "text": "Worktrees must be visible in the Orchestrator page and likely in Source Control; orchestrator-managed worktrees are partitioned from user-/assistant-created worktrees; multiple projects/repos run Orchestrator concurrently with per-project data/storage isolation, settings, themes, and snapshots."
-      },
-      {
-        "seed_id": "SEED-shard-0004-009",
-        "source_shard_id": "shard-0004",
-        "source_lines": [58, 59, 60, 61],
-        "text": "Multi-account execution must allow switching to another account on usage exhaustion or predicted imminent exhaustion, modeling account/provider selection as requested-vs-effective runtime identity persisted at attempt level."
-      },
-      {
-        "seed_id": "SEED-shard-0004-019",
-        "source_shard_id": "shard-0004",
-        "source_lines": [166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180],
-        "text": "Add explicit effective_account_id and switch/fallback reason to attempt/runtime visibility; multi-account policy supports cooldown and retry-budget concepts on top of threshold/priority; account selection operates over a provider+role+namespace/pool snapshot; browser-based relogin and log parsing remain optional/supplemental—not canonical quota truth or the default execution model."
-      }
-    ],
-    "decisions": [
-      {
-        "seed_id": "SEED-shard-0001-003",
-        "source_shard_id": "shard-0001",
-        "source_lines": [29, 30, 31],
-        "text": "Orchestrator remains tab-first (not widget-first); Progress remains the first tab and is the tab that hosts Orchestrator widgets."
-      },
-      {
-        "seed_id": "SEED-shard-0001-004",
-        "source_shard_id": "shard-0001",
-        "source_lines": [32],
-        "text": "Replace the existing Tiers tab with a seam/package-oriented tab (likely Seams)."
-      },
-      {
-        "seed_id": "SEED-shard-0001-006",
-        "source_shard_id": "shard-0001",
-        "source_lines": [59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74],
-        "text": "Keep tabs separate: Progress, Seams (replacement for Tiers), Node Graph, Evidence, History, Ledger; Progress is the widget-hosting operational summary tab; History and Ledger remain separate (chronological story vs. structured durable record inspection)."
-      },
-      {
-        "seed_id": "SEED-shard-0001-008",
-        "source_shard_id": "shard-0001",
-        "source_lines": [92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105],
-        "text": "Default Progress-widget drill targets are deterministic: Run Status -> History; Current Activity / Attention / Worktree Lanes -> Node Graph; Seam Health / Package Activity / Overseer Activity -> Seams; Promotion Queue -> Ledger; Account/Usage Pressure -> Usage; Recent Major Events / Throughput -> History; Corroboration Queue / Recovery State -> Evidence."
-      },
-      {
-        "seed_id": "SEED-shard-0002-008",
-        "source_shard_id": "shard-0002",
-        "source_lines": [41, 42, 43, 44, 45, 46, 47, 48],
-        "text": "Condition aging: unresolved conditions stay on operational surfaces; resolved fall back to History; recently resolved major items may linger briefly; default lifetimes ~15 minutes for normal resolved operational items and up to 24 hours (or until dismissed) for major resolved items; future control is policy-level, not per-alert micro-configuration."
-      },
-      {
-        "seed_id": "SEED-shard-0002-018",
-        "source_shard_id": "shard-0002",
-        "source_lines": [131, 132, 133, 134, 135, 136, 137, 138],
-        "text": "Projection freshness: event-driven updates are the primary model; manual refresh / tab re-open refresh remain secondary; conceptual projection-health states are current, refreshing, stale, failed."
-      },
-      {
-        "seed_id": "SEED-shard-0002-022",
-        "source_shard_id": "shard-0002",
-        "source_lines": [167, 168, 169, 170],
-        "text": "Default sort orders: Seams = most operationally problematic first; History = newest first; Ledger = newest first."
-      },
-      {
-        "seed_id": "SEED-shard-0002-023",
-        "source_shard_id": "shard-0002",
-        "source_lines": [171, 172, 173, 174, 175],
-        "text": "Surface split: Dashboard = summary/urgency/entry points; Orchestrator = operational depth; Projects = multi-project summary/management richer than a tiny status list but still summary-first; Project cards show compact orchestrator/attention/usage pressure and one primary blocked owner/reason when blocked."
-      },
-      {
-        "seed_id": "SEED-shard-0003-003",
-        "source_shard_id": "shard-0003",
-        "source_lines": [29, 30, 31],
-        "text": "New multi-account failover/account-threshold/effective-account behavior extends the existing Usage model and projections; do not invent a second independent account-pressure or quota subsystem beside Usage."
-      },
-      {
-        "seed_id": "SEED-shard-0003-006",
-        "source_shard_id": "shard-0003",
-        "source_lines": [37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55],
-        "text": "Conversational actors (assistant, interviewer, requirements-doc builder, PRD builder) share provider/account/usage/runtime identity with orchestration actors but are not orchestration nodes/packages/seams; the broader handoff chain runs requirements-doc builder -> interview flow -> PRD builder -> graph-plan inputs -> Orchestrator with human review at document-production stages; Orchestrator-style chat-thread resolution is not projected backward onto ordinary conversational interaction."
-      },
-      {
-        "seed_id": "SEED-shard-0003-011",
-        "source_shard_id": "shard-0003",
-        "source_lines": [79, 80, 81, 82, 83, 84],
-        "text": "Separate task state / completion truth, append-only execution learnings, and reusable pattern memory; do not rely on one giant conversational thread as the only continuity mechanism."
-      },
-      {
-        "seed_id": "SEED-shard-0003-013",
-        "source_shard_id": "shard-0003",
-        "source_lines": [103, 104, 105, 106, 107, 108, 109, 110, 111],
-        "text": "Canonical handoff/retry memory must be structured runtime records (not loose markdown logs); worker-facing handoff is a synthesized bounded packet assembled from canonical records, not full raw history."
-      },
-      {
-        "seed_id": "SEED-shard-0003-016",
-        "source_shard_id": "shard-0003",
-        "source_lines": [121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133],
-        "text": "New orchestration artifacts (node retry memory, attempt handoff artifacts, reusable learning records, worker handoff packets) map onto the documented stack: event/source-of-truth aspects in seglog, projected/current-state aspects in redb, JSON/JSONL only as user-requested export/inspection; loose JSON files must not be canonical."
-      },
-      {
-        "seed_id": "SEED-shard-0003-021",
-        "source_shard_id": "shard-0003",
-        "source_lines": [192, 193, 194],
-        "text": "Hybrid graph+tier is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens; it is dangerous if both retain execution authority."
-      },
-      {
-        "seed_id": "SEED-shard-0004-001",
-        "source_shard_id": "shard-0004",
-        "source_lines": [1, 2, 3, 4],
-        "text": "Keep the canonical graph as execution truth; introduce bounded coherent subgraph groupings (work packages); assign local overseers to work packages; keep the global Orchestrator runtime deterministic and above those overseers."
-      },
-      {
-        "seed_id": "SEED-shard-0004-002",
-        "source_shard_id": "shard-0004",
-        "source_lines": [7, 8, 9, 10, 11, 12, 13, 14],
-        "text": "Governance layering reintroduces both work-package overseer and same-feature-seam overseer over graph-based execution; feature seam is first-class; weak integration means the feature seam is not complete (package completion is necessary but not sufficient)."
-      },
-      {
-        "seed_id": "SEED-shard-0004-006",
-        "source_shard_id": "shard-0004",
-        "source_lines": [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46],
-        "text": "System is fully automated by default; HITL is configurable but off by default; on critical failure or major decision, surface the issue in Dashboard, Orchestrator, and a spawned chat-window agent/thread, with chat presenting the issue/decision for resolution."
-      },
-      {
-        "seed_id": "SEED-shard-0004-018",
-        "source_shard_id": "shard-0004",
-        "source_lines": [109, 110, 111, 112, 113, 114, 115, 116, 117],
-        "text": "Lifecycle is per-entity (node, work package, feature seam, promotion, worktree lane) rather than one universal status enum; transitions are deterministic and event-driven; canonical event naming is shared across runtime and UI projections—Orchestrator must not invent a shadow event language."
-      }
-    ],
-    "data_shapes": [
-      {
-        "seed_id": "SEED-shard-0001-007",
-        "source_shard_id": "shard-0001",
-        "source_lines": [75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91],
-        "text": "Core Progress-tab widget catalog: Run Status, Current Activity, Attention/Blockers, Seam Health, Package Activity, Promotion Queue, Worktree Lanes, Account/Usage Pressure, Recent Major Events, Overseer Activity, Corroboration Queue, Recovery State, Throughput/Capacity (err on side of more options; user can disable/hide)."
-      },
-      {
-        "seed_id": "SEED-shard-0001-017",
-        "source_shard_id": "shard-0001",
-        "source_lines": [183, 184, 185, 186],
-        "text": "Promotions are visible as explicit named boundaries: Lane to Package, Package to Seam, Seam Completion."
-      },
-      {
-        "seed_id": "SEED-shard-0002-005",
-        "source_shard_id": "shard-0002",
-        "source_lines": [16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
-        "text": "Canonical event families remain stable: seam.*, package.*, node.*, promotion.*, corroboration.*, graph_patch.*, recovery.*, account.*."
-      },
-      {
-        "seed_id": "SEED-shard-0002-013",
-        "source_shard_id": "shard-0002",
-        "source_lines": [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74],
-        "text": "Concern is a first-class record carrying identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, and visibility/attention flags; lifecycle states include active, acknowledged, resolved, dismissed."
-      },
-      {
-        "seed_id": "SEED-shard-0002-015",
-        "source_shard_id": "shard-0002",
-        "source_lines": [115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127],
-        "text": "Required orchestrator projection families: Run Summary, Seam Summary, Package Summary, Node Summary, Promotion Summary, Lane/Worktree Summary, Concern Summary, Account/Usage Pressure, Recent Major Events, Corroboration Summary, Recovery Summary, Overseer Activity."
-      },
-      {
-        "seed_id": "SEED-shard-0002-025",
-        "source_shard_id": "shard-0002",
-        "source_lines": [181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197],
-        "text": "Settings groupings: Providers & Models, Execution Identity, Governance, Workers, Recovery, HITL; settings-scope hierarchy: App/Global, Project (main execution policy owner), Seam (feature-level overrides), Package (local execution/recovery overrides), Node (rare targeted override), Actor/Role (cross-cutting policy), Runtime only (computed truth, not user configuration)."
-      },
-      {
-        "seed_id": "SEED-shard-0003-014",
-        "source_shard_id": "shard-0003",
-        "source_lines": [112, 113, 114, 115, 116, 117, 118, 119, 120],
-        "text": "Documented persistence stack: seglog = canonical append-only event source; redb = durable KV state / checkpoints / projections / rollups; Tantivy = search index; JSONL mirror = disposable projector output, not canonical truth; FinalGUISpec aligns persistence(events)=seglog and layout/settings/state=redb."
-      },
-      {
-        "seed_id": "SEED-shard-0003-015",
-        "source_shard_id": "shard-0003",
-        "source_lines": [94, 95, 96, 97, 98, 99, 100, 101, 102],
-        "text": "Each attempt should produce at minimum: what was attempted, what changed/artifacts produced, checks/tests/review outcome, why it failed/blocked, contamination/restore state if relevant, recommended next action, and reusable learnings/patterns when appropriate."
-      },
-      {
-        "seed_id": "SEED-shard-0004-022",
-        "source_shard_id": "shard-0004",
-        "source_lines": [181, 182, 183, 184],
-        "text": "Canonical persisted objects include at least project, run, feature_seam, work_package, node, attempt, lane, snapshot, promotion, review, resolution_thread, and event; dashboard/orchestrator/source-control summaries are projections, not separate truths."
-      },
-      {
-        "seed_id": "SEED-shard-0004-023",
-        "source_shard_id": "shard-0004",
-        "source_lines": [187, 188],
-        "text": "attempt persists identity, actor type, requested-vs-effective provider/model/effort/persona/account, resolution/fallback metadata, lane/snapshot linkage, lifecycle/result, and evidence refs."
-      },
-      {
-        "seed_id": "SEED-shard-0004-024",
-        "source_shard_id": "shard-0004",
-        "source_lines": [189, 190],
-        "text": "lane persists project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation."
-      },
-      {
-        "seed_id": "SEED-shard-0004-025",
-        "source_shard_id": "shard-0004",
-        "source_lines": [190, 191],
-        "text": "promotion persists promotion class, source/target linkage, eligibility/blocking/HITL state, decision/result, and evidence/review/corroboration linkage."
-      },
-      {
-        "seed_id": "SEED-shard-0004-026",
-        "source_shard_id": "shard-0004",
-        "source_lines": [191, 192],
-        "text": "review persists scope, review type, actor linkage, verdict/severity/blocking, findings, evidence, and timestamps."
-      },
-      {
-        "seed_id": "SEED-shard-0004-027",
-        "source_shard_id": "shard-0004",
-        "source_lines": [192, 193],
-        "text": "resolution_thread persists trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage."
-      },
-      {
-        "seed_id": "SEED-shard-0004-028",
-        "source_shard_id": "shard-0004",
-        "source_lines": [195, 196, 197, 198, 199, 200],
-        "text": "Parent objects: project owns identity, repo/project settings/theme/account-policy linkage, active-run pointers, coarse status; run owns execution-session identity/lifecycle, graph linkage, run-level settings snapshot, active pointers/rollup posture; feature_seam owns membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, evidence linkage; work_package owns membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, evidence linkage."
-      }
-    ],
-    "routing_rules": [
-      {
-        "seed_id": "SEED-shard-0001-002",
-        "source_shard_id": "shard-0001",
-        "source_lines": [41, 42, 43, 44, 45],
-        "text": "Orchestrator widgets live inside Progress; some Orchestrator widgets may also be hostable on Dashboard; non-Orchestrator widgets are not hostable on the Orchestrator page; widgets remain resizable/customizable but tab-first structure remains primary."
-      },
-      {
-        "seed_id": "SEED-shard-0001-014",
-        "source_shard_id": "shard-0001",
-        "source_lines": [141, 142, 143, 144],
-        "text": "Cross-tab navigation is a real contract: object/event focus deep-links across Progress / Seams / Node Graph / Evidence / History / Ledger; deep links carry selection/filter/focus context; Seams and Node Graph share focus context without hyperactive live-sync."
-      },
-      {
-        "seed_id": "SEED-shard-0002-006",
-        "source_shard_id": "shard-0002",
-        "source_lines": [26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
-        "text": "Operator visibility splits events into history-only, badge-worthy, attention-card-worthy, and chat-thread-worthy action-required; backbone user-facing events include block/completion/reopen/supersede, promotion blocked/promoted/revoked, graph_patch requested/applied/generation_updated, restore required/failed/completed, threshold crossed/account switched/account exhausted."
-      },
-      {
-        "seed_id": "SEED-shard-0002-011",
-        "source_shard_id": "shard-0002",
-        "source_lines": [75, 76, 77, 78, 79, 80, 81, 82, 83, 84],
-        "text": "Canonical concerns are minted by runtime, package overseer, seam overseer, corroboration outcome, and graph-patch/state-transition logic; workers may nominate findings but must not mint canonical concerns directly; concerns update/escalate/downgrade rather than duplicate."
-      },
-      {
-        "seed_id": "SEED-shard-0002-012",
-        "source_shard_id": "shard-0002",
-        "source_lines": [85, 86, 87, 88, 89, 90, 91],
-        "text": "All major surfaces project the same concern model: Progress = operational attention projection; Seams = integration/governance projection; Evidence = proof-backed concern projection; History = concern lifecycle timeline projection; Ledger = exact structured concern-record projection."
-      },
-      {
-        "seed_id": "SEED-shard-0002-013b",
-        "source_shard_id": "shard-0002",
-        "source_lines": [92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
-        "text": "User-facing concern actions stay narrow (open/focus, open evidence/history/ledger, acknowledge/dismiss where allowed, open resolution thread, approve/reject only at true HITL boundaries); runtime/overseer actions (request corroboration, route to remediation, request graph patch, severity/owner mutation, merge/split, true resolution) remain mostly non-generic GUI buttons."
-      },
-      {
-        "seed_id": "SEED-shard-0002-016",
-        "source_shard_id": "shard-0002",
-        "source_lines": [128, 129, 130],
-        "text": "Run Summary, Seam Summary, Concern Summary, Account/Usage Pressure, and Recent Major Events projections are broadly reusable across Orchestrator/Dashboard/Projects; more operational/dense summaries stay primarily Orchestrator-facing."
-      },
-      {
-        "seed_id": "SEED-shard-0002-021",
-        "source_shard_id": "shard-0002",
-        "source_lines": [149, 150, 151, 152],
-        "text": "Under stale projections, degrade from summary/projection surfaces to direct record-backed inspection; Ledger and direct record views become the trust anchor; only certain current/generation-matched direct records support action."
-      },
-      {
-        "seed_id": "SEED-shard-0003-022",
-        "source_shard_id": "shard-0003",
-        "source_lines": [164, 165, 166, 167, 168, 169, 175, 176, 177, 178, 179, 180],
-        "text": "Quota/pressure detection uses heterogeneous signal sources—runtime outcomes, provider capabilities, and (where necessary) log-derived heuristics; usage stays project-scoped with multi-project aggregation as a separate later concern; provider-specific browser auth/manual rotation/log parsing are optional supplemental capabilities, not the canonical execution model."
-      },
-      {
-        "seed_id": "SEED-shard-0004-013",
-        "source_shard_id": "shard-0004",
-        "source_lines": [92, 93, 94, 95],
-        "text": "Orchestrator concerns split into page IA/widget behavior/data bindings vs. execution policy/scheduler consumption/remediation behavior; these must not drift apart, and shadow ownership at the page layer must be removed in favor of consuming canonical contracts."
-      }
-    ],
-    "verification_rules": [
-      {
-        "seed_id": "SEED-shard-0001-015",
-        "source_shard_id": "shard-0001",
-        "source_lines": [179, 180, 181, 182],
-        "text": "Seam completion is presented distinctly from package completion and from package-to-seam availability using Locally Complete, Available to Seam, and Seam Complete."
-      },
-      {
-        "seed_id": "SEED-shard-0001-019",
-        "source_shard_id": "shard-0001",
-        "source_lines": [187, 188, 189, 190, 191, 192],
-        "text": "Revocation/reopen semantics are explicit and visible: Promotion Revoked, Seam Completion Revoked, Reopened, Reopened by Patch, Reopened by New Evidence."
-      },
-      {
-        "seed_id": "SEED-shard-0002-010",
-        "source_shard_id": "shard-0002",
-        "source_lines": [49, 50, 51, 52],
-        "text": "Alert-state semantics: resolved means the underlying condition actually changed; dismissed means presentation hidden/acknowledged while the condition may still exist; active blockers must not be dismissible in a way that makes the system appear unblocked."
-      },
-      {
-        "seed_id": "SEED-shard-0002-011b",
-        "source_shard_id": "shard-0002",
-        "source_lines": [53, 54, 55, 56, 57],
-        "text": "Acknowledged is distinct from resolved and dismissed and is intended for advisory/minor/non-blocking concerns; blockers requiring real action must not be acknowledgeable in place of resolution."
-      },
-      {
-        "seed_id": "SEED-shard-0002-012b",
-        "source_shard_id": "shard-0002",
-        "source_lines": [81, 82, 83, 84],
-        "text": "Concern resolution must track underlying truth changes, not mere presentation changes."
-      },
-      {
-        "seed_id": "SEED-shard-0002-020",
-        "source_shard_id": "shard-0002",
-        "source_lines": [139, 140, 141, 142, 143, 144, 145, 146, 147, 148],
-        "text": "When projection health undermines trust in blocked/promotion/recovery/patch/account-pressure truth it must mint a real concern; actions that change execution/promotion/recovery/approval truth require fresh-enough projection state, with UI explaining inline what is stale, why it matters, and what to do next; observational/navigation/export actions remain safe under degraded projections."
-      },
-      {
-        "seed_id": "SEED-shard-0003-024",
-        "source_shard_id": "shard-0003",
-        "source_lines": [183, 184, 185, 186, 187, 188],
-        "text": "Event-driven wakeups are the authoritative execution/update model; worktree-native isolation is required; file-lease orchestration is explicitly rejected; blocked outcomes, remediation lineage, retry/backoff posture, and same-cycle reconsideration are first-class orchestration behavior."
-      },
-      {
-        "seed_id": "SEED-shard-0004-014",
-        "source_shard_id": "shard-0004",
-        "source_lines": [88, 89, 90, 91],
-        "text": "Packet emission must not proceed until target-level survivor/stale token contradictions in packet-planning inputs are repaired; current packet artifacts are useful as planning state but are not yet faithful-emission-safe."
-      },
-      {
-        "seed_id": "SEED-shard-0004-029",
-        "source_shard_id": "shard-0004",
-        "source_lines": [153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163],
-        "text": "Direct-record action surfaces (promotion, graph-patch + state-transition, recovery/restore, concern records) must explicitly show currentness, generation match, superseded yes/no, and actionable yes/no before allowing action."
-      }
-    ],
-    "owner_consumer_obligations": [
-      {
-        "seed_id": "SEED-shard-0001-001",
-        "source_shard_id": "shard-0001",
-        "source_lines": [22, 23, 24, 25, 26],
-        "text": "Working ledger is execution memory only—non-canonical and must not be cited in planning docs; do not write planning-doc changes during work-item stewardship; do not treat the ledger file as packet content, reconciliation text, or canonical cleanup output; preserve packetized state and run metadata while refreshing mode-contract durability files."
-      },
-      {
-        "seed_id": "SEED-shard-0002-013c",
-        "source_shard_id": "shard-0002",
-        "source_lines": [105, 106, 107],
-        "text": "Inspector vs full-record split: side inspectors stay summary/action-light; heavy/high-consequence actions and dense records belong in full-record views."
-      },
-      {
-        "seed_id": "SEED-shard-0003-017",
-        "source_shard_id": "shard-0003",
-        "source_lines": [134, 135, 136],
-        "text": "Remove 'optional JSON' wording from design language unless JSON export is explicitly about manual inspection/export; orchestrator-page exportability is desirable but JSON is not canonical storage."
-      },
-      {
-        "seed_id": "SEED-shard-0003-025",
-        "source_shard_id": "shard-0003",
-        "source_lines": [180, 181, 182, 183, 184, 185, 186, 187, 188],
-        "text": "Orchestrator must consume canonical runtime fields and event names from shared contracts; it must not redefine schemas, event types, or live-status mappings locally—those belong to upstream owners (Plans/orchestrator-subagent-integration.md)."
-      },
-      {
-        "seed_id": "SEED-shard-0004-016",
-        "source_shard_id": "shard-0004",
-        "source_lines": [96, 97, 98],
-        "text": "Page-layer documents must not retain shadow event/schema ownership: page doc must bind to upstream owners rather than naming concrete event sources or local live-status mappings."
-      }
-    ],
-    "stale_retirement_items": [
-      {
-        "seed_id": "SEED-shard-0003-018",
-        "source_shard_id": "shard-0003",
-        "source_lines": [156, 157],
-        "text": "Retire vague term 'delegated worker' in favor of 'overseer-spawned node worker' across docs, settings, and runtime contracts."
-      },
-      {
-        "seed_id": "SEED-shard-0004-015",
-        "source_shard_id": "shard-0004",
-        "source_lines": [62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77],
-        "text": "Retire or derive the first-class tier hierarchy (Phase/Task/Subtask/Iteration) where graph is canonical—Plans/Orchestrator_Page.md, Plans/Run_Graph_View.md, and Plans/FinalGUISpec.md still preserve tier vocabulary alongside graph nodes; reconcile shadow event/schema ownership (PuppetMasterEvent::*, named 'Overseer' role) at the page layer with the consumer-of-contracts stance."
-      },
-      {
-        "seed_id": "SEED-shard-0004-017",
-        "source_shard_id": "shard-0004",
-        "source_lines": [99, 100, 101],
-        "text": "Tier-driven orchestration identity, UI labels, and persona defaults retained as first-class overlays over graph nodes are stale—docs must be simplified to graph-native vocabulary with tiers as a derived human lens at most."
-      }
-    ],
-    "open_questions": [
-      {
-        "seed_id": "SEED-shard-0001-OQ-1",
-        "source_shard_id": "shard-0001",
-        "source_lines": [32],
-        "text": "Final canonical name for the Tiers-replacement tab (Seams vs. equivalent) is still open."
-      },
-      {
-        "seed_id": "SEED-shard-0001-OQ-2",
-        "source_shard_id": "shard-0001",
-        "source_lines": [39],
-        "text": "Whether History and Ledger should ultimately merge remains on the table (current direction keeps them separate)."
-      },
-      {
-        "seed_id": "SEED-shard-0003-OQ-3",
-        "source_shard_id": "shard-0003",
-        "source_lines": [103, 104, 105, 106, 107, 108, 109, 110, 111],
-        "text": "Concrete storage medium and worker delivery for handoff/retry artifacts (literal JSON/JSONL vs redb-backed records, project-scoped paths/storage domains, inline-prompt vs referenced-artifact vs fetched-context vs mixed model) is still an open design seam."
-      },
-      {
-        "seed_id": "SEED-shard-0003-OQ-4",
-        "source_shard_id": "shard-0003",
-        "source_lines": [121, 122, 123, 124, 125, 126, 127],
-        "text": "Concrete mapping of node retry memory, attempt handoff artifacts, reusable learning records, and worker handoff packets onto seglog/redb shapes is not yet nailed down."
-      },
-      {
-        "seed_id": "SEED-shard-0003-OQ-5",
-        "source_shard_id": "shard-0003",
-        "source_lines": [195, 196, 197, 198],
-        "text": "Key unresolved design seam: what is the governing intelligence/control loop in a graph-canonical system (single overseer agent versus bounded packages with local overseers)?"
-      },
-      {
-        "seed_id": "SEED-shard-0004-OQ-6",
-        "source_shard_id": "shard-0004",
-        "source_lines": [5, 6, 7],
-        "text": "Governance safeguard proposal: when an overseer flags missing work/wiring/design issues, spawn two additional subagents to validate the concern before remediation or graph-change action—implementation depth is open."
-      },
-      {
-        "seed_id": "SEED-shard-0004-OQ-7",
-        "source_shard_id": "shard-0004",
-        "source_lines": [31],
-        "text": "Snapshot/safe-point policy and its explicit relationship to the plan graph remains queued for deeper design."
-      },
-      {
-        "seed_id": "SEED-shard-0004-OQ-8",
-        "source_shard_id": "shard-0004",
-        "source_lines": [114, 115, 116, 117, 118, 119],
-        "text": "Next subtopic: classify which events are runtime-internal vs operator-visible vs chat-thread resolution events, and define the event model that drives lifecycle transitions."
-      }
-    ],
-    "process_defects": [
-      {
-        "seed_id": "SEED-shard-0004-PD-1",
-        "source_shard_id": "shard-0004",
-        "source_lines": [80, 81, 82, 83, 84, 85, 86, 87],
-        "text": "packet_plan.json contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets: Plans/Executor_Protocol.md#5. Node execution fields -> TierContext, tier_id; Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules) -> github_api:github.com/<login>; Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09) -> approve_continue; Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy -> tier_id."
-      },
-      {
-        "seed_id": "SEED-shard-0004-PD-2",
-        "source_shard_id": "shard-0004",
-        "source_lines": [102, 103, 104, 105, 106, 107, 108],
-        "text": "GUI/spec gaps: no documented surface for work_package or feature_seam yet; no seam-level acceptance/weak-integration/corroboration review affordance; worktree visibility/controls are not coordinated across Orchestrator and Source Control; orchestrator-owned vs non-orchestrator worktrees lack explicit partitioning/filtering; per-project aggregation on dashboard/projects surfaces is unclear."
-      }
-    ],
-    "doc_hints": [
-      {
-        "seed_id": "SEED-shard-0001-020",
-        "source_shard_id": "shard-0001",
-        "source_lines": [145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170],
-        "text": "Prefer canonical terms in docs and runtime: tab/object labels Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer; user-facing state/action labels include Locally Complete, Seam Complete, Completion Blocked, Weak Integration, Promotion Blocked, Promotion Revoked, Corroboration Requested, Challenge Accepted/Not Accepted, Advisory Concern Recorded, Graph Patch Requested/Applied, Generation Updated; keep expert/canonical terms stable in docs and derive simpler labels later only for the more technical/loaded ones."
-      },
-      {
-        "seed_id": "SEED-shard-0003-001",
-        "source_shard_id": "shard-0003",
-        "source_lines": [17, 18, 19, 20, 21, 22],
-        "text": "Plans/usage-feature.md is the strongest current owner for usage/quota/alerts/analytics/product-shape; Plans/storage-plan.md and Plans/FinalGUISpec.md carry meaningful usage/runtime/event/GUI assumptions—usage is already a first-class cross-surface concern.",
-        "related_paths": ["Plans/usage-feature.md", "Plans/storage-plan.md", "Plans/FinalGUISpec.md"]
-      },
-      {
-        "seed_id": "SEED-shard-0003-002",
-        "source_shard_id": "shard-0003",
-        "source_lines": [23, 24, 25, 26, 27, 28],
-        "text": "Existing usage docs already assume configurable warning thresholds, platform quota visibility, rate-limit / reset countdown surfaces, project-scoped usage storage, dashboard widgets, orchestrator/runtime event persistence, and usage+ledger+analytics rollups—new multi-account/account-pressure work must extend this rather than duplicate it.",
-        "related_paths": ["Plans/usage-feature.md"]
-      },
-      {
-        "seed_id": "SEED-shard-0003-020",
-        "source_shard_id": "shard-0003",
-        "source_lines": [177, 178, 179, 180, 181, 182, 188, 189, 190, 191],
-        "text": "Plans/Orchestrator_Page.md owns the UI/page-shell for the six-tab Orchestrator; Plans/orchestrator-subagent-integration.md treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, executes headless from .puppet-master/project/plan_graph/index.json and node shards, and dispatches from a global ready set.",
-        "related_paths": ["Plans/Orchestrator_Page.md", "Plans/orchestrator-subagent-integration.md"]
-      },
-      {
-        "seed_id": "SEED-shard-0004-020",
-        "source_shard_id": "shard-0004",
-        "source_lines": [62, 63, 64],
-        "text": "Direct repo search found no current references to feature seam or work package in Plans/**; current GUI/spec docs do not yet reflect these newly discussed governance objects.",
-        "related_paths": ["Plans/"]
-      },
-      {
-        "seed_id": "SEED-shard-0004-021",
-        "source_shard_id": "shard-0004",
-        "source_lines": [65, 66, 67, 68, 69, 70, 71, 72],
-        "text": "Plans/Orchestrator_Page.md still defines tabs Progress/Tiers/Node Graph Display/Evidence/History/Ledger and says runs/tier checks are driven by 'Overseer'; Plans/Run_Graph_View.md still uses tier-type iconography and tier vocabulary; Plans/FinalGUISpec.md still references phase/task/subtask progress and mapping editors—docs are not yet purely graph-native.",
-        "related_paths": ["Plans/Orchestrator_Page.md", "Plans/Run_Graph_View.md", "Plans/FinalGUISpec.md"]
-      }
-    ]
-  },
+  "requirements": [
+    {
+      "id": "seed-c3-extract-task-001-001",
+      "source_shard_id": "shard-0001",
+      "source_line_range": {"start_line": 23, "end_line": 25},
+      "summary": "The ledger must remain non-canonical execution memory and must not be cited as planning canon.",
+      "raw_excerpt": "Ledger is execution memory only; it is not canonical and must not be cited in planning docs.",
+      "doc_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+    },
+    {
+      "id": "seed-c3-extract-task-001-002",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 689, "end_line": 691},
+      "summary": "Packet emission is prohibited until survivor-versus-retire contradictions are repaired in packet-planning inputs.",
+      "raw_excerpt": "packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs",
+      "gate_name": "packet_emission_readiness"
+    },
+    {
+      "id": "seed-c3-extract-task-001-003",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 635, "end_line": 645},
+      "summary": "Automation-first behavior is required with HITL disabled by default and critical/HITL issues surfaced to Dashboard, Orchestrator, and chat-thread resolution.",
+      "raw_excerpt": "all tests/review paths are expected to be fully automated by default ... HITL is explicitly off by default ... issue must surface in: Dashboard, Orchestrator page, a spawned agent/thread in the chat window"
+    },
+    {
+      "id": "seed-c3-repair2-task-001-003",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 398, "end_line": 400},
+      "summary": "Policy transparency requires UI to explicitly show inherited, overridden, and effective values.",
+      "raw_excerpt": "UI should explicitly show: `Inherited`, `Overridden`, `Effective` ... users should not need a separate modal just to understand resolution/inheritance/fallback"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "seed-c3-extract-task-001-004",
+      "source_shard_id": "shard-0001",
+      "source_line_range": {"start_line": 60, "end_line": 75},
+      "summary": "The tab model stays split with distinct Progress, Seams, Node Graph, Evidence, History, and Ledger responsibilities instead of merging History and Ledger.",
+      "raw_excerpt": "keep tabs separate: `Progress`, `Seams` ... `History` and `Ledger` should remain separate: `History` = chronological runtime story; `Ledger` = structured record inspection",
+      "decision_rationale": "Separation preserves operational workflow clarity and avoids conflating timeline narrative with structured records."
+    },
+    {
+      "id": "seed-c3-extract-task-001-005",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 593, "end_line": 594},
+      "summary": "Hybrid governance is acceptable only when graph execution remains canonical and tiers are merely a derived human-facing lens.",
+      "raw_excerpt": "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens",
+      "rejected_alternatives": ["Dual execution authority across tiers and graph"]
+    },
+    {
+      "id": "seed-c3-repair2-task-001-001",
+      "source_shard_id": "shard-0001",
+      "source_line_range": {"start_line": 75, "end_line": 78},
+      "summary": "Progress tab policy prefers a broad orchestrator widget catalog, with users able to disable or hide widgets.",
+      "raw_excerpt": "Progress-tab widget direction is now firmer: err on the side of more orchestrator widget options rather than fewer; user can disable/hide widgets they do not want"
+    }
+  ],
+  "data_shapes": [
+    {
+      "id": "seed-c3-extract-task-001-006",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 259, "end_line": 269},
+      "summary": "Concern records are first-class and must include identity, scope, severity, category, owner, lifecycle state, meaning, linkage, and visibility flags.",
+      "raw_excerpt": "concern records should carry: identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
+      "schema_name": "concern_record"
+    },
+    {
+      "id": "seed-c3-extract-task-001-007",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 270, "end_line": 274},
+      "summary": "Concern lifecycle states are enumerated as active, acknowledged, resolved, and dismissed.",
+      "raw_excerpt": "likely concern lifecycle states: `active`, `acknowledged`, `resolved`, `dismissed`",
+      "schema_name": "concern_lifecycle_state",
+      "enum_values": ["active", "acknowledged", "resolved", "dismissed"]
+    },
+    {
+      "id": "seed-c3-extract-task-001-008",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 334, "end_line": 338},
+      "summary": "Projection health states are modeled as current, refreshing, stale, and failed.",
+      "raw_excerpt": "projection health states should conceptually include: `current`, `refreshing`, `stale`, `failed`",
+      "schema_name": "projection_health_state",
+      "enum_values": ["current", "refreshing", "stale", "failed"]
+    },
+    {
+      "id": "seed-c3-extract-task-001-009",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 782, "end_line": 784},
+      "summary": "Canonical persisted object inventory includes project, run, feature_seam, work_package, node, attempt, lane, snapshot, promotion, review, resolution_thread, and event.",
+      "raw_excerpt": "canonical persisted objects should likely include at least `project`, `run`, `feature_seam`, `work_package`, `node`, `attempt`, `lane`, `snapshot`, `promotion`, `review`, `resolution_thread`, and `event`"
+    },
+    {
+      "id": "seed-c3-extract-task-001-010",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 788, "end_line": 792},
+      "summary": "Child object schema direction defines required fields for attempt, lane, promotion, review, and resolution_thread records.",
+      "raw_excerpt": "`attempt` should persist identity ... requested vs effective ... `lane` should persist ... worktree binding ... `promotion` ... `review` ... `resolution_thread` ...",
+      "schema_name": "child_record_shapes"
+    },
+    {
+      "id": "seed-c3-repair-task-001-001",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 794, "end_line": 800},
+      "summary": "Parent object schema direction requires minimal field shapes for project, run, feature_seam, and work_package.",
+      "raw_excerpt": "Parent-object field-shape direction now discussed: `project` ... `run` ... `feature_seam` ... `work_package` ..."
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "seed-c3-extract-task-001-011",
+      "source_shard_id": "shard-0001",
+      "source_line_range": {"start_line": 141, "end_line": 144},
+      "summary": "Cross-tab deep-linking must carry selection, filter, and focus context rather than only switching tabs.",
+      "raw_excerpt": "deep links should carry selection/filter/focus context, not merely switch tabs"
+    },
+    {
+      "id": "seed-c3-extract-task-001-012",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 343, "end_line": 349},
+      "summary": "When projections degrade, execution-changing actions require fresh-enough state while observational and navigation actions can remain available with inline gating explanation.",
+      "raw_excerpt": "actions that change execution/promotion/recovery/approval truth require fresh-enough projection state ... observational/navigation/export actions generally remain safe ... UI should explain gating inline"
+    },
+    {
+      "id": "seed-c3-extract-task-001-013",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 349, "end_line": 353},
+      "summary": "Under stale projections, routing degrades to direct record-backed inspection with Ledger as trust anchor and action limited to current generation-matched records.",
+      "raw_excerpt": "degrade from summary/projection surfaces to direct record-backed inspection ... `Ledger` and direct record views become the trust anchor ... only certain current/generation-matched direct records should support action"
+    },
+    {
+      "id": "seed-c3-repair-task-001-002",
+      "source_shard_id": "shard-0001",
+      "source_line_range": {"start_line": 120, "end_line": 120},
+      "summary": "Node Graph detail inspector evidence and artifact links must deep-link into Evidence with target selection/filter applied.",
+      "raw_excerpt": "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied"
+    },
+    {
+      "id": "seed-c3-repair2-task-001-002",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 381, "end_line": 397},
+      "summary": "Settings scope hierarchy defines authoritative inheritance tiers from app/global through runtime-only computed truth.",
+      "raw_excerpt": "Settings scope hierarchy direction now clarified: `App / Global` ... `Project` ... `Seam` ... `Package` ... `Node` ... `Actor / Role` ... `Runtime only` = computed truth, not user configuration"
+    },
+    {
+      "id": "seed-c3-repair2-task-001-004",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 454, "end_line": 456},
+      "summary": "Orchestrator chat-thread escalation patterns must not be back-projected onto normal conversational actor flows.",
+      "raw_excerpt": "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way"
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "seed-c3-extract-task-001-014",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 605, "end_line": 607},
+      "summary": "Before remediation or graph change, two additional subagents must validate an overseer-raised missing-work or correctness concern.",
+      "raw_excerpt": "when an overseer finds missing work / wiring / design correctness issues, two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds"
+    },
+    {
+      "id": "seed-c3-extract-task-001-015",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 612, "end_line": 614},
+      "summary": "Seam completion verification must fail when integration is weak, so package completion alone is insufficient.",
+      "raw_excerpt": "if integration is weak, the feature seam is not complete; package completion is therefore necessary but not sufficient for seam completion"
+    },
+    {
+      "id": "seed-c3-repair-task-001-003",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 250, "end_line": 257},
+      "summary": "Alert semantics must keep resolved, dismissed, and acknowledged distinct, and active blockers must not be dismissed or acknowledged in place of real resolution.",
+      "raw_excerpt": "`resolved` = underlying condition actually changed ... `dismissed` = presentation hidden ... active blockers must not be dismissible ... blockers requiring real action must not be acknowledgeable in place of resolution"
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "id": "seed-c3-extract-task-001-016",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 581, "end_line": 586},
+      "summary": "Orchestrator is obligated to consume canonical runtime scheduler contracts and event-driven runtime fields rather than owning schemas locally.",
+      "raw_excerpt": "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner ... event-driven wakeups ... authoritative execution/update model",
+      "owner": "Runtime shared contracts",
+      "consumer": "Orchestrator"
+    },
+    {
+      "id": "seed-c3-extract-task-001-017",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 418, "end_line": 420},
+      "summary": "Usage and quota model ownership remains centered in usage docs, with storage and GUI docs as supporting consumers for runtime assumptions.",
+      "raw_excerpt": "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion. `Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions.",
+      "owner": "Plans/usage-feature.md",
+      "consumer": "Plans/storage-plan.md, Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-repair-task-001-004",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 201, "end_line": 230},
+      "summary": "Ownership contract must keep blocked-owner labels, alert levels, and event families canonical while mapping operator visibility tiers by surface.",
+      "raw_excerpt": "blocked ownership should be normalized ... alert levels ... canonical event families should remain stable ... operator visibility should separate history-only, badge-worthy, attention-card-worthy, and chat-thread-worthy cases"
+    },
+    {
+      "id": "seed-c3-repair-task-001-005",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 275, "end_line": 283},
+      "summary": "Canonical concern records are created by runtime and overseer/corroboration/patch logic; workers may nominate findings but may not mint canonical concerns directly.",
+      "raw_excerpt": "canonical concerns should be created by runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic ... workers may nominate findings but should not mint canonical concerns directly"
+    },
+    {
+      "id": "seed-c3-repair-task-001-006",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 429, "end_line": 437},
+      "summary": "Any provider-using actor must participate in shared pre-send and post-send account-health loop, including non-Orchestrator conversational actors.",
+      "raw_excerpt": "account selection / failover is not just an Orchestrator-node concern ... any provider-using actor must participate in the same pre-send and post-send account-health loop"
+    }
+  ],
+  "stale_retirement_items": [
+    {
+      "id": "seed-c3-extract-task-001-018",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 535, "end_line": 537},
+      "summary": "Design language should retire ambiguous optional-JSON phrasing except for explicit manual inspection or export use.",
+      "raw_excerpt": "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage"
+    },
+    {
+      "id": "seed-c3-extract-task-001-019",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 674, "end_line": 677},
+      "summary": "Legacy page-layer shadow event and schema ownership should be removed so Orchestrator remains a projection-and-controls consumer.",
+      "raw_excerpt": "remove shadow event/schema ownership from the page layer and tighten it around projections and controls only"
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "seed-c3-extract-task-001-020",
+      "source_shard_id": "shard-0001",
+      "source_line_range": {"start_line": 32, "end_line": 32},
+      "summary": "The replacement name for the Tiers tab remains unresolved between Seams and equivalent variants.",
+      "raw_excerpt": "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)"
+    },
+    {
+      "id": "seed-c3-extract-task-001-021",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 503, "end_line": 512},
+      "summary": "Concrete storage medium, owning paths, and worker handoff delivery mechanism for retry artifacts are still unresolved.",
+      "raw_excerpt": "\"JSON-like\" is too vague ... design still needs to pin down whether these artifacts are literally JSON/JSONL/redb-backed records/projections ... what concrete project-scoped paths ... how a worker actually receives the handoff packet ... remains an open design seam"
+    },
+    {
+      "id": "seed-c3-repair-task-001-007",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 511, "end_line": 511},
+      "summary": "Exact storage medium/path and worker handoff delivery mechanism remains unresolved and still open.",
+      "raw_excerpt": "exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely",
+      "question_text": "Which concrete storage medium/path and handoff delivery mechanism should own retry/handoff artifacts?",
+      "status": "open"
+    }
+  ],
+  "process_defects": [
+    {
+      "id": "seed-c3-extract-task-001-022",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 682, "end_line": 687},
+      "summary": "Packet planning currently contains survivor-versus-stale-retire token contradictions across four documented targets, blocking faithful packet emission.",
+      "raw_excerpt": "`packet_plan.json` currently contains at least four survivor/residue contradictions ... `TierContext`, `tier_id`, `github_api:github.com/<login>`, `approve_continue`",
+      "process_area": "packetization"
+    },
+    {
+      "id": "seed-c3-extract-task-001-023",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 703, "end_line": 708},
+      "summary": "Current docs lack documented GUI surfaces for feature seams and work packages, indicating transfer-fidelity gap against newly agreed governance model.",
+      "raw_excerpt": "no documented GUI surface yet for `work package` ... no documented GUI surface yet for `feature seam` ... no documented seam-level acceptance / weak-integration / corroboration review affordance yet",
+      "process_area": "doc transfer fidelity"
+    },
+    {
+      "id": "seed-c3-repair-task-001-008",
+      "source_shard_id": "shard-0002",
+      "source_line_range": {"start_line": 354, "end_line": 363},
+      "summary": "Direct-record actionability must display trust markers (currentness, generation match, superseded, actionable), with saved views and sorting defaults defined per tab.",
+      "raw_excerpt": "direct record views that allow action should explicitly show currentness, generation match, superseded yes/no, actionable yes/no ... Orchestrator should support saved views ... History/Ledger default sort = newest first"
+    },
+    {
+      "id": "seed-c3-repair-task-001-009",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 709, "end_line": 781},
+      "summary": "Event classification and multi-project/account scoping constraints remain underdefined and require canonicalization to avoid runtime/UI drift.",
+      "raw_excerpt": "Next subtopic requested: classify which events are runtime-internal vs operator-visible vs chat-thread resolution events ... multi-project and multi-account identity/projection/storage implications"
+    }
+  ],
+  "doc_hints": [
+    {
+      "id": "seed-c3-extract-task-001-024",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 666, "end_line": 669},
+      "summary": "Orchestrator and GUI specs should be updated to replace tier vocabulary with feature seam and work package governance objects.",
+      "raw_excerpt": "`Plans/Orchestrator_Page.md` still defines tabs `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger` ... `Plans/FinalGUISpec.md` still references `phase/task/subtask` progress",
+      "doc_path": "Plans/Orchestrator_Page.md",
+      "doc_line_span": "tabs and governance terminology sections"
+    },
+    {
+      "id": "seed-c3-extract-task-001-025",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 513, "end_line": 521},
+      "summary": "Storage and GUI canon should record that seglog/redb are canonical persistence layers while JSON/JSONL remain export or disposable projections.",
+      "raw_excerpt": "`Plans/storage-plan.md` already declares: `seglog` = canonical append-only event source ... `redb` = durable KV ... JSONL mirror = disposable projector output ... `Plans/FinalGUISpec.md` aligns with this",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": "persistence stack declarations"
+    },
+    {
+      "id": "seed-c3-extract-task-001-026",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 418, "end_line": 428},
+      "summary": "Usage documentation should capture multi-account extensions as an extension of existing usage projections rather than a second quota subsystem.",
+      "raw_excerpt": "`Plans/usage-feature.md` is the strongest current owner ... new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections ... do not invent a second independent \"account pressure\" or \"quota\" subsystem",
+      "doc_path": "Plans/usage-feature.md",
+      "doc_line_span": "multi-account and quota-pressure model sections"
+    },
+    {
+      "id": "seed-c3-repair-task-001-010",
+      "source_shard_id": "shard-0003",
+      "source_line_range": {"start_line": 581, "end_line": 586},
+      "doc_path": "Plans/orchestrator-subagent-integration.md",
+      "summary": "Orchestrator integration contract should remain authoritative for canonical runtime-consumer boundaries.",
+      "raw_excerpt": "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner"
+    },
+    {
+      "id": "seed-c3-repair-task-001-011",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 666, "end_line": 669},
+      "doc_path": "Plans/Run_Graph_View.md",
+      "summary": "Run graph documentation should be aligned with seam/package governance and reduced tier-carryover assumptions.",
+      "raw_excerpt": "`Plans/Run_Graph_View.md` describes the graph as live DAG execution, but node rendering still includes tier-type iconography and tier-oriented vocabulary"
+    },
+    {
+      "id": "seed-c3-repair-task-001-012",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 684, "end_line": 685},
+      "doc_path": "Plans/Executor_Protocol.md",
+      "summary": "Executor protocol references containing tier tokens should be reconciled with packet survivor/retire rules.",
+      "raw_excerpt": "`Plans/Executor_Protocol.md#5. Node execution fields` -> `TierContext`, `tier_id`"
+    },
+    {
+      "id": "seed-c3-repair-task-001-013",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 685, "end_line": 686},
+      "doc_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "summary": "GitHub auth flow token-handling section appears in contradiction set and needs packet-plan reconciliation.",
+      "raw_excerpt": "`Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)` -> `github_api:github.com/<login>`"
+    },
+    {
+      "id": "seed-c3-repair-task-001-014",
+      "source_shard_id": "shard-0004",
+      "source_line_range": {"start_line": 686, "end_line": 687},
+      "doc_path": "Plans/UI_Command_Catalog.md",
+      "summary": "UI command catalog entries in contradiction set should be reconciled before packet emission.",
+      "raw_excerpt": "`Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)` -> `approve_continue`"
+    }
+  ],
   "exclusions_by_shard": {
     "shard-0001": [
-      "Working ledger explicitly excluded as packet content, reconciliation text, or canonical cleanup output (lines 25-26).",
-      "Planning-doc changes excluded during work-item stewardship (line 24)."
+      {
+        "reason": "UI catalog detail without durable obligation text",
+        "lines_or_section": "79-140"
+      },
+      {
+        "reason": "Label brainstorming and copy variants not yet locked as requirements",
+        "lines_or_section": "145-200"
+      }
     ],
-    "shard-0002": [],
+    "shard-0002": [
+      {
+        "reason": "Extended examples and surface-specific UX recaps repeat established concern/projection rules",
+        "lines_or_section": "31-58, 85-131"
+      },
+      {
+        "reason": "Default sort/filter preferences treated as low-stability UI preference notes",
+        "lines_or_section": "164-180"
+      }
+    ],
     "shard-0003": [
-      "Browser auto-relogin excluded as a core cross-provider assumption; only optional provider-specific recovery (lines 171-172).",
-      "Log parsing excluded as canonical quota truth; supplemental heuristic only (lines 173-174, 178-180).",
-      "Manual 'set active' excluded as the main execution model; remains operator/debug control only (line 174)."
+      {
+        "reason": "Topic/setup and chronology recap rather than normative contract",
+        "lines_or_section": "170-201"
+      }
     ],
     "shard-0004": [
-      "Deep redesign of existing Orchestrator tab structure excluded from this thread—current spec is weak and not the focus (line 51).",
-      "OpenCode-as-provider excluded as a primary target for multi-account support (line 178 of shard-0003 context confirmed here in continuity)."
+      {
+        "reason": "Duplicate conversational carryover and repeated context not adding new obligation",
+        "lines_or_section": "616-634, 646-665"
+      }
     ]
   },
   "seed_ids_by_shard": {
     "shard-0001": [
-      "SEED-shard-0001-001",
-      "SEED-shard-0001-002",
-      "SEED-shard-0001-003",
-      "SEED-shard-0001-004",
-      "SEED-shard-0001-005",
-      "SEED-shard-0001-006",
-      "SEED-shard-0001-007",
-      "SEED-shard-0001-008",
-      "SEED-shard-0001-009",
-      "SEED-shard-0001-010",
-      "SEED-shard-0001-011",
-      "SEED-shard-0001-013",
-      "SEED-shard-0001-014",
-      "SEED-shard-0001-015",
-      "SEED-shard-0001-016",
-      "SEED-shard-0001-017",
-      "SEED-shard-0001-018",
-      "SEED-shard-0001-019",
-      "SEED-shard-0001-020",
-      "SEED-shard-0001-OQ-1",
-      "SEED-shard-0001-OQ-2"
+      "seed-c3-extract-task-001-001",
+      "seed-c3-extract-task-001-004",
+      "seed-c3-extract-task-001-011",
+      "seed-c3-extract-task-001-020",
+      "seed-c3-repair-task-001-002",
+      "seed-c3-repair2-task-001-001"
     ],
     "shard-0002": [
-      "SEED-shard-0002-004",
-      "SEED-shard-0002-005",
-      "SEED-shard-0002-006",
-      "SEED-shard-0002-008",
-      "SEED-shard-0002-009",
-      "SEED-shard-0002-010",
-      "SEED-shard-0002-011",
-      "SEED-shard-0002-011b",
-      "SEED-shard-0002-012",
-      "SEED-shard-0002-012b",
-      "SEED-shard-0002-013",
-      "SEED-shard-0002-013b",
-      "SEED-shard-0002-013c",
-      "SEED-shard-0002-014",
-      "SEED-shard-0002-015",
-      "SEED-shard-0002-016",
-      "SEED-shard-0002-018",
-      "SEED-shard-0002-019",
-      "SEED-shard-0002-020",
-      "SEED-shard-0002-021",
-      "SEED-shard-0002-022",
-      "SEED-shard-0002-023",
-      "SEED-shard-0002-024",
-      "SEED-shard-0002-025"
+      "seed-c3-extract-task-001-006",
+      "seed-c3-extract-task-001-007",
+      "seed-c3-extract-task-001-008",
+      "seed-c3-extract-task-001-012",
+      "seed-c3-extract-task-001-013",
+      "seed-c3-repair-task-001-003",
+      "seed-c3-repair-task-001-004",
+      "seed-c3-repair-task-001-005",
+      "seed-c3-repair-task-001-008",
+      "seed-c3-repair2-task-001-002",
+      "seed-c3-repair2-task-001-003"
     ],
     "shard-0003": [
-      "SEED-shard-0003-001",
-      "SEED-shard-0003-002",
-      "SEED-shard-0003-003",
-      "SEED-shard-0003-005",
-      "SEED-shard-0003-006",
-      "SEED-shard-0003-009",
-      "SEED-shard-0003-011",
-      "SEED-shard-0003-013",
-      "SEED-shard-0003-014",
-      "SEED-shard-0003-015",
-      "SEED-shard-0003-016",
-      "SEED-shard-0003-017",
-      "SEED-shard-0003-018",
-      "SEED-shard-0003-019",
-      "SEED-shard-0003-020",
-      "SEED-shard-0003-021",
-      "SEED-shard-0003-022",
-      "SEED-shard-0003-024",
-      "SEED-shard-0003-025",
-      "SEED-shard-0003-OQ-3",
-      "SEED-shard-0003-OQ-4",
-      "SEED-shard-0003-OQ-5"
+      "seed-c3-extract-task-001-005",
+      "seed-c3-extract-task-001-016",
+      "seed-c3-extract-task-001-017",
+      "seed-c3-extract-task-001-018",
+      "seed-c3-extract-task-001-021",
+      "seed-c3-extract-task-001-025",
+      "seed-c3-extract-task-001-026",
+      "seed-c3-repair-task-001-006",
+      "seed-c3-repair-task-001-007",
+      "seed-c3-repair-task-001-010",
+      "seed-c3-repair2-task-001-004"
     ],
     "shard-0004": [
-      "SEED-shard-0004-001",
-      "SEED-shard-0004-002",
-      "SEED-shard-0004-003",
-      "SEED-shard-0004-004",
-      "SEED-shard-0004-006",
-      "SEED-shard-0004-008",
-      "SEED-shard-0004-009",
-      "SEED-shard-0004-013",
-      "SEED-shard-0004-014",
-      "SEED-shard-0004-015",
-      "SEED-shard-0004-016",
-      "SEED-shard-0004-017",
-      "SEED-shard-0004-018",
-      "SEED-shard-0004-019",
-      "SEED-shard-0004-020",
-      "SEED-shard-0004-021",
-      "SEED-shard-0004-022",
-      "SEED-shard-0004-023",
-      "SEED-shard-0004-024",
-      "SEED-shard-0004-025",
-      "SEED-shard-0004-026",
-      "SEED-shard-0004-027",
-      "SEED-shard-0004-028",
-      "SEED-shard-0004-029",
-      "SEED-shard-0004-PD-1",
-      "SEED-shard-0004-PD-2",
-      "SEED-shard-0004-OQ-6",
-      "SEED-shard-0004-OQ-7",
-      "SEED-shard-0004-OQ-8"
+      "seed-c3-extract-task-001-002",
+      "seed-c3-extract-task-001-003",
+      "seed-c3-extract-task-001-009",
+      "seed-c3-extract-task-001-010",
+      "seed-c3-extract-task-001-014",
+      "seed-c3-extract-task-001-015",
+      "seed-c3-extract-task-001-019",
+      "seed-c3-extract-task-001-022",
+      "seed-c3-extract-task-001-023",
+      "seed-c3-extract-task-001-024",
+      "seed-c3-repair-task-001-001",
+      "seed-c3-repair-task-001-009",
+      "seed-c3-repair-task-001-011",
+      "seed-c3-repair-task-001-012",
+      "seed-c3-repair-task-001-013",
+      "seed-c3-repair-task-001-014"
     ]
   },
   "status": "complete",
-  "blocking_reason": null
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": true,
+    "notes": ["targeted_c4_round2_repair: missing_material_added"]
+  }
 }

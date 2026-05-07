@@ -1,0 +1,233 @@
+{
+  "schema_id": "pm.wave_artifact.v3.1.15",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "stage_mode": "targeted_repair_round_2",
+  "wave_index": 1,
+  "wave_size_attempted": 6,
+  "wave_size_actual": 6,
+  "wave_started_at_utc": "20260507T194600Z",
+  "wave_completed_at_utc": "20260507T194700Z",
+  "task_ids_in_wave": [
+    "c3-repair2-task-001",
+    "c3-repair2-task-002",
+    "c3-repair2-task-003",
+    "c3-repair2-task-004",
+    "c3-repair2-task-005",
+    "c3-repair2-task-006"
+  ],
+  "completed_task_ids": [
+    "c3-repair2-task-001",
+    "c3-repair2-task-002",
+    "c3-repair2-task-003",
+    "c3-repair2-task-004",
+    "c3-repair2-task-005",
+    "c3-repair2-task-006"
+  ],
+  "blocked_task_ids": [],
+  "subagent_invocations": [
+    {
+      "subagent_invocation_id": "9aec3fdc-9307-460b-b44e-0ea86b02fa4a",
+      "subagent_task_id": "c3-repair2-task-001",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair_round2",
+      "batch_anchor_shard_id": "shard-0001",
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0003",
+        "shard-0004"
+      ],
+      "input_total_lines": 800,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0001.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0001.json",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0001.json",
+      "result_seed_total": 44,
+      "added_seeds": 4,
+      "added_exclusions": 0,
+      "added_open_questions": 0,
+      "added_doc_hints": 0,
+      "lineage_repairs_applied": 0,
+      "all_seed_line_ranges_within_shard_bounds": true,
+      "lineage_consistent_with_flat_seed_total": true,
+      "json_concatenation_detected_in_output": false,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "status": "complete",
+      "blocking_reason": null,
+      "notes": [
+        "4 missing material items addressed"
+      ]
+    },
+    {
+      "subagent_invocation_id": "3b2d2fb1-97e3-43f9-ba03-cf8d5c6749c6",
+      "subagent_task_id": "c3-repair2-task-002",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair_round2",
+      "batch_anchor_shard_id": "shard-0025",
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0026",
+        "shard-0027",
+        "shard-0028"
+      ],
+      "input_total_lines": 800,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0025.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0025.json",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0025.json",
+      "result_seed_total": 61,
+      "added_seeds": 17,
+      "added_exclusions": 0,
+      "added_open_questions": 0,
+      "added_doc_hints": 7,
+      "lineage_repairs_applied": 0,
+      "all_seed_line_ranges_within_shard_bounds": true,
+      "lineage_consistent_with_flat_seed_total": true,
+      "json_concatenation_detected_in_output": false,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "status": "complete",
+      "blocking_reason": null,
+      "notes": [
+        "17 missing material items + 7 doc-hint preservations (vs 16 reported by C4 \u2014 7 unique live Plans paths)"
+      ]
+    },
+    {
+      "subagent_invocation_id": "cb22687c-2b30-4e4d-9660-a47f9281cd45",
+      "subagent_task_id": "c3-repair2-task-003",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair_round2",
+      "batch_anchor_shard_id": "shard-0029",
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0030",
+        "shard-0031",
+        "shard-0032"
+      ],
+      "input_total_lines": 800,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0029.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0029.json",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0029.json",
+      "result_seed_total": 58,
+      "added_seeds": 3,
+      "added_exclusions": 0,
+      "added_open_questions": 0,
+      "added_doc_hints": 0,
+      "lineage_repairs_applied": 0,
+      "all_seed_line_ranges_within_shard_bounds": true,
+      "lineage_consistent_with_flat_seed_total": true,
+      "json_concatenation_detected_in_output": false,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "status": "complete",
+      "blocking_reason": null,
+      "notes": [
+        "3 missing material items addressed"
+      ]
+    },
+    {
+      "subagent_invocation_id": "b2ab9140-8cba-4e68-b639-fd856e3171f3",
+      "subagent_task_id": "c3-repair2-task-004",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair_round2",
+      "batch_anchor_shard_id": "shard-0033",
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036"
+      ],
+      "input_total_lines": 800,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0033.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0033.json",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0033.json",
+      "result_seed_total": 54,
+      "added_seeds": 6,
+      "added_exclusions": 0,
+      "added_open_questions": 2,
+      "added_doc_hints": 0,
+      "lineage_repairs_applied": 0,
+      "all_seed_line_ranges_within_shard_bounds": true,
+      "lineage_consistent_with_flat_seed_total": true,
+      "json_concatenation_detected_in_output": false,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "status": "complete",
+      "blocking_reason": null,
+      "notes": [
+        "6 missing material items + 2 open-question items addressed"
+      ]
+    },
+    {
+      "subagent_invocation_id": "084d9bd2-4ddc-4ae8-ad9a-5abba1669e14",
+      "subagent_task_id": "c3-repair2-task-005",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair_round2",
+      "batch_anchor_shard_id": "shard-0049",
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0050",
+        "shard-0051",
+        "shard-0052"
+      ],
+      "input_total_lines": 800,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0049.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0049.json",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0049.json",
+      "result_seed_total": 36,
+      "added_seeds": 2,
+      "added_exclusions": 0,
+      "added_open_questions": 2,
+      "added_doc_hints": 2,
+      "lineage_repairs_applied": 0,
+      "all_seed_line_ranges_within_shard_bounds": true,
+      "lineage_consistent_with_flat_seed_total": true,
+      "json_concatenation_detected_in_output": false,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "status": "complete",
+      "blocking_reason": null,
+      "notes": [
+        "2 missing material + 2 doc-hints + 2 open-questions"
+      ]
+    },
+    {
+      "subagent_invocation_id": "af4e5b6b-c9a8-4b2d-809c-03392e04624d",
+      "subagent_task_id": "c3-repair2-task-006",
+      "task_type": "semantic_chunk_processing.targeted_seed_group_repair_round2",
+      "batch_anchor_shard_id": "shard-0061",
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064"
+      ],
+      "input_total_lines": 800,
+      "input_seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0061.json",
+      "input_completeness_check_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_completeness_checks/seed_completeness_check.shard-0061.json",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0061.json",
+      "result_seed_total": 46,
+      "added_seeds": 9,
+      "added_exclusions": 0,
+      "added_open_questions": 0,
+      "added_doc_hints": 0,
+      "lineage_repairs_applied": 13,
+      "all_seed_line_ranges_within_shard_bounds": true,
+      "lineage_consistent_with_flat_seed_total": true,
+      "json_concatenation_detected_in_output": false,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "status": "complete",
+      "blocking_reason": null,
+      "notes": [
+        "9 missing material items added + 13 content-provenance lineage repairs (raw_excerpts re-aligned with cited line ranges)"
+      ]
+    }
+  ],
+  "main_stage_actions_after_wave": [
+    "Validated all 6 subagent outputs as single canonical JSON objects (no concatenation issues)",
+    "Verified canonical pm.ledger_seed_group.v3.1.15 shape, in-bounds lineage, and flat==lineage equality on all 6 files",
+    "Verified preserved seed IDs (40, 37, 55, 46, 30, 37 across the 6 batches) plus expected new repair2 seed IDs (4, 24, 3, 8, 6, 9)",
+    "Confirmed no cross-group seed-id collisions across all 23 seed groups (1120 total seeds, 1120 unique IDs)",
+    "Confirmed shard_line_ranges in all 6 repaired files match manifest shard line bounds",
+    "Confirmed exclusions_by_shard and seed_ids_by_shard contain a key for every source_shard_id"
+  ],
+  "fanout_proof_for_wave": {
+    "expected_distinct_invocations": 6,
+    "actual_distinct_invocations": 6,
+    "omnibus_invocation_detected": false,
+    "main_agent_bulk_output_detected": false,
+    "task_to_invocation_one_to_one": true,
+    "wave_completed_successfully": true
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.ledger_seed_completeness_report.v3.1.14",
+  "prompt_id": "C4",
+  "prompt_version": "pm.c4.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "execution_type": "semantic_chunk_processing",
+  "status": "blocked",
+  "completeness_gate_passed": false,
+  "summary": {
+    "bounded_validation_tasks_total": 5,
+    "bounded_validation_tasks_complete": 4,
+    "bounded_validation_tasks_blocked": 1,
+    "material_coverage_status": "mostly_complete",
+    "lineage_status": "pass_with_one_remaining_strict_structure_gap",
+    "doc_hint_preservation_status": "preserved_with_one_remaining_structure_gap",
+    "open_question_preservation_status": "preserved_with_one_remaining_structure_gap"
+  },
+  "batch_results": [
+    {
+      "subagent_task_id": "c4d-task-001",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "pass_with_format_drift",
+      "missing_material_items": []
+    },
+    {
+      "subagent_task_id": "c4d-task-002",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "not_evaluated_per_scope",
+      "missing_material_items": []
+    },
+    {
+      "subagent_task_id": "c4d-task-003",
+      "status": "blocked",
+      "material_gate_judgment": "fail_with_minor_gaps",
+      "lineage_judgment": "pass_with_format_drift",
+      "missing_material_items": [
+        "seed_group shard-0045 lacks explicit strict top-level doc_hints/open_questions preservation structure for decisive gate closure"
+      ]
+    },
+    {
+      "subagent_task_id": "c4d-task-004",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "pass",
+      "missing_material_items": []
+    },
+    {
+      "subagent_task_id": "c4d-task-005",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "pass",
+      "missing_material_items": []
+    }
+  ],
+  "critical_findings": [
+    {
+      "severity": "high",
+      "category": "strict_structure_gap",
+      "detail": "Only c4d-task-003 remains blocked; shard-0045 seed group requires strict canonical structure closure for final C4 pass."
+    }
+  ],
+  "required_rework": {
+    "route": "C3",
+    "reason": "strict_structure_validation_not_satisfied",
+    "target_seed_groups": [
+      "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0045.json"
+    ],
+    "target_shards": [
+      "shard-0045",
+      "shard-0046",
+      "shard-0047",
+      "shard-0048"
+    ]
+  },
+  "generated_at_utc": "2026-05-07T16:18:34Z"
+}

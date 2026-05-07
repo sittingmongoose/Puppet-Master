@@ -1,627 +1,612 @@
 {
-  "schema_id": "pm.c3_recovery.seed_group.v1",
-  "prompt_id": "c3-recovery-extraction",
-  "prompt_version": "1.0",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "subagent_task_id": "task-023",
-  "source_shard_ids": [
-    "shard-0089",
-    "shard-0090",
-    "shard-0091",
-    "shard-0092"
-  ],
+  "subagent_task_id": "c3-extract-task-023",
+  "batch_anchor_shard_id": "shard-0089",
+  "source_shard_ids": ["shard-0089", "shard-0090", "shard-0091", "shard-0092"],
   "shard_line_ranges": {
-    "shard-0089": [
-      1,
-      201
-    ],
-    "shard-0090": [
-      1,
-      201
-    ],
-    "shard-0091": [
-      1,
-      201
-    ],
-    "shard-0092": [
-      1,
-      45
-    ]
+    "shard-0089": {"start_line": 17601, "end_line": 17800},
+    "shard-0090": {"start_line": 17801, "end_line": 18000},
+    "shard-0091": {"start_line": 18001, "end_line": 18200},
+    "shard-0092": {"start_line": 18201, "end_line": 18244}
   },
   "requirements": [
     {
-      "seed_id": "sg0089-req-001",
-      "source_shard_id": "shard-0089",
-      "source_lines": [
-        55,
-        55
-      ],
-      "detail": "gap-004 must retain the missing cross-surface receipt owner anchor, four unresolved receipt fields, and absent consumer anchors as blocking requirements."
-    },
-    {
-      "seed_id": "sg0089-req-002",
-      "source_shard_id": "shard-0089",
-      "source_lines": [
-        150,
-        150
-      ],
-      "detail": "The blocked packet must carry blocked_sequence, approval_scope_key, report_ref, startup_recovered, action_available, and escalation_level where required by consumer surfaces."
-    },
-    {
-      "seed_id": "sg0090-req-001",
-      "source_shard_id": "shard-0090",
-      "source_lines": [
-        29,
-        35
-      ],
-      "detail": "Runtime identity and account-history repair must focus on requested/effective account identity carry-through, runtime-role carry-through, and explicit usage/account-history section ownership rather than missing account_id wholesale."
-    },
-    {
-      "seed_id": "sg0090-req-002",
-      "source_shard_id": "shard-0090",
-      "source_lines": [
-        126,
-        130
-      ],
-      "detail": "Receipt repair must preserve existing run_id, phase_plan_ref, requirements_quality_report_ref, and pass_verdict coverage while adding missing receipt owner headings, consumer anchors, blocked_notice fields, and usage observability for escalation_level."
-    },
-    {
-      "seed_id": "sg0091-req-001",
-      "source_shard_id": "shard-0091",
-      "source_lines": [
-        73,
-        78
-      ],
-      "detail": "Storage and glossary fixes must add discoverable Canonical records and Orchestrator rewrite terms anchors, then repair live consumer references to those anchors."
-    },
-    {
-      "seed_id": "sg0092-req-001",
+      "id": "seed-c3-extract-task-023-041",
       "source_shard_id": "shard-0092",
-      "source_lines": [
-        4,
-        6
-      ],
-      "detail": "The remaining coverage blockers require owner-definition sections for concern lifecycle, provider/model precedence across orchestration levels, and concrete worktree allocation strategy with contamination, reuse, and cleanup rules."
+      "source_line_range": {"start_line": 18204, "end_line": 18204},
+      "summary": "cov-034/obl-016 requires a canonical concern-lifecycle owner section with active/acknowledged/resolved/dismissed semantics, resolution_kind coverage including accepted_risk, and a concern-action confirmation matrix.",
+      "raw_excerpt": "`cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix",
+      "obligation_id": "obl-016",
+      "coverage_id": "cov-034",
+      "owner_section_required": "concern-lifecycle owner section",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-extract-task-023-042",
+      "source_shard_id": "shard-0092",
+      "source_line_range": {"start_line": 18205, "end_line": 18205},
+      "summary": "cov-511/obl-215 requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels plus parallel-node worktree assignment and ownership transitions.",
+      "raw_excerpt": "`cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions",
+      "obligation_id": "obl-215",
+      "coverage_id": "cov-511",
+      "owner_section_required": "provider/model precedence + parallel-node worktree assignment + ownership transitions",
+      "doc_path": "Plans/Models_System.md"
+    },
+    {
+      "id": "seed-c3-extract-task-023-043",
+      "source_shard_id": "shard-0092",
+      "source_line_range": {"start_line": 18206, "end_line": 18206},
+      "summary": "cov-526/obl-222 requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules.",
+      "raw_excerpt": "`cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules",
+      "obligation_id": "obl-222",
+      "coverage_id": "cov-526",
+      "owner_section_required": "worktree allocation strategy + contamination/reuse/cleanup rules",
+      "doc_path": "Plans/WorktreeGitImprovement.md"
     }
   ],
   "decisions": [
     {
-      "seed_id": "sg0089-dec-001",
+      "id": "seed-c3-extract-task-023-003",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        43,
-        44
-      ],
-      "detail": "After sharpening the blocker bundle, the next required stage was returned to Audit Mode rather than Ready Check."
+      "source_line_range": {"start_line": 17684, "end_line": 17684},
+      "summary": "Locked decision: handoff target for the audit-stable blocker bundle is Ledger Condenser, not another Audit Mode sweep.",
+      "raw_excerpt": "Handoff target is now `Ledger Condenser`.",
+      "decision_rationale": "Two consecutive zero-finding follow-up audit waves; further broad audit passes are low yield.",
+      "rejected_alternatives": ["another Audit Mode sweep", "another Ready Check"]
     },
     {
-      "seed_id": "sg0089-dec-002",
-      "source_shard_id": "shard-0089",
-      "source_lines": [
-        56,
-        57
-      ],
-      "detail": "All gap families stayed open, and follow-up assessment concluded the bundle was ready to hand off to Ledger Condenser."
-    },
-    {
-      "seed_id": "sg0090-dec-001",
-      "source_shard_id": "shard-0090",
-      "source_lines": [
-        115,
-        118
-      ],
-      "detail": "Two consecutive bounded audit waves with zero new findings satisfied the audit stop condition and shifted the next useful stage to Ledger Condenser."
-    },
-    {
-      "seed_id": "sg0091-dec-001",
+      "id": "seed-c3-extract-task-023-031",
       "source_shard_id": "shard-0091",
-      "source_lines": [
-        193,
-        196
-      ],
-      "detail": "The repaired blocker split held with planning_blockers = 0, fix_backlog_items = 8, total_gaps = 8, docs_affected = 20, and underlying_gap_evidence_count = 62."
+      "source_line_range": {"start_line": 18031, "end_line": 18031},
+      "summary": "gap-005 downgraded: report_ref and startup_recovered removed from the unresolved exact-missing list because they are owned in Contracts_V0.md and Executor_Protocol.md.",
+      "raw_excerpt": "`gap-005` downgraded: `report_ref` and `startup_recovered` are no longer kept in the unresolved exact-missing list; the remaining live defect is the skeletal `blocked_notice` payload, missing usage observability carry-through for `escalation_level`, missing `action_available` ownership, and the stale tuple / stale verdict survivors.",
+      "decision_rationale": "Both fields already owned in Contracts_V0.md blocked-episode contract and runtime wake canon."
     },
     {
-      "seed_id": "sg0092-dec-001",
+      "id": "seed-c3-extract-task-023-038",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18116, "end_line": 18116},
+      "summary": "gap-007 downgraded: prior restore points contradiction was overstated because storage-plan.md cleanly separates runtime safe points from project-scoped restore points and FinalGUISpec.md explicitly forbids presenting safe points as restore points.",
+      "raw_excerpt": "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.",
+      "decision_rationale": "Live owner doc separates safe points from restore points; consumer doc forbids conflation."
+    },
+    {
+      "id": "seed-c3-extract-task-023-045",
       "source_shard_id": "shard-0092",
-      "source_lines": [
-        41,
-        44
-      ],
-      "detail": "The three deferred coverage blockers remain exact owner-definition gaps, further audit would restate the same missing sections, and the ledger is ready for condensation."
+      "source_line_range": {"start_line": 18243, "end_line": 18243},
+      "summary": "Highest-pressure docs for condensation are storage-plan.md, Contracts_V0.md, Models_System.md, Executor_Protocol.md, WorktreeGitImprovement.md, Crosswalk.md, and Orchestrator_Page.md.",
+      "raw_excerpt": "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.",
+      "pressure_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Crosswalk.md",
+        "Plans/Orchestrator_Page.md"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-023-046",
+      "source_shard_id": "shard-0092",
+      "source_line_range": {"start_line": 18244, "end_line": 18244},
+      "summary": "Audit-stable terminal decision: the ledger is ready for condensation.",
+      "raw_excerpt": "The ledger is ready for condensation.",
+      "decision_rationale": "Three remaining blockers are exact owner-definition gaps, not unresolved search/verification gaps; further audit waves would restate the same missing sections."
     }
   ],
   "data_shapes": [
     {
-      "seed_id": "sg0089-shape-001",
+      "id": "seed-c3-extract-task-023-005",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        52,
-        54
-      ],
-      "detail": "Identity data canon includes requested_account_binding, requested_account_policy, tool_use_id, project-state ownership, lifecycle-boundary semantics, and stale TierContext, tier_id, artifact_kind, and task_id cleanup boundaries."
+      "source_line_range": {"start_line": 17693, "end_line": 17693},
+      "summary": "storage-plan.md must add the named canonical key family orchestrator.project_state.{project_id} and the discoverable owner headings ### Required redb keys and ### Restart and stale history.",
+      "raw_excerpt": "`orchestrator.project_state.{project_id}` still is not present in `Plans/storage-plan.md`, and the required owner headings `### Required redb keys` and `### Restart and stale history` still are not discoverable.",
+      "schema_name": "orchestrator.project_state.{project_id}",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": "1330-1391"
     },
     {
-      "seed_id": "sg0089-shape-002",
+      "id": "seed-c3-extract-task-023-006",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        92,
-        94
-      ],
-      "detail": "Storage data canon must distinguish existing historical_lineage_refs[] from still-missing orchestrator.project_state.{project_id}, Required redb keys, Restart and stale history, and receipt fields pass_verdict, phase_plan_ref, and requirements_quality_report_ref."
+      "source_line_range": {"start_line": 17694, "end_line": 17694},
+      "summary": "storage-plan.md receipt minimum-fields list must carry run_id, pass_verdict, phase_plan_ref, and requirements_quality_report_ref.",
+      "raw_excerpt": "`Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`.",
+      "schema_name": "runtime receipt minimum-fields",
+      "fields": ["run_id", "pass_verdict", "phase_plan_ref", "requirements_quality_report_ref"],
+      "doc_path": "Plans/storage-plan.md"
     },
     {
-      "seed_id": "sg0090-shape-001",
+      "id": "seed-c3-extract-task-023-012",
+      "source_shard_id": "shard-0089",
+      "source_line_range": {"start_line": 17750, "end_line": 17750},
+      "summary": "assistant-chat-design.md blocked-packet payload must carry blocked_sequence, approval_scope_key, report_ref, startup_recovered, action_available, and escalation_level.",
+      "raw_excerpt": "`Plans/assistant-chat-design.md` still does not carry the exact blocked packet fields `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, or `escalation_level`.",
+      "schema_name": "blocked-packet payload",
+      "fields": ["blocked_sequence", "approval_scope_key", "report_ref", "startup_recovered", "action_available", "escalation_level"],
+      "doc_path": "Plans/assistant-chat-design.md",
+      "doc_line_span": "2213-2240"
+    },
+    {
+      "id": "seed-c3-extract-task-023-013",
+      "source_shard_id": "shard-0089",
+      "source_line_range": {"start_line": 17774, "end_line": 17774},
+      "summary": "interview-subagent-integration.md ### Runtime identity visibility currently stops at requested_account_binding/operational_identity and must add requested_account_policy and tool_use_id.",
+      "raw_excerpt": "`Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`.",
+      "schema_name": "Runtime identity visibility",
+      "fields_present": ["requested_account_binding", "operational_identity"],
+      "fields_missing": ["requested_account_policy", "tool_use_id"],
+      "doc_path": "Plans/interview-subagent-integration.md",
+      "doc_line_span": "1686-1698"
+    },
+    {
+      "id": "seed-c3-extract-task-023-016",
       "source_shard_id": "shard-0090",
-      "source_lines": [
-        1,
-        5
-      ],
-      "detail": "Blocked-episode canon already defines report_ref, startup_recovered, and escalation_level in owner docs, but Tools, assistant chat, usage, and action_available ownership still need propagation or definition."
+      "source_line_range": {"start_line": 17801, "end_line": 17804},
+      "summary": "Owner mapping for blocked-episode fields is locked: report_ref owned in Contracts_V0.md, startup_recovered owned in Contracts_V0.md and Executor_Protocol.md, escalation_level owned in Orchestrator_Page.md; consumer surfaces Tools.md, assistant-chat-design.md, and usage-feature.md still miss them.",
+      "raw_excerpt": "`Plans/Contracts_V0.md` already carries `report_ref` in the blocked-episode contract. `Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered` in runtime wake canon. `Plans/Orchestrator_Page.md` already carries `escalation_level` in the concern/notification owner fields.",
+      "owners": {
+        "report_ref": "Plans/Contracts_V0.md",
+        "startup_recovered": ["Plans/Contracts_V0.md", "Plans/Executor_Protocol.md"],
+        "escalation_level": "Plans/Orchestrator_Page.md"
+      },
+      "missing_consumers": ["Plans/Tools.md", "Plans/assistant-chat-design.md", "Plans/usage-feature.md"]
     },
     {
-      "seed_id": "sg0090-shape-002",
+      "id": "seed-c3-extract-task-023-018",
       "source_shard_id": "shard-0090",
-      "source_lines": [
-        32,
-        35
-      ],
-      "detail": "Usage already carries canonical account_id in billing identity and UsageRecord schemas; remaining identity shape work is requested/effective identity and runtime-role carry-through."
+      "source_line_range": {"start_line": 17832, "end_line": 17832},
+      "summary": "usage-feature.md already carries canonical account_id attribution in both the billing-identity tuple and the unified UsageRecord schema.",
+      "raw_excerpt": "`Plans/usage-feature.md` already carries canonical `account_id` attribution in both the billing-identity tuple and the unified `UsageRecord` schema.",
+      "schema_name": "UsageRecord",
+      "fields_present": ["account_id"],
+      "doc_path": "Plans/usage-feature.md",
+      "doc_line_span": "346-389"
     },
     {
-      "seed_id": "sg0091-shape-001",
+      "id": "seed-c3-extract-task-023-019",
+      "source_shard_id": "shard-0090",
+      "source_line_range": {"start_line": 17834, "end_line": 17834},
+      "summary": "orchestrator-subagent-integration.md execution_unit_context packet currently stops at requested_account_id, effective_account_id, and operational_identity.",
+      "raw_excerpt": "`Plans/orchestrator-subagent-integration.md` still carries a narrower `execution_unit_context` packet that stops at `requested_account_id`, `effective_account_id`, and `operational_identity`.",
+      "schema_name": "execution_unit_context",
+      "fields_present": ["requested_account_id", "effective_account_id", "operational_identity"],
+      "doc_path": "Plans/orchestrator-subagent-integration.md",
+      "doc_line_span": "374-391"
+    },
+    {
+      "id": "seed-c3-extract-task-023-024",
+      "source_shard_id": "shard-0090",
+      "source_line_range": {"start_line": 17928, "end_line": 17928},
+      "summary": "storage-plan.md carries the broader project_summary.v1:{project_id} record family, but the exact orchestrator.project_state.{project_id} key family is still not present as named canon.",
+      "raw_excerpt": "`Plans/storage-plan.md` already carries the broader `project_summary.v1:{project_id}` record family, but the exact `orchestrator.project_state.{project_id}` key family still is not present as named canon.",
+      "schema_name": "orchestrator.project_state.{project_id}",
+      "related_existing_record": "project_summary.v1:{project_id}",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-extract-task-023-025",
+      "source_shard_id": "shard-0090",
+      "source_line_range": {"start_line": 17929, "end_line": 17929},
+      "summary": "assistant-chat-design.md blocked_notice currently defines only blocked_family and allowed_action_ids[]; blocked_sequence and approval_scope_key remain missing from the live payload.",
+      "raw_excerpt": "`Plans/assistant-chat-design.md` still defines `blocked_notice` with only `blocked_family` and `allowed_action_ids[]`, so `blocked_sequence` and `approval_scope_key` remain missing specifically from the live blocked-notice payload.",
+      "schema_name": "blocked_notice",
+      "fields_present": ["blocked_family", "allowed_action_ids[]"],
+      "fields_missing": ["blocked_sequence", "approval_scope_key"],
+      "doc_path": "Plans/assistant-chat-design.md",
+      "doc_line_span": "808-818"
+    },
+    {
+      "id": "seed-c3-extract-task-023-026",
+      "source_shard_id": "shard-0090",
+      "source_line_range": {"start_line": 17930, "end_line": 17930},
+      "summary": "usage-feature.md still reports blocked attempts only by blocked_reason_code; escalation_level is missing from the runtime scheduler / recovery observability consumer path.",
+      "raw_excerpt": "`Plans/usage-feature.md` still reports blocked attempts only by `blocked_reason_code`, so `escalation_level` remains missing from the runtime scheduler / recovery observability consumer path.",
+      "fields_present": ["blocked_reason_code"],
+      "fields_missing": ["escalation_level"],
+      "doc_path": "Plans/usage-feature.md",
+      "doc_line_span": "690-705"
+    },
+    {
+      "id": "seed-c3-extract-task-023-027",
+      "source_shard_id": "shard-0090",
+      "source_line_range": {"start_line": 17932, "end_line": 17932},
+      "summary": "Glossary.md carries the help-entry field template and labels, but still lacks the named ### Orchestrator rewrite terms / ### Runtime and routing terms sections and populated help-entry rows.",
+      "raw_excerpt": "`Plans/Glossary.md` already carries the required help-entry field template and labels, but still does not have the named `### Orchestrator rewrite terms` / `### Runtime and routing terms` sections or populated help-entry rows.",
+      "missing_sections": ["### Orchestrator rewrite terms", "### Runtime and routing terms"],
+      "doc_path": "Plans/Glossary.md",
+      "doc_line_span": "30-67"
+    },
+    {
+      "id": "seed-c3-extract-task-023-029",
       "source_shard_id": "shard-0091",
-      "source_lines": [
-        29,
-        33
-      ],
-      "detail": "execution_unit_context in Contracts_V0 omits requested_account_binding, requested_account_policy, and operational_identity; glossary help entries must include canonical_name, short_definition, why_it_matters, what_it_is_not, common_related_states, related_concepts, and surface_examples."
+      "source_line_range": {"start_line": 18029, "end_line": 18029},
+      "summary": "Owner anchor ### 5.1B Persona/Runtime Snapshot Payload Contract is still absent and Contracts_V0.md execution_unit_context required-field list still omits requested_account_binding, requested_account_policy, and operational_identity.",
+      "raw_excerpt": "the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `Plans/Contracts_V0.md` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity`",
+      "schema_name": "execution_unit_context",
+      "missing_owner_anchor": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "fields_missing": ["requested_account_binding", "requested_account_policy", "operational_identity"],
+      "doc_path": "Plans/Contracts_V0.md",
+      "doc_line_span": "557-624"
     },
     {
-      "seed_id": "sg0092-shape-001",
-      "source_shard_id": "shard-0092",
-      "source_lines": [
-        4,
-        6
-      ],
-      "detail": "Concern lifecycle data must cover active, acknowledged, resolved, dismissed, resolution_kind including accepted_risk, and action confirmation matrix; provider/model data must cover precedence across run, seam, package, node, overseer, and delegated-subagent levels; worktree data must cover allocation, contamination, reuse, and cleanup."
+      "id": "seed-c3-extract-task-023-032",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18032, "end_line": 18032},
+      "summary": "Glossary.md must instantiate terms with the full help-entry field set, not as two-column Term | Definition tables or inline bullets.",
+      "raw_excerpt": "the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`)",
+      "schema_name": "help-entry field set",
+      "fields": ["canonical_name", "short_definition", "why_it_matters", "what_it_is_not", "common_related_states", "related_concepts", "surface_examples"],
+      "doc_path": "Plans/Glossary.md",
+      "doc_line_span": "34-85"
+    },
+    {
+      "id": "seed-c3-extract-task-023-034",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18074, "end_line": 18074},
+      "summary": "storage-plan.md still lacks a discoverable Canonical records heading even though it contains inline canonical-records prose and a canonical_record.v1:{project_id}:{record_id} authoritative container; Orchestrator_Page.md points at the missing #Canonical records anchor from three sections.",
+      "raw_excerpt": "`Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.",
+      "schema_name": "canonical_record.v1:{project_id}:{record_id}",
+      "missing_owner_heading": "### Canonical records",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": "1389-1396"
     }
   ],
   "routing_rules": [
     {
-      "seed_id": "sg0089-route-001",
-      "source_shard_id": "shard-0089",
-      "source_lines": [
-        96,
-        99
-      ],
-      "detail": "UI command routing requires exact Command entry contract, Search-command routing, and Canonical runtime recovery command ownership anchors, plus removal of detached_window and result_id routing survivors."
-    },
-    {
-      "seed_id": "sg0090-route-001",
-      "source_shard_id": "shard-0090",
-      "source_lines": [
-        55,
-        58
-      ],
-      "detail": "Runtime identity routing should point gap-001 at the real partial-transfer sections: Runtime identity visibility, Unified UsageRecord schema expectations, and Subagent Selector."
-    },
-    {
-      "seed_id": "sg0091-route-001",
+      "id": "seed-c3-extract-task-023-030",
       "source_shard_id": "shard-0091",
-      "source_lines": [
-        29,
-        33
-      ],
-      "detail": "Route-target repair must replace non-existent Orchestrator_Page search/action and Source Control boundary references, and recognize result_id as live in cmd.search.open_result and cmd.search.replace_selected args."
-    },
-    {
-      "seed_id": "sg0091-route-002",
-      "source_shard_id": "shard-0091",
-      "source_lines": [
-        114,
-        116
-      ],
-      "detail": "Contracts, Orchestrator_Page, WorktreeGitImprovement, and Runtime_Artifacts_Panel contain live broken links to missing storage-plan Canonical records, Restart and stale history, and Cross-surface receipt record anchors."
+      "source_line_range": {"start_line": 18030, "end_line": 18030},
+      "summary": "UI_Command_Catalog.md still points at non-existent Plans/Orchestrator_Page.md#10. Search, routing, and action policy, and result_id remains live in cmd.search.open_result / cmd.search.replace_selected args rather than appearing only as stale residue.",
+      "raw_excerpt": "`gap-002` sharpened: `Plans/UI_Command_Catalog.md` still points at the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`, and `result_id` remains live in `cmd.search.open_result` / `cmd.search.replace_selected` args rather than appearing only as stale residue.",
+      "broken_target": "Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
+      "live_commands": ["cmd.search.open_result", "cmd.search.replace_selected"],
+      "doc_path": "Plans/UI_Command_Catalog.md",
+      "doc_line_span": "214-223"
     }
   ],
   "verification_rules": [
     {
-      "seed_id": "sg0089-verify-001",
-      "source_shard_id": "shard-0089",
-      "source_lines": [
-        83,
-        84
-      ],
-      "detail": "Further broad audit passes are low yield once the unresolved set is sharp enough and only reconfirms existing evidence."
-    },
-    {
-      "seed_id": "sg0090-verify-001",
+      "id": "seed-c3-extract-task-023-021",
       "source_shard_id": "shard-0090",
-      "source_lines": [
-        79,
-        83
-      ],
-      "detail": "A bounded audit stop condition is met when two waves add zero new exact missing fields, commands, statuses, cross-reference targets, headings, stale survivors, affected targets, or blocker families."
+      "source_line_range": {"start_line": 17878, "end_line": 17879},
+      "summary": "Iterative-audit stop condition: two consecutive zero-finding waves trigger a stop; next useful stage becomes Ledger Condenser.",
+      "raw_excerpt": "Wave 1 and Wave 2 both count as zero-finding waves under the strict audit rule because they added no new exact missing field, command, heading, stale survivor, affected target, or blocker family. The next useful stage is `Ledger Condenser`, not another immediate audit wave.",
+      "gate_name": "iterative_audit_zero_finding_stop",
+      "stop_threshold": "two consecutive zero-finding waves"
     },
     {
-      "seed_id": "sg0091-verify-001",
+      "id": "seed-c3-extract-task-023-028",
       "source_shard_id": "shard-0091",
-      "source_lines": [
-        153,
-        159
-      ],
-      "detail": "The repaired pm.open_gaps.v3 blocker split verifies as stable when waves reconfirm known defects, reject unsupported reclassification back to planning, and add no new exact findings."
+      "source_line_range": {"start_line": 18020, "end_line": 18021},
+      "summary": "A wave counts as zero-finding when it adds no new exact missing field, command, heading, stale survivor, affected target, or blocker family.",
+      "raw_excerpt": "Wave 1 and Wave 2 both count as zero-finding waves under the strict audit rule because they added no new exact missing field, command, heading, stale survivor, affected target, or blocker family.",
+      "gate_name": "zero_finding_wave_definition",
+      "criteria": ["new exact missing field", "new command", "new heading", "new stale survivor", "new affected target", "new blocker family"]
     },
     {
-      "seed_id": "sg0092-verify-001",
-      "source_shard_id": "shard-0092",
-      "source_lines": [
-        41,
-        44
-      ],
-      "detail": "For cov-034, cov-511, and cov-526, verification should treat further audit as complete until live docs change because the blockers are owner-definition gaps, not evidence-collection gaps."
+      "id": "seed-c3-extract-task-023-039",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18158, "end_line": 18158},
+      "summary": "Repair rule: missing-heading and broken-anchor items must NOT be reclassified back to planning blockers when the owner sections, consumer targets, and exact mutations are already known.",
+      "raw_excerpt": "A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced.",
+      "gate_name": "blocker_type_repair_rule",
+      "rule": "do not reclassify to blocker_type=planning when owner sections, consumer targets, and exact mutations are known"
     }
   ],
   "owner_consumer_obligations": [
     {
-      "seed_id": "sg0089-obl-001",
-      "source_shard_id": "shard-0089",
-      "source_lines": [
-        174,
-        177
-      ],
-      "detail": "Interview runtime identity must extend beyond requested_account_binding and operational_identity to carry requested_account_policy and tool_use_id; usage still needs an artifact drill-through section and project output/runtime artifact/interview docs need validation lineage and report anchors."
-    },
-    {
-      "seed_id": "sg0090-obl-001",
+      "id": "seed-c3-extract-task-023-020",
       "source_shard_id": "shard-0090",
-      "source_lines": [
-        126,
-        132
-      ],
-      "detail": "Storage and project-output owners already carry some receipt lineage fields; consumers still owe receipt anchors, blocked-notice payload expansion, usage escalation observability, stale tuple removal, stale verdict removal, and glossary section population."
-    },
-    {
-      "seed_id": "sg0091-obl-001",
-      "source_shard_id": "shard-0091",
-      "source_lines": [
-        155,
-        158
-      ],
-      "detail": "Known owner sections, consumer targets, and exact mutations remain sufficient to keep repaired gaps as fix-backlog items rather than planning blockers."
-    },
-    {
-      "seed_id": "sg0092-obl-001",
-      "source_shard_id": "shard-0092",
-      "source_lines": [
-        4,
-        6
-      ],
-      "detail": "Owner docs must define concern lifecycle, provider/model precedence, and worktree allocation strategy; consumers currently expose only fragments across Orchestrator_Page, storage-plan, Models_System, Executor_Protocol, WorktreeGitImprovement, Crosswalk, and orchestrator-subagent-integration."
+      "source_line_range": {"start_line": 17855, "end_line": 17857},
+      "summary": "gap-001 retargeted to live owner/consumer sections: interview's ### Runtime identity visibility, usage's ### Unified UsageRecord schema expectations, and orchestrator's ### Subagent Selector containing the narrower execution_unit_context packet.",
+      "raw_excerpt": "`gap-001` now points at `Plans/interview-subagent-integration.md` — `### Runtime identity visibility`... `Plans/usage-feature.md` — `### Unified \\`UsageRecord\\` schema expectations`... `Plans/orchestrator-subagent-integration.md` — `### Subagent Selector`, which is the real containing section for the narrower `execution_unit_context` packet.",
+      "owner": "Plans/Contracts_V0.md (execution_unit_context contract)",
+      "consumers": [
+        {"doc_path": "Plans/interview-subagent-integration.md", "section": "### Runtime identity visibility", "doc_line_span": "1686-1698"},
+        {"doc_path": "Plans/usage-feature.md", "section": "### Unified `UsageRecord` schema expectations", "doc_line_span": "346-389"},
+        {"doc_path": "Plans/orchestrator-subagent-integration.md", "section": "### Subagent Selector", "doc_line_span": "374-391"}
+      ]
     }
   ],
   "stale_retirement_items": [
     {
-      "seed_id": "sg0089-stale-001",
+      "id": "seed-c3-extract-task-023-001",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        1,
-        2
-      ],
-      "detail": "Retire exact stale contradictory survivors: TierContext, tier_id, detached_window, result_id, artifact_kind, task_id, { tool_name, invocation_summary, options }, No remaining gaps, and restore points."
+      "source_line_range": {"start_line": 17602, "end_line": 17602},
+      "summary": "Confirmed exact stale contradictory survivors that must be retired across the Plans canon.",
+      "raw_excerpt": "Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.",
+      "stale_terms": ["TierContext", "tier_id", "detached_window", "result_id", "artifact_kind", "task_id", "{ tool_name, invocation_summary, options }", "No remaining gaps", "restore points"]
     },
     {
-      "seed_id": "sg0089-stale-002",
+      "id": "seed-c3-extract-task-023-004",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        97,
-        99
-      ],
-      "detail": "orchestrator-subagent-integration still carries TierContext and tier_id residue, Contracts_V0 still preserves detached_window, Tools still carries the stale ask tuple, assistant-chat-design still carries No remaining gaps, and FinalGUISpec still carries restore points contradiction at this audit point."
+      "source_line_range": {"start_line": 17692, "end_line": 17692},
+      "summary": "Retire historical_lineage_refs[] from gap-003's exact-missing list because storage-plan.md already carries it.",
+      "raw_excerpt": "`historical_lineage_refs[]` is already present in `Plans/storage-plan.md`, so it no longer belongs in `gap-003`'s exact-missing list.",
+      "retired_term": "historical_lineage_refs[]",
+      "from_gap": "gap-003",
+      "doc_path": "Plans/storage-plan.md"
     },
     {
-      "seed_id": "sg0090-stale-001",
+      "id": "seed-c3-extract-task-023-009",
+      "source_shard_id": "shard-0089",
+      "source_line_range": {"start_line": 17697, "end_line": 17697},
+      "summary": "orchestrator-subagent-integration.md still actively carries TierContext / tier_id residue, and Contracts_V0.md still preserves detached_window.",
+      "raw_excerpt": "`Plans/orchestrator-subagent-integration.md` still actively carries `TierContext` / `tier_id` residue, and `Plans/Contracts_V0.md` still preserves `detached_window`.",
+      "stale_terms": ["TierContext", "tier_id", "detached_window"],
+      "doc_paths": ["Plans/orchestrator-subagent-integration.md", "Plans/Contracts_V0.md"]
+    },
+    {
+      "id": "seed-c3-extract-task-023-010",
+      "source_shard_id": "shard-0089",
+      "source_line_range": {"start_line": 17698, "end_line": 17698},
+      "summary": "Tools.md still carries the stale tuple { tool_name, invocation_summary, options }; assistant-chat-design.md still carries No remaining gaps; FinalGUISpec.md still carries the restore points contradiction.",
+      "raw_excerpt": "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction.",
+      "stale_terms": ["{ tool_name, invocation_summary, options }", "No remaining gaps", "restore points"],
+      "doc_paths": ["Plans/Tools.md", "Plans/assistant-chat-design.md", "Plans/FinalGUISpec.md"]
+    },
+    {
+      "id": "seed-c3-extract-task-023-022",
       "source_shard_id": "shard-0090",
-      "source_lines": [
-        129,
-        131
-      ],
-      "detail": "assistant-chat-design still lacks blocked_notice fields, usage-feature still lacks escalation_level in blocked-attempt observability, Tools still carries the stale ask tuple, and assistant-chat-design still carries No remaining gaps."
+      "source_line_range": {"start_line": 17926, "end_line": 17926},
+      "summary": "Retire run_id from gap-004's unresolved list because storage-plan.md already includes it in the runtime receipt minimum-fields list.",
+      "raw_excerpt": "`Plans/storage-plan.md` already includes `run_id` in the runtime receipt minimum-fields list, so `gap-004` must no longer treat that field as unresolved.",
+      "retired_term": "run_id",
+      "from_gap": "gap-004",
+      "doc_path": "Plans/storage-plan.md"
     },
     {
-      "seed_id": "sg0091-stale-001",
-      "source_shard_id": "shard-0091",
-      "source_lines": [
-        116,
-        117
-      ],
-      "detail": "The restore points contradiction was downgraded as overstated; remaining stale-survivor verification targets include detached_window, result_id, blocked_notice, action_available, and No remaining gaps."
+      "id": "seed-c3-extract-task-023-023",
+      "source_shard_id": "shard-0090",
+      "source_line_range": {"start_line": 17927, "end_line": 17927},
+      "summary": "Retire phase_plan_ref, requirements_quality_report_ref, and pass_verdict from gap-004's wholesale-missing list because Project_Output_Artifacts.md already carries them in the validation-pass-report lineage.",
+      "raw_excerpt": "`Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` in the validation-pass-report lineage, so `gap-004`'s unresolved work is now the missing receipt owner heading plus missing consumer anchors rather than those fields wholesale.",
+      "retired_terms": ["phase_plan_ref", "requirements_quality_report_ref", "pass_verdict"],
+      "from_gap": "gap-004",
+      "doc_path": "Plans/Project_Output_Artifacts.md",
+      "doc_line_span": "485-530"
     }
   ],
   "open_questions": [
     {
-      "seed_id": "sg0089-open-001",
-      "source_shard_id": "shard-0089",
-      "source_lines": [
-        93,
-        95
-      ],
-      "detail": "Open repair question: where to add discoverable Required redb keys, Restart and stale history, receipt minimum fields, and usage consumer sections so existing partial canon becomes owner/consumer complete."
-    },
-    {
-      "seed_id": "sg0090-open-001",
+      "id": "seed-c3-extract-task-023-017",
       "source_shard_id": "shard-0090",
-      "source_lines": [
-        33,
-        35
-      ],
-      "detail": "Open repair question: how to propagate requested_account_policy, tool_use_id, requested/effective identity, runtime-role carry-through, and account-history ownership across interview, orchestrator-subagent, usage, and storage docs."
-    },
-    {
-      "seed_id": "sg0091-open-001",
-      "source_shard_id": "shard-0091",
-      "source_lines": [
-        74,
-        75
-      ],
-      "detail": "Open repair question: whether storage and glossary owner headings should be added verbatim to satisfy existing Orchestrator_Page consumer links or whether the consumer links should be retargeted to existing live headings."
-    },
-    {
-      "seed_id": "sg0092-open-001",
-      "source_shard_id": "shard-0092",
-      "source_lines": [
-        5,
-        6
-      ],
-      "detail": "Open design question: choose and document the provider/model precedence owner and concrete worktree allocation strategy across run, seam, package, node, overseer, delegated subagent, and lane/worktree boundaries."
+      "source_line_range": {"start_line": 17805, "end_line": 17805},
+      "summary": "action_available has no discoverable owner or consumer presence in the live Plans docs; ownership is unresolved.",
+      "raw_excerpt": "`action_available` still does not have a discoverable owner or consumer presence in the live Plans docs.",
+      "unresolved_field": "action_available",
+      "owner_status": "missing",
+      "consumer_status": "missing"
     }
   ],
   "process_defects": [
     {
-      "seed_id": "sg0089-proc-001",
+      "id": "seed-c3-extract-task-023-002",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        1,
-        1
-      ],
-      "detail": "gap-008 was previously overstated as missing_data_shape because owner and adjacent consumer docs already carry much of the account-history and projection-health canon."
+      "source_line_range": {"start_line": 17643, "end_line": 17644},
+      "summary": "open_gaps.json.next_required_stage was returned to Audit Mode in this pass; the compact blocker bundle was updated directly rather than handed to Ready Check.",
+      "raw_excerpt": "`open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.",
+      "defect": "blocker bundle updated in place without Ready Check handoff",
+      "artifact": "open_gaps.json.next_required_stage"
     },
     {
-      "seed_id": "sg0089-proc-002",
+      "id": "seed-c3-extract-task-023-011",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        92,
-        92
-      ],
-      "detail": "historical_lineage_refs[] was incorrectly kept in gap-003 exact-missing even though storage-plan already contains it."
+      "source_line_range": {"start_line": 17699, "end_line": 17699},
+      "summary": "GitHub_Integration.md points at the non-existent Plans/Orchestrator_Page.md#11. Source Control boundary anchor, sharpening gap-007's owner-heading defect.",
+      "raw_excerpt": "`Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#11. Source Control boundary`, which sharpens `gap-007`'s owner-heading defect.",
+      "broken_anchor": "Plans/Orchestrator_Page.md#11. Source Control boundary",
+      "consumer_doc": "Plans/GitHub_Integration.md",
+      "doc_line_span": "251-258"
     },
     {
-      "seed_id": "sg0090-proc-001",
-      "source_shard_id": "shard-0090",
-      "source_lines": [
-        126,
-        127
-      ],
-      "detail": "gap-004 overstated unresolved receipt fields because run_id, phase_plan_ref, requirements_quality_report_ref, and pass_verdict already exist in owner or adjacent artifact docs."
-    },
-    {
-      "seed_id": "sg0090-proc-002",
-      "source_shard_id": "shard-0090",
-      "source_lines": [
-        169,
-        170
-      ],
-      "detail": "canon_inventory.json lagged refined blocker wording after audit sharpening and needed Ledger Condenser rather than another broad audit."
-    },
-    {
-      "seed_id": "sg0091-proc-001",
+      "id": "seed-c3-extract-task-023-033",
       "source_shard_id": "shard-0091",
-      "source_lines": [
-        144,
-        147
-      ],
-      "detail": "The audit removed an overstated restore-points contradiction and added broken-anchor evidence, again leaving canon_inventory.json behind the sharpened wording."
+      "source_line_range": {"start_line": 18033, "end_line": 18033},
+      "summary": "Broken Plans/Orchestrator_Page.md#11. Source Control boundary anchor survives in GitHub_Integration.md, storage-plan.md, and WorktreeGitImprovement.md; FinalGUISpec.md still preserves the restore points contradiction.",
+      "raw_excerpt": "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.",
+      "broken_anchor": "Plans/Orchestrator_Page.md#11. Source Control boundary",
+      "affected_consumer_docs": ["Plans/GitHub_Integration.md", "Plans/storage-plan.md", "Plans/WorktreeGitImprovement.md"]
     },
     {
-      "seed_id": "sg0092-proc-001",
-      "source_shard_id": "shard-0092",
-      "source_lines": [
-        41,
-        42
+      "id": "seed-c3-extract-task-023-035",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18075, "end_line": 18075},
+      "summary": "Orchestrator_Page.md history and concern sections still point at the missing Plans/Glossary.md#Orchestrator rewrite terms anchor.",
+      "raw_excerpt": "`gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.",
+      "broken_anchor": "Plans/Glossary.md#Orchestrator rewrite terms",
+      "consumer_doc": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-extract-task-023-036",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18114, "end_line": 18114},
+      "summary": "Contracts_V0.md still points at missing Plans/storage-plan.md#Canonical records, and Orchestrator_Page.md and WorktreeGitImprovement.md still point at missing Plans/storage-plan.md#Restart and stale history.",
+      "raw_excerpt": "`Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading.",
+      "broken_anchors": [
+        "Plans/storage-plan.md#Canonical records",
+        "Plans/storage-plan.md#Restart and stale history"
       ],
-      "detail": "The final coverage audit established that remaining blockers are owner-definition defects rather than discovery defects, so repeated evidence searches are a process dead end until docs change."
+      "consumer_docs": ["Plans/Contracts_V0.md", "Plans/Orchestrator_Page.md", "Plans/WorktreeGitImprovement.md"]
+    },
+    {
+      "id": "seed-c3-extract-task-023-037",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18115, "end_line": 18115},
+      "summary": "Runtime_Artifacts_Panel.md points directly at the missing Plans/storage-plan.md#Cross-surface receipt record anchor; gap-004 includes a live broken consumer reference.",
+      "raw_excerpt": "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.",
+      "broken_anchor": "Plans/storage-plan.md#Cross-surface receipt record",
+      "consumer_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "doc_line_span": "57-65"
+    },
+    {
+      "id": "seed-c3-extract-task-023-040",
+      "source_shard_id": "shard-0091",
+      "source_line_range": {"start_line": 18194, "end_line": 18194},
+      "summary": "Stable inventory metrics: planning_blockers=0, fix_backlog_items=8, total_gaps=8, docs_affected=20, underlying_gap_evidence_count=62.",
+      "raw_excerpt": "This invocation kept `planning_blockers = 0`, `fix_backlog_items = 8`, `total_gaps = 8`, `docs_affected = 20`, and `underlying_gap_evidence_count = 62`.",
+      "metrics": {
+        "planning_blockers": 0,
+        "fix_backlog_items": 8,
+        "total_gaps": 8,
+        "docs_affected": 20,
+        "underlying_gap_evidence_count": 62
+      }
+    },
+    {
+      "id": "seed-c3-extract-task-023-044",
+      "source_shard_id": "shard-0092",
+      "source_line_range": {"start_line": 18241, "end_line": 18241},
+      "summary": "Bounded audit on the deferred coverage blockers closed at 17 resolved, 3 unresolved.",
+      "raw_excerpt": "This invocation closes the bounded audit on the three deferred coverage blockers left after doc-discovery resolution (`17` resolved, `3` unresolved).",
+      "resolved_count": 17,
+      "unresolved_count": 3,
+      "deferred_coverage_blockers": ["cov-034", "cov-511", "cov-526"]
     }
   ],
   "doc_hints": [
     {
-      "seed_id": "sg0089-doc-001",
+      "id": "seed-c3-extract-task-023-007",
       "source_shard_id": "shard-0089",
-      "source_lines": [
-        100,
-        113
-      ],
-      "detail": "Primary docs repeatedly implicated by the sharpened blocker bundle include storage-plan, usage-feature, UI_Command_Catalog, Contracts_V0, orchestrator-subagent-integration, Tools, assistant-chat-design, Glossary, Orchestrator_Page, GitHub_Integration, FinalGUISpec, interview-subagent-integration, and human-in-the-loop."
+      "source_line_range": {"start_line": 17695, "end_line": 17695},
+      "summary": "usage-feature.md must record named consumer sections for artifact drill-through, usage-attribution, export-taxonomy, account-history, and degrade-behavior.",
+      "raw_excerpt": "`Plans/usage-feature.md` still lacks the named `artifact drill-through`, usage-attribution, export-taxonomy, account-history, and degrade-behavior consumer sections.",
+      "doc_path": "Plans/usage-feature.md",
+      "missing_sections": ["artifact drill-through", "usage-attribution", "export-taxonomy", "account-history", "degrade-behavior"]
     },
     {
-      "seed_id": "sg0090-doc-001",
-      "source_shard_id": "shard-0090",
-      "source_lines": [
-        181,
-        197
+      "id": "seed-c3-extract-task-023-008",
+      "source_shard_id": "shard-0089",
+      "source_line_range": {"start_line": 17696, "end_line": 17696},
+      "summary": "UI_Command_Catalog.md must add the exact anchors ### 2.0 Command entry contract (doc-level), Search-command routing, and Canonical runtime recovery command ownership; existing normalization sits under ### 2.0A Promoted Section 15 command families.",
+      "raw_excerpt": "`Plans/UI_Command_Catalog.md` still lacks the exact `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors even though real normalization content exists under `### 2.0A Promoted Section 15 command families`.",
+      "doc_path": "Plans/UI_Command_Catalog.md",
+      "missing_sections": [
+        "### 2.0 Command entry contract (doc-level)",
+        "Search-command routing",
+        "Canonical runtime recovery command ownership"
       ],
-      "detail": "The zero-finding handoff inventory affected storage-plan, Project_Output_Artifacts, Runtime_Artifacts_Panel, usage-feature, assistant-chat-design, Tools, human-in-the-loop, interview-subagent-integration, Contracts_V0, Executor_Protocol, orchestrator-subagent-integration, UI_Command_Catalog, Glossary, Orchestrator_Page, GitHub_Integration, and FinalGUISpec."
+      "doc_line_span": "29-92"
     },
     {
-      "seed_id": "sg0091-doc-001",
-      "source_shard_id": "shard-0091",
-      "source_lines": [
-        160,
-        175
-      ],
-      "detail": "The repaired blocker split's affected docs are Contracts_V0, Executor_Protocol, UI_Command_Catalog, assistant-chat-design, usage-feature, human-in-the-loop, Tools, storage-plan, Runtime_Artifacts_Panel, Project_Output_Artifacts, interview-subagent-integration, Orchestrator_Page, Glossary, GitHub_Integration, and WorktreeGitImprovement."
+      "id": "seed-c3-extract-task-023-014",
+      "source_shard_id": "shard-0089",
+      "source_line_range": {"start_line": 17776, "end_line": 17776},
+      "summary": "usage-feature.md still does not contain an exact 'artifact drill-through section' heading.",
+      "raw_excerpt": "`Plans/usage-feature.md` still does not contain an exact `artifact drill-through section` heading.",
+      "doc_path": "Plans/usage-feature.md",
+      "missing_sections": ["artifact drill-through section"],
+      "doc_line_span": "233-245"
     },
     {
-      "seed_id": "sg0092-doc-001",
-      "source_shard_id": "shard-0092",
-      "source_lines": [
-        41,
-        43
+      "id": "seed-c3-extract-task-023-015",
+      "source_shard_id": "shard-0089",
+      "source_line_range": {"start_line": 17777, "end_line": 17777},
+      "summary": "Project_Output_Artifacts.md, Runtime_Artifacts_Panel.md, and interview-subagent-integration.md still do not contain the exact validation artifact lineage, bridge-field viewer, or validation/report section headings.",
+      "raw_excerpt": "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.",
+      "doc_paths": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md"
       ],
-      "detail": "Highest-pressure condensation docs are storage-plan, Contracts_V0, Models_System, Executor_Protocol, WorktreeGitImprovement, Crosswalk, and Orchestrator_Page."
+      "missing_sections": ["validation artifact lineage", "bridge-field viewer", "validation/report section"]
     }
   ],
   "exclusions_by_shard": {
     "shard-0089": [
-      {
-        "source_lines": [
-          3,
-          40
-        ],
-        "reason": "Impacted-doc and evidence-ref lists are retained indirectly through extracted findings and doc_hints, but they are not standalone seed obligations."
-      },
-      {
-        "source_lines": [
-          120,
-          136
-        ],
-        "reason": "Evidence references support the extracted refinements but do not add separate requirements beyond the exact_items and notes."
-      },
-      {
-        "source_lines": [
-          195,
-          201
-        ],
-        "reason": "This is an incomplete cross-shard entry header; its substantive exact_items continue in shard-0090 and are extracted from shard-0090 lines 1-5."
-      }
+      {"reason": "boilerplate impacted_docs/evidence_refs lists are restated for every Audit Mode entry", "lines_or_section": "17603-17640, 17658-17681, 17700-17736, 17753-17767, 17778-17795"},
+      {"reason": "restated entry header metadata (timestamp_utc, stage, finding_type) duplicated across multiple Audit Mode entries", "lines_or_section": "17647-17650, 17687-17690, 17743-17746, 17769-17772"},
+      {"reason": "supersedes_prior: yes flag and recap notes that only restate prior conclusions without new obligation content", "lines_or_section": "17641-17644, 17682-17684, 17738-17740, 17764-17766, 17790-17794"}
     ],
     "shard-0090": [
-      {
-        "source_lines": [
-          13,
-          20
-        ],
-        "reason": "Evidence references are citations for blocked-episode refinements already extracted from lines 1-5."
-      },
-      {
-        "source_lines": [
-          64,
-          69
-        ],
-        "reason": "Evidence references identify live sections for target precision but do not add new seed details separate from routing and obligation records."
-      },
-      {
-        "source_lines": [
-          198,
-          201
-        ],
-        "reason": "This is an incomplete evidence-ref tail at the shard boundary; the continued citation list in shard-0091 is not a standalone seed."
-      }
+      {"reason": "restated impacted_docs / evidence_refs lists for the Audit Mode entries (no new obligation content)", "lines_or_section": "17806-17820, 17836-17843, 17859-17869, 17884-17915, 17933-17970, 17981-18000"},
+      {"reason": "restated entry header metadata (timestamp_utc, stage, finding_type) for multiple Audit Mode entries", "lines_or_section": "17826-17829, 17849-17852, 17875-17877, 17920-17923, 17972-17975"},
+      {"reason": "recap notes that restate prior pass conclusions without adding new obligation material", "lines_or_section": "17821-17824, 17844-17847, 17870-17873, 17916-17919, 17968-17971, 17996-18000"},
+      {"reason": "Wave 1 / Wave 2 / Wave 3 prose only restating prior recorded findings (zero-finding waves)", "lines_or_section": "17881-17883, 17977-17980"}
     ],
     "shard-0091": [
-      {
-        "source_lines": [
-          1,
-          17
-        ],
-        "reason": "Boundary-continuation evidence references support the prior entry but contain no new exact item, decision, or obligation."
-      },
-      {
-        "source_lines": [
-          46,
-          62
-        ],
-        "reason": "Evidence references for gap sharpening are captured through routing, data-shape, and process-defect seeds rather than duplicated as separate records."
-      },
-      {
-        "source_lines": [
-          198,
-          201
-        ],
-        "reason": "This is an incomplete cross-shard entry header; its substantive finding_type, summary, and exact_items continue in shard-0092."
-      }
+      {"reason": "restated impacted_docs and evidence_refs lists tied to the Audit Mode entries (no new obligation content)", "lines_or_section": "18001-18017, 18036-18066, 18079-18101, 18119-18147, 18160-18193"},
+      {"reason": "restated entry header metadata (timestamp_utc, stage, finding_type) for the four Audit Mode entries", "lines_or_section": "18024-18027, 18069-18072, 18108-18111, 18149-18153"},
+      {"reason": "Follow-up Wave 2 / Wave 3 / Wave 4 prose only restating prior wave-one findings (zero-finding waves)", "lines_or_section": "18034-18035, 18076-18078, 18117-18118, 18159"},
+      {"reason": "recap notes restating canon_inventory.json lag and next-stage routing already captured by other seeds", "lines_or_section": "18063-18066, 18103-18106, 18144-18147, 18194-18196"}
     ],
     "shard-0092": [
-      {
-        "source_lines": [
-          7,
-          18
-        ],
-        "reason": "Impacted-doc listings are summarized in doc_hints and do not create separate requirements beyond the three coverage blockers."
-      },
-      {
-        "source_lines": [
-          19,
-          38
-        ],
-        "reason": "Evidence references provide provenance for cov-034, cov-511, and cov-526 but are not separate extracted seeds."
-      },
-      {
-        "source_lines": [
-          39,
-          40
-        ],
-        "reason": "supersedes_prior and notes labels are metadata; the actionable notes are extracted from lines 41-44."
-      }
+      {"reason": "restated impacted_docs and evidence_refs lists tied to the closing Audit Mode entry (no new obligation content)", "lines_or_section": "18207-18239"},
+      {"reason": "supersedes_prior flag and brief recap notes without new obligation material", "lines_or_section": "18240, 18242"}
     ]
   },
   "seed_ids_by_shard": {
     "shard-0089": [
-      "sg0089-req-001",
-      "sg0089-req-002",
-      "sg0089-dec-001",
-      "sg0089-dec-002",
-      "sg0089-shape-001",
-      "sg0089-shape-002",
-      "sg0089-route-001",
-      "sg0089-verify-001",
-      "sg0089-obl-001",
-      "sg0089-stale-001",
-      "sg0089-stale-002",
-      "sg0089-open-001",
-      "sg0089-proc-001",
-      "sg0089-proc-002",
-      "sg0089-doc-001"
+      "seed-c3-extract-task-023-001",
+      "seed-c3-extract-task-023-002",
+      "seed-c3-extract-task-023-003",
+      "seed-c3-extract-task-023-004",
+      "seed-c3-extract-task-023-005",
+      "seed-c3-extract-task-023-006",
+      "seed-c3-extract-task-023-007",
+      "seed-c3-extract-task-023-008",
+      "seed-c3-extract-task-023-009",
+      "seed-c3-extract-task-023-010",
+      "seed-c3-extract-task-023-011",
+      "seed-c3-extract-task-023-012",
+      "seed-c3-extract-task-023-013",
+      "seed-c3-extract-task-023-014",
+      "seed-c3-extract-task-023-015"
     ],
     "shard-0090": [
-      "sg0090-req-001",
-      "sg0090-req-002",
-      "sg0090-dec-001",
-      "sg0090-shape-001",
-      "sg0090-shape-002",
-      "sg0090-route-001",
-      "sg0090-verify-001",
-      "sg0090-obl-001",
-      "sg0090-stale-001",
-      "sg0090-open-001",
-      "sg0090-proc-001",
-      "sg0090-proc-002",
-      "sg0090-doc-001"
+      "seed-c3-extract-task-023-016",
+      "seed-c3-extract-task-023-017",
+      "seed-c3-extract-task-023-018",
+      "seed-c3-extract-task-023-019",
+      "seed-c3-extract-task-023-020",
+      "seed-c3-extract-task-023-021",
+      "seed-c3-extract-task-023-022",
+      "seed-c3-extract-task-023-023",
+      "seed-c3-extract-task-023-024",
+      "seed-c3-extract-task-023-025",
+      "seed-c3-extract-task-023-026",
+      "seed-c3-extract-task-023-027"
     ],
     "shard-0091": [
-      "sg0091-req-001",
-      "sg0091-dec-001",
-      "sg0091-shape-001",
-      "sg0091-route-001",
-      "sg0091-route-002",
-      "sg0091-verify-001",
-      "sg0091-obl-001",
-      "sg0091-stale-001",
-      "sg0091-open-001",
-      "sg0091-proc-001",
-      "sg0091-doc-001"
+      "seed-c3-extract-task-023-028",
+      "seed-c3-extract-task-023-029",
+      "seed-c3-extract-task-023-030",
+      "seed-c3-extract-task-023-031",
+      "seed-c3-extract-task-023-032",
+      "seed-c3-extract-task-023-033",
+      "seed-c3-extract-task-023-034",
+      "seed-c3-extract-task-023-035",
+      "seed-c3-extract-task-023-036",
+      "seed-c3-extract-task-023-037",
+      "seed-c3-extract-task-023-038",
+      "seed-c3-extract-task-023-039",
+      "seed-c3-extract-task-023-040"
     ],
     "shard-0092": [
-      "sg0092-req-001",
-      "sg0092-dec-001",
-      "sg0092-shape-001",
-      "sg0092-verify-001",
-      "sg0092-obl-001",
-      "sg0092-open-001",
-      "sg0092-proc-001",
-      "sg0092-doc-001"
+      "seed-c3-extract-task-023-041",
+      "seed-c3-extract-task-023-042",
+      "seed-c3-extract-task-023-043",
+      "seed-c3-extract-task-023-044",
+      "seed-c3-extract-task-023-045",
+      "seed-c3-extract-task-023-046"
     ]
   },
   "status": "complete",
-  "blocking_reason": null
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": false,
+    "notes": [
+      "Source shards are canonical Audit Mode entries with timestamp_utc, stage, finding_type, summary, exact_items, impacted_docs, evidence_refs, supersedes_prior, notes structure.",
+      "Per-shard exclusions list the boilerplate impacted_docs and evidence_refs blocks plus zero-finding wave prose that only restate prior findings.",
+      "All 10 category arrays are top-level keys in canonical order; empty arrays would be present if no items existed.",
+      "shard-0092 is the short final shard (44 lines) and contributes seeds 041-046 covering the three remaining transfer-coverage blockers and the ledger-ready-for-condensation decision."
+    ]
+  }
 }

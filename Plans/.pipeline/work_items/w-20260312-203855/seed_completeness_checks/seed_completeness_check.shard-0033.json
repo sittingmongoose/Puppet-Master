@@ -1,0 +1,143 @@
+{
+  "schema_id": "pm.ledger_seed_completeness_check.v3.1.15",
+  "prompt_id": "C4",
+  "prompt_version": "pm.c4.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "c4-r3-task-009",
+  "batch_anchor_shard_id": "shard-0033",
+  "source_shard_ids": [
+    "shard-0033",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036"
+  ],
+  "shard_line_ranges": {
+    "shard-0033": {
+      "start_line": 6401,
+      "end_line": 6600
+    },
+    "shard-0034": {
+      "start_line": 6601,
+      "end_line": 6800
+    },
+    "shard-0035": {
+      "start_line": 6801,
+      "end_line": 7000
+    },
+    "shard-0036": {
+      "start_line": 7001,
+      "end_line": 7200
+    }
+  },
+  "round2_repaired": true,
+  "checks": {
+    "structure_check": {
+      "pass": true
+    },
+    "coverage_check": {
+      "pass": true,
+      "missing_material_items_per_shard": {
+        "shard-0033": [],
+        "shard-0034": [],
+        "shard-0035": [],
+        "shard-0036": []
+      },
+      "missing_material_total": 0,
+      "per_shard_material_counts": {
+        "shard-0033": 15,
+        "shard-0034": 9,
+        "shard-0035": 15,
+        "shard-0036": 15
+      }
+    },
+    "lineage_check": {
+      "pass": false,
+      "lineage_failures_per_shard": {
+        "shard-0033": [
+          "seed-c3-extract-task-009-001",
+          "seed-c3-extract-task-009-003",
+          "seed-c3-extract-task-009-032"
+        ],
+        "shard-0034": [
+          "seed-c3-extract-task-009-009",
+          "seed-c3-extract-task-009-010",
+          "seed-c3-extract-task-009-019",
+          "seed-c3-extract-task-009-026",
+          "seed-c3-extract-task-009-028"
+        ],
+        "shard-0035": [
+          "seed-c3-extract-task-009-029",
+          "seed-c3-extract-task-009-035",
+          "seed-c3-repair-task-009-003",
+          "seed-c3-repair-task-009-004",
+          "seed-c3-repair-task-009-005"
+        ],
+        "shard-0036": [
+          "seed-c3-extract-task-009-013",
+          "seed-c3-extract-task-009-014",
+          "seed-c3-extract-task-009-017",
+          "seed-c3-extract-task-009-030",
+          "seed-c3-extract-task-009-031",
+          "seed-c3-extract-task-009-036",
+          "seed-c3-repair-task-009-009",
+          "seed-c3-repair-task-009-010"
+        ]
+      },
+      "lineage_failures_total": 21
+    },
+    "doc_hint_preservation_check": {
+      "pass": false,
+      "unreferenced_doc_hints_per_shard": {
+        "shard-0033": [
+          "seed-c3-extract-task-009-032"
+        ],
+        "shard-0034": [],
+        "shard-0035": [
+          "seed-c3-extract-task-009-035",
+          "seed-c3-repair-task-009-003",
+          "seed-c3-repair-task-009-004",
+          "seed-c3-repair-task-009-005"
+        ],
+        "shard-0036": [
+          "seed-c3-extract-task-009-036",
+          "seed-c3-repair-task-009-009",
+          "seed-c3-repair-task-009-010"
+        ]
+      },
+      "doc_hints_unreferenced_total": 8
+    },
+    "open_question_preservation_check": {
+      "pass": false,
+      "unrepresented_open_questions_per_shard": {
+        "shard-0033": [
+          "seed-c3-extract-task-009-025"
+        ],
+        "shard-0034": [
+          "seed-c3-extract-task-009-026"
+        ],
+        "shard-0035": [
+          "seed-c3-extract-task-009-027"
+        ],
+        "shard-0036": []
+      },
+      "open_questions_unrepresented_total": 3
+    }
+  },
+  "summary": {
+    "totals": {
+      "missing_material_total": 0,
+      "lineage_failures_total": 21,
+      "doc_hints_unreferenced_total": 8,
+      "open_questions_unrepresented_total": 3
+    },
+    "all_checks_passed": false,
+    "status": "issues_found",
+    "issues_found_categories": [
+      "lineage_check",
+      "doc_hint_preservation_check",
+      "open_question_preservation_check"
+    ]
+  },
+  "blocking_reason": null,
+  "generated_at_utc": "2026-05-07T19:20:00Z"
+}

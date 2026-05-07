@@ -1,12 +1,13 @@
 {
-  "schema_id": "pm.ledger_shard_manifest.v3.1.14",
+  "schema_id": "pm.ledger_shard_manifest.v3.1.15",
   "prompt_id": "C2",
-  "prompt_version": "pm.c2.v3.1.14",
+  "prompt_version": "pm.c2.v3.1.15",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
   "source_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
   "source_line_count": 18244,
+  "source_byte_size": 1044305,
   "max_lines_per_shard": 200,
   "shard_count": 92,
   "shards": [
@@ -748,15 +749,16 @@
     }
   ],
   "verification": {
-    "source_line_count": 18244,
-    "shard_count": 92,
-    "max_lines_per_shard": 200,
     "all_shards_exist": true,
     "all_shards_within_line_limit": true,
+    "no_gaps": true,
+    "no_overlaps": true,
     "no_gaps_or_overlaps": true,
+    "gaps": [],
+    "overlaps": [],
+    "oversize_shards": [],
     "reconstructed_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
     "reconstructed_equals_source": true,
     "errors": []
-  },
-  "generated_at_utc": "2026-05-07T15:18:50Z"
+  }
 }

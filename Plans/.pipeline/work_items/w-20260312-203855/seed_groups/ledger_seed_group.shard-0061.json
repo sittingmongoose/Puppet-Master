@@ -1,570 +1,716 @@
 {
-  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
   "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.1.12",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "inventory_id": "c3-inv-016",
-  "task_id": "task-016",
-  "anchor_shard_id": "shard-0061",
-  "working_ledger_line_start": 12001,
-  "working_ledger_line_end": 12800,
-  "status": "complete",
-  "per_shard": [
+  "subagent_task_id": "c3-repair2-task-006",
+  "batch_anchor_shard_id": "shard-0061",
+  "source_shard_ids": [
+    "shard-0061",
+    "shard-0062",
+    "shard-0063",
+    "shard-0064"
+  ],
+  "shard_line_ranges": {
+    "shard-0061": {
+      "start_line": 12001,
+      "end_line": 12200
+    },
+    "shard-0062": {
+      "start_line": 12201,
+      "end_line": 12400
+    },
+    "shard-0063": {
+      "start_line": 12401,
+      "end_line": 12600
+    },
+    "shard-0064": {
+      "start_line": 12601,
+      "end_line": 12800
+    }
+  },
+  "requirements": [
     {
-      "shard_id": "shard-0061",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0061.md",
-      "line_start_in_source": 12001,
-      "line_end_in_source": 12200,
-      "source_sha256": "e9a4cf6d4bd48790e41ed3fbac612582ddac7addc61f341b704a7426983420c0",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "data_shape",
-          "text": "Route-target normalization: generated/staged artifact uses subject_id = artifact:<artifact_id>; persisted workspace doc uses doc:<document_id>; thread jump uses object_kind thread + object_id; wizard resume uses object_kind wizard + object_id with step selection in subtarget/resume_url not universal base; usage focus prefers object_kind usage_event + object_id vs top-level usage_event_ref",
-          "line_in_shard": 1,
-          "line_in_source": 12001
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (route_target seam): primary Contracts_V0, UI_Command_Catalog, Crosswalk; cross-owner FileManager, storage-plan, FinalGUISpec, assistant-chat-design, Runtime_Artifacts_Panel",
-          "line_in_shard": 17,
-          "line_in_source": 12017
-        },
-        {
-          "type": "contradiction",
-          "text": "Many commands/deep-links still expose raw local IDs with no normalized target; payloads mix context and target; line/range belong to path/document-open specialization not canonical base route object",
-          "line_in_shard": 29,
-          "line_in_source": 12029
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Keep route_target small; OpenFile owns path/line/range; OpenSubject owns subject_id; object-family commands carry domain-local anchors only when not reusable; avoid generic extra-args bag on route_target",
-          "line_in_shard": 34,
-          "line_in_source": 12034
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: restraint as quality bar; oversized base target becomes new dumping ground; most navigation payloads can normalize more aggressively than current docs",
-          "line_in_shard": 42,
-          "line_in_source": 12042
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Controlled vocabulary for `subject_id` families and `object_kind`",
-          "line_in_shard": 47,
-          "line_in_source": 12047
-        },
-        {
-          "type": "data_shape",
-          "text": "Guardrail: subject_id stays narrow/open-oriented; object_kind covers non-subject domain objects needing navigation/focus/inspection; subject_id must not become second generic taxonomy",
-          "line_in_shard": 57,
-          "line_in_source": 12057
-        },
-        {
-          "type": "data_shape",
-          "text": "Recommended subject_id families: canonical small set doc:<document_id>, artifact:<artifact_id>; avoid thread/run/wizard/safe_point as subject_id when better as object_kind/object_id",
-          "line_in_shard": 63,
-          "line_in_source": 12063
-        },
-        {
-          "type": "data_shape",
-          "text": "Recommended early object_kind: conversational thread, message, wizard, usage_event; execution run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation; orchestration feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation",
-          "line_in_shard": 71,
-          "line_in_source": 12071
-        },
-        {
-          "type": "routing_rule",
-          "text": "Generally NOT object_kind: raw UI container state (panel/tab/split/layout), transport artifacts resume_url/generated://, provider/account disclosure as target kinds",
-          "line_in_shard": 95,
-          "line_in_source": 12095
-        },
-        {
-          "type": "routing_rule",
-          "text": "object_id uses canonical domain identities from docs (thread_id, message_id, wizard_id, run_id, attempt_id, etc.); avoid route-local surrogates; sub-selection via inspector_target or specialized verb",
-          "line_in_shard": 107,
-          "line_in_source": 12107
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (vocabulary): primary Contracts_V0, Crosswalk; cross storage-plan, UI_Command_Catalog, assistant-chat-design, Orchestrator_Page, Runtime_Artifacts_Panel, FinalGUISpec",
-          "line_in_shard": 123,
-          "line_in_source": 12123
-        },
-        {
-          "type": "contradiction",
-          "text": "Surfaces still assume bespoke payload per target kind; subject_id risks mud if expanded too early; rewrite-era families need stable kinds while older docs pivot run_id/tier_id/path",
-          "line_in_shard": 135,
-          "line_in_source": 12135
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Declare initial subject_id families and early canonical object_kind enum with controlled extension; prefer extending object_kind over new top-level route fields; keep UI container state as view context not target taxonomy",
-          "line_in_shard": 140,
-          "line_in_source": 12140
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: vocabulary split prevents collapse to pass whatever ids; subject_id sparse; object_kind does cross-surface identity; Feature Seam, Work Package, Concern, Graph Patch deserve first-class kinds",
-          "line_in_shard": 146,
-          "line_in_source": 12146
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary",
-          "line_in_shard": 151,
-          "line_in_source": 12151
-        },
-        {
-          "type": "data_shape",
-          "text": "Surfaces need more than open object X (node graph detail, document history, wizard step, message focus, file line/range) but sub-selection kinds differ and must not all become first-class identity",
-          "line_in_shard": 160,
-          "line_in_source": 12160
-        },
-        {
-          "type": "routing_rule",
-          "text": "Split: canonical target identity lands object/surface; secondary focus/sub-selection reveals highlight; inspector_target for reusable detail/subsection focus not universal dumping ground",
-          "line_in_shard": 167,
-          "line_in_source": 12167
-        },
-        {
-          "type": "routing_rule",
-          "text": "route_target owns main identity/scope only; sub-selection via OpenFile line/range, inspector_target for reusable detail focus, or object-family anchors only when truly domain-local",
-          "line_in_shard": 173,
-          "line_in_source": 12173
-        },
-        {
-          "type": "data_shape",
-          "text": "Good inspector_target fits: detail section/subsection, evidence vs history vs review tabs, node detail subsection, stable reusable document pane modes",
-          "line_in_shard": 180,
-          "line_in_source": 12180
-        },
-        {
-          "type": "process_defect",
-          "text": "Poor inspector_target fits: wizard_step as primary identity, message_id when target is the message, line/range, raw provider fields, arbitrary per-feature blobs",
-          "line_in_shard": 186,
-          "line_in_source": 12186
-        },
-        {
-          "type": "routing_rule",
-          "text": "Normalization: thread hit object_kind message + object_id with thread_id context; wizard resume object_kind wizard + object_id; node graph object_kind node or attempt + inspector_target; file OpenFile { path, line, range }",
-          "line_in_shard": 193,
-          "line_in_source": 12193
-        }
+      "id": "seed-c3-extract-task-016-001",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12269,
+        "end_line": 12271
+      },
+      "summary": "Migration compatibility requires new producers/docs to emit canonical route-target forms while limiting old payloads to temporary alias acceptance.",
+      "raw_excerpt": "- new docs/producers MUST prefer canonical route-target forms\n- consumers MAY accept older wrapper-local payloads during migration\n- migration aliases MUST NOT become permanent parallel canon",
+      "owner": "Plans/Contracts_V0.md",
+      "consumer": "Plans/UI_Command_Catalog.md",
+      "gate_name": "navigation-migration-discipline"
+    },
+    {
+      "id": "seed-c3-extract-task-016-002",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12677,
+        "end_line": 12687
+      },
+      "summary": "Route activation policy mandates overriding target/destination context when needed and forbids reuse of persisted state that hides or misroutes the requested target.",
+      "raw_excerpt": "- MUST override:\n  - target object identity\n  - destination surface when the action explicitly names a different surface\n...\n- MUST NOT reuse persisted state when doing so would:\n  - land on the wrong object\n  - hide the requested target behind the wrong tab/subview",
+      "gate_name": "route-activation-override-policy",
+      "doc_path": "Plans/Contracts_V0.md"
+    },
+    {
+      "id": "seed-c3-repair-task-014-001",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12322,
+        "end_line": 12324
+      },
+      "summary": "Index and checklist owner docs retain phantom command IDs and stale panel assumptions, requiring explicit cleanup as drift multipliers.",
+      "raw_excerpt": "Index/checklist docs carrying phantom command IDs and stale panel assumptions are material but not explicitly represented as seeds/exclusions/open-questions.",
+      "owner": "Plans/00-plans-index.md",
+      "consumer": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "gate_name": "index-checklist-drift-retirement"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "seed-c3-extract-task-016-003",
+      "source_shard_id": "shard-0061",
+      "source_line_range": {
+        "start_line": 12035,
+        "end_line": 12040
+      },
+      "summary": "The base route_target is intentionally constrained and specialized selectors remain in command-specific contracts rather than a generic extra-args bag.",
+      "raw_excerpt": "- Keep `route_target` intentionally small and force normalization pressure through `subject_id` and `object_kind/object_id`.\n...\n- Avoid adding a generic nested “extra args” bag to `route_target`",
+      "decision_rationale": "Prevent canonical contract drift into ad hoc per-surface payloads.",
+      "rejected_alternatives": [
+        "generic nested extra args in route_target"
       ]
     },
     {
-      "shard_id": "shard-0062",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0062.md",
-      "line_start_in_source": 12201,
-      "line_end_in_source": 12400,
-      "source_sha256": "b8bf3b775f8ed47e92eed78312a1eda9b4b7554307ecac189d9d7d3ff15969d9",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "routing_rule",
-          "text": "Wizard step/clarification focus is domain-local anchor or serialized deep-link detail not base identity; node graph uses inspector_target evidence/history/reviews; file uses OpenFile",
-          "line_in_shard": 1,
-          "line_in_source": 12201
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (sub-selection): primary Contracts_V0, FinalGUISpec, Orchestrator_Page, FileManager; cross assistant-chat-design, storage-plan, UI_Command_Catalog",
-          "line_in_shard": 9,
-          "line_in_source": 12209
-        },
-        {
-          "type": "contradiction",
-          "text": "Docs blur which object vs which part of UI; without sub-selection rule payloads bloat or surfaces invent custom anchors; wizard_step matters operationally but must not wizard-shape base target",
-          "line_in_shard": 20,
-          "line_in_source": 12220
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Define inspector_target narrowly as reusable detail focus; line/range under OpenFile; object-family anchors only with justification",
-          "line_in_shard": 25,
-          "line_in_source": 12225
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: canonical identity vs UI focus are separate layers; prevents route-target contract becoming per-surface deep-link spaghetti",
-          "line_in_shard": 30,
-          "line_in_source": 12230
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers",
-          "line_in_shard": 35,
-          "line_in_source": 12235
-        },
-        {
-          "type": "routing_rule",
-          "text": "Migration like event aliases and cmd.runtime consolidation: user-facing wrappers may remain; semantics normalize through route_target/OpenSubject; older payloads accepted during migration; new producers emit canonical model; resume_url as serialized transport not stronger separate primitive",
-          "line_in_shard": 42,
-          "line_in_source": 12242
-        },
-        {
-          "type": "routing_rule",
-          "text": "Canonical layer route_target, OpenSubject, OpenFile, optional cmd.nav.*; wrappers normalize internally; new docs prefer canonical; consumers MAY accept legacy; aliases MUST NOT become permanent parallel canon",
-          "line_in_shard": 57,
-          "line_in_source": 12257
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (migration): primary Contracts_V0, UI_Command_Catalog, Crosswalk; cross Wiring_Matrix, UI_Wiring_Rules, FinalGUISpec, assistant-chat-design",
-          "line_in_shard": 72,
-          "line_in_source": 12272
-        },
-        {
-          "type": "process_defect",
-          "text": "Navigation lacks explicit migration discipline like events/runtime recovery; risk freezing old payloads or overclaiming flag day; wrappers real but docs lack canonical vs deprecated transport rule",
-          "line_in_shard": 83,
-          "line_in_source": 12283
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Reuse event-alias and recovery-command migration template; wrappers stay for UX but underlying target canonical; explicit migration notes for raw IDs to subject_id/object_kind; wiring docs distinguish canonical vs wrapper vs deprecated",
-          "line_in_shard": 88,
-          "line_in_source": 12288
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: goal not delete every surface command but stop private navigation semantics per surface",
-          "line_in_shard": 94,
-          "line_in_source": 12294
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Opus uncovered tranche synthesis",
-          "line_in_shard": 99,
-          "line_in_source": 12299
-        },
-        {
-          "type": "contradiction",
-          "text": "UI_Command_Catalog unresolved split legacy cmd.graph.* vs canonical cmd.runtime.* recovery; cmd.runtime.* lacks first-class catalog placement despite being cross-surface recovery set",
-          "line_in_shard": 118,
-          "line_in_source": 12318
-        },
-        {
-          "type": "process_defect",
-          "text": "Index/checklist/promoted-feature docs are drift carriers: 00-plans-index misroutes rewrite owners; GUI_Rebuild_Requirements_Checklist phantom command IDs stale assumptions; Section15 MVP stale commands and persistence vs workspace-tab identity",
-          "line_in_shard": 121,
-          "line_in_source": 12321
-        },
-        {
-          "type": "process_defect",
-          "text": "Architecture_Invariants lacks invariants for requested/effective identity completeness, graph-lock degradation, projection trust/staleness, blocked/failure classification, concurrent actors on provider pools, safe-point vs restore-point separation",
-          "line_in_shard": 125,
-          "line_in_source": 12325
-        },
-        {
-          "type": "process_defect",
-          "text": "MiscPlan tier-era sequential cleanup/remediation; FileSafe silent bypass/HTE-only assumptions incomplete DAE write-scope; Media vs orchestrator-subagent on live capability vs frozen snapshots; platform.capability_evaluated outside Contracts_V0",
-          "line_in_shard": 128,
-          "line_in_source": 12328
-        },
-        {
-          "type": "data_shape",
-          "text": "OpenCode SSE/auth process-global makes per-session per-run identity/account binding impossible without PM scoping; agent-rules-context assumes tiny actor set CLI-only vs broader provider actors",
-          "line_in_shard": 130,
-          "line_in_source": 12330
-        },
-        {
-          "type": "contradiction",
-          "text": "Containers_Registry ghost commands; cmd.docker.image.push vs cmd.orchestrator.push_image same event family; DockerHub auth isolated from Multi-Account; Document_Packaging no glossary/requirements-staging seglog lineage; evidence/ naming confusion",
-          "line_in_shard": 133,
-          "line_in_source": 12333
-        },
-        {
-          "type": "process_defect",
-          "text": "LSPSupport: tool.invoked vs run_id requirement conflict; plan-mode denies lsp despite planning assumptions; mixed mutation vs mutation_capable unresolved",
-          "line_in_shard": 142,
-          "line_in_source": 12342
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Highest-signal follow-on: Architecture_Invariants, Containers_Registry_and_Unraid, FileSafe, Media_Generation_and_Capabilities, MiscPlan, OpenCode_Deep_Extraction, Section15 MVP, LSPSupport plus 00-plans-index and GUI_Rebuild_Requirements_Checklist as drift multipliers",
-          "line_in_shard": 180,
-          "line_in_source": 12380
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: sweep incomplete until coverage recomputed; Gemini pass removes catalog asymmetry; remaining docs under-examined not low-importance",
-          "line_in_shard": 192,
-          "line_in_source": 12392
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - `resume_url` / deep-link serialization should be a narrowed transport",
-          "line_in_shard": 197,
-          "line_in_source": 12397
-        }
+      "id": "seed-c3-extract-task-016-004",
+      "source_shard_id": "shard-0061",
+      "source_line_range": {
+        "start_line": 12169,
+        "end_line": 12179
+      },
+      "summary": "Canonical identity is separated from UI sub-selection by keeping route_target for identity and delegating sub-selection to OpenFile, inspector_target, or justified object-family anchors.",
+      "raw_excerpt": "- `route_target` owns the main identity/scope only.\n- Sub-selection is handled by one of three mechanisms:\n  - `OpenFile` specialization for `line` / `range`\n  - `inspector_target` for reusable detail-surface focus\n  - object-family-specific anchor fields only when ... domain-local",
+      "decision_rationale": "Keeps canonical routing portable while allowing necessary detail focus.",
+      "doc_path": "Plans/Contracts_V0.md"
+    },
+    {
+      "id": "seed-c3-extract-task-016-005",
+      "source_shard_id": "shard-0063",
+      "source_line_range": {
+        "start_line": 12422,
+        "end_line": 12426
+      },
+      "summary": "resume_url is treated as a narrowed serialized transport that decodes into canonical route_target rather than an independent navigation primitive.",
+      "raw_excerpt": "- Internal:\n  - canonical `route_target`\n- External / persisted transport:\n  - narrowed serializable form that decodes into `route_target`\n  - `resume_url` is one concrete transport instance of that form",
+      "decision_rationale": "Avoids deep-link formats diverging from internal canonical routing.",
+      "rejected_alternatives": [
+        "treating resume_url as standalone canonical contract"
       ]
     },
     {
-      "shard_id": "shard-0063",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0063.md",
-      "line_start_in_source": 12401,
-      "line_end_in_source": 12600,
-      "source_sha256": "9df3efdc714dffff4554035f444b35a5130a22cbf49331754cf51f834cecc921",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "data_shape",
-          "text": "Only concrete deep-link format defined is puppet-master://wizard/.../step/.../clarify — one transport form of broader routing; internal route_target richer than URL; preserve stable identity, focus, deterministic decode; not ephemeral layout/transient UI/non-stable widget state",
-          "line_in_shard": 5,
-          "line_in_source": 12405
-        },
-        {
-          "type": "routing_rule",
-          "text": "Internal canonical route_target; external narrowed serializable decodes into route_target; resume_url one transport instance",
-          "line_in_shard": 20,
-          "line_in_source": 12420
-        },
-        {
-          "type": "data_shape",
-          "text": "Good serialized: object_kind/object_id or subject_id; scope project_id/thread_id/focused_run_id; narrow anchors wizard step message usage record. Bad: panel dock, splits, scroll offsets except contract-dependent, broad inspector expansion, provider disclosure as target",
-          "line_in_shard": 27,
-          "line_in_source": 12427
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (serialization): primary Contracts_V0, FinalGUISpec; cross storage-plan, assistant-chat-design, UI_Command_Catalog, Crosswalk",
-          "line_in_shard": 48,
-          "line_in_source": 12448
-        },
-        {
-          "type": "contradiction",
-          "text": "resume_url concrete while route-target implicit; risk serializing entire model or one-off URL shapes; wizard URL should not stand alone as only precise deep-link contract",
-          "line_in_shard": 58,
-          "line_in_source": 12458
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Define resume_url as serialized route-target in contract; serialized narrower than internal; family-specific anchor material only when needed; decode all forms to same internal path",
-          "line_in_shard": 63,
-          "line_in_source": 12463
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: serialization preserves work intent not every UI detail; restraint; wizard deep-link precedent in normalized transport family",
-          "line_in_shard": 69,
-          "line_in_source": 12469
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Shell/workspace state should remain adjacent to routing, not inside it",
-          "line_in_shard": 74,
-          "line_in_source": 12474
-        },
-        {
-          "type": "data_shape",
-          "text": "Shell persists dock/floating, side panel visibility, activity bar order, workspace-tab identity, project_state, per-surface state, browser/document/chat/editor shell — important but not canonical route identity",
-          "line_in_shard": 82,
-          "line_in_source": 12482
-        },
-        {
-          "type": "routing_rule",
-          "text": "Routing chooses target and destination surface/context; shell state realizes layout; route may name visible surface/tab/panel and project context but not panel widths/coords/icon order/full project_state snapshots",
-          "line_in_shard": 92,
-          "line_in_source": 12492
-        },
-        {
-          "type": "routing_rule",
-          "text": "Boundary: routing answers what object, broad destination, project/run/thread context; shell persistence handles docking, workspace tab host, per-project layout; destination intent not raw shell-state restoration payload",
-          "line_in_shard": 105,
-          "line_in_source": 12505
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (shell boundary): primary FinalGUISpec, storage-plan, Crosswalk, Contracts_V0; cross UI_Command_Catalog, feature-list, FileManager, Orchestrator_Page",
-          "line_in_shard": 116,
-          "line_in_source": 12516
-        },
-        {
-          "type": "contradiction",
-          "text": "Payloads blur destination intent with shell-state realization; cmd.panel.switch useful but must not become universal navigation primitive; project_state records adjacent restore not canonical route payload",
-          "line_in_shard": 128,
-          "line_in_source": 12528
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Keep shell persistence in shell/storage docs; route names major surfaces/tabs/panels when needed; workspace-tab docking layout restore are shell layered under canonical routing; cmd.panel.switch consumes routing context not replaces it",
-          "line_in_shard": 133,
-          "line_in_source": 12533
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: routing asks where user lands not how every panel laid out; shell and route cooperate without collapsing contracts",
-          "line_in_shard": 139,
-          "line_in_source": 12539
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Destination-surface vocabulary should stay controlled and coarse",
-          "line_in_shard": 144,
-          "line_in_source": 12544
-        },
-        {
-          "type": "data_shape",
-          "text": "Coarse destination classes: primary_view (Dashboard Projects Wizard Interview Settings Usage FileEditor Orchestrator); side_panel (chat files source_control github_actions docker_manager artifacts run_debug); bottom_panel (terminal problems output ports browser debug); embedded_surface (document_pane agent_activity); page_tab (Orchestrator Progress Seams Node Graph Evidence History Ledger)",
-          "line_in_shard": 164,
-          "line_in_source": 12564
-        },
-        {
-          "type": "process_defect",
-          "text": "Stay out of destination vocab: dock/floating realization, side-panel width, exact subview selected repo/compare, widget slots, remembered collapse prefs",
-          "line_in_shard": 176,
-          "line_in_source": 12576
-        },
-        {
-          "type": "contradiction",
-          "text": "Commands mix coarse destination with detailed shell/subview state; side-panel vs page-tab stable but not connected cleanly to routing; too-fine destination vocab re-imports shell implementation",
-          "line_in_shard": 194,
-          "line_in_source": 12594
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Controlled coarse destination enum in route contract; object identity separate from destination; shell state refines after landing; page-tab and panel-subview as destination-layer not core identity",
-          "line_in_shard": 199,
-          "line_in_source": 12599
-        }
+      "id": "seed-c3-extract-task-016-006",
+      "source_shard_id": "shard-0063",
+      "source_line_range": {
+        "start_line": 12493,
+        "end_line": 12503
+      },
+      "summary": "Routing and shell persistence are split so routing picks target and destination context while shell state owns layout realization details.",
+      "raw_excerpt": "- The cleaner rule is:\n  - routing chooses the target object and any necessary destination surface/context\n  - shell state decides how that surface is realized inside the current window/workspace layout\n...\n- But it should not try to encode:\n  - panel widths\n  - floating window coordinates",
+      "decision_rationale": "Prevents route contracts from absorbing full workspace-state payloads."
+    }
+  ],
+  "data_shapes": [
+    {
+      "id": "seed-c3-extract-task-016-007",
+      "source_shard_id": "shard-0061",
+      "source_line_range": {
+        "start_line": 12064,
+        "end_line": 12067
+      },
+      "summary": "Initial subject_id family is constrained to doc and artifact identifiers.",
+      "raw_excerpt": "- Keep the initial canonical set deliberately small:\n  - `doc:<document_id>`\n  - `artifact:<artifact_id>`",
+      "schema_name": "subject_id",
+      "enum_values": [
+        "doc:<document_id>",
+        "artifact:<artifact_id>"
       ]
     },
     {
-      "shard_id": "shard-0064",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0064.md",
-      "line_start_in_source": 12601,
-      "line_end_in_source": 12800,
-      "source_sha256": "19178521364e437ebf45ba88f65a638e3dfcb9391a43b4c94b28ced0e21130ba",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "routing_rule",
-          "text": "Let object identity and scope pick thing to show; destination picks major surface class; shell state handles rest; page-tab and panel-subview resolution as destination-layer not core identity",
-          "line_in_shard": 1,
-          "line_in_source": 12601
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: route needs destination intent only at coarse level; cross-surface pivots without mirroring whole shell; Orchestrator tab and side-panel routing fit with explicit coarse vocabulary",
-          "line_in_shard": 4,
-          "line_in_source": 12604
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Subviews and panel-local selectors belong to view state, not target identity",
-          "line_in_shard": 9,
-          "line_in_source": 12609
-        },
-        {
-          "type": "data_shape",
-          "text": "Surfaces persist subview/selection: Source Control active_subview repo/worktree/compare/filters; GitHub Actions subview branch/workflows/run; Docker Manager subview runtime/registry/publish; document pane doc/view/history/approval — destination may land in surface; panel-local refines; not object_kind/subject_id/base route identity",
-          "line_in_shard": 16,
-          "line_in_source": 12616
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (subviews): primary storage-plan, UI_Command_Catalog, FinalGUISpec, Contracts_V0; cross Crosswalk, Orchestrator_Page",
-          "line_in_shard": 29,
-          "line_in_source": 12629
-        },
-        {
-          "type": "contradiction",
-          "text": "Commands package destination and panel-local state as one; docs unclear when route overrides remembered subview vs reuses; risk route absorbing filter/subview noise",
-          "line_in_shard": 39,
-          "line_in_source": 12639
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Keep active_subview filters compare pinned in destination/view-state contracts; routes optionally name destination-local subview as refinement not base identity; reuse persisted state when route omits override",
-          "line_in_shard": 44,
-          "line_in_source": 12644
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: land in Source Control without full serialized source_control.project_state; destination refinement one layer below canonical target identity",
-          "line_in_shard": 49,
-          "line_in_source": 12649
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary",
-          "line_in_shard": 54,
-          "line_in_source": 12654
-        },
-        {
-          "type": "routing_rule",
-          "text": "Override policy: MUST override target identity, destination surface when action names different surface, scope for meaningful target; MAY reuse docking/subview/filters when they do not hide target; MUST NOT reuse when wrong object, wrong tab/subview, stale run/thread/project",
-          "line_in_shard": 71,
-          "line_in_source": 12671
-        },
-        {
-          "type": "routing_rule",
-          "text": "Examples: show_in_usage opens correct project/thread/run scope; open_in_source_control lands with worktree/repo context may reuse subview if target clear; Resume Wizard overrides wizard surface/step; focus_thread_usage focuses thread usage may reuse panel dock",
-          "line_in_shard": 89,
-          "line_in_source": 12689
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted docs (override): primary Contracts_V0, FinalGUISpec, UI_Command_Catalog; cross storage-plan, assistant-chat-design, Orchestrator_Page, Crosswalk",
-          "line_in_shard": 103,
-          "line_in_source": 12703
-        },
-        {
-          "type": "process_defect",
-          "text": "Right behavior implied locally but no general override rule across consumers; implementers could always-restore or always-hard-reset both superficially consistent",
-          "line_in_shard": 114,
-          "line_in_source": 12714
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Shared route-activation override rule in contract/GUI docs; conditional reuse when not obscuring target; same rule for search artifacts Usage attention cards pivots",
-          "line_in_shard": 118,
-          "line_in_source": 12718
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: predictability; precise enough to arrive, restrained enough not to trash unrelated shell state; override only what is necessary ties routing and shell-state",
-          "line_in_shard": 123,
-          "line_in_source": 12723
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis",
-          "line_in_shard": 128,
-          "line_in_source": 12728
-        },
-        {
-          "type": "process_defect",
-          "text": "Meta/index docs lag: Decision_Log empty for rewrite era; rewrite-tie-in-memo stale vs seams/packages/lanes; feature-list and newfeatures tier-era framing mislead; Formatters/Plugins/Skills gaps under DAE mutation reachability introspection",
-          "line_in_shard": 143,
-          "line_in_source": 12743
-        },
-        {
-          "type": "contradiction",
-          "text": "DRY_Rules cross-check duplicate/mislabeled sections; OpenCode_Coverage_Matrix too narrow stale fixes; BinaryLocator stale around OpenCode launcher four-tier session wording",
-          "line_in_shard": 153,
-          "line_in_source": 12753
-        },
-        {
-          "type": "contradiction",
-          "text": "Owner-of-owners docs stale enough to amplify drift; runtime safety under-owned in plugins/skills/formatters for DAE mixed mutation tool reachability",
-          "line_in_shard": 185,
-          "line_in_source": 12785
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Continue ordered model on Decision_Log, Formatters_System, OpenCode_Coverage_Matrix, Plugins_System, Skills_System, feature-list, newfeatures, rewrite-tie-in-memo",
-          "line_in_shard": 190,
-          "line_in_source": 12790
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: last Gemini-only tranche meaningful not residue; partial surface fully confirmed high-signal",
-          "line_in_shard": 198,
-          "line_in_source": 12798
-        }
+      "id": "seed-c3-extract-task-016-008",
+      "source_shard_id": "shard-0061",
+      "source_line_range": {
+        "start_line": 12071,
+        "end_line": 12094
+      },
+      "summary": "An early canonical object_kind enum is defined across conversational, execution/runtime, and rewrite orchestration objects.",
+      "raw_excerpt": "- `thread`\n- `message`\n- `wizard`\n- `usage_event`\n...\n- `safe_point`\n- `remediation`\n...\n- `feature_seam`\n- `work_package`\n- `lane`\n- `worktree`\n- `concern`\n- `promotion`\n- `graph_patch`\n- `graph_generation`",
+      "schema_name": "object_kind",
+      "doc_path": "Plans/Contracts_V0.md"
+    },
+    {
+      "id": "seed-c3-extract-task-016-009",
+      "source_shard_id": "shard-0063",
+      "source_line_range": {
+        "start_line": 12565,
+        "end_line": 12574
+      },
+      "summary": "Destination routing uses controlled coarse destination classes instead of fine-grained shell realization details.",
+      "raw_excerpt": "### Recommended coarse destination classes\n- `primary_view`\n- `side_panel`\n- `bottom_panel`\n- `embedded_surface`\n- `page_tab`",
+      "schema_name": "destination_surface_class",
+      "enum_values": [
+        "primary_view",
+        "side_panel",
+        "bottom_panel",
+        "embedded_surface",
+        "page_tab"
       ]
     }
-  ]
+  ],
+  "routing_rules": [
+    {
+      "id": "seed-c3-extract-task-016-010",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12257,
+        "end_line": 12266
+      },
+      "summary": "Navigation migration keeps wrapper commands user-facing but requires wrappers to normalize arguments into canonical route_target/OpenSubject forms.",
+      "raw_excerpt": "- surface-specific commands ... may remain user-facing wrappers\n- wrappers normalize their args into canonical target/subject forms internally\n- docs should explicitly mark older/raw payload conventions as migration aliases where needed",
+      "doc_path": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "id": "seed-c3-extract-task-016-011",
+      "source_shard_id": "shard-0063",
+      "source_line_range": {
+        "start_line": 12410,
+        "end_line": 12418
+      },
+      "summary": "Deep-link serialization should include stable target identity/context and exclude ephemeral shell/UI details.",
+      "raw_excerpt": "- A deep-link transport should preserve:\n  - stable sharable identity\n...\n- It should generally NOT try to preserve:\n  - ephemeral UI layout state\n  - transient panel widths/split ratios\n  - non-stable local widget state",
+      "doc_path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-extract-task-016-012",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12624,
+        "end_line": 12626
+      },
+      "summary": "Panel-local selectors such as active_subview and filters are destination/view-state refinements, not canonical route identity.",
+      "raw_excerpt": "- destination surface may indicate the user should land in `source_control`, `github_actions`, `docker_manager`, or `document_pane`\n- panel-local subviews/selectors then refine the landing inside that destination\n- persisted surface state continues to supply defaults when the route does not override them",
+      "doc_path": "Plans/storage-plan.md"
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "seed-c3-extract-task-016-013",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12393,
+        "end_line": 12394
+      },
+      "summary": "Coverage must be recomputed before declaring broader sweep completion after tranche incorporation.",
+      "raw_excerpt": "- The broader sweep still cannot be called complete until coverage is recomputed again after this tranche.",
+      "gate_name": "coverage-recompute-gate"
+    },
+    {
+      "id": "seed-c3-extract-task-016-014",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12292,
+        "end_line": 12293
+      },
+      "summary": "Wiring and gate docs must distinguish canonical commands, wrappers, and deprecated aliases as separate statuses.",
+      "raw_excerpt": "- Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just “command id exists.”",
+      "gate_name": "command-status-classification"
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "id": "seed-c3-extract-task-016-015",
+      "source_shard_id": "shard-0061",
+      "source_line_range": {
+        "start_line": 12018,
+        "end_line": 12027
+      },
+      "summary": "Routing seam updates are owned primarily by Contracts, Command Catalog, and Crosswalk, with multiple dependent consumer docs listed as cross-owner implications.",
+      "raw_excerpt": "### Impacted docs\n- Primary owners:\n  - `Plans/Contracts_V0.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/Crosswalk.md`\n- Cross-owner docs implicated by this seam:\n  - `Plans/FileManager.md`\n  - `Plans/storage-plan.md`\n  - `Plans/FinalGUISpec.md`",
+      "owner": "Plans/Contracts_V0.md",
+      "consumer": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-extract-task-016-016",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12788,
+        "end_line": 12788
+      },
+      "summary": "Runtime safety and capability contracts remain under-owned across Plugins, Skills, and Formatters under DAE and mixed mutation semantics.",
+      "raw_excerpt": "- Runtime safety and capability contracts are still under-owned in plugins/skills/formatters, especially under DAE, mixed mutation semantics, and runtime tool reachability.",
+      "owner": "Plans/Plugins_System.md",
+      "consumer": "Plans/Contracts_V0.md"
+    }
+  ],
+  "stale_retirement_items": [
+    {
+      "id": "seed-c3-extract-task-016-017",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12319,
+        "end_line": 12321
+      },
+      "summary": "Command catalog drift includes unresolved legacy cmd.graph recovery families that should retire behind canonical cmd.runtime recovery placement.",
+      "raw_excerpt": "- the catalog still has an unresolved split between legacy `cmd.graph.*` recovery commands and canonical `cmd.runtime.*` recovery families.\n- `cmd.runtime.*` still lacks first-class placement in the main catalog structure",
+      "doc_path": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "id": "seed-c3-extract-task-016-018",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12787,
+        "end_line": 12787
+      },
+      "summary": "Owner-of-owners docs are stale enough to amplify drift and require retirement/supersession updates.",
+      "raw_excerpt": "- Multiple \"owner-of-owners\" docs (`Decision_Log`, `rewrite-tie-in-memo`, `feature-list`, `newfeatures`, `OpenCode_Coverage_Matrix`, `DRY_Rules`) are stale enough that they amplify downstream drift rather than containing it.",
+      "doc_path": "Plans/Decision_Log.md"
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "seed-c3-extract-task-016-019",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12319,
+        "end_line": 12321
+      },
+      "summary": "The command catalog still has unresolved canonical placement for cmd.runtime recovery commands versus legacy cmd.graph command families.",
+      "raw_excerpt": "- the catalog still has an unresolved split between legacy `cmd.graph.*` recovery commands and canonical `cmd.runtime.*` recovery families.\n- `cmd.runtime.*` still lacks first-class placement in the main catalog structure"
+    },
+    {
+      "id": "seed-c3-extract-task-016-020",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12788,
+        "end_line": 12788
+      },
+      "summary": "DAE-era runtime safety ownership for plugin/skills/formatter mutation behavior remains unresolved.",
+      "raw_excerpt": "- Runtime safety and capability contracts are still under-owned in plugins/skills/formatters, especially under DAE, mixed mutation semantics, and runtime tool reachability."
+    },
+    {
+      "id": "seed-c3-repair-task-014-002",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12788,
+        "end_line": 12788
+      },
+      "summary": "Who owns DAE runtime safety and capability contracts for plugin/skills/formatter mutation semantics remains unresolved and needs explicit contract assignment.",
+      "raw_excerpt": "- Runtime safety and capability contracts are still under-owned in plugins/skills/formatters, especially under DAE, mixed mutation semantics, and runtime tool reachability."
+    }
+  ],
+  "process_defects": [
+    {
+      "id": "seed-c3-extract-task-016-021",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12752,
+        "end_line": 12752
+      },
+      "summary": "DRY rule cross-checks found mechanical document integrity defects including duplicated and mislabeled sections in owner docs.",
+      "raw_excerpt": "- `DRY_Rules.md` cross-checking surfaced exact duplicate and mislabeled sections in owner docs, showing that stale/additive layering has become a mechanical doc-integrity issue rather than just a conceptual one.",
+      "defect_type": "doc-integrity"
+    },
+    {
+      "id": "seed-c3-extract-task-016-022",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12395,
+        "end_line": 12395
+      },
+      "summary": "Coverage process defect remains where meaningful docs were under-examined and retained contradictions due to uneven model pass coverage.",
+      "raw_excerpt": "- This tranche confirms that some of the remaining docs are not just “less important” — they were simply under-examined and still contain real contradictions.",
+      "defect_type": "coverage-audit-gap"
+    }
+  ],
+  "doc_hints": [
+    {
+      "id": "seed-c3-extract-task-016-023",
+      "source_shard_id": "shard-0061",
+      "source_line_range": {
+        "start_line": 12141,
+        "end_line": 12144
+      },
+      "summary": "Contracts should record narrow subject_id families and early object_kind canonical enum extension guidance.",
+      "raw_excerpt": "- Declare the initial `subject_id` families narrowly and explicitly.\n- Declare an early canonical `object_kind` enum family in the contract layer, with room for later controlled extension.",
+      "doc_path": "Plans/Contracts_V0.md",
+      "doc_line_span": "routing target schema section"
+    },
+    {
+      "id": "seed-c3-extract-task-016-024",
+      "source_shard_id": "shard-0063",
+      "source_line_range": {
+        "start_line": 12464,
+        "end_line": 12467
+      },
+      "summary": "Contract docs should define resume_url as serialized route-target transport and enforce decoding through a single internal routing path.",
+      "raw_excerpt": "- Define `resume_url` as a serialized route-target transport in the contract layer once `route_target` exists.\n...\n- Decode all supported deep-link forms into the same internal routing path",
+      "doc_path": "Plans/Contracts_V0.md",
+      "doc_line_span": "deep-link transport rules"
+    },
+    {
+      "id": "seed-c3-extract-task-016-025",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12753,
+        "end_line": 12753
+      },
+      "summary": "Coverage matrix documentation should add multi-account/runtime-correlation dimensions and remove stale fix recommendations.",
+      "raw_excerpt": "- `OpenCode_Coverage_Matrix.md` is no longer broad enough to audit current rewrite concerns because it omits multi-account/runtime-correlation coverage dimensions and now contains stale fix recommendations.",
+      "doc_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "doc_line_span": "coverage dimensions and recommendations"
+    },
+    {
+      "id": "seed-c3-repair-task-014-003",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12326,
+        "end_line": 12329
+      },
+      "summary": "Architecture invariants doc needs rewrite-era invariant additions for identity completeness, projection trust, and safe-point boundaries.",
+      "raw_excerpt": "`Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, projection trust/generation staleness, and safe-point vs restore-point separation.",
+      "doc_path": "Plans/Architecture_Invariants.md",
+      "doc_line_span": "rewrite invariants coverage"
+    },
+    {
+      "id": "seed-c3-repair-task-014-004",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12334,
+        "end_line": 12337
+      },
+      "summary": "Container registry and publish authority docs need command ownership reconciliation and account-lineage bridging.",
+      "raw_excerpt": "`Containers_Registry_and_Unraid.md` still defines command families absent from catalog and duplicates publish authority with Docker command aliases.",
+      "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+      "doc_line_span": "publish authority and command families"
+    },
+    {
+      "id": "seed-c3-repair-task-014-005",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12338,
+        "end_line": 12339
+      },
+      "summary": "Packaging policy must include glossary and requirements-staging artifacts plus package-generation lineage states.",
+      "raw_excerpt": "`Document_Packaging_Policy.md` has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states.",
+      "doc_path": "Plans/Document_Packaging_Policy.md",
+      "doc_line_span": "artifact classes and lineage"
+    },
+    {
+      "id": "seed-c3-repair-task-014-006",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12323,
+        "end_line": 12324
+      },
+      "summary": "GUI rebuild checklist remains a drift multiplier via phantom command IDs and stale panel assumptions.",
+      "raw_excerpt": "`GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI and Orchestrator docs.",
+      "doc_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "doc_line_span": "command and panel assumptions"
+    },
+    {
+      "id": "seed-c3-repair-task-014-007",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12327,
+        "end_line": 12328
+      },
+      "summary": "Misc plan still carries tier-era sequencing assumptions that conflict with canonical failure and remediation lineage.",
+      "raw_excerpt": "`MiscPlan.md` still embeds tier-era cleanup/remediation assumptions, including prepare/cleanup ordering that can erase safe-point baselines.",
+      "doc_path": "Plans/MiscPlan.md",
+      "doc_line_span": "cleanup and remediation sequencing"
+    },
+    {
+      "id": "seed-c3-repair-task-014-008",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12747,
+        "end_line": 12747
+      },
+      "summary": "Feature-list terminology and execution framing require rewrite alignment to avoid stale shell and tier-era guidance.",
+      "raw_excerpt": "- `feature-list.md` and `newfeatures.md` still carry tier-era execution framing, old widget inventories, stale shell terminology, and promoted-feature phasing contradictions that would actively mislead implementation readers.",
+      "doc_path": "Plans/feature-list.md",
+      "doc_line_span": "rewrite feature inventory alignment"
+    },
+    {
+      "id": "seed-c3-repair-task-014-009",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12756,
+        "end_line": 12756
+      },
+      "summary": "Binary locator spec needs rewrite of OpenCode launcher ownership and retirement of four-tier naming residues.",
+      "raw_excerpt": "- `BinaryLocator_Spec.md` now looks stale around OpenCode launcher ownership, dead four-tier naming references, and process/session-scope wording.",
+      "doc_path": "Plans/BinaryLocator_Spec.md",
+      "doc_line_span": "launcher ownership and naming"
+    },
+    {
+      "id": "seed-c3-repair-task-014-010",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12753,
+        "end_line": 12753
+      },
+      "summary": "DRY rules document should carry deduplication remediation where cross-checks found duplicate and mislabeled owner sections.",
+      "raw_excerpt": "- `DRY_Rules.md` cross-checking surfaced exact duplicate and mislabeled sections in owner docs, showing that stale/additive layering has become a mechanical doc-integrity issue rather than just a conceptual one.",
+      "doc_path": "Plans/DRY_Rules.md",
+      "doc_line_span": "doc integrity checks and remediation"
+    },
+    {
+      "id": "seed-c3-repair-task-014-011",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12747,
+        "end_line": 12747
+      },
+      "summary": "New features inventory doc must be updated to remove stale promoted-feature phasing assumptions.",
+      "raw_excerpt": "- `feature-list.md` and `newfeatures.md` still carry tier-era execution framing, old widget inventories, stale shell terminology, and promoted-feature phasing contradictions that would actively mislead implementation readers.",
+      "doc_path": "Plans/newfeatures.md",
+      "doc_line_span": "phasing and rewrite framing"
+    },
+    {
+      "id": "seed-c3-repair-task-014-012",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12746,
+        "end_line": 12746
+      },
+      "summary": "Rewrite tie-in memo needs supersession updates for seams/packages/lanes and projection-trust invariants.",
+      "raw_excerpt": "- `rewrite-tie-in-memo.md` is itself now stale as a rewrite-alignment owner because it predates seams/packages/lanes/overseers, scopes requested/effective identity too narrowly, and does not surface projection-trust or lane scheduling as rewrite invariants.",
+      "doc_path": "Plans/rewrite-tie-in-memo.md",
+      "doc_line_span": "rewrite alignment baseline"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-001",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12328,
+        "end_line": 12328
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement.",
+      "doc_path": "Plans/FileSafe.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-002",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12330,
+        "end_line": 12330
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still disagree on live capability re-checks vs frozen run snapshots, and `platform.capability_evaluated` remains outside Contracts_V0 event registration.",
+      "doc_path": "Plans/Media_Generation_and_Capabilities.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-003",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12331,
+        "end_line": 12331
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `OpenCode_Deep_Extraction.md` source-verified that OpenCode’s SSE bus and auth model are process-global/server-global, making per-session/per-run identity and account binding impossible without explicit PM-side scoping logic.",
+      "doc_path": "Plans/OpenCode_Deep_Extraction.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-004",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12332,
+        "end_line": 12332
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `agent-rules-context.md` still assumes a tiny set of actors and CLI-only transport, while the real provider-using actor set is much broader and now includes non-CLI transports.",
+      "doc_path": "Plans/agent-rules-context.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-005",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12340,
+        "end_line": 12343
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`.\n- plan-mode tooling policy still denies `lsp` even though LSP context is assumed for planning/interview features.\n- mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract.",
+      "doc_path": "Plans/LSPSupport.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-006",
+      "source_shard_id": "shard-0062",
+      "source_line_range": {
+        "start_line": 12324,
+        "end_line": 12324
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.",
+      "doc_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-007",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12749,
+        "end_line": 12749
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `Formatters_System.md` has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, and unregistered `format.*` events.",
+      "doc_path": "Plans/Formatters_System.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-008",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12750,
+        "end_line": 12750
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `Plugins_System.md` still has a severe hook/schema split, missing `mutation_capable` on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, and prompt/param hooks that can bypass run-mode safety assumptions.",
+      "doc_path": "Plans/Plugins_System.md",
+      "doc_line_span": "targeted-c4-round2"
+    },
+    {
+      "id": "seed-c3-repair2-task-006-009",
+      "source_shard_id": "shard-0064",
+      "source_line_range": {
+        "start_line": 12751,
+        "end_line": 12751
+      },
+      "summary": "Targeted missing-material coverage added from C4 round-2.",
+      "raw_excerpt": "- `Skills_System.md` still assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, and lacks a proper introspection/listing surface for runtime skills.",
+      "doc_path": "Plans/Skills_System.md",
+      "doc_line_span": "targeted-c4-round2"
+    }
+  ],
+  "exclusions_by_shard": {
+    "shard-0061": [
+      {
+        "reason": "boilerplate section labels",
+        "lines_or_section": "Repeated 'Research Progress', 'Targeted docs read' headings"
+      },
+      {
+        "reason": "non-obligatory recap text",
+        "lines_or_section": "General framing lines without normative action"
+      }
+    ],
+    "shard-0062": [
+      {
+        "reason": "long catalog listings without explicit obligation",
+        "lines_or_section": "Opus tranche targeted-doc lists"
+      },
+      {
+        "reason": "status recap",
+        "lines_or_section": "Do-not-forget summary lines that restate prior findings"
+      }
+    ],
+    "shard-0063": [
+      {
+        "reason": "examples without normative constraint",
+        "lines_or_section": "Illustrative destination examples absent obligation"
+      },
+      {
+        "reason": "boilerplate headings",
+        "lines_or_section": "Repeated section title scaffolding"
+      }
+    ],
+    "shard-0064": [
+      {
+        "reason": "continuation-candidate prioritization",
+        "lines_or_section": "Model sequence continuation preference list"
+      },
+      {
+        "reason": "descriptive inventory text",
+        "lines_or_section": "Feature/doc inventories without enforceable rule"
+      },
+      {
+        "reason": "material covered by new doc hint",
+        "lines_or_section": "BinaryLocator stale ownership/tier naming drift now represented in doc_hints"
+      }
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0061": [
+      "seed-c3-extract-task-016-003",
+      "seed-c3-extract-task-016-004",
+      "seed-c3-extract-task-016-007",
+      "seed-c3-extract-task-016-008",
+      "seed-c3-extract-task-016-015",
+      "seed-c3-extract-task-016-023"
+    ],
+    "shard-0062": [
+      "seed-c3-extract-task-016-001",
+      "seed-c3-repair-task-014-001",
+      "seed-c3-extract-task-016-010",
+      "seed-c3-extract-task-016-013",
+      "seed-c3-extract-task-016-014",
+      "seed-c3-extract-task-016-017",
+      "seed-c3-extract-task-016-019",
+      "seed-c3-extract-task-016-022",
+      "seed-c3-repair-task-014-003",
+      "seed-c3-repair-task-014-004",
+      "seed-c3-repair-task-014-005",
+      "seed-c3-repair-task-014-006",
+      "seed-c3-repair-task-014-007",
+      "seed-c3-repair2-task-006-001",
+      "seed-c3-repair2-task-006-002",
+      "seed-c3-repair2-task-006-003",
+      "seed-c3-repair2-task-006-004",
+      "seed-c3-repair2-task-006-005",
+      "seed-c3-repair2-task-006-006"
+    ],
+    "shard-0063": [
+      "seed-c3-extract-task-016-005",
+      "seed-c3-extract-task-016-006",
+      "seed-c3-extract-task-016-009",
+      "seed-c3-extract-task-016-011",
+      "seed-c3-extract-task-016-024"
+    ],
+    "shard-0064": [
+      "seed-c3-extract-task-016-002",
+      "seed-c3-extract-task-016-012",
+      "seed-c3-extract-task-016-016",
+      "seed-c3-extract-task-016-018",
+      "seed-c3-extract-task-016-020",
+      "seed-c3-repair-task-014-002",
+      "seed-c3-extract-task-016-021",
+      "seed-c3-extract-task-016-025",
+      "seed-c3-repair-task-014-008",
+      "seed-c3-repair-task-014-009",
+      "seed-c3-repair-task-014-010",
+      "seed-c3-repair-task-014-011",
+      "seed-c3-repair-task-014-012",
+      "seed-c3-repair2-task-006-007",
+      "seed-c3-repair2-task-006-008",
+      "seed-c3-repair2-task-006-009"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": true,
+    "notes": [
+      "targeted_c4_round2_repair: lineage_content_provenance_repaired, missing_material_added"
+    ]
+  }
 }

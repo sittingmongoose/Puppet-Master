@@ -1,22 +1,41 @@
 {
-  "schema_id": "pm.fanout_worklist.v3.1.14",
+  "schema_id": "pm.fanout_worklist.v3.1.15",
   "prompt_id": "C2",
-  "prompt_version": "pm.c2.v3.1.14",
+  "prompt_version": "pm.c2.v3.1.15",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "subagents_required": false,
-  "tasks": [
+  "subagents_required_rationale": "C2 is classified mechanical_tool_operation with deterministic 200-line sharding via script. Per the C2 deterministic sharding rule and the kernel's mechanical_tool_operation gate, subagents must not be used for the line-splitting work. The fanout/wave artifacts record the deterministic tool operations that performed the work.",
+  "required_subagent_tasks_total": 0,
+  "deterministic_operations": [
     {
-      "task_id": "mechanical-shard-and-verify-001",
-      "task_type": "deterministic_tool_operation",
+      "operation_id": "mechanical-shard-and-verify-001",
+      "operation_type": "deterministic_tool_operation",
+      "tool": "python3",
       "input_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "expected_input_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+      "expected_input_line_count": 18244,
+      "max_lines_per_shard": 200,
+      "expected_shard_count": 92,
       "output_paths": [
-        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-*.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0002.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003.md",
+        "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-...up to shard-0092.md",
         "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json"
       ],
+      "verifications_required": [
+        "all shard files exist on disk",
+        "every shard has line_count <= 200",
+        "no line-coverage gaps",
+        "no line-coverage overlaps",
+        "reconstructed sha256 from shard concatenation equals source sha256",
+        "manifest written from actual on-disk shards"
+      ],
+      "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
       "status": "complete"
     }
   ],
-  "required_subagent_tasks_total": 0,
-  "generated_at_utc": "2026-05-07T15:18:50Z"
+  "tasks": [],
+  "generated_at_utc": "20260507T170122Z"
 }
