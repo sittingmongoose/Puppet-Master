@@ -1,47 +1,29 @@
 {
-  "schema_id": "pm.stage_report.v3.1.12",
+  "schema_id": "pm.stage_report.B0.v3.1.14",
   "prompt_id": "B0",
-  "prompt_version": "pm.b0.v3.1.12",
-  "timestamp_utc": "20260506T182731Z",
+  "prompt_version": "pm.b0.v3.1.14",
   "work_id": "w-20260312-203855",
-  "status": "COMPLETE",
   "execution_type": "mechanical_tool_operation",
-  "execution_type_rationale": "Deterministic read of Section A handoff and routing files; JSON report emission only. No semantic chunk processing.",
-  "deterministic_verification": {
+  "status": "COMPLETE",
+  "deterministic_verification_proof": {
     "inputs_read": [
       "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
       "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
       "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
     ],
-    "work_id_locked": "w-20260312-203855",
-    "section_exit_A_section_status": "COMPLETE",
-    "outputs_written": [
-      "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B0.json"
-    ]
+    "section_exit_a_files_found": 1,
+    "work_id_derivation_source": "section_exit_A.json",
+    "work_id_consistency_check": "pass",
+    "intake_route_resolution": "no_explicit_intake_path_found_defaulted_to_B4"
   },
   "subagents": {
-    "used": false,
-    "required_subagent_tasks_total": 0,
-    "distinct_subagent_invocations_total": 0
+    "required": false,
+    "used": false
   },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
-  "fanout_proof": {
-    "wave_artifacts_total": 0,
-    "wave_artifacts_expected_min": 0,
-    "wave_artifact_paths": [],
-    "completed_task_ids_from_wave_artifacts": [],
-    "pending_task_ids_from_wave_artifacts": [],
-    "blocked_task_ids_from_wave_artifacts": [],
-    "subagent_invocation_ids_from_wave_artifacts": [],
-    "distinct_subagent_invocations_total_from_wave_artifacts": 0,
-    "task_to_invocation_map": {},
-    "invocation_to_task_map": {},
-    "omnibus_invocation_detected": false,
-    "main_agent_bulk_output_detected": false
-  },
-  "next_section": "B",
-  "next_prompt_id": "B4",
-  "next_prompt_request": "B4 — Ledger Intake Decision v3.1.12.",
-  "summary": "Locked work_id w-20260312-203855 from Section A exit; work_id matches route_state and meta. No explicit intake path; defaulted next prompt to B4 Ledger Intake Decision."
+  "outputs_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B0.json"
+  ],
+  "next_prompt_request": "Paste prompt B4 — Ledger Intake Decision v3.1.14."
 }

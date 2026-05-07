@@ -1,49 +1,29 @@
 {
-  "schema_id": "pm.stage_report.A3.v3.1.12",
+  "schema_id": "pm.stage_report.A3.v3.1.14",
   "prompt_id": "A3",
-  "prompt_version": "pm.a3.v3.1.12",
+  "prompt_version": "pm.a3.v3.1.14",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260506T182511Z",
   "execution_type": "mechanical_tool_operation",
-  "status": "COMPLETE",
-  "run_mode": "fresh_restart",
-  "subagents": {
-    "required": false,
-    "used": false,
-    "admission_gate": {
-      "input_artifact_families": 1,
-      "notes": "Derived route_state from meta, current_state, and artifact_sanitizer_report; no semantic interpretation of ledger or Plans bodies."
-    }
-  },
-  "required_subagent_tasks_total": 0,
-  "wave_artifacts_total": 0,
-  "wave_artifacts_expected_min": 0,
-  "wave_artifact_paths": [],
-  "completed_task_ids_from_wave_artifacts": [],
-  "pending_task_ids_from_wave_artifacts": [],
-  "blocked_task_ids_from_wave_artifacts": [],
-  "subagent_invocation_ids_from_wave_artifacts": [],
-  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
-  "distinct_subagent_invocations_total": 0,
-  "task_to_invocation_map": {},
-  "invocation_to_task_map": {},
-  "omnibus_invocation_detected": false,
-  "main_agent_bulk_output_detected": false,
+  "subagents_required": false,
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
-  "fanout_proof_notes": "Subagents not required; single deterministic route_state.json write from allowed READ inputs.",
   "deterministic_verification": {
-    "inputs": [
+    "inputs_read": [
       "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
       "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
       "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json"
     ],
-    "outputs": [
-      "Plans/.pipeline/work_items/w-20260312-203855/route_state.json"
-    ]
+    "sanitizer_prompt_id": "A2",
+    "sanitizer_execution_type": "mechanical_tool_operation",
+    "route_state_written": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "semantic_artifacts_inspected": false
   },
-  "summary": "Initialized route_state.json for fresh_restart: section A, active root under work item active/, archive root under work item archive/, next prompt A4 Section Exit.",
-  "artifacts": {
-    "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json"
+  "final_gate": {
+    "route_state_exists": true,
+    "route_state_next_prompt_request_count": 1,
+    "route_state_next_prompt_request": "A4"
   },
-  "next_prompt_request": "A4 — Section Exit: Run Control v3.1.12"
+  "status": "COMPLETE",
+  "next_prompt_request": "A4",
+  "next_prompt_name": "Section Exit: Run Control",
+  "timestamp_utc": "20260507T151020Z"
 }

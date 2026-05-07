@@ -1,489 +1,78 @@
 {
-  "schema_id": "pm.ledger_seed_completeness_report.v3.1.12",
+  "schema_id": "pm.ledger_seed_completeness_report.v3.1.14",
   "prompt_id": "C4",
-  "prompt_version": "pm.c4.v3.1.12",
-  "timestamp_utc": "20260506T191331Z",
+  "prompt_version": "pm.c4.v3.1.14",
   "work_id": "w-20260312-203855",
-  "source_working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
-  "source_working_ledger_line_count": 18244,
-  "inputs_verified": {
-    "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-    "working_ledger_sha256_matches_manifest": true,
-    "ledger_shards_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
-    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-    "seed_group_files_expected": 23,
-    "shard_ids_total": 92,
-    "all_shards_in_exactly_one_batch": true
+  "execution_type": "semantic_chunk_processing",
+  "status": "blocked",
+  "completeness_gate_passed": false,
+  "summary": {
+    "bounded_validation_tasks_total": 5,
+    "bounded_validation_tasks_complete": 4,
+    "bounded_validation_tasks_blocked": 1,
+    "material_coverage_status": "mostly_complete",
+    "lineage_status": "pass_with_one_remaining_strict_structure_gap",
+    "doc_hint_preservation_status": "preserved_with_one_remaining_structure_gap",
+    "open_question_preservation_status": "preserved_with_one_remaining_structure_gap"
   },
-  "mechanical_checks": {
-    "obligation_seed_batches": 23,
-    "shard_coverage_union_equals_manifest": true,
-    "evidence_anchoring_rule": "norm_compare(shard batch union): collapse markdown bullets, strip bold, unify semicolons; ellipsis segments must substring-match or token_ratio>=0.45 vs batch text",
-    "line_in_source_defects": {
-      "ledger_seed_group.shard-0081.json": {
-        "shard-0082": {
-          "incorrect_line_in_source_count": 8,
-          "entries": [
-            {
-              "line_in_shard": 148,
-              "stated": 16248,
-              "expected": 16348,
-              "type": "owner_consumer_obligation"
-            },
-            {
-              "line_in_shard": 150,
-              "stated": 16250,
-              "expected": 16350,
-              "type": "doc_hint"
-            },
-            {
-              "line_in_shard": 156,
-              "stated": 16256,
-              "expected": 16356,
-              "type": "contradiction"
-            },
-            {
-              "line_in_shard": 164,
-              "stated": 16264,
-              "expected": 16364,
-              "type": "process_defect"
-            },
-            {
-              "line_in_shard": 169,
-              "stated": 16269,
-              "expected": 16369,
-              "type": "contradiction"
-            },
-            {
-              "line_in_shard": 179,
-              "stated": 16279,
-              "expected": 16379,
-              "type": "doc_hint"
-            },
-            {
-              "line_in_shard": 191,
-              "stated": 16291,
-              "expected": 16391,
-              "type": "contradiction"
-            },
-            {
-              "line_in_shard": 199,
-              "stated": 16299,
-              "expected": 16399,
-              "type": "candidate_fix"
-            }
-          ],
-          "pattern": "stated line_in_source is 100 less than line_start_in_source + line_in_shard - 1"
-        }
-      }
+  "batch_results": [
+    {
+      "subagent_task_id": "c4d-task-001",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "pass_with_format_drift",
+      "missing_material_items": []
     },
-    "batch_pass_failures": []
-  },
-  "extraction_model_notes": {
-    "line_exhaustive": false,
-    "semantic_sampling": true,
-    "rationale": "C3 captures obligation-bearing lines and summaries; C4 verifies lineage and evidence anchoring to shard text, not line-by-line mirroring."
-  },
-  "final_gate": {
-    "passed": true,
-    "material_ledger_represented_or_excluded_or_open": true,
-    "blocking_high_severity_gaps": [],
-    "deficiencies": [
-      "Reference defect: some extracted_items carry line_in_source inconsistent with line_start_in_source + line_in_shard - 1 (notably shard-0082 in ledger_seed_group.shard-0081.json); ledger text still maps via line_in_shard.",
-      "Seeds are semantically sampled; many narrative ledger lines are not mirrored as per-line seeds (acceptable when material themes are covered or marked excluded/noise/open)."
+    {
+      "subagent_task_id": "c4d-task-002",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "not_evaluated_per_scope",
+      "missing_material_items": []
+    },
+    {
+      "subagent_task_id": "c4d-task-003",
+      "status": "blocked",
+      "material_gate_judgment": "fail_with_minor_gaps",
+      "lineage_judgment": "pass_with_format_drift",
+      "missing_material_items": [
+        "seed_group shard-0045 lacks explicit strict top-level doc_hints/open_questions preservation structure for decisive gate closure"
+      ]
+    },
+    {
+      "subagent_task_id": "c4d-task-004",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "pass",
+      "missing_material_items": []
+    },
+    {
+      "subagent_task_id": "c4d-task-005",
+      "status": "complete",
+      "material_gate_judgment": "pass",
+      "lineage_judgment": "pass",
+      "missing_material_items": []
+    }
+  ],
+  "critical_findings": [
+    {
+      "severity": "high",
+      "category": "strict_structure_gap",
+      "detail": "Only c4d-task-003 remains blocked; shard-0045 seed group requires strict canonical structure closure for final C4 pass."
+    }
+  ],
+  "required_rework": {
+    "route": "C3",
+    "reason": "strict_structure_validation_not_satisfied",
+    "target_seed_groups": [
+      "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0045.json"
+    ],
+    "target_shards": [
+      "shard-0045",
+      "shard-0046",
+      "shard-0047",
+      "shard-0048"
     ]
   },
-  "batch_findings": [
-    {
-      "subagent_task_id": "c4-task-001",
-      "subagent_invocation_id": "c4-inv-001",
-      "c3_upstream_task_id": "c3-task-001",
-      "source_shard_ids": [
-        "shard-0001",
-        "shard-0002",
-        "shard-0003",
-        "shard-0004"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0001.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[0]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-002",
-      "subagent_invocation_id": "c4-inv-002",
-      "c3_upstream_task_id": "c3-task-002",
-      "source_shard_ids": [
-        "shard-0005",
-        "shard-0006",
-        "shard-0007",
-        "shard-0008"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0005.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[1]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-003",
-      "subagent_invocation_id": "c4-inv-003",
-      "c3_upstream_task_id": "c3-task-003",
-      "source_shard_ids": [
-        "shard-0009",
-        "shard-0010",
-        "shard-0011",
-        "shard-0012"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0009.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[2]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-004",
-      "subagent_invocation_id": "c4-inv-004",
-      "c3_upstream_task_id": "c3-task-004",
-      "source_shard_ids": [
-        "shard-0013",
-        "shard-0014",
-        "shard-0015",
-        "shard-0016"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0013.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[3]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-005",
-      "subagent_invocation_id": "c4-inv-005",
-      "c3_upstream_task_id": "c3-task-005",
-      "source_shard_ids": [
-        "shard-0017",
-        "shard-0018",
-        "shard-0019",
-        "shard-0020"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0017.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[4]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-006",
-      "subagent_invocation_id": "c4-inv-006",
-      "c3_upstream_task_id": "c3-task-006",
-      "source_shard_ids": [
-        "shard-0021",
-        "shard-0022",
-        "shard-0023",
-        "shard-0024"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0021.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[5]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-007",
-      "subagent_invocation_id": "c4-inv-007",
-      "c3_upstream_task_id": "c3-task-007",
-      "source_shard_ids": [
-        "shard-0025",
-        "shard-0026",
-        "shard-0027",
-        "shard-0028"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0025.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[6]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-008",
-      "subagent_invocation_id": "c4-inv-008",
-      "c3_upstream_task_id": "c3-task-008",
-      "source_shard_ids": [
-        "shard-0029",
-        "shard-0030",
-        "shard-0031",
-        "shard-0032"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0029.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[7]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-009",
-      "subagent_invocation_id": "c4-inv-009",
-      "c3_upstream_task_id": "c3-task-009",
-      "source_shard_ids": [
-        "shard-0033",
-        "shard-0034",
-        "shard-0035",
-        "shard-0036"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0033.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[8]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-010",
-      "subagent_invocation_id": "c4-inv-010",
-      "c3_upstream_task_id": "c3-task-010",
-      "source_shard_ids": [
-        "shard-0037",
-        "shard-0038",
-        "shard-0039",
-        "shard-0040"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0037.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[9]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-011",
-      "subagent_invocation_id": "c4-inv-011",
-      "c3_upstream_task_id": "c3-task-011",
-      "source_shard_ids": [
-        "shard-0041",
-        "shard-0042",
-        "shard-0043",
-        "shard-0044"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0041.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[10]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-012",
-      "subagent_invocation_id": "c4-inv-012",
-      "c3_upstream_task_id": "c3-task-012",
-      "source_shard_ids": [
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0048"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0045.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[11]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-013",
-      "subagent_invocation_id": "c4-inv-013",
-      "c3_upstream_task_id": "c3-task-013",
-      "source_shard_ids": [
-        "shard-0049",
-        "shard-0050",
-        "shard-0051",
-        "shard-0052"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0049.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[12]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-014",
-      "subagent_invocation_id": "c4-inv-014",
-      "c3_upstream_task_id": "c3-task-014",
-      "source_shard_ids": [
-        "shard-0053",
-        "shard-0054",
-        "shard-0055",
-        "shard-0056"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0053.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[13]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-015",
-      "subagent_invocation_id": "c4-inv-015",
-      "c3_upstream_task_id": "c3-task-015",
-      "source_shard_ids": [
-        "shard-0057",
-        "shard-0058",
-        "shard-0059",
-        "shard-0060"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0057.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[14]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-016",
-      "subagent_invocation_id": "c4-inv-016",
-      "c3_upstream_task_id": "c3-task-016",
-      "source_shard_ids": [
-        "shard-0061",
-        "shard-0062",
-        "shard-0063",
-        "shard-0064"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0061.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[15]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-017",
-      "subagent_invocation_id": "c4-inv-017",
-      "c3_upstream_task_id": "c3-task-017",
-      "source_shard_ids": [
-        "shard-0065",
-        "shard-0066",
-        "shard-0067",
-        "shard-0068"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0065.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[16]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-018",
-      "subagent_invocation_id": "c4-inv-018",
-      "c3_upstream_task_id": "c3-task-018",
-      "source_shard_ids": [
-        "shard-0069",
-        "shard-0070",
-        "shard-0071",
-        "shard-0072"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0069.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[17]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-019",
-      "subagent_invocation_id": "c4-inv-019",
-      "c3_upstream_task_id": "c3-task-019",
-      "source_shard_ids": [
-        "shard-0073",
-        "shard-0074",
-        "shard-0075",
-        "shard-0076"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0073.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[18]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-020",
-      "subagent_invocation_id": "c4-inv-020",
-      "c3_upstream_task_id": "c3-task-020",
-      "source_shard_ids": [
-        "shard-0077",
-        "shard-0078",
-        "shard-0079",
-        "shard-0080"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0077.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[19]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-021",
-      "subagent_invocation_id": "c4-inv-021",
-      "c3_upstream_task_id": "c3-task-021",
-      "source_shard_ids": [
-        "shard-0081",
-        "shard-0082",
-        "shard-0083",
-        "shard-0084"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0081.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[20]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-022",
-      "subagent_invocation_id": "c4-inv-022",
-      "c3_upstream_task_id": "c3-task-022",
-      "source_shard_ids": [
-        "shard-0085",
-        "shard-0086",
-        "shard-0087",
-        "shard-0088"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0085.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[21]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    },
-    {
-      "subagent_task_id": "c4-task-023",
-      "subagent_invocation_id": "c4-inv-023",
-      "c3_upstream_task_id": "c3-task-023",
-      "source_shard_ids": [
-        "shard-0089",
-        "shard-0090",
-        "shard-0091",
-        "shard-0092"
-      ],
-      "seed_group_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0089.json",
-      "result_captured_in": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json#batch_findings[22]",
-      "batch_pass": true,
-      "summary": "Deterministic C4: missing_ps=[]; excerpt_mismatch_count=0.",
-      "status": "complete",
-      "excerpt_mismatch_seed_ids": []
-    }
-  ]
+  "generated_at_utc": "2026-05-07T16:18:34Z"
 }

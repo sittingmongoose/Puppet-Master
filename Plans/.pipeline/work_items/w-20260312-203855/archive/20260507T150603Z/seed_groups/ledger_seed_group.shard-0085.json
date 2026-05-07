@@ -1,0 +1,540 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
+  "work_id": "w-20260312-203855",
+  "inventory_id": "c3-inv-022",
+  "task_id": "c3-task-022",
+  "anchor_shard_id": "shard-0085",
+  "working_ledger_line_start": 16801,
+  "working_ledger_line_end": 17600,
+  "status": "complete",
+  "per_shard": [
+    {
+      "shard_id": "shard-0085",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0085.md",
+      "line_start_in_source": 16801,
+      "line_end_in_source": 17000,
+      "source_sha256": "155ae2228a88031b8dd4fd8456bd398dc7b92f8c0895ca47b98c2449abaf30cb",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - execution-core and main surface seam: Executor Protocol, Orchestrator Page",
+          "line_in_shard": 1,
+          "line_in_source": 16801
+        },
+        {
+          "type": "data_shape",
+          "text": "Executor_Protocol.md ahead of tier-era lexicon in dispatch: scored ready-set selection (not pure lexical node_id), first-class attempt_id and scheduler_lane, safe-point/remediation/worktree-conflict/blocked runtime present, lexicographic node_id demoted to final tiebreak only",
+          "line_in_shard": 7,
+          "line_in_source": 16807
+        },
+        {
+          "type": "contradiction",
+          "text": "Executor_Protocol.md same-file drift: title/role model still Overseer/Builder/Verifier; opening sections omit Package Overseer vs Seam Overseer split; TierContext replacement not named as first-class owner execution-unit context",
+          "line_in_shard": 14,
+          "line_in_source": 16814
+        },
+        {
+          "type": "data_shape",
+          "text": "Orchestrator_Page.md stale surface owner: six-tab page with Tiers; tabs 1/2/4/5/6 widget-based; tier_tree centers Tiers; Evidence/History/Ledger as widget tabs; Progress widgets in phase/task/subtask + tier_id filters; stale requested/effective persona/provider/model; HITL keyed by request_id; TierChanged and UserInteractionRequired as primary live inputs",
+          "line_in_shard": 18,
+          "line_in_source": 16818
+        },
+        {
+          "type": "data_shape",
+          "text": "Orchestrator_Page.md lower addenda closer to rewrite: allowed_action_ids[], requested vs effective identity called out, lane/worktree/receipt/cross-surface lineage present",
+          "line_in_shard": 36,
+          "line_in_source": 16836
+        },
+        {
+          "type": "contradiction",
+          "text": "Orchestrator_Page.md is same-file supersession (addenda vs head), not merely an outdated page spec",
+          "line_in_shard": 41,
+          "line_in_source": 16841
+        },
+        {
+          "type": "doc_hint",
+          "text": "Impacted (Executor/Orchestrator seam): primary Executor_Protocol.md, Orchestrator_Page.md; adjacent Contracts_V0, Run_Graph_View, FinalGUISpec, Widget_System, storage-plan, UI_Command_Catalog",
+          "line_in_shard": 42,
+          "line_in_source": 16842
+        },
+        {
+          "type": "contradiction",
+          "text": "Execution core ahead of Orchestrator page spec; Executor_Protocol still names older Overseer-only execution role at top; Orchestrator_Page encodes stale ontology across tabs/widgets/events/filters/identity",
+          "line_in_shard": 54,
+          "line_in_source": 16854
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Reconcile using Executor_Protocol as stronger runtime baseline toward Orchestrator_Page (not reverse). Executor: name execution-unit context replacing TierContext; relate scheduler/execution roles to package/seam overseer governance. Orchestrator_Page: retire Tiers\u2192Seams; only Progress widget-composed; Evidence/History/Ledger native tabs; replace tier_id filters and worker identity with canonical node/attempt/runtime identity; elevate blocked/runtime sources over request-centric HITL and TierChanged assumptions",
+          "line_in_shard": 59,
+          "line_in_source": 16859
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: Executor_Protocol is no longer main tier-era drift source; Orchestrator_Page is larger multiplier; reconciliation should collapse same-file contradictions vs blind full replacement",
+          "line_in_shard": 71,
+          "line_in_source": 16871
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - remaining high-risk stale consumers: Run Graph, Widget System, Usage, Assistant Chat",
+          "line_in_shard": 76,
+          "line_in_source": 16876
+        },
+        {
+          "type": "data_shape",
+          "text": "Run_Graph_View.md still tier-era at core: Output filtered by tier_id; verifier scoped to tier_id; View in Usage by tier_id; model retains worker/verifier provider+model and hitl_request_id; interactions reference Tiers tab / tier_id; lower addenda add scheduler_lane, allowed_action_ids[], blocked_sequence, lineage preservation",
+          "line_in_shard": 85,
+          "line_in_source": 16885
+        },
+        {
+          "type": "data_shape",
+          "text": "Widget_System.md major hostability owner: Dashboard/Usage/Orchestrator widget tabs; widget.tier_tree; persists widget_layout orchestrator tiers/evidence/history/ledger; migration contradiction backup vs deleted legacy key; data sources still TierChanged/tier_id and phase/task/subtask for multiple Orchestrator widgets",
+          "line_in_shard": 104,
+          "line_in_source": 16904
+        },
+        {
+          "type": "data_shape",
+          "text": "usage-feature.md correlation drift: usage.jsonl and UsageRecord center tier_id; Run Graph and Orchestrator aggregate by tier_id/attempt_id?; later navigation wording trends toward usage_event_ref and canonical Usage surfaces",
+          "line_in_shard": 116,
+          "line_in_source": 16916
+        },
+        {
+          "type": "data_shape",
+          "text": "assistant-chat-design.md comparatively healthy: blocked-state addenda align runtime actions; per-thread usage canonical; APIs key thread_id/run_id/message_id/event_id; remaining drift localized (e.g., resume_url? in blocked-notice persistence)",
+          "line_in_shard": 124,
+          "line_in_source": 16924
+        },
+        {
+          "type": "doc_hint",
+          "text": "Impacted (stale consumers tranche): primary Run_Graph_View, Widget_System, usage-feature, assistant-chat-design; adjacent Contracts_V0, storage-plan, Orchestrator_Page, FinalGUISpec, UI_Command_Catalog, Runtime_Artifacts_Panel",
+          "line_in_shard": 130,
+          "line_in_source": 16930
+        },
+        {
+          "type": "contradiction",
+          "text": "Run_Graph_View and usage-feature reinforce tier_id correlation; Widget_System and Orchestrator_Page reinforce all Orchestrator tabs as widget canvases; assistant-chat broadly less stale",
+          "line_in_shard": 144,
+          "line_in_source": 16944
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Reconciliation order: usage-feature, Run_Graph_View, Widget_System, assistant-chat-design \u2014 move usage off tier_id as primary cross-surface key; elevate run/node/attempt and usage_event_ref; align graph pivots and remove hitl_request_id/View in Tiers/tier_id filtering; narrow Orchestrator hostability to Progress and update widget data sources; reduce resume_url to transport/compatibility and tie blocked messages to shared route/runtime action model",
+          "line_in_shard": 149,
+          "line_in_source": 16949
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: do not over-correct assistant-chat; Run_Graph_View + usage-feature are highest-risk remaining stale consumer pair via shared tier_id correlation",
+          "line_in_shard": 171,
+          "line_in_source": 16971
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - promoted-shell and feature-summary tranche",
+          "line_in_shard": 176,
+          "line_in_source": 16976
+        },
+        {
+          "type": "data_shape",
+          "text": "Section15_MVP_Promoted_Features_Spec.md comparatively disciplined: not storage/command/permission/widget SSOT; risk is stale pass/fail if upstream moves",
+          "line_in_shard": 184,
+          "line_in_source": 16984
+        },
+        {
+          "type": "data_shape",
+          "text": "feature-list.md broad stale mirror: dashboard/orchestrator widget+tier framing; six tabs including Tiers; stale widgets tier_tree/progress_bars/current_task; Usage by tier/session; worktree via tier_id",
+          "line_in_shard": 188,
+          "line_in_source": 16988
+        },
+        {
+          "type": "data_shape",
+          "text": "newfeatures.md mirrors older surfaces: dashboard/widget stack; recovery snapshot language phase/task/subtask; HITL tier-boundary framing; Git/worktree sections still use tier_id as ownership glue",
+          "line_in_shard": 197,
+          "line_in_source": 16997
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0086",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0086.md",
+      "line_start_in_source": 17001,
+      "line_end_in_source": 17200,
+      "source_sha256": "f2e3255cf17d32542ff179ffa8648c32d977fb19c0f3a447355ab468e0a1a801",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "newfeatures.md continuation: Git/worktree sections still use tier_id as worktree ownership glue",
+          "line_in_shard": 1,
+          "line_in_source": 17001
+        },
+        {
+          "type": "data_shape",
+          "text": "GUI_Rebuild_Requirements_Checklist.md reconciliation follower: PASS items can be PASS only vs stale upstream (six tabs + Tiers; old Orchestrator widget tab coverage); command families need revalidation vs newer runtime recovery and route/open model",
+          "line_in_shard": 2,
+          "line_in_source": 17002
+        },
+        {
+          "type": "doc_hint",
+          "text": "Impacted (summary/checklist tranche): primary Section15 MVP, feature-list, newfeatures, GUI_Rebuild checklist; adjacent FinalGUISpec, Widget_System, Orchestrator_Page, UI_Command_Catalog, WorktreeGitImprovement, human-in-the-loop",
+          "line_in_shard": 8,
+          "line_in_source": 17008
+        },
+        {
+          "type": "contradiction",
+          "text": "Mirror/checklist tranche mostly inherits upstream contradictions; still dangerous after upstream moves \u2014 stale PASS broadcasts and outdated summaries without explicit recheck",
+          "line_in_shard": 22,
+          "line_in_source": 17022
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Reconcile upstream owners first; GUI_Rebuild checklist second for status repair; feature-list/newfeatures third; Section15 last as verification vs corrected owners; treat as mirrors/summaries not runtime owners",
+          "line_in_shard": 26,
+          "line_in_source": 17026
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: GUI_Rebuild checklist can create false confidence; feature-list/newfeatures amplify drift by condensing many features into first-read summaries",
+          "line_in_shard": 34,
+          "line_in_source": 17034
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - convergence and reconciliation readiness",
+          "line_in_shard": 39,
+          "line_in_source": 17039
+        },
+        {
+          "type": "data_shape",
+          "text": "Research backlog exhausted for current rewrite scope: ledger covers mixed-canon owners, stale primary consumers, mirror/checklist followers needing post-owner revalidation; remaining work is reconciliation-order not new seam discovery",
+          "line_in_shard": 65,
+          "line_in_source": 17065
+        },
+        {
+          "type": "routing_rule",
+          "text": "Reconciliation order locked: (1) owner docs + rewrite-root routing, (2) primary stale consumers, (3) mirror/checklist followers",
+          "line_in_shard": 74,
+          "line_in_source": 17074
+        },
+        {
+          "type": "requirement",
+          "text": "Hand-off: work item ready for reconciliation; ledger has owner-routing, contradiction, cleanup-order detail without restarting discovery",
+          "line_in_shard": 79,
+          "line_in_source": 17079
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: do not reopen execution model without stronger contradiction than established graph/seam/package/attempt/lane model; update mirrors only after owner reconciliation",
+          "line_in_shard": 83,
+          "line_in_source": 17083
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Reconciliation / Coverage Pass - 2026-03-17 - final impacted-doc register before packetization",
+          "line_in_shard": 88,
+          "line_in_source": 17088
+        },
+        {
+          "type": "doc_hint",
+          "text": "Coverage register \u2014 clearly implicated: Contracts_V0, Crosswalk, storage-plan, human-in-the-loop, Prompt_Pipeline, rewrite-tie-in-memo, Decision_Log, DRY_Rules, Progression_Gates, Executor_Protocol, orchestrator-subagent-integration, Orchestrator_Page, FinalGUISpec, UI_Command_Catalog, Run_Graph_View, Widget_System, usage-feature, FileManager, Glossary, 00-plans-index, feature-list, newfeatures, GUI_Rebuild checklist, Section15 MVP",
+          "line_in_shard": 92,
+          "line_in_source": 17092
+        },
+        {
+          "type": "doc_hint",
+          "text": "Coverage register \u2014 probably implicated: Personas, Models_System, Multi-Account, WorktreeGitImprovement, GitHub_Integration, Runtime_Artifacts_Panel, assistant-chat-design, Project_Output_Artifacts, Permissions_System, Decision_Policy",
+          "line_in_shard": 118,
+          "line_in_source": 17118
+        },
+        {
+          "type": "doc_hint",
+          "text": "Coverage register \u2014 could drift if untouched: Tools, newtools, interview-subagent-integration, chain-wizard-flexibility",
+          "line_in_shard": 130,
+          "line_in_source": 17130
+        },
+        {
+          "type": "data_shape",
+          "text": "Packetization MUST CHANGE bucket: direct stale canon or owner gaps \u2014 assume replace/retire not annotate only",
+          "line_in_shard": 138,
+          "line_in_source": 17138
+        },
+        {
+          "type": "data_shape",
+          "text": "Packetization MUST RECONCILE bucket: not primary execution owners but will drift/mislead if omitted",
+          "line_in_shard": 158,
+          "line_in_source": 17158
+        },
+        {
+          "type": "data_shape",
+          "text": "Packetization MUST VERIFY bucket: omit from packet unless final inspection shows edits needed",
+          "line_in_shard": 175,
+          "line_in_source": 17175
+        },
+        {
+          "type": "requirement",
+          "text": "Packetization reminders: MUST CHANGE vs MUST RECONCILE vs MUST VERIFY semantics; derived-only artifacts out of packet intent: Plans/_shards/** and Plans/.evidence/**",
+          "line_in_shard": 182,
+          "line_in_source": 17182
+        },
+        {
+          "type": "doc_hint",
+          "text": "Same-file supersession hot list: Contracts_V0, storage-plan, human-in-the-loop, Orchestrator_Page, FinalGUISpec, UI_Command_Catalog, Run_Graph_View, Widget_System, Progression_Gates",
+          "line_in_shard": 190,
+          "line_in_source": 17190
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0087",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0087.md",
+      "line_start_in_source": 17201,
+      "line_end_in_source": 17400,
+      "source_sha256": "35462f50becbad6d33d8b515d50d19e583bd6c02fb567ca8d7f7e992f0f4320e",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "requirement",
+          "text": "Do-not-forget (pre-packet): canon-collapse pass not light additive; owner\u2192consumer\u2192mirrors order; Section15 remains verification-only unless upstream reveals stale references needing edits",
+          "line_in_shard": 1,
+          "line_in_source": 17201
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Transfer-Fidelity + Buildability Audit - 2026-04-06",
+          "line_in_shard": 6,
+          "line_in_source": 17206
+        },
+        {
+          "type": "data_shape",
+          "text": "Transfer-fidelity audit goal: separate ledger-to-plan transfer misses from broader plan quality; audit-only (no planning doc edits); evidence: 34 subauditor reports + spot checks + owner reads; lenses: UX/flow, state/storage/commands/audit, tools/permissions/identity, cross-doc consistency/precedence/routing ownership",
+          "line_in_shard": 9,
+          "line_in_source": 17209
+        },
+        {
+          "type": "data_shape",
+          "text": "Raw themes deduped into recurring clusters: export taxonomy/manifest; settings/requested-vs-effective/identity display; project-summary/escalation/blocked-owner/resurfacing; projection-trust UI/gating/fallback; governance record schemas/envelopes; lane/worktree lifecycle/cleanup; route/open-subject/bridge-field refinement; glossary/help terminology collapse",
+          "line_in_shard": 21,
+          "line_in_source": 17221
+        },
+        {
+          "type": "process_defect",
+          "text": "Recurring drift patterns: refinement layer omitted after base primitive; owner updated but consumers not canon-collapsed; storage keys without field schema; UI docs missing operational policy layer; cross-doc primitives not machine-verifiable owners",
+          "line_in_shard": 34,
+          "line_in_source": 17234
+        },
+        {
+          "type": "data_shape",
+          "text": "Cluster A transfer misses (Orchestrator UI/progress/notification/projection): Widget_System Progress-only scope landed but Progress widget catalog + deterministic drill-target mapping not transferred; Orchestrator_Page missing blocked-owner taxonomy, resurfacing/aging, concern action policy, projection fallback ladder, saved-view/sort-defaults, historical mode, search scope/switch disclosure, dense-tab scale; FinalGUISpec missing escalation ladder semantics, notification narrowing, project-card blocked-owner/primary-reason/pressure-summary, settings display grammar, help structure, action-surface/shortcut/context-menu policy",
+          "line_in_shard": 45,
+          "line_in_source": 17245
+        },
+        {
+          "type": "data_shape",
+          "text": "Cluster B transfer misses (storage/governance records): storage-plan missing field schemas for project_summary.v1, project_attention_item.v1, account_pressure_episode.v1, account_switch_event.v1, broader governance/runtime envelope families; bridge fields exist but precedence/join + compatibility fallbacks under-specified; Runtime_Artifacts_Panel envelope fields landed but per-family behavior + bridge governance not fully transferred",
+          "line_in_shard": 53,
+          "line_in_source": 17253
+        },
+        {
+          "type": "data_shape",
+          "text": "Cluster C transfer misses (identity/attribution): Prompt_Pipeline missing unified execution-role + operational/account identity layer; Contracts_V0 missing execution_role in attempt/runtime families + incomplete blocked-family/ref-family separation; Tools tool.invoked analytics-thin vs richer attribution packet; GitHub_API_Auth_and_Flows login-keyed vs stably account-keyed; orchestrator-subagent-integration preserves TierContext-era live canon vs execution_unit_context direction",
+          "line_in_shard": 61,
+          "line_in_source": 17261
+        },
+        {
+          "type": "data_shape",
+          "text": "Cluster D transfer misses (route/open/bridge): Contracts_V0 missing selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, concrete route examples, resume_url serialization classes; UI_Command_Catalog missing per-command command_kind/normalization metadata + canonicalized navigation-family treatment; FileManager OpenSubject partial on runtime-lineage families; Wiring_Matrix/Progression_Gates/evidence.schema.json route-aware extensions incomplete; chain-wizard-flexibility/FinalGUISpec still treat resume_url as primary routing vs derived transport in places",
+          "line_in_shard": 72,
+          "line_in_source": 17272
+        },
+        {
+          "type": "data_shape",
+          "text": "Cluster E transfer misses (lifecycle/glossary/help): WorktreeGitImprovement missing full lane/worktree lifecycle vocab, cleanup semantics, gating, transitions; Glossary orchestrator rewrite terms empty vs ledger transfer; FinalGUISpec/glossary/help missing help-entry template, related-concept linking, high-risk term-pair distinction rules",
+          "line_in_shard": 90,
+          "line_in_source": 17290
+        },
+        {
+          "type": "process_defect",
+          "text": "Cluster F same-file supersession failures: human-in-the-loop mixed request/tier-era with newer blocked-runtime; usage-feature older tier-era correlation coexists with corrective text; Contracts_V0/storage-plan/FinalGUISpec/UI_Command_Catalog show mixed-era layering without retiring older framing",
+          "line_in_shard": 98,
+          "line_in_source": 17298
+        },
+        {
+          "type": "process_defect",
+          "text": "Additional buildability gaps: prose-only primitive boundaries; evidence/gates cannot structurally prove richer routing; docs imply stronger shared contract than owned \u2014 secondary behind missed-transfer clusters",
+          "line_in_shard": 106,
+          "line_in_source": 17306
+        },
+        {
+          "type": "contradiction",
+          "text": "False-positive exclusions (not missing transfer): route_target/OpenSubject/command_kind/normalizes_to_contract/target_kind/object_kind/inspector_target already in Contracts_V0; requested_account_id/requested_account_binding/operational_identity not wholly absent; account pressure/switch families exist \u2014 missing schema/detail layer; projection_freshness/health exist \u2014 missing operational trust UI layer. Focus refinements not re-claim total absence.",
+          "line_in_shard": 113,
+          "line_in_source": 17313
+        },
+        {
+          "type": "doc_hint",
+          "text": "Transfer audit owner order hint: primary Contracts_V0, storage-plan, Prompt_Pipeline, Orchestrator_Page, FinalGUISpec, UI_Command_Catalog, Glossary, WorktreeGitImprovement; consumers human-in-the-loop, usage-feature, FileManager, orchestrator-subagent-integration, Runtime_Artifacts_Panel, chain-wizard-flexibility, assistant-chat-design; mirrors downstream",
+          "line_in_shard": 121,
+          "line_in_source": 17321
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Reconciliation direction: owner contracts/schemas first; collapse same-file mixed-era in primary consumers; route/blocked/attribution end-to-end across owner+consumer; mirrors/checklists after stable canon",
+          "line_in_shard": 141,
+          "line_in_source": 17341
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget implementation risks: missing field schemas \u2192 incompatible shapes; mixed canon \u2192 contradictory behavior by section; missing route/ref boundaries \u2192 shadow routing; missing blocked/escalation/resurfacing \u2192 inconsistent UX/persistence; missing cleanup rules \u2192 destructive ambiguity",
+          "line_in_shard": 147,
+          "line_in_source": 17347
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Chunked Transfer-Fidelity Recheck - 2026-04-06",
+          "line_in_shard": 154,
+          "line_in_source": 17354
+        },
+        {
+          "type": "data_shape",
+          "text": "Chunked rerun method: 13 smaller baseline + 13 Opus 4.6 subauditors on narrow seams; stricter retries; audit-only (no planning edits). Did not overturn partial-transfer diagnosis; added line-grounded precision.",
+          "line_in_shard": 157,
+          "line_in_source": 17357
+        },
+        {
+          "type": "data_shape",
+          "text": "Sharpened misses: Orchestrator_Page/Widget_System \u2014 13-widget Progress catalog effectively absent as named catalog; default drill-target mappings absent; Orchestrator_Page/FinalGUISpec/Glossary \u2014 state/action label set, alert-level taxonomy, event-family taxonomy, backbone events, condition-aging policy largely untransferred",
+          "line_in_shard": 173,
+          "line_in_source": 17373
+        },
+        {
+          "type": "data_shape",
+          "text": "Sharpened historical mode/search/trust: focus_mode live|historical; orchestrator.project_state persistence; page-wide focused_run_id coherence; historical Progress behavior; default search scope focused run with widening + disclosure; global vs local Orchestrator search; fallback hierarchy to History/Ledger under projection degradation",
+          "line_in_shard": 180,
+          "line_in_source": 17380
+        },
+        {
+          "type": "data_shape",
+          "text": "Concern/governance record gap sharpened: concern canonical fields, non-weak categories, resolution_kind, concern owner-kind enum, review/corroboration/graph-patch/promotion/recovery shapes, state transition report family, 4-level confirmation taxonomy",
+          "line_in_shard": 191,
+          "line_in_source": 17391
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0088",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0088.md",
+      "line_start_in_source": 17401,
+      "line_end_in_source": 17600,
+      "source_sha256": "17e8c1fe4d0c9b3a4fa363b3506afd625f73c51bc05efcdd727e31a26ce968dd",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "Chunked rerun continuation: 3-level reversibility taxonomy; action-family\u2192confirmation mapping; orchestration undo/compensating-action label policy (underspecified in owners)",
+          "line_in_shard": 1,
+          "line_in_source": 17401
+        },
+        {
+          "type": "data_shape",
+          "text": "Export/settings/persona gaps: three-way export taxonomy record/bundle/view; shared Orchestrator export manifest; export-family distinctions; three-axis settings model source/request/execution; display grammar (Inherited/Overridden/Requested/Effective/Reason/Support); source-layer enumeration; worker-policy display; Orchestrator actor/operation resolver inputs; deterministic resolver matrix; actor\u2192persona defaults; resolver emit shape (ranked candidates, winner, fallback reason)",
+          "line_in_shard": 5,
+          "line_in_source": 17405
+        },
+        {
+          "type": "data_shape",
+          "text": "Help/project-status/escalation gaps: three-part help architecture; help-entry template; related-concept clusters; project activity_state and attention_state enums; blocked-owner 8-kind taxonomy; primary attention reason; pressure-summary; 5-level escalation ladder; surface ladder mapping; resurfacing/aging rules; persistent-blocker UI semantics",
+          "line_in_shard": 19,
+          "line_in_source": 17419
+        },
+        {
+          "type": "data_shape",
+          "text": "Route/bridge/normalization sharpened: bridge-field precedence missing in Contracts_V0; timestamp/run/thread fallback not marked compatibility-only; storage-plan lacks practical join attempt\u2192provider\u2192usage\u2192receipt; Crosswalk missing Primitive:RouteTarget/OpenSubject in index; Wiring_Matrix cannot express wrapper/canonical normalization structurally; GATE-010 text improved but evidence schema/matrix lags; Contracts_V0 missing late refinement layer; resume_url demotion exists but stale consumers still treat as primary behavioral field",
+          "line_in_shard": 35,
+          "line_in_source": 17435
+        },
+        {
+          "type": "data_shape",
+          "text": "Identity/attribution/blocked-policy misses: execution_role absent in many docs; requested_account_id absent where expected; operational_identity partial; account switch/pressure named but under-owned at contract; blocked_sequence minting ownership missing; startup recovery handshake incomplete; DAE jail/approval gaps; usage lacks switch-history/execution-role follow-through",
+          "line_in_shard": 47,
+          "line_in_source": 17447
+        },
+        {
+          "type": "contradiction",
+          "text": "Chunked recheck preserves exclusions: core primitives landed; projection_freshness/health exist; account families exist \u2014 missing operationalization/schema ownership; Opus refinement: missing layer is operationalization of trust states not inventing base model",
+          "line_in_shard": 59,
+          "line_in_source": 17459
+        },
+        {
+          "type": "process_defect",
+          "text": "Net rerun result: more concrete misses in widget/event/alert detail, historical/search state, concern/governance schemas, settings/help/project-status structures, route primitive indexing/bridge precedence/gate follow-through, blocked-sequence/startup-recovery/DAE ownership \u2014 central conclusion unchanged: ledger transferred only partially; gaps concentrated in schemas/enums/operational policies/routing refinements/same-file collapse",
+          "line_in_shard": 67,
+          "line_in_source": 17467
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Post-rerun posture: proceed as canon-collapse + owner-schema completion not generic polish; owner-doc-first order list: Contracts_V0, storage-plan, Prompt_Pipeline, Orchestrator_Page, FinalGUISpec, UI_Command_Catalog, Glossary, WorktreeGitImprovement \u2014 then consumer cleanup and supersession collapse",
+          "line_in_shard": 84,
+          "line_in_source": 17484
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Audit Pass 2026-04-16T01:28:16Z",
+          "line_in_shard": 97,
+          "line_in_source": 17497
+        },
+        {
+          "type": "data_shape",
+          "text": "2026-04-16 audit scope: confirm highest-pressure docs match blocker inventory; capture stale survivors/false cognates. Live confirmations: assistant-chat-design ~1775-1784 stale self-verdict 'fully fleshed out' / 'No remaining gaps' conflicts FIDELITY-049..053 \u2014 treat as contradictory survivor; FinalGUISpec ~2092 restore-point cross-ref via newfeatures vs ~2737-2739 safe points not user restore points \u2014 false cognate survivor; storage-plan ~879-910 partial bridge/activity transfer (provider_attempt_ref, usage_event_ref, detail_ref, report_ref) \u2014 treat as under-transfer not total absence",
+          "line_in_shard": 98,
+          "line_in_source": 17498
+        },
+        {
+          "type": "requirement",
+          "text": "Audit hand-off: blocker inventory remains open; next stage condensation vs broad sweep",
+          "line_in_shard": 112,
+          "line_in_source": 17512
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Entry \u2014 Ready Check decision (2026-04-16T02:02:50Z): work item bundle rewritten to v2 artifacts; mutation planning still blocked with eight material blocker families",
+          "line_in_shard": 116,
+          "line_in_source": 17516
+        },
+        {
+          "type": "data_shape",
+          "text": "v2 meta migration: pm.work_item_meta.v2; current_state.md, canon_inventory.json, open_gaps.json v2 shapes; next_required_stage Audit Mode; stale survivors include TierContext, tier_id, detached_window, result_id, artifact_kind, task_id, {tool_name, invocation_summary, options}, 'No remaining gaps', restore points",
+          "line_in_shard": 121,
+          "line_in_source": 17521
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Entry \u2014 Audit Mode contract (2026-04-16T02:09:06Z): live doc chunk audit \u2014 blockers real but often overstated as total absence; failures are partial-transfer, structural-heading, stale-survivor defects",
+          "line_in_shard": 141,
+          "line_in_source": 17541
+        },
+        {
+          "type": "data_shape",
+          "text": "Audit Mode exact items snapshot: UI_Command_Catalog has normalization owner block but cmd.search.open_result/replace_selected still use result_id; orchestrator-subagent has execution_unit_context block but TierContext/tier_id residue; Executor_Protocol strong execution_unit_context block but Contracts_V0 lacks exact '### 5.1B Persona/Runtime Snapshot Payload Contract' heading; Contracts_V0 still has forbidden detached_window in closed target_kind enum; storage-plan has artifacts_index, provider_attempt_ref, usage_event_ref, workflow_run_id, validation lineage; human-in-the-loop has blocked_sequence and approval_scope_key; Glossary/Orchestrator_Page have label/behavior blocks but lack required discoverable owner headings in audited clusters",
+          "line_in_shard": 146,
+          "line_in_source": 17546
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Entry \u2014 Audit Mode contract (2026-04-16T02:29:10Z): narrowed unresolved set \u2014 live docs carry more receipt/glossary/account-history canon than compact gap bundle claimed",
+          "line_in_shard": 189,
+          "line_in_source": 17589
+        },
+        {
+          "type": "data_shape",
+          "text": "Narrowing examples: storage-plan already includes workflow_refs/docker_refs/kubernetes_refs, provider_attempt_ref, usage_event_ref, workflow_run_id, validation lineage, account_pressure_episode, account_switch_event, projection_freshness/health, requested/effective_account_id, execution_role, account_switch_reason; FinalGUISpec already includes account pressure/switch episodes and projection freshness/health; interview-subagent-integration has requested/effective visibility and operational_identity; gap-004 narrows to missing Cross-surface receipt record anchor + fields run_id/pass_verdict/phase_plan_ref/requirements_quality_report_ref + consumer anchors; gap-006 narrows to missing owner headings/help-entry rows not missing labels; gap-005 narrows to blocked-packet carry-through, escalation semantics, composite ask tuple, stale assistant-chat verdict",
+          "line_in_shard": 194,
+          "line_in_source": 17594
+        }
+      ]
+    }
+  ]
+}

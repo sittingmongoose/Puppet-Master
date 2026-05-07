@@ -1,93 +1,401 @@
 {
-  "schema_id": "pm.a2.artifact_sanitizer_report.v3.1.12",
+  "schema_id": "pm.artifact_sanitizer_report.v3.1.14",
   "prompt_id": "A2",
-  "prompt_version": "pm.a2.v3.1.12",
+  "prompt_version": "pm.a2.v3.1.14",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260506T182414Z",
   "execution_type": "mechanical_tool_operation",
-  "run_mode": "fresh_restart",
-  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
-  "subagents_required": false,
-  "subagents_used": false,
-  "preserved_at_work_item_root": [
-    "meta.json",
-    "current_state.md",
+  "timestamp_utc": "20260507T150603Z",
+  "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260507T150603Z",
+  "archived_items_total": 61,
+  "archived_items": [
+    {
+      "name": "artifact_sanitizer_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/artifact_sanitizer_report.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "canonical_obligations.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/canonical_obligations.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "canonical_obligations_source_gate_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/canonical_obligations_source_gate_report.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "coverage_classifications",
+      "kind": "directory",
+      "archive_relpath": "archive/20260507T150603Z/coverage_classifications",
+      "rule": "named_stale_directory"
+    },
+    {
+      "name": "coverage_worklist.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/coverage_worklist.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "doc_discovery_exhaustion_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/doc_discovery_exhaustion_report.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "doc_discovery_resolution.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/doc_discovery_resolution.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "ledger_condenser_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/ledger_condenser_report.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "ledger_intake_manifest.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/ledger_intake_manifest.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "ledger_obligation_seed.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/ledger_obligation_seed.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "ledger_seed_completeness_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/ledger_seed_completeness_report.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "ledger_shard_indexer.fanout_worklist.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/ledger_shard_indexer.fanout_worklist.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "ledger_shard_indexer.wave-01.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/ledger_shard_indexer.wave-01.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "ledger_shards",
+      "kind": "directory",
+      "archive_relpath": "archive/20260507T150603Z/ledger_shards",
+      "rule": "named_stale_directory"
+    },
+    {
+      "name": "obligation_groups",
+      "kind": "directory",
+      "archive_relpath": "archive/20260507T150603Z/obligation_groups",
+      "rule": "named_stale_directory"
+    },
+    {
+      "name": "obligation_worklist.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/obligation_worklist.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "open_gaps.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/open_gaps.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "open_gaps_classifications",
+      "kind": "directory",
+      "archive_relpath": "archive/20260507T150603Z/open_gaps_classifications",
+      "rule": "named_stale_directory"
+    },
+    {
+      "name": "open_gaps_reducer_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/open_gaps_reducer_report.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "open_gaps_worklist.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/open_gaps_worklist.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "route_state.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/route_state.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "section_entry_B_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_entry_B_report.json",
+      "rule": "glob:section_entry_*.json"
+    },
+    {
+      "name": "section_entry_C_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_entry_C_report.json",
+      "rule": "glob:section_entry_*.json"
+    },
+    {
+      "name": "section_entry_D_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_entry_D_report.json",
+      "rule": "glob:section_entry_*.json"
+    },
+    {
+      "name": "section_entry_E_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_entry_E_report.json",
+      "rule": "glob:section_entry_*.json"
+    },
+    {
+      "name": "section_entry_F_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_entry_F_report.json",
+      "rule": "glob:section_entry_*.json"
+    },
+    {
+      "name": "section_exit_A.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_exit_A.json",
+      "rule": "glob:section_exit_*.json"
+    },
+    {
+      "name": "section_exit_B.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_exit_B.json",
+      "rule": "glob:section_exit_*.json"
+    },
+    {
+      "name": "section_exit_C.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_exit_C.json",
+      "rule": "glob:section_exit_*.json"
+    },
+    {
+      "name": "section_exit_D.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_exit_D.json",
+      "rule": "glob:section_exit_*.json"
+    },
+    {
+      "name": "section_exit_E.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/section_exit_E.json",
+      "rule": "glob:section_exit_*.json"
+    },
+    {
+      "name": "seed_groups",
+      "kind": "directory",
+      "archive_relpath": "archive/20260507T150603Z/seed_groups",
+      "rule": "named_stale_directory"
+    },
+    {
+      "name": "stage_report.A2.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.A2.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.A3.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.A3.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.A4.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.A4.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.B0.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.B0.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.B4.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.B4.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.C0.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.C0.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.C1.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.C1.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.C2.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.C2.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.C3.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.C3.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.C4.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.C4.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.C5.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.C5.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.D0.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.D0.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.D1.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.D1.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.D2.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.D2.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.D3.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.D3.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.D4.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.D4.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.E0.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.E0.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.E1.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.E1.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.E2.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.E2.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.E3.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.E3.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.E4.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.E4.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.F0.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.F0.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.F1.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.F1.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.F2.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.F2.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.F3.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.F3.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.F4.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.F4.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "stage_report.F5.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/stage_report.F5.json",
+      "rule": "glob:stage_report.*.json"
+    },
+    {
+      "name": "transfer_coverage.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/transfer_coverage.json",
+      "rule": "named_stale_artifact"
+    },
+    {
+      "name": "transfer_coverage_source_gate_report.json",
+      "kind": "file",
+      "archive_relpath": "archive/20260507T150603Z/transfer_coverage_source_gate_report.json",
+      "rule": "named_stale_artifact"
+    }
+  ],
+  "preserved_inputs": [
     "working_ledger.md",
     "active/",
     "archive/",
-    "legacy_quarantine/"
+    ".pipeline/",
+    "legacy_quarantine/",
+    "meta.json",
+    "current_state.md"
   ],
-  "preserved_inputs_notes": [
-    "user-provided material at work item root: working_ledger.md only (explicitly preserved)",
-    "live Plans/** docs untouched (outside work item paths)"
-  ],
-  "archived_files_count": 53,
-  "archival_breakdown_counts": {
-    "files_directly_under_archive_timestamp": 0,
-    "files_under_archived_ledger_shards": 35,
-    "note": "Breakdown is informational; archived_files_count is the authoritative recursive file total under the archive timestamp."
-  },
-  "archived_directories_moved": [
-    "ledger_shards/"
-  ],
-  "archived_relative_paths": [
-    "archive/20260506T182414Z/artifact_sanitizer_report.json",
-    "archive/20260506T182414Z/ledger_condenser_report.json",
-    "archive/20260506T182414Z/ledger_intake_manifest.json",
-    "archive/20260506T182414Z/ledger_shard_indexer.fanout_worklist.json",
-    "archive/20260506T182414Z/ledger_shard_indexer.wave-01.json",
-    "archive/20260506T182414Z/ledger_shards/shard-001.md",
-    "archive/20260506T182414Z/ledger_shards/shard-002.md",
-    "archive/20260506T182414Z/ledger_shards/shard-003.md",
-    "archive/20260506T182414Z/ledger_shards/shard-004.md",
-    "archive/20260506T182414Z/ledger_shards/shard-005.md",
-    "archive/20260506T182414Z/ledger_shards/shard-006.md",
-    "archive/20260506T182414Z/ledger_shards/shard-007.md",
-    "archive/20260506T182414Z/ledger_shards/shard-008.md",
-    "archive/20260506T182414Z/ledger_shards/shard-009.md",
-    "archive/20260506T182414Z/ledger_shards/shard-010.md",
-    "archive/20260506T182414Z/ledger_shards/shard-011.md",
-    "archive/20260506T182414Z/ledger_shards/shard-012.md",
-    "archive/20260506T182414Z/ledger_shards/shard-013.md",
-    "archive/20260506T182414Z/ledger_shards/shard-014.md",
-    "archive/20260506T182414Z/ledger_shards/shard-015.md",
-    "archive/20260506T182414Z/ledger_shards/shard-016.md",
-    "archive/20260506T182414Z/ledger_shards/shard-017.md",
-    "archive/20260506T182414Z/ledger_shards/shard-018.md",
-    "archive/20260506T182414Z/ledger_shards/shard-019.md",
-    "archive/20260506T182414Z/ledger_shards/shard-020.md",
-    "archive/20260506T182414Z/ledger_shards/shard-021.md",
-    "archive/20260506T182414Z/ledger_shards/shard-022.md",
-    "archive/20260506T182414Z/ledger_shards/shard-023.md",
-    "archive/20260506T182414Z/ledger_shards/shard-024.md",
-    "archive/20260506T182414Z/ledger_shards/shard-025.md",
-    "archive/20260506T182414Z/ledger_shards/shard-027.md",
-    "archive/20260506T182414Z/ledger_shards/shard-028.md",
-    "archive/20260506T182414Z/ledger_shards/shard-029.md",
-    "archive/20260506T182414Z/ledger_shards/shard-029.meta.jsonl",
-    "archive/20260506T182414Z/ledger_shards/shard-030.md",
-    "archive/20260506T182414Z/ledger_shards/shard-031.md",
-    "archive/20260506T182414Z/ledger_shards/shard-032.md",
-    "archive/20260506T182414Z/ledger_shards/shard-033.md",
-    "archive/20260506T182414Z/ledger_shards/shard-035.md",
-    "archive/20260506T182414Z/ledger_shards/shard-037.md",
-    "archive/20260506T182414Z/route_state.json",
-    "archive/20260506T182414Z/section_entry_B_report.json",
-    "archive/20260506T182414Z/section_entry_C_report.json",
-    "archive/20260506T182414Z/section_exit_A.json",
-    "archive/20260506T182414Z/section_exit_B.json",
-    "archive/20260506T182414Z/stage_report.A2.json",
-    "archive/20260506T182414Z/stage_report.A3.json",
-    "archive/20260506T182414Z/stage_report.A4.json",
-    "archive/20260506T182414Z/stage_report.B0.json",
-    "archive/20260506T182414Z/stage_report.B4.json",
-    "archive/20260506T182414Z/stage_report.C0.json",
-    "archive/20260506T182414Z/stage_report.C1.json",
-    "archive/20260506T182414Z/stage_report.C3.json"
-  ],
-  "archived_from_active_count": 0,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "deterministic_verification": {
-    "method": "filesystem mv into archive/<timestamp>; find -type f count; path enumeration via pathlib.rglob",
-    "semantic_artifacts_inspected_for_meaning": false
+    "method": "rule-based filename/directory archive move",
+    "semantic_artifacts_inspected": false,
+    "unmatched_top_level_entries_left_in_place": [
+      ".pipeline",
+      "active",
+      "archive",
+      "current_state.md",
+      "legacy_quarantine",
+      "meta.json",
+      "working_ledger.md"
+    ]
   }
 }

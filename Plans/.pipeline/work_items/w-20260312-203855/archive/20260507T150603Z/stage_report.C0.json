@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.stage_report.v3.1.12",
+  "prompt_id": "C0",
+  "prompt_version": "pm.c0.v3.1.12",
+  "timestamp_utc": "20260506T182824Z",
+  "work_id": "w-20260312-203855",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "execution_type_rationale": "Derived work_id from section_exit_B.json; verified ledger_intake_manifest.json exists and lists accepted sources; existence and non-empty proof for working_ledger.md via wc only (no full semantic read).",
+  "deterministic_verification": {
+    "commands_run": [
+      "test -f Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "wc -l -c Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+    ],
+    "inputs_read": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json"
+    ],
+    "working_ledger_line_count": 18244,
+    "working_ledger_byte_count": 1044305,
+    "paths_checked_present": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+    ],
+    "outputs_written": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_entry_C_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C0.json"
+    ]
+  },
+  "subagents": {
+    "used": false,
+    "required_subagent_tasks_total": 0,
+    "distinct_subagent_invocations_total": 0,
+    "omnibus_invocation_detected": false,
+    "task_to_invocation_map": {}
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "fanout_proof": {
+    "wave_artifacts_total": 0,
+    "wave_artifacts_expected_min": 0,
+    "wave_artifact_paths": [],
+    "completed_task_ids_from_wave_artifacts": [],
+    "pending_task_ids_from_wave_artifacts": [],
+    "blocked_task_ids_from_wave_artifacts": [],
+    "subagent_invocation_ids_from_wave_artifacts": [],
+    "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+    "task_to_invocation_map": {},
+    "invocation_to_task_map": {},
+    "omnibus_invocation_detected": false,
+    "main_agent_bulk_output_detected": false
+  },
+  "section_C_entry": {
+    "source_mode": "existing_working_ledger",
+    "final_gate_passed": true
+  },
+  "summary": "Locked work_id w-20260312-203855 from section_exit_B.json; confirmed ledger_intake_manifest.json and non-empty working_ledger.md; Section C entry gate passed; wrote section_entry_C_report.json and stage_report.C0.json."
+}

@@ -1,0 +1,4457 @@
+{
+  "subagent_invocation_id": "c3-inv-012",
+  "subagent_task_id": "c3-task-012",
+  "work_id": "w-20260312-203855",
+  "batch_anchor_shard_id": "shard-0045",
+  "source_shard_ids": [
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0048"
+  ],
+  "working_line_ranges": [
+    {
+      "shard_id": "shard-0045",
+      "ledger_line_start": 8801,
+      "ledger_line_end": 9000
+    },
+    {
+      "shard_id": "shard-0046",
+      "ledger_line_start": 9001,
+      "ledger_line_end": 9200
+    },
+    {
+      "shard_id": "shard-0047",
+      "ledger_line_start": 9201,
+      "ledger_line_end": 9400
+    },
+    {
+      "shard_id": "shard-0048",
+      "ledger_line_start": 9401,
+      "ledger_line_end": 9600
+    }
+  ],
+  "per_shard": {
+    "shard-0045": {
+      "shard_id": "shard-0045",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0045.md",
+      "ledger_line_start": 8801,
+      "ledger_line_end": 9000,
+      "source_sha256": "af6e347be665d792008b75d645c443c9f7632b4408b7af91e6821e4454424610",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "- re-run after reject must resolve to canonical runtime action families like `restore_safe_point_then_retry`, `start_fresh_attempt`, `replan`, or `skip_node`",
+          "line_in_shard": 1,
+          "line_in_source": 8801
+        },
+        {
+          "type": "data_shape",
+          "text": "- deprecated `allowed_actions[]` is compatibility-only and MUST NOT appear in new canonical schemas",
+          "line_in_shard": 2,
+          "line_in_source": 8802
+        },
+        {
+          "type": "data_shape",
+          "text": "- `UI_Command_Catalog.md` aligns with the newer runtime model:",
+          "line_in_shard": 3,
+          "line_in_source": 8803
+        },
+        {
+          "type": "data_shape",
+          "text": "- canonical recovery maps from `allowed_action_ids[]` to `cmd.runtime.*`",
+          "line_in_shard": 4,
+          "line_in_source": 8804
+        },
+        {
+          "type": "data_shape",
+          "text": "- pre-attempt blocked episodes are keyed by `blocked_sequence`, not by fabricated `attempt_id`",
+          "line_in_shard": 5,
+          "line_in_source": 8805
+        },
+        {
+          "type": "data_shape",
+          "text": "- this is already closer to the rewrite direction than the old HITL request examples",
+          "line_in_shard": 6,
+          "line_in_source": 8806
+        },
+        {
+          "type": "data_shape",
+          "text": "- The missing structural piece is approval scope anchoring. Current docs still do not define one durable scope key that answers:",
+          "line_in_shard": 7,
+          "line_in_source": 8807
+        },
+        {
+          "type": "data_shape",
+          "text": "- what exact blocked episode is being approved",
+          "line_in_shard": 8,
+          "line_in_source": 8808
+        },
+        {
+          "type": "data_shape",
+          "text": "- which execution unit it belongs to",
+          "line_in_shard": 9,
+          "line_in_source": 8809
+        },
+        {
+          "type": "data_shape",
+          "text": "- whether the approval is specific to one blocked episode vs reusable session policy",
+          "line_in_shard": 10,
+          "line_in_source": 8810
+        },
+        {
+          "type": "data_shape",
+          "text": "- who approved or declined it",
+          "line_in_shard": 11,
+          "line_in_source": 8811
+        },
+        {
+          "type": "data_shape",
+          "text": "- Because the older HITL contract is tier-keyed, it is still vulnerable to the same stale-ownership problem as `TierContext`. Under the rewrite, approval must anchor to canonical execution-unit context first, with any tier/package/seam label only as secondary presentation metadata.",
+          "line_in_shard": 12,
+          "line_in_source": 8812
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 14,
+          "line_in_source": 8814
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 15,
+          "line_in_source": 8815
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 16,
+          "line_in_source": 8816
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 17,
+          "line_in_source": 8817
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 18,
+          "line_in_source": 8818
+        },
+        {
+          "type": "doc_hint",
+          "text": "- downstream consumers:",
+          "line_in_shard": 19,
+          "line_in_source": 8819
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 20,
+          "line_in_source": 8820
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 21,
+          "line_in_source": 8821
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Run_Graph_View.md`",
+          "line_in_shard": 22,
+          "line_in_source": 8822
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 24,
+          "line_in_source": 8824
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Contracts_V0.md` still publishes `HITLRequest` with legacy `allowed_actions[]` and `approve_continue`, while the later correction in `human-in-the-loop.md` says deprecated field names must not appear in new canonical schemas.",
+          "line_in_shard": 25,
+          "line_in_source": 8825
+        },
+        {
+          "type": "contradiction",
+          "text": "- `storage-plan.md` still registers HITL events as `request_id`, `run_id`, `tier_id`, `tier_type`, `request_kind`, `message`, `allowed_actions`, which is now behind the newer blocked-projection/action-family model.",
+          "line_in_shard": 26,
+          "line_in_source": 8826
+        },
+        {
+          "type": "contradiction",
+          "text": "- `UI_Command_Catalog.md` still has graph-local `cmd.graph.approve_hitl` / `cmd.graph.deny_hitl` entries even though the same file later establishes `cmd.runtime.*` as the canonical recovery namespace.",
+          "line_in_shard": 27,
+          "line_in_source": 8827
+        },
+        {
+          "type": "contradiction",
+          "text": "- No durable approver identity is defined on approval/rejection events yet.",
+          "line_in_shard": 28,
+          "line_in_source": 8828
+        },
+        {
+          "type": "contradiction",
+          "text": "- No explicit `approval_scope_key` or equivalent exists to separate:",
+          "line_in_shard": 29,
+          "line_in_source": 8829
+        },
+        {
+          "type": "contradiction",
+          "text": "- one blocked episode approval",
+          "line_in_shard": 30,
+          "line_in_source": 8830
+        },
+        {
+          "type": "contradiction",
+          "text": "- one node/attempt-specific approval",
+          "line_in_shard": 31,
+          "line_in_source": 8831
+        },
+        {
+          "type": "contradiction",
+          "text": "- one broader prerequisite/session policy choice",
+          "line_in_shard": 32,
+          "line_in_source": 8832
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 34,
+          "line_in_source": 8834
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Reconcile HITL so blocked/runtime semantics are canonical and tier-boundary examples become derived copy only.",
+          "line_in_shard": 35,
+          "line_in_source": 8835
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Move approval anchoring onto canonical runtime identity:",
+          "line_in_shard": 36,
+          "line_in_source": 8836
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `run_id`",
+          "line_in_shard": 37,
+          "line_in_source": 8837
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `node_id`",
+          "line_in_shard": 38,
+          "line_in_source": 8838
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `blocked_sequence`",
+          "line_in_shard": 39,
+          "line_in_source": 8839
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `attempt_id?`",
+          "line_in_shard": 40,
+          "line_in_source": 8840
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- plus execution-unit context refs where applicable",
+          "line_in_shard": 41,
+          "line_in_source": 8841
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add an explicit approval-scope field or object, likely something like `approval_scope_key`, so reusable approvals and one-off blocked-episode approvals cannot bleed together.",
+          "line_in_shard": 42,
+          "line_in_source": 8842
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add durable approver identity fields to approval/rejection records/events so audit/history can explain who approved or declined, not just that it happened.",
+          "line_in_shard": 43,
+          "line_in_source": 8843
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Deprecate graph-local HITL command IDs in favor of `cmd.runtime.*` mappings everywhere, with surface-specific labels only in copy.",
+          "line_in_shard": 44,
+          "line_in_source": 8844
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 46,
+          "line_in_source": 8846
+        },
+        {
+          "type": "requirement",
+          "text": "- the important split is blocked-episode approval versus session-wide policy; the docs still do not formalize that boundary",
+          "line_in_shard": 47,
+          "line_in_source": 8847
+        },
+        {
+          "type": "requirement",
+          "text": "- `approve_continue` is legacy vocabulary and should not survive as canonical runtime action naming",
+          "line_in_shard": 48,
+          "line_in_source": 8848
+        },
+        {
+          "type": "requirement",
+          "text": "- pre-attempt blocked episodes must not invent an `attempt_id`; `blocked_sequence` is already the cleaner anchor",
+          "line_in_shard": 49,
+          "line_in_source": 8849
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Sonnet downstream cohort synthesis",
+          "line_in_shard": 51,
+          "line_in_source": 8851
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 53,
+          "line_in_source": 8853
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 54,
+          "line_in_source": 8854
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 55,
+          "line_in_source": 8855
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 56,
+          "line_in_source": 8856
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 57,
+          "line_in_source": 8857
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 58,
+          "line_in_source": 8858
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Tools.md`",
+          "line_in_shard": 59,
+          "line_in_source": 8859
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Executor_Protocol.md`",
+          "line_in_shard": 60,
+          "line_in_source": 8860
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/orchestrator-subagent-integration.md`",
+          "line_in_shard": 61,
+          "line_in_source": 8861
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 62,
+          "line_in_source": 8862
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 63,
+          "line_in_source": 8863
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 64,
+          "line_in_source": 8864
+        },
+        {
+          "type": "doc_hint",
+          "text": "- current `working_ledger.md`",
+          "line_in_shard": 65,
+          "line_in_source": 8865
+        },
+        {
+          "type": "doc_hint",
+          "text": "- adjacent owner docs pulled by the Sonnet passes (`Contracts_V0.md`, `storage-plan.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `Multi-Account.md`, `Glossary.md`, `Orchestrator_Page.md`, `Run_Graph_View.md`)",
+          "line_in_shard": 66,
+          "line_in_source": 8866
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 68,
+          "line_in_source": 8868
+        },
+        {
+          "type": "data_shape",
+          "text": "- Sonnet materially deepened the downstream cohort rather than merely echoing the Opus pass.",
+          "line_in_shard": 69,
+          "line_in_source": 8869
+        },
+        {
+          "type": "process_defect",
+          "text": "- UI / projection / command contracts are still structurally incomplete:",
+          "line_in_shard": 70,
+          "line_in_source": 8870
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FinalGUISpec.md` still has no true Orchestrator page section, still leaves `Tiers` as a standalone run-group view, and still lacks any native concern-model, historical-run-mode, or Progress-only widget-boundary contract.",
+          "line_in_shard": 71,
+          "line_in_source": 8871
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FinalGUISpec.md` also sharpens the projection-state naming issue: generic “projection trust” language will collide with existing preview/browser `trust_tier`; the cleaner split remains `projection_freshness` vs `projection_health`.",
+          "line_in_shard": 72,
+          "line_in_source": 8872
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Runtime_Artifacts_Panel.md` now looks more fragile than earlier passes suggested: `attempt_id` is still absent from the canonical artifact ID set, producer identity is anonymous at the envelope boundary, `subagent_lineage` still has no minimum payload semantics, `cost_usage` drill-through still rests on optional `usage_event_ref`, and the artifacts panel still has no degraded/stale projection contract.",
+          "line_in_shard": 73,
+          "line_in_source": 8873
+        },
+        {
+          "type": "process_defect",
+          "text": "- `UI_Command_Catalog.md` still leaves the runtime command layer under-owned: deprecated graph recovery commands are still presented as live canon, HITL `approve_continue` still has no canonical `cmd.*` mapping, cross-surface pivot payloads still lack rewrite-era structural keys, and there are still no stable `cmd.account.*`, `cmd.concern.*`, or `cmd.promotion.*` families.",
+          "line_in_shard": 74,
+          "line_in_source": 8874
+        },
+        {
+          "type": "process_defect",
+          "text": "- Conversational / HITL / tooling contracts still break under shared-runtime and multi-lane execution:",
+          "line_in_shard": 75,
+          "line_in_source": 8875
+        },
+        {
+          "type": "process_defect",
+          "text": "- `assistant-chat-design.md` still promises requested/effective auth/account disclosure in its rewrite-alignment prose but fails to materialize it anywhere in its concrete surface sections.",
+          "line_in_shard": 76,
+          "line_in_source": 8876
+        },
+        {
+          "type": "process_defect",
+          "text": "- validation-pass and wizard-handoff payloads still omit `effective_account_id`, `requested_account`, `execution_role`, and permission posture even though those are now critical for reproducible downstream execution.",
+          "line_in_shard": 77,
+          "line_in_source": 8877
+        },
+        {
+          "type": "process_defect",
+          "text": "- `human-in-the-loop.md` remains tier-keyed at its canonical request/storage layer, still lacks node/package/lane/attempt anchors, still has no approver identity on durable HITL events, and still leaves session-scoped reject/always semantics lane-unsafe.",
+          "line_in_shard": 78,
+          "line_in_source": 8878
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Tools.md` still leaves tool events under-attributed (`node_id`, `attempt_id`, actor/account/role, lane context missing), keeps the normalized outcome taxonomy unwired to actual event fields, and still lacks any real DAE post-hoc tool-event contract.",
+          "line_in_shard": 79,
+          "line_in_source": 8879
+        },
+        {
+          "type": "data_shape",
+          "text": "- The execution-core and wizard/source-control documents continue to expose load-bearing rewrite drift:",
+          "line_in_shard": 80,
+          "line_in_source": 8880
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Executor_Protocol.md` still has a broken Glossary forward reference, an incomplete wake-reason set, no real `blocked_reason_code` table, no `blocked_sequence` integration, and no actor/lifecycle model for reviewer/corroboration flows.",
+          "line_in_shard": 81,
+          "line_in_source": 8881
+        },
+        {
+          "type": "process_defect",
+          "text": "- `orchestrator-subagent-integration.md` sharpens from “drift” to “implementation risk”: `TierContext` and `ActiveAgent` are concrete structs missing lane/package/seam/account/role identity, and `FindingCategory` cannot map cleanly into the emerging concern taxonomy.",
+          "line_in_shard": 82,
+          "line_in_source": 8882
+        },
+        {
+          "type": "process_defect",
+          "text": "- `interview-subagent-integration.md` still contradicts itself on `requested_persona_id` vs `requested_persona`, still omits account/role identity from provenance and blocked-handoff surfaces, and still maps interview phases through `tier_id`-shaped crew structs.",
+          "line_in_shard": 83,
+          "line_in_source": 8883
+        },
+        {
+          "type": "process_defect",
+          "text": "- `chain-wizard-flexibility.md` still leaves CUP without requested/effective runtime governance, still has no `wizard_id -> run_id` lineage bridge, and still carries the actively misleading “no change to tier/subtask execution” claim.",
+          "line_in_shard": 84,
+          "line_in_source": 8884
+        },
+        {
+          "type": "process_defect",
+          "text": "- `WorktreeGitImprovement.md` now has a specifically named failure mode: `extract_tier_id()` is a hidden migration tripwire that would silently drop lane/node-named worktrees during restart repopulation; the document still has no lane lifecycle model, no shared worktree projection object, and no account identity in Git/PR operation contexts.",
+          "line_in_shard": 85,
+          "line_in_source": 8885
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Highest-risk impacted docs",
+          "line_in_shard": 87,
+          "line_in_source": 8887
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 88,
+          "line_in_source": 8888
+        },
+        {
+          "type": "process_defect",
+          "text": "- still lacks true Orchestrator-page ownership, concern-model UI, historical-run-mode behavior, and stable projection-freshness/health language.",
+          "line_in_shard": 89,
+          "line_in_source": 8889
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 90,
+          "line_in_source": 8890
+        },
+        {
+          "type": "process_defect",
+          "text": "- still lacks attempt-level identity, producer attribution, trustworthy `cost_usage` linkage, and degraded/stale projector behavior.",
+          "line_in_shard": 91,
+          "line_in_source": 8891
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 92,
+          "line_in_source": 8892
+        },
+        {
+          "type": "process_defect",
+          "text": "- still lacks concrete auth/account/role disclosure and still leaves session approval and handoff scopes ambiguous.",
+          "line_in_shard": 93,
+          "line_in_source": 8893
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 94,
+          "line_in_source": 8894
+        },
+        {
+          "type": "process_defect",
+          "text": "- still lacks execution anchors, approver identity, concurrency-safe approval scope, and escalation behavior.",
+          "line_in_shard": 95,
+          "line_in_source": 8895
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 96,
+          "line_in_source": 8896
+        },
+        {
+          "type": "process_defect",
+          "text": "- still lacks canonical mappings/families for HITL, account management, concern flows, promotion flows, and freshness-gated mutation commands.",
+          "line_in_shard": 97,
+          "line_in_source": 8897
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/orchestrator-subagent-integration.md`",
+          "line_in_shard": 98,
+          "line_in_source": 8898
+        },
+        {
+          "type": "process_defect",
+          "text": "- still contains concrete runtime structs that cannot carry the rewrite’s full execution identity or concern model.",
+          "line_in_shard": 99,
+          "line_in_source": 8899
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 100,
+          "line_in_source": 8900
+        },
+        {
+          "type": "process_defect",
+          "text": "- still leaves wizard/runtime lineage and execution policy under-specified at the exact handoff boundary that now matters most.",
+          "line_in_shard": 101,
+          "line_in_source": 8901
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 102,
+          "line_in_source": 8902
+        },
+        {
+          "type": "process_defect",
+          "text": "- still treats tier identity as the filesystem and registry key, making lane-aware recovery and audit structurally unsafe.",
+          "line_in_shard": 103,
+          "line_in_source": 8903
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 105,
+          "line_in_source": 8905
+        },
+        {
+          "type": "contradiction",
+          "text": "- Several downstream docs now fail at the schema level, not only at the prose level:",
+          "line_in_shard": 106,
+          "line_in_source": 8906
+        },
+        {
+          "type": "contradiction",
+          "text": "- missing `attempt_id`, `blocked_sequence`, account identity, or execution-role fields mean later UI/runtime promises cannot be implemented faithfully from the current contracts.",
+          "line_in_shard": 107,
+          "line_in_source": 8907
+        },
+        {
+          "type": "contradiction",
+          "text": "- Conversational/HITL/tooling docs still overload “session” with incompatible scope meanings, which becomes a correctness bug under multi-lane and multi-actor execution.",
+          "line_in_shard": 108,
+          "line_in_source": 8908
+        },
+        {
+          "type": "contradiction",
+          "text": "- Artifact, tool, blocked, and handoff surfaces still cannot explain which effective account/actor produced or approved the action they represent.",
+          "line_in_shard": 109,
+          "line_in_source": 8909
+        },
+        {
+          "type": "contradiction",
+          "text": "- Execution-core docs still retain enough tier-rooted structs and enum sets that downstream consumers keep compensating locally instead of inheriting stable runtime truth.",
+          "line_in_shard": 110,
+          "line_in_source": 8910
+        },
+        {
+          "type": "contradiction",
+          "text": "- Source Control / worktree docs still describe boundary ownership in prose only; they still do not anchor one shared projection object or route payload that other surfaces can rely on.",
+          "line_in_shard": 111,
+          "line_in_source": 8911
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 113,
+          "line_in_source": 8913
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add a real Orchestrator section to `FinalGUISpec.md`, make Progress the only widget canvas, and bind all projection-state UX to `projection_freshness` + `projection_health` rather than overloaded trust language.",
+          "line_in_shard": 114,
+          "line_in_source": 8914
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Extend artifact/tool/HITL/blocked/handoff envelopes with the missing identity anchors: `attempt_id`, `node_id`, `lane_id`, `package_id`, `execution_role`, actor identity, account identity, and `blocked_sequence` where appropriate.",
+          "line_in_shard": 115,
+          "line_in_source": 8915
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Define canonical command families for account operations, concern operations, and promotion operations, and explicitly map HITL `allowed_action_ids` into stable `cmd.*` handlers.",
+          "line_in_shard": 116,
+          "line_in_source": 8916
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Introduce an Approval Scope Key so session approvals and rejects stop bleeding across unrelated concurrent lanes/actors.",
+          "line_in_shard": 117,
+          "line_in_source": 8917
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Consolidate execution-core protocol docs around node-native execution context, reviewer/corroboration/concern lifecycle hooks, and wake/block taxonomies that are complete enough to serve downstream consumers.",
+          "line_in_shard": 118,
+          "line_in_source": 8918
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add explicit wizard/runtime lineage and isolation policy fields so CUP, validation passes, wizard handoff, Orchestrator receipts, and Source Control all share one auditable chain.",
+          "line_in_shard": 119,
+          "line_in_source": 8919
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Replace tier-keyed worktree path and registry assumptions before lane-named worktrees exist, or restart recovery will silently lose state.",
+          "line_in_shard": 120,
+          "line_in_source": 8920
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 122,
+          "line_in_source": 8922
+        },
+        {
+          "type": "requirement",
+          "text": "- `extract_tier_id()` is now a named migration trap, not just a vocabulary issue.",
+          "line_in_shard": 123,
+          "line_in_source": 8923
+        },
+        {
+          "type": "requirement",
+          "text": "- `approve_continue` is still the most dangerous unmapped UI action in the downstream command layer.",
+          "line_in_shard": 124,
+          "line_in_source": 8924
+        },
+        {
+          "type": "requirement",
+          "text": "- `validation_pass_report` and wizard handoff still look “complete” until you ask which account/role actually executed them.",
+          "line_in_shard": 125,
+          "line_in_source": 8925
+        },
+        {
+          "type": "requirement",
+          "text": "- The missing `attempt_id` in artifact surfaces is now a cross-surface correctness bug, not merely a future enhancement.",
+          "line_in_shard": 126,
+          "line_in_source": 8926
+        },
+        {
+          "type": "requirement",
+          "text": "- Sonnet confirms the downstream cohort still contains enough high-signal drift that stopping at Opus+Sonnet would leave the user’s requested multi-model breadth visibly unfinished.",
+          "line_in_shard": 127,
+          "line_in_source": 8927
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - GPT-5.4 downstream cohort synthesis",
+          "line_in_shard": 129,
+          "line_in_source": 8929
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 131,
+          "line_in_source": 8931
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 132,
+          "line_in_source": 8932
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 133,
+          "line_in_source": 8933
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 134,
+          "line_in_source": 8934
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 135,
+          "line_in_source": 8935
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 136,
+          "line_in_source": 8936
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Tools.md`",
+          "line_in_shard": 137,
+          "line_in_source": 8937
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Executor_Protocol.md`",
+          "line_in_shard": 138,
+          "line_in_source": 8938
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/orchestrator-subagent-integration.md`",
+          "line_in_shard": 139,
+          "line_in_source": 8939
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 140,
+          "line_in_source": 8940
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 141,
+          "line_in_source": 8941
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 142,
+          "line_in_source": 8942
+        },
+        {
+          "type": "doc_hint",
+          "text": "- adjacent owner docs pulled for contradiction checks (`Contracts_V0.md`, `Prompt_Pipeline.md`, `storage-plan.md`, `Multi-Account.md`, `Orchestrator_Page.md`, `Run_Graph_View.md`, `UI_Wiring_Rules.md`, `Wiring_Matrix.schema.json`, `GitHub_Integration.md`, `GitHub_API_Auth_and_Flows.md`, `Project_Output_Artifacts.md`)",
+          "line_in_shard": 143,
+          "line_in_source": 8943
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 145,
+          "line_in_source": 8945
+        },
+        {
+          "type": "data_shape",
+          "text": "- GPT-5.4 sharpened several downstream issues from “drift” into concrete contract breaks.",
+          "line_in_shard": 146,
+          "line_in_source": 8946
+        },
+        {
+          "type": "process_defect",
+          "text": "- GUI / command / projection contracts still have live SSOT collisions:",
+          "line_in_shard": 147,
+          "line_in_source": 8947
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FinalGUISpec.md` still has no true Orchestrator-page owner section, still leaves Dashboard/Orchestrator operational surfaces identity-thin, still conflicts with `UI_Command_Catalog.md` on slash-command canon, and still mixes `restore point` language with runtime safe-point recovery.",
+          "line_in_shard": 148,
+          "line_in_source": 8948
+        },
+        {
+          "type": "process_defect",
+          "text": "- `UI_Command_Catalog.md` is now directly self-contradictory: it still presents graph-local HITL mutators as canon while later insisting all blocked-state recovery buttons across graph/chat/GUI must map to `cmd.runtime.*`.",
+          "line_in_shard": 149,
+          "line_in_source": 8949
+        },
+        {
+          "type": "process_defect",
+          "text": "- account/auth controls, concern actions, and promotion actions still have no canonical command-family owner, and command/wiring schemas still cannot encode projection-freshness/health gating for mutating actions.",
+          "line_in_shard": 150,
+          "line_in_source": 8950
+        },
+        {
+          "type": "process_defect",
+          "text": "- Artifact / HITL / tool surfaces still fail at the keying and persistence layer:",
+          "line_in_shard": 151,
+          "line_in_source": 8951
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Runtime_Artifacts_Panel.md` now has a stronger failure: it mandates a concrete envelope + 19 per-type JSON schema files that do not exist, making its validation contract unimplementable as written.",
+          "line_in_shard": 152,
+          "line_in_source": 8952
+        },
+        {
+          "type": "process_defect",
+          "text": "- artifact identity still cannot satisfy adjacent attempt-native receipt/evidence pivots because the common ID set still omits `attempt_id`.",
+          "line_in_shard": 153,
+          "line_in_source": 8953
+        },
+        {
+          "type": "process_defect",
+          "text": "- `human-in-the-loop.md` now exposes a three-way approval-identity split: `request_id` for HITL replay, `blocked_sequence` for runtime recovery commands, and vague `session` scoping for permission propagation.",
+          "line_in_shard": 154,
+          "line_in_source": 8954
+        },
+        {
+          "type": "process_defect",
+          "text": "- restart persistence for HITL is still effectively run-scoped (`checkpoints.hitl.{run_id}`), which is unsafe once multiple concurrent approval episodes exist in one run.",
+          "line_in_shard": 155,
+          "line_in_source": 8955
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Tools.md` still splits its own minimum payload contract from later blocked-runtime addenda, still has no legal durable contract for tool-level `pending-HITL`, and still lacks a real registry/tool-definition home for `mutation_capable`.",
+          "line_in_shard": 156,
+          "line_in_source": 8956
+        },
+        {
+          "type": "process_defect",
+          "text": "- Execution-core ownership gaps are now more specifically named:",
+          "line_in_shard": 157,
+          "line_in_source": 8957
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Executor_Protocol.md` still lacks `blocked_sequence` minting rules even though storage/contracts/UI all depend on it.",
+          "line_in_shard": 158,
+          "line_in_source": 8958
+        },
+        {
+          "type": "process_defect",
+          "text": "- the same doc still names `startup_recovered`, but no doc owns the full restart-recovery -> first `scheduler.pass` handoff.",
+          "line_in_shard": 159,
+          "line_in_source": 8959
+        },
+        {
+          "type": "process_defect",
+          "text": "- `execution_role` is now visibly required by multi-account routing policy, yet it is still absent from canonical effective-resolution/runtime snapshot families.",
+          "line_in_shard": 160,
+          "line_in_source": 8960
+        },
+        {
+          "type": "process_defect",
+          "text": "- `orchestrator-subagent-integration.md` is now sharper than earlier passes suggested: `TierContext` declares runtime identity fields that its own constructor never populates, while active coordination/hook structs remain fully tier-rooted and cannot be joined losslessly to attempt/worktree/permission/runtime records.",
+          "line_in_shard": 161,
+          "line_in_source": 8961
+        },
+        {
+          "type": "process_defect",
+          "text": "- Wizard / interview / Source Control lineage still has unclosed hard seams:",
+          "line_in_shard": 162,
+          "line_in_source": 8962
+        },
+        {
+          "type": "process_defect",
+          "text": "- `interview-subagent-integration.md` claims Prompt Pipeline alignment while truncating auth/account identity from its requested/effective contract, still writes blocked bundles as `attention_required` in earlier sections, and still splits interview execution identity between `tier_id = None` and synthetic `interview-phase-*` pseudo-tier ids.",
+          "line_in_shard": 163,
+          "line_in_source": 8963
+        },
+        {
+          "type": "process_defect",
+          "text": "- `chain-wizard-flexibility.md` still leaks orchestrator ownership into pre-run CUP/quality blocking, still omits hard lineage keys from the normalized downstream payload (`project_id`, thread/report identity), and still overstates Contribute(PR) as “no worktrees” rather than a stable-branch policy with isolated runtime execution underneath.",
+          "line_in_shard": 164,
+          "line_in_source": 8964
+        },
+        {
+          "type": "process_defect",
+          "text": "- `WorktreeGitImprovement.md` still lacks any durable worktree record/projection family, still splits restart authority between filesystem rediscovery and runtime lineage, still has no authority rule across commit author / push actor / PR API actor, and still conflicts with `GitHub_Integration.md` / `storage-plan.md` on the owning `base_branch` state key.",
+          "line_in_shard": 165,
+          "line_in_source": 8965
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Highest-risk impacted docs",
+          "line_in_shard": 167,
+          "line_in_source": 8967
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 168,
+          "line_in_source": 8968
+        },
+        {
+          "type": "process_defect",
+          "text": "- schema family absent, attempt identity incomplete, receipt/artifact drill contract still unimplementable.",
+          "line_in_shard": 169,
+          "line_in_source": 8969
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 170,
+          "line_in_source": 8970
+        },
+        {
+          "type": "process_defect",
+          "text": "- approval identity/keying split (`request_id` vs `blocked_sequence` vs session scope) is now a correctness bug for restart and concurrency.",
+          "line_in_shard": 171,
+          "line_in_source": 8971
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 172,
+          "line_in_source": 8972
+        },
+        {
+          "type": "process_defect",
+          "text": "- still internally split on blocked/HITL mutator ownership and still missing command families for account/concern/promotion flows.",
+          "line_in_shard": 173,
+          "line_in_source": 8973
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/orchestrator-subagent-integration.md`",
+          "line_in_shard": 174,
+          "line_in_source": 8974
+        },
+        {
+          "type": "process_defect",
+          "text": "- runtime identity looks declared but is not actually materialized by its own constructor/coordination path.",
+          "line_in_shard": 175,
+          "line_in_source": 8975
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/Executor_Protocol.md`",
+          "line_in_shard": 176,
+          "line_in_source": 8976
+        },
+        {
+          "type": "process_defect",
+          "text": "- still missing canonical ownership for `execution_role`, `blocked_sequence` minting, and startup-recovery scheduler handoff.",
+          "line_in_shard": 177,
+          "line_in_source": 8977
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 178,
+          "line_in_source": 8978
+        },
+        {
+          "type": "process_defect",
+          "text": "- still claims shared runtime alignment while dropping auth/account identity and reintroducing pseudo-tier execution keys.",
+          "line_in_shard": 179,
+          "line_in_source": 8979
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 180,
+          "line_in_source": 8980
+        },
+        {
+          "type": "process_defect",
+          "text": "- still leaves lineage/isolation payloads too thin at the last pre-run handoff boundary.",
+          "line_in_shard": 181,
+          "line_in_source": 8981
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 182,
+          "line_in_source": 8982
+        },
+        {
+          "type": "process_defect",
+          "text": "- still cannot support durable historical worktree lineage or multi-identity SCM audit without new record families.",
+          "line_in_shard": 183,
+          "line_in_source": 8983
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 185,
+          "line_in_source": 8985
+        },
+        {
+          "type": "contradiction",
+          "text": "- The same user action can still target three different approval identities depending on which doc you read.",
+          "line_in_shard": 186,
+          "line_in_source": 8986
+        },
+        {
+          "type": "contradiction",
+          "text": "- Several docs still claim to align with canonical runtime records while silently dropping auth/account/role fields that those records already own elsewhere.",
+          "line_in_shard": 187,
+          "line_in_source": 8987
+        },
+        {
+          "type": "contradiction",
+          "text": "- Command and wiring SSOTs still cannot express stale/degraded action preconditions, even though surface docs increasingly require them.",
+          "line_in_shard": 188,
+          "line_in_source": 8988
+        },
+        {
+          "type": "contradiction",
+          "text": "- Runtime-core docs still depend on tier-rooted live coordination objects while downstream recovery/history contracts have already moved to attempt-native keys.",
+          "line_in_shard": 189,
+          "line_in_source": 8989
+        },
+        {
+          "type": "contradiction",
+          "text": "- Source Control and worktree docs still lack one durable object family for worktree ownership, restart authority, and historical lineage preservation.",
+          "line_in_shard": 190,
+          "line_in_source": 8990
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 192,
+          "line_in_source": 8992
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Unify approval identity across HITL/chat/runtime recovery (`request_id`, `blocked_sequence`, approval scope) and make restart persistence episode-scoped rather than run-scoped.",
+          "line_in_shard": 193,
+          "line_in_source": 8993
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add the missing schema/record families that docs already require in practice: runtime-artifact schemas, durable worktree records/projections, and command families for account/concern/promotion actions.",
+          "line_in_shard": 194,
+          "line_in_source": 8994
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Extend canonical runtime snapshots with `execution_role` and carry that through Prompt Pipeline, Contracts, storage, wizard/interview, and UI owners.",
+          "line_in_shard": 195,
+          "line_in_source": 8995
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Rebase orchestrator live-context structs around node/attempt/worktree/permission-aware execution envelopes instead of tier-keyed adapters.",
+          "line_in_shard": 196,
+          "line_in_source": 8996
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Treat Contribute(PR) isolation as a policy about stable branch ownership, not as a promise that isolated worktrees never exist.",
+          "line_in_shard": 197,
+          "line_in_source": 8997
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Reconcile `base_branch` storage ownership before more Source Control/UI work lands on conflicting keys.",
+          "line_in_shard": 198,
+          "line_in_source": 8998
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 200,
+          "line_in_source": 9000
+        }
+      ]
+    },
+    "shard-0046": {
+      "shard_id": "shard-0046",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0046.md",
+      "ledger_line_start": 9001,
+      "ledger_line_end": 9200,
+      "source_sha256": "a489d9d71112ae3280ca1efb1c734e2fdd592c5c759ccd7e11a2a5318d008855",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "- The required runtime-artifact schema family is not merely incomplete; it is absent.",
+          "line_in_shard": 1,
+          "line_in_source": 9001
+        },
+        {
+          "type": "data_shape",
+          "text": "- `checkpoints.hitl.{run_id}` is too coarse once more than one approval can exist in the same run.",
+          "line_in_shard": 2,
+          "line_in_source": 9002
+        },
+        {
+          "type": "data_shape",
+          "text": "- `execution_role` is now an audit/routing requirement, not a nice-to-have display field.",
+          "line_in_shard": 3,
+          "line_in_source": 9003
+        },
+        {
+          "type": "data_shape",
+          "text": "- `project_id` and validation/report lineage are still missing from the wizard’s normalized handoff payload.",
+          "line_in_shard": 4,
+          "line_in_source": 9004
+        },
+        {
+          "type": "data_shape",
+          "text": "- Contribute(PR) still needs isolated runtime execution even if the user-facing PR branch stays singular.",
+          "line_in_shard": 5,
+          "line_in_source": 9005
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - GPT-5.2 downstream cohort synthesis",
+          "line_in_shard": 7,
+          "line_in_source": 9007
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 9,
+          "line_in_source": 9009
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 10,
+          "line_in_source": 9010
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 11,
+          "line_in_source": 9011
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 12,
+          "line_in_source": 9012
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 13,
+          "line_in_source": 9013
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 14,
+          "line_in_source": 9014
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Tools.md`",
+          "line_in_shard": 15,
+          "line_in_source": 9015
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Executor_Protocol.md`",
+          "line_in_shard": 16,
+          "line_in_source": 9016
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/orchestrator-subagent-integration.md`",
+          "line_in_shard": 17,
+          "line_in_source": 9017
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 18,
+          "line_in_source": 9018
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 19,
+          "line_in_source": 9019
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 20,
+          "line_in_source": 9020
+        },
+        {
+          "type": "doc_hint",
+          "text": "- adjacent owner docs pulled for contradiction checks (`Contracts_V0.md`, `storage-plan.md`, `Orchestrator_Page.md`, `Run_Graph_View.md`, `Widget_System.md`, `Project_Output_Artifacts.md`, `GitHub_Integration.md`, `Multi-Account.md`, `Permissions_System.md`)",
+          "line_in_shard": 21,
+          "line_in_source": 9021
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 23,
+          "line_in_source": 9023
+        },
+        {
+          "type": "process_defect",
+          "text": "- GPT-5.2 mostly confirmed and sharpened the downstream contradictions into exact field/key mismatches.",
+          "line_in_shard": 24,
+          "line_in_source": 9024
+        },
+        {
+          "type": "data_shape",
+          "text": "- GUI / command / page-ownership conflicts are now pinned to concrete IDs and examples:",
+          "line_in_shard": 25,
+          "line_in_source": 9025
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FinalGUISpec.md` still conflicts with Orchestrator-page canon by listing standalone `Tiers` / `Evidence` / `History` / `Ledger` views, and still hosts non-canonical `cmd.orchestrator.*` action IDs where `UI_Command_Catalog.md` defines different stable IDs.",
+          "line_in_shard": 26,
+          "line_in_source": 9026
+        },
+        {
+          "type": "process_defect",
+          "text": "- `UI_Command_Catalog.md` now has a concrete template-level contradiction: `Wiring_Matrix.md` references `cmd.orchestrator.switch_tab`, but the canonical command catalog does not define it.",
+          "line_in_shard": 27,
+          "line_in_source": 9027
+        },
+        {
+          "type": "process_defect",
+          "text": "- graph-local retry/HITL commands still cannot actually be thin aliases to runtime commands because they omit runtime-minimum anchors like `run_id`, `attempt_id`, and `blocked_sequence`.",
+          "line_in_shard": 28,
+          "line_in_source": 9028
+        },
+        {
+          "type": "process_defect",
+          "text": "- Artifact / HITL / tool surfaces still have direct schema and key mismatches:",
+          "line_in_shard": 29,
+          "line_in_source": 9029
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Runtime_Artifacts_Panel.md` still collides with `Contracts_V0.md` on what “envelope” means, still requires missing schema files, still omits `attempt_id` from the common identity set, and still does not pin whether artifact attribution comes from embedded runtime snapshots or mandatory attempt joins.",
+          "line_in_shard": 30,
+          "line_in_source": 9030
+        },
+        {
+          "type": "process_defect",
+          "text": "- `human-in-the-loop.md` now exposes a sharper self-contradiction: it deprecates `allowed_actions[]` in favor of `allowed_action_ids[]`, but `Contracts_V0.md` and `storage-plan.md` still publish `allowed_actions` in HITL-adjacent canonical shapes.",
+          "line_in_shard": 31,
+          "line_in_source": 9031
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Tools.md` now looks even more bifurcated: scheduler-impacting denials and pending approvals can only be modeled correctly if they map into canonical blocked episodes, not as a standalone minimal `tool.denied` payload.",
+          "line_in_shard": 32,
+          "line_in_source": 9032
+        },
+        {
+          "type": "process_defect",
+          "text": "- Execution-core seams are now pinned to specific missing mint/ownership rules:",
+          "line_in_shard": 33,
+          "line_in_source": 9033
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Executor_Protocol.md` still has duplicated scheduler sections, still leaves `blocked_sequence` minting rules unowned, and still leaves the startup-recovery -> first scheduler-pass handshake implicit even though the vocabulary (`startup_recovered`) now exists.",
+          "line_in_shard": 34,
+          "line_in_source": 9034
+        },
+        {
+          "type": "process_defect",
+          "text": "- `orchestrator-subagent-integration.md` still uses `TierContext` as a selection/decomposition context rather than a canonical execution identity, and still carries active-agent / hook / coordination records that cannot join to attempt-keyed runtime records.",
+          "line_in_shard": 35,
+          "line_in_source": 9035
+        },
+        {
+          "type": "process_defect",
+          "text": "- Wizard / interview / worktree lineage gaps continue to sharpen at the seams:",
+          "line_in_shard": 36,
+          "line_in_source": 9036
+        },
+        {
+          "type": "process_defect",
+          "text": "- `interview-subagent-integration.md` still contradicts itself on persona field names, still truncates auth/account identity from its shared-runtime contract, still writes “blocked bundle” language against `attention_required`, and still contains a likely routing bug (`interview-phase-phase-*`) inside its pseudo-tier message keys.",
+          "line_in_shard": 37,
+          "line_in_source": 9037
+        },
+        {
+          "type": "process_defect",
+          "text": "- `chain-wizard-flexibility.md` still leaves wizard normalized payloads too thin to satisfy adjacent contracts that already require `thread_id`, `project_id`, and validation lineage for reproducible pre-run quality governance.",
+          "line_in_shard": 38,
+          "line_in_source": 9038
+        },
+        {
+          "type": "process_defect",
+          "text": "- `WorktreeGitImprovement.md` now has a sharper ownership split: `worktree_id` is first-class in `storage-plan.md` and `GitHub_Integration.md`, while the worktree plan still centers `tier_id`/filesystem path; it also still splits `base_branch` ownership across run config vs Git panel state and still returns raw git-hook errors instead of canonical blocked episodes.",
+          "line_in_shard": 39,
+          "line_in_source": 9039
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Highest-risk impacted docs",
+          "line_in_shard": 41,
+          "line_in_source": 9041
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 42,
+          "line_in_source": 9042
+        },
+        {
+          "type": "process_defect",
+          "text": "- command/wiring/template drift is now concrete enough to break gate logic and stable action IDs.",
+          "line_in_shard": 43,
+          "line_in_source": 9043
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 44,
+          "line_in_source": 9044
+        },
+        {
+          "type": "process_defect",
+          "text": "- approval identity and field-name drift (`allowed_actions` vs `allowed_action_ids`) still cut across recovery, replay, and storage.",
+          "line_in_shard": 45,
+          "line_in_source": 9045
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 46,
+          "line_in_source": 9046
+        },
+        {
+          "type": "process_defect",
+          "text": "- envelope/schema-family ambiguity and missing attempt-key ownership still block deterministic drill-through.",
+          "line_in_shard": 47,
+          "line_in_source": 9047
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/Executor_Protocol.md`",
+          "line_in_shard": 48,
+          "line_in_source": 9048
+        },
+        {
+          "type": "process_defect",
+          "text": "- still lacks the mint/ownership rules that blocked/runtime recovery now depend on.",
+          "line_in_shard": 49,
+          "line_in_source": 9049
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 50,
+          "line_in_source": 9050
+        },
+        {
+          "type": "process_defect",
+          "text": "- still contains both field-name drift and pseudo-tier execution-key bugs.",
+          "line_in_shard": 51,
+          "line_in_source": 9051
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 52,
+          "line_in_source": 9052
+        },
+        {
+          "type": "process_defect",
+          "text": "- still leaves pre-run governance lineage under-keyed relative to adjacent canonical event/artifact contracts.",
+          "line_in_shard": 53,
+          "line_in_source": 9053
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 54,
+          "line_in_source": 9054
+        },
+        {
+          "type": "process_defect",
+          "text": "- still mismatches `worktree_id` ownership, base-branch ownership, and canonical blocked-emitter semantics.",
+          "line_in_shard": 55,
+          "line_in_source": 9055
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 57,
+          "line_in_source": 9057
+        },
+        {
+          "type": "contradiction",
+          "text": "- Several downstream docs now fail on exact key or field names rather than broad conceptual drift.",
+          "line_in_shard": 58,
+          "line_in_source": 9058
+        },
+        {
+          "type": "contradiction",
+          "text": "- The same runtime approval and recovery flows still use incompatible key sets across chat/HITL/runtime commands/storage.",
+          "line_in_shard": 59,
+          "line_in_source": 9059
+        },
+        {
+          "type": "contradiction",
+          "text": "- Event/persistence contracts continue to claim shared-runtime alignment while dropping auth/account/role fields exactly where those become auditable.",
+          "line_in_shard": 60,
+          "line_in_source": 9060
+        },
+        {
+          "type": "contradiction",
+          "text": "- Worktree/source-control docs still lack one agreed durable identity key (`worktree_id` vs tier/path) and one agreed base-branch owner.",
+          "line_in_shard": 61,
+          "line_in_source": 9061
+        },
+        {
+          "type": "contradiction",
+          "text": "- Command and wiring SSOTs still cannot mechanically express freshness/health gating or canonical mutation ownership.",
+          "line_in_shard": 62,
+          "line_in_source": 9062
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 64,
+          "line_in_source": 9064
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Reconcile all approval/recovery schemas onto one key strategy and one field family (`allowed_action_ids[]`, `blocked_sequence`, explicit mapping for any retained `request_id`).",
+          "line_in_shard": 65,
+          "line_in_source": 9065
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Promote `thread_id`, `project_id`, validation/report lineage, and requested/effective account identity into wizard/interview pre-run governance payloads where adjacent canonical docs already require them.",
+          "line_in_shard": 66,
+          "line_in_source": 9066
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Make `worktree_id` the durable worktree identity across storage, Source Control, and orchestration receipts, and resolve `base_branch` ownership into one canonical store.",
+          "line_in_shard": 67,
+          "line_in_source": 9067
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Treat scheduler-impacting tool denials/pending approvals as blocked-runtime episodes rather than a weak standalone `tool.denied` path.",
+          "line_in_shard": 68,
+          "line_in_source": 9068
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Remove or alias stale/non-canonical `cmd.orchestrator.*` and template/example command IDs so the catalog is truly the only stable command owner.",
+          "line_in_shard": 69,
+          "line_in_source": 9069
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 71,
+          "line_in_source": 9071
+        },
+        {
+          "type": "requirement",
+          "text": "- `cmd.orchestrator.switch_tab` currently appears in the wiring template without existing in the catalog.",
+          "line_in_shard": 72,
+          "line_in_source": 9072
+        },
+        {
+          "type": "requirement",
+          "text": "- `blocked_sequence` must exist even for pre-attempt blocked episodes; minting still has no owner.",
+          "line_in_shard": 73,
+          "line_in_source": 9073
+        },
+        {
+          "type": "requirement",
+          "text": "- `allowed_actions[]` is still alive in neighboring docs even though HITL addenda say it is deprecated.",
+          "line_in_shard": 74,
+          "line_in_source": 9074
+        },
+        {
+          "type": "requirement",
+          "text": "- `interview-phase-phase-*` looks like a real routing-key bug, not merely stale vocabulary.",
+          "line_in_shard": 75,
+          "line_in_source": 9075
+        },
+        {
+          "type": "requirement",
+          "text": "- `.puppet-master/state/active-git-operations.json` cannot become canonical audit if storage-plan keeps seglog/receipts as the source of truth.",
+          "line_in_shard": 76,
+          "line_in_source": 9076
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Tool-event and artifact runtime attribution",
+          "line_in_shard": 78,
+          "line_in_source": 9078
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 80,
+          "line_in_source": 9080
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Tools.md`",
+          "line_in_shard": 81,
+          "line_in_source": 9081
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 82,
+          "line_in_source": 9082
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 83,
+          "line_in_source": 9083
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 84,
+          "line_in_source": 9084
+        },
+        {
+          "type": "doc_hint",
+          "text": "- current `working_ledger.md`",
+          "line_in_shard": 85,
+          "line_in_source": 9085
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 87,
+          "line_in_source": 9087
+        },
+        {
+          "type": "process_defect",
+          "text": "- Tool events are still specified in two different maturity levels:",
+          "line_in_shard": 88,
+          "line_in_source": 9088
+        },
+        {
+          "type": "data_shape",
+          "text": "- older analytics-oriented minimum:",
+          "line_in_shard": 89,
+          "line_in_source": 9089
+        },
+        {
+          "type": "data_shape",
+          "text": "- `tool.invoked` = `tool_name`, `run_id`, optional `thread_id`, `latency_ms`, `success`, `error`",
+          "line_in_shard": 90,
+          "line_in_source": 9090
+        },
+        {
+          "type": "data_shape",
+          "text": "- `tool.denied` = `tool_name`, `run_id`, optional `thread_id`, `reason`",
+          "line_in_shard": 91,
+          "line_in_source": 9091
+        },
+        {
+          "type": "data_shape",
+          "text": "- newer runtime-oriented addenda:",
+          "line_in_shard": 92,
+          "line_in_source": 9092
+        },
+        {
+          "type": "data_shape",
+          "text": "- `tool.denied` must carry `blocked_reason_code`, `failure_class`, ordered `allowed_action_ids[]`, `headless_denied`, and effective permission snapshot id when scheduler state is affected",
+          "line_in_shard": 93,
+          "line_in_source": 9093
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Tools.md` still mostly describes tool events as Usage-widget inputs, while other docs now need those same events to explain:",
+          "line_in_shard": 94,
+          "line_in_source": 9094
+        },
+        {
+          "type": "data_shape",
+          "text": "- scheduler blocking",
+          "line_in_shard": 95,
+          "line_in_source": 9095
+        },
+        {
+          "type": "data_shape",
+          "text": "- permission/HITL behavior",
+          "line_in_shard": 96,
+          "line_in_source": 9096
+        },
+        {
+          "type": "data_shape",
+          "text": "- receipts and evidence",
+          "line_in_shard": 97,
+          "line_in_source": 9097
+        },
+        {
+          "type": "data_shape",
+          "text": "- cross-surface audit",
+          "line_in_shard": 98,
+          "line_in_source": 9098
+        },
+        {
+          "type": "data_shape",
+          "text": "- why a run used or failed to use a tool under a specific account/runtime context",
+          "line_in_shard": 99,
+          "line_in_source": 9099
+        },
+        {
+          "type": "process_defect",
+          "text": "- Runtime artifact contracts are still not carrying enough runtime identity:",
+          "line_in_shard": 100,
+          "line_in_source": 9100
+        },
+        {
+          "type": "data_shape",
+          "text": "- `Runtime_Artifacts_Panel.md` canonical id set includes `artifact_id`, `run_id`, `thread_id`, `task_id`, `linked_artifact_id`, `logical_artifact_id`",
+          "line_in_shard": 101,
+          "line_in_source": 9101
+        },
+        {
+          "type": "process_defect",
+          "text": "- it still omits `attempt_id` and `node_id` from the canonical id set even though receipt linkage and the run-graph model now rely on attempt-level identity",
+          "line_in_shard": 102,
+          "line_in_source": 9102
+        },
+        {
+          "type": "data_shape",
+          "text": "- receipt-like artifacts are explicitly told to stay on canonical runtime identity, which is stronger than the current artifact id guidance",
+          "line_in_shard": 103,
+          "line_in_source": 9103
+        },
+        {
+          "type": "data_shape",
+          "text": "- `storage-plan.md` is closer to the rewrite direction than the artifact/tool docs themselves:",
+          "line_in_shard": 104,
+          "line_in_source": 9104
+        },
+        {
+          "type": "data_shape",
+          "text": "- `orchestrator.receipt.{run_id}.{attempt_id}` already exists",
+          "line_in_shard": 105,
+          "line_in_source": 9105
+        },
+        {
+          "type": "data_shape",
+          "text": "- `usage_record` already carries `attempt_id?`",
+          "line_in_shard": 106,
+          "line_in_source": 9106
+        },
+        {
+          "type": "data_shape",
+          "text": "- run-graph/orchestrator projections already require attempt-level resolution",
+          "line_in_shard": 107,
+          "line_in_source": 9107
+        },
+        {
+          "type": "data_shape",
+          "text": "- blocked/runtime records already assume node/attempt identity",
+          "line_in_shard": 108,
+          "line_in_source": 9108
+        },
+        {
+          "type": "process_defect",
+          "text": "- The missing structural fields now fall into a repeatable set across tool events and artifact families:",
+          "line_in_shard": 109,
+          "line_in_source": 9109
+        },
+        {
+          "type": "data_shape",
+          "text": "- execution identity:",
+          "line_in_shard": 110,
+          "line_in_source": 9110
+        },
+        {
+          "type": "data_shape",
+          "text": "- `node_id?`",
+          "line_in_shard": 111,
+          "line_in_source": 9111
+        },
+        {
+          "type": "data_shape",
+          "text": "- `attempt_id?`",
+          "line_in_shard": 112,
+          "line_in_source": 9112
+        },
+        {
+          "type": "data_shape",
+          "text": "- `lane_id?`",
+          "line_in_shard": 113,
+          "line_in_source": 9113
+        },
+        {
+          "type": "data_shape",
+          "text": "- `work_package_id?`",
+          "line_in_shard": 114,
+          "line_in_source": 9114
+        },
+        {
+          "type": "data_shape",
+          "text": "- `feature_seam_id?`",
+          "line_in_shard": 115,
+          "line_in_source": 9115
+        },
+        {
+          "type": "data_shape",
+          "text": "- `execution_role?`",
+          "line_in_shard": 116,
+          "line_in_source": 9116
+        },
+        {
+          "type": "data_shape",
+          "text": "- runtime identity:",
+          "line_in_shard": 117,
+          "line_in_source": 9117
+        },
+        {
+          "type": "data_shape",
+          "text": "- effective permission snapshot id",
+          "line_in_shard": 118,
+          "line_in_source": 9118
+        },
+        {
+          "type": "data_shape",
+          "text": "- requested/effective model snapshot ids where relevant",
+          "line_in_shard": 119,
+          "line_in_source": 9119
+        },
+        {
+          "type": "data_shape",
+          "text": "- `effective_account_id?`",
+          "line_in_shard": 120,
+          "line_in_source": 9120
+        },
+        {
+          "type": "data_shape",
+          "text": "- `operational_identity?`",
+          "line_in_shard": 121,
+          "line_in_source": 9121
+        },
+        {
+          "type": "data_shape",
+          "text": "- artifact/tool linkage:",
+          "line_in_shard": 122,
+          "line_in_source": 9122
+        },
+        {
+          "type": "data_shape",
+          "text": "- `artifact_id` <-> `attempt_id`",
+          "line_in_shard": 123,
+          "line_in_source": 9123
+        },
+        {
+          "type": "data_shape",
+          "text": "- tool event <-> resulting artifact refs",
+          "line_in_shard": 124,
+          "line_in_source": 9124
+        },
+        {
+          "type": "process_defect",
+          "text": "- `usage_event_ref?` is useful but not sufficient as the only drill-through anchor",
+          "line_in_shard": 125,
+          "line_in_source": 9125
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 127,
+          "line_in_source": 9127
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Tools.md`",
+          "line_in_shard": 128,
+          "line_in_source": 9128
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 129,
+          "line_in_source": 9129
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 130,
+          "line_in_source": 9130
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 131,
+          "line_in_source": 9131
+        },
+        {
+          "type": "doc_hint",
+          "text": "- downstream consumers:",
+          "line_in_shard": 132,
+          "line_in_source": 9132
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/usage-feature.md`",
+          "line_in_shard": 133,
+          "line_in_source": 9133
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 134,
+          "line_in_source": 9134
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Run_Graph_View.md`",
+          "line_in_shard": 135,
+          "line_in_source": 9135
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 136,
+          "line_in_source": 9136
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Source Control / receipt-linked surfaces",
+          "line_in_shard": 137,
+          "line_in_source": 9137
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 139,
+          "line_in_source": 9139
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Tools.md` still says `tool.denied` should not emit for FileSafe blocks, but the normalized terminal outcome taxonomy in the same doc already includes `filesafe_blocked`. That means the event family and the normalized outcome story are not yet aligned.",
+          "line_in_shard": 140,
+          "line_in_source": 9140
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Contracts_V0.md` upgrades `tool.denied` when scheduler state is affected, but `Tools.md` and `storage-plan.md` still publish the thinner payloads as if they were sufficient canon.",
+          "line_in_shard": 141,
+          "line_in_source": 9141
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Runtime_Artifacts_Panel.md` says receipt-like artifacts must preserve canonical run/attempt identity, but its own canonical ID set still omits `attempt_id`.",
+          "line_in_shard": 142,
+          "line_in_source": 9142
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Runtime_Artifacts_Panel.md` still uses `task_id` vocabulary where the rewrite increasingly needs `node_id` / package / seam / lane identity instead.",
+          "line_in_shard": 143,
+          "line_in_source": 9143
+        },
+        {
+          "type": "contradiction",
+          "text": "- `usage_event_ref?` is being used as a useful bridge for cost-bearing artifacts and receipts, but without `attempt_id` / `node_id` it is not enough to explain who produced the artifact or why it exists in the execution graph.",
+          "line_in_shard": 144,
+          "line_in_source": 9144
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 146,
+          "line_in_source": 9146
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Promote tool events from analytics-only payloads to runtime-attributed records whenever they intersect orchestrator execution:",
+          "line_in_shard": 147,
+          "line_in_source": 9147
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- add canonical optional refs for `node_id`, `attempt_id`, `execution_role`, and runtime snapshot identifiers",
+          "line_in_shard": 148,
+          "line_in_source": 9148
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- add effective account/runtime attribution where tool execution depends on provider identity or permission state",
+          "line_in_shard": 149,
+          "line_in_source": 9149
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Normalize tool denial/execution outcomes so `permission_denied`, `user_declined`, `headless_ask_denied`, and `filesafe_blocked` can all be explained through one durable event/result story.",
+          "line_in_shard": 150,
+          "line_in_source": 9150
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Extend runtime artifact identity so canonical artifact linkage includes `attempt_id?` and `node_id?`, with package/seam/lane refs when relevant.",
+          "line_in_shard": 151,
+          "line_in_source": 9151
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Treat `task_id` in artifact docs as legacy/decomposition wording unless a migration alias is explicitly needed.",
+          "line_in_shard": 152,
+          "line_in_source": 9152
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Ensure tool events and runtime artifacts can link to each other directly:",
+          "line_in_shard": 153,
+          "line_in_source": 9153
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- tool trace -> artifact refs",
+          "line_in_shard": 154,
+          "line_in_source": 9154
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- artifact -> originating attempt/tool refs",
+          "line_in_shard": 155,
+          "line_in_source": 9155
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- receipt -> run/attempt plus cross-surface refs",
+          "line_in_shard": 156,
+          "line_in_source": 9156
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 158,
+          "line_in_source": 9158
+        },
+        {
+          "type": "requirement",
+          "text": "- the real problem is not only missing fields; it is that tool events are still described as analytics exhaust while other docs already want them to carry runtime truth",
+          "line_in_shard": 159,
+          "line_in_source": 9159
+        },
+        {
+          "type": "requirement",
+          "text": "- artifact identity and receipt identity should not diverge once attempt-centric orchestration is canonical",
+          "line_in_shard": 160,
+          "line_in_source": 9160
+        },
+        {
+          "type": "requirement",
+          "text": "- FileSafe blocks still need a durable attributed outcome path even if the old `tool.denied` wording excluded them",
+          "line_in_shard": 161,
+          "line_in_source": 9161
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Wizard and interview pre-run governance payloads",
+          "line_in_shard": 163,
+          "line_in_source": 9163
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 165,
+          "line_in_source": 9165
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 166,
+          "line_in_source": 9166
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 167,
+          "line_in_source": 9167
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Prompt_Pipeline.md`",
+          "line_in_shard": 168,
+          "line_in_source": 9168
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 169,
+          "line_in_source": 9169
+        },
+        {
+          "type": "doc_hint",
+          "text": "- current `working_ledger.md`",
+          "line_in_shard": 170,
+          "line_in_source": 9170
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 172,
+          "line_in_source": 9172
+        },
+        {
+          "type": "process_defect",
+          "text": "- Wizard/interview docs are increasingly explicit about lineage and blocked-state handling, but their concrete handoff payloads still stop short of the shared runtime identity model.",
+          "line_in_shard": 173,
+          "line_in_source": 9173
+        },
+        {
+          "type": "data_shape",
+          "text": "- `chain-wizard-flexibility.md` has a reasonably solid assistant-to-wizard handoff payload:",
+          "line_in_shard": 174,
+          "line_in_source": 9174
+        },
+        {
+          "type": "data_shape",
+          "text": "- `handoff_source`",
+          "line_in_shard": 175,
+          "line_in_source": 9175
+        },
+        {
+          "type": "data_shape",
+          "text": "- `handoff_reason`",
+          "line_in_shard": 176,
+          "line_in_source": 9176
+        },
+        {
+          "type": "data_shape",
+          "text": "- `origin_thread_id`",
+          "line_in_shard": 177,
+          "line_in_source": 9177
+        },
+        {
+          "type": "data_shape",
+          "text": "- `origin_message_id`",
+          "line_in_shard": 178,
+          "line_in_source": 9178
+        },
+        {
+          "type": "data_shape",
+          "text": "- `default_intent`",
+          "line_in_shard": 179,
+          "line_in_source": 9179
+        },
+        {
+          "type": "data_shape",
+          "text": "- `project_id` / `project_path` when available",
+          "line_in_shard": 180,
+          "line_in_source": 9180
+        },
+        {
+          "type": "data_shape",
+          "text": "- requirements/scope/codebase summaries and refs",
+          "line_in_shard": 181,
+          "line_in_source": 9181
+        },
+        {
+          "type": "data_shape",
+          "text": "- optional effective persona/platform/model",
+          "line_in_shard": 182,
+          "line_in_source": 9182
+        },
+        {
+          "type": "process_defect",
+          "text": "- That is directionally good, but still thin relative to the rewrite:",
+          "line_in_shard": 183,
+          "line_in_source": 9183
+        },
+        {
+          "type": "process_defect",
+          "text": "- no requested/effective account disclosure",
+          "line_in_shard": 184,
+          "line_in_source": 9184
+        },
+        {
+          "type": "process_defect",
+          "text": "- no `execution_role`",
+          "line_in_shard": 185,
+          "line_in_source": 9185
+        },
+        {
+          "type": "process_defect",
+          "text": "- no operational identity or permission posture",
+          "line_in_shard": 186,
+          "line_in_source": 9186
+        },
+        {
+          "type": "process_defect",
+          "text": "- no durable link from wizard/interview handoff into later run/attempt lineage",
+          "line_in_shard": 187,
+          "line_in_source": 9187
+        },
+        {
+          "type": "process_defect",
+          "text": "- `interview-subagent-integration.md` explicitly claims shared runtime alignment and has separate requested/effective interview contract pieces, but still drops the same execution-governance fields in practice:",
+          "line_in_shard": 188,
+          "line_in_source": 9188
+        },
+        {
+          "type": "process_defect",
+          "text": "- requested/effective account fields are not carried through the concrete handoff/provenance requirements",
+          "line_in_shard": 189,
+          "line_in_source": 9189
+        },
+        {
+          "type": "process_defect",
+          "text": "- `execution_role` is absent",
+          "line_in_shard": 190,
+          "line_in_source": 9190
+        },
+        {
+          "type": "process_defect",
+          "text": "- provenance metadata currently requires `source_stage`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, `timestamp`, which is useful but still weaker than the shared runtime identity grammar elsewhere",
+          "line_in_shard": 191,
+          "line_in_source": 9191
+        },
+        {
+          "type": "process_defect",
+          "text": "- Interview still reintroduces tier-era coordination/ownership in several concrete examples:",
+          "line_in_shard": 192,
+          "line_in_source": 9192
+        },
+        {
+          "type": "data_shape",
+          "text": "- `CrewCreator::Orchestrator { tier_id: format!(\\\"interview-phase-...\\\") }`",
+          "line_in_shard": 193,
+          "line_in_source": 9193
+        },
+        {
+          "type": "data_shape",
+          "text": "- `to_tier_id: Some(format!(\\\"interview-phase-...\\\"))`",
+          "line_in_shard": 194,
+          "line_in_source": 9194
+        },
+        {
+          "type": "data_shape",
+          "text": "- `thread_id: None` in multiple handoff/coordination examples even though thread continuity is part of the surrounding model",
+          "line_in_shard": 195,
+          "line_in_source": 9195
+        },
+        {
+          "type": "data_shape",
+          "text": "- The planning-to-runtime blocked/degraded handoff is closer to correct:",
+          "line_in_shard": 196,
+          "line_in_source": 9196
+        },
+        {
+          "type": "data_shape",
+          "text": "- wizard blocked state carries `wizard_step`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, and `replan_generation?`",
+          "line_in_shard": 197,
+          "line_in_source": 9197
+        },
+        {
+          "type": "data_shape",
+          "text": "- degraded draft decomposition retains lineage into later graph lock artifacts",
+          "line_in_shard": 198,
+          "line_in_source": 9198
+        },
+        {
+          "type": "process_defect",
+          "text": "- but even here the payload remains too wizard-local and still does not connect cleanly to the broader execution-unit / account / role model",
+          "line_in_shard": 199,
+          "line_in_source": 9199
+        },
+        {
+          "type": "data_shape",
+          "text": "- The upstream boundary is now clearer:",
+          "line_in_shard": 200,
+          "line_in_source": 9200
+        }
+      ]
+    },
+    "shard-0047": {
+      "shard_id": "shard-0047",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0047.md",
+      "ledger_line_start": 9201,
+      "ledger_line_end": 9400,
+      "source_sha256": "c166928d5f9ae98f6c7d0cf38ce46524d32835fb5eaf7963bf620c26330d7832",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "- wizard, builder, interview remain conversational/document-production actors, not orchestration nodes/packages/seams",
+          "line_in_shard": 1,
+          "line_in_source": 9201
+        },
+        {
+          "type": "data_shape",
+          "text": "- but their handoff payloads still need to carry enough canonical identity and lineage so downstream runtime, history, ledger, search, and audit can explain how execution began",
+          "line_in_shard": 2,
+          "line_in_source": 9202
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 4,
+          "line_in_source": 9204
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 5,
+          "line_in_source": 9205
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 6,
+          "line_in_source": 9206
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Prompt_Pipeline.md`",
+          "line_in_shard": 7,
+          "line_in_source": 9207
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 8,
+          "line_in_source": 9208
+        },
+        {
+          "type": "doc_hint",
+          "text": "- downstream consumers:",
+          "line_in_shard": 9,
+          "line_in_source": 9209
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 10,
+          "line_in_source": 9210
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 11,
+          "line_in_source": 9211
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 12,
+          "line_in_source": 9212
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Run_Graph_View.md`",
+          "line_in_shard": 13,
+          "line_in_source": 9213
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 15,
+          "line_in_source": 9215
+        },
+        {
+          "type": "contradiction",
+          "text": "- `chain-wizard-flexibility.md` already carries `project_id` in the assistant-to-wizard payload, but `interview-subagent-integration.md` still shows `thread_id: None` in concrete orchestration/crew paths that should likely preserve thread correlation.",
+          "line_in_shard": 16,
+          "line_in_source": 9216
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Prompt_Pipeline.md` owns the canonical requested/effective runtime record, but the wizard/interview handoff payloads only expose a thin subset of it.",
+          "line_in_shard": 17,
+          "line_in_source": 9217
+        },
+        {
+          "type": "contradiction",
+          "text": "- `persona_override_owner_id` still allows `tier_id`-style ownership in shared runtime docs, while wizard/interview are simultaneously trying to align with newer non-tier execution semantics.",
+          "line_in_shard": 18,
+          "line_in_source": 9218
+        },
+        {
+          "type": "contradiction",
+          "text": "- Validation pass reports in chain-wizard require `provider` and `model`, but not the fuller runtime identity fields now needed for multi-account/shared-runtime explanation.",
+          "line_in_shard": 19,
+          "line_in_source": 9219
+        },
+        {
+          "type": "contradiction",
+          "text": "- Wizard/interview docs are good on blocked/degraded planning lineage, but still weak on the bridge from that lineage into the eventual execution run identity.",
+          "line_in_shard": 20,
+          "line_in_source": 9220
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 22,
+          "line_in_source": 9222
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Extend wizard/interview handoff payloads so they can carry the upstream subset of canonical runtime identity:",
+          "line_in_shard": 23,
+          "line_in_source": 9223
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `project_id`",
+          "line_in_shard": 24,
+          "line_in_source": 9224
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `thread_id`",
+          "line_in_shard": 25,
+          "line_in_source": 9225
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `wizard_id`",
+          "line_in_shard": 26,
+          "line_in_source": 9226
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requested_persona?` / `effective_persona?`",
+          "line_in_shard": 27,
+          "line_in_source": 9227
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requested_platform?` / `effective_platform?`",
+          "line_in_shard": 28,
+          "line_in_source": 9228
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requested_model?` / `effective_model?`",
+          "line_in_shard": 29,
+          "line_in_source": 9229
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requested_account_policy?`",
+          "line_in_shard": 30,
+          "line_in_source": 9230
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requested_account_id?`",
+          "line_in_shard": 31,
+          "line_in_source": 9231
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requested_account_binding?`",
+          "line_in_shard": 32,
+          "line_in_source": 9232
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `effective_account_id?`",
+          "line_in_shard": 33,
+          "line_in_source": 9233
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `execution_role`",
+          "line_in_shard": 34,
+          "line_in_source": 9234
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `operational_identity?`",
+          "line_in_shard": 35,
+          "line_in_source": 9235
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- permission/runtime snapshot refs when relevant",
+          "line_in_shard": 36,
+          "line_in_source": 9236
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add an explicit lineage bridge from wizard/interview artifacts and handoff payloads into the eventual execution run:",
+          "line_in_shard": 37,
+          "line_in_source": 9237
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- likely `wizard_id -> run_id`",
+          "line_in_shard": 38,
+          "line_in_source": 9238
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- plus stable refs from validation pass reports and staged bundles into the launched run",
+          "line_in_shard": 39,
+          "line_in_source": 9239
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.",
+          "line_in_shard": 40,
+          "line_in_source": 9240
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep wizard/interview separate from Orchestrator ontology, but require them to emit enough canonical identity for downstream consumers to remain truthful without reconstructing context heuristically.",
+          "line_in_shard": 41,
+          "line_in_source": 9241
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 43,
+          "line_in_source": 9243
+        },
+        {
+          "type": "requirement",
+          "text": "- the upstream actors are not orchestration nodes, but they still need shared runtime identity semantics when handing off into execution",
+          "line_in_shard": 44,
+          "line_in_source": 9244
+        },
+        {
+          "type": "requirement",
+          "text": "- `thread_id: None` in interview examples is now a concrete drift signal, not just omitted detail",
+          "line_in_shard": 45,
+          "line_in_source": 9245
+        },
+        {
+          "type": "requirement",
+          "text": "- validation pass reports need richer runtime identity than provider/model alone if they are meant to be auditable later",
+          "line_in_shard": 46,
+          "line_in_source": 9246
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - GPT-5.3-Codex downstream cohort synthesis",
+          "line_in_shard": 48,
+          "line_in_source": 9248
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 50,
+          "line_in_source": 9250
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 51,
+          "line_in_source": 9251
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 52,
+          "line_in_source": 9252
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 53,
+          "line_in_source": 9253
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 54,
+          "line_in_source": 9254
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 55,
+          "line_in_source": 9255
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Tools.md`",
+          "line_in_shard": 56,
+          "line_in_source": 9256
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Executor_Protocol.md`",
+          "line_in_shard": 57,
+          "line_in_source": 9257
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/orchestrator-subagent-integration.md`",
+          "line_in_shard": 58,
+          "line_in_source": 9258
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 59,
+          "line_in_source": 9259
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 60,
+          "line_in_source": 9260
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 61,
+          "line_in_source": 9261
+        },
+        {
+          "type": "doc_hint",
+          "text": "- adjacent owner docs pulled for contradiction checks (`Orchestrator_Page.md`, `Run_Graph_View.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Commands_System.md`, `Project_Output_Artifacts.md`, `GitHub_Integration.md`, `Contracts_V0.md`, `storage-plan.md`, `Permissions_System.md`)",
+          "line_in_shard": 62,
+          "line_in_source": 9262
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 64,
+          "line_in_source": 9264
+        },
+        {
+          "type": "data_shape",
+          "text": "- The Codex pass mostly closed the loop by turning several remaining downstream issues into exact spec-integrity failures.",
+          "line_in_shard": 65,
+          "line_in_source": 9265
+        },
+        {
+          "type": "process_defect",
+          "text": "- GUI / command ownership remains split in concrete, machine-breaking ways:",
+          "line_in_shard": 66,
+          "line_in_source": 9266
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FinalGUISpec.md` now shows a second internal navigation contradiction beyond the already-known Orchestrator-page drift (`§4.1` vs `§5.1`), and `Orchestrator_Page.md` itself is structurally incomplete because its TOC advertises a missing `UICommand IDs` section.",
+          "line_in_shard": 67,
+          "line_in_source": 9267
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Wiring_Matrix.md` still references `cmd.orchestrator.switch_tab`, but `UI_Command_Catalog.md` does not define it.",
+          "line_in_shard": 68,
+          "line_in_source": 9268
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Commands_System.md` and `assistant-chat-design.md` still disagree on whether reserved slash commands may be overridden, while `UI_Command_Catalog.md` still lacks the corresponding `cmd.chat.run_user_command` owner row.",
+          "line_in_shard": 69,
+          "line_in_source": 9269
+        },
+        {
+          "type": "process_defect",
+          "text": "- catalog/promoted-family gaps remain explicit: account, concern, promotion, and several promised tab/window/catalog/dev command families still do not exist as concrete catalog entries.",
+          "line_in_shard": 70,
+          "line_in_source": 9270
+        },
+        {
+          "type": "data_shape",
+          "text": "- Artifact / HITL / tool contracts remain under-owned at the exact file/field level:",
+          "line_in_shard": 71,
+          "line_in_source": 9271
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Runtime_Artifacts_Panel.md` still sits in a three-way ownership contradiction with `Contracts_V0.md` and `storage-plan.md` over payload schema authority; it still points at missing schema files and still lacks a concrete artifact-projection key family in `storage-plan.md`.",
+          "line_in_shard": 72,
+          "line_in_source": 9272
+        },
+        {
+          "type": "process_defect",
+          "text": "- `human-in-the-loop.md` still contains an intra-doc contradiction on `allowed_actions` vs `allowed_action_ids`, still leaves `request_id <-> blocked_sequence` mapping unowned, and still keeps approval-scope/session semantics under-keyed while neighboring docs cascade approvals broadly.",
+          "line_in_shard": 73,
+          "line_in_source": 9273
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Tools.md` is now a fully visible three-way SSOT split (`Tools.md` / `Contracts_V0.md` / `storage-plan.md`) for `tool.denied`, still allows `pending-HITL` without a legal persisted tool-approval contract, and still lacks durable event families for unavailable/degraded tool truth.",
+          "line_in_shard": 74,
+          "line_in_source": 9274
+        },
+        {
+          "type": "process_defect",
+          "text": "- Execution-core and runtime coordination gaps remain exact rather than abstract:",
+          "line_in_shard": 75,
+          "line_in_source": 9275
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Executor_Protocol.md` contains byte-identical duplicated canonical scheduler sections and still leaves `blocked_sequence` minting, startup recovery handshake, `execution_role` ownership, and reviewer/corroboration lifecycle unowned.",
+          "line_in_shard": 76,
+          "line_in_source": 9276
+        },
+        {
+          "type": "process_defect",
+          "text": "- `orchestrator-subagent-integration.md` now shows an explicit same-file contradiction: `TierContext` declares fields that its own constructor does not populate, while file-based coordination is simultaneously described as canonical and as a derived/debug mirror.",
+          "line_in_shard": 77,
+          "line_in_source": 9277
+        },
+        {
+          "type": "process_defect",
+          "text": "- Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:",
+          "line_in_shard": 78,
+          "line_in_source": 9278
+        },
+        {
+          "type": "process_defect",
+          "text": "- `interview-subagent-integration.md` still mixes canonical and deprecated persona field names, still truncates auth/account identity from its runtime contract, and still routes interview work through pseudo-tier keys with at least one concrete malformed routing key.",
+          "line_in_shard": 79,
+          "line_in_source": 9279
+        },
+        {
+          "type": "process_defect",
+          "text": "- `chain-wizard-flexibility.md` still leaves the normalized downstream payload too lineage-thin, still conflicts with interview ownership on where pre-run quality/CUP correction lives, and still contains a self-contradictory Contribute(PR) worktree policy.",
+          "line_in_shard": 80,
+          "line_in_source": 9280
+        },
+        {
+          "type": "process_defect",
+          "text": "- `WorktreeGitImprovement.md` still lacks a durable `worktree_record` / `worktree_projection` family, still has no explicit precedence rule between persisted runtime lineage and filesystem rediscovery, and still treats git-hook blocks and state files as if they could substitute for canonical blocked/runtime events.",
+          "line_in_shard": 81,
+          "line_in_source": 9281
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Highest-risk impacted docs",
+          "line_in_shard": 83,
+          "line_in_source": 9283
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 84,
+          "line_in_source": 9284
+        },
+        {
+          "type": "process_defect",
+          "text": "- command/catalog/template/example integrity is still broken enough to miswire surfaces mechanically.",
+          "line_in_shard": 85,
+          "line_in_source": 9285
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 86,
+          "line_in_source": 9286
+        },
+        {
+          "type": "process_defect",
+          "text": "- schema-family authority, missing storage key owner, and missing attempt/project identity remain unresolved.",
+          "line_in_shard": 87,
+          "line_in_source": 9287
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/human-in-the-loop.md`",
+          "line_in_shard": 88,
+          "line_in_source": 9288
+        },
+        {
+          "type": "process_defect",
+          "text": "- approval identity, field-family normalization, and persistence semantics are still split across incompatible shapes.",
+          "line_in_shard": 89,
+          "line_in_source": 9289
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/Executor_Protocol.md`",
+          "line_in_shard": 90,
+          "line_in_source": 9290
+        },
+        {
+          "type": "process_defect",
+          "text": "- duplicate canonical sections plus unowned mint/handshake rules remain an execution-core risk multiplier.",
+          "line_in_shard": 91,
+          "line_in_source": 9291
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/orchestrator-subagent-integration.md`",
+          "line_in_shard": 92,
+          "line_in_source": 9292
+        },
+        {
+          "type": "process_defect",
+          "text": "- active coordination and context construction still cannot be trusted as canonical runtime identity.",
+          "line_in_shard": 93,
+          "line_in_source": 9293
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 94,
+          "line_in_source": 9294
+        },
+        {
+          "type": "process_defect",
+          "text": "- runtime identity parity and routing-key correctness remain visibly incomplete.",
+          "line_in_shard": 95,
+          "line_in_source": 9295
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 96,
+          "line_in_source": 9296
+        },
+        {
+          "type": "process_defect",
+          "text": "- pre-run lineage and worktree/isolation policy are still too ambiguous for deterministic audit.",
+          "line_in_shard": 97,
+          "line_in_source": 9297
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 98,
+          "line_in_source": 9298
+        },
+        {
+          "type": "process_defect",
+          "text": "- durable worktree lineage, base-branch authority, and canonical blocked emitters remain unresolved.",
+          "line_in_shard": 99,
+          "line_in_source": 9299
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 101,
+          "line_in_source": 9301
+        },
+        {
+          "type": "contradiction",
+          "text": "- Several docs now fail because they promise canonical sections/IDs that do not exist at all.",
+          "line_in_shard": 102,
+          "line_in_source": 9302
+        },
+        {
+          "type": "contradiction",
+          "text": "- Approval and mutation flows still span multiple incompatible key families and scope models across chat/HITL/runtime/tooling.",
+          "line_in_shard": 103,
+          "line_in_source": 9303
+        },
+        {
+          "type": "contradiction",
+          "text": "- The same owner docs still claim both file-based canon and event-sourced canon for runtime coordination/audit.",
+          "line_in_shard": 104,
+          "line_in_source": 9304
+        },
+        {
+          "type": "contradiction",
+          "text": "- Storage-plan is now clearly missing several record/projection families that downstream docs already treat as if they exist (`runtime_artifact` payload schemas, worktree records/projections, artifact index registration).",
+          "line_in_shard": 105,
+          "line_in_source": 9305
+        },
+        {
+          "type": "contradiction",
+          "text": "- Cross-surface lineage still weakens exactly at the planning->wizard->validation->run and runtime->SCM->PR boundaries where audit now matters most.",
+          "line_in_shard": 106,
+          "line_in_source": 9306
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 108,
+          "line_in_source": 9308
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Reconcile all remaining command/template/example drift so `UI_Command_Catalog.md` is the sole stable action owner and every referenced command actually exists.",
+          "line_in_shard": 109,
+          "line_in_source": 9309
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Resolve the payload-owner triangle for runtime artifacts and either add the missing schema family/registration or soften the mandate explicitly.",
+          "line_in_shard": 110,
+          "line_in_source": 9310
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Normalize HITL/tool approval semantics onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance.",
+          "line_in_shard": 111,
+          "line_in_source": 9311
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add the missing canonical record/projection families to `storage-plan.md` for worktree lifecycle and artifact index state before downstream docs keep inventing them implicitly.",
+          "line_in_shard": 112,
+          "line_in_source": 9312
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Collapse duplicated executor canon and explicitly assign owners for `blocked_sequence`, `startup_recovered` handshake, `execution_role`, and reviewer/corroboration lifecycle.",
+          "line_in_shard": 113,
+          "line_in_source": 9313
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Replace pseudo-tier interview/wizard/runtime lineage keys with the same canonical thread/project/run/attempt identity families already required elsewhere.",
+          "line_in_shard": 114,
+          "line_in_source": 9314
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 116,
+          "line_in_source": 9316
+        },
+        {
+          "type": "requirement",
+          "text": "- `Orchestrator_Page.md` currently advertises a missing section; that is a spec-integrity problem, not only a content gap.",
+          "line_in_shard": 117,
+          "line_in_source": 9317
+        },
+        {
+          "type": "requirement",
+          "text": "- `cmd.orchestrator.switch_tab` is still referenced without existing in the catalog.",
+          "line_in_shard": 118,
+          "line_in_source": 9318
+        },
+        {
+          "type": "requirement",
+          "text": "- `Runtime_Artifacts_Panel.md` still points at schema files that do not exist and an index key not registered in storage-plan.",
+          "line_in_shard": 119,
+          "line_in_source": 9319
+        },
+        {
+          "type": "requirement",
+          "text": "- `allowed_actions` is still alive in canonical-looking HITL/storage shapes even after the deprecation addendum.",
+          "line_in_shard": 120,
+          "line_in_source": 9320
+        },
+        {
+          "type": "requirement",
+          "text": "- The coordination-canon contradiction in `orchestrator-subagent-integration.md` is now explicit in the same file.",
+          "line_in_shard": 121,
+          "line_in_source": 9321
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Validation-pass report identity and lineage",
+          "line_in_shard": 123,
+          "line_in_source": 9323
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 125,
+          "line_in_source": 9325
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 126,
+          "line_in_source": 9326
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 127,
+          "line_in_source": 9327
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 128,
+          "line_in_source": 9328
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 129,
+          "line_in_source": 9329
+        },
+        {
+          "type": "doc_hint",
+          "text": "- current `working_ledger.md`",
+          "line_in_shard": 130,
+          "line_in_source": 9330
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 132,
+          "line_in_source": 9332
+        },
+        {
+          "type": "data_shape",
+          "text": "- Validation-pass reports are already treated as canonical first-class artifacts:",
+          "line_in_shard": 133,
+          "line_in_source": 9333
+        },
+        {
+          "type": "data_shape",
+          "text": "- exactly three per sweep",
+          "line_in_shard": 134,
+          "line_in_source": 9334
+        },
+        {
+          "type": "data_shape",
+          "text": "- grouped by `workflow_run_id`",
+          "line_in_shard": 135,
+          "line_in_source": 9335
+        },
+        {
+          "type": "data_shape",
+          "text": "- stored in seglog as `artifact_type: validation_pass_report`",
+          "line_in_shard": 136,
+          "line_in_source": 9336
+        },
+        {
+          "type": "data_shape",
+          "text": "- required to include `pass_number`, `pass_name`, `pass_verdict`, `verdict_reason`, and `provider` / `model`",
+          "line_in_shard": 137,
+          "line_in_source": 9337
+        },
+        {
+          "type": "process_defect",
+          "text": "- That contract is structurally better than many adjacent artifacts, but it still stops too early on identity:",
+          "line_in_shard": 138,
+          "line_in_source": 9338
+        },
+        {
+          "type": "data_shape",
+          "text": "- it links the three passes together with `workflow_run_id`",
+          "line_in_shard": 139,
+          "line_in_source": 9339
+        },
+        {
+          "type": "data_shape",
+          "text": "- it links to provider/model settings",
+          "line_in_shard": 140,
+          "line_in_source": 9340
+        },
+        {
+          "type": "process_defect",
+          "text": "- but it still does not carry enough context to explain which wizard/runtime state produced the sweep and what later execution it seeded",
+          "line_in_shard": 141,
+          "line_in_source": 9341
+        },
+        {
+          "type": "data_shape",
+          "text": "- The current lineage story is fragmented across multiple docs:",
+          "line_in_shard": 142,
+          "line_in_source": 9342
+        },
+        {
+          "type": "data_shape",
+          "text": "- `chain-wizard-flexibility.md` ties reports to the three-pass sweep and wizard blocked/attention behavior",
+          "line_in_shard": 143,
+          "line_in_source": 9343
+        },
+        {
+          "type": "data_shape",
+          "text": "- `Project_Output_Artifacts.md` owns the artifact type and `workflow_run_id`",
+          "line_in_shard": 144,
+          "line_in_source": 9344
+        },
+        {
+          "type": "data_shape",
+          "text": "- wizard state elsewhere owns `wizard_id`, `phase_plan_ref`, staged bundle refs, and blocked report refs",
+          "line_in_shard": 145,
+          "line_in_source": 9345
+        },
+        {
+          "type": "process_defect",
+          "text": "- no single pass-report contract currently ties those together cleanly",
+          "line_in_shard": 146,
+          "line_in_source": 9346
+        },
+        {
+          "type": "process_defect",
+          "text": "- The missing fields are now fairly clear:",
+          "line_in_shard": 147,
+          "line_in_source": 9347
+        },
+        {
+          "type": "data_shape",
+          "text": "- planning lineage:",
+          "line_in_shard": 148,
+          "line_in_source": 9348
+        },
+        {
+          "type": "data_shape",
+          "text": "- `wizard_id`",
+          "line_in_shard": 149,
+          "line_in_source": 9349
+        },
+        {
+          "type": "data_shape",
+          "text": "- `project_id`",
+          "line_in_shard": 150,
+          "line_in_source": 9350
+        },
+        {
+          "type": "data_shape",
+          "text": "- `thread_id?`",
+          "line_in_shard": 151,
+          "line_in_source": 9351
+        },
+        {
+          "type": "data_shape",
+          "text": "- `phase_plan_ref?`",
+          "line_in_shard": 152,
+          "line_in_source": 9352
+        },
+        {
+          "type": "data_shape",
+          "text": "- `staged_bundle_ref?` or equivalent pre/post-unification bundle refs",
+          "line_in_shard": 153,
+          "line_in_source": 9353
+        },
+        {
+          "type": "data_shape",
+          "text": "- `requirements_quality_report_ref?` when relevant",
+          "line_in_shard": 154,
+          "line_in_source": 9354
+        },
+        {
+          "type": "data_shape",
+          "text": "- runtime identity:",
+          "line_in_shard": 155,
+          "line_in_source": 9355
+        },
+        {
+          "type": "data_shape",
+          "text": "- richer requested/effective runtime snapshot than provider/model alone",
+          "line_in_shard": 156,
+          "line_in_source": 9356
+        },
+        {
+          "type": "data_shape",
+          "text": "- `effective_account_id?`",
+          "line_in_shard": 157,
+          "line_in_source": 9357
+        },
+        {
+          "type": "data_shape",
+          "text": "- `execution_role`",
+          "line_in_shard": 158,
+          "line_in_source": 9358
+        },
+        {
+          "type": "data_shape",
+          "text": "- permission/runtime snapshot refs when a pass is provider-executed rather than purely structural",
+          "line_in_shard": 159,
+          "line_in_source": 9359
+        },
+        {
+          "type": "data_shape",
+          "text": "- downstream bridge:",
+          "line_in_shard": 160,
+          "line_in_source": 9360
+        },
+        {
+          "type": "data_shape",
+          "text": "- stable ref from accepted/final sweep output into the launched execution run",
+          "line_in_shard": 161,
+          "line_in_source": 9361
+        },
+        {
+          "type": "data_shape",
+          "text": "- likely eventual `run_id?` or launch receipt ref once execution begins",
+          "line_in_shard": 162,
+          "line_in_source": 9362
+        },
+        {
+          "type": "process_defect",
+          "text": "- These reports are upstream artifacts, not execution attempts, so they should not pretend to be run/node/attempt records. But they now need a stronger bridge so runtime/history/ledger/search can answer:",
+          "line_in_shard": 163,
+          "line_in_source": 9363
+        },
+        {
+          "type": "data_shape",
+          "text": "- which wizard/session produced this sweep",
+          "line_in_shard": 164,
+          "line_in_source": 9364
+        },
+        {
+          "type": "data_shape",
+          "text": "- which staged artifact bundle it evaluated",
+          "line_in_shard": 165,
+          "line_in_source": 9365
+        },
+        {
+          "type": "data_shape",
+          "text": "- which final artifact tree it promoted",
+          "line_in_shard": 166,
+          "line_in_source": 9366
+        },
+        {
+          "type": "data_shape",
+          "text": "- which eventual run, if any, launched from it",
+          "line_in_shard": 167,
+          "line_in_source": 9367
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 169,
+          "line_in_source": 9369
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 170,
+          "line_in_source": 9370
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 171,
+          "line_in_source": 9371
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 172,
+          "line_in_source": 9372
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 173,
+          "line_in_source": 9373
+        },
+        {
+          "type": "doc_hint",
+          "text": "- downstream consumers:",
+          "line_in_shard": 174,
+          "line_in_source": 9374
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 175,
+          "line_in_source": 9375
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 176,
+          "line_in_source": 9376
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 177,
+          "line_in_source": 9377
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Run_Graph_View.md`",
+          "line_in_shard": 178,
+          "line_in_source": 9378
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 180,
+          "line_in_source": 9380
+        },
+        {
+          "type": "contradiction",
+          "text": "- Validation-pass reports require `provider` and `model`, but not the fuller requested/effective runtime identity fields that other provider-using artifacts are now expected to expose.",
+          "line_in_shard": 181,
+          "line_in_source": 9381
+        },
+        {
+          "type": "contradiction",
+          "text": "- The pass reports are canonical enough to gate wizard transitions and downstream artifact promotion, but not canonical enough to explain their own upstream/downstream lineage without consulting multiple other records.",
+          "line_in_shard": 182,
+          "line_in_source": 9382
+        },
+        {
+          "type": "contradiction",
+          "text": "- `workflow_run_id` links the three passes together, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run.",
+          "line_in_shard": 183,
+          "line_in_source": 9383
+        },
+        {
+          "type": "contradiction",
+          "text": "- The docs clearly state that the post-pass artifact tree is the canonical final set, but they do not define a strong receipt/reference object that binds that finality to the sweep reports and later execution handoff.",
+          "line_in_shard": 184,
+          "line_in_source": 9384
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 186,
+          "line_in_source": 9386
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Extend `validation_pass_report` identity so it carries the planning/governance lineage needed for audit and routing:",
+          "line_in_shard": 187,
+          "line_in_source": 9387
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `wizard_id`",
+          "line_in_shard": 188,
+          "line_in_source": 9388
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `project_id`",
+          "line_in_shard": 189,
+          "line_in_source": 9389
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `thread_id?`",
+          "line_in_shard": 190,
+          "line_in_source": 9390
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `phase_plan_ref?`",
+          "line_in_shard": 191,
+          "line_in_source": 9391
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- input/output artifact-bundle refs",
+          "line_in_shard": 192,
+          "line_in_source": 9392
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requirements_quality_report_ref?` when applicable",
+          "line_in_shard": 193,
+          "line_in_source": 9393
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add the upstream subset of canonical runtime identity to pass reports when a provider/model actually executed the pass:",
+          "line_in_shard": 194,
+          "line_in_source": 9394
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- requested/effective persona/platform/model snapshot refs",
+          "line_in_shard": 195,
+          "line_in_source": 9395
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `requested_account_policy?`",
+          "line_in_shard": 196,
+          "line_in_source": 9396
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `effective_account_id?`",
+          "line_in_shard": 197,
+          "line_in_source": 9397
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- `execution_role`",
+          "line_in_shard": 198,
+          "line_in_source": 9398
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add an explicit bridge from the accepted sweep result into the launched execution package/run, likely via a launch receipt or promoted package ref rather than by mutating the pass report afterward.",
+          "line_in_shard": 199,
+          "line_in_source": 9399
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep validation-pass reports distinct from runtime attempts, but stop leaving them as isolated artifacts with only local workflow identity.",
+          "line_in_shard": 200,
+          "line_in_source": 9400
+        }
+      ]
+    },
+    "shard-0048": {
+      "shard_id": "shard-0048",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0048.md",
+      "ledger_line_start": 9401,
+      "ledger_line_end": 9600,
+      "source_sha256": "1cff1c10fe27ec9ffe80ee84e5ecae773e0dcb3a978c7150589329011c6d0b15",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 2,
+          "line_in_source": 9402
+        },
+        {
+          "type": "requirement",
+          "text": "- `workflow_run_id` is useful grouping identity, but not enough lineage by itself",
+          "line_in_shard": 3,
+          "line_in_source": 9403
+        },
+        {
+          "type": "requirement",
+          "text": "- validation-pass reports are one of the few upstream artifacts already treated as hard-gating canon, so weak identity here will propagate confusion downstream",
+          "line_in_shard": 4,
+          "line_in_source": 9404
+        },
+        {
+          "type": "requirement",
+          "text": "- these reports should bridge into execution; they should not be mistaken for execution",
+          "line_in_shard": 5,
+          "line_in_source": 9405
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Storage owner gaps for missing record/projection families",
+          "line_in_shard": 7,
+          "line_in_source": 9407
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 9,
+          "line_in_source": 9409
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 10,
+          "line_in_source": 9410
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 11,
+          "line_in_source": 9411
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 12,
+          "line_in_source": 9412
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 13,
+          "line_in_source": 9413
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 14,
+          "line_in_source": 9414
+        },
+        {
+          "type": "doc_hint",
+          "text": "- current `working_ledger.md`",
+          "line_in_shard": 15,
+          "line_in_source": 9415
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 17,
+          "line_in_source": 9417
+        },
+        {
+          "type": "data_shape",
+          "text": "- `storage-plan.md` is now fairly strong on runtime-core records:",
+          "line_in_shard": 18,
+          "line_in_source": 9418
+        },
+        {
+          "type": "data_shape",
+          "text": "- `attempt_record`",
+          "line_in_shard": 19,
+          "line_in_source": 9419
+        },
+        {
+          "type": "data_shape",
+          "text": "- `blocked_projection`",
+          "line_in_shard": 20,
+          "line_in_source": 9420
+        },
+        {
+          "type": "data_shape",
+          "text": "- `scheduler_pass_record`",
+          "line_in_shard": 21,
+          "line_in_source": 9421
+        },
+        {
+          "type": "data_shape",
+          "text": "- `wizard_runtime_state`",
+          "line_in_shard": 22,
+          "line_in_source": 9422
+        },
+        {
+          "type": "data_shape",
+          "text": "- cross-surface `orchestrator.receipt.{run_id}.{attempt_id}`",
+          "line_in_shard": 23,
+          "line_in_source": 9423
+        },
+        {
+          "type": "process_defect",
+          "text": "- But several downstream docs already assume additional record/projection families that `storage-plan.md` still does not actually own in concrete form.",
+          "line_in_shard": 24,
+          "line_in_source": 9424
+        },
+        {
+          "type": "process_defect",
+          "text": "- The clearest missing family is the runtime-artifact index side:",
+          "line_in_shard": 25,
+          "line_in_source": 9425
+        },
+        {
+          "type": "data_shape",
+          "text": "- `Runtime_Artifacts_Panel.md` declares `artifacts_index:v1:{project_id}`",
+          "line_in_shard": 26,
+          "line_in_source": 9426
+        },
+        {
+          "type": "data_shape",
+          "text": "- declares a projector from `runtime_artifact.*` events",
+          "line_in_shard": 27,
+          "line_in_source": 9427
+        },
+        {
+          "type": "data_shape",
+          "text": "- declares envelope and per-type schema files",
+          "line_in_shard": 28,
+          "line_in_source": 9428
+        },
+        {
+          "type": "process_defect",
+          "text": "- `storage-plan.md` still does not clearly register that artifacts index family alongside the other canonical keys, and the broader doc set still shows signs that the schema family itself may not yet exist",
+          "line_in_shard": 29,
+          "line_in_source": 9429
+        },
+        {
+          "type": "process_defect",
+          "text": "- The other major missing family is worktree/lane lifecycle state:",
+          "line_in_shard": 30,
+          "line_in_source": 9430
+        },
+        {
+          "type": "data_shape",
+          "text": "- `WorktreeGitImprovement.md` now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs",
+          "line_in_shard": 31,
+          "line_in_source": 9431
+        },
+        {
+          "type": "data_shape",
+          "text": "- `Orchestrator_Page.md` expects `worktree_id` and historical worktree context to survive",
+          "line_in_shard": 32,
+          "line_in_source": 9432
+        },
+        {
+          "type": "process_defect",
+          "text": "- `storage-plan.md` currently has only adjacent state like `source_control.project_state.{project_id}` and `orchestrator.receipt.{run_id}.{attempt_id}`; it does not yet define a proper durable worktree record/projection family for lifecycle/history/audit",
+          "line_in_shard": 33,
+          "line_in_source": 9433
+        },
+        {
+          "type": "data_shape",
+          "text": "- This means several surfaces are currently leaning on the same narrow bridge object (`orchestrator.receipt`) to explain more than it should:",
+          "line_in_shard": 34,
+          "line_in_source": 9434
+        },
+        {
+          "type": "data_shape",
+          "text": "- receipts are good for cross-surface pivots",
+          "line_in_shard": 35,
+          "line_in_source": 9435
+        },
+        {
+          "type": "process_defect",
+          "text": "- they are not enough to replace durable worktree/lane lifecycle records",
+          "line_in_shard": 36,
+          "line_in_source": 9436
+        },
+        {
+          "type": "data_shape",
+          "text": "- A similar pattern exists for the artifact panel:",
+          "line_in_shard": 37,
+          "line_in_source": 9437
+        },
+        {
+          "type": "data_shape",
+          "text": "- one projector/index key is named",
+          "line_in_shard": 38,
+          "line_in_source": 9438
+        },
+        {
+          "type": "process_defect",
+          "text": "- but the storage owner doc does not yet make it a first-class family with key registration, lifecycle, and failure/rebuild semantics at the same level as the newer runtime records",
+          "line_in_shard": 39,
+          "line_in_source": 9439
+        },
+        {
+          "type": "process_defect",
+          "text": "- The broader lesson is that storage ownership is lagging behind the rewrite’s stronger UI/runtime object model. Some downstream docs are not merely “too detailed”; they are revealing object families the storage plan now genuinely needs.",
+          "line_in_shard": 40,
+          "line_in_source": 9440
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 42,
+          "line_in_source": 9442
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 43,
+          "line_in_source": 9443
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 44,
+          "line_in_source": 9444
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 45,
+          "line_in_source": 9445
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 46,
+          "line_in_source": 9446
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 47,
+          "line_in_source": 9447
+        },
+        {
+          "type": "doc_hint",
+          "text": "- downstream consumers:",
+          "line_in_shard": 48,
+          "line_in_source": 9448
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Source Control-related docs",
+          "line_in_shard": 49,
+          "line_in_source": 9449
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/usage-feature.md`",
+          "line_in_shard": 50,
+          "line_in_source": 9450
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 51,
+          "line_in_source": 9451
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 53,
+          "line_in_source": 9453
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Runtime_Artifacts_Panel.md` names `artifacts_index:v1:{project_id}` as canonical, but `storage-plan.md` does not appear to register/own that family at the same level as other redb families.",
+          "line_in_shard": 54,
+          "line_in_source": 9454
+        },
+        {
+          "type": "contradiction",
+          "text": "- Runtime artifact schema ownership is still split awkwardly:",
+          "line_in_shard": 55,
+          "line_in_source": 9455
+        },
+        {
+          "type": "contradiction",
+          "text": "- panel doc names required schema files",
+          "line_in_shard": 56,
+          "line_in_source": 9456
+        },
+        {
+          "type": "contradiction",
+          "text": "- storage doc refers to runtime-artifact payloads but does not fully anchor the family",
+          "line_in_shard": 57,
+          "line_in_source": 9457
+        },
+        {
+          "type": "contradiction",
+          "text": "- this makes it unclear where authoritative schema registration and projector ownership actually live",
+          "line_in_shard": 58,
+          "line_in_source": 9458
+        },
+        {
+          "type": "contradiction",
+          "text": "- `WorktreeGitImprovement.md` and Orchestrator/Source Control docs now assume durable worktree identity and lineage, but storage only clearly owns surface state (`selected_worktree_id?`) and receipt linkage (`worktree_id?`), not full lifecycle records.",
+          "line_in_shard": 59,
+          "line_in_source": 9459
+        },
+        {
+          "type": "contradiction",
+          "text": "- The current storage families are still more attempt/block/usage-centric than lane/worktree/concern/project-attention-centric, even though the rewrite now relies on those object families elsewhere.",
+          "line_in_shard": 60,
+          "line_in_source": 9460
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 62,
+          "line_in_source": 9462
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add explicit first-class storage families for runtime-artifact indexing/projection:",
+          "line_in_shard": 63,
+          "line_in_source": 9463
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- canonical redb key registration",
+          "line_in_shard": 64,
+          "line_in_source": 9464
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- projector ownership/checkpoint semantics",
+          "line_in_shard": 65,
+          "line_in_source": 9465
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- rebuild/failure semantics",
+          "line_in_shard": 66,
+          "line_in_source": 9466
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- clear schema ownership boundary",
+          "line_in_shard": 67,
+          "line_in_source": 9467
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add explicit first-class storage families for durable worktree/lane lifecycle:",
+          "line_in_shard": 68,
+          "line_in_source": 9468
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- worktree record",
+          "line_in_shard": 69,
+          "line_in_source": 9469
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- lane/worktree projection for current state",
+          "line_in_shard": 70,
+          "line_in_source": 9470
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- historical lineage retention after archive/remove",
+          "line_in_shard": 71,
+          "line_in_source": 9471
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- conflict/suspect/restoring/archive/remove lifecycle support",
+          "line_in_shard": 72,
+          "line_in_source": 9472
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees.",
+          "line_in_shard": 73,
+          "line_in_source": 9473
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Audit `storage-plan.md` for other downstream-assumed families already discussed in research:",
+          "line_in_shard": 74,
+          "line_in_source": 9474
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- project summary / attention items",
+          "line_in_shard": 75,
+          "line_in_source": 9475
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- concern records/projections",
+          "line_in_shard": 76,
+          "line_in_source": 9476
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- account pressure and switch history",
+          "line_in_shard": 77,
+          "line_in_source": 9477
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- projection freshness/health fields on projections",
+          "line_in_shard": 78,
+          "line_in_source": 9478
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 80,
+          "line_in_source": 9480
+        },
+        {
+          "type": "requirement",
+          "text": "- the storage gap is now about concrete missing object families, not just incomplete wording",
+          "line_in_shard": 81,
+          "line_in_source": 9481
+        },
+        {
+          "type": "requirement",
+          "text": "- artifacts index and worktree lifecycle look like the clearest missing families right now",
+          "line_in_shard": 82,
+          "line_in_source": 9482
+        },
+        {
+          "type": "requirement",
+          "text": "- receipt linkage is necessary but not sufficient; it cannot carry the full weight of lifecycle/history/state projection",
+          "line_in_shard": 83,
+          "line_in_source": 9483
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Proposed storage families for worktree/lane and artifact index",
+          "line_in_shard": 85,
+          "line_in_source": 9485
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 87,
+          "line_in_source": 9487
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 88,
+          "line_in_source": 9488
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 89,
+          "line_in_source": 9489
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 90,
+          "line_in_source": 9490
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 91,
+          "line_in_source": 9491
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 93,
+          "line_in_source": 9493
+        },
+        {
+          "type": "process_defect",
+          "text": "- The missing storage-owner work is now specific enough to propose concrete families rather than leaving it as a generic gap.",
+          "line_in_shard": 94,
+          "line_in_source": 9494
+        },
+        {
+          "type": "data_shape",
+          "text": "- Two first-class families stand out as structurally necessary:",
+          "line_in_shard": 95,
+          "line_in_source": 9495
+        },
+        {
+          "type": "data_shape",
+          "text": "- runtime artifact indexing/projection",
+          "line_in_shard": 96,
+          "line_in_source": 9496
+        },
+        {
+          "type": "data_shape",
+          "text": "- durable worktree/lane lifecycle state",
+          "line_in_shard": 97,
+          "line_in_source": 9497
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Recommended artifact-index storage family",
+          "line_in_shard": 99,
+          "line_in_source": 9499
+        },
+        {
+          "type": "data_shape",
+          "text": "- Keep seglog `runtime_artifact.*` events as canonical source.",
+          "line_in_shard": 100,
+          "line_in_source": 9500
+        },
+        {
+          "type": "data_shape",
+          "text": "- Add explicit redb/projector ownership in `storage-plan.md` for:",
+          "line_in_shard": 101,
+          "line_in_source": 9501
+        },
+        {
+          "type": "data_shape",
+          "text": "- `artifacts_index.v1:{project_id}:{artifact_id}`",
+          "line_in_shard": 102,
+          "line_in_source": 9502
+        },
+        {
+          "type": "data_shape",
+          "text": "- current lookup/index row for one runtime artifact",
+          "line_in_shard": 103,
+          "line_in_source": 9503
+        },
+        {
+          "type": "data_shape",
+          "text": "- `artifacts_project_state.v1:{project_id}`",
+          "line_in_shard": 104,
+          "line_in_source": 9504
+        },
+        {
+          "type": "data_shape",
+          "text": "- optional UI/projector cursor/filter/health metadata if needed",
+          "line_in_shard": 105,
+          "line_in_source": 9505
+        },
+        {
+          "type": "data_shape",
+          "text": "- `projector.checkpoint.runtime_artifacts:{project_id}`",
+          "line_in_shard": 106,
+          "line_in_source": 9506
+        },
+        {
+          "type": "data_shape",
+          "text": "- projector checkpoint / rebuild state",
+          "line_in_shard": 107,
+          "line_in_source": 9507
+        },
+        {
+          "type": "data_shape",
+          "text": "- Minimum indexed fields should include:",
+          "line_in_shard": 108,
+          "line_in_source": 9508
+        },
+        {
+          "type": "data_shape",
+          "text": "- `artifact_id`",
+          "line_in_shard": 109,
+          "line_in_source": 9509
+        },
+        {
+          "type": "data_shape",
+          "text": "- `artifact_type`",
+          "line_in_shard": 110,
+          "line_in_source": 9510
+        },
+        {
+          "type": "data_shape",
+          "text": "- `project_id`",
+          "line_in_shard": 111,
+          "line_in_source": 9511
+        },
+        {
+          "type": "data_shape",
+          "text": "- `run_id?`",
+          "line_in_shard": 112,
+          "line_in_source": 9512
+        },
+        {
+          "type": "data_shape",
+          "text": "- `thread_id?`",
+          "line_in_shard": 113,
+          "line_in_source": 9513
+        },
+        {
+          "type": "data_shape",
+          "text": "- `node_id?`",
+          "line_in_shard": 114,
+          "line_in_source": 9514
+        },
+        {
+          "type": "data_shape",
+          "text": "- `attempt_id?`",
+          "line_in_shard": 115,
+          "line_in_source": 9515
+        },
+        {
+          "type": "data_shape",
+          "text": "- `created_at_utc`",
+          "line_in_shard": 116,
+          "line_in_source": 9516
+        },
+        {
+          "type": "data_shape",
+          "text": "- `summary`",
+          "line_in_shard": 117,
+          "line_in_source": 9517
+        },
+        {
+          "type": "data_shape",
+          "text": "- primary refs (`linked_artifact_id?`, `usage_event_ref?`, receipt/open refs)",
+          "line_in_shard": 118,
+          "line_in_source": 9518
+        },
+        {
+          "type": "data_shape",
+          "text": "- projection freshness/health markers if projector state is degraded",
+          "line_in_shard": 119,
+          "line_in_source": 9519
+        },
+        {
+          "type": "data_shape",
+          "text": "- Rule:",
+          "line_in_shard": 120,
+          "line_in_source": 9520
+        },
+        {
+          "type": "data_shape",
+          "text": "- the index is a projection for lookup/filter/navigation",
+          "line_in_shard": 121,
+          "line_in_source": 9521
+        },
+        {
+          "type": "data_shape",
+          "text": "- it must be rebuildable from seglog",
+          "line_in_shard": 122,
+          "line_in_source": 9522
+        },
+        {
+          "type": "data_shape",
+          "text": "- missing/corrupt index rows must degrade to record-backed views rather than implying artifact loss",
+          "line_in_shard": 123,
+          "line_in_source": 9523
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Recommended worktree/lane storage family",
+          "line_in_shard": 125,
+          "line_in_source": 9525
+        },
+        {
+          "type": "data_shape",
+          "text": "- Keep Source Control worktree-first at the UI level, but storage needs both durable worktree identity and lane lineage.",
+          "line_in_shard": 126,
+          "line_in_source": 9526
+        },
+        {
+          "type": "data_shape",
+          "text": "- Proposed families:",
+          "line_in_shard": 127,
+          "line_in_source": 9527
+        },
+        {
+          "type": "data_shape",
+          "text": "- `worktree_record.v1:{project_id}:{worktree_id}`",
+          "line_in_shard": 128,
+          "line_in_source": 9528
+        },
+        {
+          "type": "data_shape",
+          "text": "- durable worktree identity / filesystem / git backing",
+          "line_in_shard": 129,
+          "line_in_source": 9529
+        },
+        {
+          "type": "data_shape",
+          "text": "- `lane_record.v1:{project_id}:{lane_id}`",
+          "line_in_shard": 130,
+          "line_in_source": 9530
+        },
+        {
+          "type": "data_shape",
+          "text": "- package/lane operational lineage object",
+          "line_in_shard": 131,
+          "line_in_source": 9531
+        },
+        {
+          "type": "data_shape",
+          "text": "- `worktree_projection.v1:{project_id}:{worktree_id}`",
+          "line_in_shard": 132,
+          "line_in_source": 9532
+        },
+        {
+          "type": "data_shape",
+          "text": "- current lifecycle/status projection for the worktree",
+          "line_in_shard": 133,
+          "line_in_source": 9533
+        },
+        {
+          "type": "data_shape",
+          "text": "- `lane_projection.v1:{project_id}:{lane_id}`",
+          "line_in_shard": 134,
+          "line_in_source": 9534
+        },
+        {
+          "type": "data_shape",
+          "text": "- current lane lifecycle/status projection",
+          "line_in_shard": 135,
+          "line_in_source": 9535
+        },
+        {
+          "type": "data_shape",
+          "text": "- Minimum `worktree_record` fields:",
+          "line_in_shard": 136,
+          "line_in_source": 9536
+        },
+        {
+          "type": "data_shape",
+          "text": "- `worktree_id`",
+          "line_in_shard": 137,
+          "line_in_source": 9537
+        },
+        {
+          "type": "data_shape",
+          "text": "- `project_id`",
+          "line_in_shard": 138,
+          "line_in_source": 9538
+        },
+        {
+          "type": "data_shape",
+          "text": "- `repo_id`",
+          "line_in_shard": 139,
+          "line_in_source": 9539
+        },
+        {
+          "type": "data_shape",
+          "text": "- `path_ref` or canonical path snapshot",
+          "line_in_shard": 140,
+          "line_in_source": 9540
+        },
+        {
+          "type": "data_shape",
+          "text": "- `branch_ref`",
+          "line_in_shard": 141,
+          "line_in_source": 9541
+        },
+        {
+          "type": "data_shape",
+          "text": "- `baseline_ref?`",
+          "line_in_shard": 142,
+          "line_in_source": 9542
+        },
+        {
+          "type": "data_shape",
+          "text": "- `created_at_utc`",
+          "line_in_shard": 143,
+          "line_in_source": 9543
+        },
+        {
+          "type": "data_shape",
+          "text": "- `created_by_run_id?`",
+          "line_in_shard": 144,
+          "line_in_source": 9544
+        },
+        {
+          "type": "data_shape",
+          "text": "- `created_by_attempt_id?`",
+          "line_in_shard": 145,
+          "line_in_source": 9545
+        },
+        {
+          "type": "data_shape",
+          "text": "- `lane_id?`",
+          "line_in_shard": 146,
+          "line_in_source": 9546
+        },
+        {
+          "type": "data_shape",
+          "text": "- `historical_lineage_refs[]?`",
+          "line_in_shard": 147,
+          "line_in_source": 9547
+        },
+        {
+          "type": "data_shape",
+          "text": "- Minimum `worktree_projection` fields:",
+          "line_in_shard": 148,
+          "line_in_source": 9548
+        },
+        {
+          "type": "data_shape",
+          "text": "- lifecycle state (`active | suspect | restoring | retained | cleanup_eligible | archived | removed`)",
+          "line_in_shard": 149,
+          "line_in_source": 9549
+        },
+        {
+          "type": "data_shape",
+          "text": "- `dirty_state`",
+          "line_in_shard": 150,
+          "line_in_source": 9550
+        },
+        {
+          "type": "data_shape",
+          "text": "- `conflict_state`",
+          "line_in_shard": 151,
+          "line_in_source": 9551
+        },
+        {
+          "type": "data_shape",
+          "text": "- `owner_run_id?`",
+          "line_in_shard": 152,
+          "line_in_source": 9552
+        },
+        {
+          "type": "data_shape",
+          "text": "- `owner_attempt_id?`",
+          "line_in_shard": 153,
+          "line_in_source": 9553
+        },
+        {
+          "type": "data_shape",
+          "text": "- latest `blocked_reason_code?`",
+          "line_in_shard": 154,
+          "line_in_source": 9554
+        },
+        {
+          "type": "data_shape",
+          "text": "- `last_seen_at_utc`",
+          "line_in_shard": 155,
+          "line_in_source": 9555
+        },
+        {
+          "type": "data_shape",
+          "text": "- `projection_freshness`",
+          "line_in_shard": 156,
+          "line_in_source": 9556
+        },
+        {
+          "type": "data_shape",
+          "text": "- `projection_health`",
+          "line_in_shard": 157,
+          "line_in_source": 9557
+        },
+        {
+          "type": "data_shape",
+          "text": "- Minimum `lane_record` / `lane_projection` should preserve:",
+          "line_in_shard": 158,
+          "line_in_source": 9558
+        },
+        {
+          "type": "data_shape",
+          "text": "- package/work-package linkage",
+          "line_in_shard": 159,
+          "line_in_source": 9559
+        },
+        {
+          "type": "data_shape",
+          "text": "- current baseline",
+          "line_in_shard": 160,
+          "line_in_source": 9560
+        },
+        {
+          "type": "data_shape",
+          "text": "- active worktree refs",
+          "line_in_shard": 161,
+          "line_in_source": 9561
+        },
+        {
+          "type": "data_shape",
+          "text": "- historical worktree refs",
+          "line_in_shard": 162,
+          "line_in_source": 9562
+        },
+        {
+          "type": "data_shape",
+          "text": "- cleanup/archive/remove lineage",
+          "line_in_shard": 163,
+          "line_in_source": 9563
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Ownership guidance",
+          "line_in_shard": 165,
+          "line_in_source": 9565
+        },
+        {
+          "type": "data_shape",
+          "text": "- `storage-plan.md` should own:",
+          "line_in_shard": 166,
+          "line_in_source": 9566
+        },
+        {
+          "type": "data_shape",
+          "text": "- key registration",
+          "line_in_shard": 167,
+          "line_in_source": 9567
+        },
+        {
+          "type": "data_shape",
+          "text": "- projector/rebuild semantics",
+          "line_in_shard": 168,
+          "line_in_source": 9568
+        },
+        {
+          "type": "data_shape",
+          "text": "- current vs historical projection rules",
+          "line_in_shard": 169,
+          "line_in_source": 9569
+        },
+        {
+          "type": "data_shape",
+          "text": "- `WorktreeGitImprovement.md` should own:",
+          "line_in_shard": 170,
+          "line_in_source": 9570
+        },
+        {
+          "type": "data_shape",
+          "text": "- operational behavior",
+          "line_in_shard": 171,
+          "line_in_source": 9571
+        },
+        {
+          "type": "data_shape",
+          "text": "- cleanup/archive/remove rules",
+          "line_in_shard": 172,
+          "line_in_source": 9572
+        },
+        {
+          "type": "data_shape",
+          "text": "- UI expectations for Source Control and Orchestrator",
+          "line_in_shard": 173,
+          "line_in_source": 9573
+        },
+        {
+          "type": "data_shape",
+          "text": "- `Runtime_Artifacts_Panel.md` should own:",
+          "line_in_shard": 174,
+          "line_in_source": 9574
+        },
+        {
+          "type": "data_shape",
+          "text": "- artifact-type semantics",
+          "line_in_shard": 175,
+          "line_in_source": 9575
+        },
+        {
+          "type": "data_shape",
+          "text": "- panel behavior",
+          "line_in_shard": 176,
+          "line_in_source": 9576
+        },
+        {
+          "type": "data_shape",
+          "text": "- schema family references",
+          "line_in_shard": 177,
+          "line_in_source": 9577
+        },
+        {
+          "type": "data_shape",
+          "text": "- `orchestrator.receipt` should remain the cross-surface bridge record, not the substitute for these families.",
+          "line_in_shard": 178,
+          "line_in_source": 9578
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 180,
+          "line_in_source": 9580
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 181,
+          "line_in_source": 9581
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 182,
+          "line_in_source": 9582
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 183,
+          "line_in_source": 9583
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 184,
+          "line_in_source": 9584
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Source Control-related docs",
+          "line_in_shard": 185,
+          "line_in_source": 9585
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 187,
+          "line_in_source": 9587
+        },
+        {
+          "type": "contradiction",
+          "text": "- `artifacts_index:v1:{project_id}` is too underspecified to function as the sole canonical index contract; it needs row identity and projector ownership.",
+          "line_in_shard": 188,
+          "line_in_source": 9588
+        },
+        {
+          "type": "contradiction",
+          "text": "- `selected_worktree_id?` in project UI state is not a substitute for a durable worktree record family.",
+          "line_in_shard": 189,
+          "line_in_source": 9589
+        },
+        {
+          "type": "contradiction",
+          "text": "- `orchestrator.receipt` already carries `worktree_id?`, which is useful, but without a worktree record/projection family there is nowhere canonical for lifecycle/history to live.",
+          "line_in_shard": 190,
+          "line_in_source": 9590
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 192,
+          "line_in_source": 9592
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Expand `storage-plan.md` with explicit artifact-index and worktree/lane family registration.",
+          "line_in_shard": 193,
+          "line_in_source": 9593
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Align artifact ID guidance so `attempt_id?` and `node_id?` are first-class indexed refs where relevant.",
+          "line_in_shard": 194,
+          "line_in_source": 9594
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Align worktree docs around `worktree_id` as durable identity and `lane_id` as operational lineage, rather than continuing to let tier IDs or raw paths carry canonical meaning.",
+          "line_in_shard": 195,
+          "line_in_source": 9595
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 197,
+          "line_in_source": 9597
+        },
+        {
+          "type": "requirement",
+          "text": "- these families are projections/records that downstream docs are already implicitly depending on",
+          "line_in_shard": 198,
+          "line_in_source": 9598
+        },
+        {
+          "type": "requirement",
+          "text": "- Source Control being worktree-first in UI does not remove the need for lane lineage in storage",
+          "line_in_shard": 199,
+          "line_in_source": 9599
+        },
+        {
+          "type": "requirement",
+          "text": "- artifact index rows should degrade cleanly to seglog-backed inspection if projector state is stale or missing",
+          "line_in_shard": 200,
+          "line_in_source": 9600
+        }
+      ]
+    }
+  },
+  "status": "complete"
+}

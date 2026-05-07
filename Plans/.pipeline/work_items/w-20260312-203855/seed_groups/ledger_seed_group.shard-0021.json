@@ -3,559 +3,116 @@
   "prompt_id": "C3",
   "prompt_version": "pm.c3.v3.1.12",
   "work_id": "w-20260312-203855",
-  "c3_invocation_id": "c3-inv-006",
-  "c3_task_id": "c3-task-006",
-  "anchor_shard_id": "shard-0021",
-  "shard_id": "shard-0021",
+  "subagent_task_id": "task-006",
   "source_shard_ids": [
     "shard-0021",
     "shard-0022",
     "shard-0023",
     "shard-0024"
   ],
-  "status": "complete",
-  "extraction_status": "complete",
-  "coverage": {
-    "working_ledger_line_start": 4001,
-    "working_ledger_line_end": 4800,
-    "line_count": 800,
-    "anchor_shard_id": "shard-0021",
-    "source_paths": [
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0021.md",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0022.md",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0023.md",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0024.md"
+  "shard_line_ranges": {
+    "shard-0021": "1-201",
+    "shard-0022": "1-201",
+    "shard-0023": "1-201",
+    "shard-0024": "1-201"
+  },
+  "extracted": {
+    "requirements": [
+      "Auto Persona resolution must prioritize actor-type defaults over stack hints and always resolve `auto` to an effective persona with reason.",
+      "Simple help must simplify explanation without renaming or mutating canonical model semantics.",
+      "Expert and ELI5 help variants must share the same concept skeleton and differ only in phrasing density.",
+      "Project cards must distinguish health vs activity vs attention, and treat historical-only activity as non-degraded unless explicitly archived.",
+      "Resurfacing should be change/persistence-based (severity/owner/duration/actionability), not heartbeat spam.",
+      "Dense Orchestrator tabs must use slice loading, virtualization, lazy expansion, and demand-loading; exact ledger inspection still paged.",
+      "Bulk actions should default to navigation/triage/low-risk updates; high-risk runtime mutations require explicit safe batch semantics.",
+      "Mutation controls must be gated by trusted projection state (`current`) or canonical runtime revalidation."
+    ],
+    "decisions": [
+      "Split help model into canonical term system, help entry system, and contextual help system.",
+      "Use glossary as canonical short-definition backbone; richer help entries carry examples and related links.",
+      "Use a project-summary projection with compact singular status emphasizing dominant owner and primary reason.",
+      "Adopt shared escalation ladder: info -> warning -> attention_required -> blocked -> system_notification.",
+      "Treat scale and projection-trust behavior as Orchestrator-wide contracts, not per-tab ad hoc rules.",
+      "Keep command palette universal for navigation but guarded for mutation-bearing runtime actions."
+    ],
+    "data_shapes": [
+      "Help entry template: canonical name, short definition, why it matters, what it is not, related states/actions, related concepts, where seen.",
+      "Project card model: Activity (`idle|running|paused|queued|background_active`), Attention (`none|attention_required|blocked|degraded`), plus Health.",
+      "Shared routing payload: `project_id`, `focused_run_id`, destination tab, selected object id/type, optional inspector target, optional filters.",
+      "Projection trust states: `current|refreshing|stale|degraded|unavailable`.",
+      "Trust disclosure fields: `freshness_state`, `last_updated_at`, `data_source_kind`, optional `degraded_reason`, optional `action_gate_reason`."
+    ],
+    "routing_rules": [
+      "Concept-help links should connect related clusters (e.g., seam/work-package/integration, promotion/revocation/reopen, lane/worktree lifecycle).",
+      "Projects page should deep-link pressure/attention summaries into Usage, Authentication, Orchestrator, and detail tabs.",
+      "Escalation surface mapping: History gets full chronology; Progress/Dashboard active severity; badges compressed counts; chat for user decisions; sparse system notifications.",
+      "Fallback ladder under stale/degraded trust: widget summary -> native tab; rollup -> filtered record slice; inspector -> Ledger/History/detail-ref view.",
+      "Context menus should expose only object-valid canonical actions; palette/shortcuts must honor same confirmation gates."
+    ],
+    "verification_rules": [
+      "`auto` cannot remain opaque; historical runs must preserve resolved effective persona/reason at execution time.",
+      "`attention_required` and `blocked` must remain distinct; persistent blockers cannot be dismissed into fake health.",
+      "Confirmation strength cannot be downgraded by action discoverability (palette/shortcut/context).",
+      "Stale visibility is not action authority; stale `allowed_action_ids[]` must not be trusted without revalidation."
+    ],
+    "owner_consumer_obligations": [
+      "When attention/blocked is shown, surface dominant current owner (Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource).",
+      "Project summaries should communicate one primary reason and optional additional-issues count, avoiding mini-dashboard overload.",
+      "System notifications should be reserved for sparse high-value events (HITL required, completion, major failure, severe execution-blocking pressure)."
+    ],
+    "stale_retirement_items": [
+      "Retire setup-centric single-dot status semantics that conflate health with attention.",
+      "Retire tooltip-only concept-help assumptions for rewrite-era first-class terms.",
+      "Retire graph-only scaling assumptions; enforce equivalent density controls on Seams/Evidence/History/Ledger.",
+      "Retire broad implicit bulk-mutation affordances without explicit action-surface classification."
+    ],
+    "open_questions": [
+      "What explicit policy determines which concepts get full help entries versus contextual-only help?",
+      "What exact thresholds drive resurfacing cadence by severity and persistence?",
+      "What Orchestrator-wide defaults define initial slice sizes, paging/search interplay, and cross-tab inspector loading?",
+      "What concrete action matrix classifies palette-visible, shortcut-eligible, context-menu-only, and bulk-forbidden commands?"
+    ],
+    "process_defects": [
+      "Concept-help contract is underdefined; risk of inconsistent term redefinition across surfaces.",
+      "Projects status model remains too setup-centric and lacks a canonical blocked-owner/primary-reason rollup.",
+      "Escalation behavior exists as fragmented case rules, not a single cross-surface contract.",
+      "Scale and trust policies are uneven across tabs; mutation gating under stale/degraded projections is not uniformly specified."
+    ],
+    "doc_hints": [
+      "Codify deterministic auto-persona resolver outputs and extend the same pattern to other decision surfaces.",
+      "Add dedicated help-entry contract and concept-link graph anchored by glossary canonical terms.",
+      "Define project-summary projection contract and compact card semantics with deep-link exits.",
+      "Publish Orchestrator action-surface policy (navigation vs mutation, single vs bulk, confirmation class).",
+      "Publish projection-trust + fallback policy with mandatory freshness disclosures per dense tab.",
+      "Complete shared record envelope/artifact normalization specification started in shard-0024."
     ]
   },
-  "extracted_items": [
-    {
-      "type": "doc_hint",
-      "text": "Auto Persona resolver should emit ranked candidates, winning candidate, concise selection reason, and fallback reason when preferred is not effective.",
-      "line_in_working_ledger": 4001,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "requirement",
-      "text": "Keep actor-type defaults stronger than stack hints in auto Persona resolution.",
-      "line_in_working_ledger": 4005,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Reuse Interview-style deterministic resolver pattern for other surfaces where possible.",
-      "line_in_working_ledger": 4006,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "verification_rule",
-      "text": "`auto` must never appear as opaque state with no resolved Persona/reason.",
-      "line_in_working_ledger": 4009,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Historical runs must preserve resolved effective Persona and reason from execution time.",
-      "line_in_working_ledger": 4010,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Corroboration/review personas should remain distinct from original implementation persona when possible.",
-      "line_in_working_ledger": 4011,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Dual-copy rule: app Interaction Mode (Expert/ELI5) controls help/tooltip/interviewer copy; Chat ELI5 is separate and must not be conflated.",
-      "line_in_working_ledger": 4024,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "process_defect",
-      "text": "Help/copy contract is mostly tooltip-oriented; complex concepts need more than tooltip-only help.",
-      "line_in_working_ledger": 4027,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "requirement",
-      "text": "Simple help must simplify explanation without mutating canonical terms or inventing alternate semantics.",
-      "line_in_working_ledger": 4029,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "decision",
-      "text": "Split help into canonical term system, help entry system, and contextual help system.",
-      "line_in_working_ledger": 4033,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Canonical term system: stable object/state/action names for docs/runtime/contracts.",
-      "line_in_working_ledger": 4038,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Help entry system: explainer pages/cards for important concepts.",
-      "line_in_working_ledger": 4040,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Contextual help: inline tooltips, badges, hover copy, small affordances.",
-      "line_in_working_ledger": 4042,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "requirement",
-      "text": "Simple help simplifies explanation; keep canonical names stable; ELI5 explains simply without parallel friendly names that drift from contracts.",
-      "line_in_working_ledger": 4046,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Dedicated help entries likely for Feature Seam, Work Package, overseers, Weak Integration, Promotion, Corroboration, Graph Patch, Reopened, Revoked, requested vs effective identity, safe vs restore point, lane vs worktree, concern lifecycle.",
-      "line_in_working_ledger": 4058,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Contextual-only help for local buttons, simple badges, obvious single-surface controls, provider caveats near controls.",
-      "line_in_working_ledger": 4076,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Help entry template: canonical name, short definition, why it matters, what it is not, related states/actions, related concepts, surface examples.",
-      "line_in_working_ledger": 4086,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Related-concept clusters link Feature Seam/Work Package/Weak Integration/Seam Complete; Promotion/Reopened/Revoked; Corroboration/Concern/Review; Graph Patch/Generation Updated/Historical Path; Lane/Worktree/Cleanup Eligible/Archived; Requested/Effective/Skipped-Clamped.",
-      "line_in_working_ledger": 4102,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "requirement",
-      "text": "Expert and ELI5 share same concept skeleton; differ in density not substance; ELI5 must not introduce weaker semantics.",
-      "line_in_working_ledger": 4111,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Settings: tooltip-heavy; Orchestrator: clickable help on Seams/Progress/inspectors; History/Ledger: records first plus concept help links.",
-      "line_in_working_ledger": 4122,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "decision",
-      "text": "Glossary becomes canonical concept inventory backbone; glossary = short definitions; help entries = fuller explanations with links.",
-      "line_in_working_ledger": 4132,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "process_defect",
-      "text": "No concept-help contract yet; risk of inconsistent rewrite term definitions across surfaces.",
-      "line_in_working_ledger": 4138,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Define help-entry contract with fixed structure and related links; keep canonical names stable; classify full-entry vs contextual-only concepts.",
-      "line_in_working_ledger": 4143,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "verification_rule",
-      "text": "App Expert/ELI5 stays independent from chat simplification; help must not mutate runtime truth.",
-      "line_in_working_ledger": 4149,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Projects page today: name/path, badges, last opened, orchestrator idle/running/paused, health indicator (mostly repo/config checks).",
-      "line_in_working_ledger": 4163,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "process_defect",
-      "text": "Project health signals do not express blocked ownership, primary attention reason, multi-account pressure, historical posture, background activity.",
-      "line_in_working_ledger": 4173,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "decision",
-      "text": "Separate project health, project activity, and project attention.",
-      "line_in_working_ledger": 4183,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Health = setup/integrity/config; Activity = active/paused/queued/background; Attention = needs user/operator action.",
-      "line_in_working_ledger": 4187,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Project card fields: name, path, badges, activity status, attention status, health, primary blocked/attention reason, owner when relevant, pressure summary, last active/opened.",
-      "line_in_working_ledger": 4195,
-      "source_shard_id": "shard-0021"
-    },
-    {
-      "type": "data_shape",
-      "text": "Compact model: Activity idle|running|paused|queued|background_active; Attention none|attention_required|blocked|degraded; Health integrity signal.",
-      "line_in_working_ledger": 4206,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "owner_consumer_obligation",
-      "text": "When project blocked/attention, show dominant current owner: Runtime, Package/Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource.",
-      "line_in_working_ledger": 4213,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Show one primary attention/blocked reason with optional count badge for more issues.",
-      "line_in_working_ledger": 4229,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Pressure summary stays compact (e.g. Gemini pressure high, account switch active) and deep-links to Usage/Auth/Orchestrator.",
-      "line_in_working_ledger": 4246,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "requirement",
-      "text": "Do not treat historical project as semantic class unless product adds archiving; many historical runs alone is not a problem state.",
-      "line_in_working_ledger": 4252,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "decision",
-      "text": "Surface background work independently from blocked attention (can be background_active + attention_required without globally blocked).",
-      "line_in_working_ledger": 4262,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Projects page summarizes canonical project-level projection rollup: run state, dominant blocked owner, severity, pressure, health.",
-      "line_in_working_ledger": 4270,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "process_defect",
-      "text": "No clear project-level rollup for blocked-owner and primary attention; orchestrator status alone too weak.",
-      "line_in_working_ledger": 4280,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Define project-summary projection; keep card status singular with deep links; avoid mini-dashboard many badges.",
-      "line_in_working_ledger": 4284,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Blocked ownership is dominant issue; health vs attention must not share one overloaded indicator.",
-      "line_in_working_ledger": 4295,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Shared escalation ladder: info, warning, attention_required, blocked, system_notification with defined meanings per level.",
-      "line_in_working_ledger": 4322,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Surface mapping: History all chronology; Progress/Dashboard active issues; badges compressed; chat for real decisions; sparse system notifications.",
-      "line_in_working_ledger": 4341,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "requirement",
-      "text": "Resurface unresolved conditions on severity/persistence changes, not every heartbeat; suppress duplicate noise while unchanged.",
-      "line_in_working_ledger": 4355,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Dismissed is presentation not resolution; real blocked states stay until truth changes; no dismiss into fake health.",
-      "line_in_working_ledger": 4369,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Narrow system notifications: HITL approval, run complete, major failure, maybe severe rate-limit when execution-blocking.",
-      "line_in_working_ledger": 4378,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Usage pressure pattern: threshold, dismiss/quiet, path to config; escalate when execution-blocking.",
-      "line_in_working_ledger": 4393,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "decision",
-      "text": "Escalation from concerns uses severity, blocking effect, owner, persistence—not every concern becomes system notification.",
-      "line_in_working_ledger": 4399,
-      "source_shard_id": "shard-0022"
-    },
-    {
-      "type": "process_defect",
-      "text": "No single cross-surface escalation contract; rate-limit suppression clearer than other condition classes.",
-      "line_in_working_ledger": 4407,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Define shared escalation ladder, resurfacing on meaningful change, sparse system notifications, blocked stronger than dismissible warnings.",
-      "line_in_working_ledger": 4412,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "verification_rule",
-      "text": "attention_required vs blocked distinct everywhere; no silent demotion of persistent blockers with time.",
-      "line_in_working_ledger": 4418,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "data_shape",
-      "text": "Graph scale targets: 500 nodes stretch 1000, 60fps pan/zoom, layout <500ms, load <1s at 500 nodes.",
-      "line_in_working_ledger": 4433,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "data_shape",
-      "text": "Graph implementation: culling+overscan, virtualization, per-gen layout cache, incremental updates, throttling, optional canvas fallback.",
-      "line_in_working_ledger": 4438,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "decision",
-      "text": "Treat scale as cross-tab contract covering Seams, Graph, Evidence, History, Ledger, Progress—not graph-only.",
-      "line_in_working_ledger": 4452,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "Node Graph: keep culling/caching/throttle; historical generations in model but not all paths full fidelity; visibility/focus modes.",
-      "line_in_working_ledger": 4468,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "Seams: progressive disclosure; lazy package/node expansion.",
-      "line_in_working_ledger": 4472,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "Evidence: virtualization/paging; metadata-first artifacts; demand-loaded previews.",
-      "line_in_working_ledger": 4476,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "History: windowed chronological; recent slice first; summarize dense bursts when collapsed.",
-      "line_in_working_ledger": 4480,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "Ledger: exact via filtered query, paging, stable sort; export can exceed viewport.",
-      "line_in_working_ledger": 4484,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "Progress widgets use compact projections and deep-link to dense tabs.",
-      "line_in_working_ledger": 4488,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "decision",
-      "text": "Default graph: focused generation + lineage context; emphasize current gen, mute superseded, overlays on demand.",
-      "line_in_working_ledger": 4494,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Degrade large surfaces to smaller record-backed slices when projections stale/degraded.",
-      "line_in_working_ledger": 4514,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "process_defect",
-      "text": "Graph scale guidance stronger than Seams/Evidence/History/Ledger; missing Orchestrator-wide slice/paging/inspector rules.",
-      "line_in_working_ledger": 4520,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Add Orchestrator-wide scale contract: mandatory slice loading, virtualization, lazy expansion, widget projections only, tie to projection trust.",
-      "line_in_working_ledger": 4530,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Ledger exactness does not require eager full materialization; non-graph tabs may bottleneck before graph.",
-      "line_in_working_ledger": 4537,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Command palette: universal navigation/precise actions but not all dangerous mutations one keystroke away.",
-      "line_in_working_ledger": 4567,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "decision",
-      "text": "Palette split: friendly navigation/search; guarded recover/retry/approve with confirmations; discourage ambiguous bulk destructive actions.",
-      "line_in_working_ledger": 4569,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "Bulk actions default to navigation/triage/low-risk updates; narrow live mutations unless safe batch semantic exists.",
-      "line_in_working_ledger": 4583,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "requirement",
-      "text": "Shortcuts prioritize navigation, focus, search, inspector toggles, non-destructive actions.",
-      "line_in_working_ledger": 4599,
-      "source_shard_id": "shard-0023"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Orchestrator shortcut candidates: global search, tab next/prev, inspector toggle, jump attention items, graph fit/focus/gen overlay.",
-      "line_in_working_ledger": 4601,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "requirement",
-      "text": "Higher-risk runtime actions avoid global shortcuts unless passing stronger action policy.",
-      "line_in_working_ledger": 4606,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Context menus show only actions valid for object state with canonical runtime labels (node, concern, promotion, patch, lane/worktree, recovery).",
-      "line_in_working_ledger": 4611,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "data_shape",
-      "text": "Shared routing payload: project_id, focused_run_id, destination tab, selected object id/type, optional inspector, optional filter.",
-      "line_in_working_ledger": 4624,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Discoverability does not weaken confirmation: strong/hard_gate/non_reversible/compensating_only still gated in palette/shortcuts.",
-      "line_in_working_ledger": 4635,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Source Control worktree-first: lean on context menus; bulk cleanup preview-heavy; Orchestrator deep-links not blind batch Git cleanup.",
-      "line_in_working_ledger": 4644,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "process_defect",
-      "text": "Command infra ahead of Orchestrator action-surface policy; bulk navigation wording could imply unsafe bulk execution.",
-      "line_in_working_ledger": 4649,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Classify actions: navigation vs mutation, single vs multi-target, shortcut/palette/context-menu, confirmation class; default bulk to triage/navigation.",
-      "line_in_working_ledger": 4659,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Palette must not downgrade confirmation strength; bulk mutations far narrower than bulk navigation.",
-      "line_in_working_ledger": 4670,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "data_shape",
-      "text": "Storage baseline: seglog canonical; redb/Tantivy/JSONL/rollups are projections rebuildable from records.",
-      "line_in_working_ledger": 4685,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "process_defect",
-      "text": "Missing Orchestrator-wide policy for projection freshness, degraded behavior, action gating, record-backed fallback.",
-      "line_in_working_ledger": 4692,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "data_shape",
-      "text": "Projection trust states operational: current, refreshing, stale, degraded, unavailable—with meanings for read/write.",
-      "line_in_working_ledger": 4701,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Action gating: read-only may tolerate refreshing/stale/degraded; live mutation needs current or canonical revalidation path.",
-      "line_in_working_ledger": 4722,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "requirement",
-      "text": "Do not present mutation controls on stale/degraded surfaces that imply false confidence.",
-      "line_in_working_ledger": 4728,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Per-tab trust: Progress shows freshness; Seams tighten promote actions when stale; Graph discloses trust on live controls; Ledger/History as fallbacks.",
-      "line_in_working_ledger": 4732,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "requirement",
-      "text": "Stale/degraded writes: runtime refuses clearly or revalidates authoritatively; GUI must not assume stale allowed_action_ids still valid.",
-      "line_in_working_ledger": 4750,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "data_shape",
-      "text": "Trust UI fields: freshness_state, last_updated_at, data_source_kind, degraded_reason?, action_gate_reason?.",
-      "line_in_working_ledger": 4758,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "routing_rule",
-      "text": "Fallback ladder: widget summary→tab; rollup→filtered list; inspector→Ledger/History/detail_ref.",
-      "line_in_working_ledger": 4773,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Define shared projection-trust contract; require freshness disclosure on dense tabs; standardize fallback to Ledger/History/inspectors.",
-      "line_in_working_ledger": 4783,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "verification_rule",
-      "text": "Stale visibility ≠ action authority; blocked/recovery sensitive to invalid allowed_action_ids when trust drops.",
-      "line_in_working_ledger": 4789,
-      "source_shard_id": "shard-0024"
-    },
-    {
-      "type": "doc_hint",
-      "text": "Shared Record Envelope / Artifact Normalization research started (targeted docs: storage-plan, Contracts_V0, Orchestrator_Page, Run_Graph_View, FinalGUISpec).",
-      "line_in_working_ledger": 4795,
-      "source_shard_id": "shard-0024"
-    }
-  ],
-  "explicit_exclusion": null
+  "exclusions_by_shard": {
+    "shard-0021": [],
+    "shard-0022": [],
+    "shard-0023": [],
+    "shard-0024": [
+      "Shared Record Envelope / Artifact Normalization section contains only kickoff metadata without substantive extraction details."
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0021": [
+      "seed-0021-persona-resolution",
+      "seed-0021-help-contract"
+    ],
+    "shard-0022": [
+      "seed-0022-project-status-rollup",
+      "seed-0022-escalation-ladder"
+    ],
+    "shard-0023": [
+      "seed-0023-scale-contract",
+      "seed-0023-command-safety"
+    ],
+    "shard-0024": [
+      "seed-0024-projection-trust-gating",
+      "seed-0024-record-envelope-kickoff"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
 }

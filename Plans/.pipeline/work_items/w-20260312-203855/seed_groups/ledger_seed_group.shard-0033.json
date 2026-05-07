@@ -1,495 +1,116 @@
 {
   "schema_id": "pm.ledger_seed_group.v3.1.12",
-  "subagent_invocation_id": "c3-inv-009",
-  "subagent_task_id": "c3-task-009",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
   "work_id": "w-20260312-203855",
-  "batch_anchor_shard_id": "shard-0033",
+  "subagent_task_id": "task-009",
   "source_shard_ids": [
     "shard-0033",
     "shard-0034",
     "shard-0035",
     "shard-0036"
   ],
-  "working_line_ranges": {
-    "shard-0033": {
-      "line_start": 6401,
-      "line_end": 6600
-    },
-    "shard-0034": {
-      "line_start": 6601,
-      "line_end": 6800
-    },
-    "shard-0035": {
-      "line_start": 6801,
-      "line_end": 7000
-    },
-    "shard-0036": {
-      "line_start": 7001,
-      "line_end": 7200
-    }
+  "shard_line_ranges": {
+    "shard-0033": "1-201",
+    "shard-0034": "1-201",
+    "shard-0035": "1-201",
+    "shard-0036": "1-201"
+  },
+  "extracted": {
+    "requirements": [
+      "Concern actions must use an explicit policy matrix covering allowed actors, confirmation strength, rationale requirements, lineage effects, reversibility, and audit fields.",
+      "Concern lifecycle transitions must be compensating-action based (reopen/reverse lineage/successor records), not history erasure.",
+      "Help content must preserve canonical term names across Expert and ELI5 modes; only explanatory depth changes.",
+      "Orchestrator widget hostability must narrow to Progress while Seams/Node Graph/Evidence/History/Ledger remain native surfaces.",
+      "Widget semantic scope must inherit page/router context (project, focused run, live vs historical) and avoid independent run/lane scope drift.",
+      "Cross-surface routing must prefer receipt/attempt/usage identity over tier-era or run-only pivots, with explicit trust-state gating for stale/degraded projections.",
+      "Runtime/provider identity contracts must include requested/effective account context and actor scope beyond run-only records.",
+      "Project summary state must distinguish activity, attention, and health with blocked-owner routing and trust disclosure."
+    ],
+    "decisions": [
+      "Concern dismiss/accepted-risk/lineage edits default to strong confirmation with required rationale; acknowledge/reopen may use lighter confirmation.",
+      "Adopt three-depth help contract: inline help, context help, canonical help entries.",
+      "Use app-default plus project override for Orchestrator Progress widget layout persistence.",
+      "Treat quiet/suppression as notification behavior, not concern dismissal.",
+      "Use blocked-episode and command-catalog canonical payloads as the basis for recovery and mutation routing across surfaces."
+    ],
+    "data_shapes": [
+      "Concern action policy row: `action`, `allowed_actor_kinds`, `confirmation_level`, `rationale_required`, `resulting_status_or_lineage`, `reversibility`, `audit_fields`.",
+      "Canonical actor envelope: `project_id`, `actor_kind`, sparse actor refs (`run_id?`, `attempt_id?`, `thread_id?`, `wizard_id?`, `interview_id?`) plus requested/effective runtime-account identity.",
+      "Project summary projection minimum: `activity_state`, `attention_state`, `health_state`, `primary_owner_kind?`, `primary_reason_code?`, `primary_object_ref?`, counts, `projection_trust_state`, `last_activity_at_utc`.",
+      "Trust disclosure payload across surfaces: freshness/trust state, last update metadata, degraded reason, and mutation gate reason.",
+      "Usage bridge requires one authoritative `usage_event_ref` locator shape reused by receipts, artifacts, Usage, Ledger, and deep links."
+    ],
+    "routing_rules": [
+      "Concern structural actions (`merge/split/supersede`) require guided lineage flows rather than one-click toggles.",
+      "Palette/shortcut/context actions must share the same confirmation and gating policy; discoverability cannot weaken safety.",
+      "Historical-mode views must remain anchored to focused historical run/attempt context; widgets cannot silently follow live scope.",
+      "Project badges/cards/title-bar/attention surfaces should share one status vocabulary and precedence (blocked over attention_required over advisory)."
+    ],
+    "verification_rules": [
+      "Canonical concern history must not be hard-deleted in normal operations.",
+      "`dismissed` and `resolved` semantics must remain distinct; `resolve` should carry explicit `resolution_kind`.",
+      "Schema consumers must not rely on tier-era identifiers or forbidden canonical names where newer contracts have replaced them.",
+      "Stale/degraded projection visibility is not mutation authority; runtime revalidation is required before sensitive actions."
+    ],
+    "owner_consumer_obligations": [
+      "Orchestrator, Run Graph, Usage, Widget, and GitHub surfaces must converge on shared command payloads and trust-state behavior.",
+      "GitHub integration must bind reconnect/recovery to canonical project+actor context and effective account identity while preserving auth realm separation.",
+      "Project summaries should expose a dominant blocked/attention owner and reason to route users to the correct next surface."
+    ],
+    "stale_retirement_items": [
+      "Retire concern-action behavior that mirrors lightweight toast/widget dismissal semantics.",
+      "Retire widgetized assumptions for non-Progress Orchestrator tabs.",
+      "Retire login-keyed durable GitHub identity in favor of stable internal account identity.",
+      "Retire tier-boundary/tier-era routing semantics where canonical package/seam/lane/attempt contracts now apply."
+    ],
+    "open_questions": [
+      "What is the final canonical schema and versioning strategy for `usage_event_ref` across all consuming docs?",
+      "How should account-switch history be represented canonically (event family vs record family) for History/Ledger/Usage parity?",
+      "Which actions require hard-gate runtime contracts versus strong-confirm UI gates in the unified action matrix?",
+      "What exact trust-state payload is mandatory for mutating actions on stale/degraded projections per surface?"
+    ],
+    "process_defects": [
+      "Core contracts still contain self-conflicts and table-vs-prose drift around runtime identity, receipts, and command payloads.",
+      "Surface docs lag command catalog normalization and retain compatibility-era naming and routing assumptions.",
+      "Help/glossary governance is under-specified, allowing concept drift across dense UI surfaces.",
+      "Widget persistence and scope ownership were inconsistent until explicit Progress-only hostability and project override guidance."
+    ],
+    "doc_hints": [
+      "Publish a single canonical concern action policy and reversibility contract.",
+      "Define and propagate the actor envelope and account-switch history semantics through contracts, storage, stream mapping, and UI consumers.",
+      "Normalize Run Graph/Orchestrator/GitHub command and deep-link payloads to `UI_Command_Catalog.md` contracts.",
+      "Add canonical projection-health/trust contract and mutation-gating rules shared by Usage, Orchestrator, Source Control, and widgets.",
+      "Expand glossary/help ownership for rewrite-era terms and link depth rules."
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0033": [],
+    "shard-0034": [],
+    "shard-0035": [],
+    "shard-0036": []
+  },
+  "seed_ids_by_shard": {
+    "shard-0033": [
+      "seed-0033-concern-action-policy",
+      "seed-0033-help-depth-contract",
+      "seed-0033-widget-scope-boundary"
+    ],
+    "shard-0034": [
+      "seed-0034-runtime-identity-routing",
+      "seed-0034-account-switch-history-gap",
+      "seed-0034-bridged-stream-contract-gaps"
+    ],
+    "shard-0035": [
+      "seed-0035-actor-envelope-normalization",
+      "seed-0035-usage-event-ref-contract",
+      "seed-0035-github-orchestrator-command-drift"
+    ],
+    "shard-0036": [
+      "seed-0036-progress-layout-scope-decision",
+      "seed-0036-project-summary-blocked-owner-model"
+    ]
   },
   "status": "complete",
-  "per_shard": {
-    "shard-0033": {
-      "seeds": [
-        {
-          "seed_id": "c3-s033-001",
-          "kind": "requirement",
-          "summary": "Publish a canonical concern action policy matrix: confirmation level, rationale, allowed actors, reversibility, lineage side effects, and audit fields.",
-          "evidence_ledger_excerpt": "There is still no canonical concern action matrix spanning: confirmation level; rationale requirements; who may perform the action; reversibility model; lineage side effects.",
-          "related_paths": [
-            "Plans/FinalGUISpec.md",
-            "Plans/Contracts_V0.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-002",
-          "kind": "obligation",
-          "summary": "Normal operation must not hard-delete canonical concern history; undo via compensating records (reopened, lineage), not erasure.",
-          "evidence_ledger_excerpt": "The safest cross-cutting rule is: concern actions never hard-delete canonical concern history in normal operation; concern \"undo\" should generally be implemented as compensating follow-up records.",
-          "related_paths": [
-            "Plans/FinalGUISpec.md",
-            "Plans/Widget_System.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-003",
-          "kind": "decision",
-          "summary": "Treat acknowledge as noise/ownership signaling; dismiss as durable semantic judgment with strong confirmation; resolve requires resolution_kind; structural edits are merge/split/supersede—not generic toggles.",
-          "evidence_ledger_excerpt": "`acknowledge` is closest to noise-control / ownership-signaling; `dismiss` is a durable semantic judgment and must not look like closing a toast; `resolve` is not one generic operation; it needs `resolution_kind`.",
-          "related_paths": [
-            "Plans/FinalGUISpec.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-004",
-          "kind": "routing_rule",
-          "summary": "Concern operations must use the same action policy on Progress, Seams, Evidence, History, Ledger, and graph inspector despite different UI density.",
-          "evidence_ledger_excerpt": "concern operations should likely be available from multiple surfaces (`Progress`, `Seams`, `Evidence`, `History`, `Ledger`, graph inspector), so the same action policy must survive different UI densities",
-          "related_paths": [
-            "Plans/Orchestrator_Page.md",
-            "Plans/FinalGUISpec.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-005",
-          "kind": "verification_rule",
-          "summary": "Audit records must retain who changed concern state and why even when the visible current state looks simple.",
-          "evidence_ledger_excerpt": "the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple",
-          "related_paths": [
-            "Plans/storage-plan.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-006",
-          "kind": "doc_hint",
-          "summary": "Widget_System is a negative precedent for concern UX: widget removal is lightweight reversible layout; concerns are canonical governance records.",
-          "evidence_ledger_excerpt": "widget removal is intentionally lightweight and reversible via a short local undo window; concern actions should NOT inherit that policy because concerns are canonical operational/governance records",
-          "related_paths": [
-            "Plans/Widget_System.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-007",
-          "kind": "requirement",
-          "summary": "Adopt a three-depth help contract: inline help, context help, and canonical help entries for durable cross-surface concepts.",
-          "evidence_ledger_excerpt": "Define a three-depth help contract: `inline help`: short tooltip / badge explainer; `context help`: richer popover or surface-local explainer; `canonical help entry`: dedicated glossary/help article",
-          "related_paths": [
-            "Plans/Glossary.md",
-            "Plans/FinalGUISpec.md",
-            "Plans/Models_System.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-008",
-          "kind": "obligation",
-          "summary": "Expert vs ELI5 must change explanation depth only; canonical object names stay identical across modes.",
-          "evidence_ledger_excerpt": "the safer rule is: simplify explanation depth, not canonical object names; for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer",
-          "related_paths": [
-            "Plans/Personas.md",
-            "Plans/Models_System.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-009",
-          "kind": "data_shape",
-          "summary": "Maintain a prioritized set of concepts warranting dedicated canonical help entries (Feature Seam, Work Package, History vs Ledger, etc.).",
-          "evidence_ledger_excerpt": "Recommended dedicated help-entry set for the rewrite: `Feature Seam`; `Work Package`; `Package Overseer`; `Concern`; `History vs Ledger`; `historical vs superseded vs revoked vs reopened`; …",
-          "related_paths": [
-            "Plans/Glossary.md",
-            "Plans/Orchestrator_Page.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s033-010",
-          "kind": "open_question",
-          "summary": "Whether runtime/overseer actors may directly perform durable concern transitions or only propose via linked records remains unspecified.",
-          "evidence_ledger_excerpt": "There is still no explicit rule for whether runtime/overseer actors may directly perform concern-state transitions versus only propose them through linked records.",
-          "related_paths": [
-            "Plans/Contracts_V0.md"
-          ]
-        }
-      ],
-      "excluded": [],
-      "open_decisions": [
-        "Authority model for runtime/overseer performing concern-state transitions vs proposal-only flows."
-      ],
-      "process_defects": [
-        "Ledger research clusters repeat 'candidate fixes' without a single SSOT concern-action table."
-      ],
-      "noise": [
-        "Long enumerated doc lists under 'Targeted docs read' without delta per line."
-      ]
-    },
-    "shard-0034": {
-      "seeds": [
-        {
-          "seed_id": "c3-s034-001",
-          "kind": "requirement",
-          "summary": "Limit Orchestrator widget composition to Progress; Seams, Node Graph, Evidence, History, Ledger are native surfaces with their own state contracts.",
-          "evidence_ledger_excerpt": "Narrow the widget-hostable Orchestrator surface to `Progress` only. `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with their own state contracts",
-          "related_paths": [
-            "Plans/Widget_System.md",
-            "Plans/Orchestrator_Page.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-002",
-          "kind": "data_shape",
-          "summary": "Layer scope ownership: router/page scope (project, focused_run_id, mode), tab scope, widget config (presentation and safe subfilters only).",
-          "evidence_ledger_excerpt": "`router/page scope`: `project_id`, `focused_run_id`, historical/live mode; `tab scope`: tab-native filters; `widget config`: presentation settings and safe subfilters only",
-          "related_paths": [
-            "Plans/Widget_System.md",
-            "Plans/FinalGUISpec.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-003",
-          "kind": "obligation",
-          "summary": "Orchestrator widgets must inherit focused_run_id and page trust; they must not invent independent run selection or lane/concern semantics.",
-          "evidence_ledger_excerpt": "widgets may not invent independent semantic scope such as their own run selection, their own lane universe, or their own concern-state semantics",
-          "related_paths": [
-            "Plans/Widget_System.md",
-            "Plans/Orchestrator_Page.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-004",
-          "kind": "process_defect",
-          "summary": "Widget_System contradicts itself on dashboard_layout:v1: keep as backup vs SSOT conversion deleting legacy key.",
-          "evidence_ledger_excerpt": "section 7.3 first says keep `dashboard_layout:v1` as backup and do not delete it; then immediately defines SSOT precedence saying legacy keys are converted and the legacy key is deleted",
-          "related_paths": [
-            "Plans/Widget_System.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-005",
-          "kind": "requirement",
-          "summary": "Align storage-plan enumerated event rows with normative MUST prose for full persona/runtime/auth snapshot on run.started and related events.",
-          "evidence_ledger_excerpt": "Align `storage-plan.md` event-table rows with the stronger normative rules: either inline the canonical runtime snapshot fields explicitly or normatively reference the shared snapshot object",
-          "related_paths": [
-            "Plans/storage-plan.md",
-            "Plans/Contracts_V0.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-006",
-          "kind": "data_shape",
-          "summary": "Introduce a durable account-switch history family (event or record) with old/new effective identity, reason, scope, and timeline semantics.",
-          "evidence_ledger_excerpt": "Add a canonical account-switch history family: event or record based; carrying old/new effective account identity, reason, scope, and timeline semantics",
-          "related_paths": [
-            "Plans/Multi-Account.md",
-            "Plans/storage-plan.md",
-            "Plans/usage-feature.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-007",
-          "kind": "stale_retirement",
-          "summary": "Retire tier-era persisted fields and naming (plan_or_tier_default, tier_id, select_for_tier) from Prompt_Pipeline and Personas SSOT sections.",
-          "evidence_ledger_excerpt": "Replace tier-era persisted names/values in `Prompt_Pipeline.md` and `Personas.md` before they become entrenched in durable records.",
-          "related_paths": [
-            "Plans/Prompt_Pipeline.md",
-            "Plans/Personas.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-008",
-          "kind": "routing_rule",
-          "summary": "Prefer cross-surface receipt/attempt pivots over ad hoc page-local references for trust-safe navigation.",
-          "evidence_ledger_excerpt": "The cross-surface receipt record is already the strongest trust-safe pivot anchor; follow-on doc cleanup should prefer receipt/attempt-based routing over ad-hoc page-local refs.",
-          "related_paths": [
-            "Plans/storage-plan.md",
-            "Plans/UI_Command_Catalog.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-009",
-          "kind": "verification_rule",
-          "summary": "Reconcile Contracts_V0 canonical naming bans with Orchestrator runtime field names still requiring legacy persona identifiers.",
-          "evidence_ledger_excerpt": "`Contracts_V0.md` forbids `_persona_id` canonical names while `Orchestrator_Page.md` still requires them in runtime-facing worker identity fields.",
-          "related_paths": [
-            "Plans/Contracts_V0.md",
-            "Plans/Orchestrator_Page.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s034-010",
-          "kind": "requirement",
-          "summary": "Extend shared runtime identity and bridged envelopes with requested_account_id, effective_account_id, execution scope, actor_kind, and execution_role.",
-          "evidence_ledger_excerpt": "Add `requested_account_id?`, `effective_account_id?`, execution-scope fields, and `actor_kind` / `execution_role` to the shared runtime identity bundle and to the bridged-provider envelope.",
-          "related_paths": [
-            "Plans/CLI_Bridged_Providers.md",
-            "Plans/Prompt_Pipeline.md",
-            "Plans/Multi-Account.md"
-          ]
-        }
-      ],
-      "excluded": [],
-      "open_decisions": [
-        "Final persistence scope for Usage vs Dashboard widget layouts (Progress decision deferred to shard-0036 batch)."
-      ],
-      "process_defects": [
-        "GitHub docs still key durable identity by mutable login vs storage multi-account account_id model.",
-        "Run Graph and Orchestrator page specs lag UI_Command_Catalog normalization for HITL and recovery commands."
-      ],
-      "noise": [
-        "Repeated 'Highest-risk impacted docs' boilerplate across clusters."
-      ]
-    },
-    "shard-0035": {
-      "seeds": [
-        {
-          "seed_id": "c3-s035-001",
-          "kind": "process_defect",
-          "summary": "usage_event_ref is referenced as a canonical bridge field but no document defines its concrete shape or stability semantics.",
-          "evidence_ledger_excerpt": "`usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is.",
-          "related_paths": [
-            "Plans/storage-plan.md",
-            "Plans/usage-feature.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-002",
-          "kind": "requirement",
-          "summary": "Define usage_event_ref once as a locator-grade structured reference and reuse across receipts, Usage, Ledger, and artifact pivots.",
-          "evidence_ledger_excerpt": "Define `usage_event_ref` explicitly and make all `Show in Usage` / `Show in Ledger` pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters.",
-          "related_paths": [
-            "Plans/storage-plan.md",
-            "Plans/Runtime_Artifacts_Panel.md",
-            "Plans/Orchestrator_Page.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-003",
-          "kind": "stale_retirement",
-          "summary": "Replace reserved stream category tier_boundary with a versioned governance_boundary (or equivalent), with explicit migration aliases.",
-          "evidence_ledger_excerpt": "Introduce a versioned replacement for `tier_boundary` such as `governance_boundary`, keeping compatibility aliases only as an explicit migration strategy.",
-          "related_paths": [
-            "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-004",
-          "kind": "obligation",
-          "summary": "Reserved diagnostic schemas that represent execution, audit, handoff, and HITL must expose attempt_id where addenda require stream continuity.",
-          "evidence_ledger_excerpt": "Add `attempt_id` to the reserved diagnostic schemas … and back it with a new architecture invariant for attempt continuity.",
-          "related_paths": [
-            "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-            "Plans/Architecture_Invariants.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-005",
-          "kind": "data_shape",
-          "summary": "Normalized provider streams need account attribution on usage/auth_state and actor_kind (and related context) for multi-account and failover correctness.",
-          "evidence_ledger_excerpt": "`usage` events carry no account attribution; `auth_state` carries no pool-member / account context for failover rotation",
-          "related_paths": [
-            "Plans/Multi-Account.md",
-            "Plans/CLI_Bridged_Providers.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-006",
-          "kind": "process_defect",
-          "summary": "A2A Overseer audit protocol (singular overseer, start/end_of_tier, exactly two reviewers) conflicts with 2-of-3 corroboration and package/seam authority.",
-          "evidence_ledger_excerpt": "The Overseer audit protocol is structurally incompatible with the rewrite: singular `Overseer`; `audit_kind = start_of_tier | end_of_tier`; hard `exactly 2 reviewer subagents`; no minority-advisory outcome for the now-required 2-of-3 corroboration pattern",
-          "related_paths": [
-            "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-            "Plans/human-in-the-loop.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-007",
-          "kind": "requirement",
-          "summary": "Add shared ProjectionHealth / trust-state contract spanning Usage, Orchestrator, Source Control, and widgets derived from committed state and receipts.",
-          "evidence_ledger_excerpt": "Add a shared projection-health / trust-state record family built from committed projection state, checkpoints, and last-updated metadata.",
-          "related_paths": [
-            "Plans/storage-plan.md",
-            "Plans/usage-feature.md",
-            "Plans/Widget_System.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-008",
-          "kind": "routing_rule",
-          "summary": "Bind GitHub Integration UI to project-scoped selected_repo_id and provider_accounts.* with cache scoping {project_id, repo, effective account}.",
-          "evidence_ledger_excerpt": "Bind GitHub Integration to project-scoped `selected_repo_id` and `provider_accounts.*` state, and fold Deferred GitHub Recovery Binding into canonical blocked-episode detail paths.",
-          "related_paths": [
-            "Plans/GitHub_Integration.md",
-            "Plans/storage-plan.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-009",
-          "kind": "doc_hint",
-          "summary": "Runtime_Artifacts_Panel assumes enforced runtime-artifact schemas that are not present in-repo today.",
-          "evidence_ledger_excerpt": "The promised runtime-artifact schemas are absent today, so any linkage that depends on them is currently documentation-only.",
-          "related_paths": [
-            "Plans/Runtime_Artifacts_Panel.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s035-010",
-          "kind": "verification_rule",
-          "summary": "Stream contract changes need explicit version governance to prevent adapter-local shadow fields.",
-          "evidence_ledger_excerpt": "This seam now needs explicit contract-version governance; otherwise adapter-local shadow fields will proliferate.",
-          "related_paths": [
-            "Plans/CLI_Bridged_Providers.md",
-            "Plans/Contracts_V0.md"
-          ]
-        }
-      ],
-      "excluded": [],
-      "open_decisions": [
-        "Whether stream field additions are V0 extensions vs a versioned V1 event contract."
-      ],
-      "process_defects": [
-        "Addenda require attempt_id continuity but reserved category schemas omit attempt_id.",
-        "SelectSpeakerEvent demoted to raw_observation hides governance-relevant speaker transitions."
-      ],
-      "noise": [
-        "Multiple model-attributed cluster headers (GPT-5.2, Sonnet) with overlapping hotspot lists."
-      ]
-    },
-    "shard-0036": {
-      "seeds": [
-        {
-          "seed_id": "c3-s036-001",
-          "kind": "decision",
-          "summary": "Orchestrator Progress widget layout persistence uses app-default baseline with project-scoped override; effective layout merges both; historical/live run switching does not change layout identity.",
-          "evidence_ledger_excerpt": "Orchestrator `Progress` widget layout persistence should use **app-default with project override**. … effective `Progress` widget layout should be computed as: app default baseline; plus project-scoped override when present",
-          "related_paths": [
-            "Plans/Widget_System.md",
-            "Plans/Orchestrator_Page.md",
-            "Plans/storage-plan.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-002",
-          "kind": "data_shape",
-          "summary": "Reset flows must distinguish reset project override to app default vs reset app default baseline; UI discloses inherited vs overridden layout.",
-          "evidence_ledger_excerpt": "reset flows should distinguish: reset project override back to app default; reset app default baseline … the UI should make it clear when a project is using the inherited app-default layout versus a project-specific override",
-          "related_paths": [
-            "Plans/FinalGUISpec.md",
-            "Plans/Widget_System.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-003",
-          "kind": "requirement",
-          "summary": "Add canonical project_summary projection: activity_state, attention_state, health_state, primary_owner_kind, projection_trust_state, counts, and precedence vs blocked episodes.",
-          "evidence_ledger_excerpt": "Add a canonical project-summary projection … Recommended minimum project-summary shape: `activity_state` … `attention_state` … `health_state` … `primary_owner_kind?` … `projection_trust_state` …",
-          "related_paths": [
-            "Plans/feature-list.md",
-            "Plans/storage-plan.md",
-            "Plans/FinalGUISpec.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-004",
-          "kind": "routing_rule",
-          "summary": "Project cards and badges should name primary blocked owner (Run, Concern, GitHub, etc.) to route the user, not only a generic blocked badge.",
-          "evidence_ledger_excerpt": "project cards should not just say \"blocked\"; they should identify the primary blocked owner / attention owner when one exists",
-          "related_paths": [
-            "Plans/FinalGUISpec.md",
-            "Plans/feature-list.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-005",
-          "kind": "verification_rule",
-          "summary": "Precedence: canonical active blocked episodes outrank derived warnings; blocked outranks attention_required; degraded trust adjusts confidence, not canonical status alone.",
-          "evidence_ledger_excerpt": "canonical active blocked episodes win over derived warnings; `blocked` outranks `attention_required` … stale/degraded trust modifies confidence/disclosure, not the underlying canonical status by itself",
-          "related_paths": [
-            "Plans/FinalGUISpec.md",
-            "Plans/storage-plan.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-006",
-          "kind": "requirement",
-          "summary": "Normalize Run Graph HITL and recovery commands to UI_Command_Catalog (request_id, cmd.runtime.*) and add trust/action gating for stale projections.",
-          "evidence_ledger_excerpt": "Normalize Run Graph onto canonical `cmd.runtime.*` / `cmd.orchestrator.open_in_*` command bindings, add the missing action envelope, and add trust-state gating rules.",
-          "related_paths": [
-            "Plans/Run_Graph_View.md",
-            "Plans/UI_Command_Catalog.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-007",
-          "kind": "data_shape",
-          "summary": "Canonical actor envelope spans project_id, actor_kind, sparse refs (run_id, attempt_id, thread_id, wizard_id, interview_id), and requested/effective runtime/account fields for snapshots and receipts.",
-          "evidence_ledger_excerpt": "the missing minimum envelope is now `project_id` + `actor_kind` + sparse actor refs (`run_id?`, `attempt_id?`, `thread_id?`, `wizard_id?`, `interview_id?`) plus requested/effective runtime/account fields",
-          "related_paths": [
-            "Plans/storage-plan.md",
-            "Plans/Contracts_V0.md",
-            "Plans/usage-feature.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-008",
-          "kind": "obligation",
-          "summary": "Preserve hard realm split between github_api and copilot_github while normalizing stable internal account identity.",
-          "evidence_ledger_excerpt": "Preserve the hard realm split between `github_api` and `copilot_github` even while normalizing stable account identity.",
-          "related_paths": [
-            "Plans/GitHub_API_Auth_and_Flows.md",
-            "Plans/Multi-Account.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-009",
-          "kind": "requirement",
-          "summary": "Replace login-keyed durable GitHub credential identity with stable account_id / credential_ref; login remains display metadata.",
-          "evidence_ledger_excerpt": "Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only.",
-          "related_paths": [
-            "Plans/GitHub_API_Auth_and_Flows.md",
-            "Plans/GitHub_Integration.md"
-          ]
-        },
-        {
-          "seed_id": "c3-s036-010",
-          "kind": "doc_hint",
-          "summary": "projects:v1 list metadata is too thin for operational summary; extend with project_summary rather than overloading shell-only project_state.",
-          "evidence_ledger_excerpt": "`projects:v1` currently only promises list metadata … that is not enough for the newer Orchestrator/concern/projection-trust model",
-          "related_paths": [
-            "Plans/storage-plan.md",
-            "Plans/feature-list.md"
-          ]
-        }
-      ],
-      "excluded": [],
-      "open_decisions": [
-        "Final non-remediation node_concerns[] projection shape beyond finding_refs[] piggyback.",
-        "Single superseding Contracts_V0 payload block for scheduler/safe-point/remediation consolidation."
-      ],
-      "process_defects": [
-        "storage-plan early receipt shape omits project_id/created_at_utc while later cross-surface receipt requires them.",
-        "Orchestrator_Page still mixes forbidden requested_persona_id / effective_persona_id names with canonical naming rules."
-      ],
-      "noise": [
-        "Repeated 'Do-not-forget details' bullets that restate manual_preferred_account_id limitation."
-      ]
-    }
-  }
+  "blocking_reason": ""
 }

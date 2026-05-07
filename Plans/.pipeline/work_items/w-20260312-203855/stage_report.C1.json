@@ -1,56 +1,52 @@
 {
-  "schema_id": "pm.stage_report.v3.1.12",
+  "schema_id": "pm.stage_report.v3.1.14",
   "prompt_id": "C1",
-  "prompt_version": "pm.c1.v3.1.12",
-  "timestamp_utc": "20260506T182934Z",
+  "prompt_version": "pm.c1.v3.1.14",
   "work_id": "w-20260312-203855",
-  "status": "COMPLETE",
-  "execution_type": "mechanical_tool_operation",
-  "execution_type_rationale": "Read-only validation of section_entry_C_report and ledger_intake_manifest; bounded head/tail sampling of working_ledger.md for structure; wc and sha256sum for line/byte/hash proof; no semantic condensation of full ledger and no file rewrite in preserve mode.",
+  "status": "complete",
+  "execution_type": "hybrid_mechanical_and_semantic",
+  "inputs": {
+    "section_entry_C_report_path": "Plans/.pipeline/work_items/w-20260312-203855/section_entry_C_report.json",
+    "ledger_intake_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+    "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  },
+  "mode_resolution": {
+    "source_mode": "existing_working_ledger",
+    "selected_mode": "MODE_A_EXISTING_WORKING_LEDGER",
+    "mode_result": "existing_working_ledger_preserved"
+  },
   "deterministic_verification": {
-    "commands_run": [
-      "wc -l -c Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "sha256sum Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
-    ],
-    "inputs_read": [
-      "Plans/.pipeline/work_items/w-20260312-203855/section_entry_C_report.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md (bounded head/tail windows only for structure check)"
-    ],
-    "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "working_ledger_exists_non_empty": true,
     "working_ledger_line_count": 18244,
-    "working_ledger_byte_count": 1044305,
-    "working_ledger_modified": false,
-    "outputs_written": [
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_condenser_report.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C1.json"
-    ]
+    "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "working_ledger_h2_heading_count": 272,
+    "ledger_rewritten": false,
+    "final_gate_passed": true
   },
   "subagents": {
-    "used": false,
-    "required_subagent_tasks_total": 0,
-    "distinct_subagent_invocations_total": 0,
-    "omnibus_invocation_detected": false,
-    "task_to_invocation_map": {}
+    "required": false,
+    "used": false
   },
-  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
-  "fanout_proof": {
-    "wave_artifacts_total": 0,
-    "wave_artifacts_expected_min": 0,
-    "wave_artifact_paths": [],
-    "completed_task_ids_from_wave_artifacts": [],
-    "pending_task_ids_from_wave_artifacts": [],
-    "blocked_task_ids_from_wave_artifacts": [],
-    "subagent_invocation_ids_from_wave_artifacts": [],
-    "distinct_subagent_invocations_total_from_wave_artifacts": 0,
-    "task_to_invocation_map": {},
-    "invocation_to_task_map": {},
-    "omnibus_invocation_detected": false,
-    "main_agent_bulk_output_detected": false
-  },
-  "ledger_condenser": {
-    "condenser_mode": "existing_working_ledger_preserved",
-    "minor_normalization_required": false
-  },
-  "summary": "MODE A: validated non-empty working_ledger.md; assessed as markdown suitable for sharding; preserved file unchanged; recorded SHA-256 and counts in ledger_condenser_report.json; route to C2."
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "distinct_subagent_invocations_total": 0,
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mode_a_existing_working_ledger_preserved",
+  "blocking_reason": null,
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_condenser_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C1.json"
+  ],
+  "next_prompt_request": "Paste prompt C2 — Ledger Shard Indexer v3.1.14.",
+  "generated_at_utc": "2026-05-07T15:17:17Z"
 }

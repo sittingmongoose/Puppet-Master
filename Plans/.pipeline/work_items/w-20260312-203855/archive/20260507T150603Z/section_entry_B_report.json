@@ -1,0 +1,24 @@
+{
+  "schema_id": "pm.section_entry_B.v3.1.12",
+  "prompt_id": "B0",
+  "prompt_version": "pm.b0.v3.1.12",
+  "timestamp_utc": "20260506T182731Z",
+  "work_id": "w-20260312-203855",
+  "section_exit_A_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+  "section_exit_A_timestamp_utc": "20260506T182613Z",
+  "section_exit_A_prompt_id": "A4",
+  "work_id_derivation": {
+    "primary_source": "section_exit_A.json",
+    "route_state_work_id": "w-20260312-203855",
+    "meta_work_id": "w-20260312-203855",
+    "all_match": true
+  },
+  "route_state_note": "route_state.json next_prompt_id remained A4 from initializer; section_exit_A.json records A4 complete and next B0. work_id is consistent; no multi-work-id conflict.",
+  "intake_selection": {
+    "priority_rule_applied": 3,
+    "rule_description": "No explicit intake path in user prompt, section_exit_A, route_state, or meta; default B4",
+    "next_prompt_id": "B4",
+    "next_prompt_name": "Ledger Intake Decision",
+    "next_prompt_version": "pm.b4.v3.1.12"
+  }
+}

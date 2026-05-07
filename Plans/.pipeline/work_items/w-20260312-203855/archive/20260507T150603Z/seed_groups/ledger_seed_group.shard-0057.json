@@ -1,0 +1,4074 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
+  "subagent_invocation_id": "c3-inv-015",
+  "subagent_task_id": "c3-task-015",
+  "work_id": "w-20260312-203855",
+  "batch_anchor_shard_id": "shard-0057",
+  "source_shard_ids": [
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060"
+  ],
+  "working_line_ranges": [
+    {
+      "shard_id": "shard-0057",
+      "ledger_line_start": 11201,
+      "ledger_line_end": 11400
+    },
+    {
+      "shard_id": "shard-0058",
+      "ledger_line_start": 11401,
+      "ledger_line_end": 11600
+    },
+    {
+      "shard_id": "shard-0059",
+      "ledger_line_start": 11601,
+      "ledger_line_end": 11800
+    },
+    {
+      "shard_id": "shard-0060",
+      "ledger_line_start": 11801,
+      "ledger_line_end": 12000
+    }
+  ],
+  "source_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+  "status": "complete",
+  "extraction_status": "complete",
+  "per_shard": {
+    "shard-0057": {
+      "shard_id": "shard-0057",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0057.md",
+      "ledger_line_start": 11201,
+      "ledger_line_end": 11400,
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "  - freshness, mutation-risk, or blocked-action preconditions",
+          "line_in_shard": 1
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `UI_Wiring_Rules.md` already treats `correlation_id` as part of the command envelope, but the matrix/schema pair has no way to declare or verify passthrough obligations for route payloads, subject IDs, or correlation continuity into downstream events.",
+          "line_in_shard": 2
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Wiring_Matrix.md` still contains stale example drift that matters mechanically, not just editorially. The example row for `cmd.orchestrator.switch_tab` reinforces an older command shape even though the broader research already flagged that command family as a ghost/stale-ID risk.",
+          "line_in_shard": 3
+        },
+        {
+          "type": "process_defect",
+          "text": "- The addenda in `Wiring_Matrix.md` increasingly ask the matrix to cover runtime producers, blocked/recovery actions, and projection consumers, but the actual schema still models only UI element rows. The prose is now expecting more than `Wiring_Matrix.schema.json` can encode.",
+          "line_in_shard": 4
+        },
+        {
+          "type": "process_defect",
+          "text": "- As written, GATE-010 can reasonably verify handler coverage and event emission for one-off command dispatch, but it cannot strongly verify a generalized route/subject navigation system.",
+          "line_in_shard": 5
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 6
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 7
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 8
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Wiring_Rules.md`",
+          "line_in_shard": 9
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Wiring_Matrix.md`",
+          "line_in_shard": 10
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Wiring_Matrix.schema.json`",
+          "line_in_shard": 11
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 12
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 13
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 14
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 15
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Progression_Gates.md`",
+          "line_in_shard": 16
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 17
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 18
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 19
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 20
+        },
+        {
+          "type": "contradiction",
+          "text": "- The wiring prose is drifting toward producer/consumer/runtime-trace coverage, while the machine-readable schema still only understands interactive-element dispatch rows.",
+          "line_in_shard": 21
+        },
+        {
+          "type": "contradiction",
+          "text": "- The matrix cannot encode whether a command is a canonical navigation primitive, a deprecated alias, or a surface wrapper over a shared route target.",
+          "line_in_shard": 22
+        },
+        {
+          "type": "contradiction",
+          "text": "- There is still no schema-level place to express argument-contract requirements for subject-open or route-payload commands.",
+          "line_in_shard": 23
+        },
+        {
+          "type": "contradiction",
+          "text": "- `correlation_id` is part of the canonical envelope in prose but not part of any matrix-verifiable passthrough requirement.",
+          "line_in_shard": 24
+        },
+        {
+          "type": "contradiction",
+          "text": "- GATE-010 currently cannot verify reusable navigation semantics strongly enough to act as a serious guardrail for the route/subject direction.",
+          "line_in_shard": 25
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 26
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 27
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Extend the wiring schema and rules with route-aware fields, likely along the lines of:",
+          "line_in_shard": 28
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `command_arg_contract_ref?`",
+          "line_in_shard": 29
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `route_target_kind?`",
+          "line_in_shard": 30
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `subject_kind?`",
+          "line_in_shard": 31
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `deprecated_alias_for?`",
+          "line_in_shard": 32
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `preconditions?`",
+          "line_in_shard": 33
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `arg_passthrough_requirements?`",
+          "line_in_shard": 34
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `correlation_passthrough?`",
+          "line_in_shard": 35
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Tighten `UI_Wiring_Rules.md` so reusable navigation commands and subject-open commands are treated as first-class wiring shapes rather than smuggled through generic `args`.",
+          "line_in_shard": 36
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Clean stale/ghost command examples out of `Wiring_Matrix.md` before relying on it for automated extraction or coverage.",
+          "line_in_shard": 37
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Decide whether the matrix remains strictly UI-element wiring plus a separate producer/consumer matrix, or whether the schema is intentionally widened to cover both.",
+          "line_in_shard": 38
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 39
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 40
+        },
+        {
+          "type": "requirement",
+          "text": "- This is not just a documentation nicety: current wiring artifacts are too weak to verify the navigation architecture the rewrite is converging toward.",
+          "line_in_shard": 41
+        },
+        {
+          "type": "requirement",
+          "text": "- The matrix/schema mismatch is now the same kind of issue as earlier gate/evidence mismatches: prose is promising stronger guarantees than the machine-readable contract can support.",
+          "line_in_shard": 42
+        },
+        {
+          "type": "requirement",
+          "text": "- If `cmd.nav.*` is adopted later, this seam will need reconciliation early, or the catalog/wiring/gate stack will drift immediately.",
+          "line_in_shard": 43
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 44
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - GATE-010 and evidence limits for route-aware wiring",
+          "line_in_shard": 45
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 46
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 47
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Progression_Gates.md`",
+          "line_in_shard": 48
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/evidence.schema.json`",
+          "line_in_shard": 49
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Wiring_Rules.md`",
+          "line_in_shard": 50
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Wiring_Matrix.md`",
+          "line_in_shard": 51
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 52
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 53
+        },
+        {
+          "type": "process_defect",
+          "text": "- `GATE-010` is still written around the original wiring model: schema validation, entry uniqueness, command coverage, handler resolution, expected-event tests, unknown-command rejection, and architectural lints.",
+          "line_in_shard": 54
+        },
+        {
+          "type": "doc_hint",
+          "text": "- That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.",
+          "line_in_shard": 55
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `GATE-010` has no explicit notion of:",
+          "line_in_shard": 56
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - subject-open commands",
+          "line_in_shard": 57
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - wrapper commands over a canonical navigation primitive",
+          "line_in_shard": 58
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - route-payload completeness",
+          "line_in_shard": 59
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - alias/deprecation handling",
+          "line_in_shard": 60
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - blocked-action admissibility tied to `allowed_action_ids[]`",
+          "line_in_shard": 61
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - stale/degraded projection revalidation requirements before mutation",
+          "line_in_shard": 62
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The evidence side is similarly underspecified. `Plans/evidence.schema.json` only gives a generic `checks[]` array with `name`, `result`, `details`, and optional `contract_refs`. That is too weak to carry structured route-aware verification outcomes without each check inventing its own ad hoc text.",
+          "line_in_shard": 63
+        },
+        {
+          "type": "doc_hint",
+          "text": "- This means the docs currently describe stronger verifiability than the gate/evidence contracts can actually support once navigation ceases to be a set of one-off command handlers.",
+          "line_in_shard": 64
+        },
+        {
+          "type": "process_defect",
+          "text": "- There is also a pattern mismatch with later gates: `GATE-011` and `GATE-012` already want machine-readable failure arrays for specific conditions, while `GATE-010` still relies on broad generic check rows.",
+          "line_in_shard": 65
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 66
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 67
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 68
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Progression_Gates.md`",
+          "line_in_shard": 69
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/evidence.schema.json`",
+          "line_in_shard": 70
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Wiring_Rules.md`",
+          "line_in_shard": 71
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Wiring_Matrix.md`",
+          "line_in_shard": 72
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 73
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Wiring_Matrix.schema.json`",
+          "line_in_shard": 74
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 75
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 76
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 77
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Decision_Policy.md`",
+          "line_in_shard": 78
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 79
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 80
+        },
+        {
+          "type": "contradiction",
+          "text": "- `GATE-010` claims the wiring matrix is “complete, valid, and testable,” but completeness is currently defined too narrowly for route/subject-aware navigation.",
+          "line_in_shard": 81
+        },
+        {
+          "type": "contradiction",
+          "text": "- The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.",
+          "line_in_shard": 82
+        },
+        {
+          "type": "contradiction",
+          "text": "- The gate stack is inconsistent about structured failure detail: some later gates demand named machine-readable arrays, but `GATE-010` still has only freeform `details`.",
+          "line_in_shard": 83
+        },
+        {
+          "type": "contradiction",
+          "text": "- There is still no canonical gate-level place to express revalidation obligations when UI actions depend on stale or degraded projections.",
+          "line_in_shard": 84
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 85
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 86
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Expand `GATE-010` so route-aware verification is first-class if `cmd.nav.*` / `OpenSubject` becomes canonical, including checks for:",
+          "line_in_shard": 87
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - subject/route arg completeness",
+          "line_in_shard": 88
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - wrapper-to-canonical navigation consistency",
+          "line_in_shard": 89
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - deprecated alias coverage",
+          "line_in_shard": 90
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - correlation/route payload passthrough",
+          "line_in_shard": 91
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - blocked-action admissibility and projection-trust preconditions where relevant",
+          "line_in_shard": 92
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Either extend `Plans/evidence.schema.json` with structured gate-specific detail blocks, or add a dedicated wiring-evidence schema for richer machine-readable results.",
+          "line_in_shard": 93
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Align `GATE-010` with the machine-readable-detail pattern already used by `GATE-011` / `GATE-012` instead of relying on text-heavy `details`.",
+          "line_in_shard": 94
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Decide whether route-aware verification remains part of `GATE-010` or becomes a sibling gate, but stop leaving that boundary implicit.",
+          "line_in_shard": 95
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 96
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 97
+        },
+        {
+          "type": "requirement",
+          "text": "- This is now the gate-side version of the same drift pattern seen in the matrix/schema seam: the prose is expanding faster than the verifiable contract.",
+          "line_in_shard": 98
+        },
+        {
+          "type": "requirement",
+          "text": "- If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+          "line_in_shard": 99
+        },
+        {
+          "type": "requirement",
+          "text": "- The `allowed_action_ids[]` and stale/degraded revalidation issues are not just runtime concerns; they also need a verification home.",
+          "line_in_shard": 100
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 101
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation",
+          "line_in_shard": 102
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 103
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 104
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 105
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Commands_System.md`",
+          "line_in_shard": 106
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 107
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 108
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 109
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `UI_Command_Catalog.md` already contains several navigation-like or cross-surface commands:",
+          "line_in_shard": 110
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `cmd.artifacts.show_in_ledger`",
+          "line_in_shard": 111
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `cmd.artifacts.show_in_usage`",
+          "line_in_shard": 112
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `cmd.orchestrator.open_in_source_control`",
+          "line_in_shard": 113
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `cmd.orchestrator.open_in_github_actions`",
+          "line_in_shard": 114
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `cmd.orchestrator.open_in_docker_manager`",
+          "line_in_shard": 115
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `cmd.panel.switch`",
+          "line_in_shard": 116
+        },
+        {
+          "type": "process_defect",
+          "text": "- But the catalog still models them as flat peer commands with ad hoc payload tables. There is no stronger notion of:",
+          "line_in_shard": 117
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - canonical navigation primitive",
+          "line_in_shard": 118
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - surface-specific wrapper command",
+          "line_in_shard": 119
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - deprecated alias/wrapper relationship",
+          "line_in_shard": 120
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - shared route-payload contract",
+          "line_in_shard": 121
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - shared subject-open/open-by-identity contract",
+          "line_in_shard": 122
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The document does have some migration vocabulary in isolated places, for example superseded chat usage commands and deprecated recovery namespaces, and `Contracts_V0.md` has explicit alias handling for several runtime events. But that migration/alias discipline has not been elevated into a general command-catalog pattern.",
+          "line_in_shard": 123
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Because of that, navigation semantics are drifting into prose notes and payload examples instead of being normalized the way event aliasing already is elsewhere.",
+          "line_in_shard": 124
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Commands_System.md` is useful mainly as a boundary reminder: user-authored slash/palette commands are a separate concept. The current gap is inside internal `UICommand` modeling, not user command presets.",
+          "line_in_shard": 125
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 126
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 127
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 128
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 129
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 130
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 131
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Wiring_Rules.md`",
+          "line_in_shard": 132
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Wiring_Matrix.md`",
+          "line_in_shard": 133
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 134
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 135
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 136
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 137
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 138
+        },
+        {
+          "type": "contradiction",
+          "text": "- Event contracts already have a recognizable alias/migration pattern, but command contracts do not.",
+          "line_in_shard": 139
+        },
+        {
+          "type": "contradiction",
+          "text": "- The catalog can list payload keys, but it cannot currently say whether two commands are different user-facing wrappers over one canonical route target.",
+          "line_in_shard": 140
+        },
+        {
+          "type": "contradiction",
+          "text": "- There is still no canonical command family for subject-open or generalized route focus, so cross-surface pivots keep accreting as one-off commands.",
+          "line_in_shard": 141
+        },
+        {
+          "type": "contradiction",
+          "text": "- Navigation-related commands are described as layout/UI-state only, but the docs still lack a shared rule for when those commands must carry `project_id`, `focused_run_id`, `thread_id`, or other context needed to restore scope correctly.",
+          "line_in_shard": 142
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 143
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 144
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add an explicit command-catalog pattern for:",
+          "line_in_shard": 145
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - canonical command",
+          "line_in_shard": 146
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - wrapper command",
+          "line_in_shard": 147
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - deprecated alias",
+          "line_in_shard": 148
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - migration rule",
+          "line_in_shard": 149
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- If the route/subject model stays on track, introduce a small canonical family such as `cmd.nav.*` and let surface-specific commands either wrap it or be declared as typed specializations.",
+          "line_in_shard": 150
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Reuse the event-side alias discipline from `Contracts_V0.md` as the template for command deprecation/migration rules rather than inventing a weaker prose-only pattern.",
+          "line_in_shard": 151
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes.",
+          "line_in_shard": 152
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 153
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 154
+        },
+        {
+          "type": "requirement",
+          "text": "- The command catalog is not hostile to the new navigation model, but it is still too flat to describe it cleanly.",
+          "line_in_shard": 155
+        },
+        {
+          "type": "requirement",
+          "text": "- The strongest comparison point is event aliasing: that discipline already exists and can be copied.",
+          "line_in_shard": 156
+        },
+        {
+          "type": "requirement",
+          "text": "- Without a wrapper/alias model, the catalog, wiring matrix, and route payload work will keep diverging independently.",
+          "line_in_shard": 157
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 158
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Storage/routing handshake for subject-open and preview identity",
+          "line_in_shard": 159
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 160
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 161
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 162
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FileManager.md`",
+          "line_in_shard": 163
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 164
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 165
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 166
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 167
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `storage-plan.md` is already substantially ahead of the routing docs on subject identity. It defines:",
+          "line_in_shard": 168
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`",
+          "line_in_shard": 169
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - project-scoped preview state keyed by that subject",
+          "line_in_shard": 170
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - deterministic restore from either `document_id` or `artifact_id`",
+          "line_in_shard": 171
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - artifact-backed reopen into transient `generated://<artifact_id>` buffers when there is no backing document yet",
+          "line_in_shard": 172
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `FinalGUISpec.md` aligns with that newer model in the embedded document pane:",
+          "line_in_shard": 173
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - workspace-backed documents use `doc:<document_id>`",
+          "line_in_shard": 174
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - planning drafts and unsaved/generated content use `artifact:<artifact_id>`",
+          "line_in_shard": 175
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - artifact-backed content may open source in transient `generated://<artifact_id>` buffers",
+          "line_in_shard": 176
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FileManager.md` is now the main lagging owner. It still presents `OpenFile { path... }` as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects.",
+          "line_in_shard": 177
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.",
+          "line_in_shard": 178
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The clean architectural split now looks stronger:",
+          "line_in_shard": 179
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - canonical persisted subject identity = `doc:<document_id>` / `artifact:<artifact_id>`",
+          "line_in_shard": 180
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - transient source realization = workspace `path` or `generated://<artifact_id>`",
+          "line_in_shard": 181
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - routing should target the subject identity first, then resolve to the best openable representation",
+          "line_in_shard": 182
+        },
+        {
+          "type": "process_defect",
+          "text": "- `generated://<artifact_id>` should remain an ephemeral source buffer transport, not become the canonical persisted identity. The canonical identity is still `artifact:<artifact_id>`.",
+          "line_in_shard": 183
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 184
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 185
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 186
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 187
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 188
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 189
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 190
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 191
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 192
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 193
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 194
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 195
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 196
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 197
+        },
+        {
+          "type": "contradiction",
+          "text": "- The storage/UI model already admits identity-native preview subjects, but the universal open contract in `FileManager.md` still assumes everything meaningful is a path.",
+          "line_in_shard": 198
+        },
+        {
+          "type": "contradiction",
+          "text": "- Artifact-backed open/restore behavior exists in storage and GUI prose, but there is no single owner doc that clearly says the resolution order is `subject_id -> backing document or transient generated buffer -> routed surface`.",
+          "line_in_shard": 199
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Runtime_Artifacts_Panel.md` depends on artifact identity opens without fully owning the resolver contract, so the open-by-identity behavior still risks being re-invented per surface.",
+          "line_in_shard": 200
+        }
+      ]
+    },
+    "shard-0058": {
+      "shard_id": "shard-0058",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0058.md",
+      "ledger_line_start": 11401,
+      "ledger_line_end": 11600,
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "- `generated://<artifact_id>` is discussed as a transport/resulting buffer, but the docs still need to guard against treating it like the durable identity.",
+          "line_in_shard": 1
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 2
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 3
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep `Plans/storage-plan.md` as the owner of persisted preview-subject identity and restore joins.",
+          "line_in_shard": 4
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.",
+          "line_in_shard": 5
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add or normalize a distinct identity-native open contract above it, consistent with the earlier `OpenSubject` direction:",
+          "line_in_shard": 6
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - subject kinds should at minimum include `doc:<document_id>` and `artifact:<artifact_id>`",
+          "line_in_shard": 7
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - resolution may end in a workspace path open, a transient `generated://` buffer, or a routed non-editor surface",
+          "line_in_shard": 8
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Make `Runtime_Artifacts_Panel.md` and other artifact-bearing surfaces consume the same subject-open resolver rather than bespoke artifact-opening rules.",
+          "line_in_shard": 9
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep route payloads and subject-open semantics aligned so deep links, preview restore, artifact opens, and cross-surface pivots all resolve through the same identity model.",
+          "line_in_shard": 10
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 11
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 12
+        },
+        {
+          "type": "requirement",
+          "text": "- This seam is one of the cleaner ones: storage already contains most of the right model; the lag is mainly in the universal-open/file-centric docs.",
+          "line_in_shard": 13
+        },
+        {
+          "type": "requirement",
+          "text": "- `doc:` / `artifact:` should be treated as canonical persisted subject IDs, while `generated://` stays an implementation-level transient representation.",
+          "line_in_shard": 14
+        },
+        {
+          "type": "requirement",
+          "text": "- If this owner split is not made explicit, generated docs/artifacts and preview-backed opens will keep leaking path-based assumptions back into the routing model.",
+          "line_in_shard": 15
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 16
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Missing canonical route-target contract in Contracts_V0",
+          "line_in_shard": 17
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 18
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 19
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 20
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 21
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 22
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 23
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 24
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 25
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:",
+          "line_in_shard": 26
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `command_id`",
+          "line_in_shard": 27
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `issued_at`",
+          "line_in_shard": 28
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `origin`",
+          "line_in_shard": 29
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `correlation_id`",
+          "line_in_shard": 30
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `args`",
+          "line_in_shard": 31
+        },
+        {
+          "type": "process_defect",
+          "text": "- That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:",
+          "line_in_shard": 32
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - route target identity",
+          "line_in_shard": 33
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - subject-open identity",
+          "line_in_shard": 34
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - focused-run/thread/project restoration context",
+          "line_in_shard": 35
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - wrapper-command routing to a canonical target",
+          "line_in_shard": 36
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The only stronger navigation-like primitive visible at the contract layer today is `resume_url`, primarily in wizard-blocked / clarification flows. That makes `resume_url` more semantically powerful than the general UI command contract, which is the wrong layering for the rewrite.",
+          "line_in_shard": 37
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `storage-plan.md` and `FinalGUISpec.md` are already speaking in stronger identity terms (`preview_subject_id`, `doc:<document_id>`, `artifact:<artifact_id>`), but that identity model has not been lifted into the cross-cutting contract layer.",
+          "line_in_shard": 38
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `UI_Command_Catalog.md` therefore has to carry routing meaning indirectly in per-command arg tables instead of relying on a shared contract family.",
+          "line_in_shard": 39
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 40
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 41
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 42
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 43
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 44
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 45
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 46
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 47
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 48
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Wiring_Rules.md`",
+          "line_in_shard": 49
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Wiring_Matrix.md`",
+          "line_in_shard": 50
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 51
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 52
+        },
+        {
+          "type": "contradiction",
+          "text": "- `resume_url` is currently a stronger navigation primitive than generic `UICommand.args`, which inverts the desired architecture.",
+          "line_in_shard": 53
+        },
+        {
+          "type": "contradiction",
+          "text": "- The contract layer has canonical event aliasing and blocked-action vocabulary, but still no canonical route/subject vocabulary.",
+          "line_in_shard": 54
+        },
+        {
+          "type": "contradiction",
+          "text": "- Surface docs and storage docs are converging on identity-native navigation, but they are doing it without a stable shared contract owner.",
+          "line_in_shard": 55
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 56
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 57
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add a canonical route-target / subject-open contract family to `Plans/Contracts_V0.md`, above individual surface commands.",
+          "line_in_shard": 58
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep `UICommand` as the dispatch envelope, but give `args` a normalized target model when the command is navigation/open/focus-oriented.",
+          "line_in_shard": 59
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Treat `resume_url` as one serialized transport form of the same canonical route-target model rather than a parallel stronger primitive.",
+          "line_in_shard": 60
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Reuse the already-emerging identity vocabulary:",
+          "line_in_shard": 61
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `project_id`",
+          "line_in_shard": 62
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `focused_run_id?`",
+          "line_in_shard": 63
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `thread_id?`",
+          "line_in_shard": 64
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `subject_id?`",
+          "line_in_shard": 65
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `object_kind?`",
+          "line_in_shard": 66
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `object_id?`",
+          "line_in_shard": 67
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `tab_id?`",
+          "line_in_shard": 68
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `inspector_target?`",
+          "line_in_shard": 69
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 70
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 71
+        },
+        {
+          "type": "requirement",
+          "text": "- This is now mostly an owner-doc problem, not a conceptual one; the identity vocabulary already exists in scattered places.",
+          "line_in_shard": 72
+        },
+        {
+          "type": "requirement",
+          "text": "- If `Contracts_V0.md` does not absorb this, routing semantics will keep being redefined in the catalog, GUI docs, and storage docs separately.",
+          "line_in_shard": 73
+        },
+        {
+          "type": "requirement",
+          "text": "- `resume_url` should end up as a transport/serialization concern, not the hidden canonical route contract.",
+          "line_in_shard": 74
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 75
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Project-output and draft lineage already leaning subject-first",
+          "line_in_shard": 76
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 77
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 78
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 79
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 80
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 81
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 82
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 83
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 84
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The planning/output side is already closer to the subject-open model than the file-opening docs are.",
+          "line_in_shard": 85
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Project_Output_Artifacts.md` is clear that canonical persistence is seglog-first and filesystem materialization under `.puppet-master/project/**` is staging/export/cache only.",
+          "line_in_shard": 86
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `chain-wizard-flexibility.md`, `interview-subagent-integration.md`, and `FinalGUISpec.md` all assume staged or non-persisted document bundles that may be opened before they have stable workspace paths.",
+          "line_in_shard": 87
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `FinalGUISpec.md` is especially explicit here:",
+          "line_in_shard": 88
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - non-persisted drafts use transient `generated://<artifact_id>` buffers",
+          "line_in_shard": 89
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - deep-plan and embedded-document flows already expect source/preview/editor surfaces to work before final persist",
+          "line_in_shard": 90
+        },
+        {
+          "type": "doc_hint",
+          "text": "- That means the upstream planning/document systems are already implicitly subject-first:",
+          "line_in_shard": 91
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - first-class identity is the staged/generated artifact",
+          "line_in_shard": 92
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - filesystem path is a later materialization or backing-document assignment",
+          "line_in_shard": 93
+        },
+        {
+          "type": "process_defect",
+          "text": "- The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract.",
+          "line_in_shard": 94
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 95
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 96
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 97
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 98
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/chain-wizard-flexibility.md`",
+          "line_in_shard": 99
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/interview-subagent-integration.md`",
+          "line_in_shard": 100
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 101
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 102
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 103
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 104
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 105
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 106
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 107
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 108
+        },
+        {
+          "type": "contradiction",
+          "text": "- Upstream draft/generation flows already rely on artifact-first behavior, but there is still no single shared contract saying these surfaces open by subject identity first and path second.",
+          "line_in_shard": 109
+        },
+        {
+          "type": "contradiction",
+          "text": "- `Project_Output_Artifacts.md` gets canonical persistence right, but does not itself own the GUI/open-resolution contract.",
+          "line_in_shard": 110
+        },
+        {
+          "type": "contradiction",
+          "text": "- The subject-first behavior is present in practice, but still looks like a set of special-case prose pockets instead of one normalized identity rule.",
+          "line_in_shard": 111
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 112
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 113
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Preserve the current seglog-first / staging-second model from `Project_Output_Artifacts.md`; it aligns well with subject-open routing.",
+          "line_in_shard": 114
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Make explicit that staged/generated planning outputs enter the UI as `artifact:<artifact_id>` subjects before any backing path exists.",
+          "line_in_shard": 115
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep `generated://<artifact_id>` as the transient editor/source realization for those subjects, not the durable identity.",
+          "line_in_shard": 116
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.",
+          "line_in_shard": 117
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 118
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 119
+        },
+        {
+          "type": "requirement",
+          "text": "- This seam is mostly confirming alignment, not exposing a major contradiction.",
+          "line_in_shard": 120
+        },
+        {
+          "type": "requirement",
+          "text": "- The planning side is already proving that path-first opening is too weak for the rewrite.",
+          "line_in_shard": 121
+        },
+        {
+          "type": "requirement",
+          "text": "- Once the route/subject contract is normalized, these docs should mostly reconcile cleanly rather than needing conceptual redesign.",
+          "line_in_shard": 122
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 123
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - GPT-5.3-Codex owner-doc tranche synthesis",
+          "line_in_shard": 124
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 125
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 126
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Commands_System.md`",
+          "line_in_shard": 127
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Wiring_Matrix.md`",
+          "line_in_shard": 128
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Wiring_Rules.md`",
+          "line_in_shard": 129
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 130
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Glossary.md`",
+          "line_in_shard": 131
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FileManager.md`",
+          "line_in_shard": 132
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Crosswalk.md`",
+          "line_in_shard": 133
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Decision_Policy.md`",
+          "line_in_shard": 134
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Run_Modes.md`",
+          "line_in_shard": 135
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Progression_Gates.md`",
+          "line_in_shard": 136
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/newtools.md`",
+          "line_in_shard": 137
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-memory-subsystem.md`",
+          "line_in_shard": 138
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 139
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 140
+        },
+        {
+          "type": "process_defect",
+          "text": "- The final Codex pass still added meaningful last-mile contradictions instead of flattening into simple confirmation, especially where owner docs remain mechanically unverifiable or structurally inconsistent.",
+          "line_in_shard": 141
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Command/event ownership tightened at the end:",
+          "line_in_shard": 142
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - the chat event seam is now clearly split not only by phantom events but by canonical namespace (`chat.thread.created` vs `chat.thread_created`) and likely terminal-state naming (`run.cancelled` vs `run.completed`).",
+          "line_in_shard": 143
+        },
+        {
+          "type": "process_defect",
+          "text": "  - `/mode` is now a payload-shape contradiction because the current single `{ mode }` contract cannot carry the requested/effective overlay/runtime split already required elsewhere.",
+          "line_in_shard": 144
+        },
+        {
+          "type": "process_defect",
+          "text": "  - reserved-name ownership remains split across three docs, with `/compact` still showing why copied lists and copied rules are unsafe.",
+          "line_in_shard": 145
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Wiring/gate trust failures are now very explicit:",
+          "line_in_shard": 146
+        },
+        {
+          "type": "process_defect",
+          "text": "  - normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references.",
+          "line_in_shard": 147
+        },
+        {
+          "type": "process_defect",
+          "text": "  - coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped `cmd.*.json` strings.",
+          "line_in_shard": 148
+        },
+        {
+          "type": "process_defect",
+          "text": "  - `Wiring_Matrix.schema.json` still cannot represent wildcard family rows or the producer/consumer normative rows the docs already require.",
+          "line_in_shard": 149
+        },
+        {
+          "type": "process_defect",
+          "text": "  - `UI_Wiring_Rules.md` still has no deterministic alias/deprecated-ID handling, no enforced stale revalidation handshake, and no inverse owner-doc-to-catalog coverage rule.",
+          "line_in_shard": 150
+        },
+        {
+          "type": "process_defect",
+          "text": "- Project artifact/file-management closeout sharpened remaining deterministic gaps:",
+          "line_in_shard": 151
+        },
+        {
+          "type": "process_defect",
+          "text": "  - pass-report finality is still tied to `workflow_run_id` without that key being fully carried through the base artifact-event contract.",
+          "line_in_shard": 152
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `workflow_run_id` vs `run_id` lineage remains unresolved.",
+          "line_in_shard": 153
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - open-by-identity routing now clearly needs richer envelopes (safe point/worktree/baseline/artifact refs), not scalar IDs or plain paths.",
+          "line_in_shard": 154
+        },
+        {
+          "type": "process_defect",
+          "text": "  - receipt records are still the intended bridge, but runtime-artifact routing still lacks explicit receipt→artifact linkage.",
+          "line_in_shard": 155
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Glossary/Crosswalk closeout findings remain structural blockers:",
+          "line_in_shard": 156
+        },
+        {
+          "type": "process_defect",
+          "text": "  - dead or fragile anchors/SSOT pointers still exist (`Overseer`, `AuthPolicy`, assistant-memory short anchors).",
+          "line_in_shard": 157
+        },
+        {
+          "type": "process_defect",
+          "text": "  - runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.",
+          "line_in_shard": 158
+        },
+        {
+          "type": "process_defect",
+          "text": "  - Crosswalk and GitHub Integration both still place normative content after `References`, confirming append-after-references drift across owner docs.",
+          "line_in_shard": 159
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.",
+          "line_in_shard": 160
+        },
+        {
+          "type": "process_defect",
+          "text": "- Runtime-governance closeout sharpened a few final owner gaps:",
+          "line_in_shard": 161
+        },
+        {
+          "type": "process_defect",
+          "text": "  - startup recovery is still split not only by owner doc but by incompatible recovery objects and emission boundaries.",
+          "line_in_shard": 162
+        },
+        {
+          "type": "process_defect",
+          "text": "  - blocked-governance attribution (`blocked_owner` or equivalent) is still absent from canonical blocked projection shape even though UX/governance needs it.",
+          "line_in_shard": 163
+        },
+        {
+          "type": "process_defect",
+          "text": "  - DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce remote side-effect approval without a pre-dispatch intercept path.",
+          "line_in_shard": 164
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - account-aware strategy ordering remains underdefined when run-level DAE strategy and attempt-level account re-resolution disagree.",
+          "line_in_shard": 165
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Gate/evidence closeout stayed productive:",
+          "line_in_shard": 166
+        },
+        {
+          "type": "process_defect",
+          "text": "  - duplicate addenda are still literal/mechanical, not just thematic.",
+          "line_in_shard": 167
+        },
+        {
+          "type": "process_defect",
+          "text": "  - `run-gates` still executes checks with no numbered gate mapping.",
+          "line_in_shard": 168
+        },
+        {
+          "type": "process_defect",
+          "text": "  - `pm.evidence.schema.v1` still cannot represent the tri-state or structured payloads some gates already claim to require.",
+          "line_in_shard": 169
+        },
+        {
+          "type": "process_defect",
+          "text": "- `newtools.md` and assistant-memory still ended with unresolved canonicalization gaps:",
+          "line_in_shard": 170
+        },
+        {
+          "type": "process_defect",
+          "text": "  - the remaining missing orchestrator command gap set is now tight and explicit.",
+          "line_in_shard": 171
+        },
+        {
+          "type": "process_defect",
+          "text": "  - doctor-ID canonicalization is still broken internally.",
+          "line_in_shard": 172
+        },
+        {
+          "type": "process_defect",
+          "text": "  - `CustomHeadlessTool` still lacks stable config/identity/permission ownership and still conflicts with state/config SSOT.",
+          "line_in_shard": 173
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `live.*` remains plan-local instead of contract-registered.",
+          "line_in_shard": 174
+        },
+        {
+          "type": "process_defect",
+          "text": "  - `memory.gist.*`, AutoRunBoundary/AutoMilestone, project-switch handoff, and `attention_required` durability still lack a consistent event/persistence/command ownership story.",
+          "line_in_shard": 175
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 176
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 177
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 178
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Commands_System.md`",
+          "line_in_shard": 179
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Wiring_Matrix.md`",
+          "line_in_shard": 180
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Wiring_Rules.md`",
+          "line_in_shard": 181
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 182
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Glossary.md`",
+          "line_in_shard": 183
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 184
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Crosswalk.md`",
+          "line_in_shard": 185
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Decision_Policy.md`",
+          "line_in_shard": 186
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Run_Modes.md`",
+          "line_in_shard": 187
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Progression_Gates.md`",
+          "line_in_shard": 188
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/newtools.md`",
+          "line_in_shard": 189
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/assistant-memory-subsystem.md`",
+          "line_in_shard": 190
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Repeated cross-owner dependencies sharpened by Codex:",
+          "line_in_shard": 191
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 192
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 193
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 194
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/assistant-chat-design.md`",
+          "line_in_shard": 195
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 196
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Executor_Protocol.md`",
+          "line_in_shard": 197
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/WorktreeGitImprovement.md`",
+          "line_in_shard": 198
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Multi-Account.md`",
+          "line_in_shard": 199
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/GitHub_Integration.md`",
+          "line_in_shard": 200
+        }
+      ]
+    },
+    "shard-0059": {
+      "shard_id": "shard-0059",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0059.md",
+      "ledger_line_start": 11601,
+      "ledger_line_end": 11800,
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 1
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Media_Generation_and_Capabilities.md`",
+          "line_in_shard": 2
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `STATE_FILES.md`",
+          "line_in_shard": 3
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/evidence.schema.json`",
+          "line_in_shard": 4
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 5
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 6
+        },
+        {
+          "type": "contradiction",
+          "text": "- Several owner docs are still broken in ways that directly defeat the machine-verification/gate story they claim to support.",
+          "line_in_shard": 7
+        },
+        {
+          "type": "contradiction",
+          "text": "- Event/command naming and routing are still split enough that two “correct” implementations could disagree materially and still point at different local SSOTs.",
+          "line_in_shard": 8
+        },
+        {
+          "type": "contradiction",
+          "text": "- Glossary/Crosswalk still are not strong enough to absorb and normalize rewrite-era terms and primitives, which keeps downstream specs append-only and contradictory.",
+          "line_in_shard": 9
+        },
+        {
+          "type": "contradiction",
+          "text": "- Runtime-governance docs still lack a few critical ownership fields/rules (startup recovery handshake, blocked-owner attribution, DAE restart/intercept model).",
+          "line_in_shard": 10
+        },
+        {
+          "type": "contradiction",
+          "text": "- Newtools and memory remain the strongest examples of plan-local obligations not yet absorbed by canonical state/event/command owners.",
+          "line_in_shard": 11
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 12
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 13
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- After this final tranche, run closeout verification before claiming completion; Codex still found useful signal, but it also suggests the main remaining risk is uneven coverage on docs that never got the full ordered pass sequence.",
+          "line_in_shard": 14
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Use the next coverage audit to decide whether the remaining uncovered authored docs still need the same six-model treatment or whether this broader second sweep has reached sufficient high-signal closure.",
+          "line_in_shard": 15
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Any future reconciliation work should prioritize:",
+          "line_in_shard": 16
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - command/event namespace unification,",
+          "line_in_shard": 17
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - wiring/gate extraction/schema hardening,",
+          "line_in_shard": 18
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - artifact/run/workflow identity closure,",
+          "line_in_shard": 19
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - Glossary/Crosswalk strengthening,",
+          "line_in_shard": 20
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - startup/blocked/DAE governance ownership.",
+          "line_in_shard": 21
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 22
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 23
+        },
+        {
+          "type": "requirement",
+          "text": "- Codex did not invalidate earlier findings; it mostly tightened them into more concrete, machine-verification-relevant failures.",
+          "line_in_shard": 24
+        },
+        {
+          "type": "requirement",
+          "text": "- The owner-doc tranche now has the full requested multi-model sequence and is a strong reference set for what “fully swept” looks like.",
+          "line_in_shard": 25
+        },
+        {
+          "type": "requirement",
+          "text": "- The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.",
+          "line_in_shard": 26
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 27
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Search, attention, and usage deep-links still route locally",
+          "line_in_shard": 28
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 29
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 30
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 31
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/usage-feature.md`",
+          "line_in_shard": 32
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 33
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 34
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 35
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 36
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 37
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 38
+        },
+        {
+          "type": "process_defect",
+          "text": "- Search, attention, and usage/artifact pivots all preserve useful local identity, but they still do so in separate feature-specific ways rather than through a shared route-target model.",
+          "line_in_shard": 39
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FinalGUISpec.md` thread search already says result clicks navigate to the exact message in its thread, but that behavior is still expressed as search-local prose rather than as one normalized route payload.",
+          "line_in_shard": 40
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Wizard attention flows use `resume_url` plus `thread_id`, which again makes that flow stronger and more explicit than generic app navigation.",
+          "line_in_shard": 41
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `usage-feature.md` and `Runtime_Artifacts_Panel.md` both describe `Show in Ledger` / `Show in Usage` behavior using identifiers like:",
+          "line_in_shard": 42
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `artifact_id`",
+          "line_in_shard": 43
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `usage_event_ref?`",
+          "line_in_shard": 44
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `run_id?`",
+          "line_in_shard": 45
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `thread_id?`",
+          "line_in_shard": 46
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - time/filter context",
+          "line_in_shard": 47
+        },
+        {
+          "type": "doc_hint",
+          "text": "  but they still frame those as view-specific navigation instructions, not as a canonical target model.",
+          "line_in_shard": 48
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `UI_Command_Catalog.md` mirrors the same fragmentation: artifact actions, thread usage actions, panel switches, and Orchestrator pivots all carry their own local arg sets.",
+          "line_in_shard": 49
+        },
+        {
+          "type": "process_defect",
+          "text": "- `Orchestrator_Page.md` still uses simple links like `View in Usage` filtered by `run_id`, which is directionally correct but still narrower than the richer context now available elsewhere.",
+          "line_in_shard": 50
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 51
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 52
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 53
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 54
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/usage-feature.md`",
+          "line_in_shard": 55
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 56
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 57
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 58
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 59
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 60
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 61
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/assistant-chat-design.md`",
+          "line_in_shard": 62
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 63
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 64
+        },
+        {
+          "type": "contradiction",
+          "text": "- `resume_url` and some attention flows are more exact than general-purpose search and cross-surface pivots, which is backwards.",
+          "line_in_shard": 65
+        },
+        {
+          "type": "contradiction",
+          "text": "- Search results, artifact pivots, and usage pivots all carry enough identity to benefit from a shared routing model, but they are still encoded as local behavior text or per-command payloads.",
+          "line_in_shard": 66
+        },
+        {
+          "type": "contradiction",
+          "text": "- There is still no single place to say that a result should restore not just a destination surface, but also scope such as `project_id`, `focused_run_id`, `thread_id`, selected object, and inspector target.",
+          "line_in_shard": 67
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 68
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 69
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Route search-result activation, attention-item activation, artifact `Show in *` actions, and Usage pivots through the same canonical route-target model rather than separate ad hoc behaviors.",
+          "line_in_shard": 70
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Treat `resume_url` as one serialized transport for that same model so wizard attention is no longer a special stronger path.",
+          "line_in_shard": 71
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Let surface-specific commands remain as wrappers where helpful, but normalize their internal target payloads.",
+          "line_in_shard": 72
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Preserve richer context on activation:",
+          "line_in_shard": 73
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `project_id`",
+          "line_in_shard": 74
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `focused_run_id?`",
+          "line_in_shard": 75
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `thread_id?`",
+          "line_in_shard": 76
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `artifact_id?`",
+          "line_in_shard": 77
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `usage_event_ref?`",
+          "line_in_shard": 78
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `object_kind?`",
+          "line_in_shard": 79
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `object_id?`",
+          "line_in_shard": 80
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `tab_id?`",
+          "line_in_shard": 81
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `inspector_target?`",
+          "line_in_shard": 82
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 83
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 84
+        },
+        {
+          "type": "requirement",
+          "text": "- The issue here is less missing identity than missing normalization; the local docs already know what context they need.",
+          "line_in_shard": 85
+        },
+        {
+          "type": "requirement",
+          "text": "- Usage/artifact/search/attention all now look like natural consumers of the same route-target contract.",
+          "line_in_shard": 86
+        },
+        {
+          "type": "requirement",
+          "text": "- Once this is normalized, several existing `open in X` and `show in Y` actions may turn into thin wrappers instead of independent navigation systems.",
+          "line_in_shard": 87
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 88
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Exports still need identity-preserving manifest discipline",
+          "line_in_shard": 89
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 90
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 91
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 92
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 93
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/usage-feature.md`",
+          "line_in_shard": 94
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 95
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 96
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 97
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 98
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 99
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The canonical-storage side is already disciplined:",
+          "line_in_shard": 100
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `seglog` is canonical",
+          "line_in_shard": 101
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - JSONL mirror is derived",
+          "line_in_shard": 102
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - Project Plan Package artifacts are canonically persisted and filesystem materializations are staging/export/cache",
+          "line_in_shard": 103
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - packaged document sets already have explicit `manifest.json` ownership",
+          "line_in_shard": 104
+        },
+        {
+          "type": "process_defect",
+          "text": "- User-facing export behavior is much looser. Across thread export, ledger/export, usage export, runtime artifact export, and history export, the docs still mostly describe:",
+          "line_in_shard": 105
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - output format",
+          "line_in_shard": 106
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - filter/date-range behavior",
+          "line_in_shard": 107
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - where the file goes",
+          "line_in_shard": 108
+        },
+        {
+          "type": "doc_hint",
+          "text": "  rather than a normalized identity-preserving export contract",
+          "line_in_shard": 109
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `storage-plan.md` mentions export of thread/run history to JSONL/JSON, but only at a coarse enhancement level.",
+          "line_in_shard": 110
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `usage-feature.md` and `FinalGUISpec.md` describe export surfaces such as Ledger/Usage CSV/JSON and thread export, but they do not yet require one stable manifest shape for non-trivial bundles.",
+          "line_in_shard": 111
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Project_Output_Artifacts.md` is ahead here because it already treats manifests and canonical artifact IDs/path rules seriously; that same discipline has not yet propagated to general app exports.",
+          "line_in_shard": 112
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The result is a likely split:",
+          "line_in_shard": 113
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - simple tabular/view exports can stay lightweight",
+          "line_in_shard": 114
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - any non-trivial bundle export should preserve canonical IDs/refs and include a manifest",
+          "line_in_shard": 115
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 116
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 117
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 118
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 119
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/usage-feature.md`",
+          "line_in_shard": 120
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 121
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 122
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/assistant-chat-design.md`",
+          "line_in_shard": 123
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 124
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Project_Output_Artifacts.md`",
+          "line_in_shard": 125
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 126
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 127
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 128
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 129
+        },
+        {
+          "type": "contradiction",
+          "text": "- Exports are frequently described as output-format features, but not yet as identity-preserving artifacts in their own right.",
+          "line_in_shard": 130
+        },
+        {
+          "type": "contradiction",
+          "text": "- There is still no shared rule for when an export is just a convenience view versus when it becomes a structured bundle with manifest, canonical refs, trust disclosure, and reproducibility expectations.",
+          "line_in_shard": 131
+        },
+        {
+          "type": "contradiction",
+          "text": "- Thread/run/history exports risk flattening rich object identity unless they explicitly preserve canonical refs like `thread_id`, `run_id`, `artifact_id`, `usage_event_ref`, and route/open hints.",
+          "line_in_shard": 132
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 133
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 134
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep the earlier export taxonomy:",
+          "line_in_shard": 135
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `view export`",
+          "line_in_shard": 136
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `record export`",
+          "line_in_shard": 137
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `bundle export`",
+          "line_in_shard": 138
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Require manifests for non-trivial bundle exports, and make those manifests preserve canonical IDs/refs rather than export-local surrogate identities.",
+          "line_in_shard": 139
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Allow simple CSV/table exports to remain lightweight convenience outputs.",
+          "line_in_shard": 140
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- For exports built from stale/degraded projections, carry trust disclosure or re-query canonical backing first.",
+          "line_in_shard": 141
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Reuse `Project_Output_Artifacts.md` manifest discipline as the strongest model for general export bundles.",
+          "line_in_shard": 142
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 143
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 144
+        },
+        {
+          "type": "requirement",
+          "text": "- This seam is mostly about propagating existing rigor, not inventing a new concept.",
+          "line_in_shard": 145
+        },
+        {
+          "type": "requirement",
+          "text": "- The biggest risk is that export features get implemented as “dump whatever the current view shows” and quietly lose canonical identity.",
+          "line_in_shard": 146
+        },
+        {
+          "type": "requirement",
+          "text": "- Bundle manifests and route/subject normalization fit together naturally; exports should preserve the same object vocabulary the UI uses.",
+          "line_in_shard": 147
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 148
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Attention/CtA surfaces still encode route context locally",
+          "line_in_shard": 149
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 150
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 151
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 152
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 153
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 154
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/feature-list.md`",
+          "line_in_shard": 155
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 156
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 157
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 158
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Dashboard CtA cards, thread badges, and blocked/attention notices already carry the right kinds of identity:",
+          "line_in_shard": 159
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `resume_url`",
+          "line_in_shard": 160
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `thread_id`",
+          "line_in_shard": 161
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `wizard_step`",
+          "line_in_shard": 162
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `message_id`",
+          "line_in_shard": 163
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - blocked metadata",
+          "line_in_shard": 164
+        },
+        {
+          "type": "process_defect",
+          "text": "- The problem is not lack of context. The problem is that these attention surfaces still encode it as card-local or notice-local fields instead of as one normalized route target.",
+          "line_in_shard": 165
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FinalGUISpec.md` wizard attention and blocked CtA cards are especially explicit: they already define concrete actions like `Resume Wizard` and `View in Thread`, but those actions still resolve through special-case fields rather than a shared navigation object.",
+          "line_in_shard": 166
+        },
+        {
+          "type": "process_defect",
+          "text": "- `assistant-chat-design.md` likewise treats thread attention and blocked notices as persistent shell behaviors, but the activation path is still described behaviorally instead of via a reusable route payload.",
+          "line_in_shard": 167
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `storage-plan.md` preserves `resume_url?` on `thread_blocked_notice` and `wizard_runtime_state`, which is useful for recovery, but it also reinforces the current special-casing if no stronger route-target contract exists.",
+          "line_in_shard": 168
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 169
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 170
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 171
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 172
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/assistant-chat-design.md`",
+          "line_in_shard": 173
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 174
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 175
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 176
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 177
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/feature-list.md`",
+          "line_in_shard": 178
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 179
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 180
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 181
+        },
+        {
+          "type": "contradiction",
+          "text": "- Attention/CtA surfaces are some of the most operationally important navigation points in the app, yet they still rely on local field conventions rather than the generalized route-target model the rest of the rewrite increasingly wants.",
+          "line_in_shard": 182
+        },
+        {
+          "type": "contradiction",
+          "text": "- `resume_url` remains stronger and more explicit than most other navigation mechanisms.",
+          "line_in_shard": 183
+        },
+        {
+          "type": "contradiction",
+          "text": "- There is still no canonical statement that a CtA card or blocked notice should restore both destination and scope using the same internal payload model as search results, artifact pivots, and thread usage jumps.",
+          "line_in_shard": 184
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 185
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 186
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Treat CtA card actions and blocked-notice actions as first-class consumers of the canonical route-target model.",
+          "line_in_shard": 187
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep `resume_url` as one persisted/serialized form for recovery/deep-link transport, but not as the hidden canonical navigation primitive.",
+          "line_in_shard": 188
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Normalize attention-surface target fields so they can restore:",
+          "line_in_shard": 189
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - destination surface",
+          "line_in_shard": 190
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `project_id`",
+          "line_in_shard": 191
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `thread_id?`",
+          "line_in_shard": 192
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `focused_run_id?`",
+          "line_in_shard": 193
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `wizard_id?`",
+          "line_in_shard": 194
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `wizard_step?`",
+          "line_in_shard": 195
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - `message_id?`",
+          "line_in_shard": 196
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - selected object / inspector context",
+          "line_in_shard": 197
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 198
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 199
+        },
+        {
+          "type": "requirement",
+          "text": "- This is one of the highest-value consumers of the route-target work because attention/CtA actions are exactly where users most need precise restoration.",
+          "line_in_shard": 200
+        }
+      ]
+    },
+    "shard-0060": {
+      "shard_id": "shard-0060",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0060.md",
+      "ledger_line_start": 11801,
+      "ledger_line_end": 12000,
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "- The docs already know what fields matter; they just do not normalize them yet.",
+          "line_in_shard": 1
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Once normalized, Dashboard, thread badges, and blocked notices should stop behaving like separate navigation systems.",
+          "line_in_shard": 2
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 3
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Crosswalk still lacks route-target / subject-open ownership",
+          "line_in_shard": 4
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 5
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 6
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Crosswalk.md`",
+          "line_in_shard": 7
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 8
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FileManager.md`",
+          "line_in_shard": 9
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 10
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 11
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 12
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Crosswalk.md` explicitly owns a number of neighboring primitives:",
+          "line_in_shard": 13
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Primitive:UICommand`",
+          "line_in_shard": 14
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Primitive:DocumentPane`",
+          "line_in_shard": 15
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Primitive:DocumentReviewSurface`",
+          "line_in_shard": 16
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Primitive:DocumentCheckpoint`",
+          "line_in_shard": 17
+        },
+        {
+          "type": "process_defect",
+          "text": "- But it still has no primitive for:",
+          "line_in_shard": 18
+        },
+        {
+          "type": "routing_rule",
+          "text": "  - route target / internal navigation payload",
+          "line_in_shard": 19
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - subject-open / open-by-identity",
+          "line_in_shard": 20
+        },
+        {
+          "type": "doc_hint",
+          "text": "- That omission now explains a lot of the drift:",
+          "line_in_shard": 21
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Contracts_V0.md` owns only a thin `UICommand` envelope",
+          "line_in_shard": 22
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `FileManager.md` over-claims with `OpenFile { path... }`",
+          "line_in_shard": 23
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `storage-plan.md` owns subject identity for preview/doc/artifact restore",
+          "line_in_shard": 24
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - surface docs keep inventing local navigation semantics on top",
+          "line_in_shard": 25
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The likely stable ownership split now looks much clearer:",
+          "line_in_shard": 26
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Crosswalk.md`: introduces routing primitives and owner boundaries",
+          "line_in_shard": 27
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Contracts_V0.md`: owns canonical route-target / subject-open contract shapes",
+          "line_in_shard": 28
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `storage-plan.md`: owns persisted subject identity and restore/projection joins",
+          "line_in_shard": 29
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `FileManager.md`: owns workspace-file open semantics and editor realization only",
+          "line_in_shard": 30
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - consumer docs: only describe how their surfaces use the shared primitives",
+          "line_in_shard": 31
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 32
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 33
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 34
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Crosswalk.md`",
+          "line_in_shard": 35
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 36
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 37
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 38
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 39
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 40
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 41
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/assistant-chat-design.md`",
+          "line_in_shard": 42
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 43
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 44
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 45
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 46
+        },
+        {
+          "type": "contradiction",
+          "text": "- The Crosswalk is supposed to prevent exactly this kind of ownership drift, but currently leaves the route/subject problem unclaimed.",
+          "line_in_shard": 47
+        },
+        {
+          "type": "contradiction",
+          "text": "- Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization.",
+          "line_in_shard": 48
+        },
+        {
+          "type": "contradiction",
+          "text": "- `OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner.",
+          "line_in_shard": 49
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 50
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 51
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity, or make one primitive explicitly cover both layers if kept tight.",
+          "line_in_shard": 52
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Make `Contracts_V0.md` the concrete shape owner for those primitives.",
+          "line_in_shard": 53
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Narrow `FileManager.md` to consumer/realization ownership:",
+          "line_in_shard": 54
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - file-backed document opening",
+          "line_in_shard": 55
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - editor/tab/buffer behavior",
+          "line_in_shard": 56
+        },
+        {
+          "type": "candidate_fix",
+          "text": "  - path validation and path-target open behavior",
+          "line_in_shard": 57
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Keep `storage-plan.md` as the owner of persisted subject identity, projector-derived joins, and restore semantics.",
+          "line_in_shard": 58
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 59
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 60
+        },
+        {
+          "type": "requirement",
+          "text": "- This is one of the most actionable owner fixes found in this routing tranche.",
+          "line_in_shard": 61
+        },
+        {
+          "type": "requirement",
+          "text": "- The conceptual work is largely done; the missing piece is declaring the owner split in the docs that are supposed to stop duplication.",
+          "line_in_shard": 62
+        },
+        {
+          "type": "requirement",
+          "text": "- If Crosswalk does not absorb this, future reconciliation will likely keep slipping back into per-surface local routing prose.",
+          "line_in_shard": 63
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 64
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Exact primitive shape: layered route-target plus specialized open contracts",
+          "line_in_shard": 65
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 66
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 67
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 68
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Crosswalk.md`",
+          "line_in_shard": 69
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FileManager.md`",
+          "line_in_shard": 70
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 71
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 72
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 73
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The nearby owner docs point toward a layered design, not a single monolithic “open/navigation” contract.",
+          "line_in_shard": 74
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Contracts_V0.md` already wants a small reusable command envelope, which argues for a shared target object under `UICommand.args` rather than every command inventing its own payload.",
+          "line_in_shard": 75
+        },
+        {
+          "type": "process_defect",
+          "text": "- `FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents.",
+          "line_in_shard": 76
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_id>`) and restore rules, which argues for an identity-native contract above path opening, not a replacement of path opening.",
+          "line_in_shard": 77
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The clean answer is:",
+          "line_in_shard": 78
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - one shared canonical `route_target` object",
+          "line_in_shard": 79
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - specialized operations that consume it, especially:",
+          "line_in_shard": 80
+        },
+        {
+          "type": "doc_hint",
+          "text": "    - `OpenSubject`",
+          "line_in_shard": 81
+        },
+        {
+          "type": "doc_hint",
+          "text": "    - `OpenFile`",
+          "line_in_shard": 82
+        },
+        {
+          "type": "doc_hint",
+          "text": "    - focus/open wrapper commands in `cmd.nav.*`",
+          "line_in_shard": 83
+        },
+        {
+          "type": "doc_hint",
+          "text": "- So the best model is not “two unrelated contracts” and not “one giant contract that does everything.” It is a layered contract family.",
+          "line_in_shard": 84
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 85
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Recommended shape",
+          "line_in_shard": 86
+        },
+        {
+          "type": "data_shape",
+          "text": "- `route_target`",
+          "line_in_shard": 87
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - canonical target/scope object used by navigation/open/focus actions",
+          "line_in_shard": 88
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - likely fields:",
+          "line_in_shard": 89
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `target_kind`",
+          "line_in_shard": 90
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `project_id?`",
+          "line_in_shard": 91
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `focused_run_id?`",
+          "line_in_shard": 92
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `thread_id?`",
+          "line_in_shard": 93
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `tab_id?`",
+          "line_in_shard": 94
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `object_kind?`",
+          "line_in_shard": 95
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `object_id?`",
+          "line_in_shard": 96
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `subject_id?`",
+          "line_in_shard": 97
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `usage_event_ref?`",
+          "line_in_shard": 98
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `inspector_target?`",
+          "line_in_shard": 99
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `line?`",
+          "line_in_shard": 100
+        },
+        {
+          "type": "data_shape",
+          "text": "    - `range?`",
+          "line_in_shard": 101
+        },
+        {
+          "type": "data_shape",
+          "text": "- `OpenSubject`",
+          "line_in_shard": 102
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - identity-native open contract",
+          "line_in_shard": 103
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `subject_id` required",
+          "line_in_shard": 104
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - resolves through canonical subject/open rules",
+          "line_in_shard": 105
+        },
+        {
+          "type": "data_shape",
+          "text": "  - may realize as workspace document, transient `generated://` buffer, or routed non-editor surface",
+          "line_in_shard": 106
+        },
+        {
+          "type": "data_shape",
+          "text": "- `OpenFile`",
+          "line_in_shard": 107
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - workspace-path contract only",
+          "line_in_shard": 108
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known",
+          "line_in_shard": 109
+        },
+        {
+          "type": "data_shape",
+          "text": "- `resume_url`",
+          "line_in_shard": 110
+        },
+        {
+          "type": "data_shape",
+          "text": "  - serialized transport form of `route_target`, not a stronger parallel primitive",
+          "line_in_shard": 111
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 112
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Impacted docs",
+          "line_in_shard": 113
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Primary owners:",
+          "line_in_shard": 114
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Contracts_V0.md`",
+          "line_in_shard": 115
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Crosswalk.md`",
+          "line_in_shard": 116
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FileManager.md`",
+          "line_in_shard": 117
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Cross-owner docs implicated by this seam:",
+          "line_in_shard": 118
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/storage-plan.md`",
+          "line_in_shard": 119
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 120
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/FinalGUISpec.md`",
+          "line_in_shard": 121
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/assistant-chat-design.md`",
+          "line_in_shard": 122
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 123
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 124
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Contradictions / gaps surfaced",
+          "line_in_shard": 125
+        },
+        {
+          "type": "contradiction",
+          "text": "- `OpenFile` is currently overextended because the shared `route_target` / `OpenSubject` layer does not exist yet.",
+          "line_in_shard": 126
+        },
+        {
+          "type": "contradiction",
+          "text": "- `UICommand.args` is too generic to express reusable navigation semantics without a normalized target object.",
+          "line_in_shard": 127
+        },
+        {
+          "type": "contradiction",
+          "text": "- `resume_url` still risks becoming the de facto stronger contract until the layered model is declared canonically.",
+          "line_in_shard": 128
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 129
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Candidate fixes to carry forward",
+          "line_in_shard": 130
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add `Primitive:RouteTarget` and likely `Primitive:OpenSubject` to `Crosswalk.md`.",
+          "line_in_shard": 131
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Add concrete `route_target` and `OpenSubject` shapes to `Contracts_V0.md`.",
+          "line_in_shard": 132
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Narrow `FileManager.md` so `OpenFile` is explicitly a workspace-document path operation, not the universal object-open primitive.",
+          "line_in_shard": 133
+        },
+        {
+          "type": "candidate_fix",
+          "text": "- Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing every consumer doc to restate the model.",
+          "line_in_shard": 134
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 135
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Do-not-forget details",
+          "line_in_shard": 136
+        },
+        {
+          "type": "requirement",
+          "text": "- The important recommendation here is the layering:",
+          "line_in_shard": 137
+        },
+        {
+          "type": "requirement",
+          "text": "  - shared target object",
+          "line_in_shard": 138
+        },
+        {
+          "type": "requirement",
+          "text": "  - specialized open/navigation verbs above it",
+          "line_in_shard": 139
+        },
+        {
+          "type": "requirement",
+          "text": "  - path-open as one specialization, not the only primitive",
+          "line_in_shard": 140
+        },
+        {
+          "type": "requirement",
+          "text": "- This should let current docs reconcile incrementally instead of forcing a single disruptive replacement of every existing open/navigation rule.",
+          "line_in_shard": 141
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 142
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-16 - Minimum canonical field set for `route_target`",
+          "line_in_shard": 143
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 144
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 145
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Contracts_V0.md`",
+          "line_in_shard": 146
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/UI_Command_Catalog.md`",
+          "line_in_shard": 147
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/assistant-chat-design.md`",
+          "line_in_shard": 148
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Orchestrator_Page.md`",
+          "line_in_shard": 149
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/Runtime_Artifacts_Panel.md`",
+          "line_in_shard": 150
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/storage-plan.md`",
+          "line_in_shard": 151
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 152
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Key findings",
+          "line_in_shard": 153
+        },
+        {
+          "type": "routing_rule",
+          "text": "- The app already uses many identifiers in navigation payloads, but most of them should not become top-level canonical `route_target` fields.",
+          "line_in_shard": 154
+        },
+        {
+          "type": "doc_hint",
+          "text": "- If `route_target` simply absorbs every current surface-local field (`artifact_id`, `usage_event_ref`, `wizard_step`, `message_id`, `workflow_run_id`, etc.), it will recreate the same drift problem in a new place.",
+          "line_in_shard": 155
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The stricter direction is:",
+          "line_in_shard": 156
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - keep the canonical target object small",
+          "line_in_shard": 157
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - normalize most specific targets into either:",
+          "line_in_shard": 158
+        },
+        {
+          "type": "doc_hint",
+          "text": "    - `subject_id`",
+          "line_in_shard": 159
+        },
+        {
+          "type": "doc_hint",
+          "text": "    - `object_kind` + `object_id`",
+          "line_in_shard": 160
+        },
+        {
+          "type": "doc_hint",
+          "text": "  - keep path/line/range outside the base target object or in specialized open contracts",
+          "line_in_shard": 161
+        },
+        {
+          "type": "doc_hint",
+          "text": "- This means many existing ad hoc payloads should collapse into a smaller vocabulary rather than being copied verbatim into the new contract.",
+          "line_in_shard": 162
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 163
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Recommended minimum field set",
+          "line_in_shard": 164
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Required:",
+          "line_in_shard": 165
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `target_kind`",
+          "line_in_shard": 166
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Common scope fields:",
+          "line_in_shard": 167
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `project_id?`",
+          "line_in_shard": 168
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `focused_run_id?`",
+          "line_in_shard": 169
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `thread_id?`",
+          "line_in_shard": 170
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `tab_id?`",
+          "line_in_shard": 171
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Canonical target selector:",
+          "line_in_shard": 172
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `subject_id?`",
+          "line_in_shard": 173
+        },
+        {
+          "type": "data_shape",
+          "text": "  - or `object_kind?` + `object_id?`",
+          "line_in_shard": 174
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Optional view/detail selector:",
+          "line_in_shard": 175
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `inspector_target?`",
+          "line_in_shard": 176
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 177
+        },
+        {
+          "type": "doc_hint",
+          "text": "### What should NOT be base `route_target` fields by default",
+          "line_in_shard": 178
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `artifact_id`",
+          "line_in_shard": 179
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `document_id`",
+          "line_in_shard": 180
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `usage_event_ref`",
+          "line_in_shard": 181
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `wizard_id`",
+          "line_in_shard": 182
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `wizard_step`",
+          "line_in_shard": 183
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `message_id`",
+          "line_in_shard": 184
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `workflow_run_id`",
+          "line_in_shard": 185
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `scheduler_pass_id`",
+          "line_in_shard": 186
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `safe_point_id`",
+          "line_in_shard": 187
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `remediation_root_id`",
+          "line_in_shard": 188
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `line`",
+          "line_in_shard": 189
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `range`",
+          "line_in_shard": 190
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 191
+        },
+        {
+          "type": "doc_hint",
+          "text": "These should normally normalize into:",
+          "line_in_shard": 192
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `subject_id`",
+          "line_in_shard": 193
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `object_kind` + `object_id`",
+          "line_in_shard": 194
+        },
+        {
+          "type": "doc_hint",
+          "text": "- specialized operation payloads (`OpenFile`, `OpenSubject`, or object-specific commands)",
+          "line_in_shard": 195
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `inspector_target` only when the field is really a detail-pane selection, not the main identity",
+          "line_in_shard": 196
+        },
+        {
+          "type": "doc_hint",
+          "text": "",
+          "line_in_shard": 197
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Example normalization direction",
+          "line_in_shard": 198
+        },
+        {
+          "type": "doc_hint",
+          "text": "- artifact deep-link:",
+          "line_in_shard": 199
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `subject_id = artifact:<artifact_id>`",
+          "line_in_shard": 200
+        }
+      ]
+    }
+  }
+}
