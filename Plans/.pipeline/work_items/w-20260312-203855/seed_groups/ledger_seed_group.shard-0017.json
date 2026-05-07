@@ -1,9 +1,10 @@
 {
-  "schema_id": "pm.ledger_seed_group.c3.v1",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
   "prompt_id": "C3",
-  "prompt_version": "1.0",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "subagent_task_id": "task-005",
+  "subagent_task_id": "c3-repair-task-005",
+  "batch_anchor_shard_id": "shard-0017",
   "source_shard_ids": [
     "shard-0017",
     "shard-0018",
@@ -11,104 +12,758 @@
     "shard-0020"
   ],
   "shard_line_ranges": {
-    "shard-0017": "1-201",
-    "shard-0018": "1-201",
-    "shard-0019": "1-201",
-    "shard-0020": "1-201"
+    "shard-0017": {
+      "start_line": 3201,
+      "end_line": 3400
+    },
+    "shard-0018": {
+      "start_line": 3401,
+      "end_line": 3600
+    },
+    "shard-0019": {
+      "start_line": 3601,
+      "end_line": 3800
+    },
+    "shard-0020": {
+      "start_line": 3801,
+      "end_line": 4000
+    }
   },
-  "extracted": {
-    "requirements": [
-      "Adopt a unified action-class policy across Orchestrator/runtime surfaces, classified by confirmation level (none, light, strong, hard_gate) and reversibility (immediate_undo, compensating_action_only, non_reversible).",
-      "Keep records and artifacts distinct: canonical structured records in Ledger/export/search, with files/blobs linked as artifacts.",
-      "Use record-first exports for exact-record surfaces; treat CSV/table exports as convenience view exports, not archival canon.",
-      "Separate settings semantics into three axes: source (inherit/override), requested (run intent), and execution/result (effective plus honored/skipped/clamped).",
-      "Keep global requested-Persona precedence while requiring deterministic auto-resolver outputs per surface."
-    ],
-    "decisions": [
-      "Strong vs hard_gate confirms are distinct: hard_gate actions must follow runtime-defined non-bypassable allowed-action contracts, not generic modals.",
-      "Standardize terminology so Undo is used only for true immediate undo; use Restore/Reopen/Retry for compensating flows.",
-      "Define Orchestrator export modes explicitly as record export, bundle export, and view export.",
-      "In Persona auto-resolution, actor type and operation type should outrank stack hints."
-    ],
-    "data_shapes": [
-      "Shared record envelope: record_id, record_kind, project_id, optional run_id, scoped refs, status, created metadata, supersession link, source_refs, artifact_refs, evidence_refs, summary, optional detail_ref.",
-      "Minimum explicit record families: review, corroboration request/result, graph patch request/result, promotion, recovery, and state transition report.",
-      "Orchestrator export manifest fields include ids/kind/project/run context, generation timestamp, source surface, filter summary, counts, included ids, status notes, and schema version.",
-      "Settings/runtime display grammar fields: Inherited from, Overridden by, Requested, Effective, Reason, Support."
-    ],
-    "routing_rules": [
-      "Action family routing: none for safe navigation/read-only UI actions; light for moderate accidental actions; strong for state-destructive or live-execution-changing actions; hard_gate for HITL/runtime-governed approvals and canonical graph-changing gates.",
-      "Surface routing for settings data: Settings is source-axis heavy; Orchestrator/inspectors are requested-vs-effective heavy; History/Ledger is immutable audit-heavy.",
-      "Auto Persona routing should map role-specific defaults across package/seam overseer, node worker, verifier/reviewer, corroborator, recovery actor, and graph patch planner."
-    ],
-    "verification_rules": [
-      "Strong confirmations must include concrete consequences and reversibility class; hard_gate confirmations must include runtime-defined allowed actions and no hidden bypass.",
-      "Historical exports/runs must preserve truth even when live backing objects are removed or superseded.",
-      "Historical run views must remain frozen to historical requested/effective values.",
-      "If same-tier Persona candidates cannot be deterministically resolved, require clarification instead of speculative selection."
-    ],
-    "owner_consumer_obligations": [
-      "Expose winning source/origin for effective settings (persona/model/auth/account/worker policy) so users do not reconstruct precedence manually.",
-      "Record requested Persona, effective Persona, and selection reason when fallback occurs due to capability/provider constraints.",
-      "Preserve lineage metadata when destructive cleanup actions remove live objects."
-    ],
-    "stale_retirement_items": [
-      "Retire ambiguous mixed use of revert/rollback/restore/undo and normalize to precise recovery semantics.",
-      "Retire implicit assumptions that deleted/pruned objects can be treated as non-historical; keep retired-object metadata exportable."
-    ],
-    "open_questions": [
-      "Delete Run semantics remain unresolved (authorization boundary, reversibility, and lineage guarantees).",
-      "Orchestrator export contracts still need canonical specificity for packaging records/artifacts/references under superseded or removed backing objects.",
-      "Presentation parity for non-Persona manual overrides (provider/model/account/worker policy) is still underdefined.",
-      "Orchestrator auto Persona prioritization is still too qualitative without a fully explicit matrix."
-    ],
-    "process_defects": [
-      "Confirmation behavior is fragmented across subsystems without one shared action policy matrix.",
-      "Exact record families are referenced but incompletely normalized compared with attempts/blocked/usage envelopes.",
-      "Orchestrator export language is more UI-view-centric than canonical-contract-centric.",
-      "Override presentation consistency is weaker across settings/runtime surfaces than requested/effective runtime recording."
-    ],
-    "doc_hints": [
-      "Align action policy and record/export semantics with storage-plan, Orchestrator page, contracts, GUI spec, and run graph documents.",
-      "Align settings override and Persona resolution rules across Multi-Account, Models System, Prompt Pipeline, Personas, and Orchestrator integration docs."
-    ]
-  },
+  "requirements": [
+    {
+      "id": "seed-c3-extract-task-005-001",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3304,
+        "end_line": 3314
+      },
+      "summary": "Action affordances must not label compensating flows as Undo unless immediate undo is truly supported.",
+      "raw_excerpt": "- Recommended rule:\n  - do not over-promise \"undo\" when the system really only supports compensating actions\n- Good labels:\n  - `Undo`\n    - only when true immediate undo exists",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-extract-task-005-011",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3503,
+        "end_line": 3512
+      },
+      "summary": "Plans must keep canonical records distinct from artifacts and link artifacts by reference rather than substituting them.",
+      "raw_excerpt": "- Strong recommendation:\n  - keep records and artifacts separate\n- Working interpretation:\n  - record = canonical structured object in Ledger/export/search/routing\n  - artifact = file/blob/renderable output linked from the record",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-extract-task-005-016",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3612,
+        "end_line": 3617
+      },
+      "summary": "Exact-record export surfaces must emit canonical records rather than UI-transformed rows.",
+      "raw_excerpt": "- Recommended rule:\n  - exact-record surfaces should export canonical records, not UI-specific transformed rows\n- Implication:\n  - `Ledger` export should preserve canonical ids and structured fields",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-extract-task-005-017",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3633,
+        "end_line": 3637
+      },
+      "summary": "Exports must preserve historical truth even when backing live objects are removed.",
+      "raw_excerpt": "- Exports must preserve historical truth even when live backing objects no longer exist.\n- Example:\n  - removed worktree or retired graph path still exports as record metadata with historical status",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-extract-task-005-022",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 4000,
+        "end_line": 4000
+      },
+      "summary": "Historical run views must stay frozen to that run's requested/effective state instead of recomputing from current settings.",
+      "raw_excerpt": "- historical run views must stay frozen to historical requested/effective state",
+      "doc_path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-repair-task-005-001",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3544,
+        "end_line": 3545
+      },
+      "summary": "Export contracts must explicitly separate canonical record exports from convenience filtered view exports.",
+      "raw_excerpt": "- Current language often says \"export filtered view\" but does not clearly answer:\n  - what is the canonical manifest\n  - whether exports are view-shaped or record-shaped",
+      "doc_path": "Plans/storage-plan.md"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "seed-c3-extract-task-005-014",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3562,
+        "end_line": 3574
+      },
+      "summary": "Export design is split into record export, bundle export, and view export as separate contract types.",
+      "raw_excerpt": "- Strong recommendation:\n  - distinguish:\n    - `record export`\n    - `bundle export`\n    - `view export`\n- Working interpretation:\n  - `record export` ... canonical ids\n  - `bundle export` ... records + attached artifacts/blobs/files\n  - `view export` ... filtered table/list/chart",
+      "decision_rationale": "Separating canonical archival exports from convenience view projections avoids ambiguity about archive fidelity and packaging semantics.",
+      "rejected_alternatives": [
+        "Single undifferentiated export format for both canonical records and filtered UI views"
+      ]
+    }
+  ],
+  "data_shapes": [
+    {
+      "id": "seed-c3-extract-task-005-002",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3217,
+        "end_line": 3222
+      },
+      "summary": "Confirmation-level enum is defined as none, light, strong, and hard_gate.",
+      "raw_excerpt": "- Candidate confirmation levels:\n  - `none`\n  - `light`\n  - `strong`\n  - `hard_gate`",
+      "schema_name": "action_confirmation_level"
+    },
+    {
+      "id": "seed-c3-extract-task-005-003",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3223,
+        "end_line": 3226
+      },
+      "summary": "Reversibility enum is defined as immediate_undo, compensating_action_only, and non_reversible.",
+      "raw_excerpt": "- Candidate reversibility classes:\n  - `immediate_undo`\n  - `compensating_action_only`\n  - `non_reversible`",
+      "schema_name": "action_reversibility_class"
+    },
+    {
+      "id": "seed-c3-extract-task-005-008",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3383,
+        "end_line": 3400
+      },
+      "summary": "A shared record-envelope shape is defined with stable ids, scope refs, lifecycle fields, and linkage arrays.",
+      "raw_excerpt": "- Candidate shared envelope fields:\n  - `record_id`\n  - `record_kind`\n  - `project_id`\n  - `run_id?`\n  - scope refs:\n    - `seam_id?` ... `worktree_id?`\n  - `status`\n  - `created_at_utc`\n  - `created_by_kind`\n  - `superseded_by_record_id?`",
+      "schema_name": "record_envelope"
+    },
+    {
+      "id": "seed-c3-extract-task-005-010",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3524,
+        "end_line": 3530
+      },
+      "summary": "Minimum exact record families are identified for review, corroboration request/result, graph patch request/result, promotion, recovery, and state transition report.",
+      "raw_excerpt": "- Define exact minimum shapes for:\n  - review\n  - corroboration request/result\n  - graph patch request/result\n  - promotion\n  - recovery\n  - state transition report",
+      "schema_name": "governance_runtime_record_families"
+    },
+    {
+      "id": "seed-c3-extract-task-005-015",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3792,
+        "end_line": 3800
+      },
+      "summary": "Export manifest shape includes ids, scope refs, filter summary, counts, included ids, notes, and schema version.",
+      "raw_excerpt": "- Candidate manifest fields:\n  - `export_id`\n  - `export_kind`\n  - `project_id`\n  - `run_id?`\n  - `focused_run_id?`\n  - `generated_at_utc`\n  - `source_surface`\n  - `filter_summary`\n  - `record_counts`\n  - `artifact_counts`\n  - `included_record_ids[]`\n  - `included_artifact_ids[]`\n  - `status_notes`\n  - `schema_version`",
+      "schema_name": "orchestrator_export_manifest"
+    },
+    {
+      "id": "seed-c3-repair-task-005-002",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3799,
+        "end_line": 3800
+      },
+      "summary": "Export manifest field definitions must preserve shard-boundary continuation to avoid shape loss at handoff points.",
+      "raw_excerpt": "- Candidate manifest fields:\n  - `included_artifact_ids[]`\n  - `status_notes`\n  - `schema_version`",
+      "schema_name": "orchestrator_export_manifest"
+    },
+    {
+      "id": "seed-c3-extract-task-005-021",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3887,
+        "end_line": 3892
+      },
+      "summary": "Settings override semantics are modeled on three explicit axes: source, request, and execution/result.",
+      "raw_excerpt": "- Strong recommendation:\n  - treat these as three separate axes:\n    - `source axis`\n    - `request axis`\n    - `execution/result axis`",
+      "schema_name": "settings_override_axes"
+    },
+    {
+      "id": "seed-c3-extract-task-005-023",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3922,
+        "end_line": 3929
+      },
+      "summary": "Source-layer labels include defaults, policy mappings, manual override, and scoped override lifecycles.",
+      "raw_excerpt": "- Likely source layers that need explicit labeling:\n  - app default\n  - project override\n  - surface default\n  - role policy\n  - seam/package/node mapping\n  - manual override\n  - turn/session/run/task/subagent scoped override",
+      "schema_name": "settings_source_layer"
+    },
+    {
+      "id": "seed-c3-extract-task-005-025",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3952,
+        "end_line": 3957
+      },
+      "summary": "Runtime control support state taxonomy includes honored, clamped, skipped, and not requested.",
+      "raw_excerpt": "- A control may be:\n  - requested and honored exactly\n  - requested and clamped\n  - requested and skipped\n  - not requested at all",
+      "schema_name": "runtime_control_support_state"
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "seed-c3-extract-task-005-004",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3297,
+        "end_line": 3301
+      },
+      "summary": "Hard-gate actions must follow runtime-defined allowed actions with no hidden alternate path.",
+      "raw_excerpt": "- `hard_gate` should show:\n  - runtime-defined allowed actions\n  - why the gate exists\n  - exact consequence of each allowed action\n  - no hidden alternative path",
+      "gate_name": "hard_gate"
+    },
+    {
+      "id": "seed-c3-extract-task-005-024",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3948,
+        "end_line": 3950
+      },
+      "summary": "UI rendering routes to compact display when requested equals effective with no skipped/clamped controls, otherwise expands differences.",
+      "raw_excerpt": "- Recommended UI rule:\n  - if requested == effective and nothing was skipped/clamped, compact display is fine\n  - if they differ, the UI must expand/disclose the difference visibly"
+    },
+    {
+      "id": "seed-c3-extract-task-005-027",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3900,
+        "end_line": 3911
+      },
+      "summary": "Auto persona resolver priority is deterministic and must prioritize actor type and operation type over stack hints.",
+      "raw_excerpt": "- Good input priority inside the auto resolver:\n  - hard requirement ...\n  - actor-type bias\n  - operation-type bias\n  - scope-level bias\n  - language/framework/domain hints\n- Important rule:\n  - actor type and operation type should dominate stack hints"
+    },
+    {
+      "id": "seed-c3-extract-task-005-028",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3932,
+        "end_line": 3940
+      },
+      "summary": "When preferred persona is unavailable after filtering, resolver must fall through deterministically without blocking unless hard requirements apply.",
+      "raw_excerpt": "- Recommended rule:\n  - if the preferred candidate is unavailable after capability/provider/model filtering, fall through deterministically to the next candidate\n  - do not block solely because a preferred Persona is unavailable\n- Only hard requirements should force stronger handling."
+    },
+    {
+      "id": "seed-c3-extract-task-005-029",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3943,
+        "end_line": 3947
+      },
+      "summary": "If same-tier candidates remain ambiguous, the resolver should ask for clarification rather than speculate.",
+      "raw_excerpt": "- Keep the existing Prompt Pipeline rule:\n  - if two same-tier candidates remain and the system cannot choose deterministically, ask for clarification rather than speculating"
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "seed-c3-extract-task-005-005",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3287,
+        "end_line": 3296
+      },
+      "summary": "Strong confirmations must include action, targets, concrete consequences, artifact retention status, and reversibility class.",
+      "raw_excerpt": "- `strong` confirm should show:\n  - action name\n  - target object(s)\n  - concrete consequence summary\n  - whether local work/artifacts/history remain\n  - reversibility class"
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "id": "seed-c3-extract-task-005-009",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3514,
+        "end_line": 3516
+      },
+      "summary": "Export contracts should consume the shared record envelope as manifest backbone and attach artifacts by reference.",
+      "raw_excerpt": "- Export contracts should likely use the record envelope as the manifest backbone.\n- Then artifact files/blobs attach by reference rather than replacing record structure.",
+      "owner": "Export contract docs",
+      "consumer": "Ledger/export pipelines"
+    },
+    {
+      "id": "seed-c3-extract-task-005-018",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3630,
+        "end_line": 3630
+      },
+      "summary": "Artifact-only exports must preserve source metadata linking back to originating record, run, or object.",
+      "raw_excerpt": "- Important rule:\n  - exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from",
+      "owner": "Artifact export contract",
+      "consumer": "Audit and replay consumers"
+    },
+    {
+      "id": "seed-c3-extract-task-005-030",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3950,
+        "end_line": 3961
+      },
+      "summary": "Auto resolver output should provide a compact primary reason plus optional expanded hints for UI consumption.",
+      "raw_excerpt": "- The auto resolver should emit concise but structured reason text.\n- Recommendation:\n  - one short primary reason for compact UI\n  - optional expanded explanation listing the strongest contributing hints",
+      "owner": "Auto resolver",
+      "consumer": "Settings/Orchestrator/History UI surfaces"
+    }
+  ],
+  "stale_retirement_items": [
+    {
+      "id": "seed-c3-extract-task-005-006",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3345,
+        "end_line": 3348
+      },
+      "summary": "Ambiguous legacy wording should be retired by reserving Undo for immediate undo and using Restore/Rollback/Reopen labels for compensating paths.",
+      "raw_excerpt": "- Normalize copy:\n  - `Undo` only for real undo\n  - `Restore` / `Rollback` / `Retry from Safe Point` / `Reopen` for distinct cases"
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "seed-c3-extract-task-005-026",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3929,
+        "end_line": 3929
+      },
+      "summary": "Exact orchestrator persona IDs remain open even though the actor-to-persona mapping policy should now be explicit.",
+      "raw_excerpt": "- The exact persona ids may still evolve, but the mapping policy should be explicit now."
+    },
+    {
+      "id": "seed-c3-repair-task-005-015",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3337,
+        "end_line": 3338
+      },
+      "summary": "Should inconsistent revert/rollback/restore/undo terminology be normalized into a single global glossary and migration policy?",
+      "raw_excerpt": "- The current docs sometimes use \"revert\", \"rollback\", \"restore\", and \"undo\" in different domains without a clear global distinction."
+    },
+    {
+      "id": "seed-c3-repair-task-005-016",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3518,
+        "end_line": 3521
+      },
+      "summary": "Should record-shape normalization gaps be tracked as explicit open questions in addition to process defects for closure tracking?",
+      "raw_excerpt": "- Artifacts are discussed more concretely than the governing record objects in several places.\n- Search, deep links, and Ledger exact-record views will remain awkward until these record shapes are normalized."
+    },
+    {
+      "id": "seed-c3-repair-task-005-017",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3648,
+        "end_line": 3650
+      },
+      "summary": "What canonical manifest contract should govern Orchestrator exports across record and evidence families?",
+      "raw_excerpt": "- Current Orchestrator usage/evidence export language is too UI-view-centric.\n- No shared export-manifest contract is obvious for Orchestrator record families."
+    },
+    {
+      "id": "seed-c3-repair-task-005-018",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3990,
+        "end_line": 3993
+      },
+      "summary": "Which deterministic actor-priority mapping should be adopted so Orchestrator auto persona selection is not perceived as arbitrary?",
+      "raw_excerpt": "- The global precedence chain is clear, but Orchestrator auto-resolver specifics are still too qualitative.\n- Without a sharper actor-type mapping, `auto` risks feeling arbitrary."
+    }
+  ],
+  "process_defects": [
+    {
+      "id": "seed-c3-extract-task-005-007",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3335,
+        "end_line": 3338
+      },
+      "summary": "Current documentation lacks a shared action policy and uses inconsistent revert/rollback/restore/undo terminology.",
+      "raw_excerpt": "- Confirmation behavior exists in many isolated places, but there is no shared action policy spanning runtime, Orchestrator, Source Control, cleanup, and review/governance actions.\n- The current docs sometimes use \"revert\", \"rollback\", \"restore\", and \"undo\" in different domains without a clear global distinction."
+    },
+    {
+      "id": "seed-c3-extract-task-005-012",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3518,
+        "end_line": 3521
+      },
+      "summary": "Record families are under-shaped relative to artifacts, creating downstream friction for search and deep-link flows.",
+      "raw_excerpt": "- Artifacts are discussed more concretely than the governing record objects in several places.\n- Search, deep links, and Ledger exact-record views will remain awkward until these record shapes are normalized."
+    },
+    {
+      "id": "seed-c3-extract-task-005-019",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3647,
+        "end_line": 3650
+      },
+      "summary": "Orchestrator export language is overly view-centric and lacks a shared manifest contract.",
+      "raw_excerpt": "- Current Orchestrator usage/evidence export language is too UI-view-centric.\n- No shared export-manifest contract is obvious for Orchestrator record families."
+    },
+    {
+      "id": "seed-c3-extract-task-005-031",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3990,
+        "end_line": 3993
+      },
+      "summary": "Orchestrator auto persona resolution remains too qualitative and risks appearing arbitrary without explicit prioritization.",
+      "raw_excerpt": "- The global precedence chain is clear, but Orchestrator auto-resolver specifics are still too qualitative.\n- Without a sharper actor-type mapping, `auto` risks feeling arbitrary in the rewrite model where overseer roles are much more important."
+    }
+  ],
+  "doc_hints": [
+    {
+      "id": "seed-c3-extract-task-005-013",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3358,
+        "end_line": 3363
+      },
+      "summary": "Record-shape normalization work should be captured in storage and orchestrator-facing plan docs already referenced by this seam.",
+      "raw_excerpt": "### Targeted docs read\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Contracts_V0.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Run_Graph_View.md`",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": "record-envelope and exact-record sections"
+    },
+    {
+      "id": "seed-c3-extract-task-005-020",
+      "source_shard_id": "shard-0019",
+      "source_line_range": {
+        "start_line": 3652,
+        "end_line": 3655
+      },
+      "summary": "Export manifest and record-first export rules should be recorded in Orchestrator and storage export contract docs.",
+      "raw_excerpt": "- Add a shared Orchestrator export manifest contract.\n- Define record-first exports for Ledger/History/concern/review/promotion/patch/recovery families.\n- Keep CSV/table exports as convenience view exports, not as canonical archival exports.",
+      "doc_path": "Plans/Orchestrator_Page.md",
+      "doc_line_span": "export contracts and manifest sections"
+    },
+    {
+      "id": "seed-c3-extract-task-005-032",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3984,
+        "end_line": 3988
+      },
+      "summary": "Override grammar and requested/effective/support-state display rules should be added across settings, runtime, and history docs.",
+      "raw_excerpt": "- Define a shared override-display grammar for all runtime-related settings surfaces.\n- Separate `source`, `requested`, and `effective` in UI language and data models.\n- Add requested/effective + support-state disclosure blocks in runtime/history surfaces.",
+      "doc_path": "Plans/FinalGUISpec.md",
+      "doc_line_span": "settings and runtime detail presentation"
+    },
+    {
+      "id": "seed-c3-repair-task-005-003",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3358,
+        "end_line": 3363
+      },
+      "summary": "Contracts V0 should be linked where record-envelope and governance-family shaping is specified.",
+      "raw_excerpt": "- `Plans/Contracts_V0.md`",
+      "doc_path": "Plans/Contracts_V0.md",
+      "doc_line_span": "record contract sections"
+    },
+    {
+      "id": "seed-c3-repair-task-005-004",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3358,
+        "end_line": 3363
+      },
+      "summary": "Run graph view documentation should be linked for graph patch/result lineage semantics.",
+      "raw_excerpt": "- `Plans/Run_Graph_View.md`",
+      "doc_path": "Plans/Run_Graph_View.md",
+      "doc_line_span": "graph patch and generation transitions"
+    },
+    {
+      "id": "seed-c3-repair-task-005-005",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3544,
+        "end_line": 3545
+      },
+      "summary": "Usage feature docs should be linked in export contracts where filtered view exports are discussed.",
+      "raw_excerpt": "- `Plans/usage-feature.md`",
+      "doc_path": "Plans/usage-feature.md",
+      "doc_line_span": "usage export surfaces"
+    },
+    {
+      "id": "seed-c3-repair-task-005-006",
+      "source_shard_id": "shard-0018",
+      "source_line_range": {
+        "start_line": 3544,
+        "end_line": 3545
+      },
+      "summary": "Widget system docs should be linked where export view rendering and table projections are defined.",
+      "raw_excerpt": "- `Plans/Widget_System.md`",
+      "doc_path": "Plans/Widget_System.md",
+      "doc_line_span": "widget export interactions"
+    },
+    {
+      "id": "seed-c3-repair-task-005-007",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3864,
+        "end_line": 3870
+      },
+      "summary": "Models system docs should be linked for requested/effective model resolution and fallback behavior.",
+      "raw_excerpt": "- `Plans/Models_System.md`",
+      "doc_path": "Plans/Models_System.md",
+      "doc_line_span": "requested/effective model controls"
+    },
+    {
+      "id": "seed-c3-repair-task-005-008",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3864,
+        "end_line": 3870
+      },
+      "summary": "Multi-account docs should be linked for effective account selection and switch-reason disclosure.",
+      "raw_excerpt": "- `Plans/Multi-Account.md`",
+      "doc_path": "Plans/Multi-Account.md",
+      "doc_line_span": "account policy and effective account presentation"
+    },
+    {
+      "id": "seed-c3-repair-task-005-009",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3864,
+        "end_line": 3870
+      },
+      "summary": "Personas docs should be linked for auto resolver mapping and scoped override lifecycle.",
+      "raw_excerpt": "- `Plans/Personas.md`",
+      "doc_path": "Plans/Personas.md",
+      "doc_line_span": "persona resolver and override scope"
+    },
+    {
+      "id": "seed-c3-repair-task-005-010",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3864,
+        "end_line": 3870
+      },
+      "summary": "Prompt pipeline docs should be linked for clarification tie-break rules and persona precedence.",
+      "raw_excerpt": "- `Plans/Prompt_Pipeline.md`",
+      "doc_path": "Plans/Prompt_Pipeline.md",
+      "doc_line_span": "candidate resolution and clarification rules"
+    },
+    {
+      "id": "seed-c3-repair-task-005-011",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3839,
+        "end_line": 3843
+      },
+      "summary": "Interview subagent integration docs should be linked where deterministic stage resolver patterns are reused.",
+      "raw_excerpt": "- `Plans/interview-subagent-integration.md`",
+      "doc_path": "Plans/interview-subagent-integration.md",
+      "doc_line_span": "stage resolver references"
+    },
+    {
+      "id": "seed-c3-repair-task-005-012",
+      "source_shard_id": "shard-0020",
+      "source_line_range": {
+        "start_line": 3839,
+        "end_line": 3843
+      },
+      "summary": "Orchestrator subagent integration docs should be linked for actor-role resolver behavior.",
+      "raw_excerpt": "- `Plans/orchestrator-subagent-integration.md`",
+      "doc_path": "Plans/orchestrator-subagent-integration.md",
+      "doc_line_span": "actor/work-type integration details"
+    },
+    {
+      "id": "seed-c3-repair-task-005-013",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3358,
+        "end_line": 3363
+      },
+      "summary": "Final GUI spec should be linked where override-display grammar and runtime disclosure are standardized.",
+      "raw_excerpt": "- `Plans/FinalGUISpec.md`",
+      "doc_path": "Plans/FinalGUISpec.md",
+      "doc_line_span": "settings and history surfaces"
+    },
+    {
+      "id": "seed-c3-repair-task-005-014",
+      "source_shard_id": "shard-0017",
+      "source_line_range": {
+        "start_line": 3358,
+        "end_line": 3363
+      },
+      "summary": "Storage plan should be linked where record export and manifest backbone contracts are defined.",
+      "raw_excerpt": "- `Plans/storage-plan.md`",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": "export and manifest sections"
+    }
+  ],
   "exclusions_by_shard": {
     "shard-0017": [
-      "Excluded repetitive examples when equivalent policy class was already captured."
+      {
+        "reason": "Excluded non-obligatory framing text and recap headers.",
+        "lines_or_section": "intro bullets and section headers without normative or structural directives"
+      },
+      {
+        "reason": "Excluded repeated examples that only illustrate already captured classes.",
+        "lines_or_section": "working interpretation examples under confirmation/reversibility"
+      }
     ],
     "shard-0018": [
-      "Excluded duplicate mention of source/artifact/evidence refs already represented in shared envelope."
+      {
+        "reason": "Excluded descriptive rationale that did not impose concrete obligations or shapes beyond captured envelope/schema seeds.",
+        "lines_or_section": "benefit and interpretation narrative text"
+      },
+      {
+        "reason": "Excluded duplicated list context where same record families were already captured as schema obligations.",
+        "lines_or_section": "candidate fixes and do-not-forget restatements"
+      }
     ],
     "shard-0019": [
-      "Excluded repeated export caveats that restate canonical-vs-view distinction."
+      {
+        "reason": "Excluded convenience examples and explanatory prose not adding new normative constraints.",
+        "lines_or_section": "view export examples and explanatory notes"
+      },
+      {
+        "reason": "Excluded repeated reminders already represented by requirements/process defect seeds.",
+        "lines_or_section": "do-not-forget details"
+      }
     ],
     "shard-0020": [
-      "Excluded repeated candidate-fix bullets duplicating resolver requirements."
+      {
+        "reason": "Excluded UI copy examples that were illustrative only and did not add new rules.",
+        "lines_or_section": "example labels and sample phrasing"
+      },
+      {
+        "reason": "Excluded repeated cross-surface recap where obligations were already extracted.",
+        "lines_or_section": "surface-specific presentation restatements and candidate pattern examples"
+      }
     ]
   },
   "seed_ids_by_shard": {
     "shard-0017": [
-      "seed-0017-action-policy-matrix",
-      "seed-0017-confirmation-payload-rules",
-      "seed-0017-reversibility-terminology"
+      "seed-c3-extract-task-005-001",
+      "seed-c3-extract-task-005-002",
+      "seed-c3-extract-task-005-003",
+      "seed-c3-extract-task-005-004",
+      "seed-c3-extract-task-005-005",
+      "seed-c3-extract-task-005-006",
+      "seed-c3-extract-task-005-007",
+      "seed-c3-extract-task-005-008",
+      "seed-c3-extract-task-005-013",
+      "seed-c3-repair-task-005-003",
+      "seed-c3-repair-task-005-004",
+      "seed-c3-repair-task-005-013",
+      "seed-c3-repair-task-005-014",
+      "seed-c3-repair-task-005-015"
     ],
     "shard-0018": [
-      "seed-0018-record-envelope-shape",
-      "seed-0018-governance-record-families",
-      "seed-0018-export-mode-split"
+      "seed-c3-extract-task-005-009",
+      "seed-c3-extract-task-005-010",
+      "seed-c3-extract-task-005-011",
+      "seed-c3-extract-task-005-012",
+      "seed-c3-extract-task-005-014",
+      "seed-c3-repair-task-005-001",
+      "seed-c3-repair-task-005-005",
+      "seed-c3-repair-task-005-006",
+      "seed-c3-repair-task-005-016"
     ],
     "shard-0019": [
-      "seed-0019-export-manifest-shape",
-      "seed-0019-record-first-export-rule",
-      "seed-0019-settings-three-axis-grammar"
+      "seed-c3-extract-task-005-015",
+      "seed-c3-extract-task-005-016",
+      "seed-c3-extract-task-005-017",
+      "seed-c3-extract-task-005-018",
+      "seed-c3-extract-task-005-019",
+      "seed-c3-extract-task-005-020",
+      "seed-c3-repair-task-005-002",
+      "seed-c3-repair-task-005-017"
     ],
     "shard-0020": [
-      "seed-0020-persona-resolver-input-matrix",
-      "seed-0020-persona-priority-order",
-      "seed-0020-role-biased-default-routing"
+      "seed-c3-extract-task-005-021",
+      "seed-c3-extract-task-005-022",
+      "seed-c3-extract-task-005-023",
+      "seed-c3-extract-task-005-024",
+      "seed-c3-extract-task-005-025",
+      "seed-c3-extract-task-005-026",
+      "seed-c3-extract-task-005-027",
+      "seed-c3-extract-task-005-028",
+      "seed-c3-extract-task-005-029",
+      "seed-c3-extract-task-005-030",
+      "seed-c3-extract-task-005-031",
+      "seed-c3-extract-task-005-032",
+      "seed-c3-repair-task-005-007",
+      "seed-c3-repair-task-005-008",
+      "seed-c3-repair-task-005-009",
+      "seed-c3-repair-task-005-010",
+      "seed-c3-repair-task-005-011",
+      "seed-c3-repair-task-005-012",
+      "seed-c3-repair-task-005-018"
     ]
   },
   "status": "complete",
-  "blocking_reason": ""
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": true,
+    "notes": [
+      "targeted_c4_routed_repair: lineage_repaired, missing_material_added, doc_hints_added, open_questions_added",
+      "main_stage_structure_only_repair: lineage_source_shard_id_corrected_count=4"
+    ],
+    "main_stage_structure_only_repair_applied": true,
+    "main_stage_structure_only_repair_details": [
+      {
+        "action": "reassigned",
+        "category": "requirements",
+        "id": "seed-c3-extract-task-005-016",
+        "old_ssh": "shard-0020",
+        "new_ssh": "shard-0019",
+        "slr": {
+          "start_line": 3612,
+          "end_line": 3617
+        }
+      },
+      {
+        "action": "reassigned",
+        "category": "requirements",
+        "id": "seed-c3-extract-task-005-017",
+        "old_ssh": "shard-0020",
+        "new_ssh": "shard-0019",
+        "slr": {
+          "start_line": 3633,
+          "end_line": 3637
+        }
+      },
+      {
+        "action": "reassigned",
+        "category": "data_shapes",
+        "id": "seed-c3-extract-task-005-015",
+        "old_ssh": "shard-0020",
+        "new_ssh": "shard-0019",
+        "slr": {
+          "start_line": 3792,
+          "end_line": 3800
+        }
+      },
+      {
+        "action": "reassigned",
+        "category": "data_shapes",
+        "id": "seed-c3-repair-task-005-002",
+        "old_ssh": "shard-0020",
+        "new_ssh": "shard-0019",
+        "slr": {
+          "start_line": 3799,
+          "end_line": 3800
+        }
+      }
+    ]
+  }
 }

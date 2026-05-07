@@ -1,0 +1,104 @@
+{
+  "schema_id": "pm.ledger_seed_completeness_check.v3.1.15",
+  "prompt_id": "C4",
+  "prompt_version": "pm.c4.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "c4-r3-task-011",
+  "batch_anchor_shard_id": "shard-0041",
+  "source_shard_ids": [
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044"
+  ],
+  "shard_line_ranges": {
+    "shard-0041": {
+      "start_line": 8001,
+      "end_line": 8200
+    },
+    "shard-0042": {
+      "start_line": 8201,
+      "end_line": 8400
+    },
+    "shard-0043": {
+      "start_line": 8401,
+      "end_line": 8600
+    },
+    "shard-0044": {
+      "start_line": 8601,
+      "end_line": 8800
+    }
+  },
+  "round2_repaired": false,
+  "checks": {
+    "structure_check": {
+      "pass": true,
+      "details": {
+        "required_top_level_fields_present": true,
+        "source_shard_ids_match_batch": true,
+        "shard_line_ranges_match_batch": true,
+        "seed_ids_by_shard_consistent_with_material_items": true
+      }
+    },
+    "coverage_check": {
+      "pass": true,
+      "missing_material_items_per_shard": {
+        "shard-0041": [],
+        "shard-0042": [],
+        "shard-0043": [],
+        "shard-0044": []
+      },
+      "missing_material_total": 0,
+      "per_shard_material_counts": {
+        "shard-0041": 11,
+        "shard-0042": 7,
+        "shard-0043": 10,
+        "shard-0044": 13
+      }
+    },
+    "lineage_check": {
+      "pass": true,
+      "lineage_failures_per_shard": {
+        "shard-0041": [],
+        "shard-0042": [],
+        "shard-0043": [],
+        "shard-0044": []
+      },
+      "lineage_failures_total": 0
+    },
+    "doc_hint_preservation_check": {
+      "pass": true,
+      "unreferenced_doc_hints_per_shard": {
+        "shard-0041": [],
+        "shard-0042": [],
+        "shard-0043": [],
+        "shard-0044": []
+      },
+      "doc_hints_unreferenced_total": 0
+    },
+    "open_question_preservation_check": {
+      "pass": true,
+      "unrepresented_open_questions_per_shard": {
+        "shard-0041": [],
+        "shard-0042": [],
+        "shard-0043": [],
+        "shard-0044": []
+      },
+      "open_questions_unrepresented_total": 0
+    }
+  },
+  "summary": {
+    "totals": {
+      "material_items_total": 41,
+      "missing_material_total": 0,
+      "lineage_failures_total": 0,
+      "doc_hints_unreferenced_total": 0,
+      "open_questions_unrepresented_total": 0
+    },
+    "all_checks_passed": true,
+    "status": "pass",
+    "issues_found_categories": []
+  },
+  "blocking_reason": null,
+  "generated_at_utc": "2026-05-07T19:20:00Z"
+}

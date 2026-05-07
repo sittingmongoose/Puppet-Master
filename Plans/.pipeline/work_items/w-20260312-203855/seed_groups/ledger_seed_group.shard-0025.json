@@ -1,9 +1,10 @@
 {
-  "schema_id": "ledger_seed_group.v1",
-  "prompt_id": "c3_bounded_extraction",
-  "prompt_version": "1.0",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "subagent_task_id": "task-007",
+  "subagent_task_id": "c3-repair2-task-002",
+  "batch_anchor_shard_id": "shard-0025",
   "source_shard_ids": [
     "shard-0025",
     "shard-0026",
@@ -11,197 +12,882 @@
     "shard-0028"
   ],
   "shard_line_ranges": {
-    "shard-0025": [
-      "1-201"
-    ],
-    "shard-0026": [
-      "1-201"
-    ],
-    "shard-0027": [
-      "1-200"
-    ],
-    "shard-0028": [
-      "1-201"
-    ]
+    "shard-0025": {
+      "start_line": 4801,
+      "end_line": 5000
+    },
+    "shard-0026": {
+      "start_line": 5001,
+      "end_line": 5200
+    },
+    "shard-0027": {
+      "start_line": 5201,
+      "end_line": 5400
+    },
+    "shard-0028": {
+      "start_line": 5401,
+      "end_line": 5600
+    }
   },
-  "extracted": {
-    "requirements": [
-      "Adopt a shared governance/runtime record envelope across first-class record families with stable identity, scope, status, timestamps, refs, and lineage links.",
-      "Keep canonical records structurally distinct from artifacts/rendered outputs, with artifacts linked by canonical refs rather than substituting record identity.",
-      "Define separate but mappable lifecycle models for orchestration lanes and concrete worktrees, including explicit cleanup eligibility and historical survivability after live removal.",
-      "Gate archive/prune/remove actions on active ownership, blocked recovery dependencies, safe-point restore needs, unresolved conflict workflows, and downstream lineage dependencies.",
-      "Expand canonical glossary/help ownership to new orchestrator concepts and high-risk term distinctions to prevent cross-surface copy drift.",
-      "Preserve shared requested/effective runtime identity semantics across conversational/document-production surfaces while preventing ontology collapse into orchestrator execution objects.",
-      "Define orchestrator export taxonomy (`record`, `bundle`, `view`) with manifest requirements and trust-state disclosure/revalidation for projection-derived exports.",
-      "Route notifications/escalations using combined dimensions (severity, execution impact, blocked owner, persistence, projection trust) instead of severity-only logic."
-    ],
-    "decisions": [
-      "Use a shared envelope + family payload pattern rather than ad hoc top-level record shapes per governance object.",
-      "Treat lane lifecycle and worktree lifecycle as related but non-identical state machines.",
-      "Retain historical identity/lineage after archive/prune/remove; cleanup affects live backing, not history/ledger truth.",
-      "Anchor glossary as canonical short-definition source; let help provide deeper examples and related concept links.",
-      "Formalize boundary rule: shared runtime identity does not imply shared execution ontology.",
-      "Classify exports explicitly as canonical records, portable bundles, or derived views to avoid semantic ambiguity in JSON/CSV outputs.",
-      "Require manifest trust disclosure or canonical refresh when exporting from stale/degraded projections.",
-      "Use concern acknowledgment for noise control only; do not allow it to suppress still-active blocked states."
-    ],
-    "data_shapes": [
-      {
-        "name": "shared_record_envelope",
-        "fields": [
-          "record_id",
-          "record_kind",
-          "schema_version",
-          "project_id",
-          "run_id?",
-          "scope_type",
-          "scope_id",
-          "status",
-          "created_at_utc",
-          "updated_at_utc?",
-          "summary",
-          "summary_kind?",
-          "detail_ref?",
-          "source_refs[]",
-          "artifact_refs[]",
-          "related_record_refs[]",
-          "lineage_refs[]",
-          "actor_ref?",
-          "requested_effective_snapshot_refs?"
-        ]
+  "requirements": [
+    {
+      "id": "seed-c3-extract-task-007-001",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4854,
+        "end_line": 4854
       },
-      {
-        "name": "lane_lifecycle_states",
-        "values": [
-          "baseline",
-          "active",
-          "suspect",
-          "restoring",
-          "retained",
-          "cleanup_eligible",
-          "archived",
-          "removed",
-          "historical"
-        ]
+      "summary": "Plans must preserve record and artifact as separate objects.",
+      "raw_excerpt": "Important rule: - record and artifact must remain different objects"
+    },
+    {
+      "id": "seed-c3-extract-task-007-002",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4914,
+        "end_line": 4914
       },
-      {
-        "name": "worktree_posture_states",
-        "values": [
-          "live",
-          "dirty",
-          "conflict",
-          "orphaned",
-          "recovering",
-          "retained",
-          "archived",
-          "removed"
-        ]
+      "summary": "Plans should expand existing `detail_ref` and `*_ref` conventions instead of replacing them.",
+      "raw_excerpt": "`detail_ref` and `*_ref` conventions already exist and should be expanded, not replaced"
+    },
+    {
+      "id": "seed-c3-extract-task-007-003",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5046,
+        "end_line": 5046
       },
-      {
-        "name": "export_manifest",
-        "fields": [
-          "export_id",
-          "export_kind",
-          "schema_version",
-          "project_id",
-          "focused_run_id?",
-          "source_surface",
-          "generated_at_utc",
-          "filter_summary?",
-          "included_record_ids[]",
-          "included_artifact_ids[]",
-          "included_file_paths[]?",
-          "lineage_notes?",
-          "trust_state_at_export?"
-        ]
+      "summary": "Plans must retain historical lane/worktree identity after live cleanup actions.",
+      "raw_excerpt": "live cleanup must never erase run/lane/worktree lineage from `History`, `Ledger`, or graph-linked inspection"
+    },
+    {
+      "id": "seed-c3-extract-task-007-004",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5524,
+        "end_line": 5527
       },
-      {
-        "name": "shared_blocked_taxonomy_fields",
-        "fields": [
-          "attention_required",
-          "blocked",
-          "blocked_reason_code",
-          "allowed_action_ids[]",
-          "resume_url"
-        ]
-      }
-    ],
-    "routing_rules": [
-      "Source Control remains worktree-first and compact; Orchestrator carries richer lane lineage/policy context with worktree status attached.",
-      "Default Source Control visibility focuses live/current rows; retained/cleanup-eligible/historical materials are filter/toggle scoped.",
-      "Notification destination is owner-aware: user-owned blocks can route to chat/progress/system notifications; operational owner blocks route to operational surfaces first.",
-      "History is canonical chronology; Progress/Dashboard handles active attention; thread/chat handles direct user action paths; system notification is sparse summon layer."
-    ],
-    "verification_rules": [
-      "Before destructive cleanup actions verify no active run ownership and no unresolved recovery/safe-point/lineage dependency on the target worktree/lane.",
-      "Ensure archive/prune/remove preserve inspectable historical records in History/Ledger/lineage views.",
-      "When projection trust is stale/degraded, either qualify notification/export claims with trust disclosure or re-query canonical backing data.",
-      "Validate JSON export semantics against taxonomy: canonical record payload vs filtered view dump vs bundle manifest package."
-    ],
-    "owner_consumer_obligations": [
-      "Orchestrator owners define lane-pool truth, cleanup posture, and policy explanations.",
-      "Source Control owners execute concrete worktree operations and present compact operational inventory.",
-      "Glossary/help owners maintain canonical terminology and distinction guidance across surfaces.",
-      "Runtime identity consumers (chat/interview/builders/orchestrator) must reuse requested/effective disclosure grammar without collapsing object identities.",
-      "Notification system owners enforce escalation policy dimensions and trust-aware confidence language."
-    ],
-    "stale_retirement_items": [
-      "Retire ad hoc governance record top-level shapes in favor of shared envelope + payload families.",
-      "Retire ambiguous cleanup semantics where archive/prune/remove are treated as equivalent operations.",
-      "Retire glossary gaps that permit synonym drift for lane/worktree, history/ledger, historical/superseded, and related pairs.",
-      "Retire overconfident projection-derived alerts/exports that do not disclose stale/degraded trust state."
-    ],
-    "open_questions": [
-      "What exact schema contract and versioning policy will govern the shared envelope and per-family payload extensibility?",
-      "What authoritative mapping table should govern lane-state to worktree-state transitions across recovery and cleanup flows?",
-      "Which export surfaces require mandatory manifests vs optional manifests, and how strict should trust-state fields be for simple record exports?",
-      "What thresholds and timing policies should drive owner-based escalation to system notifications across blocked categories?"
-    ],
-    "process_defects": [
-      "Documentation currently defines many components but leaves key interaction policies implicit across seams.",
-      "Export semantics are distributed across domains, creating ambiguity about canonical vs derived JSON outputs.",
-      "Terminology governance lags behind orchestrator rewrite velocity, increasing copy and UX drift risk.",
-      "Notification policy lacks explicit combined-dimension routing logic despite existing severity ladders and trust-state needs."
-    ],
-    "doc_hints": [
-      "Prioritize updates to `Plans/Glossary.md` and corresponding help entries for new orchestrator vocabulary and distinction pairs.",
-      "Introduce explicit lane/worktree lifecycle contract language in orchestrator/source-control planning docs.",
-      "Codify shared runtime boundary statement in conversational and orchestrator architecture docs.",
-      "Add unified orchestrator export contract section tying records, bundles, views, manifests, and trust-state handling."
-    ]
-  },
+      "summary": "Plans must require trust disclosure or canonical revalidation before projection-derived export claims.",
+      "raw_excerpt": "exports derived from stale/degraded projections must either: - disclose trust state in the export/manifest - or re-query from canonical/current backing data before export"
+    },
+    {
+      "id": "seed-c3-repair-task-007-027",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4937,
+        "end_line": 4952
+      },
+      "summary": "Lane lifecycle and worktree lifecycle must remain related but non-identical models.",
+      "raw_excerpt": "treat `lane lifecycle` and `worktree lifecycle` as related but non-identical"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-001",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4998,
+        "end_line": 5000
+      },
+      "summary": "Recover, archive, prune, and remove must remain semantically distinct cleanup actions.",
+      "raw_excerpt": "Important rule: - `recover`, `archive`, `prune`, and `remove` must not blur together"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-002",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5023,
+        "end_line": 5033
+      },
+      "summary": "Cleanup eligibility must transition from concrete operational conditions, not generic completion signals.",
+      "raw_excerpt": "Good candidate transitions into `cleanup_eligible` ... Good candidate transitions into `retained` instead of immediate cleanup"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-003",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5052,
+        "end_line": 5056
+      },
+      "summary": "Confirmation hardness must scale by action severity, with prune/remove generally strong-gated.",
+      "raw_excerpt": "archive may be `light` or `strong` ... prune/remove should usually be `strong` ... remove ... may approach `hard_gate`"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-004",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5072,
+        "end_line": 5073
+      },
+      "summary": "UI copy must be re-checked so canonical terms replace informal synonyms across rewritten surfaces.",
+      "raw_excerpt": "Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms where canonical terms are now required."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-005",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5243,
+        "end_line": 5253
+      },
+      "summary": "Conversation, wizard, and orchestrator identities must remain linkable but distinct families.",
+      "raw_excerpt": "The docs imply multiple identity families that must stay distinct ... These can be linked, but should not be collapsed into one object model."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-006",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5267,
+        "end_line": 5277
+      },
+      "summary": "Shared blocked taxonomy must stay broad while preserving actor-specific state-machine semantics.",
+      "raw_excerpt": "blocked state is not Orchestrator-exclusive ... Keep blocked/remediation taxonomy shared, while preserving actor-specific state machines and object identities"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-007",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5378,
+        "end_line": 5381
+      },
+      "summary": "Filtered JSON exports must not be treated as canonical record export unless exact envelope fidelity is preserved.",
+      "raw_excerpt": "filtered JSON is not automatically a canonical record export"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-008",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5544,
+        "end_line": 5548
+      },
+      "summary": "Canonical blocked episodes cannot be hidden behind advisory quiet-window suppression policies.",
+      "raw_excerpt": "pressure/threshold warnings may use quiet periods - blocked states and canonical action-needed episodes may not quietly disappear"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "seed-c3-extract-task-007-005",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4829,
+        "end_line": 4831
+      },
+      "summary": "A shared governance/runtime record envelope is selected as the normalization baseline.",
+      "raw_excerpt": "Strong recommendation: - add one shared governance/runtime record-envelope pattern, then let each family add its own payload block",
+      "decision_rationale": "Reduces repeated re-encoding across search, export, ledger inspection, and cross-tab deep links.",
+      "rejected_alternatives": [
+        "Inventing ad hoc top-level shapes per new record family"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-007-006",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5145,
+        "end_line": 5147
+      },
+      "summary": "Glossary/help ownership is split so glossary defines canon and help provides expanded explanation.",
+      "raw_excerpt": "Recommended rule: - glossary owns short canonical definitions - help entries own deeper explanation, examples, and related-concept links",
+      "decision_rationale": "Prevents contextual help from mutating canonical semantics."
+    },
+    {
+      "id": "seed-c3-extract-task-007-007",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5225,
+        "end_line": 5239
+      },
+      "summary": "Shared runtime semantics are accepted across actor families while execution ontology remains distinct.",
+      "raw_excerpt": "conversational actors and document-production actors share provider/runtime identity semantics, but they are not orchestration execution objects",
+      "decision_rationale": "Allows shared disclosure and blocked taxonomy without collapsing actor identities.",
+      "rejected_alternatives": [
+        "Treating builder/interview/chat runs as package/seam/node objects"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-007-008",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5356,
+        "end_line": 5359
+      },
+      "summary": "Orchestrator export taxonomy is locked to record, bundle, and view classes.",
+      "raw_excerpt": "Define a shared Orchestrator export taxonomy: `record export`, `bundle export`, `view export`.",
+      "decision_rationale": "Clarifies semantics of JSON/CSV/image outputs and prevents canonical/view drift."
+    },
+    {
+      "id": "seed-c3-extract-task-007-009",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5494,
+        "end_line": 5497
+      },
+      "summary": "Notification routing is decided to use severity plus execution impact, ownership, persistence, and trust.",
+      "raw_excerpt": "Define notification routing using: - severity - execution impact - blocked owner - persistence - projection trust",
+      "decision_rationale": "Avoids over-notify, misrouting, and overconfident alerts from degraded projections."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-009",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5347,
+        "end_line": 5354
+      },
+      "summary": "Export bundles explicitly include selected-object and historical-run package candidates.",
+      "raw_excerpt": "Good candidate Orchestrator exports ... selected-object bundle ... historical run package with manifest + linked artifacts/records",
+      "decision_rationale": "Ensures export planning covers forensic and review workflows, not only filtered table dumps."
+    }
+  ],
+  "data_shapes": [
+    {
+      "id": "seed-c3-extract-task-007-010",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4832,
+        "end_line": 4851
+      },
+      "summary": "A shared record-envelope field set is specified for governance/runtime record families.",
+      "raw_excerpt": "Good base envelope fields: - `record_id` - `record_kind` - `schema_version` - `project_id` - `run_id?` - `scope_type` - `scope_id` - `status` - `created_at_utc` - `updated_at_utc?` ...",
+      "schema_name": "shared_record_envelope",
+      "fields": [
+        "record_id",
+        "record_kind",
+        "schema_version",
+        "project_id",
+        "run_id?",
+        "scope_type",
+        "scope_id",
+        "status",
+        "created_at_utc",
+        "updated_at_utc?",
+        "summary",
+        "summary_kind?",
+        "detail_ref?",
+        "source_refs[]",
+        "artifact_refs[]",
+        "related_record_refs[]",
+        "lineage_refs[]",
+        "actor_ref?",
+        "requested_effective_snapshot_refs?"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-007-011",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4955,
+        "end_line": 4963
+      },
+      "summary": "Lane state enum candidates are documented for lifecycle semantics.",
+      "raw_excerpt": "Current lane vocabulary still looks right and should be kept: - `baseline` - `active` - `suspect` - `restoring` - `retained` - `cleanup_eligible` - `archived` - `removed` - `historical`",
+      "schema_name": "lane_lifecycle_state",
+      "enum_values": [
+        "baseline",
+        "active",
+        "suspect",
+        "restoring",
+        "retained",
+        "cleanup_eligible",
+        "archived",
+        "removed",
+        "historical"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-007-012",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5187,
+        "end_line": 5200
+      },
+      "summary": "Bundle export manifest fields are explicitly enumerated.",
+      "raw_excerpt": "Good manifest fields: - `export_id` - `export_kind` - `schema_version` - `project_id` - `focused_run_id?` - `source_surface` - `generated_at_utc` - `filter_summary?` - `included_record_ids[]` - `included_artifact_ids[]`",
+      "schema_name": "orchestrator_export_manifest",
+      "fields": [
+        "export_id",
+        "export_kind",
+        "schema_version",
+        "project_id",
+        "focused_run_id?",
+        "source_surface",
+        "generated_at_utc",
+        "filter_summary?",
+        "included_record_ids[]",
+        "included_artifact_ids[]",
+        "included_file_paths[]?",
+        "lineage_notes?",
+        "trust_state_at_export?"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-007-013",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5470,
+        "end_line": 5475
+      },
+      "summary": "Notification resurfacing trigger shape is defined by specific state-change events.",
+      "raw_excerpt": "Good resurfacing triggers: - severity increase - blocked owner change - concern changes from advisory to execution-impacting - blocked duration threshold crossed - trust state improves ... - trust state degrades ...",
+      "schema_name": "notification_resurfacing_trigger_set"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-010",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4987,
+        "end_line": 4995
+      },
+      "summary": "Source Control worktree posture vocabulary is explicitly enumerated for concrete worktree state.",
+      "raw_excerpt": "Recommended worktree row posture: - `live` - `dirty` - `conflict` - `orphaned` - `recovering` - `retained` - `archived` - `removed`",
+      "schema_name": "worktree_posture_state",
+      "enum_values": [
+        "live",
+        "dirty",
+        "conflict",
+        "orphaned",
+        "recovering",
+        "retained",
+        "archived",
+        "removed"
+      ]
+    },
+    {
+      "id": "seed-c3-repair2-task-002-011",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5129,
+        "end_line": 5140
+      },
+      "summary": "High-risk glossary distinction pairs must be canonically defined to prevent copy drift.",
+      "raw_excerpt": "Several word pairs are now risky unless the glossary or help system pins them down: `lane` vs `worktree`, `record` vs `artifact`, `history` vs `ledger`, ...",
+      "schema_name": "high_risk_distinction_pairs"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-012",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5294,
+        "end_line": 5301
+      },
+      "summary": "Search and record systems must use distinct actor/run kinds while sharing runtime identity fields.",
+      "raw_excerpt": "Candidate actor/run kinds: assistant conversation, interview run, builder run, orchestrator run ... keep a shared runtime-identity field family and distinct actor/run kinds",
+      "schema_name": "actor_run_kind_partition"
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "seed-c3-extract-task-007-014",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5036,
+        "end_line": 5042
+      },
+      "summary": "Source Control should default to compact live rows with retained/cleanup/history behind filters.",
+      "raw_excerpt": "Source Control ... should default to compact current/live worktree rows with filters/toggles for: - retained - cleanup-eligible - archived/removed history"
+    },
+    {
+      "id": "seed-c3-extract-task-007-015",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5435,
+        "end_line": 5443
+      },
+      "summary": "Notification destination routing must follow canonical surface roles for history, progress, chat, and system notifications.",
+      "raw_excerpt": "Good emerging routing model: - `History` ... - `Progress` / `Dashboard` ... - `thread/chat` ... - `system notification` ...",
+      "owner": "blocked_owner"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-013",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5511,
+        "end_line": 5518
+      },
+      "summary": "Blocked-owner value must determine first-route surface and escalation style before user-facing notification.",
+      "raw_excerpt": "blocked owner influences both destination surface and notification style ... User vs Overseer/Runtime/External Resource examples",
+      "owner": "blocked_owner"
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "seed-c3-extract-task-007-016",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5013,
+        "end_line": 5020
+      },
+      "summary": "Archive/prune/remove eligibility requires runtime and lineage gating checks beyond age.",
+      "raw_excerpt": "Recommended checks before archive/prune/remove: - no active-run ownership - no unresolved blocked recovery requiring that exact worktree - no required safe-point restore ...",
+      "gate_name": "cleanup_eligibility_gate"
+    },
+    {
+      "id": "seed-c3-extract-task-007-017",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5493,
+        "end_line": 5495
+      },
+      "summary": "Concern acknowledgment may reduce noise but cannot suppress an active blocked condition.",
+      "raw_excerpt": "Keep concern acknowledgment as a noise-control mechanism, not a blocked-state suppressor.",
+      "gate_name": "blocked_state_notification_integrity"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-014",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5073,
+        "end_line": 5074
+      },
+      "summary": "Destructive worktree actions require active-run ownership visibility before execution.",
+      "raw_excerpt": "active-run ownership must be visible before destructive worktree actions",
+      "gate_name": "active_run_visibility_precondition"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-015",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5523,
+        "end_line": 5533
+      },
+      "summary": "Notification confidence must degrade when projections are stale/degraded unless canonical evidence confirms claims.",
+      "raw_excerpt": "stale or degraded projections must not generate overconfident notifications ... prefer notifications rooted in canonical events",
+      "gate_name": "projection_trust_notification_confidence_gate"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-016",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5569,
+        "end_line": 5576
+      },
+      "summary": "Trust-qualified notification copy must disclose stale/degraded state instead of asserting certainty.",
+      "raw_excerpt": "Good copy patterns: `View may be stale; refresh before acting` ... `Projection degraded; showing canonical history only`",
+      "gate_name": "trust_qualified_copy_policy"
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "id": "seed-c3-extract-task-007-018",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5036,
+        "end_line": 5038
+      },
+      "summary": "Orchestrator owns lane-pool truth while Source Control owns concrete worktree actions and inventory display.",
+      "raw_excerpt": "Orchestrator owns lane-pool truth and cleanup posture in execution context; Source Control owns concrete worktree actions and compact inventory display",
+      "owner": "Orchestrator and Source Control",
+      "consumer": "UI surfaces using lane/worktree state"
+    },
+    {
+      "id": "seed-c3-extract-task-007-019",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5259,
+        "end_line": 5264
+      },
+      "summary": "Surfaces presenting the same active conversational/doc-production run must consume the same runtime state fields.",
+      "raw_excerpt": "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields",
+      "owner": "Shared runtime contract",
+      "consumer": "Interview chat, activity pane, builder panes, chat subagent blocks"
+    }
+  ],
+  "stale_retirement_items": [
+    {
+      "id": "seed-c3-extract-task-007-020",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4893,
+        "end_line": 4900
+      },
+      "summary": "Historical semantic labels must be preserved distinctly and not collapsed to a generic old-state flag.",
+      "raw_excerpt": "Shared envelopes also help apply ... `historical`, `superseded`, `revoked`, `reopened`, `archived`, `removed` ... The envelope should not collapse these into one generic old-state bit."
+    },
+    {
+      "id": "seed-c3-extract-task-007-021",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5061,
+        "end_line": 5062
+      },
+      "summary": "Glossary ownership is marked stale relative to rewrite vocabulary and requires expansion.",
+      "raw_excerpt": "`Glossary.md` is now materially behind the Orchestrator rewrite vocabulary."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-017",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5171,
+        "end_line": 5178
+      },
+      "summary": "Distributed informal GUI wording is stale and must retire in favor of canonical glossary-owned terminology.",
+      "raw_excerpt": "rewrite needs stronger cross-cutting copy discipline so UI does not casually say informal synonyms where canonical terms are required"
+    }
+  ],
+  "open_questions": [],
+  "process_defects": [
+    {
+      "id": "seed-c3-extract-task-007-022",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5480,
+        "end_line": 5484
+      },
+      "summary": "Current docs lack an integrated interaction policy for concern state, blocked ownership, and projection trust.",
+      "raw_excerpt": "Current docs define many notification pieces, but not enough of the interaction policy between concern state, blocked ownership, and projection trust."
+    }
+  ],
+  "doc_hints": [
+    {
+      "id": "seed-c3-extract-task-007-023",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4908,
+        "end_line": 4911
+      },
+      "summary": "Record-envelope and record-vs-artifact canon should be captured in usage planning docs.",
+      "raw_excerpt": "Candidate fixes to carry forward - Define a shared record-envelope contract ... Keep artifacts and rendered summaries linked but separate from canonical records.",
+      "doc_path": "Plans/usage-feature.md"
+    },
+    {
+      "id": "seed-c3-extract-task-007-024",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5190,
+        "end_line": 5199
+      },
+      "summary": "Export manifest schema and trust-state disclosure should be recorded in Orchestrator export docs.",
+      "raw_excerpt": "Good manifest fields: `export_id` ... `included_record_ids[]` ... `trust_state_at_export?`",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-extract-task-007-025",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5100,
+        "end_line": 5117
+      },
+      "summary": "Glossary should own new Orchestrator terms and distinction pairs before UI copy crystallizes.",
+      "raw_excerpt": "Strong candidates for glossary entries: `Feature Seam`, `Work Package`, `Node`, ... `stale_historical` ... projection trust terms: `current`, `refreshing`, `stale`, `degraded`, `unavailable`",
+      "doc_path": "Plans/Glossary.md"
+    },
+    {
+      "id": "seed-c3-extract-task-007-026",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5469,
+        "end_line": 5477
+      },
+      "summary": "Notification resurfacing and trust-qualified copy rules should be reflected in GUI spec docs.",
+      "raw_excerpt": "Good resurfacing triggers ... trust state improves ... trust state degrades ... Good copy patterns: `View may be stale; refresh before acting`",
+      "doc_path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-028",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4921,
+        "end_line": 4924
+      },
+      "summary": "Lane/worktree cleanup lifecycle semantics should be captured in worktree improvement docs.",
+      "raw_excerpt": "Targeted docs read includes worktree lifecycle material needing canonical ownership.",
+      "doc_path": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-029",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4921,
+        "end_line": 4923
+      },
+      "summary": "GitHub integration documentation should align with lane/worktree lineage-preserving cleanup behavior.",
+      "raw_excerpt": "Targeted docs read includes GitHub integration in the lane/worktree cleanup lifecycle sweep.",
+      "doc_path": "Plans/GitHub_Integration.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-030",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5193,
+        "end_line": 5200
+      },
+      "summary": "Storage plan should reflect export retention interplay with canonical lineage preservation.",
+      "raw_excerpt": "export is part of archival strategy but does not authorize deletion of canonical/historical records",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-031",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5160,
+        "end_line": 5167
+      },
+      "summary": "Persona docs should remain aligned to requested/effective runtime disclosure semantics.",
+      "raw_excerpt": "shared runtime/provider docs align on requested/effective visibility and skipped/honored controls",
+      "doc_path": "Plans/Personas.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-032",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5160,
+        "end_line": 5167
+      },
+      "summary": "Model system docs should remain canonical for runtime identity and selection reason semantics.",
+      "raw_excerpt": "requested/effective provider-model semantics are already strong in shared runtime docs",
+      "doc_path": "Plans/Models_System.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-033",
+      "source_shard_id": "shard-0026",
+      "source_line_range": {
+        "start_line": 5160,
+        "end_line": 5167
+      },
+      "summary": "Multi-account docs should continue to mirror shared runtime identity semantics.",
+      "raw_excerpt": "shared provider/runtime contract applies broadly across assistant/interviewer/builders/overseers",
+      "doc_path": "Plans/Multi-Account.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-034",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5225,
+        "end_line": 5233
+      },
+      "summary": "Assistant chat docs should preserve shared-runtime disclosure without ontology collapse.",
+      "raw_excerpt": "shared runtime does not imply shared execution ontology",
+      "doc_path": "Plans/assistant-chat-design.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-035",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5225,
+        "end_line": 5233
+      },
+      "summary": "Interview integration docs should preserve runtime parity and ontology boundary guardrails.",
+      "raw_excerpt": "interview/chat surfaces share runtime fields but are not Orchestrator graph objects",
+      "doc_path": "Plans/interview-subagent-integration.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-036",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5335,
+        "end_line": 5340
+      },
+      "summary": "Wizard flexibility docs should include non-trivial bundle export manifest expectations.",
+      "raw_excerpt": "selected-object and historical bundle exports require manifest-linked semantics",
+      "doc_path": "Plans/chain-wizard-flexibility.md"
+    },
+    {
+      "id": "seed-c3-repair-task-007-037",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5316,
+        "end_line": 5320
+      },
+      "summary": "Runtime artifacts docs should preserve canonical identity linkage during export.",
+      "raw_excerpt": "artifact export should remain linked to exact record/identity model",
+      "doc_path": "Plans/Runtime_Artifacts_Panel.md"
+    },
+    {
+      "id": "seed-c3-repair2-task-002-018",
+      "source_shard_id": "shard-0025",
+      "source_line_range": {
+        "start_line": 4921,
+        "end_line": 4924
+      },
+      "doc_path": "Plans/storage-plan.md",
+      "summary": "Storage-plan implications from lane/worktree cleanup sweep should remain explicitly linked.",
+      "raw_excerpt": "Targeted docs read includes `Plans/storage-plan.md` during cleanup lifecycle sweep."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-019",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5227,
+        "end_line": 5227
+      },
+      "doc_path": "Plans/Multi-Account.md",
+      "summary": "Shared runtime contract constraints should be mirrored in multi-account documentation touchpoints.",
+      "raw_excerpt": "Targeted docs read includes `Plans/Multi-Account.md` in shared runtime boundary analysis."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-020",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5228,
+        "end_line": 5228
+      },
+      "doc_path": "Plans/Personas.md",
+      "summary": "Shared runtime boundary language should be reflected in persona docs for parity.",
+      "raw_excerpt": "Targeted docs read includes `Plans/Personas.md` in shared runtime boundary analysis."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-021",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5229,
+        "end_line": 5229
+      },
+      "doc_path": "Plans/Models_System.md",
+      "summary": "Model-system docs should preserve the runtime identity boundary statement across actor types.",
+      "raw_excerpt": "Targeted docs read includes `Plans/Models_System.md` in shared runtime boundary analysis."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-022",
+      "source_shard_id": "shard-0027",
+      "source_line_range": {
+        "start_line": 5329,
+        "end_line": 5329
+      },
+      "doc_path": "Plans/storage-plan.md",
+      "summary": "Storage-plan cross-link should remain visible in export contract synthesis.",
+      "raw_excerpt": "Targeted docs read includes `Plans/storage-plan.md` in export contracts sweep."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-023",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5472,
+        "end_line": 5472
+      },
+      "doc_path": "Plans/assistant-chat-design.md",
+      "summary": "Assistant chat notification behavior should incorporate trust-qualified escalation policy.",
+      "raw_excerpt": "Targeted docs read includes `Plans/assistant-chat-design.md` in notifications/escalation interaction sweep."
+    },
+    {
+      "id": "seed-c3-repair2-task-002-024",
+      "source_shard_id": "shard-0028",
+      "source_line_range": {
+        "start_line": 5473,
+        "end_line": 5473
+      },
+      "doc_path": "Plans/interview-subagent-integration.md",
+      "summary": "Interview integration notification behavior should align with blocked-owner and trust routing policy.",
+      "raw_excerpt": "Targeted docs read includes `Plans/interview-subagent-integration.md` in notifications/escalation interaction sweep."
+    }
+  ],
   "exclusions_by_shard": {
     "shard-0025": [
-      "No implementation code or migration scripts; planning-level findings only."
+      {
+        "reason": "Boilerplate section labels",
+        "lines_or_section": "Research Progress headings and Targeted docs read lists"
+      },
+      {
+        "reason": "Contextual recap without new obligations",
+        "lines_or_section": "General key-findings bullets that restate prior normalized-record direction"
+      }
     ],
     "shard-0026": [
-      "No concrete UI wireframe edits; lifecycle semantics and gating rules only."
+      {
+        "reason": "Repeated heading scaffolding",
+        "lines_or_section": "Contradictions / gaps surfaced blocks with no concrete new rule"
+      },
+      {
+        "reason": "Narrative examples only",
+        "lines_or_section": "Working interpretation prose where no explicit obligation/gate/schema is added"
+      }
     ],
     "shard-0027": [
-      "No finalized glossary text authored; terminology gap analysis only."
+      {
+        "reason": "Non-binding explanatory recap",
+        "lines_or_section": "Examples illustrating shared-runtime parity already captured by stronger boundary rule"
+      },
+      {
+        "reason": "Repeated section headers",
+        "lines_or_section": "Research Progress and Targeted docs read lists"
+      }
     ],
     "shard-0028": [
-      "No production notification engine spec; interaction policy recommendations only."
+      {
+        "reason": "Severity ladder recap",
+        "lines_or_section": "Existing escalation ladder list repeated as background context"
+      },
+      {
+        "reason": "Illustrative copy samples",
+        "lines_or_section": "Good/Bad copy examples not adding independent policy beyond extracted trust-routing rules"
+      }
     ]
   },
   "seed_ids_by_shard": {
     "shard-0025": [
-      "seed-envelope-normalization",
-      "seed-record-artifact-separation"
+      "seed-c3-extract-task-007-001",
+      "seed-c3-extract-task-007-002",
+      "seed-c3-extract-task-007-005",
+      "seed-c3-extract-task-007-010",
+      "seed-c3-extract-task-007-011",
+      "seed-c3-extract-task-007-020",
+      "seed-c3-extract-task-007-023",
+      "seed-c3-repair-task-007-027",
+      "seed-c3-repair-task-007-028",
+      "seed-c3-repair-task-007-029",
+      "seed-c3-repair2-task-002-001",
+      "seed-c3-repair2-task-002-010",
+      "seed-c3-repair2-task-002-018"
     ],
     "shard-0026": [
-      "seed-lane-worktree-lifecycle-split",
-      "seed-cleanup-eligibility-gates"
+      "seed-c3-extract-task-007-003",
+      "seed-c3-extract-task-007-006",
+      "seed-c3-extract-task-007-012",
+      "seed-c3-extract-task-007-014",
+      "seed-c3-extract-task-007-016",
+      "seed-c3-extract-task-007-018",
+      "seed-c3-extract-task-007-021",
+      "seed-c3-extract-task-007-024",
+      "seed-c3-extract-task-007-025",
+      "seed-c3-repair-task-007-030",
+      "seed-c3-repair-task-007-031",
+      "seed-c3-repair-task-007-032",
+      "seed-c3-repair-task-007-033",
+      "seed-c3-repair2-task-002-002",
+      "seed-c3-repair2-task-002-003",
+      "seed-c3-repair2-task-002-004",
+      "seed-c3-repair2-task-002-011",
+      "seed-c3-repair2-task-002-014",
+      "seed-c3-repair2-task-002-017"
     ],
     "shard-0027": [
-      "seed-glossary-ownership-expansion",
-      "seed-runtime-ontology-boundary"
+      "seed-c3-extract-task-007-007",
+      "seed-c3-extract-task-007-008",
+      "seed-c3-extract-task-007-019",
+      "seed-c3-repair-task-007-034",
+      "seed-c3-repair-task-007-035",
+      "seed-c3-repair-task-007-036",
+      "seed-c3-repair-task-007-037",
+      "seed-c3-repair2-task-002-005",
+      "seed-c3-repair2-task-002-006",
+      "seed-c3-repair2-task-002-009",
+      "seed-c3-repair2-task-002-012",
+      "seed-c3-repair2-task-002-019",
+      "seed-c3-repair2-task-002-020",
+      "seed-c3-repair2-task-002-021",
+      "seed-c3-repair2-task-002-022"
     ],
     "shard-0028": [
-      "seed-export-taxonomy-manifest",
-      "seed-notification-trust-routing"
+      "seed-c3-extract-task-007-004",
+      "seed-c3-extract-task-007-009",
+      "seed-c3-extract-task-007-013",
+      "seed-c3-extract-task-007-015",
+      "seed-c3-extract-task-007-017",
+      "seed-c3-extract-task-007-022",
+      "seed-c3-extract-task-007-026",
+      "seed-c3-repair2-task-002-007",
+      "seed-c3-repair2-task-002-008",
+      "seed-c3-repair2-task-002-013",
+      "seed-c3-repair2-task-002-015",
+      "seed-c3-repair2-task-002-016",
+      "seed-c3-repair2-task-002-023",
+      "seed-c3-repair2-task-002-024"
     ]
   },
   "status": "complete",
-  "blocking_reason": ""
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": true,
+    "notes": [
+      "targeted_c4_round2_repair: missing_material_added, doc_hints_preserved"
+    ]
+  }
 }

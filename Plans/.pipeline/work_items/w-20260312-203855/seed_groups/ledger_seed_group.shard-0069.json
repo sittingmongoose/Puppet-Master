@@ -1,353 +1,781 @@
 {
-  "schema_id": "pm.ledger_seed_group.v2",
-  "prompt_id": "c3_recovery_extraction",
-  "prompt_version": "1.0",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "subagent_task_id": "task-018",
-  "source_shard_ids": [
-    "shard-0069",
-    "shard-0070",
-    "shard-0071",
-    "shard-0072"
-  ],
+  "subagent_task_id": "c3-repair-task-016",
+  "batch_anchor_shard_id": "shard-0069",
+  "source_shard_ids": ["shard-0069", "shard-0070", "shard-0071", "shard-0072"],
   "shard_line_ranges": {
-    "shard-0069": {
-      "source_range": "L013601-L013800",
-      "local_range": "1-201"
+    "shard-0069": {"start_line": 13601, "end_line": 13800},
+    "shard-0070": {"start_line": 13801, "end_line": 14000},
+    "shard-0071": {"start_line": 14001, "end_line": 14200},
+    "shard-0072": {"start_line": 14201, "end_line": 14400}
+  },
+  "requirements": [
+    {
+      "id": "seed-c3-extract-task-018-001",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13731, "end_line": 13733},
+      "summary": "The contract requires inspector_target usage only after primary selector identity is established.",
+      "raw_excerpt": "- Use `inspector_target` only after primary selector identity is already established.\n- Use `inspector_target = evidence` when the target object is already selected and the detail focus must land on evidence."
     },
-    "shard-0070": {
-      "source_range": "L013801-L014000",
-      "local_range": "1-201"
+    {
+      "id": "seed-c3-extract-task-018-002",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13971, "end_line": 13977},
+      "summary": "Routing must use subject_id only for document/artifact content and object_kind plus object_id for all other object families.",
+      "raw_excerpt": "- Use `subject_id` only when the target is canonical renderable/openable content.\n- Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects.\n- The canonical `subject_id` families remain:\n  - `doc:<document_id>`\n  - `artifact:<artifact_id>`"
     },
-    "shard-0071": {
-      "source_range": "L014001-L014200",
-      "local_range": "1-201"
+    {
+      "id": "seed-c3-extract-task-018-003",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14213, "end_line": 14221},
+      "summary": "Route payload validation must reject missing selectors, conflicting selectors, incomplete object selectors, and invalid focus/state fields.",
+      "raw_excerpt": "- reject when `project_id` is missing\n- reject when no primary selector exists\n- reject when both `subject_id` and `object_kind/object_id` are supplied as competing primary selectors\n- reject when `object_kind` is present without `object_id`\n- reject when `object_id` is present without `object_kind`"
     },
-    "shard-0072": {
-      "source_range": "L014201-L014400",
-      "local_range": "1-201"
+    {
+      "id": "seed-c3-extract-task-018-004",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14273, "end_line": 14277},
+      "summary": "tab_id is constrained to page-tab routing contexts and must not replace target_kind or inspector_target.",
+      "raw_excerpt": "- `tab_id` is meaningful only with `target_kind = page_tab` or with a routed page whose visibility depends on a known stable tab family.\n- `tab_id` does not replace `target_kind`.\n- `tab_id` does not replace `inspector_target`."
     }
-  },
-  "extracted": {
-    "requirements": [
-      {
-        "seed_id": "seed-0069-route-target-canonicality",
-        "shard_id": "shard-0069",
-        "detail": "Treat route_target as canonical navigation identity and keep serialized transport narrower than internal route model."
-      },
-      {
-        "seed_id": "seed-0069-object-kind-canonical-set",
-        "shard_id": "shard-0069",
-        "detail": "Use a controlled object_kind enum spanning conversational, runtime, and orchestration-rewrite objects."
-      },
-      {
-        "seed_id": "seed-0069-inspector-target-closed-enum",
-        "shard_id": "shard-0069",
-        "detail": "inspector_target must be a small closed vocabulary and never a free-form extension bag."
-      },
-      {
-        "seed_id": "seed-0070-subject-vs-object-classification",
-        "shard_id": "shard-0070",
-        "detail": "subject_id is only for doc/artifact renderable subjects; all other routed identities use object_kind plus object_id."
-      },
-      {
-        "seed_id": "seed-0070-route-normalization-high-pressure-flows",
-        "shard_id": "shard-0070",
-        "detail": "Normalize usage, wizard resume, chat search, node detail, and attempt detail into canonical object-first route recipes."
-      },
-      {
-        "seed_id": "seed-0071-route-normalization-runtime-lineage",
-        "shard_id": "shard-0071",
-        "detail": "Normalize blocked_episode, scheduler_pass, safe_point, remediation, graph_generation, and graph_patch through object-first routes."
-      },
-      {
-        "seed_id": "seed-0071-route-normalization-orchestration-scm",
-        "shard_id": "shard-0071",
-        "detail": "Normalize worktree, lane, feature_seam, work_package, concern, and promotion pivots through object-first routing."
-      },
-      {
-        "seed_id": "seed-0072-route-validation-rejections",
-        "shard_id": "shard-0072",
-        "detail": "Route contract must include invalid-combination rejection rules (missing project, competing selectors, incomplete object selector, invalid inspector/tab/state fields)."
-      },
-      {
-        "seed_id": "seed-0072-tab-id-role",
-        "shard_id": "shard-0072",
-        "detail": "tab_id is stable page-tab focus only, not object identity and not shell/panel/workspace/browser tab identity."
-      },
-      {
-        "seed_id": "seed-0072-scoped-resolver-balance",
-        "shard_id": "shard-0072",
-        "detail": "Keep base contract small and handle scoped identity resolution through resolver context (project_id, focused_run_id, canonical stores)."
-      }
-    ],
-    "decisions": [
-      {
-        "seed_id": "seed-0069-decide-resume-url-transport",
-        "shard_id": "shard-0069",
-        "decision": "resume_url is serialized transport; route_target remains canonical identity."
-      },
-      {
-        "seed_id": "seed-0069-decide-object-kind-vocabulary",
-        "shard_id": "shard-0069",
-        "decision": "Adopt canonical object_kind enum including thread/message/wizard/usage_event/run-lineage and rewrite orchestration objects."
-      },
-      {
-        "seed_id": "seed-0069-decide-inspector-target-enum",
-        "shard_id": "shard-0069",
-        "decision": "Adopt closed inspector_target enum: summary, evidence, artifacts, history, reviews, usage, lineage, details."
-      },
-      {
-        "seed_id": "seed-0070-decide-selector-precedence",
-        "shard_id": "shard-0070",
-        "decision": "Freeze subject_id to doc/artifact and route everything else through object_kind/object_id."
-      },
-      {
-        "seed_id": "seed-0072-decide-rejection-rules",
-        "shard_id": "shard-0072",
-        "decision": "Treat invalid route payload combinations as contract failures rather than best-effort fallbacks."
-      }
-    ],
-    "data_shapes": [
-      {
-        "seed_id": "seed-0069-shape-object-kind",
-        "shard_id": "shard-0069",
-        "shape": "object_kind enum includes thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation."
-      },
-      {
-        "seed_id": "seed-0069-shape-inspector-target",
-        "shard_id": "shard-0069",
-        "shape": "inspector_target enum includes summary, evidence, artifacts, history, reviews, usage, lineage, details."
-      },
-      {
-        "seed_id": "seed-0070-shape-subject-id",
-        "shard_id": "shard-0070",
-        "shape": "subject_id families are restricted to doc:<document_id> and artifact:<artifact_id>."
-      },
-      {
-        "seed_id": "seed-0072-shape-tab-id",
-        "shard_id": "shard-0072",
-        "shape": "tab_id role is stable page-tab focus with Orchestrator family values: progress, seams, node_graph, evidence, history, ledger."
-      }
-    ],
-    "routing_rules": [
-      {
-        "seed_id": "seed-0070-rule-usage-event-route",
-        "shard_id": "shard-0070",
-        "rule": "usage routes normalize through object_kind=usage_event and canonical object_id, with inspector_target or tab selection as secondary."
-      },
-      {
-        "seed_id": "seed-0070-rule-wizard-message-route",
-        "shard_id": "shard-0070",
-        "rule": "wizard/message navigation is object-first; deep-link step/message anchors stay serialized secondary detail."
-      },
-      {
-        "seed_id": "seed-0071-rule-runtime-lineage-route",
-        "shard_id": "shard-0071",
-        "rule": "Runtime lineage objects route by object identity with focused_run_id scope; avoid attempt-only or tier-era pivots."
-      },
-      {
-        "seed_id": "seed-0071-rule-worktree-orchestrator-route",
-        "shard_id": "shard-0071",
-        "rule": "Source control and orchestration pivots route by worktree/lane/seam/package/concern/promotion object identity."
-      },
-      {
-        "seed_id": "seed-0072-rule-selector-validity",
-        "shard_id": "shard-0072",
-        "rule": "A valid route has project_id and one primary selector; reject competing subject and object selectors."
-      }
-    ],
-    "verification_rules": [
-      {
-        "seed_id": "seed-0072-verify-required-project",
-        "shard_id": "shard-0072",
-        "rule": "Reject route payloads missing project_id."
-      },
-      {
-        "seed_id": "seed-0072-verify-object-pairing",
-        "shard_id": "shard-0072",
-        "rule": "Reject object_kind without object_id and object_id without object_kind."
-      },
-      {
-        "seed_id": "seed-0072-verify-inspector-context",
-        "shard_id": "shard-0072",
-        "rule": "Reject inspector_target when no object selector exists."
-      },
-      {
-        "seed_id": "seed-0072-verify-tab-conflict",
-        "shard_id": "shard-0072",
-        "rule": "Reject tab_id values that conflict with target_kind or non-page-tab contexts."
-      },
-      {
-        "seed_id": "seed-0072-verify-local-state-leakage",
-        "shard_id": "shard-0072",
-        "rule": "Reject line/range and per-surface local state in route_target."
-      }
-    ],
-    "owner_consumer_obligations": [
-      {
-        "seed_id": "seed-0072-obligation-contracts-owner",
-        "shard_id": "shard-0072",
-        "owner": "Plans/Contracts_V0.md",
-        "obligation": "Own route_target primitives, selector precedence, validation/rejection rules, scoped resolver rules, and resume_url serialization rule."
-      },
-      {
-        "seed_id": "seed-0072-obligation-crosswalk",
-        "shard_id": "shard-0072",
-        "owner": "Plans/Crosswalk.md",
-        "obligation": "Declare primitive ownership and mark storage/surface docs as consumers of navigation identity."
-      },
-      {
-        "seed_id": "seed-0072-obligation-ui-command-catalog",
-        "shard_id": "shard-0072",
-        "owner": "Plans/UI_Command_Catalog.md",
-        "obligation": "Classify commands and normalize wrappers/aliases to route_target and OpenSubject payloads."
-      },
-      {
-        "seed_id": "seed-0072-obligation-surface-docs",
-        "shard_id": "shard-0072",
-        "owner": "FinalGUISpec, storage-plan, usage-feature, assistant-chat-design, Run_Graph_View, Orchestrator_Page",
-        "obligation": "Consume canonical route vocabulary and stop introducing stronger local deep-link or ad hoc identity fields."
-      }
-    ],
-    "stale_retirement_items": [
-      {
-        "seed_id": "seed-0069-retire-tier-id",
-        "shard_id": "shard-0069",
-        "item": "Retire tier_id-led route pivots in favor of canonical object_kind identities."
-      },
-      {
-        "seed_id": "seed-0070-retire-usage-event-ref",
-        "shard_id": "shard-0070",
-        "item": "Retire usage_event_ref as special top-level route field; normalize to object_kind=usage_event."
-      },
-      {
-        "seed_id": "seed-0071-retire-attempt-only-history",
-        "shard_id": "shard-0071",
-        "item": "Retire attempt-only history assumptions for scheduler/blocked/remediation lineage flows."
-      },
-      {
-        "seed_id": "seed-0072-retire-any-tab-anywhere",
-        "shard_id": "shard-0072",
-        "item": "Retire conflation of page tabs, panel subviews, and shell/workspace/browser tabs under route tab_id."
-      }
-    ],
-    "open_questions": [
-      {
-        "seed_id": "seed-0069-open-blocked-scope-wording",
-        "shard_id": "shard-0069",
-        "question": "Should blocked_episode scope semantics be codified as explicit resolver algorithm text in Contracts_V0 or delegated to runtime docs?"
-      },
-      {
-        "seed_id": "seed-0072-open-tab-id-expansion",
-        "shard_id": "shard-0072",
-        "question": "Beyond the Orchestrator tab family, which additional tab enums are stable enough for canonical tab_id expansion?"
-      }
-    ],
-    "process_defects": [
-      {
-        "seed_id": "seed-0069-defect-owner-contract-lag",
-        "shard_id": "shard-0069",
-        "defect": "Core route ownership text lagged behind concrete wizard and runtime flow behavior, causing stronger implicit contracts outside owner docs."
-      },
-      {
-        "seed_id": "seed-0072-defect-positive-only-contract",
-        "shard_id": "shard-0072",
-        "defect": "Prior route guidance emphasized positive examples without hard rejection rules, enabling payload drift."
-      }
-    ],
-    "doc_hints": [
-      {
-        "seed_id": "seed-0069-hint-contracts-v0",
-        "shard_id": "shard-0069",
-        "hint": "Add canonical object_kind and inspector_target enums with explicit non-goals."
-      },
-      {
-        "seed_id": "seed-0070-hint-usage-chat",
-        "shard_id": "shard-0070",
-        "hint": "Update usage-feature and assistant-chat-design to use object-first route examples."
-      },
-      {
-        "seed_id": "seed-0071-hint-runtime-orchestration",
-        "shard_id": "shard-0071",
-        "hint": "Embed runtime-lineage and orchestration route recipes in Run_Graph_View and Orchestrator_Page."
-      },
-      {
-        "seed_id": "seed-0072-hint-validation",
-        "shard_id": "shard-0072",
-        "hint": "Document validator rejection cases and resolver scope rules in Contracts_V0 and Crosswalk."
-      }
-    ]
-  },
+  ],
+  "decisions": [
+    {
+      "id": "seed-c3-extract-task-018-005",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13634, "end_line": 13657},
+      "summary": "The canonical object_kind set is locked to conversational, runtime, and orchestration-rewrite object families.",
+      "raw_excerpt": "- The canonical `object_kind` set is:\n  - conversational / upstream:\n    - `thread`\n    - `message`\n    - `wizard`\n    - `usage_event`\n  - runtime / execution:\n    - `run`\n    - `node`\n    - `attempt`\n    - `scheduler_pass`\n    - `blocked_episode`\n    - `safe_point`\n    - `remediation`",
+      "decision_rationale": "A firmer canonical refresh was required against rewrite-era object sets and runtime lineage objects.",
+      "rejected_alternatives": ["tier_id as route identity", "special-case usage_event_ref route concept"]
+    },
+    {
+      "id": "seed-c3-extract-task-018-006",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13715, "end_line": 13724},
+      "summary": "inspector_target is fixed to a closed vocabulary and is explicitly not object identity or free-form state.",
+      "raw_excerpt": "- The canonical vocabulary is:\n  - `summary`\n  - `evidence`\n  - `artifacts`\n  - `history`\n  - `reviews`\n  - `usage`\n  - `lineage`\n  - `details`\n- `inspector_target` is not object identity.\n- `inspector_target` is not a per-surface arbitrary bag."
+    },
+    {
+      "id": "seed-c3-extract-task-018-007",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14256, "end_line": 14264},
+      "summary": "tab_id is decided as page-focus refinement with a canonical Orchestrator vocabulary.",
+      "raw_excerpt": "- `tab_id` is route focus refinement, not destination class and not object identity.\n- The current high-value canonical vocabulary is:\n  - Orchestrator:\n    - `progress`\n    - `seams`\n    - `node_graph`\n    - `evidence`\n    - `history`\n    - `ledger`"
+    },
+    {
+      "id": "seed-c3-repair-task-016-002",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13932, "end_line": 13945},
+      "summary": "Sonnet remaining-partial tranche continuation is decided onto the same 22-doc set with GPT-5.4 as the next model and an explicit ordered priority list of high-signal docs that must not be collapsed back into generic summary language.",
+      "raw_excerpt": "- Continue the ordered sequence on this same 22-doc tranche into `GPT-5.4`; Sonnet still produced real new deltas across almost every doc.\n- Highest-signal docs for later-model continuation remain:\n  - `Plans/Architecture_Invariants.md`\n  - `Plans/FileSafe.md`\n  - `Plans/MiscPlan.md`\n  - `Plans/OpenCode_Deep_Extraction.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Section15_MVP_Promoted_Features_Spec.md`\n  - `Plans/feature-list.md`\n  - `Plans/newfeatures.md`\n  - `Plans/rewrite-tie-in-memo.md`\n  - `Plans/Decision_Log.md`",
+      "decision_rationale": "Sonnet sharpened generic flags into precise contract failures and source-verified architecture limits across the remaining partial set, so the continuation must keep the Gemini+Opus+Sonnet baseline uniform and route into GPT-5.4 rather than collapse deltas into summary language.",
+      "rejected_alternatives": ["collapse remaining-partial deltas back into generic summary language during reconciliation", "stop the tranche at Sonnet without later-model continuation"]
+    }
+  ],
+  "data_shapes": [
+    {
+      "id": "seed-c3-extract-task-018-008",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13658, "end_line": 13670},
+      "summary": "Canonical object_id fields are enumerated for core runtime and orchestration object kinds.",
+      "raw_excerpt": "- `object_id` must use existing canonical ids:\n  - `thread_id`\n  - `message_id`\n  - `wizard_id`\n  - `run_id`\n  - `attempt_id`\n  - `scheduler_pass_id`\n  - `blocked_sequence` in `{ run_id, node_id }` scope\n  - `safe_point_id`\n  - `remediation_root_id`\n  - `lane_id`\n  - `worktree_id`",
+      "schema_name": "route_target.object_id"
+    },
+    {
+      "id": "seed-c3-extract-task-018-009",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13974, "end_line": 13976},
+      "summary": "subject_id is constrained to two canonical families for content identity.",
+      "raw_excerpt": "- The canonical `subject_id` families remain:\n  - `doc:<document_id>`\n  - `artifact:<artifact_id>`",
+      "schema_name": "route_target.subject_id"
+    },
+    {
+      "id": "seed-c3-extract-task-018-010",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14314, "end_line": 14330},
+      "summary": "Scoped runtime identities require resolver context via existing scope fields instead of extra top-level route fields.",
+      "raw_excerpt": "- Scoped identity rules:\n  - `blocked_episode`\n    - `object_id = blocked_sequence`\n    - resolver scope requires `focused_run_id`\n  - `scheduler_pass`\n    - `object_id = scheduler_pass_id`\n    - resolver scope requires `focused_run_id`\n  - `safe_point`\n    - `object_id = safe_point_id`",
+      "schema_name": "route_target scoped resolver identities"
+    },
+    {
+      "id": "seed-c3-repair-task-016-001",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13784, "end_line": 13800},
+      "summary": "subject_id vs object_kind classification is illustrated by canonical normalization examples mapping cost usage rows, chat search results, and wizard resume to object_kind selectors and the broader object families list (message/wizard/usage_event/run/node/attempt/scheduler/blocked/safe_point/remediation/seam/package/lane/worktree/concern/promotion/graph) onto the object_kind side.",
+      "raw_excerpt": "  - message\n  - wizard\n  - usage event\n  - run / node / attempt\n  - scheduler / blocked / safe point / remediation\n  - seam / package / lane / worktree / concern / promotion / graph objects\n\n### Normalization examples\n- cost usage row:\n  - `object_kind = usage_event`\n  - `object_id = <canonical usage event id>`\n- chat search result:\n  - `object_kind = message`\n  - `object_id = <message_id>`\n- wizard resume:\n  - `object_kind = wizard`",
+      "schema_name": "route_target subject_vs_object normalization examples"
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "seed-c3-extract-task-018-011",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14164, "end_line": 14200},
+      "summary": "High-pressure user flows are normalized into object-first route recipes for usage, wizard, chat, and node pivots.",
+      "raw_excerpt": "- cost usage -> Show in Usage:\n  - `target_kind = primary_view`\n  - `object_kind = usage_event`\n  - `object_id = <canonical usage event id>`\n  - `inspector_target = usage`\n- wizard resume:\n  - `object_kind = wizard`\n  - `object_id = <wizard_id>`\n  - serialized `resume_url` carries narrow step anchor detail"
+    },
+    {
+      "id": "seed-c3-extract-task-018-012",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14201, "end_line": 14206},
+      "summary": "Attempt detail pivots are explicitly routed with attempt object identity and scoped run context.",
+      "raw_excerpt": "- attempt detail pivot:\n  - `project_id = <project_id>`\n  - `focused_run_id = <run_id>`\n  - `object_kind = attempt`\n  - `object_id = <attempt_id>`\n  - `tab_id = node_graph`\n  - `inspector_target = details | evidence | usage | lineage`"
+    },
+    {
+      "id": "seed-c3-extract-task-018-013",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14045, "end_line": 14093},
+      "summary": "Runtime lineage navigation is object-first with canonical route recipes for blocked episodes, scheduler passes, safe points, remediation, graph generation, and graph patch.",
+      "raw_excerpt": "- blocked episode:\n  - `object_kind = blocked_episode`\n  - `object_id = <blocked_sequence>`\n- scheduler pass:\n  - `object_kind = scheduler_pass`\n  - `object_id = <scheduler_pass_id>`\n- remediation lineage:\n  - `object_kind = remediation`\n  - `object_id = <remediation_root_id>`"
+    },
+    {
+      "id": "seed-c3-extract-task-018-014",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14132, "end_line": 14177},
+      "summary": "Source Control and orchestration objects are routed through explicit object_kind recipes with tab and inspector refinements as secondary fields.",
+      "raw_excerpt": "- worktree detail:\n  - `target_kind = side_panel`\n  - `object_kind = worktree`\n  - `object_id = <worktree_id>`\n- lane detail:\n  - `object_kind = lane`\n  - `object_id = <lane_id>`\n- feature seam:\n  - `object_kind = feature_seam`\n- work package:\n  - `object_kind = work_package`"
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "seed-c3-extract-task-018-015",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14239, "end_line": 14242},
+      "summary": "Invalid route payloads must be treated as contract failures and normalized before route construction.",
+      "raw_excerpt": "- Add explicit route validation rules to `Contracts_V0.md`.\n- State that invalid route payloads are contract failures, not \u201cbest effort\u201d cases.\n- Normalize before route construction, not during late destination-specific handling.",
+      "gate_name": "route_target payload validation"
+    },
+    {
+      "id": "seed-c3-repair-task-016-006",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14104, "end_line": 14118},
+      "summary": "Runtime lineage routes must enforce blocked_sequence as the canonical id with run+node resolver scope and treat scheduler/safe-point/remediation/patch lineage drill-ins as inspector_target=lineage rather than tab-only state changes; the route contract owns these examples even though cmd.runtime.* commands already imply the identities.",
+      "raw_excerpt": "- `blocked_sequence` has canonical identity meaning, but current docs still tend to route blocked work through node/attempt views instead of treating blocked episodes as their own targetable object.\n- `cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` already imply these route identities, but the general route contract still does not own the examples.\n- Older docs still assume history pivots can be attempt-only, which is insufficient for scheduler, blocked, and remediation lineage.\n- Keep blocked-episode identity explicit:\n  - `blocked_sequence` is the canonical id\n  - run and node scope remain required resolver context\n- Keep scheduler/safe-point/remediation/patch lineage under `inspector_target = lineage` when the object is already selected.",
+      "gate_name": "runtime_lineage_route_resolver_scope"
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "id": "seed-c3-extract-task-018-016",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14357, "end_line": 14399},
+      "summary": "Routing ownership is assigned to Contracts_V0 while crosswalk, command catalog, and surface docs are designated as consumers with specific obligations.",
+      "raw_excerpt": "- The owner-doc adoption split is:\n  - `Plans/Contracts_V0.md`\n    - own `route_target`\n    - own `OpenSubject`\n    - own `target_kind`\n    - own `object_kind`\n  - `Plans/Crosswalk.md`\n    - declare primitive ownership for route-target / open-subject navigation\n  - `Plans/storage-plan.md`\n    - persist refs like `resume_url`",
+      "owner": "Plans/Contracts_V0.md",
+      "consumer": "Crosswalk/UI_Command_Catalog/surface docs"
+    }
+  ],
+  "stale_retirement_items": [
+    {
+      "id": "seed-c3-extract-task-018-017",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13686, "end_line": 13694},
+      "summary": "Legacy tier_id pivots and usage_event_ref special-casing are identified for normalization retirement in favor of object_kind-based routing.",
+      "raw_excerpt": "- Older docs still pivot by `tier_id` in places where `node`, `attempt`, `scheduler_pass`, `blocked_episode`, or rewrite-era objects should now be first-class navigation targets.\n- `usage_event_ref` still appears as a special-case route concept in some docs instead of being normalized into `object_kind = usage_event`."
+    },
+    {
+      "id": "seed-c3-extract-task-018-018",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14220, "end_line": 14224},
+      "summary": "Legacy line/range and per-surface state payloads are explicitly rejected from route_target and must be normalized away.",
+      "raw_excerpt": "- reject when `line` or `range` appears in `route_target`\n- reject when per-surface state appears in `route_target`\n- The route layer must normalize legacy/special-case ids before validation rather than accepting them as ad hoc top-level fields."
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "seed-c3-repair-task-016-007",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14399, "end_line": 14400},
+      "summary": "The owner-doc adoption map continuation is truncated at the end of shard-0072 with `Plans/WorktreeGitImprovement.md` consumption as the last visible bullet and an Impacted-docs header opening into the next shard slice; the continuation must be reconciled when shard-0073 is processed so no owner/consumer obligation is lost.",
+      "raw_excerpt": "  - `Plans/WorktreeGitImprovement.md`\n    - consume worktree object routing rather than inventing a separate SCM-local navigation identity\n\n### Impacted docs",
+      "blocking": false
+    }
+  ],
+  "process_defects": [
+    {
+      "id": "seed-c3-extract-task-018-019",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13861, "end_line": 13865},
+      "summary": "Owner-of-owners planning docs are flagged as stale drift multipliers that misroute implementers during rewrite-era decision-making.",
+      "raw_excerpt": "- The highest-value pattern is that several \u201cowner-of-owners\u201d docs remain structurally stale and now actively amplify drift:\n  - `00-plans-index.md` still has missing SSOT rows...\n  - `Decision_Log.md` is still essentially empty for the rewrite era..."
+    },
+    {
+      "id": "seed-c3-extract-task-018-020",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13866, "end_line": 13873},
+      "summary": "Multiple safety/runtime docs have unresolved contract holes including DAE enforcement, safe-point rules, and account/runtime isolation limits.",
+      "raw_excerpt": "- `Architecture_Invariants.md` still lacks concrete invariant ownership...\n- `FileSafe.md` still contains major DAE-enforcement holes...\n- `OpenCode_Deep_Extraction.md` source-verifies hard architecture limits: server-global SSE with concurrent-client pollution..."
+    },
+    {
+      "id": "seed-c3-repair-task-016-003",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13873, "end_line": 13876},
+      "summary": "GUI/LSP/Section15 owner docs still carry phantom command IDs, missing rename approval families, ungated promoted-feature command families, and stale Final GUI body references that misroute implementers.",
+      "raw_excerpt": "- Tooling / command / UI owner gaps are still strong enough to justify later-model continuation:\n  - `GUI_Rebuild_Requirements_Checklist.md` still claims phantom command IDs, keeps superseded chat usage commands, omits the `cmd.runtime.*` family entirely, and does not track degraded/projection-trust runtime surfaces.\n  - `LSPSupport.md` still has unresolved MVP/gating contradictions, missing rename approval command/event families, no clear plan-mode rule for mutating LSP operations, and no multi-project-tab routing contract.\n  - `Section15_MVP_Promoted_Features_Spec.md` still points at stale Final GUI body text, missing project/session browser and attention-center surface ownership, and ungated promoted-feature command families."
+    },
+    {
+      "id": "seed-c3-repair-task-016-004",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13877, "end_line": 13880},
+      "summary": "Plugins, Skills, and Formatters subsystems retain runtime safety contract holes including hook-name schism, persona-bypass tool callability, HTE/DAE delivery ambiguity, and unregistered formatter event families that bypass FileSafe/tool policy.",
+      "raw_excerpt": "- Plugins / skills / formatters remain deeply under-owned in cross-runtime behavior:\n  - `Plugins_System.md` still has a hook-name schism, missing `mutation_capable` on plugin tools, a `shell.env` bypass that can mutate PM control env vars, shadow approval paths via `permission.ask`, and Persona-disabled plugins whose tools remain callable.\n  - `Skills_System.md` still has unresolved HTE/DAE runtime delivery mechanics, bundling-off ambiguity, bundled-skill compaction loss, actor-scope ambiguity for subagents/rotated runs, and provider-affinity ambiguity for `.claude/` discovery roots.\n  - `Formatters_System.md` still conflicts with LSP formatting ownership, has no DAE reconciliation semantics for formatter writes, bypasses FileSafe/tool policy for custom formatter commands, and defines unregistered `format.*` / `file.edited` event families."
+    },
+    {
+      "id": "seed-c3-repair-task-016-005",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13881, "end_line": 13885},
+      "summary": "Narrower-surface supporting docs (BinaryLocator, Containers_Registry, Document_Packaging, agent-rules-context) still produce material deltas around dangling ContractRefs, uncatalogued command IDs, docset canonicality conflicts, premature gate enforcement claims, and bundle-ordering disagreements with Personas/Prompt_Pipeline.",
+      "raw_excerpt": "- Supporting docs with narrower surface area still produced useful deltas:\n  - `BinaryLocator_Spec.md` sharpens an ownership vacuum around OpenCode `cli_launcher`, has a dangling/false ContractRef to a non-existent four-tier naming rule, and still uses ambiguous Session wording.\n  - `Containers_Registry_and_Unraid.md` still has uncataloged command IDs, unresolved publish-authority split, broken blocked-payload consistency, and unanchored publish-result lineage.\n  - `Document_Packaging_Policy.md` still conflicts with Project Output Artifacts around docset canonicality, provenance fields, evidence schema discrimination, and claims hard gate enforcement even though GATE-014 is not live.\n  - `agent-rules-context.md` still under-enumerates callers, omits execution-role input, conflicts with Personas/Prompt_Pipeline on bundle ordering, and has weaker disclosure/help contracts than adjacent systems."
+    }
+  ],
+  "doc_hints": [
+    {
+      "id": "seed-c3-extract-task-018-021",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13691, "end_line": 13693},
+      "summary": "Contracts_V0 should record the canonical object_kind enum and Glossary should mirror vocabulary to prevent drift.",
+      "raw_excerpt": "- Define the canonical `object_kind` enum in `Contracts_V0.md`.\n- Add the vocabulary to `Glossary.md` so downstream copy and help stop drifting.",
+      "doc_path": "Plans/Contracts_V0.md",
+      "doc_line_span": "object_kind enum section"
+    },
+    {
+      "id": "seed-c3-extract-task-018-022",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14372, "end_line": 14375},
+      "summary": "UI_Command_Catalog should encode command class and wrapper normalization metadata toward route_target and OpenSubject.",
+      "raw_excerpt": "- `Plans/UI_Command_Catalog.md`\n  - classify commands as `shell_view`, `navigation_wrapper`, or `domain_action`\n  - add wrapper/alias normalization metadata\n  - normalize command payloads toward `route_target` and `OpenSubject`",
+      "doc_path": "Plans/UI_Command_Catalog.md",
+      "doc_line_span": "command classification and payload normalization"
+    },
+    {
+      "id": "seed-c3-repair-task-016-008",
+      "source_shard_id": "shard-0069",
+      "source_line_range": {"start_line": 13678, "end_line": 13678},
+      "summary": "Glossary.md is named as a strongly implicated adjacent doc that must mirror the canonical object_kind vocabulary so downstream copy and help text stop drifting.",
+      "raw_excerpt": "  - `Plans/Glossary.md`",
+      "doc_path": "Plans/Glossary.md",
+      "doc_line_span": "object_kind vocabulary mirroring entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-009",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13835, "end_line": 13835},
+      "summary": "00-plans-index is named as a Sonnet-tranche owner-of-owners doc with stale SSOT rows and stale routing.",
+      "raw_excerpt": "- `Plans/00-plans-index.md`",
+      "doc_path": "Plans/00-plans-index.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-010",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13836, "end_line": 13836},
+      "summary": "Architecture_Invariants is named as a tranche-targeted owner doc with missing concrete invariant ownership.",
+      "raw_excerpt": "- `Plans/Architecture_Invariants.md`",
+      "doc_path": "Plans/Architecture_Invariants.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-011",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13837, "end_line": 13837},
+      "summary": "BinaryLocator_Spec is named as a tranche-targeted owner doc with an ownership vacuum around OpenCode cli_launcher.",
+      "raw_excerpt": "- `Plans/BinaryLocator_Spec.md`",
+      "doc_path": "Plans/BinaryLocator_Spec.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-012",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13838, "end_line": 13838},
+      "summary": "Containers_Registry_and_Unraid is named as a tranche-targeted owner doc with uncatalogued command IDs and broken blocked-payload consistency.",
+      "raw_excerpt": "- `Plans/Containers_Registry_and_Unraid.md`",
+      "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-013",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13839, "end_line": 13839},
+      "summary": "DRY_Rules is named as a tranche-targeted owner doc in the Sonnet remaining-partial sweep.",
+      "raw_excerpt": "- `Plans/DRY_Rules.md`",
+      "doc_path": "Plans/DRY_Rules.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-014",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13840, "end_line": 13840},
+      "summary": "Decision_Log is named as a tranche-targeted owner doc that is essentially empty for the rewrite era.",
+      "raw_excerpt": "- `Plans/Decision_Log.md`",
+      "doc_path": "Plans/Decision_Log.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-015",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13841, "end_line": 13841},
+      "summary": "Document_Packaging_Policy is named as a tranche-targeted owner doc that conflicts with Project Output Artifacts on docset canonicality.",
+      "raw_excerpt": "- `Plans/Document_Packaging_Policy.md`",
+      "doc_path": "Plans/Document_Packaging_Policy.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-016",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13842, "end_line": 13842},
+      "summary": "FileSafe is named as a tranche-targeted owner doc with major DAE-enforcement holes and silent-disable bypass paths.",
+      "raw_excerpt": "- `Plans/FileSafe.md`",
+      "doc_path": "Plans/FileSafe.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-017",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13843, "end_line": 13843},
+      "summary": "Formatters_System is named as a tranche-targeted owner doc with LSP-formatting ownership conflicts and unregistered format.* event families.",
+      "raw_excerpt": "- `Plans/Formatters_System.md`",
+      "doc_path": "Plans/Formatters_System.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-018",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13844, "end_line": 13844},
+      "summary": "GUI_Rebuild_Requirements_Checklist is named as a tranche-targeted owner doc with phantom command IDs and missing cmd.runtime.* coverage.",
+      "raw_excerpt": "- `Plans/GUI_Rebuild_Requirements_Checklist.md`",
+      "doc_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-019",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13845, "end_line": 13845},
+      "summary": "LSPSupport is named as a tranche-targeted owner doc with unresolved MVP/gating contradictions and missing rename approval command/event families.",
+      "raw_excerpt": "- `Plans/LSPSupport.md`",
+      "doc_path": "Plans/LSPSupport.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-020",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13846, "end_line": 13846},
+      "summary": "Media_Generation_and_Capabilities is named as a tranche-targeted owner doc lacking requested/effective account disclosure in media.generate.",
+      "raw_excerpt": "- `Plans/Media_Generation_and_Capabilities.md`",
+      "doc_path": "Plans/Media_Generation_and_Capabilities.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-021",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13847, "end_line": 13847},
+      "summary": "MiscPlan is named as a tranche-targeted owner doc with conflicting safe-point cleanup ordering and orphan cleanup/crew runtime contracts.",
+      "raw_excerpt": "- `Plans/MiscPlan.md`",
+      "doc_path": "Plans/MiscPlan.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-022",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13848, "end_line": 13848},
+      "summary": "OpenCode_Coverage_Matrix is named as a tranche-targeted owner doc that omits A2A/stream-owner coverage and dual-auth-realm ownership.",
+      "raw_excerpt": "- `Plans/OpenCode_Coverage_Matrix.md`",
+      "doc_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-023",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13849, "end_line": 13849},
+      "summary": "OpenCode_Deep_Extraction is named as a tranche-targeted owner doc that source-verifies server-global SSE pollution and session-scoped state limits.",
+      "raw_excerpt": "- `Plans/OpenCode_Deep_Extraction.md`",
+      "doc_path": "Plans/OpenCode_Deep_Extraction.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-024",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13850, "end_line": 13850},
+      "summary": "Plugins_System is named as a tranche-targeted owner doc with hook-name schism, shell.env bypass, and persona-disabled tool callability.",
+      "raw_excerpt": "- `Plans/Plugins_System.md`",
+      "doc_path": "Plans/Plugins_System.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-025",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13851, "end_line": 13851},
+      "summary": "Section15_MVP_Promoted_Features_Spec is named as a tranche-targeted owner doc with stale Final GUI body text and ungated promoted-feature command families.",
+      "raw_excerpt": "- `Plans/Section15_MVP_Promoted_Features_Spec.md`",
+      "doc_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-026",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13852, "end_line": 13852},
+      "summary": "Skills_System is named as a tranche-targeted owner doc with unresolved HTE/DAE delivery mechanics and bundled-skill compaction loss.",
+      "raw_excerpt": "- `Plans/Skills_System.md`",
+      "doc_path": "Plans/Skills_System.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-027",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13853, "end_line": 13853},
+      "summary": "agent-rules-context is named as a tranche-targeted owner doc that under-enumerates callers and conflicts with Personas/Prompt_Pipeline on bundle ordering.",
+      "raw_excerpt": "- `Plans/agent-rules-context.md`",
+      "doc_path": "Plans/agent-rules-context.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-028",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13854, "end_line": 13854},
+      "summary": "feature-list is named as a tranche-targeted owner doc that preserves tier-era execution and stale recovery models.",
+      "raw_excerpt": "- `Plans/feature-list.md`",
+      "doc_path": "Plans/feature-list.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-029",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13855, "end_line": 13855},
+      "summary": "newfeatures is named as a tranche-targeted owner doc with promoted-feature phasing contradictions.",
+      "raw_excerpt": "- `Plans/newfeatures.md`",
+      "doc_path": "Plans/newfeatures.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-030",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13856, "end_line": 13856},
+      "summary": "rewrite-tie-in-memo is named as a tranche-targeted owner doc that omits seams/packages/lanes/overseers and is itself a stale rewrite root.",
+      "raw_excerpt": "- `Plans/rewrite-tie-in-memo.md`",
+      "doc_path": "Plans/rewrite-tie-in-memo.md",
+      "doc_line_span": "Sonnet remaining-partial tranche targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-031",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13912, "end_line": 13912},
+      "summary": "Executor_Protocol is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Executor_Protocol.md`",
+      "doc_path": "Plans/Executor_Protocol.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-032",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13913, "end_line": 13913},
+      "summary": "Orchestrator_Page is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Orchestrator_Page.md`",
+      "doc_path": "Plans/Orchestrator_Page.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-033",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13914, "end_line": 13914},
+      "summary": "Crosswalk is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Crosswalk.md`",
+      "doc_path": "Plans/Crosswalk.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-034",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13915, "end_line": 13915},
+      "summary": "Glossary is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Glossary.md`",
+      "doc_path": "Plans/Glossary.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-035",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13916, "end_line": 13916},
+      "summary": "FinalGUISpec is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/FinalGUISpec.md`",
+      "doc_path": "Plans/FinalGUISpec.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-036",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13917, "end_line": 13917},
+      "summary": "Prompt_Pipeline is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Prompt_Pipeline.md`",
+      "doc_path": "Plans/Prompt_Pipeline.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-037",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13918, "end_line": 13918},
+      "summary": "Multi-Account is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Multi-Account.md`",
+      "doc_path": "Plans/Multi-Account.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-038",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13919, "end_line": 13919},
+      "summary": "storage-plan is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/storage-plan.md`",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-039",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13921, "end_line": 13921},
+      "summary": "Run_Modes is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Run_Modes.md`",
+      "doc_path": "Plans/Run_Modes.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-040",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13922, "end_line": 13922},
+      "summary": "Tools is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Tools.md`",
+      "doc_path": "Plans/Tools.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-041",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13923, "end_line": 13923},
+      "summary": "Permissions_System is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Permissions_System.md`",
+      "doc_path": "Plans/Permissions_System.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-042",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13924, "end_line": 13924},
+      "summary": "Widget_System is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Widget_System.md`",
+      "doc_path": "Plans/Widget_System.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-043",
+      "source_shard_id": "shard-0070",
+      "source_line_range": {"start_line": 13925, "end_line": 13925},
+      "summary": "Project_Output_Artifacts is repeatedly implicated as an adjacent owner doc for the Sonnet remaining-partial tranche.",
+      "raw_excerpt": "  - `Plans/Project_Output_Artifacts.md`",
+      "doc_path": "Plans/Project_Output_Artifacts.md",
+      "doc_line_span": "Repeatedly implicated adjacent owners list"
+    },
+    {
+      "id": "seed-c3-repair-task-016-044",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14039, "end_line": 14039},
+      "summary": "Contracts_V0 is the primary owner of the runtime lineage route normalization recipes and must absorb the canonical examples named in the targeted-docs-read list.",
+      "raw_excerpt": "- `Plans/Contracts_V0.md`",
+      "doc_path": "Plans/Contracts_V0.md",
+      "doc_line_span": "Runtime lineage route normalization targeted docs / primary owner"
+    },
+    {
+      "id": "seed-c3-repair-task-016-045",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14036, "end_line": 14036},
+      "summary": "Run_Graph_View is named as a strongly implicated adjacent doc for runtime lineage route normalization.",
+      "raw_excerpt": "- `Plans/Run_Graph_View.md`",
+      "doc_path": "Plans/Run_Graph_View.md",
+      "doc_line_span": "Runtime lineage route normalization targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-046",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14013, "end_line": 14013},
+      "summary": "usage-feature is named as an impacted adjacent doc for high-pressure user flow normalization (Show in Usage / Show in Ledger recipes).",
+      "raw_excerpt": "  - `Plans/usage-feature.md`",
+      "doc_path": "Plans/usage-feature.md",
+      "doc_line_span": "Impacted adjacent docs for high-pressure flow normalization"
+    },
+    {
+      "id": "seed-c3-repair-task-016-047",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14015, "end_line": 14015},
+      "summary": "assistant-chat-design is named as an impacted adjacent doc for high-pressure user flow normalization (chat search hit / wizard resume).",
+      "raw_excerpt": "  - `Plans/assistant-chat-design.md`",
+      "doc_path": "Plans/assistant-chat-design.md",
+      "doc_line_span": "Impacted adjacent docs for high-pressure flow normalization"
+    },
+    {
+      "id": "seed-c3-repair-task-016-048",
+      "source_shard_id": "shard-0071",
+      "source_line_range": {"start_line": 14185, "end_line": 14185},
+      "summary": "WorktreeGitImprovement is named as a strongly implicated adjacent doc that must consume worktree object routing rather than inventing a separate SCM-local navigation identity.",
+      "raw_excerpt": "  - `Plans/WorktreeGitImprovement.md`",
+      "doc_path": "Plans/WorktreeGitImprovement.md",
+      "doc_line_span": "Source Control / orchestration normalization adjacent docs"
+    },
+    {
+      "id": "seed-c3-repair-task-016-049",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14231, "end_line": 14231},
+      "summary": "Crosswalk is named as a strongly implicated adjacent doc for canonical route validation rules.",
+      "raw_excerpt": "  - `Plans/Crosswalk.md`",
+      "doc_path": "Plans/Crosswalk.md",
+      "doc_line_span": "Route validation impacted-docs adjacent owners"
+    },
+    {
+      "id": "seed-c3-repair-task-016-050",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14207, "end_line": 14207},
+      "summary": "FinalGUISpec is named as a targeted-docs-read entry for canonical route validation rules and must consume the route vocabulary without elevating resume_url over generic navigation.",
+      "raw_excerpt": "- `Plans/FinalGUISpec.md`",
+      "doc_path": "Plans/FinalGUISpec.md",
+      "doc_line_span": "Route validation targeted-docs entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-051",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14380, "end_line": 14380},
+      "summary": "FileManager is named as a routing-tranche owner doc that must keep OpenFile narrow, consume OpenSubject, and stop reading path-open as the universal navigation primitive.",
+      "raw_excerpt": "  - `Plans/FileManager.md`",
+      "doc_path": "Plans/FileManager.md",
+      "doc_line_span": "Owner-doc adoption map FileManager entry"
+    },
+    {
+      "id": "seed-c3-repair-task-016-052",
+      "source_shard_id": "shard-0072",
+      "source_line_range": {"start_line": 14397, "end_line": 14397},
+      "summary": "WorktreeGitImprovement is named in the owner-doc adoption map as the consumer of worktree object routing for Source Control surfaces.",
+      "raw_excerpt": "  - `Plans/WorktreeGitImprovement.md`",
+      "doc_path": "Plans/WorktreeGitImprovement.md",
+      "doc_line_span": "Owner-doc adoption map WorktreeGitImprovement entry"
+    }
+  ],
   "exclusions_by_shard": {
     "shard-0069": [
-      "Excluded repeated 'Targeted docs read' lists as provenance context rather than durable contract seeds."
+      {
+        "reason": "Excluded repeated section scaffolding and status-style headers.",
+        "lines_or_section": "Research Progress headings, Targeted docs read, Do-not-forget boilerplate"
+      }
     ],
     "shard-0070": [
-      "Excluded repeated impacted-doc inventories where they duplicated unchanged owner lists already captured in obligations."
+      {
+        "reason": "Excluded broad recap inventory where no direct obligation or schema rule was stated.",
+        "lines_or_section": "Large tranche doc listing and generalized continuation commentary outside the captured priority list and defect groupings"
+      }
     ],
     "shard-0071": [
-      "Excluded duplicated route template scaffolding syntax where identical field patterns repeated without new semantic rules."
+      {
+        "reason": "Excluded duplicated impacted-doc lists where routing obligations were already captured from canonical examples.",
+        "lines_or_section": "Impacted docs / Contradictions sections adjacent to route examples beyond the captured resolver-context seed"
+      }
     ],
     "shard-0072": [
-      "Excluded trailing adoption-map continuation marker without substantive content (blank terminal lines)."
+      {
+        "reason": "Excluded repeated reminders and descriptive framing that did not add new enforceable rules.",
+        "lines_or_section": "Do-not-forget detail lines and reiterative explanatory prose"
+      }
     ]
   },
   "seed_ids_by_shard": {
     "shard-0069": [
-      "seed-0069-route-target-canonicality",
-      "seed-0069-object-kind-canonical-set",
-      "seed-0069-inspector-target-closed-enum",
-      "seed-0069-decide-resume-url-transport",
-      "seed-0069-decide-object-kind-vocabulary",
-      "seed-0069-decide-inspector-target-enum",
-      "seed-0069-shape-object-kind",
-      "seed-0069-shape-inspector-target",
-      "seed-0069-retire-tier-id",
-      "seed-0069-open-blocked-scope-wording",
-      "seed-0069-defect-owner-contract-lag",
-      "seed-0069-hint-contracts-v0"
+      "seed-c3-extract-task-018-001",
+      "seed-c3-extract-task-018-005",
+      "seed-c3-extract-task-018-006",
+      "seed-c3-extract-task-018-008",
+      "seed-c3-extract-task-018-017",
+      "seed-c3-extract-task-018-021",
+      "seed-c3-repair-task-016-001",
+      "seed-c3-repair-task-016-008"
     ],
     "shard-0070": [
-      "seed-0070-subject-vs-object-classification",
-      "seed-0070-route-normalization-high-pressure-flows",
-      "seed-0070-decide-selector-precedence",
-      "seed-0070-shape-subject-id",
-      "seed-0070-rule-usage-event-route",
-      "seed-0070-rule-wizard-message-route",
-      "seed-0070-retire-usage-event-ref",
-      "seed-0070-hint-usage-chat"
+      "seed-c3-extract-task-018-002",
+      "seed-c3-extract-task-018-009",
+      "seed-c3-extract-task-018-019",
+      "seed-c3-extract-task-018-020",
+      "seed-c3-repair-task-016-002",
+      "seed-c3-repair-task-016-003",
+      "seed-c3-repair-task-016-004",
+      "seed-c3-repair-task-016-005",
+      "seed-c3-repair-task-016-009",
+      "seed-c3-repair-task-016-010",
+      "seed-c3-repair-task-016-011",
+      "seed-c3-repair-task-016-012",
+      "seed-c3-repair-task-016-013",
+      "seed-c3-repair-task-016-014",
+      "seed-c3-repair-task-016-015",
+      "seed-c3-repair-task-016-016",
+      "seed-c3-repair-task-016-017",
+      "seed-c3-repair-task-016-018",
+      "seed-c3-repair-task-016-019",
+      "seed-c3-repair-task-016-020",
+      "seed-c3-repair-task-016-021",
+      "seed-c3-repair-task-016-022",
+      "seed-c3-repair-task-016-023",
+      "seed-c3-repair-task-016-024",
+      "seed-c3-repair-task-016-025",
+      "seed-c3-repair-task-016-026",
+      "seed-c3-repair-task-016-027",
+      "seed-c3-repair-task-016-028",
+      "seed-c3-repair-task-016-029",
+      "seed-c3-repair-task-016-030",
+      "seed-c3-repair-task-016-031",
+      "seed-c3-repair-task-016-032",
+      "seed-c3-repair-task-016-033",
+      "seed-c3-repair-task-016-034",
+      "seed-c3-repair-task-016-035",
+      "seed-c3-repair-task-016-036",
+      "seed-c3-repair-task-016-037",
+      "seed-c3-repair-task-016-038",
+      "seed-c3-repair-task-016-039",
+      "seed-c3-repair-task-016-040",
+      "seed-c3-repair-task-016-041",
+      "seed-c3-repair-task-016-042",
+      "seed-c3-repair-task-016-043"
     ],
     "shard-0071": [
-      "seed-0071-route-normalization-runtime-lineage",
-      "seed-0071-route-normalization-orchestration-scm",
-      "seed-0071-rule-runtime-lineage-route",
-      "seed-0071-rule-worktree-orchestrator-route",
-      "seed-0071-retire-attempt-only-history",
-      "seed-0071-hint-runtime-orchestration"
+      "seed-c3-extract-task-018-011",
+      "seed-c3-extract-task-018-013",
+      "seed-c3-extract-task-018-014",
+      "seed-c3-repair-task-016-006",
+      "seed-c3-repair-task-016-044",
+      "seed-c3-repair-task-016-045",
+      "seed-c3-repair-task-016-046",
+      "seed-c3-repair-task-016-047",
+      "seed-c3-repair-task-016-048"
     ],
     "shard-0072": [
-      "seed-0072-route-validation-rejections",
-      "seed-0072-tab-id-role",
-      "seed-0072-scoped-resolver-balance",
-      "seed-0072-decide-rejection-rules",
-      "seed-0072-shape-tab-id",
-      "seed-0072-rule-selector-validity",
-      "seed-0072-verify-required-project",
-      "seed-0072-verify-object-pairing",
-      "seed-0072-verify-inspector-context",
-      "seed-0072-verify-tab-conflict",
-      "seed-0072-verify-local-state-leakage",
-      "seed-0072-obligation-contracts-owner",
-      "seed-0072-obligation-crosswalk",
-      "seed-0072-obligation-ui-command-catalog",
-      "seed-0072-obligation-surface-docs",
-      "seed-0072-retire-any-tab-anywhere",
-      "seed-0072-open-tab-id-expansion",
-      "seed-0072-defect-positive-only-contract",
-      "seed-0072-hint-validation"
+      "seed-c3-extract-task-018-003",
+      "seed-c3-extract-task-018-004",
+      "seed-c3-extract-task-018-007",
+      "seed-c3-extract-task-018-010",
+      "seed-c3-extract-task-018-012",
+      "seed-c3-extract-task-018-015",
+      "seed-c3-extract-task-018-016",
+      "seed-c3-extract-task-018-018",
+      "seed-c3-extract-task-018-022",
+      "seed-c3-repair-task-016-007",
+      "seed-c3-repair-task-016-049",
+      "seed-c3-repair-task-016-050",
+      "seed-c3-repair-task-016-051",
+      "seed-c3-repair-task-016-052"
     ]
   },
   "status": "complete",
-  "blocking_reason": ""
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": true,
+    "notes": [
+      "targeted_c4_routed_repair: added subject-vs-object normalization-examples data_shape seed for shard-0069 (lines 13784-13800); added Sonnet remaining-partial tranche continuation decision and three process_defect seeds (GUI/LSP/Section15, Plugins/Skills/Formatters, BinaryLocator/Containers/Document_Packaging/agent-rules-context) for shard-0070 (lines 13873-13885 and 13932-13945); added runtime-lineage resolver-scope verification_rule seed for shard-0071 (lines 14104-14118); added owner-doc adoption map continuation open_question for shard-0072 (lines 14399-14400); added 45 doc_hints entries covering all unreferenced live Plans/* paths flagged by C4 across the four shards; preserved all 22 prior valid c3-extract-task-018 seeds and existing exclusions."
+    ]
+  }
 }

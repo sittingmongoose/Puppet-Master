@@ -1,9 +1,10 @@
 {
-  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
   "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.1.12",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "subagent_task_id": "task-006",
+  "subagent_task_id": "c3-repair-task-006",
+  "batch_anchor_shard_id": "shard-0021",
   "source_shard_ids": [
     "shard-0021",
     "shard-0022",
@@ -11,108 +12,744 @@
     "shard-0024"
   ],
   "shard_line_ranges": {
-    "shard-0021": "1-201",
-    "shard-0022": "1-201",
-    "shard-0023": "1-201",
-    "shard-0024": "1-201"
+    "shard-0021": {
+      "start_line": 4001,
+      "end_line": 4200
+    },
+    "shard-0022": {
+      "start_line": 4201,
+      "end_line": 4400
+    },
+    "shard-0023": {
+      "start_line": 4401,
+      "end_line": 4600
+    },
+    "shard-0024": {
+      "start_line": 4601,
+      "end_line": 4800
+    }
   },
-  "extracted": {
-    "requirements": [
-      "Auto Persona resolution must prioritize actor-type defaults over stack hints and always resolve `auto` to an effective persona with reason.",
-      "Simple help must simplify explanation without renaming or mutating canonical model semantics.",
-      "Expert and ELI5 help variants must share the same concept skeleton and differ only in phrasing density.",
-      "Project cards must distinguish health vs activity vs attention, and treat historical-only activity as non-degraded unless explicitly archived.",
-      "Resurfacing should be change/persistence-based (severity/owner/duration/actionability), not heartbeat spam.",
-      "Dense Orchestrator tabs must use slice loading, virtualization, lazy expansion, and demand-loading; exact ledger inspection still paged.",
-      "Bulk actions should default to navigation/triage/low-risk updates; high-risk runtime mutations require explicit safe batch semantics.",
-      "Mutation controls must be gated by trusted projection state (`current`) or canonical runtime revalidation."
-    ],
-    "decisions": [
-      "Split help model into canonical term system, help entry system, and contextual help system.",
-      "Use glossary as canonical short-definition backbone; richer help entries carry examples and related links.",
-      "Use a project-summary projection with compact singular status emphasizing dominant owner and primary reason.",
-      "Adopt shared escalation ladder: info -> warning -> attention_required -> blocked -> system_notification.",
-      "Treat scale and projection-trust behavior as Orchestrator-wide contracts, not per-tab ad hoc rules.",
-      "Keep command palette universal for navigation but guarded for mutation-bearing runtime actions."
-    ],
-    "data_shapes": [
-      "Help entry template: canonical name, short definition, why it matters, what it is not, related states/actions, related concepts, where seen.",
-      "Project card model: Activity (`idle|running|paused|queued|background_active`), Attention (`none|attention_required|blocked|degraded`), plus Health.",
-      "Shared routing payload: `project_id`, `focused_run_id`, destination tab, selected object id/type, optional inspector target, optional filters.",
-      "Projection trust states: `current|refreshing|stale|degraded|unavailable`.",
-      "Trust disclosure fields: `freshness_state`, `last_updated_at`, `data_source_kind`, optional `degraded_reason`, optional `action_gate_reason`."
-    ],
-    "routing_rules": [
-      "Concept-help links should connect related clusters (e.g., seam/work-package/integration, promotion/revocation/reopen, lane/worktree lifecycle).",
-      "Projects page should deep-link pressure/attention summaries into Usage, Authentication, Orchestrator, and detail tabs.",
-      "Escalation surface mapping: History gets full chronology; Progress/Dashboard active severity; badges compressed counts; chat for user decisions; sparse system notifications.",
-      "Fallback ladder under stale/degraded trust: widget summary -> native tab; rollup -> filtered record slice; inspector -> Ledger/History/detail-ref view.",
-      "Context menus should expose only object-valid canonical actions; palette/shortcuts must honor same confirmation gates."
-    ],
-    "verification_rules": [
-      "`auto` cannot remain opaque; historical runs must preserve resolved effective persona/reason at execution time.",
-      "`attention_required` and `blocked` must remain distinct; persistent blockers cannot be dismissed into fake health.",
-      "Confirmation strength cannot be downgraded by action discoverability (palette/shortcut/context).",
-      "Stale visibility is not action authority; stale `allowed_action_ids[]` must not be trusted without revalidation."
-    ],
-    "owner_consumer_obligations": [
-      "When attention/blocked is shown, surface dominant current owner (Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource).",
-      "Project summaries should communicate one primary reason and optional additional-issues count, avoiding mini-dashboard overload.",
-      "System notifications should be reserved for sparse high-value events (HITL required, completion, major failure, severe execution-blocking pressure)."
-    ],
-    "stale_retirement_items": [
-      "Retire setup-centric single-dot status semantics that conflate health with attention.",
-      "Retire tooltip-only concept-help assumptions for rewrite-era first-class terms.",
-      "Retire graph-only scaling assumptions; enforce equivalent density controls on Seams/Evidence/History/Ledger.",
-      "Retire broad implicit bulk-mutation affordances without explicit action-surface classification."
-    ],
-    "open_questions": [
-      "What explicit policy determines which concepts get full help entries versus contextual-only help?",
-      "What exact thresholds drive resurfacing cadence by severity and persistence?",
-      "What Orchestrator-wide defaults define initial slice sizes, paging/search interplay, and cross-tab inspector loading?",
-      "What concrete action matrix classifies palette-visible, shortcut-eligible, context-menu-only, and bulk-forbidden commands?"
-    ],
-    "process_defects": [
-      "Concept-help contract is underdefined; risk of inconsistent term redefinition across surfaces.",
-      "Projects status model remains too setup-centric and lacks a canonical blocked-owner/primary-reason rollup.",
-      "Escalation behavior exists as fragmented case rules, not a single cross-surface contract.",
-      "Scale and trust policies are uneven across tabs; mutation gating under stale/degraded projections is not uniformly specified."
-    ],
-    "doc_hints": [
-      "Codify deterministic auto-persona resolver outputs and extend the same pattern to other decision surfaces.",
-      "Add dedicated help-entry contract and concept-link graph anchored by glossary canonical terms.",
-      "Define project-summary projection contract and compact card semantics with deep-link exits.",
-      "Publish Orchestrator action-surface policy (navigation vs mutation, single vs bulk, confirmation class).",
-      "Publish projection-trust + fallback policy with mandatory freshness disclosures per dense tab.",
-      "Complete shared record envelope/artifact normalization specification started in shard-0024."
-    ]
-  },
+  "requirements": [
+    {
+      "id": "seed-c3-extract-task-006-001",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4009,
+        "end_line": 4011
+      },
+      "summary": "Persona resolution output must never leave `auto` opaque and must preserve resolved effective persona and reason in historical runs.",
+      "raw_excerpt": "- `auto` must never appear as an opaque state with no resolved Persona/reason.\n- historical runs must preserve the resolved effective Persona and reason from the time of execution."
+    },
+    {
+      "id": "seed-c3-extract-task-006-002",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4046,
+        "end_line": 4050
+      },
+      "summary": "Simple help must simplify explanations while retaining canonical model names and semantics.",
+      "raw_excerpt": "- Simple help must simplify explanation, not rename the model.\n- keep canonical names stable\n- explain them more simply in ELI5 mode\n- do not create parallel \u201cfriendly\u201d object names that drift away from contracts"
+    },
+    {
+      "id": "seed-c3-extract-task-006-003",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4083,
+        "end_line": 4093
+      },
+      "summary": "Dedicated help entries should use a fixed template containing canonical definition, constraints, and related-surface context.",
+      "raw_excerpt": "- each dedicated help entry should have a small fixed template\n- canonical name\n- short definition\n- why it matters\n- what it is not\n- common related states/actions\n- related concepts\n- surface examples / where you see it"
+    },
+    {
+      "id": "seed-c3-extract-task-006-004",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4132,
+        "end_line": 4135
+      },
+      "summary": "Glossary should serve as canonical short-definition inventory while richer help entries live separately.",
+      "raw_excerpt": "- `Plans/Glossary.md` likely needs to become the canonical concept inventory backbone...\n- Glossary = canonical short definitions\n- Help entries = fuller explanations with examples and related links",
+      "doc_path": "Plans/Glossary.md"
+    },
+    {
+      "id": "seed-c3-extract-task-006-005",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4182,
+        "end_line": 4192
+      },
+      "summary": "Projects status should be split into health, activity, and attention instead of one overloaded status signal.",
+      "raw_excerpt": "- separate:\n  - `project health`\n  - `project activity`\n  - `project attention`\n- `project health` = setup/integrity/config viability\n- `project activity` = active/paused/queued/background\n- `project attention` = whether action is needed"
+    },
+    {
+      "id": "seed-c3-extract-task-006-006",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4362,
+        "end_line": 4368
+      },
+      "summary": "Blocked-state representation must remain until underlying truth changes and cannot be dismissed into fake health.",
+      "raw_excerpt": "- real blocked states should remain represented until underlying truth changes\n- `dismissed` is presentation state, not semantic resolution\n- active blockers must not be dismissible into fake health"
+    },
+    {
+      "id": "seed-c3-extract-task-006-007",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4472,
+        "end_line": 4475
+      },
+      "summary": "Seams tab should enforce progressive disclosure with compact seam rollups and lazy expansion for package/node detail.",
+      "raw_excerpt": "- `Seams`\n  - must use progressive disclosure rather than fully expanded seam/package/node trees\n  - top-level seam rows should load compact rollups first\n  - package lists and node problem lists should expand lazily",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-extract-task-006-008",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4484,
+        "end_line": 4487
+      },
+      "summary": "Ledger browsing must be exact but slice-based, requiring filtered queries, paging, and stable sort.",
+      "raw_excerpt": "- `Ledger`\n  - must be exact, but exact does not mean fully materialized at once\n  - filtered query + paging + stable sort are required\n  - export can retrieve more than the viewport",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-extract-task-006-009",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4583,
+        "end_line": 4585
+      },
+      "summary": "Bulk action defaults should remain limited to triage and navigation rather than live execution mutation.",
+      "raw_excerpt": "- bulk actions should default to navigation, triage, and low-risk state updates\n- live execution mutations should stay narrow unless the runtime has an explicit safe batch semantic"
+    },
+    {
+      "id": "seed-c3-extract-task-006-010",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4595,
+        "end_line": 4600
+      },
+      "summary": "Command palette and shortcuts must preserve the same confirmation and preview gates required by runtime action policy.",
+      "raw_excerpt": "- command discoverability does not weaken confirmation requirements\n- If an action is: `strong` confirmation / `hard_gate` / `non_reversible` ... command palette and shortcut surfaces must still honor the same gating and preview requirements."
+    },
+    {
+      "id": "seed-c3-extract-task-006-011",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4728,
+        "end_line": 4738
+      },
+      "summary": "Write actions from stale or degraded projections must be refused or authoritatively revalidated against canonical runtime state.",
+      "raw_excerpt": "- if a write action is attempted from a stale/degraded surface, the runtime should either:\n  - refuse with a clear reason\n  - or perform an authoritative revalidation against canonical/current runtime state before executing",
+      "gate_name": "projection_trust_write_gate"
+    },
+    {
+      "id": "seed-c3-extract-task-006-012",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4749,
+        "end_line": 4757
+      },
+      "summary": "Every dense Orchestrator tab should disclose freshness and gate reasons through shared trust metadata fields.",
+      "raw_excerpt": "- Good shared fields:\n  - `freshness_state`\n  - `last_updated_at`\n  - `data_source_kind`\n  - `degraded_reason?`\n  - `action_gate_reason?`"
+    },
+    {
+      "id": "seed-c3-extract-task-006-013",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4769,
+        "end_line": 4776
+      },
+      "summary": "When trust drops, UI should degrade toward exact record-backed inspection using tab and detail fallbacks instead of ambiguity.",
+      "raw_excerpt": "- when trust drops, degrade toward exact record-backed inspection, not toward empty ambiguity\n- widget summary -> native tab\n- rollup tab -> filtered record list\n- projection-derived inspector -> `Ledger` / `History` / exact record view via `detail_ref`",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "seed-c3-extract-task-006-014",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4031,
+        "end_line": 4043
+      },
+      "summary": "Help architecture is split into canonical term system, help entry system, and contextual help system.",
+      "raw_excerpt": "- distinguish:\n  - `canonical term system`\n  - `help entry system`\n  - `contextual help system`",
+      "decision_rationale": "Prevents tooltip-only drift and keeps semantic names stable while scaling explainability.",
+      "rejected_alternatives": [
+        "Tooltip-only help contract for complex rewrite concepts"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-006-015",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4320,
+        "end_line": 4337
+      },
+      "summary": "Escalation uses a shared ladder from `info` to `system_notification` with explicit behavioral meanings.",
+      "raw_excerpt": "- define one shared progression:\n  - `info`\n  - `warning`\n  - `attention_required`\n  - `blocked`\n  - `system_notification`",
+      "decision_rationale": "Unifies previously case-by-case warning behavior across surfaces.",
+      "rejected_alternatives": [
+        "Independent per-surface escalation rules"
+      ]
+    },
+    {
+      "id": "seed-c3-extract-task-006-016",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4700,
+        "end_line": 4717
+      },
+      "summary": "Projection trust is operationalized using `current`, `refreshing`, `stale`, `degraded`, and `unavailable` states.",
+      "raw_excerpt": "- keep the earlier projection states and make them operational:\n  - `current`\n  - `refreshing`\n  - `stale`\n  - `degraded`\n  - `unavailable`",
+      "decision_rationale": "Aligns action safety and UX disclosure with canonical-vs-derived data reliability."
+    }
+  ],
+  "data_shapes": [
+    {
+      "id": "seed-c3-extract-task-006-017",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4206,
+        "end_line": 4208
+      },
+      "summary": "Project card status model defines compact `Activity`, `Attention`, and `Health` dimensions.",
+      "raw_excerpt": "- `Activity`: `idle | running | paused | queued | background_active`\n- `Attention`: `none | attention_required | blocked | degraded`\n- `Health`: setup/config/repo integrity signal",
+      "schema_name": "project_summary_status"
+    },
+    {
+      "id": "seed-c3-extract-task-006-018",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4424,
+        "end_line": 4428
+      },
+      "summary": "Scale contract includes explicit graph performance targets for render size, FPS, layout time, and initial load.",
+      "raw_excerpt": "- render target: 500 nodes, stretch 1000\n- 60 fps pan/zoom\n- layout under 500ms at 500 nodes\n- initial load under 1s at 500 nodes",
+      "schema_name": "run_graph_performance_slo"
+    },
+    {
+      "id": "seed-c3-extract-task-006-019",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4624,
+        "end_line": 4630
+      },
+      "summary": "Shared routing payload requires project/run destination metadata and optional inspector/filter targets.",
+      "raw_excerpt": "- Good shared payload fields:\n  - `project_id`\n  - `focused_run_id`\n  - destination tab/surface\n  - selected object id and type\n  - optional inspector target\n  - optional filter payload",
+      "schema_name": "orchestrator_destination_payload"
+    },
+    {
+      "id": "seed-c3-extract-task-006-020",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4758,
+        "end_line": 4762
+      },
+      "summary": "Trust disclosure contract includes freshness, update timestamp, data source kind, and optional degradation/gate reason fields.",
+      "raw_excerpt": "- `freshness_state`\n- `last_updated_at`\n- `data_source_kind`\n- `degraded_reason?`\n- `action_gate_reason?`",
+      "schema_name": "projection_trust_disclosure"
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "seed-c3-extract-task-006-021",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4401,
+        "end_line": 4401
+      },
+      "summary": "Escalation routing should be determined by concern severity, blocking effect, owner, and persistence.",
+      "raw_excerpt": "- concern severity + blocking effect + owner + persistence decide escalation"
+    },
+    {
+      "id": "seed-c3-extract-task-006-022",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4722,
+        "end_line": 4728
+      },
+      "summary": "Action routing must apply stricter trust thresholds for mutation than for read-only inspection and navigation.",
+      "raw_excerpt": "- low-risk read-only inspection\n- precise navigation / deep-linking\n- live mutation / approval / recovery / retry / cleanup\n- require `current` or a direct canonical-runtime validation path"
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "seed-c3-extract-task-006-023",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4355,
+        "end_line": 4365
+      },
+      "summary": "Resurfacing checks should suppress unchanged duplicates and only re-raise unresolved conditions on meaningful change thresholds.",
+      "raw_excerpt": "- suppress duplicate noise while unchanged\n- resurface only when: severity increases / owner changes / blocked duration crosses threshold / new action becomes available / user returns focus after time away"
+    },
+    {
+      "id": "seed-c3-extract-task-006-024",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4530,
+        "end_line": 4534
+      },
+      "summary": "Scale verification should enforce mandatory slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors across dense tabs.",
+      "raw_excerpt": "- Add an Orchestrator-wide scale contract...\n- Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs."
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "id": "seed-c3-extract-task-006-025",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4070,
+        "end_line": 4073
+      },
+      "summary": "Core rewrite concepts should be maintained as dedicated help entries because they are reused across multiple surfaces.",
+      "raw_excerpt": "- these are core rewrite concepts that will appear in multiple surfaces and cannot be re-explained ad hoc every time",
+      "owner": "Concept documentation maintainers",
+      "consumer": "All Orchestrator and help surfaces"
+    },
+    {
+      "id": "seed-c3-extract-task-006-026",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4270,
+        "end_line": 4277
+      },
+      "summary": "Projects page should consume canonical project summary projections rather than invent a separate status model.",
+      "raw_excerpt": "- Projects page should summarize from canonical project-level projections rather than inventing its own status model.\n- Likely it needs a small project summary projection that rolls up...",
+      "owner": "Projection/runtime model",
+      "consumer": "Projects page UI"
+    }
+  ],
+  "stale_retirement_items": [],
+  "open_questions": [
+    {
+      "id": "seed-c3-extract-task-006-027",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4139,
+        "end_line": 4141
+      },
+      "summary": "Policy remains unresolved for deciding which concepts require full help entries versus contextual-only help.",
+      "raw_excerpt": "- There is no clearly defined \u201cwhich concepts deserve full help entries\u201d policy yet."
+    },
+    {
+      "id": "seed-c3-extract-task-006-028",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4280,
+        "end_line": 4282
+      },
+      "summary": "Project-level rollup for blocked owner and primary attention reason is still undefined.",
+      "raw_excerpt": "- There is no obvious current project-level rollup for blocked-owner and primary attention reason."
+    },
+    {
+      "id": "seed-c3-extract-task-006-029",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4469,
+        "end_line": 4470
+      },
+      "summary": "Default readability policy for thousands-of-node multi-generation runs is not yet defined.",
+      "raw_excerpt": "- The current docs do not yet define how thousands-of-node runs with many generations should remain readable by default without collapsing history away."
+    },
+    {
+      "id": "seed-c3-repair-task-006-039",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4407,
+        "end_line": 4409
+      },
+      "summary": "A unified cross-surface escalation contract remains unresolved and needs explicit policy closure.",
+      "raw_excerpt": "- There is no one explicit cross-surface escalation contract yet.\n- Existing banners/cards/toasts/badges are good pieces but not yet tied to a shared cadence model."
+    },
+    {
+      "id": "seed-c3-repair-task-006-040",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4519,
+        "end_line": 4527
+      },
+      "summary": "An explicit Orchestrator-wide scale policy is still unresolved for slices, paging/search, lazy expansion, and degraded fallback.",
+      "raw_excerpt": "- There is no explicit Orchestrator-wide rule yet for:\n  - initial slice size\n  - paging/search interplay\n  - lazy expansion behavior\n  - cross-tab inspector loading strategy\n  - projection fallback behavior under large degraded datasets"
+    },
+    {
+      "id": "seed-c3-repair-task-006-041",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4650,
+        "end_line": 4657
+      },
+      "summary": "Orchestrator action-surface classification remains unresolved and requires explicit decision boundaries.",
+      "raw_excerpt": "- Current docs do not yet define which Orchestrator actions are: palette-visible, shortcut-worthy, context-menu only, bulk-safe, bulk-forbidden.\n- grouped/bulk navigation wording could be misread as license for broad bulk execution controls"
+    },
+    {
+      "id": "seed-c3-repair-task-006-042",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4778,
+        "end_line": 4781
+      },
+      "summary": "No shared freshness/trust contract is yet standardized across Orchestrator tabs and UI execution policy.",
+      "raw_excerpt": "- Current docs establish canonical vs derived storage, but not the UI policy that follows from that distinction.\n- There is no shared freshness/trust contract yet for Orchestrator tabs."
+    }
+  ],
+  "process_defects": [
+    {
+      "id": "seed-c3-extract-task-006-030",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4407,
+        "end_line": 4409
+      },
+      "summary": "Cross-surface escalation contract is missing, leaving banners/cards/toasts/badges without a shared cadence model.",
+      "raw_excerpt": "- There is no one explicit cross-surface escalation contract yet.\n- Existing banners/cards/toasts/badges are good pieces but not yet tied to a shared cadence model."
+    },
+    {
+      "id": "seed-c3-extract-task-006-031",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4519,
+        "end_line": 4527
+      },
+      "summary": "Orchestrator lacks an explicit global rule set for initial slices, paging/search interplay, lazy expansion, and degraded fallback strategy.",
+      "raw_excerpt": "- There is no explicit Orchestrator-wide rule yet for:\n  - initial slice size\n  - paging/search interplay\n  - lazy expansion behavior\n  - cross-tab inspector loading strategy\n  - projection fallback behavior under large degraded datasets"
+    },
+    {
+      "id": "seed-c3-extract-task-006-032",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4650,
+        "end_line": 4657
+      },
+      "summary": "Orchestrator action-surface policy is underdefined, creating risk that grouped navigation language is misread as bulk execution permission.",
+      "raw_excerpt": "- Current docs do not yet define which Orchestrator actions are: palette-visible, shortcut-worthy, context-menu only, bulk-safe, bulk-forbidden.\n- grouped/bulk navigation wording could be misread as license for broad bulk execution controls"
+    },
+    {
+      "id": "seed-c3-extract-task-006-033",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4778,
+        "end_line": 4781
+      },
+      "summary": "Canonical-vs-derived storage is defined, but the resulting UI freshness/trust execution policy is still not standardized.",
+      "raw_excerpt": "- Current docs establish canonical vs derived storage, but not the UI policy that follows from that distinction.\n- There is no shared freshness/trust contract yet for Orchestrator tabs."
+    }
+  ],
+  "doc_hints": [
+    {
+      "id": "seed-c3-extract-task-006-034",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4016,
+        "end_line": 4022
+      },
+      "summary": "Help-system contract findings should be recorded in the GUI and glossary planning docs.",
+      "raw_excerpt": "- Targeted docs read\n- `Plans/FinalGUISpec.md`\n- `Plans/Glossary.md`\n- `Plans/Orchestrator_Page.md`",
+      "doc_path": "Plans/FinalGUISpec.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-extract-task-006-035",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4132,
+        "end_line": 4135
+      },
+      "summary": "Glossary should capture canonical short definitions while richer help entries link out from it.",
+      "raw_excerpt": "- `Plans/Glossary.md` likely needs to become the canonical concept inventory backbone...\n- Glossary = canonical short definitions\n- Help entries = fuller explanations...",
+      "doc_path": "Plans/Glossary.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-extract-task-006-036",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4425,
+        "end_line": 4443
+      },
+      "summary": "Run graph performance targets and mitigation techniques should be anchored to graph view and GUI specs.",
+      "raw_excerpt": "- `Run_Graph_View.md` defines concrete targets...\n- viewport culling with overscan\n- per-generation layout caching\n- burst throttling...\n- optional canvas-style fallback...",
+      "doc_path": "Plans/Run_Graph_View.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-extract-task-006-037",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4544,
+        "end_line": 4548
+      },
+      "summary": "Command catalog should encode Orchestrator action-surface classification and safety classes.",
+      "raw_excerpt": "- Add an Orchestrator action-surface policy that classifies actions by:\n  - navigation vs mutation\n  - single-target vs multi-target\n  - shortcut eligibility\n  - palette visibility\n  - confirmation/reversibility class",
+      "doc_path": "Plans/UI_Command_Catalog.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-extract-task-006-038",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4783,
+        "end_line": 4787
+      },
+      "summary": "Projection-trust and fallback policy should be codified across storage, GUI, and Orchestrator docs.",
+      "raw_excerpt": "- Define one shared projection-trust contract...\n- Require all dense Orchestrator tabs to show freshness/last-updated/disclosure state.\n- Standardize fallback toward record-backed views (`History`, `Ledger`...)",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-043",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4019,
+        "end_line": 4021
+      },
+      "summary": "Persona and account-related resolver rules should be reflected in personas and multi-account documentation.",
+      "raw_excerpt": "- `Plans/Personas.md`\n- `Plans/Multi-Account.md`\n- Keep actor-type defaults stronger than stack hints.",
+      "doc_path": "Plans/Personas.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-044",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4019,
+        "end_line": 4022
+      },
+      "summary": "Worktree-focused implications in resolver/help research should be linked to worktree improvement planning.",
+      "raw_excerpt": "- `Plans/WorktreeGitImprovement.md`\n- `Plans/Multi-Account.md`",
+      "doc_path": "Plans/WorktreeGitImprovement.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-045",
+      "source_shard_id": "shard-0021",
+      "source_line_range": {
+        "start_line": 4157,
+        "end_line": 4160
+      },
+      "summary": "Project status model and pressure handling should be coordinated with usage feature documentation.",
+      "raw_excerpt": "- `Plans/usage-feature.md`\n- multi-account pressure\n- provider/account pressure",
+      "doc_path": "Plans/usage-feature.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-046",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4304,
+        "end_line": 4306
+      },
+      "summary": "Escalation cadence should be codified in GUI and Orchestrator specs for consistent attention behavior.",
+      "raw_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- Notifications / Escalation Cadence",
+      "doc_path": "Plans/Orchestrator_Page.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-047",
+      "source_shard_id": "shard-0022",
+      "source_line_range": {
+        "start_line": 4306,
+        "end_line": 4307
+      },
+      "summary": "Escalation and resurfacing policy should map to storage-backed event handling semantics.",
+      "raw_excerpt": "- `Plans/storage-plan.md`\n- unresolved conditions should resurface based on severity and persistence",
+      "doc_path": "Plans/storage-plan.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-048",
+      "source_shard_id": "shard-0023",
+      "source_line_range": {
+        "start_line": 4547,
+        "end_line": 4549
+      },
+      "summary": "Widget command and action-surface policy links should be captured in widget and worktree guidance docs.",
+      "raw_excerpt": "- `Plans/Widget_System.md`\n- `Plans/WorktreeGitImprovement.md`\n- action-surface policy",
+      "doc_path": "Plans/Widget_System.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-049",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4681,
+        "end_line": 4682
+      },
+      "summary": "Projection-trust policy should be aligned with contract-level definitions.",
+      "raw_excerpt": "- `Plans/Contracts_V0.md`\n- projection freshness / degraded behavior",
+      "doc_path": "Plans/Contracts_V0.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-050",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4680,
+        "end_line": 4681
+      },
+      "summary": "Projection-trust and stale-data handling should cross-reference usage guidance.",
+      "raw_excerpt": "- `Plans/usage-feature.md`\n- stale data and Last updated + refresh behavior",
+      "doc_path": "Plans/usage-feature.md",
+      "doc_line_span": null
+    },
+    {
+      "id": "seed-c3-repair-task-006-051",
+      "source_shard_id": "shard-0024",
+      "source_line_range": {
+        "start_line": 4679,
+        "end_line": 4680
+      },
+      "summary": "Projection trust implications should be tied back into GUI-level disclosure language.",
+      "raw_excerpt": "- `Plans/FinalGUISpec.md`\n- shared freshness/trust UI policy",
+      "doc_path": "Plans/FinalGUISpec.md",
+      "doc_line_span": null
+    }
+  ],
   "exclusions_by_shard": {
-    "shard-0021": [],
-    "shard-0022": [],
-    "shard-0023": [],
+    "shard-0021": [
+      {
+        "reason": "Boilerplate section heading",
+        "lines_or_section": "Research Progress headings and Targeted docs read lists"
+      },
+      {
+        "reason": "Examples not normative requirements",
+        "lines_or_section": "Feature Seam example phrasing lines around 4052-4054 (absolute)"
+      },
+      {
+        "reason": "Casual recap/do-not-forget restatement",
+        "lines_or_section": "Do-not-forget details blocks"
+      }
+    ],
+    "shard-0022": [
+      {
+        "reason": "Illustrative examples only",
+        "lines_or_section": "Example escalation scenarios"
+      },
+      {
+        "reason": "Context recap",
+        "lines_or_section": "Key findings summary bullets already captured by stronger obligations"
+      }
+    ],
+    "shard-0023": [
+      {
+        "reason": "Repeated heading boilerplate",
+        "lines_or_section": "Targeted docs read and Contradictions headings"
+      },
+      {
+        "reason": "Non-obligatory descriptive context",
+        "lines_or_section": "Narrative rationale lines without explicit policy/action"
+      }
+    ],
     "shard-0024": [
-      "Shared Record Envelope / Artifact Normalization section contains only kickoff metadata without substantive extraction details."
+      {
+        "reason": "Copy style suggestions not hard obligations",
+        "lines_or_section": "UX disclosure copy examples"
+      },
+      {
+        "reason": "Partial section tail without normative content",
+        "lines_or_section": "Opening lines of Shared Record Envelope section"
+      }
     ]
   },
   "seed_ids_by_shard": {
     "shard-0021": [
-      "seed-0021-persona-resolution",
-      "seed-0021-help-contract"
+      "seed-c3-extract-task-006-001",
+      "seed-c3-extract-task-006-002",
+      "seed-c3-extract-task-006-003",
+      "seed-c3-extract-task-006-004",
+      "seed-c3-extract-task-006-005",
+      "seed-c3-extract-task-006-014",
+      "seed-c3-extract-task-006-025",
+      "seed-c3-extract-task-006-027",
+      "seed-c3-extract-task-006-034",
+      "seed-c3-extract-task-006-035",
+      "seed-c3-repair-task-006-043",
+      "seed-c3-repair-task-006-044",
+      "seed-c3-repair-task-006-045"
     ],
     "shard-0022": [
-      "seed-0022-project-status-rollup",
-      "seed-0022-escalation-ladder"
+      "seed-c3-extract-task-006-006",
+      "seed-c3-extract-task-006-015",
+      "seed-c3-extract-task-006-017",
+      "seed-c3-extract-task-006-023",
+      "seed-c3-extract-task-006-026",
+      "seed-c3-extract-task-006-028",
+      "seed-c3-repair-task-006-046",
+      "seed-c3-repair-task-006-047"
     ],
     "shard-0023": [
-      "seed-0023-scale-contract",
-      "seed-0023-command-safety"
+      "seed-c3-extract-task-006-007",
+      "seed-c3-extract-task-006-008",
+      "seed-c3-extract-task-006-009",
+      "seed-c3-extract-task-006-010",
+      "seed-c3-extract-task-006-018",
+      "seed-c3-extract-task-006-021",
+      "seed-c3-extract-task-006-024",
+      "seed-c3-extract-task-006-029",
+      "seed-c3-extract-task-006-030",
+      "seed-c3-extract-task-006-031",
+      "seed-c3-extract-task-006-036",
+      "seed-c3-extract-task-006-037",
+      "seed-c3-repair-task-006-039",
+      "seed-c3-repair-task-006-040",
+      "seed-c3-repair-task-006-048"
     ],
     "shard-0024": [
-      "seed-0024-projection-trust-gating",
-      "seed-0024-record-envelope-kickoff"
+      "seed-c3-extract-task-006-011",
+      "seed-c3-extract-task-006-012",
+      "seed-c3-extract-task-006-013",
+      "seed-c3-extract-task-006-016",
+      "seed-c3-extract-task-006-019",
+      "seed-c3-extract-task-006-020",
+      "seed-c3-extract-task-006-022",
+      "seed-c3-extract-task-006-032",
+      "seed-c3-extract-task-006-033",
+      "seed-c3-extract-task-006-038",
+      "seed-c3-repair-task-006-041",
+      "seed-c3-repair-task-006-042",
+      "seed-c3-repair-task-006-049",
+      "seed-c3-repair-task-006-050",
+      "seed-c3-repair-task-006-051"
     ]
   },
   "status": "complete",
-  "blocking_reason": ""
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": true,
+    "notes": [
+      "targeted_c4_routed_repair: lineage_repaired, missing_material_covered, doc_hints_completed, open_questions_completed",
+      "main_stage_structure_only_repair: lineage_source_shard_id_corrected_count=2"
+    ],
+    "main_stage_structure_only_repair_applied": true,
+    "main_stage_structure_only_repair_details": [
+      {
+        "action": "reassigned",
+        "category": "open_questions",
+        "id": "seed-c3-repair-task-006-039",
+        "old_ssh": "shard-0022",
+        "new_ssh": "shard-0023",
+        "slr": {
+          "start_line": 4407,
+          "end_line": 4409
+        }
+      },
+      {
+        "action": "reassigned",
+        "category": "open_questions",
+        "id": "seed-c3-repair-task-006-041",
+        "old_ssh": "shard-0023",
+        "new_ssh": "shard-0024",
+        "slr": {
+          "start_line": 4650,
+          "end_line": 4657
+        }
+      }
+    ]
+  }
 }

@@ -103,5 +103,51 @@
     "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
     "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
     "timestamp_utc": "20260507T151020Z"
+  },
+  "a2_fresh_run_initializer_v3_1_15": {
+    "schema_id": "pm.a2.fresh_run_initializer.v3.1.15",
+    "prompt_version": "pm.a2.v3.1.15",
+    "timestamp_utc": "20260507T164608Z",
+    "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260507T164608Z",
+    "archived_items_total": 24,
+    "archived_items": [
+      "artifact_sanitizer_report.json",
+      "ledger_condenser_report.json",
+      "ledger_intake_manifest.json",
+      "ledger_obligation_seed.json",
+      "ledger_seed_completeness_report.json",
+      "ledger_shard_indexer.fanout_worklist.json",
+      "ledger_shard_indexer.wave-0001.json",
+      "ledger_shards",
+      "route_state.json",
+      "section_entry_B_report.json",
+      "section_entry_C_report.json",
+      "section_exit_A.json",
+      "section_exit_B.json",
+      "seed_groups",
+      "stage_report.A2.json",
+      "stage_report.A3.json",
+      "stage_report.A4.json",
+      "stage_report.B0.json",
+      "stage_report.B4.json",
+      "stage_report.C0.json",
+      "stage_report.C1.json",
+      "stage_report.C2.json",
+      "stage_report.C3.json",
+      "stage_report.C4.json"
+    ],
+    "preserved_inputs": [
+      "working_ledger.md"
+    ],
+    "next_required_stage": "A3 \u2014 Route State Initializer"
+  },
+  "a3_route_state_initializer_v3_1_15": {
+    "schema_id": "pm.a3.route_state_initializer.v3.1.15",
+    "prompt_version": "pm.a3.v3.1.15",
+    "run_mode": "fresh_restart",
+    "current_section": "A",
+    "next_prompt_request": "A4 \u2014 Section Exit: Run Control",
+    "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "timestamp_utc": "20260507T164653Z"
   }
 }

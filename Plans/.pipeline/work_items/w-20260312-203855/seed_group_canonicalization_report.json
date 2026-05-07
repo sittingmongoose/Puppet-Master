@@ -1,0 +1,412 @@
+{
+  "schema_id": "pm.seed_group_canonicalization_report.v3.1.15",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "stage_mode": "targeted_repair_round_2",
+  "routed_from": {
+    "prompt_id": "C4",
+    "artifact": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "scope": "targeted_repair_on_6_named_anchors"
+  },
+  "expected_seed_groups_total": 23,
+  "discovered_seed_groups_total": 23,
+  "canonical_seed_groups_total": 23,
+  "noncanonical_seed_groups_total": 0,
+  "main_stage_canonicalization_actions_total": 0,
+  "main_stage_canonicalization_actions_summary": "All 23 seed-group files validated as canonical pm.ledger_seed_group.v3.1.15 with no main-stage shape transformations required. The 6 targeted seed groups (shard-0001, 0025, 0029, 0033, 0049, 0061) were repaired in-place by distinct subagents in this run; the 17 preserved anchors were not touched.",
+  "round2_repaired_anchors": [
+    "shard-0001",
+    "shard-0025",
+    "shard-0029",
+    "shard-0033",
+    "shard-0049",
+    "shard-0061"
+  ],
+  "preserved_unchanged_anchors": [
+    "shard-0005",
+    "shard-0009",
+    "shard-0013",
+    "shard-0017",
+    "shard-0021",
+    "shard-0037",
+    "shard-0041",
+    "shard-0045",
+    "shard-0053",
+    "shard-0057",
+    "shard-0065",
+    "shard-0069",
+    "shard-0073",
+    "shard-0077",
+    "shard-0081",
+    "shard-0085",
+    "shard-0089"
+  ],
+  "preserved_unchanged_anchors_count": 17,
+  "validation_checks": {
+    "schema_id_check": "pass",
+    "required_top_level_keys_check": "pass",
+    "category_arrays_present_check": "pass",
+    "shard_line_ranges_match_manifest_check": "pass",
+    "seed_ids_by_shard_keys_complete_check": "pass",
+    "exclusions_by_shard_keys_complete_check": "pass",
+    "all_seed_line_ranges_within_shard_bounds": "pass",
+    "lineage_consistent_with_flat_seed_total": "pass",
+    "no_duplicate_seed_ids_within_group": "pass",
+    "no_cross_group_seed_id_collisions": "pass",
+    "no_concatenated_json_objects": "pass",
+    "no_forbidden_top_level_keys": "pass"
+  },
+  "per_seed_group": [
+    {
+      "file": "ledger_seed_group.shard-0001.json",
+      "anchor": "shard-0001",
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0003",
+        "shard-0004"
+      ],
+      "seed_total": 44,
+      "exclusions_total": 6,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": true
+    },
+    {
+      "file": "ledger_seed_group.shard-0005.json",
+      "anchor": "shard-0005",
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006",
+        "shard-0007",
+        "shard-0008"
+      ],
+      "seed_total": 85,
+      "exclusions_total": 4,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0009.json",
+      "anchor": "shard-0009",
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010",
+        "shard-0011",
+        "shard-0012"
+      ],
+      "seed_total": 60,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0013.json",
+      "anchor": "shard-0013",
+      "source_shard_ids": [
+        "shard-0013",
+        "shard-0014",
+        "shard-0015",
+        "shard-0016"
+      ],
+      "seed_total": 55,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0017.json",
+      "anchor": "shard-0017",
+      "source_shard_ids": [
+        "shard-0017",
+        "shard-0018",
+        "shard-0019",
+        "shard-0020"
+      ],
+      "seed_total": 50,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0021.json",
+      "anchor": "shard-0021",
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0022",
+        "shard-0023",
+        "shard-0024"
+      ],
+      "seed_total": 51,
+      "exclusions_total": 9,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0025.json",
+      "anchor": "shard-0025",
+      "source_shard_ids": [
+        "shard-0025",
+        "shard-0026",
+        "shard-0027",
+        "shard-0028"
+      ],
+      "seed_total": 61,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": true
+    },
+    {
+      "file": "ledger_seed_group.shard-0029.json",
+      "anchor": "shard-0029",
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0030",
+        "shard-0031",
+        "shard-0032"
+      ],
+      "seed_total": 58,
+      "exclusions_total": 9,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": true
+    },
+    {
+      "file": "ledger_seed_group.shard-0033.json",
+      "anchor": "shard-0033",
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036"
+      ],
+      "seed_total": 54,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": true
+    },
+    {
+      "file": "ledger_seed_group.shard-0037.json",
+      "anchor": "shard-0037",
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0040"
+      ],
+      "seed_total": 55,
+      "exclusions_total": 4,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0041.json",
+      "anchor": "shard-0041",
+      "source_shard_ids": [
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044"
+      ],
+      "seed_total": 41,
+      "exclusions_total": 5,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0045.json",
+      "anchor": "shard-0045",
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0048"
+      ],
+      "seed_total": 38,
+      "exclusions_total": 4,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0049.json",
+      "anchor": "shard-0049",
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0050",
+        "shard-0051",
+        "shard-0052"
+      ],
+      "seed_total": 36,
+      "exclusions_total": 4,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": true
+    },
+    {
+      "file": "ledger_seed_group.shard-0053.json",
+      "anchor": "shard-0053",
+      "source_shard_ids": [
+        "shard-0053",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056"
+      ],
+      "seed_total": 60,
+      "exclusions_total": 14,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0057.json",
+      "anchor": "shard-0057",
+      "source_shard_ids": [
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060"
+      ],
+      "seed_total": 35,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0061.json",
+      "anchor": "shard-0061",
+      "source_shard_ids": [
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064"
+      ],
+      "seed_total": 46,
+      "exclusions_total": 9,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": true
+    },
+    {
+      "file": "ledger_seed_group.shard-0065.json",
+      "anchor": "shard-0065",
+      "source_shard_ids": [
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068"
+      ],
+      "seed_total": 27,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0069.json",
+      "anchor": "shard-0069",
+      "source_shard_ids": [
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072"
+      ],
+      "seed_total": 74,
+      "exclusions_total": 4,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0073.json",
+      "anchor": "shard-0073",
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0076"
+      ],
+      "seed_total": 37,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0077.json",
+      "anchor": "shard-0077",
+      "source_shard_ids": [
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080"
+      ],
+      "seed_total": 37,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0081.json",
+      "anchor": "shard-0081",
+      "source_shard_ids": [
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084"
+      ],
+      "seed_total": 31,
+      "exclusions_total": 8,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0085.json",
+      "anchor": "shard-0085",
+      "source_shard_ids": [
+        "shard-0085",
+        "shard-0086",
+        "shard-0087",
+        "shard-0088"
+      ],
+      "seed_total": 39,
+      "exclusions_total": 4,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    },
+    {
+      "file": "ledger_seed_group.shard-0089.json",
+      "anchor": "shard-0089",
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090",
+        "shard-0091",
+        "shard-0092"
+      ],
+      "seed_total": 46,
+      "exclusions_total": 13,
+      "canonical_shape": true,
+      "main_stage_canonicalization_action": "verified_canonical_no_change",
+      "touched_in_round2_repair": false
+    }
+  ],
+  "aggregate": {
+    "total_seeds_across_all_groups": 1120,
+    "total_unique_seed_ids": 1120
+  },
+  "generated_at_utc": "20260507T194800Z"
+}

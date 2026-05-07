@@ -1,0 +1,505 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
+  "subagent_invocation_id": "c3-inv-017",
+  "subagent_task_id": "c3-task-017",
+  "work_id": "w-20260312-203855",
+  "batch_anchor_shard_id": "shard-0065",
+  "source_shard_ids": [
+    "shard-0065",
+    "shard-0066",
+    "shard-0067",
+    "shard-0068"
+  ],
+  "working_line_ranges": [
+    {
+      "shard_id": "shard-0065",
+      "ledger_line_start": 12801,
+      "ledger_line_end": 13000
+    },
+    {
+      "shard_id": "shard-0066",
+      "ledger_line_start": 13001,
+      "ledger_line_end": 13200
+    },
+    {
+      "shard_id": "shard-0067",
+      "ledger_line_start": 13201,
+      "ledger_line_end": 13400
+    },
+    {
+      "shard_id": "shard-0068",
+      "ledger_line_start": 13401,
+      "ledger_line_end": 13600
+    }
+  ],
+  "source_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+  "status": "complete",
+  "extraction_status": "complete",
+  "per_shard": {
+    "shard-0065": {
+      "shard_id": "shard-0065",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0065.md",
+      "ledger_line_start": 12801,
+      "ledger_line_end": 13000,
+      "source_sha256": "e5e13c9dedf754d811be36b28b23e3caff9ccffc43dd0dbe0ef22249965ff343",
+      "extraction_status": "complete",
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0065-001",
+          "kind": "data_shape",
+          "summary": "Command layer needs a three-way taxonomy: pure shell/view-state commands, route-consuming navigation commands, and domain mutation/runtime commands—not a binary shell-vs-navigation split.",
+          "evidence_ledger_excerpt": "The command layer wants a three-way split, not a binary split:\n  - pure shell/view-state commands\n  - route-consuming navigation commands\n  - domain mutation/runtime commands",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-002",
+          "kind": "routing_rule",
+          "summary": "Pure shell/view-state commands change visible panel/subview/layout but do not own canonical target identity; route-consuming commands must reveal a specific object or scope and normalize through route_target.",
+          "evidence_ledger_excerpt": "Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible, but they do not own canonical target identity.\n- Route-consuming navigation commands are the ones that must reveal a specific object or scope. They should normalize through the emerging `route_target` model",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Crosswalk.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-003",
+          "kind": "process_defect",
+          "summary": "cmd.panel.switch is the clearest pure shell command, but optional context payload risks making it look like object-targeting navigation; cmd.source_control.switch_subview should not carry repo/worktree/compare identity.",
+          "evidence_ledger_excerpt": "`cmd.panel.switch` is the clearest pure shell command in the current catalog... Its current optional `context` payload is the main drift risk because it makes a shell command look like an object-targeting navigation command.\n- `cmd.source_control.switch_subview` is also a pure shell/view-state command... it should not become the carrier for repo/worktree/compare target identity.",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-004",
+          "kind": "routing_rule",
+          "summary": "Thread Usage open/focus commands stay wrapper navigation (not pure shell toggles) because they reveal Usage for a specific thread; cmd.source_control.select_worktree is object-targeting selection and should normalize through shared target identity if it stays first-class.",
+          "evidence_ledger_excerpt": "`cmd.chat.open_thread_usage` and `cmd.chat.focus_thread_usage` sit on the boundary. They should remain wrapper navigation commands, not pure shell toggles\n- `cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-targeting selection command.",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/usage-feature.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-005",
+          "kind": "process_defect",
+          "summary": "UI_Command_Catalog mixes shell and object-targeting navigation in the same layout/UI-state bucket; Crosswalk lacks a primitive for route-target navigation; Contracts_V0 lacks canonical route-target/OpenSubject, so payloads stay ad hoc.",
+          "evidence_ledger_excerpt": "`UI_Command_Catalog.md` currently mixes shell commands and object-targeting navigation commands in the same \"layout/UI state only\" bucket\n- `Crosswalk.md` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation\n- `Contracts_V0.md` still has no canonical route-target/open-subject contract",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Crosswalk.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-006",
+          "kind": "candidate_fix",
+          "summary": "Formalize the three-way taxonomy; keep panel.switch and source_control.switch_subview as pure shell with controlled vocabularies; move object-targeting out of panel.switch; add Crosswalk primitive for route-target/open-subject ownership.",
+          "evidence_ledger_excerpt": "Formalize the three-way command taxonomy:\n  - pure shell/view-state commands\n  - route-consuming navigation commands\n  - domain mutation/runtime commands\n- Add a Crosswalk primitive boundary for route-target / open-subject ownership",
+          "related_paths": [
+            "Plans/Crosswalk.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-007",
+          "kind": "requirement",
+          "summary": "Opening a panel is not revealing an object; shell commands must not accumulate object identity until they become undocumented route commands; catalog may keep wrapper names while the canonical contract underneath normalizes.",
+          "evidence_ledger_excerpt": "A panel being opened is not the same thing as an object being revealed.\n- Shell commands should not accumulate object identity until they quietly become undocumented route commands.\n- The catalog can keep UX-facing wrapper names; the important change is the canonical contract beneath them.",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-008",
+          "kind": "routing_rule",
+          "summary": "Prefer stable domain-facing wrapper commands plus canonical route_target/OpenSubject underneath rather than a large public cmd.nav family that expands catalog, wiring, and gate surface area.",
+          "evidence_ledger_excerpt": "The stronger near-term fit is:\n  - keep domain-facing wrapper commands public and stable\n  - add canonical `route_target` / `OpenSubject` semantics underneath them\n  - let wrappers normalize internally to the shared navigation primitive",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/UI_Wiring_Rules.md",
+            "Plans/Wiring_Matrix.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-009",
+          "kind": "process_defect",
+          "summary": "Wiring and GATE-010 are too command-ID-centric: they cannot express stable wrappers that normalize to one shared route primitive versus deprecated aliases, and evidence.schema.json has no structured wrapper-normalization slot.",
+          "evidence_ledger_excerpt": "`GATE-010` and the wiring rules would currently treat a growing set of wrapper commands as fully independent commands, but they have no way to say \"these different public command IDs normalize to the same canonical route primitive.\"\n- `evidence.schema.json` is also very generic here... it has no structured slot for wrapper-normalization",
+          "related_paths": [
+            "Plans/Progression_Gates.md",
+            "Plans/UI_Wiring_Rules.md",
+            "Plans/evidence.schema.json"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-010",
+          "kind": "data_shape",
+          "summary": "Command layer needs two patterns: deprecated command aliases (eventually disappear) versus stable wrapper commands (may remain permanently)—not conflated with event-alias migration alone.",
+          "evidence_ledger_excerpt": "The command layer now needs two distinct patterns, not one:\n  - deprecated command aliases during migration\n  - stable wrapper commands that intentionally normalize to one shared primitive\n- Those are not the same thing:\n  - a deprecated alias should eventually disappear\n  - a wrapper command may remain permanently because it is useful UX-facing vocabulary",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-011",
+          "kind": "candidate_fix",
+          "summary": "Add explicit command-normalization model (public command ID, canonical primitive/contract, deprecated-alias metadata only when migrating); extend GATE-010 for wrapper normalization and alias resolution; keep catalog readable for UX.",
+          "evidence_ledger_excerpt": "Add an explicit command-normalization model with three layers:\n  - public command ID\n  - canonical primitive or normalized target contract\n  - deprecated alias metadata only where migration is actually intended\n- Extend `GATE-010` evidence/reporting to capture:\n  - wrapper normalization target\n  - deprecated alias target when applicable",
+          "related_paths": [
+            "Plans/Progression_Gates.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0065-012",
+          "kind": "requirement",
+          "summary": "Stable wrapper commands are not temporary compatibility hacks by default; the problem is they currently normalize nowhere shared.",
+          "evidence_ledger_excerpt": "Wrapper commands are not a temporary compatibility hack by default.\n- The problem is not that wrapper commands exist; the problem is that they currently normalize nowhere shared.",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md"
+          ]
+        }
+      ]
+    },
+    "shard-0066": {
+      "shard_id": "shard-0066",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0066.md",
+      "ledger_line_start": 13001,
+      "ledger_line_end": 13200,
+      "source_sha256": "60ed905ae493bfa0dd1c753e6df12b6e1d9ad76c1f60beec5ce797f97b1af25e",
+      "extraction_status": "complete",
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0066-001",
+          "kind": "data_shape",
+          "summary": "Minimum normalization metadata: command_kind (shell_view | navigation_wrapper | domain_action) plus optional normalization { kind: wrapper | deprecated_alias, normalizes_to_contract | alias_of_command_id }—route schema stays owner of payload shape.",
+          "evidence_ledger_excerpt": "The minimum useful shape now looks like:\n  - `command_kind`\n    - `shell_view`\n    - `navigation_wrapper`\n    - `domain_action`\n  - optional `normalization`\n    - `kind`\n      - `wrapper`\n      - `deprecated_alias`",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0066-002",
+          "kind": "requirement",
+          "summary": "Wrapper normalizes_to_contract must stay narrow and contract-level (e.g. route_target, open_subject); do not inline route payload or argument mapping into command metadata or duplicate it across Wiring_Matrix rows.",
+          "evidence_ledger_excerpt": "It should NOT inline route payload shape, object kinds, or argument mapping rules into the command metadata. That would duplicate the route contract and turn the catalog into a second routing schema.\n- If the wiring matrix starts storing full normalization blocks per row, it will duplicate the catalog and drift quickly.",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Wiring_Matrix.schema.json"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0066-003",
+          "kind": "process_defect",
+          "summary": "Contracts_V0 UICommand envelope is too thin for normalization metadata; catalog carries meaning in prose only; GATE-010 does not yet name normalization consistency checks.",
+          "evidence_ledger_excerpt": "`Contracts_V0.md` still defines only a very thin `UICommand` envelope and has nowhere to express command-normalization metadata.\n- `UI_Command_Catalog.md` currently carries command meaning in prose/tables only\n- `GATE-010` does not yet name any normalization consistency checks",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/Progression_Gates.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0066-004",
+          "kind": "candidate_fix",
+          "summary": "Add minimal classification/normalization to command-definition layer; extend GATE-010 for wrapper divergence and deprecated-alias resolution; use Crosswalk to state catalog owns metadata, route contract owns structure, wiring owns bindings.",
+          "evidence_ledger_excerpt": "Extend `GATE-010` to verify:\n  - wrapper commands marked as normalizing to the same primitive do not diverge in handler semantics unexpectedly\n  - deprecated aliases resolve to real canonical command IDs\n- Use `Crosswalk.md` to make the owner split explicit",
+          "related_paths": [
+            "Plans/Progression_Gates.md",
+            "Plans/Crosswalk.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0066-005",
+          "kind": "requirement",
+          "summary": "Research stream wording must be deterministic: no hedge words for canonical direction; unresolved points stated as unresolved.",
+          "evidence_ledger_excerpt": "Use deterministic wording in this research stream.\n- Do not use hedge words such as `optional`, `maybe`, or similar softeners when describing canonical design direction.\n- When a point is still unresolved, state that it is unresolved rather than softening the recommendation.",
+          "related_paths": []
+        },
+        {
+          "seed_id": "SEED-shard-0066-006",
+          "kind": "doc_hint",
+          "summary": "Owner split: Contracts_V0 owns route_target, OpenSubject, resume_url relation, OpenFile reference; Crosswalk declares route-target primitive; storage-plan persists resume_url and refs but does not define canonical route identity; surface docs consume.",
+          "evidence_ledger_excerpt": "`Contracts_V0.md` is the correct owner for the canonical route contract.\n- `Crosswalk.md` is the correct owner for the primitive boundary declaration.\n- `storage-plan.md` is a consumer of navigation identity, not the owner of it.",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/Crosswalk.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0066-007",
+          "kind": "data_shape",
+          "summary": "resume_url is serialized transport of canonical route identity, not the owning contract; FileManager stays path/editor realization, not owner of cross-surface identity navigation.",
+          "evidence_ledger_excerpt": "`resume_url` should be treated as a serialized transport of canonical route identity, not as the owner contract.\n- `FileManager.md` should stay focused on path-based editor realization and should not become the owner of cross-surface identity navigation",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md",
+            "Plans/FileManager.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0066-008",
+          "kind": "process_defect",
+          "summary": "Crosswalk still lacks route-target primitive; Contracts_V0 still lacks route_target/OpenSubject despite downstream dependence; FileManager reads as if OpenFile is universal navigation primitive.",
+          "evidence_ledger_excerpt": "`Crosswalk.md` still lacks a primitive entry for route-target / identity-native open behavior.\n- `Contracts_V0.md` still has no `route_target` or `OpenSubject` contract\n- `FileManager.md` still reads as if path-based `OpenFile` is the universal open/navigation primitive.",
+          "related_paths": [
+            "Plans/Crosswalk.md",
+            "Plans/Contracts_V0.md",
+            "Plans/FileManager.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0066-009",
+          "kind": "candidate_fix",
+          "summary": "Put route_target and OpenSubject in Contracts_V0; add Crosswalk primitive; keep OpenFile narrow; anchor resume_url decoding to Contracts_V0; keep storage ownership to persisted refs only.",
+          "evidence_ledger_excerpt": "Put the canonical `route_target` and `OpenSubject` contract in `Contracts_V0.md`.\n- Add a new primitive boundary in `Crosswalk.md` for route-target / open-by-identity navigation.\n- Treat `resume_url` as a derived serialization of `route_target`, with decoding rules anchored back to `Contracts_V0.md`.",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/Crosswalk.md"
+          ]
+        }
+      ]
+    },
+    "shard-0067": {
+      "shard_id": "shard-0067",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0067.md",
+      "ledger_line_start": 13201,
+      "ledger_line_end": 13400,
+      "source_sha256": "f6958f12033bc97c9556c71eb38c9faf48a2a94e8d86706206f08d3487283e74",
+      "extraction_status": "complete",
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0067-001",
+          "kind": "data_shape",
+          "summary": "route_target handles app navigation (destination, scope, object identity, inspector focus); OpenSubject resolves canonical subject_id to openable realization; OpenFile is path-based editor open—three distinct contracts.",
+          "evidence_ledger_excerpt": "`route_target` owns app-navigation intent:\n  - destination surface\n  - scope restoration\n  - object identity needed to land on the correct view\n- `OpenSubject` owns identity-native source opening:\n  - resolve a canonical subject such as `doc:<document_id>` or `artifact:<artifact_id>`",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/FinalGUISpec.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-002",
+          "kind": "routing_rule",
+          "summary": "OpenSubject is not general cross-surface navigation; route_target is not source-opening contract; resume_url sits with route_target because it restores app navigation context.",
+          "evidence_ledger_excerpt": "`OpenSubject` is not the general cross-surface navigation contract.\n- `route_target` is not the source-opening contract.\n- `resume_url` sits on the `route_target` side, not the `OpenSubject` side, because it restores app navigation context rather than just opening a source artifact.",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-003",
+          "kind": "requirement",
+          "summary": "If route_target absorbs source-buffer realization or OpenSubject absorbs panel/tab/shell destinations, the split collapses into bloat or a second route contract.",
+          "evidence_ledger_excerpt": "If `route_target` starts carrying source-buffer realization details, it will bloat.\n- If `OpenSubject` starts carrying panel/tab/shell destination semantics, it will collapse back into a second route contract.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-004",
+          "kind": "data_shape",
+          "summary": "OpenSubject minimum fields: subject_id (doc:|artifact:) and open_intent; intent vocabulary open_source, open_preview, open_review; no project/thread/run/tab/panels/inspector/metadata bags on the contract.",
+          "evidence_ledger_excerpt": "The canonical minimum is:\n  - `subject_id`\n  - `open_intent`\n... The clean intent vocabulary is:\n  - `open_source`\n  - `open_preview`\n  - `open_review`\n- `OpenSubject` does not carry:\n  - `project_id`\n  - `thread_id`",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-005",
+          "kind": "routing_rule",
+          "summary": "Shell/scope belongs in route_target; persistence/provenance in storage; generated:// and backing_document_id are resolver/transport details, not OpenSubject fields.",
+          "evidence_ledger_excerpt": "Those fields belong elsewhere:\n  - shell and scope belong to `route_target`\n  - persistence/provenance belong to storage records and projections\n  - transport/open realization belongs to the resolver that executes `OpenSubject`\n- `generated://<artifact_id>` is not a subject field.",
+          "related_paths": [
+            "Plans/storage-plan.md",
+            "Plans/FileManager.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-006",
+          "kind": "process_defect",
+          "summary": "Downstream docs imply intents and resolver metadata but lack owner contract; FileManager centers path-open strongly enough to misread all source opening as OpenFile.",
+          "evidence_ledger_excerpt": "Downstream docs already imply several subject-open intents, but there is still no owner contract that states the minimum shape directly.\n- `FileManager.md` still centers path open strongly enough that downstream readers can misread all source opening as `OpenFile`.",
+          "related_paths": [
+            "Plans/FileManager.md",
+            "Plans/assistant-chat-design.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-007",
+          "kind": "data_shape",
+          "summary": "route_target bounded minimum: target_kind, project_id, exactly one selector (subject_id OR object_kind+object_id), narrow scope fields focused_run_id/thread_id, focus refinement tab_id/inspector_target.",
+          "evidence_ledger_excerpt": "The canonical minimum field set is:\n  - `target_kind`\n  - `project_id`\n  - one canonical target selector:\n    - `subject_id`\n    - or `object_kind` + `object_id`",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/FinalGUISpec.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-008",
+          "kind": "routing_rule",
+          "summary": "Explicitly excluded from base route_target: usage_event_ref, wizard fields, message/artifact/document IDs as top-level, scheduler/safe_point/remediation IDs as flat fields, line/range, active_subview and other per-surface persistence—normalize into subject_id or object_kind/object_id or OpenFile.",
+          "evidence_ledger_excerpt": "### What is NOT a base `route_target` field\n- `usage_event_ref`\n- `wizard_id`\n- `wizard_step`\n- `message_id`\n- `line`\n- `range`\n- per-surface state such as:\n  - `active_subview`",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/UI_Command_Catalog.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-009",
+          "kind": "process_defect",
+          "summary": "Downstream docs still imply special-case top-level navigation fields; resume_url more concrete than general route contract; catalog payloads remain ad hoc versus bounded field set.",
+          "evidence_ledger_excerpt": "Several downstream docs still imply special-case top-level fields such as `usage_event_ref`, `wizard_step`, or direct artifact/document IDs in navigation flows.\n- `resume_url` flows are still more concrete than the general route contract\n- `UI_Command_Catalog.md` still presents many navigation commands with ad hoc payload shapes",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0067-010",
+          "kind": "candidate_fix",
+          "summary": "Define route_target in Contracts_V0 with bounded fields, single-selector rule, normalization of legacy IDs, and keep transport/shell detail out.",
+          "evidence_ledger_excerpt": "Define `route_target` in `Contracts_V0.md` with the bounded field set above.\n- State the selector rule directly:\n  - `subject_id`\n  - or `object_kind` + `object_id`",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        }
+      ]
+    },
+    "shard-0068": {
+      "shard_id": "shard-0068",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0068.md",
+      "ledger_line_start": 13401,
+      "ledger_line_end": 13600,
+      "source_sha256": "e0b2fc8d1ecc26722b559911b2939b678e71d9fdd171f60bc2eab3e496b3985d",
+      "extraction_status": "complete",
+      "seeds": [
+        {
+          "seed_id": "SEED-shard-0068-001",
+          "kind": "requirement",
+          "summary": "route_target is bounded: navigation identity, scope restoration, narrow focus refinement—not event payload noise, transport detail, or per-surface state.",
+          "evidence_ledger_excerpt": "`route_target` is now bounded.\n- It carries navigation identity, scope restoration, and narrow focus refinement.\n- It does not carry event-specific payload noise.\n- It does not carry transport detail.\n- It does not carry per-surface state.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-002",
+          "kind": "data_shape",
+          "summary": "target_kind coarse controlled enum: primary_view, side_panel, bottom_panel, embedded_surface, page_tab—destination class only, not object identity or shell persistence.",
+          "evidence_ledger_excerpt": "The canonical vocabulary is:\n  - `primary_view`\n  - `side_panel`\n  - `bottom_panel`\n  - `embedded_surface`\n  - `page_tab`\n- These values are enough to express destination class without leaking shell implementation detail.",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/FinalGUISpec.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-003",
+          "kind": "routing_rule",
+          "summary": "Not target_kind: dock/float, panel width, widget slot, subview id, repo/worktree selection, browser tab id, workspace tab id—those stay outside the enum.",
+          "evidence_ledger_excerpt": "### What is not `target_kind`\n- docked vs floating\n- panel width\n- widget slot\n- subview id\n- repo/worktree selection\n- browser tab id\n- workspace tab id",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-004",
+          "kind": "process_defect",
+          "summary": "Commands and shell docs still mix destination class with realization; workspace_tab_id and browser_tab_id exist in storage but are not target_kind values.",
+          "evidence_ledger_excerpt": "Several command payloads and shell docs still mix destination class with lower-level shell realization details.\n- `workspace_tab_id` and `browser_tab_id` exist in storage and command docs, but they are not `target_kind` values.",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-005",
+          "kind": "candidate_fix",
+          "summary": "Define target_kind enum in Contracts_V0; keep destination-local refinements outside base route contract; use page_tab when a routed page must force a specific tab.",
+          "evidence_ledger_excerpt": "Define the canonical `target_kind` enum in `Contracts_V0.md`.\n- Keep destination-local refinements outside the enum and outside the base route contract.\n- Use `page_tab` when the routed destination must land inside a known page and force a specific tab.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-006",
+          "kind": "routing_rule",
+          "summary": "Exactly one primary selector: subject_id OR object_kind+object_id; subject_id wins for openable subjects; object_kind+object_id for domain/runtime objects; tab/thread/run/inspector never replace selector identity.",
+          "evidence_ledger_excerpt": "The canonical selector rule is:\n  - exactly one primary selector is present:\n    - `subject_id`\n    - or `object_kind` + `object_id`\n- `subject_id` wins for openable/renderable content subjects.\n- `object_kind` + `object_id` wins for domain/runtime/governance objects.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-007",
+          "kind": "data_shape",
+          "summary": "Resolution order: restore project_id; restore scope (focused_run_id, thread_id); restore target_kind; resolve primary selector; apply tab_id and inspector_target.",
+          "evidence_ledger_excerpt": "### Resolution order\n1. restore `project_id`\n2. restore route scope:\n   - `focused_run_id` when present\n   - `thread_id` when present\n3. restore destination class from `target_kind`\n4. resolve the primary selector",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-008",
+          "kind": "requirement",
+          "summary": "One route, one primary selector; allowing multiple competing selectors reintroduces drift immediately.",
+          "evidence_ledger_excerpt": "### Do-not-forget details\n- One route, one primary selector.\n- Scope and focus fields are not selector identity.\n- If the route layer allows multiple competing selectors, drift returns immediately.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-009",
+          "kind": "process_defect",
+          "summary": "Existing payloads imply multi-selector actions; resume_url encodes wizard-step detail more concretely than general contract; usage_event_ref still read as first-class route selector.",
+          "evidence_ledger_excerpt": "Several existing payloads still imply multiple competing selectors in the same navigation action.\n- `resume_url` flows still encode wizard-step detail more concretely than the general route contract.\n- Usage/artifact flows still read as if `usage_event_ref` can stay a first-class top-level route selector",
+          "related_paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/usage-feature.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-010",
+          "kind": "data_shape",
+          "summary": "resume_url is serialized transport of route_target—narrower than internal model; carries stable selector, required scope, narrow anchors; excludes shell layout, filters, provider disclosure.",
+          "evidence_ledger_excerpt": "`resume_url` is a serialized transport of `route_target`.\n- `resume_url` must stay narrower than the internal route contract.\n- The serialized form carries:\n  - stable primary selector identity\n  - required scope when needed\n  - narrow anchor detail when the flow requires it",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-011",
+          "kind": "routing_rule",
+          "summary": "Bad serialized fields include active_subview, compare target, widget config, docking, split ratios, generic filter bags, wide inspector expansion.",
+          "evidence_ledger_excerpt": "### Bad serialized fields\n- `active_subview`\n- compare target\n- widget configuration\n- panel docking state\n- split ratios\n- generic filter bags\n- wide inspector expansion state",
+          "related_paths": [
+            "Plans/Contracts_V0.md",
+            "Plans/FinalGUISpec.md"
+          ]
+        },
+        {
+          "seed_id": "SEED-shard-0068-012",
+          "kind": "candidate_fix",
+          "summary": "Reject multi-selector payloads as non-canonical; normalize special-case ids before entering canonical route layer; state precedence in Contracts_V0.",
+          "evidence_ledger_excerpt": "State the precedence rule directly in `Contracts_V0.md`.\n- Reject multi-selector route payloads as non-canonical.\n- Normalize all special-case ids into `subject_id` or `object_kind` + `object_id` before they enter the canonical route layer.",
+          "related_paths": [
+            "Plans/Contracts_V0.md"
+          ]
+        }
+      ]
+    }
+  }
+}

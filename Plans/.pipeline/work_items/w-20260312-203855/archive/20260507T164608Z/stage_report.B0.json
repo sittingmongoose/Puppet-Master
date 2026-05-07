@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.stage_report.B0.v3.1.14",
+  "prompt_id": "B0",
+  "prompt_version": "pm.b0.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "status": "COMPLETE",
+  "deterministic_verification_proof": {
+    "inputs_read": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
+    ],
+    "section_exit_a_files_found": 1,
+    "work_id_derivation_source": "section_exit_A.json",
+    "work_id_consistency_check": "pass",
+    "intake_route_resolution": "no_explicit_intake_path_found_defaulted_to_B4"
+  },
+  "subagents": {
+    "required": false,
+    "used": false
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "outputs_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B0.json"
+  ],
+  "next_prompt_request": "Paste prompt B4 — Ledger Intake Decision v3.1.14."
+}

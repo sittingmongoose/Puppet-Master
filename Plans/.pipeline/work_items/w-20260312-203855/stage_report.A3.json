@@ -1,29 +1,28 @@
 {
-  "schema_id": "pm.stage_report.A3.v3.1.14",
+  "schema_id": "pm.stage_report.a3.v3.1.15",
   "prompt_id": "A3",
-  "prompt_version": "pm.a3.v3.1.14",
+  "prompt_version": "pm.a3.v3.1.15",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "subagents_required": false,
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "deterministic_verification": {
-    "inputs_read": [
+    "inputs_used": [
       "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
       "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
       "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json"
     ],
-    "sanitizer_prompt_id": "A2",
-    "sanitizer_execution_type": "mechanical_tool_operation",
-    "route_state_written": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
-    "semantic_artifacts_inspected": false
+    "operations": [
+      "deterministic route_state.json creation",
+      "single next prompt assignment per run_mode rule",
+      "meta/current_state update for A4 handoff"
+    ],
+    "semantic_artifacts_inspected": false,
+    "coverage_proof": "route_state.json created with exactly one next prompt request and required roots/section fields."
   },
-  "final_gate": {
-    "route_state_exists": true,
-    "route_state_next_prompt_request_count": 1,
-    "route_state_next_prompt_request": "A4"
-  },
+  "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
   "status": "COMPLETE",
   "next_prompt_request": "A4",
   "next_prompt_name": "Section Exit: Run Control",
-  "timestamp_utc": "20260507T151020Z"
+  "timestamp_utc": "20260507T164653Z"
 }

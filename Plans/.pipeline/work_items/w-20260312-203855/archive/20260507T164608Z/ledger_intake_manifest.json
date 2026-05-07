@@ -1,0 +1,16 @@
+{
+  "schema_id": "pm.ledger_intake_manifest.v3.1.14",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "requires_new_research": false,
+  "requires_condensation": false,
+  "requires_ledger_preparation": true,
+  "next_section": "C_Ledger_Preparation",
+  "next_preferred_prompt": "C0"
+}

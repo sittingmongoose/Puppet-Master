@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.stage_report.A4.v3.1.14",
+  "prompt_id": "A4",
+  "prompt_version": "pm.a4.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "subagents_required": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification": {
+    "inputs_read": [
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json"
+    ],
+    "optional_inputs_absent": [
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A1.json"
+    ],
+    "route_state_next_prompt_verified": true,
+    "section_exit_written": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+    "semantic_artifacts_inspected": false
+  },
+  "final_gate": {
+    "section_A_handoff_complete": true,
+    "work_id_present_in_handoff": true,
+    "next_section": "B",
+    "next_prompt_request": "B0"
+  },
+  "status": "COMPLETE",
+  "next_prompt_request": "B0",
+  "next_prompt_name": "Section Entry: Research / Audit Intake",
+  "timestamp_utc": "20260507T151150Z"
+}

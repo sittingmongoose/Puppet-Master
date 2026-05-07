@@ -1,33 +1,29 @@
 {
-  "schema_id": "pm.stage_report.A4.v3.1.14",
+  "schema_id": "pm.stage_report.a4.v3.1.15",
   "prompt_id": "A4",
-  "prompt_version": "pm.a4.v3.1.14",
+  "prompt_version": "pm.a4.v3.1.15",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "subagents_required": false,
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "deterministic_verification": {
-    "inputs_read": [
+    "inputs_used": [
       "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
       "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
       "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
       "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json"
     ],
-    "optional_inputs_absent": [
-      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A1.json"
+    "operations": [
+      "deterministic section_exit_A.json generation",
+      "single next section/prompt handoff assignment",
+      "current_state handoff update for Section B"
     ],
-    "route_state_next_prompt_verified": true,
-    "section_exit_written": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
-    "semantic_artifacts_inspected": false
+    "semantic_artifacts_inspected": false,
+    "coverage_proof": "Section A handoff artifact written with locked work_id, run_mode, active roots, completed prompts, active outputs, and next section B."
   },
-  "final_gate": {
-    "section_A_handoff_complete": true,
-    "work_id_present_in_handoff": true,
-    "next_section": "B",
-    "next_prompt_request": "B0"
-  },
+  "section_exit_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
   "status": "COMPLETE",
   "next_prompt_request": "B0",
   "next_prompt_name": "Section Entry: Research / Audit Intake",
-  "timestamp_utc": "20260507T151150Z"
+  "timestamp_utc": "20260507T165052Z"
 }

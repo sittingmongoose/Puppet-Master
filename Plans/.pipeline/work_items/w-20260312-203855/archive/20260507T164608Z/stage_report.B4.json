@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.stage_report.B4.v3.1.14",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "status": "COMPLETE",
+  "deterministic_verification_proof": {
+    "inputs_checked": [
+      "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "Plans/.pipeline/work_items/w-20260312-203855/session_notes/*.jsonl",
+      "Plans/.pipeline/work_items/w-20260312-203855/research_findings.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/feature_spec_audit_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json"
+    ],
+    "working_ledger_exists": true,
+    "working_ledger_non_empty": true,
+    "session_notes_count": 0,
+    "research_findings_exists": false,
+    "feature_spec_audit_report_exists": false,
+    "issue_process_adjudication_report_exists": false,
+    "source_selection_rule_applied": "priority_1_existing_working_ledger"
+  },
+  "subagents": {
+    "required": false,
+    "used": false
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "outputs_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B4.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json"
+  ],
+  "next_prompt_request": "Paste prompt C0 — Section Entry: Ledger Preparation v3.1.14."
+}

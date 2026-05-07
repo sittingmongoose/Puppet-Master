@@ -1,18 +1,48 @@
 {
-  "schema_id": "pm.wave_artifact.v3.1.14",
+  "schema_id": "pm.wave_artifact.v3.1.15",
   "prompt_id": "C2",
-  "prompt_version": "pm.c2.v3.1.14",
+  "prompt_version": "pm.c2.v3.1.15",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-0001",
   "execution_type": "mechanical_tool_operation",
   "subagent_wave": false,
+  "subagent_wave_rationale": "Mechanical tool operation: deterministic Python 3 line-sharding executed directly by the orchestrator; no subagent invocations.",
   "operations": [
     {
       "operation_id": "mechanical-shard-and-verify-001",
+      "operation_type": "deterministic_tool_operation",
       "tool": "python3",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "input_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+      "input_line_count": 18244,
+      "max_lines_per_shard": 200,
+      "shard_count": 92,
       "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+      "verification_summary": {
+        "all_shards_exist": true,
+        "all_shards_within_line_limit": true,
+        "no_gaps": true,
+        "no_overlaps": true,
+        "reconstructed_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+        "reconstructed_equals_source": true,
+        "first_shard": {
+          "shard_id": "shard-0001",
+          "line_start": 1,
+          "line_end": 200,
+          "line_count": 200,
+          "sha256": "dd5a38b9881b1462a53d22712c893efa9f6cad51d87643e8f1712eca24d98a62"
+        },
+        "last_shard": {
+          "shard_id": "shard-0092",
+          "line_start": 18201,
+          "line_end": 18244,
+          "line_count": 44,
+          "sha256": "0b7c3c56e5eea94eaa9491e3a5178d3b803d133a67e46e6dbeb2dbf27e1e0684"
+        }
+      },
       "status": "complete"
     }
   ],
-  "generated_at_utc": "2026-05-07T15:18:50Z"
+  "subagent_invocations": [],
+  "generated_at_utc": "20260507T170122Z"
 }

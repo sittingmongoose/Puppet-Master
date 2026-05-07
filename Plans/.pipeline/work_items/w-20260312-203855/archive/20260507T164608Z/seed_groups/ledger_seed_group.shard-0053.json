@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.ledger_seed_group.c3.v1",
+  "prompt_id": "C3",
+  "prompt_version": "1.0",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "task-014",
+  "source_shard_ids": [
+    "shard-0053",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056"
+  ],
+  "shard_line_ranges": {
+    "shard-0053": "1-201",
+    "shard-0054": "1-201",
+    "shard-0055": "1-201",
+    "shard-0056": "1-201"
+  },
+  "extracted": {
+    "requirements": [
+      "Define one shared runtime attribution packet across tool events, artifacts, receipts, and usage records with run/attempt/thread/node identity plus provider/account anchors.",
+      "Treat `attempt_id` as local runtime anchor, `provider_attempt_ref` as provider/runtime bridge, `usage_event_ref` as usage bridge, and receipt refs as external side-effect lineage bridge.",
+      "Make runtime-artifact envelopes attempt-native by default and include canonical artifact identity, runtime attribution, routing refs, and payload metadata.",
+      "Split open behavior into path-native `OpenFile` for workspace docs and identity-native `OpenSubject` for artifact/runtime/report targets.",
+      "Normalize routing/deep-link/navigation around one internal target payload used by in-app commands and serialized `resume_url` forms.",
+      "Add a compact canonical navigation command family so surface-specific open/show commands become wrappers over one shared target model."
+    ],
+    "decisions": [
+      "Storage/runtime docs should own the shared attribution contract; tool/artifact docs consume it instead of maintaining partial local identity models.",
+      "Timestamp/run/thread fallbacks for usage routing are compatibility-only when canonical bridge refs are absent.",
+      "Keep `artifact_id` as artifact-object identity while lineage helpers (`logical_artifact_id`, `linked_artifact_id`) remain non-primary.",
+      "Use preview subject identity pattern (`doc:` / `artifact:`) as the basis for generalized open-by-identity routing.",
+      "Preserve domain-specific open actions for UX clarity, but bind them to shared route/subject payload semantics."
+    ],
+    "data_shapes": [
+      "Shared attribution packet fields: `run_id`, optional `attempt_id`, `thread_id`, `node_id`, `artifact_id`, `usage_event_ref`, `provider_attempt_ref`, plus effective runtime/account identity and optional repo/worktree/branch + external operation refs.",
+      "Runtime-artifact envelope minimum: artifact identity (`artifact_id`, `artifact_kind`, optional logical/linked IDs), runtime attribution (`run_id`, optional thread/node/attempt/execution/provider/usage), routing refs, and payload metadata (`created_at_utc`, summary/detail/content refs).",
+      "Open-subject model: `OpenSubject { subject_id, target_group?, open_mode?, location? }` with subject families for docs, artifacts, attempts, safe points, remediations, and scheduler passes.",
+      "Canonical route payload minimum includes target kind plus contextual pivots such as project/run/thread/subject/object/tab/inspector and optional file line/range."
+    ],
+    "routing_rules": [
+      "Identity opens resolve in order: canonical file-backed document, else artifact/generated target, else routed surface focus with identity preserved, else typed open error.",
+      "Usage/cost pivots should prefer `usage_event_ref` when present rather than heuristic timestamp joins.",
+      "Provider-backed tool/runtime traces should propagate `provider_attempt_ref` when available to keep traceability intact.",
+      "Command palette/search/artifact pivots/blocked resumes should all resolve through the same navigation target model, not parallel deep-link stacks."
+    ],
+    "verification_rules": [
+      "Bridge refs must not drift into replacement primary keys; `attempt_id` remains canonical local execution identity.",
+      "Runtime-artifact docs must not rely on artifact-local identity alone when cross-surface receipt/usage/runtime joins are required.",
+      "Wiring and gate schemas must be able to represent canonical runtime actions, admissibility constraints, freshness/revalidation checks, and deprecated/tombstoned command status.",
+      "Command/event extraction must avoid false positives from stale examples or filename-like tokens."
+    ],
+    "owner_consumer_obligations": [
+      "Owner docs must explicitly publish precedence and join rules for `attempt_id`, `provider_attempt_ref`, `usage_event_ref`, and receipt lineage refs.",
+      "FileManager/Editor/Artifacts/Orchestrator consumers should use shared subject/route contracts instead of reconstructing paths ad hoc.",
+      "UI command catalog, wiring matrix, and dispatcher rules should share one enforceable command/route boundary including reverse-coverage expectations."
+    ],
+    "stale_retirement_items": [
+      "Retire path-only assumptions for all open actions now that runtime/generated identity targets are first-class.",
+      "Retire treating `tool.invoked` as analytics-only where runtime attribution is required for side-effect-bearing traces.",
+      "Retire artifact packet dependence on legacy `task_id` as primary execution anchor."
+    ],
+    "open_questions": [
+      "Which owner doc is canonical for route payload/target-kind schema and serialized `resume_url` mapping?",
+      "How should deprecated command families and wildcard requirements be represented in catalog/matrix schemas and gates?",
+      "What durable storage/event contract should `attention_required` use to align gate evidence with runtime behavior?",
+      "How should startup recovery ownership be unified across policy/executor/storage/HITL docs?"
+    ],
+    "process_defects": [
+      "Runtime identity, routing, and command ownership remain fragmented across owner docs, causing drift and addendum-heavy reconciliation.",
+      "Wiring/gate verification remains underpowered relative to runtime-era command and routing semantics.",
+      "Glossary/Crosswalk structural weaknesses continue to block reliable term and primitive ownership resolution.",
+      "Artifact/file/open contracts still lag the attempt/project/generated identity model needed for deterministic routing."
+    ],
+    "doc_hints": [
+      "Codify shared runtime attribution packet and bridge-field precedence in canonical contracts/storage owners, then reference from tool/artifact/usage docs.",
+      "Promote runtime-artifact envelope minimum contract in artifact owner docs with explicit attempt-native semantics.",
+      "Introduce canonical `OpenSubject` + route payload owners and align FileManager/Final GUI/Command Catalog wording accordingly.",
+      "Upgrade wiring/gate schemas for runtime command admissibility, freshness checks, reverse coverage, and deprecation handling.",
+      "Repair Glossary/Crosswalk ownership and routing index integrity before further downstream reconciliations."
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0053": [],
+    "shard-0054": [],
+    "shard-0055": [],
+    "shard-0056": [
+      "Model-by-model tranche notes were condensed to cross-cutting owner/routing/gate defects and carry-forward actions."
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0053": [
+      "seed-0053-shared-runtime-attribution-packet",
+      "seed-0053-bridge-field-precedence"
+    ],
+    "shard-0054": [
+      "seed-0054-artifact-envelope-minimum-contract",
+      "seed-0054-attempt-native-artifact-routing"
+    ],
+    "shard-0055": [
+      "seed-0055-openfile-opensubject-contract-split",
+      "seed-0055-unified-route-payload-model",
+      "seed-0055-navigation-command-family"
+    ],
+    "shard-0056": [
+      "seed-0056-owner-doc-tranche-synthesis",
+      "seed-0056-wiring-gate-schema-limits"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
+}

@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.section_exit_A.v3.1.14",
+  "prompt_id": "A4",
+  "prompt_version": "pm.a4.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "run_mode": "fresh_restart",
+  "active_artifact_root": "Plans/.pipeline/work_items/w-20260312-203855",
+  "archive_root": "Plans/.pipeline/work_items/w-20260312-203855/archive",
+  "current_section": "A",
+  "completed_prompts": [
+    "A0",
+    "A2",
+    "A3",
+    "A4"
+  ],
+  "active_outputs": [
+    "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A4.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json"
+  ],
+  "next_section": "B",
+  "next_prompt_request": "B0",
+  "next_prompt_name": "Section Entry: Research / Audit Intake",
+  "handoff_ready": true,
+  "timestamp_utc": "20260507T151150Z"
+}

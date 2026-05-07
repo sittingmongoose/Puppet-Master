@@ -1,0 +1,480 @@
+{
+  "schema_id": "pm.stage_report.v3.1.14",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "status": "complete",
+  "execution_type": "semantic_chunk_processing",
+  "subagents": {
+    "required": true,
+    "used": true
+  },
+  "required_subagent_tasks_total": 23,
+  "wave_artifacts_total": 4,
+  "wave_artifacts_expected_min": 4,
+  "wave_artifact_paths": [
+    "embedded:wave-0001",
+    "embedded:wave-0002",
+    "embedded:wave-0003",
+    "embedded:wave-0004"
+  ],
+  "wave_artifacts": [
+    {
+      "wave_id": "wave-0001",
+      "entries": [
+        {
+          "subagent_invocation_id": "d342a7d3-ffaa-4012-a23b-3be913d9d0e3",
+          "subagent_task_id": "task-001",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0001",
+              "shard-0002",
+              "shard-0003",
+              "shard-0004"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0001.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "e6e62e8d-eec1-42ea-8e5d-7d359563e734",
+          "subagent_task_id": "task-002",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0005",
+              "shard-0006",
+              "shard-0007",
+              "shard-0008"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0005.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "622a61fd-fd74-4b0d-9a29-62226a96dad5",
+          "subagent_task_id": "task-003",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0009",
+              "shard-0010",
+              "shard-0011",
+              "shard-0012"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0009.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "191a4aa1-b3ad-402d-aa77-0433af069f0d",
+          "subagent_task_id": "task-004",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0013",
+              "shard-0014",
+              "shard-0015",
+              "shard-0016"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0013.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "3a4789a2-8e5d-469d-9e10-be8d341370f8",
+          "subagent_task_id": "task-005",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0017",
+              "shard-0018",
+              "shard-0019",
+              "shard-0020"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0017.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "69efdb8d-a781-47b9-b58a-a28449240dfe",
+          "subagent_task_id": "task-006",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0021",
+              "shard-0022",
+              "shard-0023",
+              "shard-0024"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0021.json",
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "wave_id": "wave-0002",
+      "entries": [
+        {
+          "subagent_invocation_id": "7c274fc4-b634-4025-a3a7-d2bacaa83c02",
+          "subagent_task_id": "task-007",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0025",
+              "shard-0026",
+              "shard-0027",
+              "shard-0028"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0025.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "34c0fa6b-d1e3-4391-9b91-ed0f4ebf75d3",
+          "subagent_task_id": "task-008",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0029",
+              "shard-0030",
+              "shard-0031",
+              "shard-0032"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0029.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "01e1fa7a-6741-4917-ba85-b4a4cf62de6f",
+          "subagent_task_id": "task-009",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0033",
+              "shard-0034",
+              "shard-0035",
+              "shard-0036"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0033.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "65d1e393-5a6b-46f5-822a-68e76cb202ec",
+          "subagent_task_id": "task-010",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0037",
+              "shard-0038",
+              "shard-0039",
+              "shard-0040"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0037.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "632f7418-9d90-4bae-8c27-1dcd8589684e",
+          "subagent_task_id": "task-011",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0041",
+              "shard-0042",
+              "shard-0043",
+              "shard-0044"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0041.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "ebfbcb80-d583-4978-81ed-1f879d413a54",
+          "subagent_task_id": "task-012",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0045",
+              "shard-0046",
+              "shard-0047",
+              "shard-0048"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0045.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "5e72b20c-c20a-41db-b805-a64555878185",
+          "subagent_task_id": "task-013",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0049",
+              "shard-0050",
+              "shard-0051",
+              "shard-0052"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0049.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "ab529b54-8711-427c-90e1-8b8633ef524a",
+          "subagent_task_id": "task-014",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0053",
+              "shard-0054",
+              "shard-0055",
+              "shard-0056"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0053.json",
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "wave_id": "wave-0003",
+      "entries": [
+        {
+          "subagent_invocation_id": "ba0f2ad1-8c3d-43f6-a919-c63d57804584",
+          "subagent_task_id": "task-015",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0057",
+              "shard-0058",
+              "shard-0059",
+              "shard-0060"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0057.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "4428e491-fb2a-4d3f-aa3e-3f7172d0a731",
+          "subagent_task_id": "task-016",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0061",
+              "shard-0062",
+              "shard-0063",
+              "shard-0064"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0061.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "749ba37b-06df-4eca-b438-326fdf768240",
+          "subagent_task_id": "task-017",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0065",
+              "shard-0066",
+              "shard-0067",
+              "shard-0068"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0065.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "c7a93078-277c-4d3e-b6f0-aab15af6ccb0",
+          "subagent_task_id": "task-018",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0069",
+              "shard-0070",
+              "shard-0071",
+              "shard-0072"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0069.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "6a743589-a06e-4bc5-b841-820ce6cc1630",
+          "subagent_task_id": "task-019",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0073",
+              "shard-0074",
+              "shard-0075",
+              "shard-0076"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0073.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "2bbd1933-c93b-4a55-bc99-d1299ae82b4d",
+          "subagent_task_id": "task-020",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0077",
+              "shard-0078",
+              "shard-0079",
+              "shard-0080"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0077.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "0fb2e074-ddf2-46f8-a89f-fbc46ea658c0",
+          "subagent_task_id": "task-021",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0081",
+              "shard-0082",
+              "shard-0083",
+              "shard-0084"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0081.json",
+          "status": "complete"
+        },
+        {
+          "subagent_invocation_id": "9d50d2cb-8e73-4e8a-90fb-393d5caa3bda",
+          "subagent_task_id": "task-022",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0085",
+              "shard-0086",
+              "shard-0087",
+              "shard-0088"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0085.json",
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "wave_id": "wave-0004",
+      "entries": [
+        {
+          "subagent_invocation_id": "030b1b5f-e426-47ee-90b6-7b4a7b4f8c76",
+          "subagent_task_id": "task-023",
+          "input_bounds": {
+            "source_shard_ids": [
+              "shard-0089",
+              "shard-0090",
+              "shard-0091",
+              "shard-0092"
+            ]
+          },
+          "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/seed_groups/ledger_seed_group.shard-0089.json",
+          "status": "complete"
+        }
+      ]
+    }
+  ],
+  "completed_task_ids_from_wave_artifacts": [
+    "task-001",
+    "task-002",
+    "task-003",
+    "task-004",
+    "task-005",
+    "task-006",
+    "task-007",
+    "task-008",
+    "task-009",
+    "task-010",
+    "task-011",
+    "task-012",
+    "task-013",
+    "task-014",
+    "task-015",
+    "task-016",
+    "task-017",
+    "task-018",
+    "task-019",
+    "task-020",
+    "task-021",
+    "task-022",
+    "task-023"
+  ],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [
+    "d342a7d3-ffaa-4012-a23b-3be913d9d0e3",
+    "e6e62e8d-eec1-42ea-8e5d-7d359563e734",
+    "622a61fd-fd74-4b0d-9a29-62226a96dad5",
+    "191a4aa1-b3ad-402d-aa77-0433af069f0d",
+    "3a4789a2-8e5d-469d-9e10-be8d341370f8",
+    "69efdb8d-a781-47b9-b58a-a28449240dfe",
+    "7c274fc4-b634-4025-a3a7-d2bacaa83c02",
+    "34c0fa6b-d1e3-4391-9b91-ed0f4ebf75d3",
+    "01e1fa7a-6741-4917-ba85-b4a4cf62de6f",
+    "65d1e393-5a6b-46f5-822a-68e76cb202ec",
+    "632f7418-9d90-4bae-8c27-1dcd8589684e",
+    "ebfbcb80-d583-4978-81ed-1f879d413a54",
+    "5e72b20c-c20a-41db-b805-a64555878185",
+    "ab529b54-8711-427c-90e1-8b8633ef524a",
+    "ba0f2ad1-8c3d-43f6-a919-c63d57804584",
+    "4428e491-fb2a-4d3f-aa3e-3f7172d0a731",
+    "749ba37b-06df-4eca-b438-326fdf768240",
+    "c7a93078-277c-4d3e-b6f0-aab15af6ccb0",
+    "6a743589-a06e-4bc5-b841-820ce6cc1630",
+    "2bbd1933-c93b-4a55-bc99-d1299ae82b4d",
+    "0fb2e074-ddf2-46f8-a89f-fbc46ea658c0",
+    "9d50d2cb-8e73-4e8a-90fb-393d5caa3bda",
+    "030b1b5f-e426-47ee-90b6-7b4a7b4f8c76"
+  ],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 23,
+  "task_to_invocation_map": {
+    "task-001": "d342a7d3-ffaa-4012-a23b-3be913d9d0e3",
+    "task-002": "e6e62e8d-eec1-42ea-8e5d-7d359563e734",
+    "task-003": "622a61fd-fd74-4b0d-9a29-62226a96dad5",
+    "task-004": "191a4aa1-b3ad-402d-aa77-0433af069f0d",
+    "task-005": "3a4789a2-8e5d-469d-9e10-be8d341370f8",
+    "task-006": "69efdb8d-a781-47b9-b58a-a28449240dfe",
+    "task-007": "7c274fc4-b634-4025-a3a7-d2bacaa83c02",
+    "task-008": "34c0fa6b-d1e3-4391-9b91-ed0f4ebf75d3",
+    "task-009": "01e1fa7a-6741-4917-ba85-b4a4cf62de6f",
+    "task-010": "65d1e393-5a6b-46f5-822a-68e76cb202ec",
+    "task-011": "632f7418-9d90-4bae-8c27-1dcd8589684e",
+    "task-012": "ebfbcb80-d583-4978-81ed-1f879d413a54",
+    "task-013": "5e72b20c-c20a-41db-b805-a64555878185",
+    "task-014": "ab529b54-8711-427c-90e1-8b8633ef524a",
+    "task-015": "ba0f2ad1-8c3d-43f6-a919-c63d57804584",
+    "task-016": "4428e491-fb2a-4d3f-aa3e-3f7172d0a731",
+    "task-017": "749ba37b-06df-4eca-b438-326fdf768240",
+    "task-018": "c7a93078-277c-4d3e-b6f0-aab15af6ccb0",
+    "task-019": "6a743589-a06e-4bc5-b841-820ce6cc1630",
+    "task-020": "2bbd1933-c93b-4a55-bc99-d1299ae82b4d",
+    "task-021": "0fb2e074-ddf2-46f8-a89f-fbc46ea658c0",
+    "task-022": "9d50d2cb-8e73-4e8a-90fb-393d5caa3bda",
+    "task-023": "030b1b5f-e426-47ee-90b6-7b4a7b4f8c76"
+  },
+  "invocation_to_task_map": {
+    "d342a7d3-ffaa-4012-a23b-3be913d9d0e3": "task-001",
+    "e6e62e8d-eec1-42ea-8e5d-7d359563e734": "task-002",
+    "622a61fd-fd74-4b0d-9a29-62226a96dad5": "task-003",
+    "191a4aa1-b3ad-402d-aa77-0433af069f0d": "task-004",
+    "3a4789a2-8e5d-469d-9e10-be8d341370f8": "task-005",
+    "69efdb8d-a781-47b9-b58a-a28449240dfe": "task-006",
+    "7c274fc4-b634-4025-a3a7-d2bacaa83c02": "task-007",
+    "34c0fa6b-d1e3-4391-9b91-ed0f4ebf75d3": "task-008",
+    "01e1fa7a-6741-4917-ba85-b4a4cf62de6f": "task-009",
+    "65d1e393-5a6b-46f5-822a-68e76cb202ec": "task-010",
+    "632f7418-9d90-4bae-8c27-1dcd8589684e": "task-011",
+    "ebfbcb80-d583-4978-81ed-1f879d413a54": "task-012",
+    "5e72b20c-c20a-41db-b805-a64555878185": "task-013",
+    "ab529b54-8711-427c-90e1-8b8633ef524a": "task-014",
+    "ba0f2ad1-8c3d-43f6-a919-c63d57804584": "task-015",
+    "4428e491-fb2a-4d3f-aa3e-3f7172d0a731": "task-016",
+    "749ba37b-06df-4eca-b438-326fdf768240": "task-017",
+    "c7a93078-277c-4d3e-b6f0-aab15af6ccb0": "task-018",
+    "6a743589-a06e-4bc5-b841-820ce6cc1630": "task-019",
+    "2bbd1933-c93b-4a55-bc99-d1299ae82b4d": "task-020",
+    "0fb2e074-ddf2-46f8-a89f-fbc46ea658c0": "task-021",
+    "9d50d2cb-8e73-4e8a-90fb-393d5caa3bda": "task-022",
+    "030b1b5f-e426-47ee-90b6-7b4a7b4f8c76": "task-023"
+  },
+  "distinct_subagent_invocations_total": 23,
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "pass",
+  "final_gate": {
+    "every_active_shard_mapped_once": true,
+    "no_pending_batch_tasks": true,
+    "seed_coverage_or_exclusion_recorded": true
+  },
+  "blocking_reason": null,
+  "next_prompt_request": "Paste prompt C4 \u2014 Ledger Seed Completeness Gate v3.1.14.",
+  "generated_at_utc": "2026-05-07T16:17:05Z"
+}

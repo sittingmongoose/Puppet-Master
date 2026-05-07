@@ -1,114 +1,545 @@
 {
-  "schema_id": "pm.ledger_seed_group.v3",
+  "schema_id": "pm.ledger_seed_group.v3.1.15",
   "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3",
+  "prompt_version": "pm.c3.v3.1.15",
   "work_id": "w-20260312-203855",
-  "subagent_task_id": "task-004",
-  "source_shard_ids": [
-    "shard-0013",
-    "shard-0014",
-    "shard-0015",
-    "shard-0016"
-  ],
+  "subagent_task_id": "c3-repair-task-004",
+  "batch_anchor_shard_id": "shard-0013",
+  "source_shard_ids": ["shard-0013", "shard-0014", "shard-0015", "shard-0016"],
   "shard_line_ranges": {
-    "shard-0013": "1-200",
-    "shard-0014": "1-201",
-    "shard-0015": "1-200",
-    "shard-0016": "1-201"
+    "shard-0013": {"start_line": 2401, "end_line": 2600},
+    "shard-0014": {"start_line": 2601, "end_line": 2800},
+    "shard-0015": {"start_line": 2801, "end_line": 3000},
+    "shard-0016": {"start_line": 3001, "end_line": 3200}
   },
-  "extracted": {
-    "requirements": [
-      "Projection-backed surfaces must visibly expose trust state, last updated time, and stale/degraded reasons.",
-      "UI must never present stale operational truth as live truth; page cache cannot substitute runtime truth when trust is insufficient.",
-      "Mutating/decision-bearing actions are trust-gated; stale/degraded states permit limited inspection while sensitive actions require refresh or direct runtime revalidation.",
-      "Orchestrator must separate active run truth from focused run context and keep a single shared focused run across tabs.",
-      "When viewing historical runs, the page must not auto-switch to live activity and must clearly indicate historical mode.",
-      "Cross-tab/deep-link/search navigation must preserve or explicitly change focused run identity; never switch run silently.",
-      "Run-level history in a project is chronological by default; relationship/lineage between runs must be explicit metadata, not inferred."
-    ],
-    "decisions": [
-      "Adopt trust states: current, refreshing, stale, degraded, unavailable.",
-      "Use record-backed fallback surfaces (History/Ledger/evidence inspectors) when projection trust is insufficient.",
-      "Treat Orchestrator search as object-first and run-aware, distinct from tab-local filtering.",
-      "Prefer exact object-identity matches before full-text results in search.",
-      "Concern lifecycle remains active/acknowledged/resolved/dismissed, with added lineage and resolution-kind semantics."
-    ],
-    "data_shapes": [
-      "orchestrator.project_state.{project_id}: focused_run_id?, focus_mode, last_live_run_id?, selected_tab, per-tab view refs, optional auto_return_to_live=false.",
-      "Canonical search result payload: focused_run_id implication, destination tab, selected object id, optional filter payload, optional inspector target.",
-      "Concern object split: concern record (durable), concern source event/ref, concern projection (surface rendering).",
-      "Minimum concern record fields include IDs/scope refs, category, severity, status, owner/creator refs, timestamps, evidence/source refs, lineage refs, and attention/blocking fields.",
-      "Record-semantics vocabulary should distinguish historical vs stale_historical vs superseded vs revoked vs reopened vs archived vs removed."
-    ],
-    "routing_rules": [
-      "Unavailable trust routes to canonical record-backed fallback or explicit recover/refresh actions.",
-      "Search results route by object type to tab-specific destinations with object preselection and run context handling.",
-      "Cross-run result selection explicitly switches focused run and discloses the switch."
-    ],
-    "verification_rules": [
-      "Action gating varies by trust state; degraded/unavailable states restrict ambiguous live actions.",
-      "Historical lineage must remain visible even when live targets disappear.",
-      "Concern dismissal/resolve flows need rationale and lineage-consistent state transitions (merge/split/supersede/invalidate)."
-    ],
-    "owner_consumer_obligations": [
-      "Concern ownership must be explicit and separable from creator/source/resolver roles.",
-      "Concern owner may change over time without changing concern identity."
-    ],
-    "stale_retirement_items": [
-      "Retire implicit stale behavior by standardizing trust UI contract across Usage/Orchestrator/Source Control.",
-      "Retire silent stale-data presentation patterns in operational tabs.",
-      "Retire ad-hoc stale mitigations in favor of uniform trust badges, timestamps, reasons, and gated actions."
-    ],
-    "open_questions": [
-      "Finalize exact orchestrator project-state schema and persistence/restore behavior fields.",
-      "Define final boundary of historical-safe vs live-only actions per tab (especially Progress).",
-      "Define canonical concern event family and storage contracts equivalent in rigor to attempts/blocked/remediation.",
-      "Set final run-scope defaults for search (focused run vs project-wide) and disclosure UX."
-    ],
-    "process_defects": [
-      "No shared projection freshness schema/contract is currently defined across projection-backed surfaces.",
-      "Historical-run mode contract is underspecified, including focused-run persistence semantics.",
-      "Canonical cross-feature routing payload is missing across search/deep links/show-in flows.",
-      "Concern merge/split/supersession modeling remains discussion-level rather than contract-level."
-    ],
-    "doc_hints": [
-      "Align updates with Plans/FinalGUISpec.md safety language and command-palette model.",
-      "Coordinate Orchestrator/Run_Graph_View/storage-plan contracts to avoid run-focus drift.",
-      "Specify semantic glossary centrally to prevent state-term drift across record families."
-    ]
-  },
+  "requirements": [
+    {
+      "id": "seed-c3-extract-task-004-003",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2439, "end_line": 2439},
+      "summary": "Plans must require that page state never silently substitute for runtime state when trust is insufficient.",
+      "raw_excerpt": "- page state must not silently stand in for runtime state when freshness/trust is insufficient"
+    },
+    {
+      "id": "seed-c3-extract-task-004-004",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2459, "end_line": 2464},
+      "summary": "Each projection-backed operational surface must expose trust state, last updated, degraded reason, and action gating status.",
+      "raw_excerpt": "- Every projection-backed operational surface should expose at least:\n  - trust state\n  - last updated time\n  - degraded/stale reason when not current\n  - whether actions are partially gated"
+    },
+    {
+      "id": "seed-c3-extract-task-004-009",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2601, "end_line": 2603},
+      "summary": "Orchestrator tabs must share one focused run so History selection pivots Node Graph, Evidence, and Ledger together.",
+      "raw_excerpt": "- `History` selection changes the whole page's focused run\n- `Node Graph`, `Evidence`, and `Ledger` all pivot to the same `run_id`"
+    },
+    {
+      "id": "seed-c3-extract-task-004-016",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2707, "end_line": 2708},
+      "summary": "When search selects a result from another run, the UI must explicitly disclose the focused run change.",
+      "raw_excerpt": "- when a result belongs to another run, selecting it should explicitly switch the focused run\n- the UI should disclose that the focused run changed because of the search result"
+    },
+    {
+      "id": "seed-c3-extract-task-004-021",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2874, "end_line": 2875},
+      "summary": "UI surfaces should show historical/replacement semantics explicitly and consistently rather than inferring by disappearance or color.",
+      "raw_excerpt": "- Recommended rule:\n  - the UI should show these semantics explicitly and consistently, not infer them ad hoc by color or disappearance"
+    },
+    {
+      "id": "seed-c3-extract-task-004-022",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2931, "end_line": 2947},
+      "summary": "Run relationship semantics must be explicit metadata and not inferred from project, repo, or temporal order.",
+      "raw_excerpt": "- Relationship must be explicit, not inferred from same-project membership.\n- Default rule:\n  - same project does not mean related\n  - same repo does not mean related\n  - temporal order does not mean related"
+    },
+    {
+      "id": "seed-c3-extract-task-004-028",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3078, "end_line": 3080},
+      "summary": "Concern dismissal should require rationale when dismissing against corroborated or high-severity evidence.",
+      "raw_excerpt": "- `dismissed`\n  - concern presentation was intentionally hidden/rejected as actionable framing\n  - should require rationale when it disagrees with corroborated/high-severity evidence"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "seed-c3-extract-task-004-008",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2482, "end_line": 2486},
+      "summary": "Trust state and last updated are locked as first-class fields used to determine action requirements.",
+      "raw_excerpt": "- Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.\n- Define which commands require:\n  - current projection\n  - direct runtime confirmation",
+      "decision_rationale": "Prevents stale projection data from being treated as live truth."
+    },
+    {
+      "id": "seed-c3-extract-task-004-012",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2625, "end_line": 2635},
+      "summary": "Orchestrator model should separate active run truth from focused run context using explicit fields and focus mode.",
+      "raw_excerpt": "- Strong recommendation:\n  - distinguish `active run truth` from `focused run context`\n- Proposed fields conceptually:\n  - `active_run_id?`\n  - `focused_run_id?`\n  - `focus_mode = live | historical`",
+      "decision_rationale": "Avoids conflating what is running now with what the user is inspecting."
+    },
+    {
+      "id": "seed-c3-extract-task-004-013",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2666, "end_line": 2673},
+      "summary": "Search architecture should split global object-first orchestrator search from tab-local filtering.",
+      "raw_excerpt": "- Strong recommendation:\n  - distinguish `global object search` from `tab-local filtering`\n- Proposed split:\n  - `Orchestrator search`\n  - `tab-local search`"
+    },
+    {
+      "id": "seed-c3-extract-task-004-019",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2813, "end_line": 2815},
+      "summary": "Record semantics should be modeled as separate dimensions: time status, replacement status, and validity status.",
+      "raw_excerpt": "- Strong recommendation:\n  - separate `time status`, `replacement status`, and `validity status`"
+    },
+    {
+      "id": "seed-c3-extract-task-004-023",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2934, "end_line": 2943},
+      "summary": "Run-level semantics should distinguish historical runs from explicitly related or derived runs.",
+      "raw_excerpt": "- Distinguish:\n  - `historical run`\n  - `related run`\n  - `derived run`\n  - `retry/recovery run` or continuation lineage if such a concept exists later"
+    },
+    {
+      "id": "seed-c3-extract-task-004-025",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3001, "end_line": 3005},
+      "summary": "Concern modeling should split canonical concern records from source events and projections.",
+      "raw_excerpt": "- Strong recommendation:\n  - distinguish between:\n    - `concern record`\n    - `concern source event/ref`\n    - `concern projection`"
+    }
+  ],
+  "data_shapes": [
+    {
+      "id": "seed-c3-extract-task-004-001",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2415, "end_line": 2420},
+      "summary": "Projection trust is defined as a five-state enum for UI and action policy decisions.",
+      "raw_excerpt": "- Recommended projection trust states:\n  - `current`\n  - `refreshing`\n  - `stale`\n  - `degraded`\n  - `unavailable`",
+      "schema_name": "projection_trust_state",
+      "enum_values": ["current", "refreshing", "stale", "degraded", "unavailable"]
+    },
+    {
+      "id": "seed-c3-extract-task-004-014",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2689, "end_line": 2695},
+      "summary": "Orchestrator search results should carry a canonical route payload with focused run, target tab, object id, and optional filters.",
+      "raw_excerpt": "- Each result should carry a canonical route target:\n  - `focused_run_id`\n  - destination tab\n  - selected object id\n  - optional filter payload\n  - optional inspector/detail target",
+      "schema_name": "orchestrator_search_route_target"
+    },
+    {
+      "id": "seed-c3-extract-task-004-020",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2816, "end_line": 2829},
+      "summary": "Shared historical semantics vocabulary includes historical, stale_historical, superseded, revoked, reopened, archived, and removed.",
+      "raw_excerpt": "- Working interpretation:\n  - `historical`\n  - `stale_historical`\n  - `superseded`\n  - `revoked`\n  - `reopened`\n  - `archived`\n  - `removed`",
+      "schema_name": "record_semantic_status"
+    },
+    {
+      "id": "seed-c3-extract-task-004-026",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3007, "end_line": 3050},
+      "summary": "Concern records need a canonical field set covering identity, scope refs, lifecycle timestamps, evidence links, lineage, and attention metadata.",
+      "raw_excerpt": "- Concern record should likely carry:\n  - `concern_id`\n  - `project_id`\n  - `run_id?`\n  - scope object refs:\n    - `seam_id?`\n    - `package_id?`\n    - `node_id?`\n    - `attempt_id?`\n    - `lane_id?`\n    - `worktree_id?`\n  - `category`\n  - `severity`\n  - `status`",
+      "schema_name": "concern_record"
+    },
+    {
+      "id": "seed-c3-extract-task-004-027",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3084, "end_line": 3093},
+      "summary": "Concern resolution should include a typed resolution_kind enum to preserve semantic closure reasons.",
+      "raw_excerpt": "- Candidate `resolution_kind` values:\n  - `fixed`\n  - `accepted_risk`\n  - `superseded`\n  - `merged`\n  - `split`\n  - `invalidated`\n  - `obsoleted_by_patch`\n  - `obsoleted_by_recovery`",
+      "schema_name": "concern_resolution_kind"
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "seed-c3-extract-task-004-002",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2433, "end_line": 2437},
+      "summary": "Trust state should gate actions: stale/degraded permit inspection while sensitive live actions require refresh or revalidation.",
+      "raw_excerpt": "- Suggested policy:\n  - `stale`: allow inspection and historical navigation; require refresh or direct runtime revalidation before sensitive live actions\n  - `degraded`: restrict to safe inspection and canonical recovery paths"
+    },
+    {
+      "id": "seed-c3-extract-task-004-005",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2449, "end_line": 2453},
+      "summary": "When projection trust degrades beyond contract, the UI should route users to canonical record-backed fallback views.",
+      "raw_excerpt": "- when necessary, fall back to canonical record-backed views:\n  - `History`\n  - `Ledger`\n  - direct evidence/record inspectors"
+    },
+    {
+      "id": "seed-c3-extract-task-004-015",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2696, "end_line": 2700},
+      "summary": "Search routing should deep-link object types to canonical destination tabs and preselected context.",
+      "raw_excerpt": "- Examples:\n  - seam/package -> `Seams` tab with correct hierarchy expanded\n  - node -> `Node Graph` with node selected and inspector open\n  - evidence/artifact -> `Evidence` with panes focused appropriately"
+    }
+  ],
+  "verification_rules": [
+    {
+      "id": "seed-c3-extract-task-004-017",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2737, "end_line": 2738},
+      "summary": "Search ranking should verify stable object identity hits before full-text matches.",
+      "raw_excerpt": "- Good rule:\n  - search should prefer stable object identity matches first\n  - text/full-text results come after exact object hits"
+    }
+  ],
+  "owner_consumer_obligations": [
+    {
+      "id": "seed-c3-extract-task-004-007",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2477, "end_line": 2482},
+      "summary": "A shared projection trust contract must be consumed across Orchestrator, Usage, Source Control, and other projection-backed surfaces.",
+      "raw_excerpt": "- Add a shared projection health/trust contract used by:\n  - Orchestrator\n  - Usage\n  - Source Control\n  - other projection-backed surfaces",
+      "owner": "Plans shared UI/storage contracts",
+      "consumer": "Orchestrator, Usage, Source Control docs"
+    },
+    {
+      "id": "seed-c3-extract-task-004-029",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3130, "end_line": 3133},
+      "summary": "Concern lifecycle obligations should distinguish owner, creator/source, and resolver roles for each concern identity.",
+      "raw_excerpt": "- Need to distinguish:\n  - concern owner for follow-up\n  - concern creator/source\n  - concern resolver"
+    }
+  ],
+  "stale_retirement_items": [],
+  "open_questions": [
+    {
+      "id": "seed-c3-extract-task-004-010",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2607, "end_line": 2615},
+      "summary": "Progress tab behavior under historical run focus remains an unresolved contract and needs explicit definition.",
+      "raw_excerpt": "- `Progress` in historical mode must stop pretending to be a live dashboard ...\n- This needs a sharper contract later."
+    },
+    {
+      "id": "seed-c3-repair-task-004-034",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2938, "end_line": 2938},
+      "summary": "Run-semantics guidance leaves continuation lineage as a conditional future concept and needs explicit follow-up decision.",
+      "raw_excerpt": "- `retry/recovery run` or continuation lineage if such a concept exists later"
+    }
+  ],
+  "process_defects": [
+    {
+      "id": "seed-c3-extract-task-004-006",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2472, "end_line": 2475},
+      "summary": "Current docs lack one reusable projection freshness contract across major projection-backed surfaces.",
+      "raw_excerpt": "- No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces."
+    },
+    {
+      "id": "seed-c3-extract-task-004-011",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2618, "end_line": 2620},
+      "summary": "Historical-run mode and focused-run persistence are missing explicit contract and state-record definitions.",
+      "raw_excerpt": "- No explicit `historical-run mode` contract yet.\n- No obvious `orchestrator.project_state.{project_id}` for focused run persistence."
+    },
+    {
+      "id": "seed-c3-extract-task-004-018",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2760, "end_line": 2762},
+      "summary": "Search/deep-link systems currently lack one canonical routing payload and scope behavior contract.",
+      "raw_excerpt": "- There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.\n- Search scope behavior across current focused run vs all project runs is not yet defined."
+    },
+    {
+      "id": "seed-c3-extract-task-004-024",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2890, "end_line": 2893},
+      "summary": "Historical semantic vocabulary is inconsistently defined across record families, risking state meaning drift.",
+      "raw_excerpt": "- There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked` / `reopened` / `archived` / `removed`."
+    },
+    {
+      "id": "seed-c3-extract-task-004-030",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3170, "end_line": 3174},
+      "summary": "Concern architecture is established conceptually but lacks canonical storage/event contracts and lineage rules.",
+      "raw_excerpt": "- Concern importance is already established, but canonical storage/contract shape is still underdefined.\n- Merge/split/supersession logic for concerns is currently discussion-only, not contract-level."
+    }
+  ],
+  "doc_hints": [
+    {
+      "id": "seed-c3-extract-task-004-031",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3177, "end_line": 3181},
+      "summary": "Concern canonical family and linkage rules should be written into core contract docs.",
+      "raw_excerpt": "- Add a canonical concern record family and corresponding projection contract.\n- Define concern-to-review/corroboration/patch/recovery linkage explicitly.",
+      "doc_path": "Plans/Contracts_V0.md"
+    },
+    {
+      "id": "seed-c3-extract-task-004-032",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2627, "end_line": 2627},
+      "summary": "Focused-run persistence contract implies a dedicated Orchestrator project-state section in storage planning docs.",
+      "raw_excerpt": "- Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-extract-task-004-033",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2477, "end_line": 2482},
+      "summary": "Shared projection trust UI contract should be captured in cross-surface GUI spec language.",
+      "raw_excerpt": "- Add a shared projection health/trust contract used by:\n  - Orchestrator\n  - Usage\n  - Source Control\n  - other projection-backed surfaces",
+      "doc_path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-035",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2497, "end_line": 2497},
+      "summary": "Trust-model research should keep Orchestrator page contracts aligned with shared projection trust language.",
+      "raw_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-036",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2498, "end_line": 2498},
+      "summary": "Projection trust and fallback behavior should be reflected in run graph view contract details.",
+      "raw_excerpt": "- `Plans/Run_Graph_View.md`",
+      "doc_path": "Plans/Run_Graph_View.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-037",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2499, "end_line": 2499},
+      "summary": "Shared trust-state model has storage implications and should be mirrored in storage planning notes.",
+      "raw_excerpt": "- `Plans/storage-plan.md`",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-038",
+      "source_shard_id": "shard-0013",
+      "source_line_range": {"start_line": 2501, "end_line": 2501},
+      "summary": "Projection trust indicators should align with widget-system level presentation conventions.",
+      "raw_excerpt": "- `Plans/Widget_System.md`",
+      "doc_path": "Plans/Widget_System.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-039",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2642, "end_line": 2642},
+      "summary": "Multi-run focus behavior should be documented consistently in Orchestrator page contracts.",
+      "raw_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-040",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2643, "end_line": 2643},
+      "summary": "Run-focus semantics and deep-link behavior should remain synchronized with run graph view design.",
+      "raw_excerpt": "- `Plans/Run_Graph_View.md`",
+      "doc_path": "Plans/Run_Graph_View.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-041",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2645, "end_line": 2645},
+      "summary": "Cross-tab focused-run mode and search routing should be captured in GUI spec contract language.",
+      "raw_excerpt": "- `Plans/FinalGUISpec.md`",
+      "doc_path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-042",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2646, "end_line": 2646},
+      "summary": "Global-versus-local search affordances should map to widget-system composition guidance.",
+      "raw_excerpt": "- `Plans/Widget_System.md`",
+      "doc_path": "Plans/Widget_System.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-043",
+      "source_shard_id": "shard-0014",
+      "source_line_range": {"start_line": 2798, "end_line": 2798},
+      "summary": "Object-first search routing payload should be mirrored in core contracts documentation.",
+      "raw_excerpt": "- `Plans/Contracts_V0.md`",
+      "doc_path": "Plans/Contracts_V0.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-044",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2990, "end_line": 2990},
+      "summary": "Historical vs current record semantics should reconcile with Orchestrator page run-context behavior.",
+      "raw_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-045",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2987, "end_line": 2987},
+      "summary": "Record-state vocabulary and run semantics should be anchored to storage-plan status modeling.",
+      "raw_excerpt": "- `Plans/storage-plan.md`",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-046",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2988, "end_line": 2988},
+      "summary": "Historical-semantic glossary should be codified in contracts to prevent meaning drift across record families.",
+      "raw_excerpt": "- `Plans/Contracts_V0.md`",
+      "doc_path": "Plans/Contracts_V0.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-047",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2991, "end_line": 2991},
+      "summary": "Run-level historical semantics and disclosures should align with GUI specification conventions.",
+      "raw_excerpt": "- `Plans/FinalGUISpec.md`",
+      "doc_path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-048",
+      "source_shard_id": "shard-0015",
+      "source_line_range": {"start_line": 2989, "end_line": 2989},
+      "summary": "Historical graph-path visibility semantics should stay aligned with run graph view requirements.",
+      "raw_excerpt": "- `Plans/Run_Graph_View.md`",
+      "doc_path": "Plans/Run_Graph_View.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-049",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3192, "end_line": 3192},
+      "summary": "Concern lifecycle and action confirmation semantics should stay consistent with Orchestrator page behavior.",
+      "raw_excerpt": "- `Plans/Orchestrator_Page.md`",
+      "doc_path": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-050",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3193, "end_line": 3193},
+      "summary": "Concern record and confirmation flows should reflect storage-level canonical record/event commitments.",
+      "raw_excerpt": "- `Plans/storage-plan.md`",
+      "doc_path": "Plans/storage-plan.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-051",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3191, "end_line": 3191},
+      "summary": "Action confirmation and undo policy for concern operations should be reflected in GUI spec requirements.",
+      "raw_excerpt": "- `Plans/FinalGUISpec.md`",
+      "doc_path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-052",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3190, "end_line": 3190},
+      "summary": "Concern routing and inspection semantics should maintain parity with run graph view interactions.",
+      "raw_excerpt": "- `Plans/Run_Graph_View.md`",
+      "doc_path": "Plans/Run_Graph_View.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-053",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3194, "end_line": 3194},
+      "summary": "Action confirmation policy should remain aligned with worktree/git improvement operational safeguards.",
+      "raw_excerpt": "- `Plans/WorktreeGitImprovement.md`",
+      "doc_path": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-054",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3195, "end_line": 3195},
+      "summary": "Cross-cutting confirmation behavior should also remain aligned with miscellaneous plan guidance.",
+      "raw_excerpt": "- `Plans/MiscPlan.md`",
+      "doc_path": "Plans/MiscPlan.md"
+    },
+    {
+      "id": "seed-c3-repair-task-004-055",
+      "source_shard_id": "shard-0016",
+      "source_line_range": {"start_line": 3196, "end_line": 3196},
+      "summary": "Concern and confirmation contract edges should remain synchronized with core contract definitions.",
+      "raw_excerpt": "- `Plans/Contracts_V0.md`",
+      "doc_path": "Plans/Contracts_V0.md"
+    }
+  ],
   "exclusions_by_shard": {
     "shard-0013": [
-      "Excluded repeated explanatory prose; retained only normative trust/run-focus semantics."
+      {"reason": "Boilerplate section header", "lines_or_section": "Research Progress title lines"},
+      {"reason": "Doc-reading inventory without obligations", "lines_or_section": "Targeted docs read list"}
     ],
     "shard-0014": [
-      "Excluded enumerative examples of searchable object types beyond core contract implications."
+      {"reason": "Narrative recap duplicated by candidate fixes", "lines_or_section": "Key findings prose not adding new obligations"},
+      {"reason": "Examples illustrative only", "lines_or_section": "Search-result presentation example parent contexts"}
     ],
     "shard-0015": [
-      "Excluded repetitive state-term comparisons once canonical semantic split was captured."
+      {"reason": "Explanatory contrasts already captured as semantic schema", "lines_or_section": "Important distinction examples"},
+      {"reason": "UI copy examples non-binding", "lines_or_section": "UI direction label examples"}
     ],
     "shard-0016": [
-      "Excluded partial Action Confirmation section tail lacking substantive bounded-task detail."
+      {"reason": "Category brainstorming not yet binding", "lines_or_section": "Category / severity direction candidate list"},
+      {"reason": "Tab-by-tab narrative duplicates concern projection requirement", "lines_or_section": "UI direction bullets for Progress/Seams/Evidence/History/Ledger"}
     ]
   },
   "seed_ids_by_shard": {
     "shard-0013": [
-      "seed-projection-trust-state-contract",
-      "seed-run-focus-model-active-vs-focused"
+      "seed-c3-extract-task-004-001",
+      "seed-c3-extract-task-004-002",
+      "seed-c3-extract-task-004-003",
+      "seed-c3-extract-task-004-004",
+      "seed-c3-extract-task-004-005",
+      "seed-c3-extract-task-004-006",
+      "seed-c3-extract-task-004-007",
+      "seed-c3-extract-task-004-008",
+      "seed-c3-extract-task-004-033",
+      "seed-c3-repair-task-004-035",
+      "seed-c3-repair-task-004-036",
+      "seed-c3-repair-task-004-037",
+      "seed-c3-repair-task-004-038"
     ],
     "shard-0014": [
-      "seed-cross-tab-run-coherence",
-      "seed-orchestrator-object-search-routing"
+      "seed-c3-extract-task-004-009",
+      "seed-c3-extract-task-004-010",
+      "seed-c3-extract-task-004-011",
+      "seed-c3-extract-task-004-012",
+      "seed-c3-extract-task-004-013",
+      "seed-c3-extract-task-004-014",
+      "seed-c3-extract-task-004-015",
+      "seed-c3-extract-task-004-016",
+      "seed-c3-extract-task-004-017",
+      "seed-c3-extract-task-004-018",
+      "seed-c3-extract-task-004-032",
+      "seed-c3-repair-task-004-039",
+      "seed-c3-repair-task-004-040",
+      "seed-c3-repair-task-004-041",
+      "seed-c3-repair-task-004-042",
+      "seed-c3-repair-task-004-043"
     ],
     "shard-0015": [
-      "seed-record-semantic-vocabulary",
-      "seed-project-runs-nonlineage-default"
+      "seed-c3-extract-task-004-019",
+      "seed-c3-extract-task-004-020",
+      "seed-c3-extract-task-004-021",
+      "seed-c3-extract-task-004-022",
+      "seed-c3-extract-task-004-023",
+      "seed-c3-extract-task-004-024",
+      "seed-c3-repair-task-004-034",
+      "seed-c3-repair-task-004-044",
+      "seed-c3-repair-task-004-045",
+      "seed-c3-repair-task-004-046",
+      "seed-c3-repair-task-004-047",
+      "seed-c3-repair-task-004-048"
     ],
     "shard-0016": [
-      "seed-concern-record-shape-lineage",
-      "seed-concern-ownership-and-routing"
+      "seed-c3-extract-task-004-025",
+      "seed-c3-extract-task-004-026",
+      "seed-c3-extract-task-004-027",
+      "seed-c3-extract-task-004-028",
+      "seed-c3-extract-task-004-029",
+      "seed-c3-extract-task-004-030",
+      "seed-c3-extract-task-004-031",
+      "seed-c3-repair-task-004-049",
+      "seed-c3-repair-task-004-050",
+      "seed-c3-repair-task-004-051",
+      "seed-c3-repair-task-004-052",
+      "seed-c3-repair-task-004-053",
+      "seed-c3-repair-task-004-054",
+      "seed-c3-repair-task-004-055"
     ]
   },
   "status": "complete",
-  "blocking_reason": ""
+  "blocking_reason": null,
+  "canonicalization": {
+    "mode": "semantic_extraction",
+    "source_shape_detected": "canonical",
+    "normalized_by_main_stage": false,
+    "material_content_changed": true,
+    "notes": ["targeted_c4_routed_repair: added missing open-question coverage and restored unreferenced per-shard live Plans doc_hints"]
+  }
 }

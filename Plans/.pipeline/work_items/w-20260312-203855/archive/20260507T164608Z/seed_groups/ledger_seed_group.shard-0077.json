@@ -1,0 +1,540 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
+  "work_id": "w-20260312-203855",
+  "inventory_id": "c3-inv-020",
+  "task_id": "c3-task-020",
+  "anchor_shard_id": "shard-0077",
+  "working_ledger_line_start": 15201,
+  "working_ledger_line_end": 16000,
+  "status": "complete",
+  "per_shard": [
+    {
+      "shard_id": "shard-0077",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0077.md",
+      "line_start_in_source": 15201,
+      "line_end_in_source": 15400,
+      "source_sha256": "5d6b310f12b6f73f65ae3e8afebaae5487a6b95307e439527f08a8eaef85ef9b",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "Primary owner-gap set: storage-plan, usage-feature; stale consumers Run_Graph_View, Orchestrator_Page; aligned Runtime_Artifacts_Panel",
+          "line_in_shard": 2,
+          "line_in_source": 15202
+        },
+        {
+          "type": "contradiction",
+          "text": "Docs mix canonical usage_event_ref with cross-surface tier_id; usage_record and evidence families unstable between Ledger cost canon and tier-correlated graph/orchestrator",
+          "line_in_shard": 11,
+          "line_in_source": 15211
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Reconcile usage/evidence away from tier-first correlation; usage-event identity primary for Usage/Ledger; node/attempt primary for runtime/graph; tier_id only derived grouping",
+          "line_in_shard": 19,
+          "line_in_source": 15219
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: seam ties storage, Usage, Run Graph, Orchestrator; Runtime_Artifacts_Panel ahead on identity rigor",
+          "line_in_shard": 25,
+          "line_in_source": 15225
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - storage-plan.md mixed execution-era canon in one file",
+          "line_in_shard": 29,
+          "line_in_source": 15229
+        },
+        {
+          "type": "data_shape",
+          "text": "storage-plan: early tables tier_id run.started usage.event tier events HITL approval_requested; later scheduler.pass node.blocked safe_point remediation blocked_projection attempt_record; canonical-record section regresses with tier_runtime_record tier-keyed usage_record",
+          "line_in_shard": 35,
+          "line_in_source": 15235
+        },
+        {
+          "type": "contradiction",
+          "text": "Multiple overlapping canonicality layers from different rewrite stages; strongest runtime model present but older canon not retired",
+          "line_in_shard": 61,
+          "line_in_source": 15261
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Same-file reconciliation order: event families, key families, record families, restore/replay; compatibility-label or retire tier/HITL-era tables",
+          "line_in_shard": 66,
+          "line_in_source": 15266
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: storage-side parallel to human-in-the-loop supersession; cleanup is retirement not invention",
+          "line_in_shard": 74,
+          "line_in_source": 15274
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Current cleanup posture: overlapping canon dominates",
+          "line_in_shard": 78,
+          "line_in_source": 15278
+        },
+        {
+          "type": "process_defect",
+          "text": "Pattern: owner docs have stronger addenda but stale base text remains; consumers mirror random era",
+          "line_in_shard": 81,
+          "line_in_source": 15281
+        },
+        {
+          "type": "doc_hint",
+          "text": "Highest-priority owners: Contracts_V0 Crosswalk storage-plan human-in-the-loop Prompt_Pipeline",
+          "line_in_shard": 88,
+          "line_in_source": 15288
+        },
+        {
+          "type": "doc_hint",
+          "text": "Highest-priority stale consumers: Orchestrator_Page Run_Graph_View UI_Command_Catalog Widget_System FinalGUISpec usage-feature",
+          "line_in_shard": 95,
+          "line_in_source": 15295
+        },
+        {
+          "type": "process_defect",
+          "text": "Remaining classes: supersession cleanup, tier wording, HITL vs blocked canon coexistence, legacy PuppetMasterEvent sources, duplicate sections numbering migration contradictions command-arg mismatches",
+          "line_in_shard": 103,
+          "line_in_source": 15303
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: branch not ready for reconciliation; stay in owner-doc cleanup",
+          "line_in_shard": 119,
+          "line_in_source": 15319
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - External full-doc audit aligns with owner-cleanup stack",
+          "line_in_shard": 123,
+          "line_in_source": 15323
+        },
+        {
+          "type": "doc_hint",
+          "text": "Reconciliation order per audit: (1) owner integrity Contracts Crosswalk storage HITL Prompt Decision_Log DRY_Rules (2) GUI/widget drift UI_Command FinalGUI Widget Section15 feature-list newfeatures checklist (3) lineage FileSafe Misc Executor Run_Modes Architecture_Invariants (4) provider Multi-Account OpenCode Media",
+          "line_in_shard": 139,
+          "line_in_source": 15339
+        },
+        {
+          "type": "contradiction",
+          "text": "Issues are repo-wide structural: ContractRef failures, command IDs, mixed-era storage/runtime; isolated consumer cleanup unreliable",
+          "line_in_shard": 169,
+          "line_in_source": 15369
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Stay owner-focused; use audit as coverage confirmation; document exact retirement targets for mechanical reconciliation",
+          "line_in_shard": 175,
+          "line_in_source": 15375
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: audit reinforced direction; collapse overlapping canon and fix exact references payloads commands",
+          "line_in_shard": 180,
+          "line_in_source": 15380
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Runtime identity field names drift in worker/verifier consumers",
+          "line_in_shard": 184,
+          "line_in_source": 15384
+        },
+        {
+          "type": "data_shape",
+          "text": "Owner canon: requested_persona effective_persona requested_platform effective_platform requested_model effective_model",
+          "line_in_shard": 193,
+          "line_in_source": 15393
+        },
+        {
+          "type": "contradiction",
+          "text": "Contracts_V0 forbids parallel canonical persona_id fields; shard continues with consumer drift details",
+          "line_in_shard": 200,
+          "line_in_source": 15400
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0078",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0078.md",
+      "line_start_in_source": 15401,
+      "line_end_in_source": 15600,
+      "source_sha256": "53624292a942ee54484fa9863f39cb408787b7bcb1db1051e9f15b1ba9d19ac3",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "Forbidden parallel fields: requested_persona_id effective_persona_id; Orchestrator still uses those plus provider/model shorthand",
+          "line_in_shard": 1,
+          "line_in_source": 15401
+        },
+        {
+          "type": "contradiction",
+          "text": "Run_Graph_View: Provider/Model worker_provider worker_model verifier_* without tying to requested/effective snapshot; Prompt_Pipeline run envelope still tier; persona_override_owner_id allows tier_id",
+          "line_in_shard": 3,
+          "line_in_source": 15403
+        },
+        {
+          "type": "doc_hint",
+          "text": "Stale consumers Orchestrator_Page Run_Graph_View; Prompt_Pipeline residual scope; canonical Contracts_V0",
+          "line_in_shard": 20,
+          "line_in_source": 15420
+        },
+        {
+          "type": "contradiction",
+          "text": "Simultaneous field-name drift and scope-language drift; tier in owner prompt wording leaks downstream",
+          "line_in_shard": 29,
+          "line_in_source": 15429
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Reconcile graph/Orchestrator to requested/effective set; remove persona_id parallel fields from requirements; fix Prompt Pipeline scope labels",
+          "line_in_shard": 36,
+          "line_in_source": 15436
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: fix field names and scope language together",
+          "line_in_shard": 42,
+          "line_in_source": 15442
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Owner docs leak tier-era scope into canonical runtime wording",
+          "line_in_shard": 46,
+          "line_in_source": 15446
+        },
+        {
+          "type": "data_shape",
+          "text": "Prompt_Pipeline tier/mode/platform/model assembly; Contracts still run.tier_started tier_completed persona_stage_changed tier_id examples; storage tier_runtime_record; Run_Modes HITL tier-boundary approvals",
+          "line_in_shard": 55,
+          "line_in_source": 15455
+        },
+        {
+          "type": "contradiction",
+          "text": "Canonical field-name modernization without scope modernization; tier owner language forces tier-shaped consumer payloads",
+          "line_in_shard": 81,
+          "line_in_source": 15481
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Canonical wording graph/node/package/seam/lane; mark tier compatibility-only; reconcile event families away from tier_id tier_type anchors",
+          "line_in_shard": 87,
+          "line_in_source": 15487
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: owner-language seam is upstream; consumer-only fixes insufficient",
+          "line_in_shard": 93,
+          "line_in_source": 15493
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Event families still teach tier-boundary and HITL-request-era semantics",
+          "line_in_shard": 97,
+          "line_in_source": 15497
+        },
+        {
+          "type": "data_shape",
+          "text": "storage teaches run.tier_started tier_completed verification_result persona_stage_changed qa cycles tier-framed; human-in-the-loop request_id tier_id tier_type tier_boundary_approval; Contracts mixes allowed_action_ids with request_id allowed_actions",
+          "line_in_shard": 108,
+          "line_in_source": 15508
+        },
+        {
+          "type": "contradiction",
+          "text": "Two approval ontologies: blocked-episode runtime-native vs HITL request tier-boundary; feeds commands graph orchestrator",
+          "line_in_shard": 141,
+          "line_in_source": 15541
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Runtime-native approval first; HITL ids compatibility only; reconcile graph commands off request_id; unify allowed_actions vs allowed_action_ids vocabulary",
+          "line_in_shard": 152,
+          "line_in_source": 15552
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: human-in-the-loop among strongest tier-era owners",
+          "line_in_shard": 158,
+          "line_in_source": 15558
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Approval identity splits blocked episodes vs HITL requests",
+          "line_in_shard": 165,
+          "line_in_source": 15565
+        },
+        {
+          "type": "data_shape",
+          "text": "Runtime: waiting_approval blocked_sequence allowed_action_ids run_id node_id attempt_id; parallel HITL record request_id tier_id tier_type; hitl graph commands request_id; human-in-the-loop contains both eras",
+          "line_in_shard": 175,
+          "line_in_source": 15575
+        },
+        {
+          "type": "doc_hint",
+          "text": "Primary owners human-in-the-loop storage Contracts_V0; stale UI_Command Run_Graph Orchestrator",
+          "line_in_shard": 197,
+          "line_in_source": 15597
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0079",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0079.md",
+      "line_start_in_source": 15601,
+      "line_end_in_source": 15800,
+      "source_sha256": "3f2f96979186b8180bd6c23560d563d291e17a9496addb34033d18b0f3f6de91",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "Strong stale UI_Command_Catalog; Executor_Protocol aligned ahead on approval seam",
+          "line_in_shard": 1,
+          "line_in_source": 15601
+        },
+        {
+          "type": "contradiction",
+          "text": "Ambiguous whether approval targets HITL request vs blocked episode; splits payloads restore graph projections; allowed_action_ids won at runtime but targeting split request_id vs blocked_sequence",
+          "line_in_shard": 6,
+          "line_in_source": 15606
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Collapse to runtime/blocked; request_id lineage-only; migrate cmd.graph.approve_hitl deny_hitl to blocked identity; restore blocked episodes not tier-boundary object",
+          "line_in_shard": 13,
+          "line_in_source": 15613
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: bridge old HITL plan to blocked/runtime commands; Executor ahead of human-in-the-loop",
+          "line_in_shard": 19,
+          "line_in_source": 15619
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Graph and Orchestrator preserve HITL-request-era fields",
+          "line_in_shard": 23,
+          "line_in_source": 15623
+        },
+        {
+          "type": "contradiction",
+          "text": "Catalog mandates allowed_action_ids to cmd.runtime but keeps graph HITL with request_id; graph hitl_request_id; Orchestrator live status request_id beside blocked_sequence; UI_Command self-contradicts approval area",
+          "line_in_shard": 59,
+          "line_in_source": 15659
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Graph/Orchestrator actions on canonical runtime commands; drop request_id primary target; replace hitl_request_id with blocked identity or lineage-only",
+          "line_in_shard": 66,
+          "line_in_source": 15666
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: consumer-side seam; runtime layer already stronger",
+          "line_in_shard": 72,
+          "line_in_source": 15672
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - human-in-the-loop.md canon supersession not additive",
+          "line_in_shard": 76,
+          "line_in_source": 15676
+        },
+        {
+          "type": "contradiction",
+          "text": "Older request-centric base incompatible with later blocked/runtime correction; two peer models without precedence is document-structure defect",
+          "line_in_shard": 102,
+          "line_in_source": 15702
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Retire early text to compatibility-only; reframe blocked overlay canonical runtime actions; request_id labeled lineage replay only",
+          "line_in_shard": 107,
+          "line_in_source": 15707
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: mutually incompatible canon same file; must rewrite not append",
+          "line_in_shard": 115,
+          "line_in_source": 15715
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Graph approval commands inconsistent and stale",
+          "line_in_shard": 119,
+          "line_in_source": 15719
+        },
+        {
+          "type": "process_defect",
+          "text": "UI_Command: approve_hitl request_id node_id rationale; Run_Graph_View: approve_hitl deny_hitl node_id rationale only; both obsolete vs cmd.runtime.approve decline with run_id node_id blocked_sequence attempt_id",
+          "line_in_shard": 125,
+          "line_in_source": 15725
+        },
+        {
+          "type": "contradiction",
+          "text": "Graph approval has no single args contract; catalog and graph spec cannot both be correct",
+          "line_in_shard": 144,
+          "line_in_source": 15744
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Remove graph approval as primary model; wrappers over cmd.runtime with explicit normalization",
+          "line_in_shard": 149,
+          "line_in_source": 15749
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: hard spec-integrity defect breaking command contracts",
+          "line_in_shard": 154,
+          "line_in_source": 15754
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Live-status mixes canonical records with PuppetMasterEvent tier-era streams",
+          "line_in_shard": 158,
+          "line_in_source": 15758
+        },
+        {
+          "type": "data_shape",
+          "text": "Consumers document TierChanged IterationStart UserInteractionRequired EvidenceStored; owners teach scheduler.pass node.blocked safe_point remediation blocked projections attempts",
+          "line_in_shard": 167,
+          "line_in_source": 15767
+        },
+        {
+          "type": "doc_hint",
+          "text": "Stale Orchestrator_Page Run_Graph_View; owners storage-plan Contracts_V0",
+          "line_in_shard": 195,
+          "line_in_source": 15795
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0080",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0080.md",
+      "line_start_in_source": 15801,
+      "line_end_in_source": 16000,
+      "source_sha256": "27693b5fb0ee61d8faae05b0f2ee5c3add53f04e036ef410c034f15c402dc65a",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "contradiction",
+          "text": "Consumers mix canonical blocked/scheduler/remediation with legacy push streams; TierChanged UserInteractionRequired taught as primary truth",
+          "line_in_shard": 2,
+          "line_in_source": 15802
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Live-status tables: canonical records/projections first; PuppetMasterEvent compatibility transport only; worker output evidence align attempt/node lineage",
+          "line_in_shard": 10,
+          "line_in_source": 15810
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: consumer sourcing problem; owner stronger model exists",
+          "line_in_shard": 15,
+          "line_in_source": 15815
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Run_Graph_View base view-model tier and request-era fields",
+          "line_in_shard": 19,
+          "line_in_source": 15819
+        },
+        {
+          "type": "data_shape",
+          "text": "GraphNode tier_type worker_* verifier_* hitl_request_id; GraphNodeUI hitl_action callback; addenda require attempt_id blocked_reason_code allowed_action_ids safe_point remediation replan_generation",
+          "line_in_shard": 28,
+          "line_in_source": 15828
+        },
+        {
+          "type": "contradiction",
+          "text": "Base structs tier/request identity vs addenda block/runtime identity; hitl_request_id out of place with blocked_sequence",
+          "line_in_shard": 51,
+          "line_in_source": 15851
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Reconcile GraphNode GraphNodeUI to runtime model; tier labels derived only; graph actions normalize to runtime targets",
+          "line_in_shard": 58,
+          "line_in_source": 15858
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: base-struct gap; addenda already define direction",
+          "line_in_shard": 64,
+          "line_in_source": 15864
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Orchestrator_Page Progress widgets active-tier and tier-targeted terminals",
+          "line_in_shard": 68,
+          "line_in_source": 15868
+        },
+        {
+          "type": "contradiction",
+          "text": "widget.current_task progress_bars agent_terminal completed_prose tier-centric; terminals pin tier_id; conflicts nodes/seams/lanes executable model",
+          "line_in_shard": 94,
+          "line_in_source": 15894
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Progress widgets bind active work blocked attention lane worktree record-backed summaries; terminal targeting runtime/worker not tier_id",
+          "line_in_shard": 102,
+          "line_in_source": 15902
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Widget_System tier-era orchestrator contracts and stale hostability",
+          "line_in_shard": 115,
+          "line_in_source": 15915
+        },
+        {
+          "type": "contradiction",
+          "text": "Widget catalog assumes multiple orchestrator tabs as canvases tier_tree non-Progress layouts; conflicts native Seams Node Graph Evidence History Ledger",
+          "line_in_shard": 146,
+          "line_in_source": 15946
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Orchestrator widget hostability Progress-only; retire tier_tree; data from canonical runtime not TierChanged UserInteractionRequired tier PTY",
+          "line_in_shard": 154,
+          "line_in_source": 15954
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: Widget_System cross-cutting SSOT can re-spread stale orchestrator assumptions",
+          "line_in_shard": 160,
+          "line_in_source": 15960
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - Widget layout migration internally inconsistent",
+          "line_in_shard": 164,
+          "line_in_source": 15964
+        },
+        {
+          "type": "process_defect",
+          "text": "Widget_System 7.3: keep dashboard_layout backup vs SSOT note deletes legacy key; FinalGUISpec C.5 mirrors backup-preserving path only",
+          "line_in_shard": 171,
+          "line_in_source": 15971
+        },
+        {
+          "type": "contradiction",
+          "text": "Two incompatible migration outcomes same section; SSOT claims amplify contradiction",
+          "line_in_shard": 187,
+          "line_in_source": 15987
+        },
+        {
+          "type": "candidate_fix",
+          "text": "One deterministic persistence rule for dashboard_layout vs widget_layout; align Widget_System and FinalGUISpec as contract decision",
+          "line_in_shard": 194,
+          "line_in_source": 15994
+        }
+      ]
+    }
+  ]
+}

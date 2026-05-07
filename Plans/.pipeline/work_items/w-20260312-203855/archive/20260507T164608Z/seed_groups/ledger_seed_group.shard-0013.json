@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "task-004",
+  "source_shard_ids": [
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0016"
+  ],
+  "shard_line_ranges": {
+    "shard-0013": "1-200",
+    "shard-0014": "1-201",
+    "shard-0015": "1-200",
+    "shard-0016": "1-201"
+  },
+  "extracted": {
+    "requirements": [
+      "Projection-backed surfaces must visibly expose trust state, last updated time, and stale/degraded reasons.",
+      "UI must never present stale operational truth as live truth; page cache cannot substitute runtime truth when trust is insufficient.",
+      "Mutating/decision-bearing actions are trust-gated; stale/degraded states permit limited inspection while sensitive actions require refresh or direct runtime revalidation.",
+      "Orchestrator must separate active run truth from focused run context and keep a single shared focused run across tabs.",
+      "When viewing historical runs, the page must not auto-switch to live activity and must clearly indicate historical mode.",
+      "Cross-tab/deep-link/search navigation must preserve or explicitly change focused run identity; never switch run silently.",
+      "Run-level history in a project is chronological by default; relationship/lineage between runs must be explicit metadata, not inferred."
+    ],
+    "decisions": [
+      "Adopt trust states: current, refreshing, stale, degraded, unavailable.",
+      "Use record-backed fallback surfaces (History/Ledger/evidence inspectors) when projection trust is insufficient.",
+      "Treat Orchestrator search as object-first and run-aware, distinct from tab-local filtering.",
+      "Prefer exact object-identity matches before full-text results in search.",
+      "Concern lifecycle remains active/acknowledged/resolved/dismissed, with added lineage and resolution-kind semantics."
+    ],
+    "data_shapes": [
+      "orchestrator.project_state.{project_id}: focused_run_id?, focus_mode, last_live_run_id?, selected_tab, per-tab view refs, optional auto_return_to_live=false.",
+      "Canonical search result payload: focused_run_id implication, destination tab, selected object id, optional filter payload, optional inspector target.",
+      "Concern object split: concern record (durable), concern source event/ref, concern projection (surface rendering).",
+      "Minimum concern record fields include IDs/scope refs, category, severity, status, owner/creator refs, timestamps, evidence/source refs, lineage refs, and attention/blocking fields.",
+      "Record-semantics vocabulary should distinguish historical vs stale_historical vs superseded vs revoked vs reopened vs archived vs removed."
+    ],
+    "routing_rules": [
+      "Unavailable trust routes to canonical record-backed fallback or explicit recover/refresh actions.",
+      "Search results route by object type to tab-specific destinations with object preselection and run context handling.",
+      "Cross-run result selection explicitly switches focused run and discloses the switch."
+    ],
+    "verification_rules": [
+      "Action gating varies by trust state; degraded/unavailable states restrict ambiguous live actions.",
+      "Historical lineage must remain visible even when live targets disappear.",
+      "Concern dismissal/resolve flows need rationale and lineage-consistent state transitions (merge/split/supersede/invalidate)."
+    ],
+    "owner_consumer_obligations": [
+      "Concern ownership must be explicit and separable from creator/source/resolver roles.",
+      "Concern owner may change over time without changing concern identity."
+    ],
+    "stale_retirement_items": [
+      "Retire implicit stale behavior by standardizing trust UI contract across Usage/Orchestrator/Source Control.",
+      "Retire silent stale-data presentation patterns in operational tabs.",
+      "Retire ad-hoc stale mitigations in favor of uniform trust badges, timestamps, reasons, and gated actions."
+    ],
+    "open_questions": [
+      "Finalize exact orchestrator project-state schema and persistence/restore behavior fields.",
+      "Define final boundary of historical-safe vs live-only actions per tab (especially Progress).",
+      "Define canonical concern event family and storage contracts equivalent in rigor to attempts/blocked/remediation.",
+      "Set final run-scope defaults for search (focused run vs project-wide) and disclosure UX."
+    ],
+    "process_defects": [
+      "No shared projection freshness schema/contract is currently defined across projection-backed surfaces.",
+      "Historical-run mode contract is underspecified, including focused-run persistence semantics.",
+      "Canonical cross-feature routing payload is missing across search/deep links/show-in flows.",
+      "Concern merge/split/supersession modeling remains discussion-level rather than contract-level."
+    ],
+    "doc_hints": [
+      "Align updates with Plans/FinalGUISpec.md safety language and command-palette model.",
+      "Coordinate Orchestrator/Run_Graph_View/storage-plan contracts to avoid run-focus drift.",
+      "Specify semantic glossary centrally to prevent state-term drift across record families."
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0013": [
+      "Excluded repeated explanatory prose; retained only normative trust/run-focus semantics."
+    ],
+    "shard-0014": [
+      "Excluded enumerative examples of searchable object types beyond core contract implications."
+    ],
+    "shard-0015": [
+      "Excluded repetitive state-term comparisons once canonical semantic split was captured."
+    ],
+    "shard-0016": [
+      "Excluded partial Action Confirmation section tail lacking substantive bounded-task detail."
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0013": [
+      "seed-projection-trust-state-contract",
+      "seed-run-focus-model-active-vs-focused"
+    ],
+    "shard-0014": [
+      "seed-cross-tab-run-coherence",
+      "seed-orchestrator-object-search-routing"
+    ],
+    "shard-0015": [
+      "seed-record-semantic-vocabulary",
+      "seed-project-runs-nonlineage-default"
+    ],
+    "shard-0016": [
+      "seed-concern-record-shape-lineage",
+      "seed-concern-ownership-and-routing"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
+}

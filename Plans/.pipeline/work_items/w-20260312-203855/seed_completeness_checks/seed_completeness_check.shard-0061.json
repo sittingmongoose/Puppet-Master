@@ -1,0 +1,239 @@
+{
+  "schema_id": "pm.ledger_seed_completeness_check.v3.1.15",
+  "prompt_id": "C4",
+  "prompt_version": "pm.c4.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "c4-r3-task-016",
+  "batch_anchor_shard_id": "shard-0061",
+  "source_shard_ids": [
+    "shard-0061",
+    "shard-0062",
+    "shard-0063",
+    "shard-0064"
+  ],
+  "shard_line_ranges": {
+    "shard-0061": {
+      "start_line": 12001,
+      "end_line": 12200
+    },
+    "shard-0062": {
+      "start_line": 12201,
+      "end_line": 12400
+    },
+    "shard-0063": {
+      "start_line": 12401,
+      "end_line": 12600
+    },
+    "shard-0064": {
+      "start_line": 12601,
+      "end_line": 12800
+    }
+  },
+  "round2_repaired": true,
+  "checks": {
+    "structure_check": {
+      "structure_check_passed": true,
+      "schema_id_valid": true,
+      "all_10_categories_present": true,
+      "lineage_maps_complete": true,
+      "seed_ids_by_shard_consistent": true,
+      "status_complete": true,
+      "structural_defects": []
+    },
+    "coverage_check": {
+      "coverage_check_passed": true,
+      "missing_material_items_per_shard": {
+        "shard-0061": [],
+        "shard-0062": [],
+        "shard-0063": [],
+        "shard-0064": []
+      },
+      "missing_material_total": 0,
+      "per_shard_material_counts": {
+        "shard-0061": 6,
+        "shard-0062": 18,
+        "shard-0063": 5,
+        "shard-0064": 14
+      },
+      "material_coverage_status": "complete",
+      "coverage_notes": "Prior C4 missing-material anchors (9) are each covered by targeted repair2 doc_hint line ranges on shard-0062/shard-0064."
+    },
+    "lineage_check": {
+      "lineage_check_passed": false,
+      "lineage_match_method": "unicode_curly_quote_to_ascii; ordered \\n...\\n blocks; ordered inline ... segments when multiple parts; else ws_collapsed_substring_of_ws_collapsed_slice",
+      "all_seed_line_ranges_within_shard_bounds": true,
+      "lineage_failures_per_shard": {
+        "shard-0061": [
+          {
+            "seed_id": "seed-c3-extract-task-016-015",
+            "declared_source_line_range": {
+              "start_line": 12018,
+              "end_line": 12027
+            },
+            "failure_reason": "raw_excerpt begins with '### Impacted docs' (absolute line 12017) but cited range starts at 12018, so the section header is outside the declared span while remaining bullets are inside."
+          }
+        ],
+        "shard-0062": [
+          {
+            "seed_id": "seed-c3-extract-task-016-001",
+            "declared_source_line_range": {
+              "start_line": 12269,
+              "end_line": 12271
+            },
+            "failure_reason": "raw_excerpt includes the first compatibility bullet ('new docs/producers MUST prefer...') but cited range 12269-12271 only spans the second and third bullets under the compatibility rule."
+          },
+          {
+            "seed_id": "seed-c3-repair-task-014-001",
+            "declared_source_line_range": {
+              "start_line": 12322,
+              "end_line": 12324
+            },
+            "failure_reason": "raw_excerpt is a synthetic meta-summary string; it does not occur verbatim in the cited shard lines (which are concrete owner-doc bullets for 00-plans-index, GUI checklist, and Section15 spec)."
+          },
+          {
+            "seed_id": "seed-c3-repair-task-014-003",
+            "declared_source_line_range": {
+              "start_line": 12326,
+              "end_line": 12329
+            },
+            "failure_reason": "raw_excerpt compresses/elides clauses present on the Architecture_Invariants bullet (e.g., omits graph-lock degradation boundaries and blocked/failure classification wording), so ws-collapsed excerpt is not a substring of the ws-collapsed cited slice."
+          },
+          {
+            "seed_id": "seed-c3-repair-task-014-004",
+            "declared_source_line_range": {
+              "start_line": 12334,
+              "end_line": 12337
+            },
+            "failure_reason": "raw_excerpt shortens the Containers_Registry_and_Unraid bullet (drops ghost-command-ID framing and auth/publish/repo-management wording), so it is not a verbatim slice of the cited multi-line span."
+          },
+          {
+            "seed_id": "seed-c3-repair-task-014-005",
+            "declared_source_line_range": {
+              "start_line": 12338,
+              "end_line": 12339
+            },
+            "failure_reason": "raw_excerpt omits packaging evidence / execution evidence naming tension clauses that appear on the cited Document_Packaging_Policy bullet line."
+          },
+          {
+            "seed_id": "seed-c3-repair-task-014-006",
+            "declared_source_line_range": {
+              "start_line": 12323,
+              "end_line": 12324
+            },
+            "failure_reason": "raw_excerpt uses 'Final GUI and Orchestrator docs' phrasing while the shard bullet uses 'Final GUI/Orchestrator docs', so strict normalized substring match fails."
+          },
+          {
+            "seed_id": "seed-c3-repair-task-014-007",
+            "declared_source_line_range": {
+              "start_line": 12327,
+              "end_line": 12328
+            },
+            "failure_reason": "raw_excerpt drops 'sequential' and the cleanup-remediation loop / runtime-failure-matrix context present on the cited MiscPlan bullet span."
+          }
+        ],
+        "shard-0063": [
+          {
+            "seed_id": "seed-c3-extract-task-016-005",
+            "declared_source_line_range": {
+              "start_line": 12422,
+              "end_line": 12426
+            },
+            "failure_reason": "raw_excerpt includes the '- Internal:' label on absolute line 12421, but cited range begins at 12422, excluding the label line from the declared span."
+          },
+          {
+            "seed_id": "seed-c3-extract-task-016-006",
+            "declared_source_line_range": {
+              "start_line": 12493,
+              "end_line": 12503
+            },
+            "failure_reason": "first \\n...\\n block begins with '- The cleaner rule is:' on absolute line 12492, but cited range begins at 12493, so the opening label line is outside the declared span."
+          },
+          {
+            "seed_id": "seed-c3-extract-task-016-009",
+            "declared_source_line_range": {
+              "start_line": 12565,
+              "end_line": 12574
+            },
+            "failure_reason": "raw_excerpt lists only enum tokens under the heading, but the shard section includes per-class 'examples:' lines; ws-collapsed excerpt is therefore not a substring of the ws-collapsed cited slice."
+          }
+        ],
+        "shard-0064": [
+          {
+            "seed_id": "seed-c3-extract-task-016-002",
+            "declared_source_line_range": {
+              "start_line": 12677,
+              "end_line": 12687
+            },
+            "failure_reason": "first \\n...\\n block begins with '- MUST override:' on absolute line 12676, but cited range begins at 12677, excluding the MUST override heading from the declared span."
+          },
+          {
+            "seed_id": "seed-c3-extract-task-016-021",
+            "declared_source_line_range": {
+              "start_line": 12752,
+              "end_line": 12752
+            },
+            "failure_reason": "cited line 12752 is the 'Audit/governance meta-docs...' heading; the DRY_Rules.md bullet text is on absolute line 12753."
+          },
+          {
+            "seed_id": "seed-c3-extract-task-016-025",
+            "declared_source_line_range": {
+              "start_line": 12753,
+              "end_line": 12753
+            },
+            "failure_reason": "cited line 12753 is the DRY_Rules.md bullet; the OpenCode_Coverage_Matrix.md bullet text is on absolute line 12754."
+          }
+        ]
+      },
+      "lineage_failures_total": 14,
+      "duplicate_seed_ids_in_lineage_map": []
+    },
+    "doc_hint_preservation_check": {
+      "doc_hint_preservation_check_passed": false,
+      "unreferenced_doc_hints_per_shard": {
+        "shard-0061": [],
+        "shard-0062": [
+          "seed-c3-repair-task-014-003",
+          "seed-c3-repair-task-014-004",
+          "seed-c3-repair-task-014-005",
+          "seed-c3-repair-task-014-006",
+          "seed-c3-repair-task-014-007"
+        ],
+        "shard-0063": [],
+        "shard-0064": [
+          "seed-c3-extract-task-016-025"
+        ]
+      },
+      "doc_hints_unreferenced_total": 6,
+      "doc_hint_notes": "Unreferenced means the doc_hint raw_excerpt failed the same lineage_match_method as seeds (subset of lineage failures limited to doc_hints category)."
+    },
+    "open_question_preservation_check": {
+      "open_question_preservation_check_passed": true,
+      "unrepresented_open_questions_per_shard": {
+        "shard-0061": [],
+        "shard-0062": [],
+        "shard-0063": [],
+        "shard-0064": []
+      },
+      "open_questions_unrepresented_total": 0
+    }
+  },
+  "summary": {
+    "totals": {
+      "lineage_failures_total": 14,
+      "missing_material_total": 0,
+      "doc_hints_unreferenced_total": 6,
+      "open_questions_unrepresented_total": 0
+    },
+    "all_checks_passed": false,
+    "status": "issues_found",
+    "issues_found_categories": [
+      "lineage_excerpt_vs_cited_range",
+      "doc_hint_excerpt_traceability",
+      "synthetic_requirement_excerpt",
+      "off_by_one_absolute_line_citations"
+    ],
+    "round2_repair_assessment": "missing_material_coverage_repaired: true (0 missing items); lineage_and_doc_hint_citation_repair: incomplete (14 lineage failures remain, including off-by-one DRY vs OpenCode lines and several heading lines excluded from cited ranges)."
+  },
+  "blocking_reason": null,
+  "generated_at_utc": "2026-05-07T19:26:07Z"
+}
