@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.stage_report.v3.2.1",
+  "prompt_id": "D0",
+  "prompt_version": "pm.d0.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260507T205502Z",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "reason": "section_entry_handoff_mechanical_checks_only"
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "distinct_subagent_invocations_total": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "deterministic_verification": {
+    "inputs_read_paths": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+    ],
+    "work_id_derived_from": "section_exit_C.work_id",
+    "checks_passed_by_tool": [
+      "section_exit_C.status == complete",
+      "section_exit_C.work_id aligns with ledger paths on disk",
+      "ledger_seed_completeness_report.status == pass",
+      "ledger_seed_completeness_report.work_id == ledger_obligation_seed.work_id",
+      "ledger_obligation_seed.schema_id == pm.ledger_obligation_seed.v3.2.1",
+      "len(ledger_obligation_seed.raw_blocks) == ledger_seed_completeness_report.summary.raw_seed_blocks_total == 4860",
+      "source_ledger_sha256 matches section_exit_C.source_ledger_sha256"
+    ],
+    "outputs_written": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_entry_D_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.D0.json"
+    ]
+  },
+  "summary": "Section D entry: work_id locked from Section C exit; ledger seed completeness pass confirmed mechanically; obligation seed present (4860 raw_blocks); no legacy obligation artifact reads."
+}

@@ -1,29 +1,33 @@
 {
-  "schema_id": "pm.section_entry_C.v3.1.15",
+  "schema_id": "pm.section_entry_C_report.v3.2.1",
   "prompt_id": "C0",
-  "prompt_version": "pm.c0.v3.1.15",
-  "execution_type": "mechanical_tool_operation",
+  "prompt_version": "pm.c0.v3.2.1",
   "work_id": "w-20260312-203855",
-  "source_section_exit_b_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
+  "timestamp_utc": "20260507T204753Z",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "derived_from": {
+    "section_exit_B_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
+    "section_exit_B_prompt_id": "B4",
+    "section_exit_B_timestamp_utc": "20260507T204628Z",
+    "section_exit_B_next_section": "C_Ledger_Preparation",
+    "section_exit_B_source_mode": "existing_working_ledger"
+  },
   "ledger_intake_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
-  "source_mode": "existing_working_ledger",
-  "accepted_sources": [
-    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
-  ],
-  "accepted_sources_verified": [
-    {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "exists": true,
-      "non_empty": true,
-      "line_count": 18244,
-      "byte_size": 1044305,
-      "sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1"
-    }
-  ],
-  "section_b_handoff_consistent": true,
-  "next_prompt_id": "C1",
-  "next_prompt_name": "Ledger Condenser",
-  "next_prompt_request": "Paste prompt C1 — Ledger Condenser v3.1.15.",
-  "status": "complete",
-  "timestamp_utc": "20260507T165700Z"
+  "manifest_confirms": {
+    "source_mode": "existing_working_ledger",
+    "accepted_sources": [
+      "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+    ]
+  },
+  "final_gate": {
+    "passed": true,
+    "source_mode": "existing_working_ledger",
+    "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "working_ledger_exists": true,
+    "working_ledger_non_empty_bytes": 1044305,
+    "working_ledger_sha256_hex_verified": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "manifest_working_ledger_sha256_hex": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "sha256_matches_manifest": true
+  }
 }

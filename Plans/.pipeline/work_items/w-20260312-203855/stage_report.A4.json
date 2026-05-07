@@ -1,7 +1,7 @@
 {
-  "schema_id": "pm.stage_report.a4.v3.1.15",
+  "schema_id": "pm.stage_report.A4.v3.2.1",
   "prompt_id": "A4",
-  "prompt_version": "pm.a4.v3.1.15",
+  "prompt_version": "pm.a4.v3.2.1",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "subagents_required": false,
@@ -13,17 +13,11 @@
       "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
       "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json"
     ],
-    "operations": [
-      "deterministic section_exit_A.json generation",
-      "single next section/prompt handoff assignment",
-      "current_state handoff update for Section B"
-    ],
+    "operation": "write Section A handoff artifact with locked work_id and Section B route",
     "semantic_artifacts_inspected": false,
-    "coverage_proof": "Section A handoff artifact written with locked work_id, run_mode, active roots, completed prompts, active outputs, and next section B."
+    "coverage_proof": "A4 wrote section_exit_A.json with work_id, run_mode, roots, completed prompts, active outputs, and B0 handoff."
   },
-  "section_exit_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
   "status": "COMPLETE",
   "next_prompt_request": "B0",
-  "next_prompt_name": "Section Entry: Research / Audit Intake",
-  "timestamp_utc": "20260507T165052Z"
+  "next_prompt_name": "Section Entry: Research / Audit Intake"
 }

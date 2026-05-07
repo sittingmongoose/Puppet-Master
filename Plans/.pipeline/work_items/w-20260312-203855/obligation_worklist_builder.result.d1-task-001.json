@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.1",
+  "subagent_task_id": "d1-task-001",
+  "work_groups": [
+    {
+      "group_id": "wg-d1-001-001",
+      "source_block_ids": [
+        "lblock-000001",
+        "lblock-000003",
+        "lblock-000004",
+        "lblock-000006",
+        "lblock-000007",
+        "lblock-000009",
+        "lblock-000010",
+        "lblock-000012",
+        "lblock-000013",
+        "lblock-000015",
+        "lblock-000016"
+      ],
+      "source_line_ranges": [
+        { "source_shard_id": "shard-0001", "start_line": 1, "end_line": 1 },
+        { "source_shard_id": "shard-0001", "start_line": 3, "end_line": 3 },
+        { "source_shard_id": "shard-0001", "start_line": 4, "end_line": 4 },
+        { "source_shard_id": "shard-0001", "start_line": 6, "end_line": 6 },
+        { "source_shard_id": "shard-0001", "start_line": 7, "end_line": 7 },
+        { "source_shard_id": "shard-0001", "start_line": 9, "end_line": 9 },
+        { "source_shard_id": "shard-0001", "start_line": 10, "end_line": 15 },
+        { "source_shard_id": "shard-0001", "start_line": 17, "end_line": 17 },
+        { "source_shard_id": "shard-0001", "start_line": 18, "end_line": 20 },
+        { "source_shard_id": "shard-0001", "start_line": 22, "end_line": 22 },
+        { "source_shard_id": "shard-0001", "start_line": 23, "end_line": 26 }
+      ],
+      "source_shard_ids": ["shard-0001"],
+      "max_source_lines": 21,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-001-001.json"
+    },
+    {
+      "group_id": "wg-d1-001-002",
+      "source_block_ids": [
+        "lblock-000018",
+        "lblock-000019",
+        "lblock-000020",
+        "lblock-000021",
+        "lblock-000022"
+      ],
+      "source_line_ranges": [
+        { "source_shard_id": "shard-0001", "start_line": 28, "end_line": 28 },
+        { "source_shard_id": "shard-0001", "start_line": 29, "end_line": 200 },
+        { "source_shard_id": "shard-0002", "start_line": 201, "end_line": 400 },
+        { "source_shard_id": "shard-0003", "start_line": 401, "end_line": 600 },
+        { "source_shard_id": "shard-0004", "start_line": 601, "end_line": 677 }
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0003",
+        "shard-0004"
+      ],
+      "max_source_lines": 650,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-001-002.json"
+    },
+    {
+      "group_id": "wg-d1-001-003",
+      "source_block_ids": [
+        "lblock-000024",
+        "lblock-000025"
+      ],
+      "source_line_ranges": [
+        { "source_shard_id": "shard-0004", "start_line": 679, "end_line": 679 },
+        { "source_shard_id": "shard-0004", "start_line": 680, "end_line": 800 }
+      ],
+      "source_shard_ids": ["shard-0004"],
+      "max_source_lines": 122,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-001-003.json"
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-000002",
+      "reason": "Pure structural newline-only block between document title and next section heading; no material content."
+    },
+    {
+      "block_id": "lblock-000005",
+      "reason": "Pure structural newline-only block between Work Item list and Mode heading; no material content."
+    },
+    {
+      "block_id": "lblock-000008",
+      "reason": "Pure structural newline-only block between Mode list and Topic/Scope heading; no material content."
+    },
+    {
+      "block_id": "lblock-000011",
+      "reason": "Pure structural newline-only block between Topic/Scope bullets and Objective heading; no material content."
+    },
+    {
+      "block_id": "lblock-000014",
+      "reason": "Pure structural newline-only block between Objective bullets and Constraints heading; no material content."
+    },
+    {
+      "block_id": "lblock-000017",
+      "reason": "Pure structural newline-only block between Constraints bullets and Key Facts heading; no material content."
+    },
+    {
+      "block_id": "lblock-000023",
+      "reason": "Pure structural newline-only block before Gaps/Problems heading; no material content."
+    }
+  ]
+}

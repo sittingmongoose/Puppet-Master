@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.stage_report.a2.v3.1.15",
+  "prompt_id": "A2",
+  "prompt_version": "pm.a2.v3.1.15",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "subagents_required": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification": {
+    "inputs_used": [
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+      "directory listing of Plans/.pipeline/work_items/w-20260312-203855"
+    ],
+    "operations": [
+      "deterministic stale-artifact selection by filename/prefix",
+      "filesystem move into timestamped archive folder",
+      "sanitizer/stage report regeneration",
+      "meta/current_state refresh for fresh run handoff"
+    ],
+    "semantic_artifacts_inspected": false,
+    "coverage_proof": "Stale semantic/control outputs were moved to archive; preserved source input remained; active directory verified after sanitize."
+  },
+  "archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260507T164608Z",
+  "archived_items_total": 24,
+  "status": "COMPLETE",
+  "next_prompt_request": "A3",
+  "next_prompt_name": "Route State Initializer"
+}

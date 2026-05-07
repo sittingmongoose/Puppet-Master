@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.stage_report.C2.v3.1.15",
+  "prompt_id": "C2",
+  "prompt_version": "pm.c2.v3.1.15",
+  "execution_type": "mechanical_tool_operation",
+  "work_id": "w-20260312-203855",
+  "status": "complete",
+  "read_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_condenser_report.json"
+  ],
+  "write_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001.md ... shard-0092.md (92 files)",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shard_indexer.fanout_worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shard_indexer.wave-0001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C2.json"
+  ],
+  "inputs": {
+    "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "ledger_condenser_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_condenser_report.json",
+    "ledger_condenser_report_mode": "existing_working_ledger_preserved",
+    "ledger_condenser_report_status": "complete",
+    "main_agent_full_semantic_read_performed": false,
+    "main_agent_inspection_scope": [
+      "deterministic line/byte/sha256 counts",
+      "deterministic on-disk file enumeration",
+      "deterministic max-line check via wc",
+      "manifest summary fields and verification summary fields"
+    ]
+  },
+  "deterministic_sharding": {
+    "manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+    "tool": "python3",
+    "method": "splitlines(keepends=True) on source bytes; fixed 200-line buckets; bytes-faithful concatenation reconstruction; sha256 equality check",
+    "source_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "source_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "source_line_count": 18244,
+    "source_byte_size": 1044305,
+    "max_lines_per_shard": 200,
+    "shard_count": 92,
+    "shard_id_first": "shard-0001",
+    "shard_id_last": "shard-0092",
+    "shard_path_first": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001.md",
+    "shard_path_last": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0092.md",
+    "shard_line_start_first": 1,
+    "shard_line_end_last": 18244,
+    "shard_line_count_first": 200,
+    "shard_line_count_last": 44,
+    "verification": {
+      "source_line_count": 18244,
+      "shard_count": 92,
+      "max_lines_per_shard": 200,
+      "all_shards_exist": true,
+      "all_shards_within_line_limit": true,
+      "no_gaps": true,
+      "no_overlaps": true,
+      "no_gaps_or_overlaps": true,
+      "gaps": [],
+      "overlaps": [],
+      "oversize_shards": [],
+      "reconstructed_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+      "reconstructed_equals_source": true,
+      "on_disk_shard_md_file_count": 92,
+      "on_disk_total_lines_across_shards": 18244,
+      "on_disk_max_lines_in_any_shard": 200,
+      "errors": []
+    }
+  },
+  "subagents": {
+    "required": false,
+    "used": false,
+    "rationale": "C2 is mechanical_tool_operation. The C2 deterministic sharding rule explicitly prohibits using model reasoning or subagents for line splitting; a deterministic Python 3 tool performed the work."
+  },
+  "fanout_artifacts": {
+    "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shard_indexer.fanout_worklist.json",
+    "wave_artifact_paths": [
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shard_indexer.wave-0001.json"
+    ]
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "final_gate": {
+    "rule": "manifest.json proves exact one-to-one source line coverage; every shard exists; every shard has <=200 lines; source sha256 recorded; no semantic/manual main-agent sharding occurred.",
+    "manifest_present": true,
+    "exact_one_to_one_source_line_coverage": true,
+    "every_shard_exists": true,
+    "every_shard_within_line_limit": true,
+    "source_sha256_recorded": true,
+    "no_semantic_or_manual_main_agent_sharding": true,
+    "result": "pass"
+  },
+  "blocking_reason": null,
+  "next_prompt_request": "Paste prompt C3 — Ledger Seed Extractor v3.1.15.",
+  "timestamp_utc": "20260507T170122Z"
+}

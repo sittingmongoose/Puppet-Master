@@ -1,0 +1,1161 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.1",
+  "subagent_task_id": "d1-task-012",
+  "work_groups": [
+    {
+      "group_id": "wg-d1-012-001",
+      "source_block_ids": [
+        "lblock-002109",
+        "lblock-002111",
+        "lblock-002112",
+        "lblock-002114",
+        "lblock-002115",
+        "lblock-002117",
+        "lblock-002118",
+        "lblock-002120",
+        "lblock-002121",
+        "lblock-002123",
+        "lblock-002125",
+        "lblock-002126",
+        "lblock-002128",
+        "lblock-002129",
+        "lblock-002131",
+        "lblock-002132",
+        "lblock-002134",
+        "lblock-002135",
+        "lblock-002137",
+        "lblock-002138",
+        "lblock-002140",
+        "lblock-002141",
+        "lblock-002143",
+        "lblock-002145",
+        "lblock-002146"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8801,
+          "end_line": 8812
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8814,
+          "end_line": 8814
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8815,
+          "end_line": 8822
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8824,
+          "end_line": 8824
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8825,
+          "end_line": 8832
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8834,
+          "end_line": 8834
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8835,
+          "end_line": 8844
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8846,
+          "end_line": 8846
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8847,
+          "end_line": 8849
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8851,
+          "end_line": 8851
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8853,
+          "end_line": 8853
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8854,
+          "end_line": 8866
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8868,
+          "end_line": 8868
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8869,
+          "end_line": 8885
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8887,
+          "end_line": 8887
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8888,
+          "end_line": 8903
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8905,
+          "end_line": 8905
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8906,
+          "end_line": 8911
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8913,
+          "end_line": 8913
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8914,
+          "end_line": 8920
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8922,
+          "end_line": 8922
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8923,
+          "end_line": 8927
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8929,
+          "end_line": 8929
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8931,
+          "end_line": 8931
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8932,
+          "end_line": 8943
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "max_source_lines": 130,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-012-001.json"
+    },
+    {
+      "group_id": "wg-d1-012-002",
+      "source_block_ids": [
+        "lblock-002148",
+        "lblock-002149",
+        "lblock-002151",
+        "lblock-002152",
+        "lblock-002154",
+        "lblock-002155",
+        "lblock-002157",
+        "lblock-002158",
+        "lblock-002160",
+        "lblock-002161",
+        "lblock-002163",
+        "lblock-002165",
+        "lblock-002166",
+        "lblock-002168",
+        "lblock-002169",
+        "lblock-002171",
+        "lblock-002172",
+        "lblock-002174",
+        "lblock-002175",
+        "lblock-002177",
+        "lblock-002178",
+        "lblock-002180",
+        "lblock-002181",
+        "lblock-002183",
+        "lblock-002185"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8945,
+          "end_line": 8945
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8946,
+          "end_line": 8965
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8967,
+          "end_line": 8967
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8968,
+          "end_line": 8983
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8985,
+          "end_line": 8985
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8986,
+          "end_line": 8990
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8992,
+          "end_line": 8992
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 8993,
+          "end_line": 8998
+        },
+        {
+          "source_shard_id": "shard-0045",
+          "start_line": 9000,
+          "end_line": 9000
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9001,
+          "end_line": 9005
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9007,
+          "end_line": 9007
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9009,
+          "end_line": 9009
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9010,
+          "end_line": 9021
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9023,
+          "end_line": 9023
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9024,
+          "end_line": 9039
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9041,
+          "end_line": 9041
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9042,
+          "end_line": 9055
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9057,
+          "end_line": 9057
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9058,
+          "end_line": 9062
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9064,
+          "end_line": 9064
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9065,
+          "end_line": 9069
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9071,
+          "end_line": 9071
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9072,
+          "end_line": 9076
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9078,
+          "end_line": 9078
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9080,
+          "end_line": 9080
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0045",
+        "shard-0046"
+      ],
+      "max_source_lines": 123,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-012-002.json"
+    },
+    {
+      "group_id": "wg-d1-012-003",
+      "source_block_ids": [
+        "lblock-002186",
+        "lblock-002188",
+        "lblock-002189",
+        "lblock-002191",
+        "lblock-002192",
+        "lblock-002194",
+        "lblock-002195",
+        "lblock-002197",
+        "lblock-002198",
+        "lblock-002200",
+        "lblock-002201",
+        "lblock-002203",
+        "lblock-002205",
+        "lblock-002206",
+        "lblock-002208",
+        "lblock-002209",
+        "lblock-002210",
+        "lblock-002212",
+        "lblock-002213",
+        "lblock-002215",
+        "lblock-002216",
+        "lblock-002218",
+        "lblock-002219",
+        "lblock-002221",
+        "lblock-002222"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9081,
+          "end_line": 9085
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9087,
+          "end_line": 9087
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9088,
+          "end_line": 9125
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9127,
+          "end_line": 9127
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9128,
+          "end_line": 9137
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9139,
+          "end_line": 9139
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9140,
+          "end_line": 9144
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9146,
+          "end_line": 9146
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9147,
+          "end_line": 9156
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9158,
+          "end_line": 9158
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9159,
+          "end_line": 9161
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9163,
+          "end_line": 9163
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9165,
+          "end_line": 9165
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9166,
+          "end_line": 9170
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9172,
+          "end_line": 9172
+        },
+        {
+          "source_shard_id": "shard-0046",
+          "start_line": 9173,
+          "end_line": 9200
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9201,
+          "end_line": 9202
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9204,
+          "end_line": 9204
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9205,
+          "end_line": 9213
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9215,
+          "end_line": 9215
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9216,
+          "end_line": 9220
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9222,
+          "end_line": 9222
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9223,
+          "end_line": 9241
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9243,
+          "end_line": 9243
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9244,
+          "end_line": 9246
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0046",
+        "shard-0047"
+      ],
+      "max_source_lines": 154,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-012-003.json"
+    },
+    {
+      "group_id": "wg-d1-012-004",
+      "source_block_ids": [
+        "lblock-002224",
+        "lblock-002226",
+        "lblock-002227",
+        "lblock-002229",
+        "lblock-002230",
+        "lblock-002232",
+        "lblock-002233",
+        "lblock-002235",
+        "lblock-002236",
+        "lblock-002238",
+        "lblock-002239",
+        "lblock-002241",
+        "lblock-002242",
+        "lblock-002244",
+        "lblock-002246",
+        "lblock-002247",
+        "lblock-002249",
+        "lblock-002250",
+        "lblock-002252",
+        "lblock-002253",
+        "lblock-002255",
+        "lblock-002256",
+        "lblock-002258",
+        "lblock-002259",
+        "lblock-002261"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9248,
+          "end_line": 9248
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9250,
+          "end_line": 9250
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9251,
+          "end_line": 9262
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9264,
+          "end_line": 9264
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9265,
+          "end_line": 9281
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9283,
+          "end_line": 9283
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9284,
+          "end_line": 9299
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9301,
+          "end_line": 9301
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9302,
+          "end_line": 9306
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9308,
+          "end_line": 9308
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9309,
+          "end_line": 9314
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9316,
+          "end_line": 9316
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9317,
+          "end_line": 9321
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9323,
+          "end_line": 9323
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9325,
+          "end_line": 9325
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9326,
+          "end_line": 9330
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9332,
+          "end_line": 9332
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9333,
+          "end_line": 9367
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9369,
+          "end_line": 9369
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9370,
+          "end_line": 9378
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9380,
+          "end_line": 9380
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9381,
+          "end_line": 9384
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9386,
+          "end_line": 9386
+        },
+        {
+          "source_shard_id": "shard-0047",
+          "start_line": 9387,
+          "end_line": 9400
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9402,
+          "end_line": 9402
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0047",
+        "shard-0048"
+      ],
+      "max_source_lines": 142,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-012-004.json"
+    },
+    {
+      "group_id": "wg-d1-012-005",
+      "source_block_ids": [
+        "lblock-002262",
+        "lblock-002264",
+        "lblock-002266",
+        "lblock-002267",
+        "lblock-002269",
+        "lblock-002270",
+        "lblock-002272",
+        "lblock-002273",
+        "lblock-002275",
+        "lblock-002276",
+        "lblock-002278",
+        "lblock-002279",
+        "lblock-002281",
+        "lblock-002282",
+        "lblock-002284",
+        "lblock-002286",
+        "lblock-002287",
+        "lblock-002289",
+        "lblock-002290",
+        "lblock-002292",
+        "lblock-002293",
+        "lblock-002295",
+        "lblock-002296",
+        "lblock-002298",
+        "lblock-002299"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9403,
+          "end_line": 9405
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9407,
+          "end_line": 9407
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9409,
+          "end_line": 9409
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9410,
+          "end_line": 9415
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9417,
+          "end_line": 9417
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9418,
+          "end_line": 9440
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9442,
+          "end_line": 9442
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9443,
+          "end_line": 9451
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9453,
+          "end_line": 9453
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9454,
+          "end_line": 9460
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9462,
+          "end_line": 9462
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9463,
+          "end_line": 9478
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9480,
+          "end_line": 9480
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9481,
+          "end_line": 9483
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9485,
+          "end_line": 9485
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9487,
+          "end_line": 9487
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9488,
+          "end_line": 9491
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9493,
+          "end_line": 9493
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9494,
+          "end_line": 9497
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9499,
+          "end_line": 9499
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9500,
+          "end_line": 9523
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9525,
+          "end_line": 9525
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9526,
+          "end_line": 9563
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9565,
+          "end_line": 9565
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9566,
+          "end_line": 9578
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "max_source_lines": 163,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-012-005.json"
+    },
+    {
+      "group_id": "wg-d1-012-006",
+      "source_block_ids": [
+        "lblock-002301",
+        "lblock-002302",
+        "lblock-002304",
+        "lblock-002305",
+        "lblock-002307",
+        "lblock-002308",
+        "lblock-002310",
+        "lblock-002311"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9580,
+          "end_line": 9580
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9581,
+          "end_line": 9585
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9587,
+          "end_line": 9587
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9588,
+          "end_line": 9590
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9592,
+          "end_line": 9592
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9593,
+          "end_line": 9595
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9597,
+          "end_line": 9597
+        },
+        {
+          "source_shard_id": "shard-0048",
+          "start_line": 9598,
+          "end_line": 9600
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "max_source_lines": 18,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-012-006.json"
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-002110",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002113",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002116",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002119",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002122",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002124",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002127",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002130",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002133",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002136",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002139",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002142",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002144",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002147",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002150",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002153",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002156",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002159",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002162",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002164",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002167",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002170",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002173",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002176",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002179",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002182",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002184",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002187",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002190",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002193",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002196",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002199",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002202",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002204",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002207",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002211",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002214",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002217",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002220",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002223",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002225",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002228",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002231",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002234",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002237",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002240",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002243",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002245",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002248",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002251",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002254",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002257",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002260",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002263",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002265",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002268",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002271",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002274",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002277",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002280",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002283",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002285",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002288",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002291",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002294",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002297",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002300",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002303",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002306",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-002309",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    }
+  ]
+}
