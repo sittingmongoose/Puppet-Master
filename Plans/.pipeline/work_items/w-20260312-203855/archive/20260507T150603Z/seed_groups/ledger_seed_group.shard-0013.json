@@ -1,0 +1,1055 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
+  "work_id": "w-20260312-203855",
+  "c3_invocation_id": "c3-inv-004",
+  "c3_task_id": "c3-task-004",
+  "anchor_shard_id": "shard-0013",
+  "shard_group": [
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0016"
+  ],
+  "working_ledger": {
+    "source_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "line_start": 2401,
+    "line_end": 3200
+  },
+  "status": "complete",
+  "per_shard": {
+    "shard-0013": {
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0013.md",
+      "working_ledger_line_start": 2401,
+      "working_ledger_line_end": 2600,
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "- redb/Tantivy/JSONL are disposable projections",
+          "line_in_shard": 1
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- stale values surprise users",
+          "line_in_shard": 5
+        },
+        {
+          "type": "doc_hint",
+          "text": "- FinalGUISpec already has compatible safety rules:",
+          "line_in_shard": 8
+        },
+        {
+          "type": "requirement",
+          "text": "- the GUI must not imply hidden fallback or hidden retry behavior",
+          "line_in_shard": 10
+        },
+        {
+          "type": "process_defect",
+          "text": "- What is still missing is an explicit shared trust policy for all projection-backed surfaces, especially Orchestrator tabs.",
+          "line_in_shard": 12
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `stale`",
+          "line_in_shard": 18
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `stale`: projection is usable for context but may not reflect current runtime truth",
+          "line_in_shard": 24
+        },
+        {
+          "type": "data_shape",
+          "text": "- `degraded`: projector/scan partially failed or a dependency signal is missing; some fields/sections are less trustworthy",
+          "line_in_shard": 25
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- read-only navigation may continue on `stale` and some `degraded` projections if the UI says so clearly",
+          "line_in_shard": 30
+        },
+        {
+          "type": "requirement",
+          "text": "- live mutating / decision-bearing actions must tighten on trust state",
+          "line_in_shard": 31
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `refreshing`: allow normal read actions; mutating actions may continue if backed by runtime truth rather than stale page cache",
+          "line_in_shard": 34
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `stale`: allow inspection and historical navigation; require refresh or direct runtime revalidation before sensitive live actions",
+          "line_in_shard": 35
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `degraded`: restrict to safe inspection and canonical recovery paths; do not allow ambiguous live actions",
+          "line_in_shard": 36
+        },
+        {
+          "type": "routing_rule",
+          "text": "- `unavailable`: route to record-backed fallback views or explicit recovery/refresh actions",
+          "line_in_shard": 37
+        },
+        {
+          "type": "requirement",
+          "text": "- page state must not silently stand in for runtime state when freshness/trust is insufficient",
+          "line_in_shard": 39
+        },
+        {
+          "type": "doc_hint",
+          "text": "- direct evidence/record inspectors",
+          "line_in_shard": 52
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Ledger` = exact record inspection",
+          "line_in_shard": 55
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- degraded/stale reason when not current",
+          "line_in_shard": 62
+        },
+        {
+          "type": "verification_rule",
+          "text": "- whether actions are partially gated",
+          "line_in_shard": 63
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `Progress`: show run-level trust banner or chip when projections are stale/degraded",
+          "line_in_shard": 65
+        },
+        {
+          "type": "verification_rule",
+          "text": "- `Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth",
+          "line_in_shard": 66
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `Node Graph`: keep historical graph and current selections visible, but flag when live node state may be stale",
+          "line_in_shard": 67
+        },
+        {
+          "type": "verification_rule",
+          "text": "- `Evidence`: artifact browsing can remain available; live verdict/action affordances may gate",
+          "line_in_shard": 68
+        },
+        {
+          "type": "data_shape",
+          "text": "- No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces.",
+          "line_in_shard": 72
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- Usage has concrete stale-data mitigations, but Orchestrator currently lacks equally explicit stale/degraded trust copy and action rules.",
+          "line_in_shard": 73
+        },
+        {
+          "type": "doc_hint",
+          "text": "- FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for projection-backed tabs/widgets/panels.",
+          "line_in_shard": 74
+        },
+        {
+          "type": "data_shape",
+          "text": "- Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.",
+          "line_in_shard": 82
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- or are safe from stale views because they operate on durable records only",
+          "line_in_shard": 86
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable.",
+          "line_in_shard": 87
+        },
+        {
+          "type": "requirement",
+          "text": "- stale/degraded trust must be visible without making the UI feel broken or unusable.",
+          "line_in_shard": 91
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- the system should never quietly present stale operational truth as if it were live truth.",
+          "line_in_shard": 92
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 96
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 100
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Current docs already imply that Orchestrator can focus either:",
+          "line_in_shard": 104
+        },
+        {
+          "type": "decision",
+          "text": "- or a selected historical run",
+          "line_in_shard": 106
+        },
+        {
+          "type": "decision",
+          "text": "- `Orchestrator_Page.md` says the graph renders when a run is active or a historical run is selected",
+          "line_in_shard": 108
+        },
+        {
+          "type": "decision",
+          "text": "- `Ledger` filters to the current/selected run",
+          "line_in_shard": 110
+        },
+        {
+          "type": "decision",
+          "text": "- but there is no clear mode contract for what the whole page is in after a historical run is selected",
+          "line_in_shard": 111
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `storage-plan.md` defines project state for Source Control, GitHub Actions, and Docker Manager",
+          "line_in_shard": 113
+        },
+        {
+          "type": "decision",
+          "text": "- there is no obvious equivalent `orchestrator.project_state.{project_id}` with focused/selected run state",
+          "line_in_shard": 114
+        },
+        {
+          "type": "doc_hint",
+          "text": "- this means run focus persistence and restore rules are currently underspecified",
+          "line_in_shard": 115
+        },
+        {
+          "type": "data_shape",
+          "text": "- Proposed fields conceptually:",
+          "line_in_shard": 124
+        },
+        {
+          "type": "open_question",
+          "text": "- `active_run_id?`",
+          "line_in_shard": 125
+        },
+        {
+          "type": "open_question",
+          "text": "- `focused_run_id?`",
+          "line_in_shard": 126
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `focus_mode = historical` when the user is inspecting any non-active run",
+          "line_in_shard": 132
+        },
+        {
+          "type": "doc_hint",
+          "text": "- avoids blending \"what is running now\" with \"what the user is currently inspecting\"",
+          "line_in_shard": 134
+        },
+        {
+          "type": "requirement",
+          "text": "- Required behavior:",
+          "line_in_shard": 139
+        },
+        {
+          "type": "routing_rule",
+          "text": "- actions route against the focused run only when they are historical-safe",
+          "line_in_shard": 143
+        },
+        {
+          "type": "doc_hint",
+          "text": "- inspect graph",
+          "line_in_shard": 145
+        },
+        {
+          "type": "doc_hint",
+          "text": "- inspect evidence",
+          "line_in_shard": 146
+        },
+        {
+          "type": "doc_hint",
+          "text": "- inspect ledger",
+          "line_in_shard": 147
+        },
+        {
+          "type": "doc_hint",
+          "text": "- open related Source Control / GitHub / Docker context in historical mode where possible",
+          "line_in_shard": 150
+        },
+        {
+          "type": "process_defect",
+          "text": "- Likely missing project-state record:",
+          "line_in_shard": 182
+        },
+        {
+          "type": "data_shape",
+          "text": "- Candidate fields:",
+          "line_in_shard": 184
+        },
+        {
+          "type": "open_question",
+          "text": "- `focused_run_id?`",
+          "line_in_shard": 185
+        },
+        {
+          "type": "open_question",
+          "text": "- `last_live_run_id?`",
+          "line_in_shard": 187
+        },
+        {
+          "type": "decision",
+          "text": "- `selected_tab`",
+          "line_in_shard": 188
+        },
+        {
+          "type": "open_question",
+          "text": "- per-tab view state refs",
+          "line_in_shard": 189
+        },
+        {
+          "type": "data_shape",
+          "text": "- maybe `auto_return_to_live = false` by default",
+          "line_in_shard": 190
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Working recommendation:",
+          "line_in_shard": 191
+        },
+        {
+          "type": "requirement",
+          "text": "- persist the last focused run per project",
+          "line_in_shard": 192
+        },
+        {
+          "type": "requirement",
+          "text": "- on restart/project reopen:",
+          "line_in_shard": 193
+        },
+        {
+          "type": "requirement",
+          "text": "  - if that run still exists and is historical, restore historical focus",
+          "line_in_shard": 194
+        },
+        {
+          "type": "requirement",
+          "text": "  - if there is also an active run, show a clear live-run notice rather than overriding focus silently",
+          "line_in_shard": 195
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Cross-tab behavior direction",
+          "line_in_shard": 197
+        },
+        {
+          "type": "requirement",
+          "text": "- Strong recommendation:",
+          "line_in_shard": 198
+        },
+        {
+          "type": "requirement",
+          "text": "- all Orchestrator tabs share the same focused `run_id`",
+          "line_in_shard": 199
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Implications:",
+          "line_in_shard": 200
+        }
+      ]
+    },
+    "shard-0014": {
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0014.md",
+      "working_ledger_line_start": 2601,
+      "working_ledger_line_end": 2800,
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "requirement",
+          "text": "- `Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA",
+          "line_in_shard": 3
+        },
+        {
+          "type": "process_defect",
+          "text": "- `History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.",
+          "line_in_shard": 20
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Background runs exist in Dashboard, but Orchestrator focus rules for live-vs-historical switching are not yet specified.",
+          "line_in_shard": 22
+        },
+        {
+          "type": "requirement",
+          "text": "- The page must not auto-switch focus away from a historical run just because live activity appears.",
+          "line_in_shard": 35
+        },
+        {
+          "type": "requirement",
+          "text": "- Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.",
+          "line_in_shard": 37
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 41
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 45
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Existing docs mostly define local/tab-specific search and filtering:",
+          "line_in_shard": 49
+        },
+        {
+          "type": "data_shape",
+          "text": "- What is still missing is a unified Orchestrator search contract that is object-first rather than page-first.",
+          "line_in_shard": 63
+        },
+        {
+          "type": "data_shape",
+          "text": "- distinguish `global object search` from `tab-local filtering`",
+          "line_in_shard": 67
+        },
+        {
+          "type": "data_shape",
+          "text": "- object-first, run-aware, cross-tab routing",
+          "line_in_shard": 70
+        },
+        {
+          "type": "data_shape",
+          "text": "- Object-first search targets should include at minimum:",
+          "line_in_shard": 73
+        },
+        {
+          "type": "data_shape",
+          "text": "- recovery / safe-point object where applicable",
+          "line_in_shard": 84
+        },
+        {
+          "type": "routing_rule",
+          "text": "### Routing contract direction",
+          "line_in_shard": 87
+        },
+        {
+          "type": "routing_rule",
+          "text": "- Each result should carry a canonical route target:",
+          "line_in_shard": 89
+        },
+        {
+          "type": "decision",
+          "text": "- selected object id",
+          "line_in_shard": 92
+        },
+        {
+          "type": "data_shape",
+          "text": "- optional filter payload",
+          "line_in_shard": 93
+        },
+        {
+          "type": "doc_hint",
+          "text": "- optional inspector/detail target",
+          "line_in_shard": 94
+        },
+        {
+          "type": "decision",
+          "text": "- node -> `Node Graph` with node selected and inspector open",
+          "line_in_shard": 97
+        },
+        {
+          "type": "requirement",
+          "text": "- Orchestrator search must be run-aware.",
+          "line_in_shard": 103
+        },
+        {
+          "type": "requirement",
+          "text": "- search result routing must preserve or intentionally change `focused_run_id`",
+          "line_in_shard": 110
+        },
+        {
+          "type": "requirement",
+          "text": "- it must never do so silently",
+          "line_in_shard": 111
+        },
+        {
+          "type": "data_shape",
+          "text": "- object-first, cross-tab, route-aware",
+          "line_in_shard": 118
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `FinalGUISpec.md` already defines a global command palette.",
+          "line_in_shard": 126
+        },
+        {
+          "type": "data_shape",
+          "text": "- command palette can expose Orchestrator object results, not just commands/pages",
+          "line_in_shard": 128
+        },
+        {
+          "type": "data_shape",
+          "text": "- selecting an object result should route through the same deep-link contract as Orchestrator search",
+          "line_in_shard": 129
+        },
+        {
+          "type": "data_shape",
+          "text": "- exact structured object lookup from redb projections / record indices",
+          "line_in_shard": 134
+        },
+        {
+          "type": "data_shape",
+          "text": "- search should prefer stable object identity matches first",
+          "line_in_shard": 137
+        },
+        {
+          "type": "data_shape",
+          "text": "- text/full-text results come after exact object hits",
+          "line_in_shard": 138
+        },
+        {
+          "type": "data_shape",
+          "text": "- object ids",
+          "line_in_shard": 140
+        },
+        {
+          "type": "data_shape",
+          "text": "- historical records with long textual payloads",
+          "line_in_shard": 142
+        },
+        {
+          "type": "data_shape",
+          "text": "- Good result row fields:",
+          "line_in_shard": 145
+        },
+        {
+          "type": "data_shape",
+          "text": "- object type",
+          "line_in_shard": 146
+        },
+        {
+          "type": "data_shape",
+          "text": "- Current docs define many local filters but not a unified Orchestrator search object model.",
+          "line_in_shard": 159
+        },
+        {
+          "type": "data_shape",
+          "text": "- There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.",
+          "line_in_shard": 160
+        },
+        {
+          "type": "data_shape",
+          "text": "- `Tantivy` is clearly intended for search, but the object/record side of Orchestrator search is not yet specified enough to rely on full-text alone.",
+          "line_in_shard": 162
+        },
+        {
+          "type": "data_shape",
+          "text": "- object identity",
+          "line_in_shard": 166
+        },
+        {
+          "type": "data_shape",
+          "text": "- object type",
+          "line_in_shard": 167
+        },
+        {
+          "type": "data_shape",
+          "text": "- selection/filter payload",
+          "line_in_shard": 170
+        },
+        {
+          "type": "routing_rule",
+          "text": "- Reuse the same routing contract for:",
+          "line_in_shard": 172
+        },
+        {
+          "type": "data_shape",
+          "text": "- Make search object-first and run-aware, not just text-match-first.",
+          "line_in_shard": 177
+        },
+        {
+          "type": "data_shape",
+          "text": "- Search should help the user find the right object, not force them to know which tab owns it first.",
+          "line_in_shard": 180
+        },
+        {
+          "type": "data_shape",
+          "text": "- A narrow Source Control panel reinforces that richer cross-object search belongs more naturally in Orchestrator / command-palette flows than in side-panel SCM UI.",
+          "line_in_shard": 181
+        },
+        {
+          "type": "requirement",
+          "text": "- Historical results must preserve run context clearly so search does not create silent run-focus jumps.",
+          "line_in_shard": 182
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 186
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 191
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- attempts from older generations can become `stale_historical`",
+          "line_in_shard": 195
+        },
+        {
+          "type": "requirement",
+          "text": "- historical lineage must remain visible even when live targets disappear",
+          "line_in_shard": 197
+        },
+        {
+          "type": "requirement",
+          "text": "- remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_required`",
+          "line_in_shard": 198
+        },
+        {
+          "type": "process_defect",
+          "text": "- The problem is uneven application:",
+          "line_in_shard": 199
+        },
+        {
+          "type": "data_shape",
+          "text": "- attempts have relatively explicit historical semantics",
+          "line_in_shard": 200
+        }
+      ]
+    },
+    "shard-0015": {
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0015.md",
+      "working_ledger_line_start": 2801,
+      "working_ledger_line_end": 3000,
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "- higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary",
+          "line_in_shard": 1
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `stale_historical`",
+          "line_in_shard": 4
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `stale_historical`",
+          "line_in_shard": 18
+        },
+        {
+          "type": "doc_hint",
+          "text": "- historical and specifically not resumable/reusable as live execution state",
+          "line_in_shard": 19
+        },
+        {
+          "type": "decision",
+          "text": "- previously accepted/active decision or state was explicitly withdrawn",
+          "line_in_shard": 23
+        },
+        {
+          "type": "data_shape",
+          "text": "- an object previously treated as settled/completed became active again",
+          "line_in_shard": 25
+        },
+        {
+          "type": "data_shape",
+          "text": "- live backing object is gone, but history may remain",
+          "line_in_shard": 29
+        },
+        {
+          "type": "data_shape",
+          "text": "- every superseded object is historical",
+          "line_in_shard": 33
+        },
+        {
+          "type": "data_shape",
+          "text": "- not every historical object is superseded",
+          "line_in_shard": 34
+        },
+        {
+          "type": "verification_rule",
+          "text": "- `revoked` = prior acceptance/approval/promotion was invalidated or withdrawn",
+          "line_in_shard": 37
+        },
+        {
+          "type": "data_shape",
+          "text": "- `removed` is backing-object or storage-presence state",
+          "line_in_shard": 42
+        },
+        {
+          "type": "data_shape",
+          "text": "### Candidate application by object family",
+          "line_in_shard": 45
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- already have `stale_historical`",
+          "line_in_shard": 47
+        },
+        {
+          "type": "verification_rule",
+          "text": "- invalidated prior path may be superseded by newer generation",
+          "line_in_shard": 62
+        },
+        {
+          "type": "decision",
+          "text": "- the patch request/decision record itself may later be historical without being revoked",
+          "line_in_shard": 63
+        },
+        {
+          "type": "doc_hint",
+          "text": "- This matters especially in:",
+          "line_in_shard": 82
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Deletion/archive language in storage docs risks bleeding into semantic validity language if not separated carefully.",
+          "line_in_shard": 92
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Orchestrator/UI docs currently refer to some of these ideas conceptually, but not yet as one consistent cross-record system.",
+          "line_in_shard": 93
+        },
+        {
+          "type": "data_shape",
+          "text": "- lane/worktree objects",
+          "line_in_shard": 102
+        },
+        {
+          "type": "stale_retirement_item",
+          "text": "- `stale_historical` is specifically stronger than plain `historical`; it carries non-resumable/non-live semantics.",
+          "line_in_shard": 108
+        },
+        {
+          "type": "requirement",
+          "text": "- `historical run` must not imply:",
+          "line_in_shard": 123
+        },
+        {
+          "type": "decision",
+          "text": "- or older in time than another selected/current run",
+          "line_in_shard": 130
+        },
+        {
+          "type": "requirement",
+          "text": "- Relationship must be explicit, not inferred from same-project membership.",
+          "line_in_shard": 131
+        },
+        {
+          "type": "requirement",
+          "text": "- But those must be explicit metadata, not inferred by heuristics.",
+          "line_in_shard": 156
+        },
+        {
+          "type": "routing_rule",
+          "text": "### Search / routing implication",
+          "line_in_shard": 158
+        },
+        {
+          "type": "decision",
+          "text": "- Cross-run navigation should switch focus to the selected run, not imply that the selected object is part of the currently focused run's lineage.",
+          "line_in_shard": 160
+        },
+        {
+          "type": "data_shape",
+          "text": "- `superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs.",
+          "line_in_shard": 166
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 175
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 179
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The local docs are still relatively sparse on exact concern record shape.",
+          "line_in_shard": 189
+        },
+        {
+          "type": "data_shape",
+          "text": "- explicit canonical record schema",
+          "line_in_shard": 191
+        },
+        {
+          "type": "routing_rule",
+          "text": "- stronger search/routing semantics",
+          "line_in_shard": 194
+        },
+        {
+          "type": "data_shape",
+          "text": "### Recommended concern object split",
+          "line_in_shard": 196
+        },
+        {
+          "type": "requirement",
+          "text": "- Strong recommendation:",
+          "line_in_shard": 197
+        },
+        {
+          "type": "data_shape",
+          "text": "- distinguish between:",
+          "line_in_shard": 198
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `concern record`",
+          "line_in_shard": 199
+        },
+        {
+          "type": "data_shape",
+          "text": "  - `concern source event/ref`",
+          "line_in_shard": 200
+        }
+      ]
+    },
+    "shard-0016": {
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0016.md",
+      "working_ledger_line_start": 3001,
+      "working_ledger_line_end": 3200,
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "data_shape",
+          "text": "- `concern record` = canonical durable object with stable identity and lifecycle",
+          "line_in_shard": 3
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `concern projection` = surface-specific rendering for Progress / Seams / Evidence / History / Ledger",
+          "line_in_shard": 5
+        },
+        {
+          "type": "open_question",
+          "text": "- `run_id?`",
+          "line_in_shard": 11
+        },
+        {
+          "type": "data_shape",
+          "text": "- scope object refs:",
+          "line_in_shard": 12
+        },
+        {
+          "type": "open_question",
+          "text": "- `seam_id?`",
+          "line_in_shard": 13
+        },
+        {
+          "type": "open_question",
+          "text": "- `package_id?`",
+          "line_in_shard": 14
+        },
+        {
+          "type": "open_question",
+          "text": "- `node_id?`",
+          "line_in_shard": 15
+        },
+        {
+          "type": "open_question",
+          "text": "- `attempt_id?`",
+          "line_in_shard": 16
+        },
+        {
+          "type": "open_question",
+          "text": "- `lane_id?`",
+          "line_in_shard": 17
+        },
+        {
+          "type": "open_question",
+          "text": "- `worktree_id?`",
+          "line_in_shard": 18
+        },
+        {
+          "type": "open_question",
+          "text": "- `detail_ref?`",
+          "line_in_shard": 23
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "- `owner_kind`",
+          "line_in_shard": 24
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "- `owner_ref?`",
+          "line_in_shard": 25
+        },
+        {
+          "type": "open_question",
+          "text": "- `created_by_ref?`",
+          "line_in_shard": 27
+        },
+        {
+          "type": "open_question",
+          "text": "- `resolved_at_utc?`",
+          "line_in_shard": 30
+        },
+        {
+          "type": "open_question",
+          "text": "- `dismissed_at_utc?`",
+          "line_in_shard": 31
+        },
+        {
+          "type": "open_question",
+          "text": "- `acknowledged_at_utc?`",
+          "line_in_shard": 32
+        },
+        {
+          "type": "open_question",
+          "text": "- `parent_concern_id?`",
+          "line_in_shard": 42
+        },
+        {
+          "type": "open_question",
+          "text": "- `superseded_by_concern_id?`",
+          "line_in_shard": 43
+        },
+        {
+          "type": "open_question",
+          "text": "- `merged_into_concern_id?`",
+          "line_in_shard": 44
+        },
+        {
+          "type": "open_question",
+          "text": "- `split_from_concern_id?`",
+          "line_in_shard": 45
+        },
+        {
+          "type": "data_shape",
+          "text": "- attention fields:",
+          "line_in_shard": 46
+        },
+        {
+          "type": "open_question",
+          "text": "- `blocking_effect?`",
+          "line_in_shard": 50
+        },
+        {
+          "type": "verification_rule",
+          "text": "- `invalidated`",
+          "line_in_shard": 90
+        },
+        {
+          "type": "data_shape",
+          "text": "- an older framing is replaced by a better/newer concern object:",
+          "line_in_shard": 106
+        },
+        {
+          "type": "verification_rule",
+          "text": "- downgrade/invalidate an existing concern",
+          "line_in_shard": 115
+        },
+        {
+          "type": "doc_hint",
+          "text": "- Specific interaction rules:",
+          "line_in_shard": 116
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "### Concern ownership / authority direction",
+          "line_in_shard": 129
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "- concern owner for follow-up",
+          "line_in_shard": 131
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "- Good owner kinds still look like:",
+          "line_in_shard": 134
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "- A concern should be allowed to change owner over time without changing identity.",
+          "line_in_shard": 143
+        },
+        {
+          "type": "routing_rule",
+          "text": "### Search / routing direction",
+          "line_in_shard": 145
+        },
+        {
+          "type": "data_shape",
+          "text": "- Concern results should be object-first.",
+          "line_in_shard": 146
+        },
+        {
+          "type": "routing_rule",
+          "text": "- Search result should route based on what the user likely needs:",
+          "line_in_shard": 147
+        },
+        {
+          "type": "decision",
+          "text": "- selected concern id",
+          "line_in_shard": 155
+        },
+        {
+          "type": "data_shape",
+          "text": "- related object context",
+          "line_in_shard": 156
+        },
+        {
+          "type": "doc_hint",
+          "text": "- There is no obvious current concern event family or concern record family in the local docs comparable to attempts/blocked/remediation.",
+          "line_in_shard": 172
+        },
+        {
+          "type": "data_shape",
+          "text": "- Add explicit concern lineage fields for merge/split/supersession.",
+          "line_in_shard": 178
+        },
+        {
+          "type": "data_shape",
+          "text": "- concerns should remain shared objects across surfaces, not duplicated local alert rows",
+          "line_in_shard": 184
+        },
+        {
+          "type": "requirement",
+          "text": "- blockers requiring action must not be trivially dismissible into a false sense of health",
+          "line_in_shard": 185
+        },
+        {
+          "type": "doc_hint",
+          "text": "### Targeted docs read",
+          "line_in_shard": 190
+        },
+        {
+          "type": "doc_hint",
+          "text": "- `Plans/FinalGUISpec.md`",
+          "line_in_shard": 191
+        },
+        {
+          "type": "doc_hint",
+          "text": "- The docs already contain many action-specific confirmation rules:",
+          "line_in_shard": 199
+        },
+        {
+          "type": "requirement",
+          "text": "- cancel run -> confirmation",
+          "line_in_shard": 200
+        }
+      ]
+    }
+  }
+}

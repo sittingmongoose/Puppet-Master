@@ -1,697 +1,207 @@
 {
-  "schema_id": "pm.ledger_seed_group.v3.1.12",
-  "investigation_id": "c3-inv-007",
-  "task_id": "c3-task-007",
-  "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.1.12",
+  "schema_id": "ledger_seed_group.v1",
+  "prompt_id": "c3_bounded_extraction",
+  "prompt_version": "1.0",
   "work_id": "w-20260312-203855",
-  "shard_id": "shard-0025",
-  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0025.md",
-  "coverage": {
-    "anchor_shard_id": "shard-0025",
-    "source_shards": [
-      "shard-0025",
-      "shard-0026",
-      "shard-0027",
-      "shard-0028"
+  "subagent_task_id": "task-007",
+  "source_shard_ids": [
+    "shard-0025",
+    "shard-0026",
+    "shard-0027",
+    "shard-0028"
+  ],
+  "shard_line_ranges": {
+    "shard-0025": [
+      "1-201"
     ],
-    "start_line": 4801,
-    "end_line": 5600,
-    "line_count": 800,
-    "source_paths": [
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0025.md",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0026.md",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0027.md",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0028.md"
+    "shard-0026": [
+      "1-201"
+    ],
+    "shard-0027": [
+      "1-200"
+    ],
+    "shard-0028": [
+      "1-201"
     ]
   },
-  "extraction_status": "complete",
-  "extracted_items": [
-    {
-      "type": "doc_hint",
-      "text": "- `Plans/usage-feature.md`",
-      "line_in_shard": 1,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Key findings",
-      "line_in_shard": 3,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Storage is already closer than the UI docs to a normalized record family model.",
-      "line_in_shard": 4,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- `storage-plan.md` already defines several canonical records (attempt_record, tier_runtime_record, blocked_projection, usage_record, evidence_record, thread_blocked_notice, wizard_runtime_state, cross-surface runtime receipt record).",
-      "line_in_shard": 5,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- `Contracts_V0.md` consistently uses: `detail_ref?`, `*_ref`, explicit identity fields, canonical event fields instead of GUI-only aliases.",
-      "line_in_shard": 14,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- The rewrite now wants many additional first-class record families: concerns, reviews, corroboration requests/results, promotions, graph patch requests/results, recovery records.",
-      "line_in_shard": 19,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- What is still missing is a shared envelope pattern that keeps those families structurally compatible.",
-      "line_in_shard": 26,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Recommended normalization direction",
-      "line_in_shard": 28,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "decision",
-      "text": "- Strong recommendation: add one shared governance/runtime record-envelope pattern, then let each family add its own payload block.",
-      "line_in_shard": 29,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Good base envelope fields include: record_id, record_kind, schema_version, project_id, run_id?, scope_type, scope_id, status, created_at_utc, updated_at_utc?, summary, summary_kind?, detail_ref?, source_refs[], artifact_refs[], related_record_refs[], lineage_refs[], actor_ref?, requested_effective_snapshot_refs?.",
-      "line_in_shard": 31,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Record vs artifact distinction",
-      "line_in_shard": 52,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "requirement",
-      "text": "- Important rule: record and artifact must remain different objects.",
-      "line_in_shard": 53,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- record: structured canonical object used by projections, search, history, and ledger; artifact: blob/file/renderable output linked from a record.",
-      "line_in_shard": 55,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Separate exact structured record vs human-readable rendered summary vs attached artifact(s) for review/patch output language.",
-      "line_in_shard": 60,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Family-specific payload direction",
-      "line_in_shard": 65,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Good pattern: shared envelope + family payload block (concern, promotion, corroboration, graph patch, recovery, review payloads).",
-      "line_in_shard": 66,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### UI / search implication",
-      "line_in_shard": 82,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- A normalized envelope simplifies object-first search, History vs Ledger distinction, deep-link routing, export manifests, cross-tab inspectors.",
-      "line_in_shard": 83,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Search can index shared envelope fields while preserving family-specific filters; Ledger can inspect record structure consistently across families.",
-      "line_in_shard": 89,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Historical semantics implication",
-      "line_in_shard": 92,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Shared envelopes help apply semantic vocabulary consistently: historical, superseded, revoked, reopened, archived, removed — without collapsing to one generic old-state bit.",
-      "line_in_shard": 93,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Contradictions / gaps surfaced",
-      "line_in_shard": 102,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "doc_hint",
-      "text": "- Newer governance families risk being invented ad hoc; without a shared envelope, search/export/ledger/deep links will re-encode the same concepts repeatedly.",
-      "line_in_shard": 103,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Candidate fixes to carry forward",
-      "line_in_shard": 107,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "decision",
-      "text": "- Define a shared record-envelope contract; keep artifacts/rendered summaries linked but separate; require new Orchestrator families to reuse envelope and status/lineage conventions.",
-      "line_in_shard": 108,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Do-not-forget details",
-      "line_in_shard": 113,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "requirement",
-      "text": "- Expand (not replace) `detail_ref` and `*_ref` conventions; prose summaries must resolve back to exact records; envelope must support search/export/routing without flattening family meaning.",
-      "line_in_shard": 114,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "## Research Progress - 2026-03-16 - Lane / Worktree Cleanup Lifecycle",
-      "line_in_shard": 118,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "doc_hint",
-      "text": "### Targeted docs read — WorktreeGitImprovement, GitHub_Integration, storage-plan, Orchestrator_Page, FinalGUISpec",
-      "line_in_shard": 120,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Cleanup is not a trivial delete: worktree rows expose recover/prune/lineage; active-run ownership visible before prune/remove; preserve safe-point/remediation lineage; dirty_worktree and worktree_conflict are blocked reasons.",
-      "line_in_shard": 127,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- WorktreeGitImprovement: conflict worktrees may survive until resolution; recovery across restart; safe-point restore targets exact worktree/baseline.",
-      "line_in_shard": 133,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Missing full lifecycle separating logical lane history, live worktree existence, cleanup eligibility, archive/remove semantics.",
-      "line_in_shard": 137,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Recommended lifecycle split",
-      "line_in_shard": 143,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "decision",
-      "text": "- Treat lane lifecycle and worktree lifecycle as related but non-identical (lane may stay historically important after worktree removed; worktree may be suspect while lane still active).",
-      "line_in_shard": 144,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Mental model: lane = orchestration lineage object; worktree = concrete Git/filesystem backing object.",
-      "line_in_shard": 149,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Recommended lane-oriented states",
-      "line_in_shard": 153,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Lane states: baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical (with interpretations for dispatch vs historical posture).",
-      "line_in_shard": 154,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Worktree-oriented state implication",
-      "line_in_shard": 184,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Worktree-first vocabulary for Source Control: live, dirty, conflict, orphaned, recovering, retained, archived, removed; Orchestrator shows lane state with worktree status in context.",
-      "line_in_shard": 185,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Cleanup-action semantics",
-      "line_in_shard": 198,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "requirement",
-      "text": "- Important rule: `recover`, `archive`, `prune`, and `remove` must not blur together.",
-      "line_in_shard": 199,
-      "source_shard_id": "shard-0025"
-    },
-    {
-      "type": "data_shape",
-      "text": "- recover / archive / prune / remove meanings: restore/reconcile vs retire with lineage vs policy-eligible cleanup vs destructive removal after checks; historical record must survive archive/prune/remove.",
-      "line_in_shard": 1,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Eligibility / gating direction",
-      "line_in_shard": 12,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "requirement",
-      "text": "- Cleanup must be gated by more than age (no active-run ownership; no unresolved blocked recovery on that worktree; no safe-point restore targeting it; no needed conflict workflow; no dependent lineage needing live worktree).",
-      "line_in_shard": 13,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "data_shape",
-      "text": "- If gates fail, remain retained/suspect/restoring — not cleanup_eligible.",
-      "line_in_shard": 20,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Trigger direction",
-      "line_in_shard": 22,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "decision",
-      "text": "- Transitions to cleanup_eligible vs retained (completion, supersession, revoked/reopened, recovery complete; vs pending review, weak integration, concerns/corroboration, manual retention).",
-      "line_in_shard": 23,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "routing_rule",
-      "text": "### Source Control vs Orchestrator boundary",
-      "line_in_shard": 34,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Orchestrator owns lane-pool truth and cleanup posture; Source Control owns concrete worktree actions and compact inventory (filters for retained, cleanup-eligible, archived/removed).",
-      "line_in_shard": 35,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "### Historical-lineage rule",
-      "line_in_shard": 44,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "requirement",
-      "text": "- Live cleanup must never erase run/lane/worktree lineage from History, Ledger, or graph-linked inspection.",
-      "line_in_shard": 45,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "verification_rule",
-      "text": "### Confirmation / undo implication",
-      "line_in_shard": 51,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "data_shape",
-      "text": "- archive light/strong; prune/remove usually strong; remove with blocked/recovery lineage may approach hard_gate; recovery via compensating action/metadata not generic undo.",
-      "line_in_shard": 52,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "process_defect",
-      "text": "### Contradictions / gaps surfaced — lane/worktree cleanup lifecycle not fully defined; cross-surface meanings still fuzzy.",
-      "line_in_shard": 59,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "decision",
-      "text": "### Candidate fixes — distinct lane/worktree states; eligibility from runtime/recovery/lineage; preserve historical records; Source Control compact with historical behind filters.",
-      "line_in_shard": 66,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "requirement",
-      "text": "### Do-not-forget — visible active-run ownership; safe-point/recovery lineage can keep worktree relevant; cleanup reduces clutter without erasing history.",
-      "line_in_shard": 72,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "## Research Progress - 2026-03-16 - Terminology / Help / Glossary Impact Sweep",
-      "line_in_shard": 77,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "doc_hint",
-      "text": "### Targeted docs read — Glossary, FinalGUISpec, Personas, Models_System, Multi-Account",
-      "line_in_shard": 79,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Runtime-selection vocabulary (requested vs effective, selection_reason, Persona controls) is ahead of Orchestrator object vocabulary; Glossary.md lags rewrite research.",
-      "line_in_shard": 86,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Terms needing glossary ownership: Feature Seam, Work Package, Node, overseers, Weak Integration, Promotion, Corroboration, Graph Patch/Generation, Concern, Lane/Lane Pool, Worktree, Historical Run, Reopened/Revoked/Superseded, stale_historical, projection trust (current/refreshing/stale/degraded/unavailable).",
-      "line_in_shard": 100,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "data_shape",
-      "text": "- High-risk word pairs needing distinction rules: lane vs worktree; record vs artifact; history vs ledger; requested vs effective; override vs requested; current vs historical; historical vs superseded; resolved vs dismissed vs acknowledged; safe point vs fresh attempt; archive vs remove vs prune.",
-      "line_in_shard": 128,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "decision",
-      "text": "- Glossary owns short definitions; help owns depth; contextual help must not mutate semantics; strong help-entry candidates listed (Weak Integration, Corroboration, Graph Patch, etc.).",
-      "line_in_shard": 142,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Multi-Account/Models_System/Personas align on requested/effective, selection reason, skipped controls, attempt snapshotting — lower conceptual rewrite risk than Orchestrator/glossary surfaces.",
-      "line_in_shard": 159,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "process_defect",
-      "text": "- FinalGUISpec needs cross-cutting copy discipline to avoid casual retry/old/completed/degraded/history wording where canonical terms are required.",
-      "line_in_shard": 170,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "process_defect",
-      "text": "### Contradictions — Glossary behind Orchestrator vocabulary; copy drift risk in Orchestrator tabs, Source Control, blocked/recovery, concerns/promotions/patches labels.",
-      "line_in_shard": 180,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "decision",
-      "text": "### Candidate fixes — expand Glossary; use it as canonical short-definition source; add distinction guidance; re-check FinalGUISpec for informal synonyms.",
-      "line_in_shard": 189,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "requirement",
-      "text": "### Do-not-forget — do not reinvent requested/effective; glossary/help before UI copy crystallizes; lane vs worktree, history vs ledger, historical vs superseded are drift-prone.",
-      "line_in_shard": 195,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "## Research Progress - 2026-03-16 - Shared Conversational-Actor / Runtime Identity Boundary",
-      "line_in_shard": 200,
-      "source_shard_id": "shard-0026"
-    },
-    {
-      "type": "doc_hint",
-      "text": "### Targeted docs read — assistant-chat-design, interview-subagent-integration, chain-wizard-flexibility, FinalGUISpec, Multi-Account, Personas, Models_System",
-      "line_in_shard": 2,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Shared provider-runtime contract applies beyond Orchestrator (assistant, interviewer, builders, overseers, node workers, provider-backed chat); requested/effective and selection reason are shared.",
-      "line_in_shard": 11,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Conversational/document-production surfaces require effective Persona, selection reason, platform/model, skipped-control disclosure (Interview, Requirements Builder, subagent blocks).",
-      "line_in_shard": 15,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Shared failure/remediation taxonomy: failure_class/blocked_reason_code; chat blocked notices use allowed_action_ids[] and canonical metadata.",
-      "line_in_shard": 19,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "decision",
-      "text": "### Main boundary clarification — conversational actors share provider/runtime identity semantics but are not orchestration execution objects (not Feature Seams, Work Packages, Nodes, lane-pool, package/seam governance).",
-      "line_in_shard": 24,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Identity-model direction — distinct families: thread_id; wizard_id/stage/bundle ids; run_id/package/seam/node/attempt ids — linkable but not collapsed.",
-      "line_in_shard": 41,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "decision",
-      "text": "### Shared-runtime surface parity — multiple surfaces showing the same active conversational/document-production run must share underlying runtime state and requested/effective fields.",
-      "line_in_shard": 58,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Blocked-state implication — blocked not Orchestrator-exclusive; attention_required/blocked/blocked_reason_code/allowed_action_ids/resume_url across Chat/Interview/Wizard.",
-      "line_in_shard": 66,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "requirement",
-      "text": "### Non-goal / anti-drift — shared provider runtime does not imply shared execution ontology (same machinery, different object families and lifecycles).",
-      "line_in_shard": 78,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Search / record implication — span actors without flattening; shared runtime-identity fields with distinct actor/run kinds (assistant, interview, builder, orchestrator).",
-      "line_in_shard": 91,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "process_defect",
-      "text": "### Contradictions — 'shared runtime, separate ontology' mostly implicit; risk of over-unifying or duplicating identity logic.",
-      "line_in_shard": 103,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "decision",
-      "text": "### Candidate fixes — explicit boundary statement; preserve actor/run kinds; one disclosure grammar; shared blocked taxonomy with actor-specific state machines.",
-      "line_in_shard": 111,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "requirement",
-      "text": "### Do-not-forget — thread_id, wizard_id, bundle/review ids, orchestration ids linkable but distinct; blocked notices prove shared taxonomy without shared ontology.",
-      "line_in_shard": 119,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "## Research Progress - 2026-03-16 - Export Contracts",
-      "line_in_shard": 124,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "doc_hint",
-      "text": "### Targeted docs read — usage-feature, FinalGUISpec, Orchestrator_Page, storage-plan, Runtime_Artifacts_Panel, chain-wizard-flexibility",
-      "line_in_shard": 126,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Export families: .pm-bundle; render exports; Artifacts panel export; Usage/Ledger CSV/JSON; project outputs under .puppet-master/project/**; seglog/JSONL history — no unified Orchestrator export contract yet.",
-      "line_in_shard": 134,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Runtime_Artifacts_Panel: canonical runtime identity; Show in Ledger/Usage; no shadow models. chain-wizard: sharded graph canonical, monolithic export derived.",
-      "line_in_shard": 143,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "process_defect",
-      "text": "- Orchestrator_Page export language thin: filtered ledger export but weak run/evidence/history/record-bundle contract.",
-      "line_in_shard": 150,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "decision",
-      "text": "### Recommended export taxonomy — record export vs bundle export vs view export (exact records vs portable multi-record manifest vs filtered/rendered outputs).",
-      "line_in_shard": 154,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Orchestrator-specific export candidates — records (concern, promotion, corroboration, patch, recovery, ledger slice); bundles (evidence, selected objects, historical run package); views (CSV/JSON tables, search, graph render).",
-      "line_in_shard": 168,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "requirement",
-      "text": "### Manifest direction — non-trivial bundle exports should carry manifest (export_id, export_kind, schema_version, project_id, focused_run_id?, source_surface, generated_at_utc, filter_summary?, included_record_ids[], included_artifact_ids[]).",
-      "line_in_shard": 187,
-      "source_shard_id": "shard-0027"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Manifest fields continued: included_file_paths[]?, lineage_notes?, trust_state_at_export? (important given stale/degraded projections).",
-      "line_in_shard": 1,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "requirement",
-      "text": "### Canonical-vs-derived rule — export convenience must not redefine canonical truth (CSV view ≠ canonical history; JSON summary ≠ record export unless exact envelope; monolithic graph derived; JSONL mirror projection-derived).",
-      "line_in_shard": 6,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Runtime-artifact implication — preserve run/thread/attempt linkage; no shadow IDs; usage artifacts route through canonical usage identity.",
-      "line_in_shard": 15,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "verification_rule",
-      "text": "### Trust / stale-data implication — exports from stale/degraded projections must disclose trust in manifest or re-query canonical backing (ledger, concerns, promotions, graph generation).",
-      "line_in_shard": 22,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Retention / archival — export supports long-term retention; may motivate cleanup transitions but does not authorize deleting canonical/historical records.",
-      "line_in_shard": 34,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "process_defect",
-      "text": "### Contradictions — no single Orchestrator export contract tying records, artifacts, manifests, view exports, trust disclosure; JSON export meaning ambiguous.",
-      "line_in_shard": 42,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "decision",
-      "text": "### Candidate fixes — define record/bundle/view taxonomy; require manifests; preserve canonical ids/refs; trust disclosure or revalidation for projection-based exports.",
-      "line_in_shard": 55,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "requirement",
-      "text": "### Do-not-forget — do not blur export families; filtered JSON ≠ canonical record export; derived exports must stay visibly derived.",
-      "line_in_shard": 61,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "stale_retirement_item",
-      "text": "## Research Progress - 2026-03-16 - Notifications / Escalation Interaction with Concerns, Blocked Ownership, and Projection Trust",
-      "line_in_shard": 66,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "doc_hint",
-      "text": "### Targeted docs read — FinalGUISpec, Orchestrator_Page, usage-feature, assistant-chat-design, interview-subagent-integration",
-      "line_in_shard": 68,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Escalation ladder: info, warning, attention_required, blocked, system_notification; blocked vs attention_required distinct; wizard-blocked outranks attention-required; usage quiet periods; all-nodes-blocked time escalation.",
-      "line_in_shard": 75,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "data_shape",
-      "text": "- Missing interaction policy: concern state × escalation; blocked-owner routing; stale/degraded trust qualifying notifications.",
-      "line_in_shard": 88,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "decision",
-      "text": "### Concern interaction — severity alone does not drive escalation; combine severity, execution impact, persistence, ownership; acknowledged must not mask active blocked.",
-      "line_in_shard": 93,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "routing_rule",
-      "text": "### Blocked-owner interaction — owner shapes destination surface and notification style (User vs overseers vs Runtime/Recovery/Graph Patch vs External Resource).",
-      "line_in_shard": 106,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "verification_rule",
-      "text": "### Projection-trust interaction — stale/degraded projections must not drive overconfident notifications; prefer canonical events/blocked records over untrusted rollups.",
-      "line_in_shard": 120,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Routing / surface model — History (chronology), Progress/Dashboard (active attention), thread/chat (user action), system notification (sparse high-value).",
-      "line_in_shard": 134,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Resurfacing — good triggers: severity increase, owner change, advisory→execution impact, blocked duration, trust state changes; bad: identical stale heartbeat summaries.",
-      "line_in_shard": 149,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "requirement",
-      "text": "### Usage / pressure — quiet periods for threshold warnings must not hide canonical blocked/action-needed episodes.",
-      "line_in_shard": 161,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "data_shape",
-      "text": "### Copy / severity — qualify copy for trust (stale/degraded patterns vs strong claims from untrusted projections).",
-      "line_in_shard": 168,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "process_defect",
-      "text": "### Contradictions — notification interaction layer incomplete; risks over-notify, misroute, confident alerts from degraded projections.",
-      "line_in_shard": 178,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "decision",
-      "text": "### Candidate fixes — route on severity, execution impact, blocked owner, persistence, projection trust; acknowledgment as noise control only; quiet windows not for unresolved blocked; stale/degraded disclosure before strong claims.",
-      "line_in_shard": 186,
-      "source_shard_id": "shard-0028"
-    },
-    {
-      "type": "requirement",
-      "text": "### Do-not-forget — blocked owner drives where/how user is notified; projection trust affects confidence; acknowledgment cannot fake health under blocked runtime.",
-      "line_in_shard": 197,
-      "source_shard_id": "shard-0028"
-    }
-  ]
+  "extracted": {
+    "requirements": [
+      "Adopt a shared governance/runtime record envelope across first-class record families with stable identity, scope, status, timestamps, refs, and lineage links.",
+      "Keep canonical records structurally distinct from artifacts/rendered outputs, with artifacts linked by canonical refs rather than substituting record identity.",
+      "Define separate but mappable lifecycle models for orchestration lanes and concrete worktrees, including explicit cleanup eligibility and historical survivability after live removal.",
+      "Gate archive/prune/remove actions on active ownership, blocked recovery dependencies, safe-point restore needs, unresolved conflict workflows, and downstream lineage dependencies.",
+      "Expand canonical glossary/help ownership to new orchestrator concepts and high-risk term distinctions to prevent cross-surface copy drift.",
+      "Preserve shared requested/effective runtime identity semantics across conversational/document-production surfaces while preventing ontology collapse into orchestrator execution objects.",
+      "Define orchestrator export taxonomy (`record`, `bundle`, `view`) with manifest requirements and trust-state disclosure/revalidation for projection-derived exports.",
+      "Route notifications/escalations using combined dimensions (severity, execution impact, blocked owner, persistence, projection trust) instead of severity-only logic."
+    ],
+    "decisions": [
+      "Use a shared envelope + family payload pattern rather than ad hoc top-level record shapes per governance object.",
+      "Treat lane lifecycle and worktree lifecycle as related but non-identical state machines.",
+      "Retain historical identity/lineage after archive/prune/remove; cleanup affects live backing, not history/ledger truth.",
+      "Anchor glossary as canonical short-definition source; let help provide deeper examples and related concept links.",
+      "Formalize boundary rule: shared runtime identity does not imply shared execution ontology.",
+      "Classify exports explicitly as canonical records, portable bundles, or derived views to avoid semantic ambiguity in JSON/CSV outputs.",
+      "Require manifest trust disclosure or canonical refresh when exporting from stale/degraded projections.",
+      "Use concern acknowledgment for noise control only; do not allow it to suppress still-active blocked states."
+    ],
+    "data_shapes": [
+      {
+        "name": "shared_record_envelope",
+        "fields": [
+          "record_id",
+          "record_kind",
+          "schema_version",
+          "project_id",
+          "run_id?",
+          "scope_type",
+          "scope_id",
+          "status",
+          "created_at_utc",
+          "updated_at_utc?",
+          "summary",
+          "summary_kind?",
+          "detail_ref?",
+          "source_refs[]",
+          "artifact_refs[]",
+          "related_record_refs[]",
+          "lineage_refs[]",
+          "actor_ref?",
+          "requested_effective_snapshot_refs?"
+        ]
+      },
+      {
+        "name": "lane_lifecycle_states",
+        "values": [
+          "baseline",
+          "active",
+          "suspect",
+          "restoring",
+          "retained",
+          "cleanup_eligible",
+          "archived",
+          "removed",
+          "historical"
+        ]
+      },
+      {
+        "name": "worktree_posture_states",
+        "values": [
+          "live",
+          "dirty",
+          "conflict",
+          "orphaned",
+          "recovering",
+          "retained",
+          "archived",
+          "removed"
+        ]
+      },
+      {
+        "name": "export_manifest",
+        "fields": [
+          "export_id",
+          "export_kind",
+          "schema_version",
+          "project_id",
+          "focused_run_id?",
+          "source_surface",
+          "generated_at_utc",
+          "filter_summary?",
+          "included_record_ids[]",
+          "included_artifact_ids[]",
+          "included_file_paths[]?",
+          "lineage_notes?",
+          "trust_state_at_export?"
+        ]
+      },
+      {
+        "name": "shared_blocked_taxonomy_fields",
+        "fields": [
+          "attention_required",
+          "blocked",
+          "blocked_reason_code",
+          "allowed_action_ids[]",
+          "resume_url"
+        ]
+      }
+    ],
+    "routing_rules": [
+      "Source Control remains worktree-first and compact; Orchestrator carries richer lane lineage/policy context with worktree status attached.",
+      "Default Source Control visibility focuses live/current rows; retained/cleanup-eligible/historical materials are filter/toggle scoped.",
+      "Notification destination is owner-aware: user-owned blocks can route to chat/progress/system notifications; operational owner blocks route to operational surfaces first.",
+      "History is canonical chronology; Progress/Dashboard handles active attention; thread/chat handles direct user action paths; system notification is sparse summon layer."
+    ],
+    "verification_rules": [
+      "Before destructive cleanup actions verify no active run ownership and no unresolved recovery/safe-point/lineage dependency on the target worktree/lane.",
+      "Ensure archive/prune/remove preserve inspectable historical records in History/Ledger/lineage views.",
+      "When projection trust is stale/degraded, either qualify notification/export claims with trust disclosure or re-query canonical backing data.",
+      "Validate JSON export semantics against taxonomy: canonical record payload vs filtered view dump vs bundle manifest package."
+    ],
+    "owner_consumer_obligations": [
+      "Orchestrator owners define lane-pool truth, cleanup posture, and policy explanations.",
+      "Source Control owners execute concrete worktree operations and present compact operational inventory.",
+      "Glossary/help owners maintain canonical terminology and distinction guidance across surfaces.",
+      "Runtime identity consumers (chat/interview/builders/orchestrator) must reuse requested/effective disclosure grammar without collapsing object identities.",
+      "Notification system owners enforce escalation policy dimensions and trust-aware confidence language."
+    ],
+    "stale_retirement_items": [
+      "Retire ad hoc governance record top-level shapes in favor of shared envelope + payload families.",
+      "Retire ambiguous cleanup semantics where archive/prune/remove are treated as equivalent operations.",
+      "Retire glossary gaps that permit synonym drift for lane/worktree, history/ledger, historical/superseded, and related pairs.",
+      "Retire overconfident projection-derived alerts/exports that do not disclose stale/degraded trust state."
+    ],
+    "open_questions": [
+      "What exact schema contract and versioning policy will govern the shared envelope and per-family payload extensibility?",
+      "What authoritative mapping table should govern lane-state to worktree-state transitions across recovery and cleanup flows?",
+      "Which export surfaces require mandatory manifests vs optional manifests, and how strict should trust-state fields be for simple record exports?",
+      "What thresholds and timing policies should drive owner-based escalation to system notifications across blocked categories?"
+    ],
+    "process_defects": [
+      "Documentation currently defines many components but leaves key interaction policies implicit across seams.",
+      "Export semantics are distributed across domains, creating ambiguity about canonical vs derived JSON outputs.",
+      "Terminology governance lags behind orchestrator rewrite velocity, increasing copy and UX drift risk.",
+      "Notification policy lacks explicit combined-dimension routing logic despite existing severity ladders and trust-state needs."
+    ],
+    "doc_hints": [
+      "Prioritize updates to `Plans/Glossary.md` and corresponding help entries for new orchestrator vocabulary and distinction pairs.",
+      "Introduce explicit lane/worktree lifecycle contract language in orchestrator/source-control planning docs.",
+      "Codify shared runtime boundary statement in conversational and orchestrator architecture docs.",
+      "Add unified orchestrator export contract section tying records, bundles, views, manifests, and trust-state handling."
+    ]
+  },
+  "exclusions_by_shard": {
+    "shard-0025": [
+      "No implementation code or migration scripts; planning-level findings only."
+    ],
+    "shard-0026": [
+      "No concrete UI wireframe edits; lifecycle semantics and gating rules only."
+    ],
+    "shard-0027": [
+      "No finalized glossary text authored; terminology gap analysis only."
+    ],
+    "shard-0028": [
+      "No production notification engine spec; interaction policy recommendations only."
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0025": [
+      "seed-envelope-normalization",
+      "seed-record-artifact-separation"
+    ],
+    "shard-0026": [
+      "seed-lane-worktree-lifecycle-split",
+      "seed-cleanup-eligibility-gates"
+    ],
+    "shard-0027": [
+      "seed-glossary-ownership-expansion",
+      "seed-runtime-ontology-boundary"
+    ],
+    "shard-0028": [
+      "seed-export-taxonomy-manifest",
+      "seed-notification-trust-routing"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
 }

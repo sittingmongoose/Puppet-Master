@@ -1,28 +1,34 @@
 {
-  "schema_id": "pm.ledger_condenser_report.v3.1.12",
+  "schema_id": "pm.ledger_condenser_report.v3.1.14",
   "prompt_id": "C1",
-  "prompt_version": "pm.c1.v3.1.12",
-  "timestamp_utc": "20260506T182934Z",
+  "prompt_version": "pm.c1.v3.1.14",
   "work_id": "w-20260312-203855",
+  "status": "complete",
+  "execution_type": "hybrid_mechanical_and_semantic",
   "mode": "existing_working_ledger_preserved",
   "source_mode": "existing_working_ledger",
-  "ledger_intake_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
-  "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-  "working_ledger_preserved_unchanged": true,
-  "working_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
-  "working_ledger_line_count": 18244,
-  "working_ledger_byte_count": 1044305,
-  "structure_assessment": {
-    "suitable_for_sharding": true,
-    "format": "markdown",
-    "notes": "Top-level work metadata and scope sections plus repeated '## Entry' audit blocks with timestamp/stage/finding fields; line-bounded sharding or entry-oriented splits are feasible without rewriting content."
+  "input_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+  "input_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+  "preservation": {
+    "ledger_rewritten": false,
+    "ledger_preserved_unchanged": true,
+    "normalization_applied": false
   },
-  "normalization_applied": [],
-  "subagent_patch_artifacts": [],
-  "final_gate": {
-    "passed": true,
-    "mode_a_existing_ledger": true,
-    "rationale": "Non-empty working_ledger.md validated; no summarization or bulk rewrite; file byte-identical to pre-stage hash."
+  "deterministic_checks": {
+    "exists_non_empty": true,
+    "line_count": 18244,
+    "sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "heading_count_h2": 272
   },
-  "next_prompt_request": "Paste prompt C2 — Ledger Shard Indexer v3.1.12."
+  "readiness_for_sharding": {
+    "structured_enough": true,
+    "basis": [
+      "non_empty_ledger_verified",
+      "stable_hash_recorded",
+      "line_count_recorded",
+      "section_headings_detected"
+    ]
+  },
+  "next_prompt_request": "Paste prompt C2 — Ledger Shard Indexer v3.1.14.",
+  "generated_at_utc": "2026-05-07T15:17:17Z"
 }

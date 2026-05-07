@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.ledger_intake_manifest.v3.1.12",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.1.12",
+  "timestamp_utc": "20260506T182752Z",
+  "work_id": "w-20260312-203855",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "excluded_sources": [],
+  "open_decisions": [],
+  "requires_new_research": false,
+  "requires_condensation": false,
+  "requires_ledger_preparation": true,
+  "next_section": "C_Ledger_Preparation",
+  "next_preferred_prompt": "C0",
+  "selection_rationale": "Priority 1: working_ledger.md exists and is non-empty (18244 lines). No session_notes/*.jsonl, research_findings.json, feature_spec_audit_report.json, or issue_process_adjudication_report.json present under the work item.",
+  "working_ledger_stats": {
+    "line_count": 18244,
+    "byte_count": 1044305
+  }
+}

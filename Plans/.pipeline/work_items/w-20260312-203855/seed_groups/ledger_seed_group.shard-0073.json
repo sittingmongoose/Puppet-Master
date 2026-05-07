@@ -1,563 +1,607 @@
 {
-  "schema_id": "pm.ledger_seed_group.v3.1.12",
-  "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.1.12",
+  "schema_version": "ledger_seed_group.v1",
   "work_id": "w-20260312-203855",
-  "inventory_id": "c3-inv-019",
-  "task_id": "c3-task-019",
-  "anchor_shard_id": "shard-0073",
-  "working_ledger_line_start": 14401,
-  "working_ledger_line_end": 15200,
-  "status": "complete",
-  "per_shard": [
+  "task_id": "task-019",
+  "bounded_extraction": "C3",
+  "seed_group_id": "ledger_seed_group.shard-0073",
+  "source_shards": [
+    "shard-0073",
+    "shard-0074",
+    "shard-0075",
+    "shard-0076"
+  ],
+  "source_files": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0073.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0074.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0075.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0076.md"
+  ],
+  "extraction_fields": [
+    "seed_id",
+    "source_shard",
+    "source_lines",
+    "title",
+    "target_docs",
+    "owners",
+    "problem_statement",
+    "required_change",
+    "acceptance_criteria",
+    "evidence"
+  ],
+  "seeds": [
     {
-      "shard_id": "shard-0073",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0073.md",
-      "line_start_in_source": 14401,
-      "line_end_in_source": 14600,
-      "source_sha256": "beb7d4f9fab8cbb8a381ceb08ddbfcd3a768b17cc19195bce1099865aa8b450b",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "doc_hint",
-          "text": "Routing tranche owner chain: primary `Contracts_V0.md`, `Crosswalk.md`; adjacent `UI_Command_Catalog`, `FinalGUISpec`, `FileManager`, `storage-plan`, `usage-feature`, `assistant-chat-design`, `Run_Graph_View`, `Orchestrator_Page`, `WorktreeGitImprovement`",
-          "line_in_shard": 1,
-          "line_in_source": 14401
-        },
-        {
-          "type": "contradiction",
-          "text": "Contract conclusions stronger than several owner/consumer docs; route vocabulary is cross-cutting—reconciling from surface docs first reintroduces drift",
-          "line_in_shard": 16,
-          "line_in_source": 14416
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Reconcile owners in order: Contracts_V0, Crosswalk, UI_Command_Catalog, FinalGUISpec, then consumers; keep routing tranche centralized in owners before broad consumer prose",
-          "line_in_shard": 20,
-          "line_in_source": 14420
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: routing model has clear owner chain; reconciliation must follow it or fragment again",
-          "line_in_shard": 28,
-          "line_in_source": 14428
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Routing collision with tier-era consumer docs",
-          "line_in_shard": 32,
-          "line_in_source": 14432
-        },
-        {
-          "type": "data_shape",
-          "text": "Orchestrator_Page tier-era: tab 2 `Tiers`, six-tab shell Progress/Tiers/Node Graph/Evidence/History/Ledger, Progress centers active tier and TierChanged; cross-surface CTAs should normalize object-first route_target not tier pivots",
-          "line_in_shard": 42,
-          "line_in_source": 14442
-        },
-        {
-          "type": "contradiction",
-          "text": "Run_Graph_View carries two identity systems: older tier_id/tier_type vs newer scheduler_pass_id, blocked_sequence, safe_point_id, remediation",
-          "line_in_shard": 47,
-          "line_in_source": 14447
-        },
-        {
-          "type": "contradiction",
-          "text": "UI_Command_Catalog split: newer blocked_sequence vs graph HITL request_id; cmd.source_control.select_worktree still layout/UI-only conflicting object-first worktree routing",
-          "line_in_shard": 52,
-          "line_in_source": 14452
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted stale consumers: Orchestrator_Page, Run_Graph_View, FinalGUISpec, UI_Command_Catalog; owners Contracts_V0, Crosswalk",
-          "line_in_shard": 57,
-          "line_in_source": 14457
-        },
-        {
-          "type": "contradiction",
-          "text": "tier_id still canonical for execution/navigation where rewrite needs run_id+node_id+attempt_id?+blocked_sequence?; request_id vs blocked_sequence for HITL; Tiers as primary tab/page vs Seams+Node Graph; Usage tier_id filters vs usage_event routing; worktree as UI-only vs first-class routed object",
-          "line_in_shard": 67,
-          "line_in_source": 14467
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Reconcile owners first; replace Tiers assumptions with Progress/Seams/Node Graph/Evidence/History/Ledger; tier_id navigation → node/attempt/blocked_episode/scheduler_pass/safe_point/remediation; graph HITL identity request_id → blocked-episode anchored; reclassify worktree/SCM as object navigation",
-          "line_in_shard": 74,
-          "line_in_source": 14474
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: Orchestrator_Page mixes blocked/remediation with TierChanged/active tier; Run_Graph_View strong internal contradiction; FinalGUISpec reintroduces stale pages until owners fixed; UI_Command_Catalog exposes request_id vs blocked_sequence in command rows",
-          "line_in_shard": 93,
-          "line_in_source": 14493
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Usage surfaces versus object-first routing",
-          "line_in_shard": 99,
-          "line_in_source": 14499
-        },
-        {
-          "type": "data_shape",
-          "text": "usage-feature aligned on cost_usage Show in Ledger/Usage, usage.event canonical, page placement fixed; stale: deep-links as filters via usage_event_seq/ref or run_id/thread_id/ts, UsageRecord requires tier_id, aggregates tier_id+attempt_id?, duplicate cost_usage section",
-          "line_in_shard": 104,
-          "line_in_source": 14504
-        },
-        {
-          "type": "process_defect",
-          "text": "Duplicate `cost_usage runtime artifact and Show in Ledger / Show in Usage` section—reconciliation hazard",
-          "line_in_shard": 115,
-          "line_in_source": 14515
-        },
-        {
-          "type": "contradiction",
-          "text": "Rewrite needs usage_event as first-class routed object but usage-feature describes navigation as page-local filtering; tier_id still required correlation key vs object-first model",
-          "line_in_shard": 126,
-          "line_in_source": 14526
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Normalize Usage deep-links object_kind=usage_event + canonical id; filters/scroll as destination not identity; demote tier_id from cross-surface nav; dedupe cost_usage section",
-          "line_in_shard": 131,
-          "line_in_source": 14531
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: usage-feature closer than tier-era graph docs but tier_id language risks drift; duplicate section not cosmetic",
-          "line_in_shard": 139,
-          "line_in_source": 14539
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - File open versus subject open consumer split",
-          "line_in_shard": 143,
-          "line_in_source": 14543
-        },
-        {
-          "type": "data_shape",
-          "text": "FileManager: universal OpenFile { path, line?, range?, target_group? }; assistant-chat: open_source to generated://artifact_id, stable thread_id/message_id, resume_url; split—FileManager path-open as truth vs chat identity-native behavior",
-          "line_in_shard": 150,
-          "line_in_source": 14550
-        },
-        {
-          "type": "contradiction",
-          "text": "OpenFile overclaimed universal while generated artifacts, checkpoints, runtime artifacts need identity resolution; assistant-chat lacks shared named primitive tying to route/object model",
-          "line_in_shard": 175,
-          "line_in_source": 14575
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Keep OpenFile path/editor scoped; introduce OpenSubject for identity-open; generated:// as resolver output not canonical subject id; reconcile FileManager to OpenSubject for artifact/document/checkpoint/open-source",
-          "line_in_shard": 180,
-          "line_in_source": 14580
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: assistant-chat proves subject-open split required; FileManager main stale consumer",
-          "line_in_shard": 186,
-          "line_in_source": 14586
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Worktree and SCM routing consumers",
-          "line_in_shard": 190,
-          "line_in_source": 14590
-        },
-        {
-          "type": "data_shape",
-          "text": "WorktreeGitImprovement tier-era: get_tier_worktree(tier_id), paths/branches keyed by tier_id, recovery/conflict in tier_id terms",
-          "line_in_shard": 197,
-          "line_in_source": 14597
-        }
+      "seed_id": "C3-S0073-001",
+      "source_shard": "shard-0073",
+      "source_lines": [
+        1,
+        30
+      ],
+      "title": "Reconcile routing owner chain first",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "problem_statement": "Contract conclusions are ahead of owner and consumer docs; route vocabulary is cross-cutting and will drift if reconciliation starts from surface docs.",
+      "required_change": "Reconcile routing owner docs before broad consumer prose, then apply the centralized route vocabulary through command and GUI specs.",
+      "acceptance_criteria": [
+        "Contracts_V0.md and Crosswalk.md contain the canonical routing owner chain before consumer docs restate route semantics.",
+        "UI_Command_Catalog.md and FinalGUISpec.md consume the owner vocabulary instead of defining page-local routing rules.",
+        "Consumer updates happen after owner-doc route/open contract placement."
+      ],
+      "evidence": [
+        "shard-0073 lines 15-17: contract conclusions are stronger than owner docs and route vocabulary is cross-cutting.",
+        "shard-0073 lines 19-26: owner docs should be reconciled before consumer docs.",
+        "shard-0073 lines 28-30: reconciliation must follow the owner chain."
       ]
     },
     {
-      "shard_id": "shard-0074",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0074.md",
-      "line_start_in_source": 14601,
-      "line_end_in_source": 14800,
-      "source_sha256": "4a190733e426c06d82678efffe1f80c06eb0786bb80592f7a0ae9b617bc47fce",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "data_shape",
-          "text": "WorktreeGitImprovement mixes rewrite-aligned ops (Source Control primary for worktree, Orchestrator consumes identity/blocked/lineage, dirty_worktree/worktree_conflict route to SCM, historical refs) with tier_id propagation in examples",
-          "line_in_shard": 1,
-          "line_in_source": 14601
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted: WorktreeGitImprovement stale consumer, assistant-chat aligned adjacent; Orchestrator_Page, UI_Command_Catalog, Contracts_V0, storage-plan",
-          "line_in_shard": 12,
-          "line_in_source": 14612
-        },
-        {
-          "type": "contradiction",
-          "text": "Correct SCM vs Orchestrator boundary but identity hangs on tier_id—mixes rewrite surface ownership with tier-era worktree identity; crew/message examples risk propagating tier_id",
-          "line_in_shard": 23,
-          "line_in_source": 14623
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Replace tier-bound worktree identity with lane/worktree + execution-context model; SCM worktree-first with canonical worktree object id; reconcile examples off tier_id anchor",
-          "line_in_shard": 30,
-          "line_in_source": 14630
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: boundary correct, stale part is identity anchor; git/worktree examples high-risk backdoor for tier-era identity",
-          "line_in_shard": 35,
-          "line_in_source": 14635
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
-          "line_in_shard": 39,
-          "line_in_source": 14639
-        },
-        {
-          "type": "data_shape",
-          "text": "storage-plan: preview_subject_id doc:/artifact:, generated:// restore, projectors deterministic; Runtime_Artifacts_Panel partly aligned (cost_usage canonical) but open/link framed in panel terms and task_id language lags node/package/seam rewrite; Crosswalk/Contracts lack named route_target/OpenSubject",
-          "line_in_shard": 47,
-          "line_in_source": 14647
-        },
-        {
-          "type": "contradiction",
-          "text": "Storage knows canonical subject identity; Contracts/Crosswalk do not declare navigation primitive consuming it; task_id in artifacts doc drags identity to older decomposition",
-          "line_in_shard": 68,
-          "line_in_source": 14668
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Put route_target and OpenSubject in Contracts_V0; primitive boundary in Crosswalk; keep preview_subject_id and generated:// in storage; reconcile artifacts away from stale task_id toward runtime/object identity",
-          "line_in_shard": 73,
-          "line_in_source": 14673
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: clear owner-doc gap not vague alignment; storage-plan ahead of Contracts/Crosswalk on this seam",
-          "line_in_shard": 82,
-          "line_in_source": 14682
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Routing tranche closure and reconciliation strata",
-          "line_in_shard": 86,
-          "line_in_source": 14686
-        },
-        {
-          "type": "data_shape",
-          "text": "Remaining work: owner structural gap (Contracts/Crosswalk missing route/open names), command/wiring normalization, bounded stale consumer reconciliations; strata 1 owners → 2 catalog/GUI shell → 3 source-open/preview → 4 runtime/orchestration",
-          "line_in_shard": 88,
-          "line_in_source": 14688
-        },
-        {
-          "type": "contradiction",
-          "text": "Starting stratum 3/4 before stratum 1 restates local nav semantics; storage subject identity depends on contracts that do not exist by name; UI_Command_Catalog and FinalGUISpec are pressure points for vocabulary spread vs re-fragmentation",
-          "line_in_shard": 119,
-          "line_in_source": 14719
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Treat routing tranche structurally closed after owner contracts; ordered reconciliation not more invention; command layer wrapper-facing normalizing shared contracts underneath",
-          "line_in_shard": 124,
-          "line_in_source": 14724
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: model sharp enough to reconcile; blocker owner adoption not missing design",
-          "line_in_shard": 129,
-          "line_in_source": 14729
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
-          "line_in_shard": 133,
-          "line_in_source": 14733
-        },
-        {
-          "type": "routing_rule",
-          "text": "Contracts_V0 placement: chapter 7 UICommand—keep 7.1 envelope, add route_target and OpenSubject siblings before WiringEntry so wiring consumes not owns route semantics",
-          "line_in_shard": 140,
-          "line_in_source": 14740
-        },
-        {
-          "type": "routing_rule",
-          "text": "Crosswalk: add primitive near UICommand/DocumentPane/DocumentCheckpoint; state Contracts owns route/open shapes, storage owns preview_subject_id/resume_url, FileManager owns OpenFile, consumers only realize",
-          "line_in_shard": 149,
-          "line_in_source": 14749
-        },
-        {
-          "type": "contradiction",
-          "text": "Contracts ch7 jumps UICommand envelope to WiringEntry with no canonical route/open home; Crosswalk names UICommand/DocumentPane/Checkpoint without route-target primitive; Crosswalk OrchestratorPage still six tabs including Tiers",
-          "line_in_shard": 166,
-          "line_in_source": 14766
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Add route_target and OpenSubject under Contracts ch7; add Crosswalk primitive; update OrchestratorPage boundary to rewrite tabs; WiringEntry must consume contracts not surrogate-own",
-          "line_in_shard": 173,
-          "line_in_source": 14773
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: section order shows placement; WiringEntry consumes route/open not replaces",
-          "line_in_shard": 183,
-          "line_in_source": 14783
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Command catalog and GUI-shell adoption points",
-          "line_in_shard": 187,
-          "line_in_source": 14787
-        },
-        {
-          "type": "data_shape",
-          "text": "UI_Command_Catalog ready structurally but classifies routed actions as layout: select_worktree, open/focus thread usage, cmd.panel.switch with object refs; FinalGUISpec carries stale Tiers and resume_url as strong deep-link plus widget tab language vs Progress-only widget rule",
-          "line_in_shard": 193,
-          "line_in_source": 14793
-        }
+      "seed_id": "C3-S0073-002",
+      "source_shard": "shard-0073",
+      "source_lines": [
+        32,
+        97
+      ],
+      "title": "Replace tier-era routing consumers",
+      "target_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "problem_statement": "High-traffic consumer docs still use tier_id, request_id, and Tiers as primary execution/navigation identity despite the object-first route model.",
+      "required_change": "Replace tier-local navigation with route targets for node, attempt, blocked_episode, scheduler_pass, safe_point, and remediation, and replace HITL request_id payloads with blocked-episode anchored identity.",
+      "acceptance_criteria": [
+        "Orchestrator tabs use Progress, Seams, Node Graph, Evidence, History, and Ledger.",
+        "Run Graph and Orchestrator no longer treat tier_id as canonical navigation identity.",
+        "Graph HITL command payloads use blocked-episode anchored identity rather than request_id.",
+        "Source Control worktree selection is represented as object navigation, not only layout state."
+      ],
+      "evidence": [
+        "shard-0073 lines 41-56: Orchestrator, Run Graph, FinalGUISpec, and UI_Command_Catalog preserve stale tier/request identity.",
+        "shard-0073 lines 67-72: tier_id, request_id, Tiers, Usage pivots, and worktree selection conflict with object-first routing.",
+        "shard-0073 lines 74-91: candidate fixes specify the replacement tab model and routed object kinds."
       ]
     },
     {
-      "shard_id": "shard-0075",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0075.md",
-      "line_start_in_source": 14801,
-      "line_end_in_source": 15000,
-      "source_sha256": "43cab8e8ee10f0cb1749452bb461b9ee8d47b939aa2b1d407f2db791f8ec7161",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "data_shape",
-          "text": "FinalGUISpec continuation: shell/navigation lets deep-link behavior live outside shared route contract; stale Tiers and widgetized Orchestrator; resume_url as strong standalone deep-link; Tiers as primary page/tab; Orchestrator widget tabs vs Progress-only widget composition rule",
-          "line_in_shard": 1,
-          "line_in_source": 14801
-        },
-        {
-          "type": "contradiction",
-          "text": "Catalog layout/UI-only labels on canonically routed actions; cmd.panel.switch overloaded shell vs contextual object targeting; FinalGUISpec gives resume_url strong ownership; Tiers as page and settings label; widget appendix vs Progress-only composition",
-          "line_in_shard": 13,
-          "line_in_source": 14813
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Catalog: classify shell_view, navigation_wrapper, domain_action; reclassify worktree/thread usage; keep panel.switch shell-pure move object via wrappers/normalized args. FinalGUISpec: consume route_target not resume_url as primitive; replace Tiers primary language; narrow widget composition to Progress only inside Orchestrator",
-          "line_in_shard": 22,
-          "line_in_source": 14822
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: catalog structure fine—meaning labels wrong; FinalGUISpec major drift amplifier combining shell, page taxonomy, widget, deep-link",
-          "line_in_shard": 32,
-          "line_in_source": 14832
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Wiring, matrix, and evidence normalization limits",
-          "line_in_shard": 36,
-          "line_in_source": 14836
-        },
-        {
-          "type": "process_defect",
-          "text": "Wiring built on ui_element_id, ui_command_id, handler_location, expected_event_types—no wrapper normalization, alias mapping, route/open consumption, or command_kind; Wiring_Matrix.schema.json lacks command-kind/normalization fields; evidence.schema.json checks too generic for route/wrapper proof; Gates/UI_Wiring_Rules assume dispatch-level verification only",
-          "line_in_shard": 45,
-          "line_in_source": 14845
-        },
-        {
-          "type": "contradiction",
-          "text": "Rewrite needs stable wrapper commands normalizing to shared contracts but wiring treats commands as direct or UI-only; matrix cannot express wrapper-over-canonical without prose smuggling; evidence cannot carry structured normalization proof for GATE-010",
-          "line_in_shard": 76,
-          "line_in_source": 14876
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Normalization metadata catalog-owned; extend wiring/gates to consume command_kind, normalization kind, canonical target; keep matrix rows small referencing rich commands; extend evidence for structured normalization verification",
-          "line_in_shard": 81,
-          "line_in_source": 14881
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: matrix schema and evidence schema limitations differ; fix is catalog metadata consumed by wiring/gates not second routing schema in matrix",
-          "line_in_shard": 90,
-          "line_in_source": 14890
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Spec-integrity defects in routing-adjacent docs",
-          "line_in_shard": 94,
-          "line_in_source": 14894
-        },
-        {
-          "type": "process_defect",
-          "text": "Crosswalk duplicated numbering 3.13 RunGraphView vs DocumentInlineNotes, 3.14 OrchestratorPage vs TargetedRevisionPass; usage-feature duplicates cost_usage section; FinalGUISpec stale Tiers structure; Orchestrator_Page hardcodes Tab 2 Tiers orchestrator:tiers FinalGUISpec 7.7 mapping",
-          "line_in_shard": 103,
-          "line_in_source": 14903
-        },
-        {
-          "type": "contradiction",
-          "text": "Drift includes duplicate headings/sections making reconciliation ambiguous; Crosswalk duplicate numbering weakens precedence; usage-feature duplication risks divergent edits",
-          "line_in_shard": 124,
-          "line_in_source": 14924
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Treat duplicates as first-class reconciliation tasks; repair Crosswalk numbering before route/open boundary work; collapse cost_usage dup with Usage routing pass; remove stale Tiers structures from FinalGUISpec and Orchestrator_Page together",
-          "line_in_shard": 129,
-          "line_in_source": 14929
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: spec-integrity failures not open design questions—fix same pass as owner-consumer reconciliation",
-          "line_in_shard": 135,
-          "line_in_source": 14935
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - `resume_url` transport versus shadow-routing contract",
-          "line_in_shard": 139,
-          "line_in_source": 14939
-        },
-        {
-          "type": "contradiction",
-          "text": "resume_url acts as shadow routing in multiple docs; Contracts_V0 contradicts wizard.blocked resume_url required vs later resume_url?; storage blocked/wizard projections resume_url?; FinalGUISpec/chain-wizard concrete puppet-master:// vs assistant-chat anti-bypass for blocked runtime",
-          "line_in_shard": 149,
-          "line_in_source": 14949
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Treat resume_url as serialized transport only; canonical route/object primary; blocked records on wizard_id/step/thread_id/runtime identity; resume_url derived from route contract; reconcile required-vs-carried in Contracts and storage",
-          "line_in_shard": 178,
-          "line_in_source": 14978
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: owner-doc contradiction not GUI-only; assistant-chat has right anti-bypass rule",
-          "line_in_shard": 189,
-          "line_in_source": 14989
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Ref-family split: inspection refs versus navigation refs",
-          "line_in_shard": 193,
-          "line_in_source": 14993
-        }
+      "seed_id": "C3-S0073-003",
+      "source_shard": "shard-0073",
+      "source_lines": [
+        99,
+        141
+      ],
+      "title": "Normalize Usage as routed object identity",
+      "target_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "problem_statement": "Usage is partly aligned around canonical usage.event identity but still describes deep links as filters and keeps tier_id as a required cross-surface field.",
+      "required_change": "Normalize Usage deep links through object_kind usage_event and canonical usage event IDs, while treating filter, scroll, and highlight behavior as destination realization.",
+      "acceptance_criteria": [
+        "Usage navigation is expressed as route_target object_kind usage_event with canonical object_id.",
+        "tier_id is demoted from required cross-surface navigation identity in Usage records and consumers.",
+        "The duplicate cost_usage section in usage-feature.md is collapsed to one authoritative section."
+      ],
+      "evidence": [
+        "shard-0073 lines 105-116: usage-feature.md mixes canonical usage.event with older tier/filter language and duplicates cost_usage content.",
+        "shard-0073 lines 126-129: route rewrite requires usage_event as a first-class routed object.",
+        "shard-0073 lines 131-137: candidate fixes define object_kind usage_event and duplicate-section removal."
       ]
     },
     {
-      "shard_id": "shard-0076",
-      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0076.md",
-      "line_start_in_source": 15001,
-      "line_end_in_source": 15200,
-      "source_sha256": "a428d226e756950a24d18c73257823a150f11e66d86fd8f7b6aff491606bd9b5",
-      "extraction_status": "complete",
-      "extracted_items": [
-        {
-          "type": "data_shape",
-          "text": "Ref families under one loose link idea: inspection/detail, report/evidence, provenance/source, receipt/external-op, navigation/deep-link; examples detail_ref, report_ref, evidence_ref, usage_event_ref, workflow/docker/k8s refs, message_id/thread_id stable chat identity, resume_url only field acting as navigation transport",
-          "line_in_shard": 3,
-          "line_in_source": 15003
-        },
-        {
-          "type": "doc_hint",
-          "text": "Impacted: primary owners Contracts_V0, storage-plan; adjacent Runtime_Artifacts_Panel, assistant-chat-design, Orchestrator_Page",
-          "line_in_shard": 20,
-          "line_in_source": 15020
-        },
-        {
-          "type": "contradiction",
-          "text": "resume_url only ref carrying real navigation—collides with route/open work; owner docs do not state inspection vs navigation split; consumers may treat detail_ref, report_ref, resume_url interchangeably",
-          "line_in_shard": 29,
-          "line_in_source": 15029
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Owner explicit split: inspection/provenance refs in events/records; route/open owns navigation identity; keep *_ref families non-route; resume_url only serialized transport from canonical route",
-          "line_in_shard": 34,
-          "line_in_source": 15034
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: most refs need no replacement—conflict concentrates on resume_url",
-          "line_in_shard": 49,
-          "line_in_source": 15049
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Blocked/thread/wizard storage families still straddle two execution eras",
-          "line_in_shard": 53,
-          "line_in_source": 15053
-        },
-        {
-          "type": "data_shape",
-          "text": "storage-plan aligned: blocked_projection run_id/node_id/blocked_sequence, allowed_action_ids, attempt_record with scheduler/safe-point/remediation; stale tier_runtime_record tier_id, usage_record tier_id keys, evidence_record tier_id, thread_blocked_notice and wizard_runtime_state resume_url? mixed with blocked state",
-          "line_in_shard": 62,
-          "line_in_source": 15062
-        },
-        {
-          "type": "contradiction",
-          "text": "Node/attempt/blocked-sequence model vs usage/evidence/runtime still tier-native; thread/wizard blocked keeps resume_url? as stored alongside canonical metadata",
-          "line_in_shard": 91,
-          "line_in_source": 15091
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Reconcile storage: blocked/runtime node-native; tier_runtime_record to derived compat or execution-context projections; usage/evidence off tier_id as primary cross-surface key; blocked on canonical identity derived route not stored resume_url as primary",
-          "line_in_shard": 98,
-          "line_in_source": 15098
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: routing and execution-context reconciliation meet in storage-plan; it lags both",
-          "line_in_shard": 105,
-          "line_in_source": 15105
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wizard, and thread surfaces",
-          "line_in_shard": 109,
-          "line_in_source": 15109
-        },
-        {
-          "type": "data_shape",
-          "text": "node.blocked strong fields run_id, node_id, attempt_id?, blocked_reason_code, blocked_sequence, allowed_action_ids, preserved_local_work, detail_ref?, failure_class?; blocked_notice in chat aligned; wizard.blocked weak early shape vs strengthened addendum both present",
-          "line_in_shard": 116,
-          "line_in_source": 15116
-        },
-        {
-          "type": "contradiction",
-          "text": "wizard.blocked partly pre-escalation while node.blocked and blocked_notice advanced—wizard looks special deep-link not peer blocked family; unclear cross-family minimums vs local additions",
-          "line_in_shard": 149,
-          "line_in_source": 15149
-        },
-        {
-          "type": "candidate_fix",
-          "text": "Cross-family blocked minimum: reason, ordered allowed actions, preserved-work disclosure, stable blocked-episode id, inspection refs; local: node blocked_sequence/attempt/failure_class, wizard wizard fields, thread notices consumer not canonical owner; remove thin early wizard.blocked from Contracts_V0",
-          "line_in_shard": 154,
-          "line_in_source": 15154
-        },
-        {
-          "type": "requirement",
-          "text": "Do-not-forget: family-contract mismatch not one giant payload; assistant-chat stronger than owners on thread blocked actions",
-          "line_in_shard": 167,
-          "line_in_source": 15167
-        },
-        {
-          "type": "owner_consumer_obligation",
-          "text": "## Research Progress - 2026-03-17 - Usage and evidence families still use tier-era correlation",
-          "line_in_shard": 171,
-          "line_in_source": 15171
-        },
-        {
-          "type": "data_shape",
-          "text": "storage usage_record tier_id, evidence_record tier-keyed; usage-feature Run Graph/Orchestrator aggregate tier_id+attempt_id?, usage.jsonl tier-based; Run_Graph_View Usage via tier_id; Orchestrator_Page per-node tier_id tracking, evidence/worker filtered tier_id; Runtime_Artifacts_Panel stronger cost_usage by canonical usage id",
-          "line_in_shard": 180,
-          "line_in_source": 15180
-        },
-        {
-          "type": "doc_hint",
-          "text": "Usage/evidence tier-era correlation: targeted reads storage-plan, usage-feature, Run_Graph_View, Orchestrator_Page, Runtime_Artifacts_Panel; `### Impacted docs` opens at line 200 (shard boundary)",
-          "line_in_shard": 200,
-          "line_in_source": 15200
-        }
+      "seed_id": "C3-S0073-004",
+      "source_shard": "shard-0073",
+      "source_lines": [
+        143,
+        188
+      ],
+      "title": "Split OpenFile from OpenSubject",
+      "target_docs": [
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/storage-plan.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/storage-plan.md"
+      ],
+      "problem_statement": "FileManager still overclaims OpenFile as a universal open primitive even though generated artifacts, draft documents, checkpoints, search hits, and runtime artifacts require identity-native opening.",
+      "required_change": "Keep OpenFile path/editor scoped and introduce OpenSubject as the shared identity-open contract consumed by FileManager and assistant chat.",
+      "acceptance_criteria": [
+        "OpenFile is documented only for path/editor opens.",
+        "OpenSubject covers artifact, document, checkpoint, open-source, and stable message/search jump flows.",
+        "generated://artifact_id is treated as resolver output, not canonical subject identity."
+      ],
+      "evidence": [
+        "shard-0073 lines 150-163: FileManager asserts one OpenFile primitive while assistant chat already relies on identity opens.",
+        "shard-0073 lines 175-178: generated artifacts and stable IDs contradict universal path-open behavior.",
+        "shard-0073 lines 180-184: candidate fixes name OpenSubject and scope OpenFile."
+      ]
+    },
+    {
+      "seed_id": "C3-S0073-005",
+      "source_shard": "shard-0073",
+      "source_lines": [
+        190,
+        200
+      ],
+      "title": "Replace tier-bound worktree identity",
+      "target_docs": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "problem_statement": "Worktree and SCM routing are moving toward Source Control ownership, but worktree operational identity is still described with tier_id in the visible shard span.",
+      "required_change": "Carry forward a reconciliation item to replace tier-keyed worktree ownership with canonical worktree and execution-context identity.",
+      "acceptance_criteria": [
+        "Worktree identity no longer depends on get_tier_worktree(tier_id) or tier-keyed path/branch ownership.",
+        "SCM and Orchestrator flows route by canonical worktree object identity."
+      ],
+      "evidence": [
+        "shard-0073 lines 197-200: WorktreeGitImprovement.md uses get_tier_worktree(tier_id) and tier-keyed worktree paths/branches."
+      ]
+    },
+    {
+      "seed_id": "C3-S0074-001",
+      "source_shard": "shard-0074",
+      "source_lines": [
+        1,
+        37
+      ],
+      "title": "Route worktree conflicts by canonical worktree identity",
+      "target_docs": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "problem_statement": "WorktreeGitImprovement.md has correct Source Control versus Orchestrator surface ownership but still anchors examples and persistence on tier_id.",
+      "required_change": "Replace tier-bound worktree identity in SCM/runtime flows with lane/worktree plus execution-context identity, and keep Source Control worktree-first.",
+      "acceptance_criteria": [
+        "dirty_worktree and worktree_conflict routes land in Source Control with the correct worktree in scope.",
+        "Historical runs preserve historical worktree references after prune/remove.",
+        "Future crew/message examples stop carrying tier_id as the git/worktree coordination anchor."
+      ],
+      "evidence": [
+        "shard-0074 lines 1-10: examples still propagate tier_id while aligned text routes worktree state to Source Control.",
+        "shard-0074 lines 23-33: the document mixes rewrite-era surface ownership with tier-era identity and needs canonical worktree routing.",
+        "shard-0074 lines 35-37: coordination examples are a high-risk backdoor for tier-era identity."
+      ]
+    },
+    {
+      "seed_id": "C3-S0074-002",
+      "source_shard": "shard-0074",
+      "source_lines": [
+        39,
+        85
+      ],
+      "title": "Add route_target and OpenSubject owner contracts",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "problem_statement": "Storage already defines subject identity and artifact restore behavior, but Contracts and Crosswalk do not own the named navigation/open primitives that consume it.",
+      "required_change": "Put route_target and OpenSubject contracts in Contracts_V0.md and declare their primitive boundaries in Crosswalk.md.",
+      "acceptance_criteria": [
+        "Contracts_V0.md owns route_target and OpenSubject payload shapes.",
+        "Crosswalk.md declares route-target and subject-open primitive boundaries.",
+        "storage-plan.md remains owner of preview_subject_id and generated buffer restore joins.",
+        "Runtime artifact consumers route through shared primitives instead of panel-local rules."
+      ],
+      "evidence": [
+        "shard-0074 lines 48-57: storage-plan.md is ahead on subject identity; Contracts and Crosswalk lack route/open primitives.",
+        "shard-0074 lines 68-71: owner docs lack navigation primitives and artifact identity is dragged toward stale task_id language.",
+        "shard-0074 lines 73-80: candidate fixes assign contract, crosswalk, storage, and runtime-artifact ownership."
+      ]
+    },
+    {
+      "seed_id": "C3-S0074-003",
+      "source_shard": "shard-0074",
+      "source_lines": [
+        86,
+        131
+      ],
+      "title": "Order routing reconciliation by strata",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "problem_statement": "The route/open-by-identity tranche is structurally understood, but unordered consumer edits would reintroduce local navigation semantics.",
+      "required_change": "Treat the remaining work as ordered reconciliation: owner docs first, command/shell adoption second, source-open/preview consumers third, runtime/orchestration consumers fourth.",
+      "acceptance_criteria": [
+        "Contracts_V0.md and Crosswalk.md are updated before Stratum 3 or Stratum 4 consumers.",
+        "UI_Command_Catalog.md and FinalGUISpec.md spread canonical route/object vocabulary rather than local semantics.",
+        "Consumer docs are reconciled as adoption work, not further concept invention."
+      ],
+      "evidence": [
+        "shard-0074 lines 88-99: remaining work splits into owner gap, command/wiring normalization, and consumer reconciliations.",
+        "shard-0074 lines 101-117: four reconciliation strata are listed.",
+        "shard-0074 lines 119-127: consumer edits before owner fixes will drift; work is ordered reconciliation."
+      ]
+    },
+    {
+      "seed_id": "C3-S0074-004",
+      "source_shard": "shard-0074",
+      "source_lines": [
+        133,
+        185
+      ],
+      "title": "Insert route/open contracts in exact owner locations",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "problem_statement": "Contracts_V0.md chapter 7 jumps from UICommand envelope to WiringEntry, and Crosswalk.md names adjacent primitives without the route-target/open-by-identity boundary.",
+      "required_change": "Add route_target and OpenSubject as sibling contract sections under Contracts chapter 7 before WiringEntry; add the matching Crosswalk primitive near UICommand and DocumentPane.",
+      "acceptance_criteria": [
+        "Contracts_V0.md keeps UICommand envelope, then defines route_target and OpenSubject, then WiringEntry consumes those contracts.",
+        "Crosswalk.md names the route-target/open-by-identity primitive boundary near UICommand and DocumentPane.",
+        "Crosswalk.md states Contracts owns route/open shapes, storage owns persisted refs, FileManager owns OpenFile, and consumers realize primitives.",
+        "Stale OrchestratorPage Tiers boundary text is updated to the rewrite tab model."
+      ],
+      "evidence": [
+        "shard-0074 lines 140-148: exact Contracts_V0.md placement is section 7 between envelope and WiringEntry.",
+        "shard-0074 lines 149-159: exact Crosswalk.md primitive placement and ownership split are specified.",
+        "shard-0074 lines 166-181: gaps and candidate fixes identify missing sections and stale OrchestratorPage text."
+      ]
+    },
+    {
+      "seed_id": "C3-S0074-005",
+      "source_shard": "shard-0074",
+      "source_lines": [
+        187,
+        200
+      ],
+      "title": "Adopt route/open metadata in command catalog",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "owners": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "problem_statement": "UI_Command_Catalog.md is structurally ready for route/open adoption but still classifies routed object actions as layout state, while FinalGUISpec.md carries stale shell/navigation language.",
+      "required_change": "Carry forward command classification and GUI-shell route adoption work into the command catalog and GUI spec.",
+      "acceptance_criteria": [
+        "Commands that target routed objects are no longer classified as pure layout state.",
+        "FinalGUISpec.md consumes shared route_target behavior rather than standalone deep-link behavior."
+      ],
+      "evidence": [
+        "shard-0074 lines 193-200: command catalog is structurally ready but misclassifies routed actions; FinalGUISpec.md has stale shell/navigation assumptions."
+      ]
+    },
+    {
+      "seed_id": "C3-S0075-001",
+      "source_shard": "shard-0075",
+      "source_lines": [
+        1,
+        34
+      ],
+      "title": "Classify route-aware commands and GUI shell semantics",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "owners": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "problem_statement": "Command and GUI specs still let deep-link behavior, object targeting, and stale Tiers/widget assumptions live outside the shared route contract.",
+      "required_change": "Classify commands as shell_view, navigation_wrapper, or domain_action; reclassify worktree and Usage thread actions; keep cmd.panel.switch pure shell-facing; update FinalGUISpec.md to consume route_target and the rewrite Orchestrator tab model.",
+      "acceptance_criteria": [
+        "cmd.source_control.select_worktree and chat Usage open/focus commands are navigation wrappers.",
+        "cmd.panel.switch remains a pure shell-view command without contextual object targeting.",
+        "FinalGUISpec.md replaces resume_url-as-primitive and Tiers primary-surface language with route_target and rewrite tabs.",
+        "Only Progress is described as widget-composed inside Orchestrator."
+      ],
+      "evidence": [
+        "shard-0075 lines 13-20: layout-state labels, cmd.panel.switch overloading, resume_url, Tiers, and widget language conflict with route/open direction.",
+        "shard-0075 lines 22-30: candidate fixes specify command kinds, wrapper reclassification, route_target adoption, tab replacement, and Progress-only widgets.",
+        "shard-0075 lines 32-34: catalog labels and FinalGUISpec.md are drift amplifiers."
+      ]
+    },
+    {
+      "seed_id": "C3-S0075-002",
+      "source_shard": "shard-0075",
+      "source_lines": [
+        36,
+        92
+      ],
+      "title": "Extend wiring evidence for route normalization",
+      "target_docs": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/Wiring_Matrix.md",
+        "Plans/evidence.schema.json",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "owners": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/evidence.schema.json"
+      ],
+      "problem_statement": "The wiring and evidence model can verify flat command dispatch but cannot represent wrapper normalization, route/open consumption, alias mapping, or route-payload validation proof.",
+      "required_change": "Keep normalization metadata on the command-definition side and extend wiring/gate evidence so GATE-010 can verify wrapper normalization against canonical contracts.",
+      "acceptance_criteria": [
+        "Command definitions expose command_kind, normalization kind, and canonical target contract metadata.",
+        "Wiring and gate checks consume catalog normalization metadata without embedding a second routing schema in matrix rows.",
+        "Evidence checks can record wrapper target, alias target, route-payload validation result, and canonical-contract normalization evidence."
+      ],
+      "evidence": [
+        "shard-0075 lines 46-59: matrix and evidence schemas cannot encode normalization or route/open proof.",
+        "shard-0075 lines 60-66: current gate assumptions only cover flat dispatch verification.",
+        "shard-0075 lines 76-88: candidate fixes assign metadata to command definitions and structured proof to evidence checks."
+      ]
+    },
+    {
+      "seed_id": "C3-S0075-003",
+      "source_shard": "shard-0075",
+      "source_lines": [
+        94,
+        137
+      ],
+      "title": "Fix routing-adjacent spec integrity defects",
+      "target_docs": [
+        "Plans/Crosswalk.md",
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "owners": [
+        "Plans/Crosswalk.md",
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "problem_statement": "Routing-adjacent docs contain duplicate section numbering, repeated cost_usage content, and stale Tiers structures that make reconciliation ambiguous.",
+      "required_change": "Repair Crosswalk numbering, collapse duplicated usage-feature cost_usage content, and remove stale Tiers page/tab structures from FinalGUISpec.md and Orchestrator_Page.md in the reconciliation tranche.",
+      "acceptance_criteria": [
+        "Crosswalk.md has unique section numbering before it is used as the owner boundary doc for route/open primitives.",
+        "usage-feature.md has one authoritative cost_usage runtime artifact section.",
+        "FinalGUISpec.md and Orchestrator_Page.md no longer cross-reference stale Tiers page/tab structures."
+      ],
+      "evidence": [
+        "shard-0075 lines 103-115: duplicate Crosswalk numbering, duplicated cost_usage section, and stale Tiers structures are identified.",
+        "shard-0075 lines 124-127: defects make future reconciliation ambiguous and weaken Crosswalk precedence.",
+        "shard-0075 lines 129-133: candidate fixes require numbering repair, duplicate collapse, and Tiers removal."
+      ]
+    },
+    {
+      "seed_id": "C3-S0075-004",
+      "source_shard": "shard-0075",
+      "source_lines": [
+        139,
+        191
+      ],
+      "title": "Treat resume_url as route transport",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "problem_statement": "resume_url is acting as a shadow routing primitive, and owner docs disagree on whether wizard.blocked requires it or merely carries it when present.",
+      "required_change": "Make canonical route/object identity primary, treat resume_url as derived serialized transport, and reconcile required-versus-carried contradictions in owner docs.",
+      "acceptance_criteria": [
+        "Contracts_V0.md and storage-plan.md define canonical route/object identity before resume_url transport.",
+        "wizard/thread blocked records keep wizard_id, wizard_step, thread_id, and blocked/runtime identity where applicable.",
+        "resume_url is derived serialized transport, not canonical navigation identity.",
+        "FinalGUISpec.md and chain-wizard-flexibility.md stop defining behavior directly in terms of resume_url as the source of truth."
+      ],
+      "evidence": [
+        "shard-0075 lines 149-158: resume_url is used as a shadow routing primitive across Contracts, storage, GUI, and wizard docs.",
+        "shard-0075 lines 173-176: owner docs disagree on required versus optional resume_url and blocked flows must normalize through canonical identity.",
+        "shard-0075 lines 178-187: candidate fixes make resume_url derived transport."
+      ]
+    },
+    {
+      "seed_id": "C3-S0076-001",
+      "source_shard": "shard-0076",
+      "source_lines": [
+        1,
+        51
+      ],
+      "title": "Separate inspection refs from navigation refs",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "problem_statement": "Several ref families are grouped under loose link semantics, causing detail_ref, report_ref, evidence_ref, and resume_url to be treated as interchangeable open/navigation fields.",
+      "required_change": "Explicitly split inspection/provenance refs from route/open contracts, keeping resume_url only as serialized transport derived from canonical route identity.",
+      "acceptance_criteria": [
+        "detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, and kubernetes_refs are documented as record/provenance families, not route payload surrogates.",
+        "route/open contracts own navigation identity.",
+        "resume_url is the only ref-like field treated as route transport, not source-of-truth navigation identity."
+      ],
+      "evidence": [
+        "shard-0076 lines 3-16: inspection, report, evidence, provenance, receipt, conversational identity, and resume_url ref families are distinct.",
+        "shard-0076 lines 29-32: consumers may treat detail_ref, report_ref, and resume_url as interchangeable without an explicit split.",
+        "shard-0076 lines 34-47: candidate fixes keep refs as record/provenance families and route/open contracts as navigation owners."
+      ]
+    },
+    {
+      "seed_id": "C3-S0076-002",
+      "source_shard": "shard-0076",
+      "source_lines": [
+        53,
+        107
+      ],
+      "title": "Modernize blocked storage record families",
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "owners": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "problem_statement": "storage-plan.md straddles two execution eras: blocked_projection and attempt_record are node-native, while runtime, usage, and evidence records still use tier_id; blocked thread and wizard state still store resume_url as if primary.",
+      "required_change": "Reconcile storage so blocked/runtime families use node/attempt/blocked-sequence identity, tier_runtime_record becomes derived compatibility state or is replaced by execution-context projections, and thread/wizard blocked state uses canonical blocked/wizard identity with derived route transport.",
+      "acceptance_criteria": [
+        "blocked/runtime families remain node-native in storage-plan.md.",
+        "tier_runtime_record is reduced to derived compatibility state or replaced with rewrite-era execution-context projections.",
+        "usage and evidence records stop using tier_id as primary cross-surface keys.",
+        "thread_blocked_notice and wizard_runtime_state do not treat stored resume_url as canonical identity."
+      ],
+      "evidence": [
+        "shard-0076 lines 63-75: storage-plan.md mixes node-native blocked records with tier_runtime, usage, evidence, and resume_url-bearing blocked state.",
+        "shard-0076 lines 91-96: blocked episodes are node-native while usage/evidence/runtime rollups remain tier-native.",
+        "shard-0076 lines 98-103: candidate fixes replace stale tier framing and stored resume_url primacy."
+      ]
+    },
+    {
+      "seed_id": "C3-S0076-003",
+      "source_shard": "shard-0076",
+      "source_lines": [
+        109,
+        169
+      ],
+      "title": "Define blocked-family minimums",
+      "target_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "owners": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "problem_statement": "node.blocked and chat blocked_notice are mature, while wizard.blocked still has an older thin shape alongside a later stronger addendum.",
+      "required_change": "Define cross-family blocked minimums and family-local additions, then reconcile the early thin wizard.blocked definition out of Contracts_V0.md and matching storage state.",
+      "acceptance_criteria": [
+        "Canonical blocked objects share blocked reason, ordered actions where applicable, preserved-work/local-state disclosure where applicable, stable episode identity or family equivalent, and detail/report refs.",
+        "node-blocked keeps blocked_sequence, attempt_id, and failure_class as local additions.",
+        "wizard-blocked keeps wizard-specific clarification/report fields without becoming a special resume_url deep-link flow.",
+        "Thread blocked notices remain rendered/persisted consumer state, not canonical blocked ownership."
+      ],
+      "evidence": [
+        "shard-0076 lines 117-140: node.blocked and chat blocked_notice are stronger than wizard.blocked and wizard runtime state.",
+        "shard-0076 lines 149-152: wizard.blocked looks like a special deep-link flow without shared minimums.",
+        "shard-0076 lines 154-165: candidate fixes define shared minimums and family-local additions."
+      ]
+    },
+    {
+      "seed_id": "C3-S0076-004",
+      "source_shard": "shard-0076",
+      "source_lines": [
+        171,
+        201
+      ],
+      "title": "Remove tier-era Usage and Evidence correlation",
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "owners": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "problem_statement": "Usage and Evidence remain the strongest cross-surface families still tied to tier-era correlation, with storage, Usage, Run Graph, and Orchestrator still aggregating or filtering by tier_id.",
+      "required_change": "Carry forward a reconciliation item to replace tier_id-based usage/evidence correlation with canonical runtime object and usage identity, aligning consumers with Runtime_Artifacts_Panel cost_usage routing.",
+      "acceptance_criteria": [
+        "usage_record and evidence_record no longer use tier_id as primary cross-surface identity.",
+        "Run Graph and Orchestrator no longer route Usage by tier_id filters or aggregate usage/evidence by tier_id.",
+        "cost_usage routing remains by canonical usage identity rather than tier-local filters."
+      ],
+      "evidence": [
+        "shard-0076 lines 181-198: storage, usage-feature, Run Graph, and Orchestrator still use tier_id for usage/evidence correlation while Runtime_Artifacts_Panel routes cost_usage by canonical usage identity.",
+        "shard-0076 lines 200-201: impacted-doc extraction is bounded to the visible shard span; candidate fixes were not present in this shard slice."
       ]
     }
   ]

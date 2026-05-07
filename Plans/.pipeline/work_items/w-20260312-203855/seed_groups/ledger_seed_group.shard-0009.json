@@ -1,965 +1,130 @@
 {
-  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "schema_id": "pm.ledger_seed_group.v3",
   "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.1.12",
-  "subagent_invocation_id": "c3-inv-003",
-  "subagent_task_id": "c3-task-003",
+  "prompt_version": "c3.semantic_extraction.v1",
   "work_id": "w-20260312-203855",
-  "anchor": "shard-0009",
+  "subagent_task_id": "task-003",
   "source_shard_ids": [
     "shard-0009",
     "shard-0010",
     "shard-0011",
     "shard-0012"
   ],
-  "source_line_span": {
-    "line_start": 1601,
-    "line_end": 2400
+  "shard_line_ranges": {
+    "shard-0009": "1-201",
+    "shard-0010": "1-201",
+    "shard-0011": "1-201",
+    "shard-0012": "1-201"
   },
-  "manifest_paths": {
-    "shard-0009": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0009.md",
-    "shard-0010": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0010.md",
-    "shard-0011": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0011.md",
-    "shard-0012": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0012.md"
+  "extracted": {
+    "requirements": [
+      "Define a canonical package/seam/lane/promotion object family and extend schemas beyond node-level modeling.",
+      "Unify requested/effective execution identity to include account identity, fallback/switch reasons, and overseer-role semantics.",
+      "Define package-based lane-pool/worktree policy end-to-end, including contamination, restore, safe-point, and shared visibility.",
+      "Preserve historical lane/worktree lineage after cleanup/remove/archive and keep lineage queryable in graph/history/audit views.",
+      "Limit Orchestrator widget composition to Progress tab; keep Seams/Node Graph/Evidence/History/Ledger as native fixed-purpose surfaces."
+    ],
+    "decisions": [
+      "Source Control remains worktree-first; Orchestrator remains package/seam/lane-first.",
+      "Orchestrator initiates scoped lane/worktree actions while Source Control executes Git-native mutations.",
+      "Lane is primary operational object; worktree is backing filesystem/Git asset and may be removed while lane history persists.",
+      "Adopt one canonical HITL model and one canonical recovery action family across UI/runtime/chat.",
+      "Replace GitHub login as stable key with internal account_id; treat login/provider_account_id as provider-native disclosure metadata."
+    ],
+    "data_shapes": [
+      "Missing canonical IDs/keys across contracts: project_id, attempt_id, package_id, seam_id, lane_id, worktree_id, safe_point_id, promotion_class.",
+      "Canonical naming drift: requested_persona/effective_persona vs requested_persona_id/effective_persona_id.",
+      "HITL payload drift: allowed_actions[] vs allowed_action_ids[].",
+      "Lifecycle vocabulary needed for lane/worktree: baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical.",
+      "Widget projection contracts should be projection/record-based (run summary, blockers, seam/package/lane health) rather than tier events."
+    ],
+    "routing_rules": [
+      "Use three-tier cleanup routing: Priority 1 canonical contract blockers, Priority 2 misleading UI/SCM docs, Priority 3 terminology/anti-drift docs.",
+      "Route blocked/major decisions Dashboard -> Orchestrator -> chat-thread with consistent runtime action families.",
+      "Route Git/worktree mutation operations through Source Control even if launched contextually from Orchestrator.",
+      "Constrain widget hostability to Dashboard/Usage/Orchestrator-Progress and prevent deep-inspection tabs from becoming generic widget canvases."
+    ],
+    "verification_rules": [
+      "Scheduler contracts must converge to one model (eliminate lexicographic vs scored vs UI-derived coexistence).",
+      "Identity contract consumers must render canonical requested/effective fields and stop consuming deprecated _id persona canonical forms.",
+      "Projection freshness/trust-state must be persisted as a shared contract and used for action gating/fallback behavior.",
+      "Cleanup/archive/remove flows must preserve historical references and remediation linkage rather than deleting visibility."
+    ],
+    "owner_consumer_obligations": [
+      "Contracts_V0 should remain identity SSOT; downstream UI/storage/provider docs must align field names and semantics.",
+      "Orchestrator owns lane/package governance truth; Source Control owns worktree/Git execution and operator actions.",
+      "Provider/Persona/Prompt docs must retire tier-era ownership language and model package/seam/lane-aware execution identity.",
+      "Permissions model must include execution-entity/lane/package/account scoping for approvals and carryover behavior."
+    ],
+    "stale_retirement_items": [
+      "Retire tier-first/tier-widget assumptions in Orchestrator_Page, Widget_System, Run_Graph_View, and related UI docs.",
+      "Retire schema/document assumptions that only model run/node/tier without seam/package/lane/promotion/account lineage.",
+      "Deprecate stale widget layout keys for non-Progress Orchestrator tabs and replace with native tab view-state persistence."
+    ],
+    "open_questions": [
+      "Will tier terms become compatibility UI aliases only, or be fully deprecated from runtime/orchestration contracts?",
+      "How should package overseer vs seam overseer authority be partitioned across scheduling/review/promotion/recovery?",
+      "For bridged runtimes, is upstream account switching capturable, intentionally opaque, or a hard capability gap?",
+      "What is the final canonical blocked/recovery action taxonomy used by UI/runtime/chat equally?",
+      "What exact projection trust/freshness record family should govern degraded-mode behavior?"
+    ],
+    "process_defects": [
+      "Contradictory scheduler models (lexicographic vs scored ready-set vs UI-derived recovery).",
+      "Contradictory HITL boundaries (tier-boundary vs blocked-node/runtime-overlay vs mid-tier approval nodes).",
+      "Conflicting identity field semantics across contracts/UI/provider docs, including persona _id and provider_account_id drift.",
+      "Parallel SCM/worktree ownership models conflict (run/tier/subtask vs package-lane pools).",
+      "Planning machinery drift exists in support artifacts (e.g., chunk-line fallback disagreement)."
+    ],
+    "doc_hints": [
+      "High-impact rewrites concentrate in Orchestrator_Page, Executor_Protocol, Contracts_V0, storage-plan, human-in-the-loop, graph schemas, WorktreeGitImprovement.",
+      "Source Control panel is constrained; prefer compact row metadata plus deep links rather than full governance context in-panel.",
+      "Keep History and Ledger semantically separate (chronology vs exact-record inspection)."
+    ]
   },
-  "extraction_status": "complete",
-  "per_shard": {
-    "shard-0009": {
-      "seeds": [
-        {
-          "kind": "data_shape",
-          "text": "Runtime truth belongs in seglog/redb/projections per newer guidance (GPT-5.4 sweep).",
-          "line_in_shard": 1
-        },
-        {
-          "kind": "data_shape",
-          "text": "Primary schemas stop at node-level modeling; they cannot represent work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.",
-          "line_in_shard": 3
-        },
-        {
-          "kind": "data_shape",
-          "text": "Acceptance, evidence, coverage, GUI automation, and test schemas represent nodes/checks but not the package/seam/lane/account object family.",
-          "line_in_shard": 4
-        },
-        {
-          "kind": "data_shape",
-          "text": "Storage/event keys remain thin: many contracts have run_id/node_id but lack project_id, attempt_id, package_id, seam_id, lane_id, worktree_id, safe_point_id, promotion_class, and requested/effective account fields.",
-          "line_in_shard": 7
-        },
-        {
-          "kind": "data_shape",
-          "text": "Multi-account is surfaced in UX before it is modeled canonically in runtime/storage/schema contracts.",
-          "line_in_shard": 11
-        },
-        {
-          "kind": "obligation",
-          "text": "Provider/persona docs still encode old orchestration ownership (phase/task/subtask/iteration, singular Overseer) despite runtime records already carrying node_id and attempt_id.",
-          "line_in_shard": 13
-        },
-        {
-          "kind": "doc_hint",
-          "text": "Fallback behavior is contradictory across core docs (persona fallback split; GitHub vs multi-account; Docker/media stopping at provider/model).",
-          "line_in_shard": 15
-        },
-        {
-          "kind": "process_defect",
-          "text": "GitHub auth retry rules conflict with multi-account failover expectations.",
-          "line_in_shard": 17
-        },
-        {
-          "kind": "doc_hint",
-          "text": "Docker/media/provider flows usually stop at provider/model, not account-resolution lineage.",
-          "line_in_shard": 18
-        },
-        {
-          "kind": "data_shape",
-          "text": "Settings scopes are too coarse: global/project toggles dominate; package/seam/lane/run/account-aware policy scopes are mostly absent.",
-          "line_in_shard": 20
-        },
-        {
-          "kind": "process_defect",
-          "text": "Package-based lane pools are still missing as a canonical concept while SCM docs assume subtask worktrees, branch-per-run, and direct merge/PR patterns.",
-          "line_in_shard": 24
-        },
-        {
-          "kind": "obligation",
-          "text": "Worktree visibility is only partially wired between Source Control and Orchestrator (status stops at repo/worktree/branch/tier, not package/lane ownership, contamination, restore eligibility, promotion posture).",
-          "line_in_shard": 26
-        },
-        {
-          "kind": "data_shape",
-          "text": "Parallelism is modeled in outdated shapes (per-thread queues, per-provider caps, parallel subtasks, crews per tier) that do not map to package/seam promotion or lane-pool capacity.",
-          "line_in_shard": 28
-        },
-        {
-          "kind": "open_question",
-          "text": "Contamination policy is a vocabulary gap: safe-point language exists in addenda but contamination classification, restore-before-reuse, and lane quarantine semantics are absent from main SCM/worktree contracts.",
-          "line_in_shard": 35
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Priority 1 cleanup targets canonical contracts that cannot coexist with the new model (Orchestrator_Page, Executor_Protocol, Contracts_V0, storage-plan, human-in-the-loop, plan graph schemas).",
-          "line_in_shard": 39
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Priority 2 addresses misleading UI/SCM/operator docs (FinalGUISpec, Run_Graph_View, WorktreeGitImprovement, GitHub_Integration, Widget_System, UI_Command_Catalog).",
-          "line_in_shard": 47
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Priority 3 covers terminology, routing, and anti-drift docs (00-plans-index, Crosswalk, Glossary, feature-list, OpenCode_Coverage_Matrix, Project_Output_Artifacts).",
-          "line_in_shard": 55
-        },
-        {
-          "kind": "process_defect",
-          "text": "Lexicographic node selection conflicts with scored ready-set scheduler (plan_graph + Executor_Protocol).",
-          "line_in_shard": 67
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Tier-boundary HITL vs blocked-node/runtime-overlay HITL splits approval ownership, wake semantics, and UI routing.",
-          "line_in_shard": 71
-        },
-        {
-          "kind": "obligation",
-          "text": "Single Overseer vs package + seam overseer models leave scheduling/review/recovery/promotion ownership ambiguous if both persist.",
-          "line_in_shard": 75
-        },
-        {
-          "kind": "data_shape",
-          "text": "requested_persona_id vs canonical requested_persona will worsen as account identity fields are added.",
-          "line_in_shard": 79
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Graph-local recovery commands vs canonical runtime action families can expose different command families to users vs runtime/event contracts.",
-          "line_in_shard": 83
-        },
-        {
-          "kind": "process_defect",
-          "text": "Run/tier/subtask worktrees vs package-based lane pools makes worktree lifecycle and conflict recovery incoherent if both remain canonical.",
-          "line_in_shard": 87
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Manual review defaults vs automation-first optional HITL changes default behavior, expectations, and blocked-state routing.",
-          "line_in_shard": 91
-        },
-        {
-          "kind": "requirement",
-          "text": "Define the package/seam/lane/promotion object family canonically—few owner docs define these objects despite downstream dependence.",
-          "line_in_shard": 96
-        },
-        {
-          "kind": "data_shape",
-          "text": "Extend requested/effective runtime identity to account and overseer role; effective account switching remains mostly unmodeled.",
-          "line_in_shard": 99
-        },
-        {
-          "kind": "decision",
-          "text": "Choose one HITL model and one action family (tier-boundary approvals, graph-local commands, and blocked-node runtime actions currently compete).",
-          "line_in_shard": 101
-        },
-        {
-          "kind": "data_shape",
-          "text": "Separate plan structure from mutable runtime state; runtime truth is split across plan shards, JSON sidecars, and event/projection docs.",
-          "line_in_shard": 105
-        },
-        {
-          "kind": "doc_hint",
-          "text": "Specify package-based worktree lane pools end-to-end—no single canonical lane-pool model exists yet.",
-          "line_in_shard": 108
-        },
-        {
-          "kind": "doc_hint",
-          "text": "Orchestrator_Page remains a primary runtime owner for orchestration UX but still encodes Tiers, Phase/Task/Subtask, singular Overseer, and legacy persona_id fields.",
-          "line_in_shard": 118
-        },
-        {
-          "kind": "obligation",
-          "text": "Executor_Protocol still encodes singular scheduler authority and lexicographic-style selection language.",
-          "line_in_shard": 123
-        },
-        {
-          "kind": "stale_retirement",
-          "text": "human-in-the-loop.md and Project_Output_Artifacts.md still define tier-boundary HITL, legacy workspace paths, and lingering allowed_actions[] usage.",
-          "line_in_shard": 133
-        },
-        {
-          "kind": "requirement",
-          "text": "plan_graph and project_plan_graph_index schemas assume node-only lifecycle and lexicographic selection without blocked/contaminated/restore-required states.",
-          "line_in_shard": 154
-        },
-        {
-          "kind": "verification_rule",
-          "text": "GUI rebuild surfaces (Orchestrator_Page, Run_Graph_View, Widget_System, GUI_Rebuild_Requirements_Checklist) must replace tier-primary mental model with package/seam/lane/promotion/contamination/resolution-thread UX.",
-          "line_in_shard": 165
-        },
-        {
-          "kind": "decision",
-          "text": "Attention routing should be explicit Dashboard → Orchestrator → chat-thread for blocked and major-decision paths (not only thread-local/wizard-local).",
-          "line_in_shard": 170
-        },
-        {
-          "kind": "data_shape",
-          "text": "Contracts_V0 vs Orchestrator_Page: canonical persona naming disagrees before account identity is fully added; account fallback fields missing.",
-          "line_in_shard": 184
-        },
-        {
-          "kind": "process_defect",
-          "text": "allowed_actions[] vs allowed_action_ids[] both appear canonical across HITL docs, breaking blocked-action parity.",
-          "line_in_shard": 188
-        },
-        {
-          "kind": "data_shape",
-          "text": "Graph and evidence schemas remain run/node/tier-scoped without seam/package/lane/promotion/account lineage or contamination/safe-point provenance.",
-          "line_in_shard": 192
-        },
-        {
-          "kind": "verification_rule",
-          "text": "Executor_Protocol, Progression_Gates, and Run_Graph_View must reconcile lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families into one lifecycle model.",
-          "line_in_shard": 199
-        }
-      ],
-      "excluded": [
-        {
-          "line_in_shard": 40,
-          "reason": "Per-file bullet list under Priority 1 represented by routing_rule seed at line 39.",
-          "preview": "- `Plans/Orchestrator_Page.md`"
-        },
-        {
-          "line_in_shard": 41,
-          "reason": "Per-file bullet list under Priority 1 represented by routing_rule seed at line 39.",
-          "preview": "- `Plans/Executor_Protocol.md`"
-        },
-        {
-          "line_in_shard": 42,
-          "reason": "Per-file bullet list under Priority 1 represented by routing_rule seed at line 39.",
-          "preview": "- `Plans/Contracts_V0.md`"
-        },
-        {
-          "line_in_shard": 43,
-          "reason": "Per-file bullet list under Priority 1 represented by routing_rule seed at line 39.",
-          "preview": "- `Plans/storage-plan.md`"
-        },
-        {
-          "line_in_shard": 44,
-          "reason": "Per-file bullet list under Priority 1 represented by routing_rule seed at line 39.",
-          "preview": "- `Plans/human-in-the-loop.md`"
-        },
-        {
-          "line_in_shard": 45,
-          "reason": "Per-file bullet list under Priority 1 represented by routing_rule seed at line 39.",
-          "preview": "- `Plans/plan_graph.schema.json`"
-        },
-        {
-          "line_in_shard": 48,
-          "reason": "Covered by Priority 2 routing_rule seed.",
-          "preview": "- `Plans/FinalGUISpec.md`"
-        },
-        {
-          "line_in_shard": 56,
-          "reason": "Covered by Priority 3 routing_rule seed.",
-          "preview": "- `Plans/00-plans-index.md`"
-        },
-        {
-          "line_in_shard": 66,
-          "reason": "Docs-involved line paired with defect seed line 67.",
-          "preview": "- Docs involved: `plan_graph.schema.json`"
-        }
-      ],
-      "open_decisions": [
-        {
-          "text": "Normalize recovery vocabulary across safe point, restore point, rollback, contamination, and retry.",
-          "line_in_shard": 111
-        },
-        {
-          "text": "Consolidate addenda vs body ownership for FinalGUISpec / orchestrator-subagent-integration / feature-list style drift (implied by follow-up themes).",
-          "line_in_shard": 108
-        }
-      ],
-      "process_defects": [
-        {
-          "text": "Contradiction: lexicographic node selection vs scored ready-set scheduler.",
-          "line_in_shard": 65
-        },
-        {
-          "text": "Contradiction: tier-boundary HITL vs blocked-node/runtime-overlay HITL.",
-          "line_in_shard": 69
-        },
-        {
-          "text": "Contradiction: single Overseer vs package overseer + seam overseer.",
-          "line_in_shard": 73
-        },
-        {
-          "text": "Contradiction: requested_persona_id vs canonical requested_persona naming.",
-          "line_in_shard": 77
-        },
-        {
-          "text": "Contradiction: graph-local recovery commands vs canonical runtime action families.",
-          "line_in_shard": 81
-        },
-        {
-          "text": "Contradiction: run/tier/subtask worktrees vs package-based lane pools.",
-          "line_in_shard": 85
-        },
-        {
-          "text": "Contradiction: manual review/click approval vs automation-first optional HITL.",
-          "line_in_shard": 89
-        }
-      ],
-      "noise": [
-        {
-          "line_in_shard": 113,
-          "note": "Section banner with no standalone actionable seed."
-        },
-        {
-          "line_in_shard": 115,
-          "note": "Section header introducing doc-by-doc bullets captured as seeds."
-        }
-      ]
-    },
-    "shard-0010": {
-      "seeds": [
-        {
-          "kind": "data_shape",
-          "text": "Models_System / Prompt_Pipeline / Personas: requested/effective platform/model/persona exist but requested/effective account identity and fallback reason are missing.",
-          "line_in_shard": 5
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Provider_Stream_Mapping A2A: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution.",
-          "line_in_shard": 8
-        },
-        {
-          "kind": "data_shape",
-          "text": "Multi-Account / GitHub docs: active/effective account switching is not carried through repo/project/worktree execution contracts.",
-          "line_in_shard": 11
-        },
-        {
-          "kind": "data_shape",
-          "text": "newtools / assistant-chat-design: provider/model controls are per-thread or per-run and do not expose execution identity across package, seam, node, and delegated subagent layers.",
-          "line_in_shard": 14
-        },
-        {
-          "kind": "process_defect",
-          "text": "WorktreeGitImprovement: worktree ownership remains tier/subtask-native without package lane pools or contamination quarantine.",
-          "line_in_shard": 19
-        },
-        {
-          "kind": "data_shape",
-          "text": "GitHub_Integration: Source Control ownership stays branch/worktree-centric without package/seam/lane-aware visibility.",
-          "line_in_shard": 22
-        },
-        {
-          "kind": "data_shape",
-          "text": "feature-list / newfeatures / MiscPlan: concurrency framed around tiers/runs/threads instead of package lanes and promotion boundaries.",
-          "line_in_shard": 25
-        },
-        {
-          "kind": "data_shape",
-          "text": "assistant-chat-design: thread FIFO ordering misfits package-lane parallelism and multi-project orchestration.",
-          "line_in_shard": 28
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Three-tier cleanup priority lists (blocking vs misleading vs terminology) reorganize canonical doc remediation.",
-          "line_in_shard": 32
-        },
-        {
-          "kind": "process_defect",
-          "text": "Contracts_V0 vs Orchestrator_Page: canonical persona field names disagree before account identity lands.",
-          "line_in_shard": 66
-        },
-        {
-          "kind": "process_defect",
-          "text": "Contracts_V0 vs human-in-the-loop: allowed_actions[] vs allowed_action_ids[] both treated as canonical.",
-          "line_in_shard": 69
-        },
-        {
-          "kind": "process_defect",
-          "text": "Executor_Protocol / Progression_Gates / plan_graph / Run_Graph_View: scheduler truth split across lexicographic, scored, and UI-derived recovery models.",
-          "line_in_shard": 73
-        },
-        {
-          "kind": "process_defect",
-          "text": "human-in-the-loop vs Project_Output_Artifacts: tier-boundary-only HITL vs mid-tier approval nodes.",
-          "line_in_shard": 77
-        },
-        {
-          "kind": "process_defect",
-          "text": "WorktreeGitImprovement / GitHub_Integration / feature-list: tier/branch SCM ownership collides with package-lane pools.",
-          "line_in_shard": 81
-        },
-        {
-          "kind": "process_defect",
-          "text": "Containers_Registry_and_Unraid: needs_review vs blocked/failure payload semantics disagree within one doc.",
-          "line_in_shard": 86
-        },
-        {
-          "kind": "process_defect",
-          "text": "sharding_config vs auto_decisions.jsonl: fallback chunk-line settings disagree (planning machinery drift).",
-          "line_in_shard": 90
-        },
-        {
-          "kind": "open_question",
-          "text": "Define one canonical field envelope for {project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}.",
-          "line_in_shard": 95
-        },
-        {
-          "kind": "open_question",
-          "text": "Decide whether tier terms become pure derived UI aliases or are fully deprecated in orchestration/runtime contracts.",
-          "line_in_shard": 98
-        },
-        {
-          "kind": "open_question",
-          "text": "Decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests.",
-          "line_in_shard": 101
-        },
-        {
-          "kind": "open_question",
-          "text": "Formalize requested vs effective execution identity including account fallback/switching before extending provider/chat/SCM docs.",
-          "line_in_shard": 104
-        },
-        {
-          "kind": "requirement",
-          "text": "Define package-based lane-pool worktree policy end-to-end including contamination, safe-point, restore, and shared Orchestrator/Source Control visibility.",
-          "line_in_shard": 107
-        },
-        {
-          "kind": "open_question",
-          "text": "Unify blocked/recovery action families across UI, runtime, and chat-thread resolution.",
-          "line_in_shard": 110
-        },
-        {
-          "kind": "data_shape",
-          "text": "Handshake research: Source Control owns worktree inventory/actions; Orchestrator consumes identity, ownership, blocked state, lineage—but docs remain runtime-worktree-centric vs package lane pools.",
-          "line_in_shard": 124
-        },
-        {
-          "kind": "data_shape",
-          "text": "Storage direction already nears rewrite needs (orchestrator.receipt.*, source_control.project_state.*) yet UI models still describe tier ownership.",
-          "line_in_shard": 134
-        },
-        {
-          "kind": "obligation",
-          "text": "Recommended boundary: Orchestrator owns package lane-pool operational truth; Source Control owns repo/worktree execution and inspection operations.",
-          "line_in_shard": 144
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Orchestrator CTAs should route into Source Control for Git-native operations with project/run/package/lane/worktree context preserved.",
-          "line_in_shard": 159
-        },
-        {
-          "kind": "data_shape",
-          "text": "Candidate object stack: Feature Seam → Work Package → Lane → Worktree; Lane is primary operational object in Orchestrator.",
-          "line_in_shard": 164
-        },
-        {
-          "kind": "decision",
-          "text": "Lane becomes primary operational object in Orchestrator; Worktree remains concrete Git backing; lane may outlive removed worktrees.",
-          "line_in_shard": 169
-        },
-        {
-          "kind": "data_shape",
-          "text": "Proposed lane/worktree lifecycle vocabulary: baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical.",
-          "line_in_shard": 177
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Orchestrator may initiate scoped lane/worktree actions from run context; Source Control executes Git-native mutations.",
-          "line_in_shard": 195
-        }
-      ],
-      "excluded": [
-        {
-          "line_in_shard": 115,
-          "reason": "Targeted doc list under research progress—indexes only.",
-          "preview": "### Targeted docs read"
-        },
-        {
-          "line_in_shard": 116,
-          "reason": "Doc path item.",
-          "preview": "- `Plans/Orchestrator_Page.md`"
-        }
-      ],
-      "open_decisions": [
-        {
-          "text": "Choose canonical field envelope spanning project through resolution_thread.",
-          "line_in_shard": 95
-        },
-        {
-          "text": "Choose tier terminology fate (UI alias vs full deprecation in runtime).",
-          "line_in_shard": 98
-        },
-        {
-          "text": "Partition package vs seam overseer authority.",
-          "line_in_shard": 101
-        }
-      ],
-      "process_defects": [
-        {
-          "text": "Persona field naming split across Contracts_V0 and Orchestrator_Page.",
-          "line_in_shard": 66
-        },
-        {
-          "text": "Blocked action ID wiring blocked by dual canonical allowed_actions fields.",
-          "line_in_shard": 69
-        },
-        {
-          "text": "Scheduler models incompatible across Executor_Protocol, gates, schemas, Run Graph.",
-          "line_in_shard": 73
-        },
-        {
-          "text": "HITL boundary model inconsistent between human-in-the-loop and Project_Output_Artifacts.",
-          "line_in_shard": 77
-        },
-        {
-          "text": "SCM ownership model incompatible with package-lane pools.",
-          "line_in_shard": 81
-        },
-        {
-          "text": "Internal contradiction in Containers doc on review/blocked semantics.",
-          "line_in_shard": 86
-        },
-        {
-          "text": "Supporting config artifacts disagree on chunk-line fallback.",
-          "line_in_shard": 90
-        }
-      ],
-      "noise": [
-        {
-          "line_in_shard": 112,
-          "note": "Research progress section title (2026-03-16 handshake)."
-        },
-        {
-          "line_in_shard": 197,
-          "note": "Research section title stub (Opus batch) with only doc list following."
-        }
-      ]
-    },
-    "shard-0011": {
-      "seeds": [
-        {
-          "kind": "data_shape",
-          "text": "Requested/effective identity strongest on effective side; no canonical requested concrete-account anchor when users pin a specific account.",
-          "line_in_shard": 10
-        },
-        {
-          "kind": "data_shape",
-          "text": "Account identity chain split: effective_account_id vs effective_provider_identity vs provider_account_id risks shadow routing without a governing rule.",
-          "line_in_shard": 15
-        },
-        {
-          "kind": "data_shape",
-          "text": "Bridged-provider contracts omit requested/effective auth/account fields relative to Contracts_V0.",
-          "line_in_shard": 18
-        },
-        {
-          "kind": "obligation",
-          "text": "Runtime ownership in identity-facing docs remains tier-bound; not rewritten around node/package/seam/lane execution identity.",
-          "line_in_shard": 23
-        },
-        {
-          "kind": "data_shape",
-          "text": "Permissions_System resolves by tool/context/mode but not by invoking runtime entity, lane, or account.",
-          "line_in_shard": 26
-        },
-        {
-          "kind": "doc_hint",
-          "text": "Multi-Account.md is strongest for switch pressure but lacks durable switch-history storage and clean scheduler alignment.",
-          "line_in_shard": 31
-        },
-        {
-          "kind": "doc_hint",
-          "text": "Prompt_Pipeline.md should lock requested/effective semantics but stops short of requested concrete-account identity.",
-          "line_in_shard": 33
-        },
-        {
-          "kind": "doc_hint",
-          "text": "CLI_Bridged_Providers.md too weak for canonical account identity and conversational routing through provider facade.",
-          "line_in_shard": 35
-        },
-        {
-          "kind": "process_defect",
-          "text": "Personas.md still uses requested_persona_id / effective_persona_id where Contracts_V0 forbids those canonical names.",
-          "line_in_shard": 42
-        },
-        {
-          "kind": "process_defect",
-          "text": "requested_account_policy exists without a parallel requested concrete-account field, forcing downstream guesswork.",
-          "line_in_shard": 44
-        },
-        {
-          "kind": "process_defect",
-          "text": "CLI_Bridged_Providers requires multi-account surfaces for direct providers but exempts bridged providers despite Multi-Account expectations.",
-          "line_in_shard": 45
-        },
-        {
-          "kind": "process_defect",
-          "text": "Provider_OpenCode and Provider_Stream_Mapping assume disclosure obligations their mappings cannot satisfy.",
-          "line_in_shard": 46
-        },
-        {
-          "kind": "process_defect",
-          "text": "Permissions_System lacks execution-entity narrowing; lane/account-bounded permissions remain unimplementable.",
-          "line_in_shard": 47
-        },
-        {
-          "kind": "decision",
-          "text": "Add canonical requested-side concrete-account field while keeping requested_account_policy as routing rule not selected account.",
-          "line_in_shard": 49
-        },
-        {
-          "kind": "decision",
-          "text": "Govern provider_account_id: retire it or subordinate it to stable effective_account_id as provider-native metadata.",
-          "line_in_shard": 51
-        },
-        {
-          "kind": "requirement",
-          "text": "Unify bridged-provider envelopes around Contracts_V0 / Prompt_Pipeline auth/account fields.",
-          "line_in_shard": 53
-        },
-        {
-          "kind": "requirement",
-          "text": "Replace tier-bound identity wording in Prompt_Pipeline, Models_System, Personas with package/seam/lane-aware ownership.",
-          "line_in_shard": 54
-        },
-        {
-          "kind": "requirement",
-          "text": "Add execution-entity, lane, package, and effective-account dimensions to permission resolution and approval carryover rules.",
-          "line_in_shard": 55
-        },
-        {
-          "kind": "data_shape",
-          "text": "Missing requested-side account anchor blocks durable historical requested-vs-effective analysis—not only UX.",
-          "line_in_shard": 58
-        },
-        {
-          "kind": "open_question",
-          "text": "OpenCode/bridged runtimes: is upstream account switching capturable, opaque-but-accepted, or a hard gap?",
-          "line_in_shard": 60
-        },
-        {
-          "kind": "open_question",
-          "text": "Overseer Persona model: package-overseer and seam-overseer identity cannot pretend to be ordinary delegated subagents.",
-          "line_in_shard": 61
-        },
-        {
-          "kind": "data_shape",
-          "text": "Contracts_V0 is clearest SSOT for identity naming but downstream consumers weaken or rename the field set.",
-          "line_in_shard": 77
-        },
-        {
-          "kind": "data_shape",
-          "text": "Tier-era operator surfaces remain in Orchestrator_Page, Widget_System, Run_Graph_View despite addenda modernization.",
-          "line_in_shard": 82
-        },
-        {
-          "kind": "data_shape",
-          "text": "usage-feature aggregates around tier_id; storage-plan splits tier-era tables from attempt-centric records; neither models durable account-switch history.",
-          "line_in_shard": 86
-        },
-        {
-          "kind": "process_defect",
-          "text": "Projection freshness implied across Orchestrator/Widget/Run Graph without one persisted trust/freshness contract and gating.",
-          "line_in_shard": 90
-        },
-        {
-          "kind": "data_shape",
-          "text": "GitHub auth docs key on mutable login instead of stable internal account_id aligned to canonical model.",
-          "line_in_shard": 94
-        },
-        {
-          "kind": "verification_rule",
-          "text": "Run_Graph_View needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts.",
-          "line_in_shard": 102
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Recast Orchestrator tabs: Progress hosts widgets; seams/graph/evidence/history/ledger are native deep-inspection tabs; Source Control remains Git surface.",
-          "line_in_shard": 119
-        },
-        {
-          "kind": "decision",
-          "text": "Replace GitHub login as stable key with internal account_id; keep login as disclosure metadata.",
-          "line_in_shard": 124
-        },
-        {
-          "kind": "data_shape",
-          "text": "Projection trust/freshness vocabulary must stay distinct from preview/browser trust_tier to avoid semantic collision.",
-          "line_in_shard": 127
-        },
-        {
-          "kind": "obligation",
-          "text": "Destructive Git/worktree actions should resolve through Source Control semantics even when launched from Orchestrator.",
-          "line_in_shard": 131
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Split Orchestrator-owned initiation (inspect lane, request restore, open in Source Control) vs Source-Control-owned Git mutations.",
-          "line_in_shard": 132
-        },
-        {
-          "kind": "requirement",
-          "text": "Historical run/package/node/lane references must survive live worktree cleanup; missing worktrees render as historical/retired/removed with lineage preserved.",
-          "line_in_shard": 154
-        },
-        {
-          "kind": "process_defect",
-          "text": "WorktreeGitImprovement, Orchestrator_Page, GitHub_Integration, FinalGUISpec, MiscPlan, storage-plan still mix tier/subtask framing with lane-first direction.",
-          "line_in_shard": 170
-        },
-        {
-          "kind": "data_shape",
-          "text": "Add formal distinction between lane lifecycle state, worktree filesystem state, and runtime blocked/recovery state.",
-          "line_in_shard": 184
-        },
-        {
-          "kind": "requirement",
-          "text": "Reword Source Control rows from owner run/tier toward owner package/lane (run reference secondary).",
-          "line_in_shard": 188
-        },
-        {
-          "kind": "verification_rule",
-          "text": "Ensure cleanup/archive/remove preserves historical lane/worktree lineage and safe-point/remediation linkage.",
-          "line_in_shard": 192
-        }
-      ],
-      "excluded": [
-        {
-          "line_in_shard": 1,
-          "reason": "Bare doc list header continuation—detail captured in targeted reads sections.",
-          "preview": "- `Plans/Models_System.md`"
-        },
-        {
-          "line_in_shard": 2,
-          "reason": "Bare doc list item.",
-          "preview": "- `Plans/Personas.md`"
-        }
-      ],
-      "open_decisions": [
-        {
-          "text": "Resolve provider_account_id governance (retire vs subordinate to effective_account_id).",
-          "line_in_shard": 51
-        },
-        {
-          "text": "Classify bridged runtime account observability (capturable vs opaque gap).",
-          "line_in_shard": 60
-        }
-      ],
-      "process_defects": [
-        {
-          "text": "Personas persona_id fields vs Contracts_V0 prohibition.",
-          "line_in_shard": 42
-        },
-        {
-          "text": "requested_account_policy without concrete requested account anchor.",
-          "line_in_shard": 44
-        },
-        {
-          "text": "Bridged provider exemption vs multi-account routing expectations.",
-          "line_in_shard": 45
-        },
-        {
-          "text": "OpenCode/stream mappings vs disclosure obligations.",
-          "line_in_shard": 46
-        },
-        {
-          "text": "Permissions model cannot narrow to lane/package/account execution scope.",
-          "line_in_shard": 47
-        },
-        {
-          "text": "Contracts_V0 forbids _persona_id while downstream docs still consume it.",
-          "line_in_shard": 109
-        },
-        {
-          "text": "usage-feature and storage-plan use provider_account_id without deconfliction rule.",
-          "line_in_shard": 110
-        },
-        {
-          "text": "Orchestrator_Page vs Widget_System hostability claims conflict.",
-          "line_in_shard": 111
-        },
-        {
-          "text": "Run Graph and Orchestrator_Page imply richer identity display than contracts support.",
-          "line_in_shard": 113
-        }
-      ],
-      "noise": [
-        {
-          "line_in_shard": 64,
-          "note": "Research progress section title (hotspot recheck)."
-        },
-        {
-          "line_in_shard": 9,
-          "note": "### Key findings banner—content captured in following bullets."
-        }
-      ]
-    },
-    "shard-0012": {
-      "seeds": [
-        {
-          "kind": "decision",
-          "text": "Confirmed: Source Control stays worktree-first; Orchestrator stays package/seam/lane-first with worktrees as backing assets.",
-          "line_in_shard": 8
-        },
-        {
-          "kind": "requirement",
-          "text": "Source Control rows stay filesystem/Git oriented but must show orchestration metadata (owning package/lane, run ref, lifecycle, blocked/recovery) to prevent isolation drift.",
-          "line_in_shard": 18
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Orchestrator shows lane/worktree summary and deep-links to Source Control; it does not mirror a raw worktree inventory table.",
-          "line_in_shard": 25
-        },
-        {
-          "kind": "doc_hint",
-          "text": "Terminology guardrail: do not hide worktree in Source Control; lane is ownership context there, not the primary listed object.",
-          "line_in_shard": 31
-        },
-        {
-          "kind": "requirement",
-          "text": "Source Control panel is narrow: information-dense rows, compact chips, expandable details, deep-link to wider surfaces when context overflows.",
-          "line_in_shard": 48
-        },
-        {
-          "kind": "process_defect",
-          "text": "Widget_System remains tier-centric (widget.tier_tree for Orch/Tiers; tier/task widgets; TierChanged/IterationStart/Progress events).",
-          "line_in_shard": 72
-        },
-        {
-          "kind": "data_shape",
-          "text": "Rewrite direction: only Orchestrator/Progress is widget-composed; Seams, Node Graph, Evidence, History, Ledger are fixed native tabs with stronger layouts.",
-          "line_in_shard": 80
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Widgets allowed on Dashboard, Usage, Orchestrator/Progress; not the composition model for non-Progress Orchestrator tabs.",
-          "line_in_shard": 88
-        },
-        {
-          "kind": "data_shape",
-          "text": "Widgets must consume stable orchestrator projections and canonical records—not legacy tier events or tier-specific objects.",
-          "line_in_shard": 104
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Distinguish page/tab filters from widget presentation config; widgets must not invent alternate scoping semantics.",
-          "line_in_shard": 122
-        },
-        {
-          "kind": "routing_rule",
-          "text": "Hostability: Dashboard hosts curated Progress/Usage widgets; deep inspection tabs stay non-portable.",
-          "line_in_shard": 138
-        },
-        {
-          "kind": "stale_retirement",
-          "text": "Deprecate or remove widget_layout keys for orchestrator:tiers/evidence/history/ledger in favor of per-tab native view-state persistence.",
-          "line_in_shard": 153
-        },
-        {
-          "kind": "data_shape",
-          "text": "Fixed tabs need view-state persistence for filters, selection, split positions, inspector state, last-focused object—not generic widget layout.",
-          "line_in_shard": 158
-        },
-        {
-          "kind": "process_defect",
-          "text": "Widget_System assumes broad Orchestrator tab widgetization conflicting with seam/package rewrite.",
-          "line_in_shard": 167
-        },
-        {
-          "kind": "process_defect",
-          "text": "Orchestrator_Page still describes Tiers as widget-based with old default layouts.",
-          "line_in_shard": 169
-        },
-        {
-          "kind": "doc_hint",
-          "text": "FinalGUISpec needs explicit cross-reference on which pages/tabs are widget-composed.",
-          "line_in_shard": 171
-        },
-        {
-          "kind": "open_question",
-          "text": "Sharp rules still missing for widget vs tab filters, widget action scope vs page-native actions, and post-rewrite hostability.",
-          "line_in_shard": 173
-        },
-        {
-          "kind": "requirement",
-          "text": "Rewrite widget catalog around operational summary widgets; move data contracts off legacy tier events onto projections.",
-          "line_in_shard": 178
-        },
-        {
-          "kind": "obligation",
-          "text": "Page-native semantics must win over widget-local semantics for classification and blocked/completed status.",
-          "line_in_shard": 182
-        },
-        {
-          "kind": "data_shape",
-          "text": "Projection freshness work begins: seglog canonical posture acknowledged; trust/freshness contract to be unified across surfaces (section truncated in shard).",
-          "line_in_shard": 199
-        }
-      ],
-      "excluded": [
-        {
-          "line_in_shard": 35,
-          "reason": "Follow-on doc list duplicates decision narrative already seeded.",
-          "preview": "- `Plans/GitHub_Integration.md`"
-        },
-        {
-          "line_in_shard": 65,
-          "reason": "Targeted docs read list—bibliography only.",
-          "preview": "### Targeted docs read"
-        }
-      ],
-      "open_decisions": [
-        {
-          "text": "Finalize widget filter vs tab filter ownership and widget action scope vs page-native actions.",
-          "line_in_shard": 173
-        },
-        {
-          "text": "Complete projection-health / trust-state record family for Orchestrator, widgets, and Run Graph (shard ends mid-sentence).",
-          "line_in_shard": 199
-        }
-      ],
-      "process_defects": [
-        {
-          "text": "Widget_System tier-first catalog and legacy event wiring vs Progress-only widget canvas direction.",
-          "line_in_shard": 72
-        },
-        {
-          "text": "Multiple Orchestrator tabs incorrectly treated as generic widget pages.",
-          "line_in_shard": 167
-        },
-        {
-          "text": "Orchestrator_Page Tiers tab described as widget-based contrary to native tab plan.",
-          "line_in_shard": 169
-        }
-      ],
-      "noise": [
-        {
-          "line_in_shard": 5,
-          "note": "Research section title (terminology decision)."
-        },
-        {
-          "line_in_shard": 45,
-          "note": "Research section title (Source Control panel constraint)."
-        },
-        {
-          "line_in_shard": 62,
-          "note": "Research section title (Widget System Contract)."
-        },
-        {
-          "line_in_shard": 189,
-          "note": "Research section title (Projection Freshness) with truncated body."
-        },
-        {
-          "line_in_shard": 200,
-          "note": "Truncated continuation bullet (`seglog`); no closing sentence in shard file."
-        }
-      ]
-    }
-  }
+  "exclusions_by_shard": {
+    "shard-0009": [
+      "Expanded per-file bullet lists under priority buckets (kept as grouped routing priorities)."
+    ],
+    "shard-0010": [
+      "Targeted-doc bibliography lines without additional normative semantics."
+    ],
+    "shard-0011": [
+      "Repeated section headers and duplicate doc lists where findings were already represented."
+    ],
+    "shard-0012": [
+      "Repeated targeted-doc lists and overlap framing text."
+    ]
+  },
+  "seed_ids_by_shard": {
+    "shard-0009": [
+      "SG-0009-REQ-01",
+      "SG-0009-DEC-01",
+      "SG-0009-DAT-01",
+      "SG-0009-RTE-01",
+      "SG-0009-VER-01"
+    ],
+    "shard-0010": [
+      "SG-0010-REQ-01",
+      "SG-0010-DEC-01",
+      "SG-0010-DAT-01",
+      "SG-0010-RTE-01",
+      "SG-0010-PDF-01"
+    ],
+    "shard-0011": [
+      "SG-0011-REQ-01",
+      "SG-0011-DEC-01",
+      "SG-0011-DAT-01",
+      "SG-0011-OQ-01",
+      "SG-0011-PDF-01"
+    ],
+    "shard-0012": [
+      "SG-0012-REQ-01",
+      "SG-0012-DEC-01",
+      "SG-0012-DAT-01",
+      "SG-0012-RTE-01",
+      "SG-0012-STR-01"
+    ]
+  },
+  "status": "complete",
+  "blocking_reason": ""
 }

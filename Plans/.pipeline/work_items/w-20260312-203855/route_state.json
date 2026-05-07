@@ -1,19 +1,15 @@
 {
-  "schema_id": "pm.route_state.v3.1.12",
+  "schema_id": "pm.route_state.v3.1.14",
+  "prompt_id": "A3",
+  "prompt_version": "pm.a3.v3.1.14",
   "work_id": "w-20260312-203855",
-  "run_prefix": "r-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
   "run_mode": "fresh_restart",
-  "run_mode_source": "artifact_sanitizer_report.json (run_mode=fresh_restart) after A2 v3.1.12",
-  "current_section": "A",
-  "active_artifact_root": "Plans/.pipeline/work_items/w-20260312-203855/active",
-  "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855",
+  "active_artifact_root": "Plans/.pipeline/work_items/w-20260312-203855",
   "archive_root": "Plans/.pipeline/work_items/w-20260312-203855/archive",
-  "sanitizer_archive_timestamp_utc": "20260506T182414Z",
-  "next_prompt_request": "A4 — Section Exit: Run Control",
-  "next_prompt_id": "A4",
-  "initialized_by": {
-    "prompt_id": "A3",
-    "prompt_version": "pm.a3.v3.1.12",
-    "timestamp_utc": "20260506T182511Z"
-  }
+  "current_section": "A",
+  "next_prompt_request": "A4",
+  "next_prompt_name": "Section Exit: Run Control",
+  "created_from": "A2 artifact sanitizer completion",
+  "timestamp_utc": "20260507T151020Z"
 }

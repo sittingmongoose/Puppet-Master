@@ -1,0 +1,654 @@
+{
+  "schema_id": "pm.ledger_seed_group.v3.1.12",
+  "prompt_id": "C3",
+  "prompt_version": "pm.c3.v3.1.12",
+  "work_id": "w-20260312-203855",
+  "inventory_id": "c3-inv-021",
+  "task_id": "c3-task-021",
+  "anchor_shard_id": "shard-0081",
+  "working_ledger_line_start": 16001,
+  "working_ledger_line_end": 16800,
+  "status": "complete",
+  "per_shard": [
+    {
+      "shard_id": "shard-0081",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0081.md",
+      "line_start_in_source": 16001,
+      "line_end_in_source": 16200,
+      "source_sha256": "a9e039035c4c1493fb98eddd3a35774a67c79c870b516ce0da402e92c4c5fc23",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: hard persistence-contract contradiction in a cross-cutting SSOT; clean up during the same widget reconciliation tranche",
+          "line_in_shard": 1,
+          "line_in_source": 16001
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - GPT-5.4 remaining-partial tranche synthesis",
+          "line_in_shard": 5,
+          "line_in_source": 16005
+        },
+        {
+          "type": "doc_hint",
+          "text": "Targeted docs read (22-doc partial tranche): 00-plans-index, Architecture_Invariants, BinaryLocator_Spec, Containers_Registry_and_Unraid, DRY_Rules, Decision_Log, Document_Packaging_Policy, FileSafe, Formatters_System, GUI_Rebuild_Requirements_Checklist, LSPSupport, Media_Generation_and_Capabilities, MiscPlan, OpenCode_Coverage_Matrix, OpenCode_Deep_Extraction, Plugins_System, Section15_MVP_Promoted_Features_Spec, Skills_System, agent-rules-context, feature-list, newfeatures, rewrite-tie-in-memo",
+          "line_in_shard": 7,
+          "line_in_source": 16007
+        },
+        {
+          "type": "process_defect",
+          "text": "GPT-5.4 wave still produced substantive owner-level deltas across the entire remaining partial tranche; not yet a convergence zone",
+          "line_in_shard": 32,
+          "line_in_source": 16032
+        },
+        {
+          "type": "contradiction",
+          "text": "Several docs fail mechanically: DRY_Rules duplicated canonical sections, malformed ContractRefs, lowercase normative text evading traceability, alias rules contradicting owners",
+          "line_in_shard": 34,
+          "line_in_source": 16034
+        },
+        {
+          "type": "contradiction",
+          "text": "GUI_Rebuild_Requirements_Checklist command-coverage block self-invalidating: phantom/superseded IDs, wrong catalog section ranges",
+          "line_in_shard": 35,
+          "line_in_source": 16035
+        },
+        {
+          "type": "contradiction",
+          "text": "OpenCode_Coverage_Matrix stale structurally and procedurally: missing claimed rows, stale fix-status, matrix assumptions vs current OpenCode/bridged-provider identity",
+          "line_in_shard": 36,
+          "line_in_source": 16036
+        },
+        {
+          "type": "data_shape",
+          "text": "Runtime identity/recovery: Architecture_Invariants needs frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust vs scheduler authority, safe-point lineage exactness",
+          "line_in_shard": 38,
+          "line_in_source": 16038
+        },
+        {
+          "type": "contradiction",
+          "text": "Decision_Log lacks canonical entries for rewrite decisions only in addenda/ledger facts → canon ambiguity",
+          "line_in_shard": 39,
+          "line_in_source": 16039
+        },
+        {
+          "type": "data_shape",
+          "text": "MiscPlan and FileSafe: deferred-run resume validity, pre-cleanup vs safe-point ordering, DAE/post-scan blocked phases, orphan cleanup outside canonical runtime lineage",
+          "line_in_shard": 40,
+          "line_in_source": 16040
+        },
+        {
+          "type": "data_shape",
+          "text": "OpenCode_Deep_Extraction: server-global SSE, fixed WD, session-scoped compaction/approvals, ephemeral session identity → direct PM obligations unless bridge changes",
+          "line_in_shard": 42,
+          "line_in_source": 16042
+        },
+        {
+          "type": "data_shape",
+          "text": "Media_Generation_and_Capabilities and OpenCode_Coverage_Matrix: caller-scoped identity and transient runtime capability state lack proper request/event surfaces",
+          "line_in_shard": 43,
+          "line_in_source": 16043
+        },
+        {
+          "type": "contradiction",
+          "text": "Section15, feature-list, newfeatures: promoted shell/runtime language mixed with pre-promotion models; internal contradictions on persistence identity and recovery anchors; 00-plans-index under-routes Multi-Account/Provider/Orchestrator packet ownership",
+          "line_in_shard": 44,
+          "line_in_source": 16044
+        },
+        {
+          "type": "data_shape",
+          "text": "Tooling: Formatters_System outside central mutation/policy engine, loses attribution under DAE; Plugins_System read-only bypass via mutating tools/env; Skills_System bundling-off, compaction, HTE/DAE reachability; LSPSupport lacks normalized UI vs internal vs read-only vs mutation-capable LSP split in multi-project-tab routing",
+          "line_in_shard": 48,
+          "line_in_source": 16048
+        },
+        {
+          "type": "doc_hint",
+          "text": "Impacted primary + adjacent: Executor_Protocol, Crosswalk, Glossary, Orchestrator_Page, FinalGUISpec, Prompt_Pipeline, Multi-Account, storage-plan, UI_Command_Catalog, Run_Modes, Tools, Permissions_System, Project_Output_Artifacts, Widget_System",
+          "line_in_shard": 54,
+          "line_in_source": 16054
+        },
+        {
+          "type": "contradiction",
+          "text": "Tail still has broad fourth-pass signal worth continuing; addenda vs base text conflict with no Decision Log resolution; unresolved DAE enforcement, OpenCode bridge limits, promoted-feature shell ownership, runtime identity provenance",
+          "line_in_shard": 94,
+          "line_in_source": 16094
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Continue ordered sequence into GPT-5.2; prioritize Architecture_Invariants, FileSafe, MiscPlan, OpenCode_Deep_Extraction, OpenCode_Coverage_Matrix, Section15, DRY_Rules, Decision_Log, feature-list, newfeatures, rewrite-tie-in-memo, plus GUI checklist, Plugins_System, Skills_System, LSPSupport",
+          "line_in_shard": 100,
+          "line_in_source": 16100
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: after merge partial tail at Gemini+Opus+Sonnet+GPT-5.4; Decision_Log retry agent-331 canonical success vs agent-314 failed; meta.json active sweep not ready for reconciliation",
+          "line_in_shard": 115,
+          "line_in_source": 16115
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis",
+          "line_in_shard": 121,
+          "line_in_source": 16121
+        },
+        {
+          "type": "process_defect",
+          "text": "GPT-5.2 continuation still substantive across full 22-doc tail; tranche not converged before final GPT-5.3-Codex pass",
+          "line_in_shard": 148,
+          "line_in_source": 16148
+        },
+        {
+          "type": "contradiction",
+          "text": "GPT-5.2: specs fail at exact field/anchor/command-registration boundaries: DRY_Rules/Crosswalk/Progression_Gates/Contracts_V0 ContractRef/anchor/duplicate-section failures; GUI/Section15/feature-list/newfeatures phantom command IDs and persistence contradictions vs catalog/FinalGUISpec; Document_Packaging_Policy vs Project_Output_Artifacts canonicality/evidence namespace split",
+          "line_in_shard": 150,
+          "line_in_source": 16150
+        },
+        {
+          "type": "data_shape",
+          "text": "Architecture_Invariants missing invariants stated elsewhere: safe-point vs restore-point, graph-lock non-degradation, classification-before-policy, checkpoint-derived projection freshness, attempt-boundary identity freeze",
+          "line_in_shard": 154,
+          "line_in_source": 16154
+        },
+        {
+          "type": "contradiction",
+          "text": "FileSafe: DAE seam post-approval arg mutation, context_files widening scope, fail-open init, recovery_options[] vs allowed_action_ids[] drift; MiscPlan cleanup can invalidate safe-point prerequisites; mtime evidence pruning vs attempt-lineage retention",
+          "line_in_shard": 155,
+          "line_in_source": 16155
+        },
+        {
+          "type": "data_shape",
+          "text": "BinaryLocator: OpenCode launcher discovery gap, dangling Spec_Lock naming-rule claim; Media_Generation, agent-rules-context, Skills_System under-specify caller scope, execution-role, identity disclosure, usable-vs-enabled capabilities",
+          "line_in_shard": 157,
+          "line_in_source": 16157
+        },
+        {
+          "type": "data_shape",
+          "text": "OpenCode_Coverage_Matrix and OpenCode_Deep_Extraction: session identity provider-native, SSE correlation under-specified, requested/effective parity weaker for bridged providers",
+          "line_in_shard": 160,
+          "line_in_source": 16160
+        },
+        {
+          "type": "data_shape",
+          "text": "Formatters: no authoritative formatter-vs-LSP ownership, DAE non-triggering host writes, overlapping detectors; Plugins: post-permission mutation bypass, TOML namespace collisions, name-based policy bypass; LSPSupport: run-scoped tool.* vs UI-session vs mutation apply-edit routing gap",
+          "line_in_shard": 161,
+          "line_in_source": 16161
+        },
+        {
+          "type": "contradiction",
+          "text": "00-plans-index, Decision_Log, rewrite-tie-in-memo under-route or omit rewrite-era decisions: Seams/Packages/Overseers, requested/effective identity scope, operational identity classes, Crosswalk precedence",
+          "line_in_shard": 165,
+          "line_in_source": 16165
+        },
+        {
+          "type": "doc_hint",
+          "text": "GPT-5.2 impacted primary tranche repeats 22 docs; adjacent adds Personas, CLI_Bridged_Providers, Provider_OpenCode, Provider_Stream_Mapping_External_Reference_A2A (via shard-0082 continuation)",
+          "line_in_shard": 168,
+          "line_in_source": 16168
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0082",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0082.md",
+      "line_start_in_source": 16201,
+      "line_end_in_source": 16400,
+      "source_sha256": "b5ac53da91fec29f90ebf622cf3b293624d9e93b1ae6e32c6f50cc07dc4d73d1",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "doc_hint",
+          "text": "Adjacent owners (GPT-5.2 tail): UI_Command_Catalog, Run_Modes, Tools, Permissions_System, Project_Output_Artifacts, Widget_System, Personas, CLI_Bridged_Providers, Provider_OpenCode, Provider_Stream_Mapping_External_Reference_A2A",
+          "line_in_shard": 1,
+          "line_in_source": 16201
+        },
+        {
+          "type": "contradiction",
+          "text": "Fifth model pass still broad signal; carry full tranche to GPT-5.3-Codex; exact canon-breaking defects: missing anchors, unresolved command IDs, stale sections, naming claims without backing canon, storage/packaging authority splits",
+          "line_in_shard": 12,
+          "line_in_source": 16212
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Continue into GPT-5.3-Codex intact; highest-signal Architecture_Invariants, FileSafe, MiscPlan, DRY_Rules, Decision_Log, OpenCode_Deep_Extraction, OpenCode_Coverage_Matrix, Section15, GUI checklist, feature-list, newfeatures, rewrite-tie-in-memo; Plugins, Skills, LSPSupport, Media_Generation, agent-rules-context still active",
+          "line_in_shard": 18,
+          "line_in_source": 16218
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: partial tail at Gemini+Opus+Sonnet+GPT-5.4+GPT-5.2; 39 docs six-pass complete, 22 at five passes post-merge audit; meta.json active not reconciliation-ready",
+          "line_in_shard": 34,
+          "line_in_source": 16234
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - GPT-5.3-Codex remaining-partial tranche synthesis",
+          "line_in_shard": 40,
+          "line_in_source": 16240
+        },
+        {
+          "type": "doc_hint",
+          "text": "GPT-5.3-Codex targeted same 22-doc tranche list as prior partial passes",
+          "line_in_shard": 42,
+          "line_in_source": 16242
+        },
+        {
+          "type": "process_defect",
+          "text": "Final Codex pass: mostly mechanical canon-integrity failures — strong closeout tranche vs flat confirmation",
+          "line_in_shard": 67,
+          "line_in_source": 16267
+        },
+        {
+          "type": "contradiction",
+          "text": "Structural breakage: Crosswalk/DRY_Rules/Progression_Gates/Decision_Log duplicate section numbers, misbound ContractRefs, gate semantics vs adjacent canon, missing rewrite governance records; GUI/Section15/feature-list/newfeatures phantom commands and workspace-tab persistence contradictions",
+          "line_in_shard": 69,
+          "line_in_source": 16269
+        },
+        {
+          "type": "contradiction",
+          "text": "BinaryLocator, Document_Packaging_Policy, Containers_Registry_and_Unraid: split ownership with exact command ID, artifact-type, launcher mismatches",
+          "line_in_shard": 71,
+          "line_in_source": 16271
+        },
+        {
+          "type": "data_shape",
+          "text": "Architecture_Invariants still missing attempt immutability, failure-vs-blocked separation, restore identity, projection authority, shared provider-pool concurrency",
+          "line_in_shard": 73,
+          "line_in_source": 16273
+        },
+        {
+          "type": "contradiction",
+          "text": "Executor_Protocol, FileSafe, MiscPlan: conflicting attempt reuse, DAE/FileSafe authority, cleanup vs safe-point validity, blocked-recovery payload fields",
+          "line_in_shard": 74,
+          "line_in_source": 16274
+        },
+        {
+          "type": "data_shape",
+          "text": "OpenCode: missing canonical SSE filter discriminator, stable OpenCode session → provider-native identity mapping, requested/effective account/auth parity",
+          "line_in_shard": 76,
+          "line_in_source": 16276
+        },
+        {
+          "type": "contradiction",
+          "text": "Media_Generation: live capabilities.get vs frozen orchestrator snapshots vs missing Contracts_V0 event registration",
+          "line_in_shard": 77,
+          "line_in_source": 16277
+        },
+        {
+          "type": "data_shape",
+          "text": "Formatters, LSPSupport, Plugins, Skills: mutation-capable semantics, hosted-vs-DAE reachability, tool/event identity, plugin/skill introspection/isolation gaps; agent-rules-context under-scopes actors vs Prompt Pipeline/Multi-Account/chat disclosure",
+          "line_in_shard": 79,
+          "line_in_source": 16279
+        },
+        {
+          "type": "doc_hint",
+          "text": "GPT-5.3-Codex adjacent: Crosswalk, Executor_Protocol, Glossary, Orchestrator_Page, FinalGUISpec, Prompt_Pipeline, Multi-Account, storage-plan, UI_Command_Catalog, Run_Modes, Tools, Permissions_System, Project_Output_Artifacts, Provider_OpenCode, CLI_Bridged_Providers, Provider_Stream_Mapping_A2A, Personas, assistant-chat-design",
+          "line_in_shard": 82,
+          "line_in_source": 16282
+        },
+        {
+          "type": "contradiction",
+          "text": "Closeout: signal is structural canon breakage, stale owner-routing, field/command/schema mismatch — not broad new conceptual seams; risk areas traceability, promoted-shell command/persistence identity, DAE/FileSafe/recovery lineage, OpenCode identity/event correlation",
+          "line_in_shard": 126,
+          "line_in_source": 16326
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Authored sweep complete → hand off to reconciliation: (1) ContractRef/anchor/duplicate cleanup (2) promoted-shell command completeness and persistence-scope normalization (3) DAE/FileSafe/recovery lineage (4) OpenCode identity/SSE/requested-effective disclosure",
+          "line_in_shard": 135,
+          "line_in_source": 16335
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: all 61 top-level Plans/*.md now have six model passes; meta.json status active — pass closes research sweep not reconciliation readiness; no planning-doc edits outside work-item ledger/meta; session plan.md execution tracking only",
+          "line_in_shard": 142,
+          "line_in_source": 16342
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk",
+          "line_in_shard": 148,
+          "line_in_source": 16248
+        },
+        {
+          "type": "doc_hint",
+          "text": "Seam targeted Decision_Log.md, DRY_Rules.md, Crosswalk.md",
+          "line_in_shard": 150,
+          "line_in_source": 16250
+        },
+        {
+          "type": "contradiction",
+          "text": "Decision_Log not rewrite-era ledger: only two 2026-02-27 OpenCode entries; missing Feature Seam/Work Package, Package/Seam Overseer, worktree-first SC, requested vs effective identity, blocked-episode over HITL-request, route_target/OpenSubject, projection_freshness/health",
+          "line_in_shard": 156,
+          "line_in_source": 16256
+        },
+        {
+          "type": "process_defect",
+          "text": "DRY_Rules: section 2 uses ContractName:Contracts_V0.md not file-path form; section 6 allows ContractName:<path>#anchor but section 2 breaks rule; section 7 GATE-009 vs references GATE-011; mixing path-only and path-plus-anchor; self-referential compliance line",
+          "line_in_shard": 164,
+          "line_in_source": 16264
+        },
+        {
+          "type": "contradiction",
+          "text": "Crosswalk: stale Primitive:WidgetCatalog Orchestrator widget tabs; Primitive:OrchestratorPage six tabs with Tiers; no primitive ownership for route_target/OpenSubject; duplicate 3.13/3.14/3.15; duplicated headings after ## References breaks structure and anchor targeting",
+          "line_in_shard": 169,
+          "line_in_source": 16269
+        },
+        {
+          "type": "doc_hint",
+          "text": "Seam adjacent: Contracts_V0, Progression_Gates, Widget_System, Orchestrator_Page, FinalGUISpec",
+          "line_in_shard": 179,
+          "line_in_source": 16279
+        },
+        {
+          "type": "contradiction",
+          "text": "Owner-routing stack not closed: Crosswalk stale Orchestrator/widget canon; DRY_Rules demands ContractRef discipline while inconsistent; Decision_Log should record final decisions but omits rewrite decisions governing owners",
+          "line_in_shard": 191,
+          "line_in_source": 16291
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Treat Crosswalk+DRY_Rules+Decision_Log as integrity stack; reconcile Crosswalk first (numbering, Tiers wording, route_target/OpenSubject primitives), then DRY deterministic ContractRef shape, then Decision_Log durable rewrite-era records",
+          "line_in_shard": 199,
+          "line_in_source": 16299
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0083",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0083.md",
+      "line_start_in_source": 16401,
+      "line_end_in_source": 16600,
+      "source_sha256": "65538027ea6d2f24d7965cd0583e863844d5b004528a01b1db1b64c9014500e8",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "routing_rule",
+          "text": "Reconciliation order: Crosswalk first, DRY_Rules second, Decision_Log third — owner-level seam not consumer-first Orchestrator_Page/FinalGUISpec",
+          "line_in_shard": 1,
+          "line_in_source": 16401
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Crosswalk: correct section numbering, remove stale Tiers/widgetized-Orchestrator wording, explicit route_target and OpenSubject ownership; DRY_Rules: one ContractRef shape for ContractName, examples follow rule, gate/anchor consistency; Decision_Log: durable rewrite-era records for routing, Orchestrator ontology, blocked identity, runtime identity, projection-trust vocabulary",
+          "line_in_shard": 4,
+          "line_in_source": 16404
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: duplicated Crosswalk numbering undermines ContractRef stability and gateable traceability; Decision_Log gives no durable pointer for why rewrite ownership changed",
+          "line_in_shard": 16,
+          "line_in_source": 16416
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates",
+          "line_in_shard": 22,
+          "line_in_source": 16422
+        },
+        {
+          "type": "doc_hint",
+          "text": "Progression_Gates.md with adjacent DRY_Rules, Crosswalk, Contracts_V0, UI_Wiring_Rules, UI_Command_Catalog, Wiring_Matrix.schema.json, evidence.schema.json",
+          "line_in_shard": 24,
+          "line_in_source": 16424
+        },
+        {
+          "type": "contradiction",
+          "text": "GATE-003 ContractRef syntax violation: comma-separated refs + SchemaID:evidence.schema.json bypasses ContractName taxonomy DRY_Rules calls canonical",
+          "line_in_shard": 31,
+          "line_in_source": 16431
+        },
+        {
+          "type": "process_defect",
+          "text": "GATE-010 validates flat wiring only — not command wrapper normalization, route_target pass-through, OpenSubject binding, deprecated alias vs stable wrapper",
+          "line_in_shard": 34,
+          "line_in_source": 16434
+        },
+        {
+          "type": "contradiction",
+          "text": "Addendum stack unstable: Runtime Recovery Canonicalization duplicated; addenda append stronger checks without numbered gate integration; gate definitions mixed with free-floating reconciliation notes; non-deterministic phrasing 'Execution contract (recommended)', 'targeted for future enforcement'",
+          "line_in_shard": 39,
+          "line_in_source": 16439
+        },
+        {
+          "type": "contradiction",
+          "text": "Gate doc enforces ContractRef rigor while violating taxonomy; routing model depends on checks GATE-010 cannot express — gate layer behind owner contracts; duplicate runtime-recovery addendum parallels Crosswalk/human-in-the-loop/storage-plan duplication problems",
+          "line_in_shard": 60,
+          "line_in_source": 16460
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Normalize Progression_Gates as owner doc: fix ContractRef lines to one taxonomy, fold duplicate addenda into numbered canon, deterministic language only, extend GATE-010 for route/wrapper normalization via command metadata + wiring evidence; relate to Contracts_V0 route/open, UI_Command_Catalog wrapper metadata",
+          "line_in_shard": 65,
+          "line_in_source": 16465
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: routing cleanup weak if GATE-010 stays flat-command-only while Contracts_V0 and UI_Command_Catalog adopt route/open; GATE-003 ContractRef break is hard integrity defect",
+          "line_in_shard": 76,
+          "line_in_source": 16476
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership",
+          "line_in_shard": 81,
+          "line_in_source": 16481
+        },
+        {
+          "type": "data_shape",
+          "text": "Contracts_V0 lacks named canonical contracts for route_target and OpenSubject; main body teaches HITLRequest request_id/tier_id/tier_type/allowed_actions[] and run.tier_* events; addenda move to node.blocked with blocked_sequence and allowed_action_ids[], scheduler.pass, attempt lineage, wizard.blocked, runtime event precedence",
+          "line_in_shard": 87,
+          "line_in_source": 16487
+        },
+        {
+          "type": "contradiction",
+          "text": "wizard.blocked: earlier addendum requires resume_url, later weakens to resume_url?, neither grounded in named route_target; remediation.resolved: earlier success|failed|ceiling_exceeded vs later fixed|superseded|abandoned|replan_required both presented canonical",
+          "line_in_shard": 99,
+          "line_in_source": 16499
+        },
+        {
+          "type": "doc_hint",
+          "text": "Contracts_V0 adjacent: Crosswalk, storage-plan, human-in-the-loop, Executor_Protocol, UI_Command_Catalog, FileManager, FinalGUISpec",
+          "line_in_shard": 108,
+          "line_in_source": 16508
+        },
+        {
+          "type": "contradiction",
+          "text": "Contracts_V0 carries parallel approval ontologies (request-centric HITL vs blocked-episode) and parallel navigation (raw resume_url vs no named route/open); main body behind, addenda ahead → downstream drift",
+          "line_in_shard": 120,
+          "line_in_source": 16520
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Collapse Contracts_V0: blocked identity over request-centric HITL; allowed_action_ids[] over allowed_actions[]; named route_target and OpenSubject; one remediation resolution enum; retire HITLRequest as peer canonical approval, demote request_id to lineage, retire run.tier_* teaching from snapshot guidance",
+          "line_in_shard": 129,
+          "line_in_source": 16529
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: route/open, blocked-identity, tier-era runtime cleanup meet here; resume_url cannot stay shadow primitive if route_target adopted; request_id compatibility only not primary approval identity",
+          "line_in_shard": 141,
+          "line_in_source": 16541
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity collapse",
+          "line_in_shard": 147,
+          "line_in_source": 16547
+        },
+        {
+          "type": "contradiction",
+          "text": "human-in-the-loop opens with request_id/tier-era contract; later blocked_reason_code waiting_approval, blocked_sequence, runtime records as persistence; middle preserves phase/task/subtask tier-boundary wording and redb keyed to old fields; label drift Reject/Cancel Run/Skip vs canonical Approve/Decline/Retry from safe point/etc.",
+          "line_in_shard": 153,
+          "line_in_source": 16553
+        },
+        {
+          "type": "doc_hint",
+          "text": "human-in-the-loop adjacent: Contracts_V0, storage-plan, UI_Command_Catalog, Run_Graph_View, Orchestrator_Page, orchestrator-subagent-integration",
+          "line_in_shard": 172,
+          "line_in_source": 16572
+        },
+        {
+          "type": "contradiction",
+          "text": "File claims HITL semantics must not change while later sections change meaning to blocked/runtime; persistence still teaches request-era fields later demoted; tier boundaries as approval anchor vs blocked-episode identity on run/node/blocked_sequence",
+          "line_in_shard": 183,
+          "line_in_source": 16583
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Retire request-centric opening; rebuild around blocked/runtime approval identity, canonical runtime action families, lineage via blocked records; tier settings as trigger policy not approval object identity; request_id only in compatibility notes",
+          "line_in_shard": 188,
+          "line_in_source": 16588
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: file teaches persistence of approval state — old section recreates storage/command drift; action-label cleanup depends on stopping Reject/Cancel Run/Skip as if canonical names",
+          "line_in_shard": 196,
+          "line_in_source": 16596
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-0084",
+      "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0084.md",
+      "line_start_in_source": 16601,
+      "line_end_in_source": 16800,
+      "source_sha256": "fa1137dd87d055b9d5801873ce463276eed0014bff58b130f4d8db845d5a078d",
+      "extraction_status": "complete",
+      "extracted_items": [
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - owner-contract seam: storage-plan mixed runtime eras",
+          "line_in_shard": 1,
+          "line_in_source": 16601
+        },
+        {
+          "type": "data_shape",
+          "text": "storage-plan mixes runtime-native blocked_projection, attempt_record, scheduler_pass_record, preview_subject_id doc:/artifact: with tier-era tier_id tables, run.tier_*, hitl.* request_id/tier_id/allowed_actions, tier_runtime_record, usage_record and evidence_record tier-keyed",
+          "line_in_shard": 7,
+          "line_in_source": 16607
+        },
+        {
+          "type": "data_shape",
+          "text": "Ahead: preview_subject_id subject-first restore; orchestrator.receipt attempt-native; provider policy and requested/effective identity closer to rewrite. Behind: no route_target/OpenSubject tie despite preview identity; no worktree_record/lane_record; uneven runtime artifacts and attention/summary ownership",
+          "line_in_shard": 20,
+          "line_in_source": 16620
+        },
+        {
+          "type": "doc_hint",
+          "text": "storage-plan adjacent: Contracts_V0, usage-feature, Orchestrator_Page, Run_Graph_View, Runtime_Artifacts_Panel, FileManager, WorktreeGitImprovement",
+          "line_in_shard": 29,
+          "line_in_source": 16629
+        },
+        {
+          "type": "contradiction",
+          "text": "Stronger blocked/attempt identities coexist with tier-era keys as peer canonical; preview subject-first while route/open primitives undefined in owners; Usage/Evidence tier_id keys propagate drift",
+          "line_in_shard": 41,
+          "line_in_source": 16641
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Normalize storage-plan: attempt-native records, blocked projections by episode identity, subject-first restore, receipt joins; demote/replace tier_runtime_record and tier-keyed usage/evidence; add lane/worktree lifecycle, artifact indexing, project summary/attention, account pressure/switch history",
+          "line_in_shard": 46,
+          "line_in_source": 16646
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: storage-plan publishes canonical key shapes — tier-era keys propagate; preview_subject_id proves subject-first viability — route/open should align not invent second identity model",
+          "line_in_shard": 59,
+          "line_in_source": 16659
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime identity drift",
+          "line_in_shard": 64,
+          "line_in_source": 16664
+        },
+        {
+          "type": "data_shape",
+          "text": "Prompt_Pipeline uses requested_persona, effective_persona, requested_account_policy, effective_account_id but frames through stale tier/mode/plan_or_tier_default/Orchestrator tier override/stage-tier-task context; persona_override_owner_id still allows tier_id",
+          "line_in_shard": 70,
+          "line_in_source": 16670
+        },
+        {
+          "type": "contradiction",
+          "text": "Effective-resolution close to rewrite but lacks execution_role, operational/side-effect target identity, requested concrete account binding; addenda attempt-native handoff vs core narrative still tier-centric scope",
+          "line_in_shard": 82,
+          "line_in_source": 16682
+        },
+        {
+          "type": "doc_hint",
+          "text": "Prompt_Pipeline adjacent: Contracts_V0, storage-plan, Multi-Account, Executor_Protocol, Orchestrator_Page, Run_Graph_View",
+          "line_in_shard": 93,
+          "line_in_source": 16693
+        },
+        {
+          "type": "contradiction",
+          "text": "Doc says runtime identity canonical while anchoring overrides to tier; handoff addenda assume attempt-native identity but core teaches tier-centric resolution",
+          "line_in_shard": 104,
+          "line_in_source": 16704
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Keep correct field names; demote tier wording to compatibility/derived context; align overrides with run/node/attempt and actor-role; extend effective-resolution/handoff to execution-role and operational-identity layers; persona_override_owner_id must not teach tier_id as scope anchor",
+          "line_in_shard": 109,
+          "line_in_source": 16709
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: Prompt_Pipeline upstream of requested/effective disclosure across chat/builders/Orchestrator/storage — scope drift leaks everywhere; seam is ownership/scope not renaming fields",
+          "line_in_shard": 116,
+          "line_in_source": 16716
+        },
+        {
+          "type": "owner_consumer_obligation",
+          "text": "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec",
+          "line_in_shard": 121,
+          "line_in_source": 16721
+        },
+        {
+          "type": "data_shape",
+          "text": "rewrite-tie-in-memo ahead on Gemini requested/effective auth, Slint/seglog/redb/Tantivy/Provider terminology, subject-first preview doc:/artifact:; missing routing for Feature Seam/Work Package, Overseers, route_target/OpenSubject, projection_freshness/health, blocked-episode over request HITL",
+          "line_in_shard": 128,
+          "line_in_source": 16728
+        },
+        {
+          "type": "contradiction",
+          "text": "UI_Command_Catalog: cmd.graph.approve_hitl/deny_hitl with request_id coexists with cmd.runtime.* recovery by run_id/node_id/blocked_sequence; many routed commands still layout/UI state only while targeting object navigation; widget commands still Orchestrator widget tabs vs rewrite Progress-only widget-composed",
+          "line_in_shard": 139,
+          "line_in_source": 16739
+        },
+        {
+          "type": "contradiction",
+          "text": "FinalGUISpec: Tiers as primary view, tier/phase-task-subtask progress bars as canonical Orchestrator model, wizard_attention_required uses resume_url as primary nav, section 7.7 Tiers, Appendix C widgetization Dashboard/Orchestrator tabs, Settings includes Tiers language",
+          "line_in_shard": 150,
+          "line_in_source": 16750
+        },
+        {
+          "type": "doc_hint",
+          "text": "GUI seam adjacent: Contracts_V0, Crosswalk, Orchestrator_Page, Widget_System, Run_Graph_View, storage-plan",
+          "line_in_shard": 158,
+          "line_in_source": 16758
+        },
+        {
+          "type": "contradiction",
+          "text": "rewrite-tie-in locks provider/runtime arch but not newer Orchestrator/routing/projection decisions; UI_Command_Catalog same-file stale graph-HITL vs canonical runtime recovery; FinalGUISpec amplifies stale ontology into visible product structure",
+          "line_in_shard": 171,
+          "line_in_source": 16771
+        },
+        {
+          "type": "candidate_fix",
+          "text": "Order: rewrite-tie-in-memo first (routing for graph/seam/package, route/open, projection vocabulary, blocked approval identity), UI_Command_Catalog second (remove/demote graph HITL, normalize object pivots, Progress-only Orchestrator widgets), FinalGUISpec third (retire Tiers primary view, resume_url as transport not nav identity, dashboard/settings aligned to graph/seam/package)",
+          "line_in_shard": 176,
+          "line_in_source": 16776
+        },
+        {
+          "type": "requirement",
+          "text": "Do-not-forget: FinalGUISpec dangerous drift multiplier for user-visible structure; UI_Command_Catalog direct contradiction graph-HITL vs cmd.runtime.*; rewrite-tie-in strong place to record missing rewrite-root decisions",
+          "line_in_shard": 195,
+          "line_in_source": 16795
+        }
+      ]
+    }
+  ]
+}

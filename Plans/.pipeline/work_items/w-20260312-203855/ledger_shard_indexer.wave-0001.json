@@ -1,0 +1,18 @@
+{
+  "schema_id": "pm.wave_artifact.v3.1.14",
+  "prompt_id": "C2",
+  "prompt_version": "pm.c2.v3.1.14",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-0001",
+  "execution_type": "mechanical_tool_operation",
+  "subagent_wave": false,
+  "operations": [
+    {
+      "operation_id": "mechanical-shard-and-verify-001",
+      "tool": "python3",
+      "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+      "status": "complete"
+    }
+  ],
+  "generated_at_utc": "2026-05-07T15:18:50Z"
+}

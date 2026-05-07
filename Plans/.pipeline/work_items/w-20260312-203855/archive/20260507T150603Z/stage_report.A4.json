@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.stage_report.A4.v3.1.12",
+  "prompt_id": "A4",
+  "prompt_version": "pm.a4.v3.1.12",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260506T182613Z",
+  "execution_type": "mechanical_tool_operation",
+  "status": "COMPLETE",
+  "run_mode": "fresh_restart",
+  "subagents": {
+    "required": false,
+    "used": false,
+    "admission_gate": {
+      "input_artifact_families": 1,
+      "notes": "Assembled section_exit_A from meta, route_state, and A2/A3 stage reports only; no A1 stage report present."
+    }
+  },
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "distinct_subagent_invocations_total": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "fanout_proof_notes": "Subagents not required; section exit JSON derived from allowed READ paths.",
+  "deterministic_verification": {
+    "inputs": [
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json"
+    ],
+    "outputs": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A4.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+    ]
+  },
+  "summary": "Wrote section_exit_A.json with work_id, fresh_restart, active/archive roots, A2/A3 completion evidence, active outputs, and B0 handoff.",
+  "artifacts": {
+    "section_exit_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json"
+  },
+  "next_prompt_request": "B0 — Section Entry: Research / Audit Intake v3.1.12"
+}

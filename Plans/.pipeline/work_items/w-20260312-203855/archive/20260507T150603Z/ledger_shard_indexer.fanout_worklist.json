@@ -1,0 +1,13 @@
+{
+  "schema_id": "pm.ledger_shard_indexer.fanout_worklist.v3.1.12",
+  "prompt_id": "C2",
+  "prompt_version": "pm.c2.v3.1.12",
+  "timestamp_utc": "20260506T183116Z",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "note": "C2 uses one deterministic Python sharding pass (binary readline, 200-line windows). No bounded subagent tasks; fan-out worklist is intentionally empty.",
+  "required_subagent_tasks_total": 0,
+  "max_lines_per_shard": 200,
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+  "tasks": []
+}
