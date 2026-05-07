@@ -1,8 +1,10 @@
 {
-  "schema_id": "pm.ledger_intake_manifest.v3.1.15",
+  "schema_id": "pm.ledger_intake_manifest.v3.2.1",
   "prompt_id": "B4",
-  "prompt_version": "pm.b4.v3.1.15",
+  "prompt_version": "pm.b4.v3.2.1",
   "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260507T204628Z",
+  "status": "COMPLETE",
   "source_mode": "existing_working_ledger",
   "accepted_sources": [
     "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
@@ -12,5 +14,15 @@
   "requires_ledger_preparation": true,
   "next_section": "C_Ledger_Preparation",
   "next_preferred_prompt": "C0",
-  "timestamp_utc": "20260507T165530Z"
+  "deterministic_source_checks": {
+    "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "working_ledger_bytes": 1044305,
+    "working_ledger_lines": 18244,
+    "working_ledger_words": 130609,
+    "working_ledger_sha256_hex": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "session_notes_jsonl_count": 0,
+    "research_findings_present": false,
+    "feature_spec_audit_report_present": false,
+    "issue_process_adjudication_report_present": false
+  }
 }

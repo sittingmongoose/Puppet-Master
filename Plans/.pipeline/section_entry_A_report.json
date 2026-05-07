@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.section_entry_A_report.v1",
   "prompt_id": "A0",
-  "prompt_version": "pm.a0.v3.1.15",
+  "prompt_version": "pm.a0.v3.2.1",
   "work_id": "w-20260312-203855",
   "run_mode": "fresh_restart",
   "run_mode_source": "default_task_rule_no_explicit_user_mode",
@@ -10,8 +10,7 @@
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "deterministic_verification": {
     "inputs_used": [
-      "user prompt (explicit work_id and A0 instructions)",
-      "repo root listing for Plans/.pipeline/work_items/**/meta.json (presence check only)"
+      "user prompt (explicit work_id and A0 instructions)"
     ],
     "tooling": [
       "glob listing for meta.json presence",

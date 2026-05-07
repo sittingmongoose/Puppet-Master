@@ -1,0 +1,1233 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.1",
+  "subagent_task_id": "d1-task-008",
+  "work_groups": [
+    {
+      "group_id": "wg-d1-008-001",
+      "source_block_ids": [
+        "lblock-001258",
+        "lblock-001260",
+        "lblock-001261",
+        "lblock-001263",
+        "lblock-001264",
+        "lblock-001266",
+        "lblock-001267",
+        "lblock-001269",
+        "lblock-001270",
+        "lblock-001272",
+        "lblock-001273",
+        "lblock-001275",
+        "lblock-001276",
+        "lblock-001278",
+        "lblock-001279",
+        "lblock-001281",
+        "lblock-001282",
+        "lblock-001284",
+        "lblock-001285",
+        "lblock-001287",
+        "lblock-001288",
+        "lblock-001290",
+        "lblock-001291"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5602,
+          "end_line": 5602
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5604,
+          "end_line": 5604
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5605,
+          "end_line": 5611
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5613,
+          "end_line": 5613
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5614,
+          "end_line": 5635
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5637,
+          "end_line": 5637
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5638,
+          "end_line": 5647
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5649,
+          "end_line": 5649
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5650,
+          "end_line": 5670
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5672,
+          "end_line": 5672
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5673,
+          "end_line": 5693
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5695,
+          "end_line": 5695
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5696,
+          "end_line": 5700
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5702,
+          "end_line": 5702
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5703,
+          "end_line": 5716
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5718,
+          "end_line": 5718
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5719,
+          "end_line": 5724
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5726,
+          "end_line": 5726
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5727,
+          "end_line": 5732
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5734,
+          "end_line": 5734
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5735,
+          "end_line": 5739
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5741,
+          "end_line": 5741
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5742,
+          "end_line": 5747
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "max_source_lines": 135,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-001.json"
+    },
+    {
+      "group_id": "wg-d1-008-002",
+      "source_block_ids": [
+        "lblock-001293",
+        "lblock-001294",
+        "lblock-001296",
+        "lblock-001297"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5749,
+          "end_line": 5749
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5750,
+          "end_line": 5753
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5755,
+          "end_line": 5755
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5756,
+          "end_line": 5758
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "max_source_lines": 9,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-002.json"
+    },
+    {
+      "group_id": "wg-d1-008-003",
+      "source_block_ids": [
+        "lblock-001299",
+        "lblock-001301",
+        "lblock-001302",
+        "lblock-001304",
+        "lblock-001305",
+        "lblock-001307",
+        "lblock-001308",
+        "lblock-001309",
+        "lblock-001311",
+        "lblock-001312",
+        "lblock-001314",
+        "lblock-001315",
+        "lblock-001317",
+        "lblock-001318",
+        "lblock-001320",
+        "lblock-001321",
+        "lblock-001323",
+        "lblock-001324",
+        "lblock-001326",
+        "lblock-001327",
+        "lblock-001329",
+        "lblock-001330"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5760,
+          "end_line": 5760
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5762,
+          "end_line": 5762
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5763,
+          "end_line": 5769
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5771,
+          "end_line": 5771
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5772,
+          "end_line": 5787
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5789,
+          "end_line": 5789
+        },
+        {
+          "source_shard_id": "shard-0029",
+          "start_line": 5790,
+          "end_line": 5800
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5801,
+          "end_line": 5812
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5814,
+          "end_line": 5814
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5815,
+          "end_line": 5824
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5826,
+          "end_line": 5826
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5827,
+          "end_line": 5838
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5840,
+          "end_line": 5840
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5841,
+          "end_line": 5846
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5848,
+          "end_line": 5848
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5849,
+          "end_line": 5855
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5857,
+          "end_line": 5857
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5858,
+          "end_line": 5867
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5869,
+          "end_line": 5869
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5870,
+          "end_line": 5877
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5879,
+          "end_line": 5879
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5880,
+          "end_line": 5887
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0029",
+        "shard-0030"
+      ],
+      "max_source_lines": 118,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-003.json"
+    },
+    {
+      "group_id": "wg-d1-008-004",
+      "source_block_ids": [
+        "lblock-001332",
+        "lblock-001333",
+        "lblock-001335",
+        "lblock-001336",
+        "lblock-001338",
+        "lblock-001339"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5889,
+          "end_line": 5889
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5890,
+          "end_line": 5892
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5894,
+          "end_line": 5894
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5895,
+          "end_line": 5905
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5907,
+          "end_line": 5907
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5908,
+          "end_line": 5910
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "max_source_lines": 20,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-004.json"
+    },
+    {
+      "group_id": "wg-d1-008-005",
+      "source_block_ids": [
+        "lblock-001341",
+        "lblock-001343",
+        "lblock-001344",
+        "lblock-001346",
+        "lblock-001347",
+        "lblock-001349",
+        "lblock-001350",
+        "lblock-001352",
+        "lblock-001353",
+        "lblock-001355",
+        "lblock-001356",
+        "lblock-001357",
+        "lblock-001358",
+        "lblock-001360",
+        "lblock-001361",
+        "lblock-001363",
+        "lblock-001364",
+        "lblock-001366",
+        "lblock-001367",
+        "lblock-001369",
+        "lblock-001370",
+        "lblock-001372",
+        "lblock-001373"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5912,
+          "end_line": 5912
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5914,
+          "end_line": 5914
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5915,
+          "end_line": 5921
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5923,
+          "end_line": 5923
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5924,
+          "end_line": 5936
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5938,
+          "end_line": 5938
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5939,
+          "end_line": 5955
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5957,
+          "end_line": 5957
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5958,
+          "end_line": 5988
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5990,
+          "end_line": 5990
+        },
+        {
+          "source_shard_id": "shard-0030",
+          "start_line": 5991,
+          "end_line": 6000
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6001,
+          "end_line": 6001
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6002,
+          "end_line": 6014
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6016,
+          "end_line": 6016
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6017,
+          "end_line": 6027
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6029,
+          "end_line": 6029
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6030,
+          "end_line": 6038
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6040,
+          "end_line": 6040
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6041,
+          "end_line": 6056
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6058,
+          "end_line": 6058
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6059,
+          "end_line": 6074
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6076,
+          "end_line": 6076
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6077,
+          "end_line": 6084
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0030",
+        "shard-0031"
+      ],
+      "max_source_lines": 163,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-005.json"
+    },
+    {
+      "group_id": "wg-d1-008-006",
+      "source_block_ids": [
+        "lblock-001375",
+        "lblock-001376",
+        "lblock-001378",
+        "lblock-001379",
+        "lblock-001381",
+        "lblock-001382"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6086,
+          "end_line": 6086
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6087,
+          "end_line": 6089
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6091,
+          "end_line": 6091
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6092,
+          "end_line": 6095
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6097,
+          "end_line": 6097
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6098,
+          "end_line": 6100
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "max_source_lines": 13,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-006.json"
+    },
+    {
+      "group_id": "wg-d1-008-007",
+      "source_block_ids": [
+        "lblock-001384",
+        "lblock-001386",
+        "lblock-001387",
+        "lblock-001389",
+        "lblock-001390",
+        "lblock-001392",
+        "lblock-001393",
+        "lblock-001395",
+        "lblock-001396",
+        "lblock-001398",
+        "lblock-001399",
+        "lblock-001401",
+        "lblock-001402"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6102,
+          "end_line": 6102
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6104,
+          "end_line": 6104
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6105,
+          "end_line": 6115
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6117,
+          "end_line": 6117
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6118,
+          "end_line": 6133
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6135,
+          "end_line": 6135
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6136,
+          "end_line": 6145
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6147,
+          "end_line": 6147
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6148,
+          "end_line": 6160
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6162,
+          "end_line": 6162
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6163,
+          "end_line": 6175
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6177,
+          "end_line": 6177
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6178,
+          "end_line": 6182
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "max_source_lines": 75,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-007.json"
+    },
+    {
+      "group_id": "wg-d1-008-008",
+      "source_block_ids": [
+        "lblock-001404",
+        "lblock-001406",
+        "lblock-001407",
+        "lblock-001409",
+        "lblock-001410",
+        "lblock-001411",
+        "lblock-001413",
+        "lblock-001414",
+        "lblock-001416",
+        "lblock-001417",
+        "lblock-001419",
+        "lblock-001420",
+        "lblock-001422",
+        "lblock-001423"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6184,
+          "end_line": 6184
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6186,
+          "end_line": 6186
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6187,
+          "end_line": 6194
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6196,
+          "end_line": 6196
+        },
+        {
+          "source_shard_id": "shard-0031",
+          "start_line": 6197,
+          "end_line": 6200
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6201,
+          "end_line": 6210
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6212,
+          "end_line": 6212
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6213,
+          "end_line": 6219
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6221,
+          "end_line": 6221
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6222,
+          "end_line": 6226
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6228,
+          "end_line": 6228
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6229,
+          "end_line": 6240
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6242,
+          "end_line": 6242
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6243,
+          "end_line": 6247
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0032"
+      ],
+      "max_source_lines": 58,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-008.json"
+    },
+    {
+      "group_id": "wg-d1-008-009",
+      "source_block_ids": [
+        "lblock-001425",
+        "lblock-001427",
+        "lblock-001428",
+        "lblock-001430",
+        "lblock-001431",
+        "lblock-001433",
+        "lblock-001434",
+        "lblock-001436",
+        "lblock-001437",
+        "lblock-001439",
+        "lblock-001440",
+        "lblock-001442",
+        "lblock-001443"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6249,
+          "end_line": 6249
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6251,
+          "end_line": 6251
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6252,
+          "end_line": 6260
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6262,
+          "end_line": 6262
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6263,
+          "end_line": 6279
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6281,
+          "end_line": 6281
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6282,
+          "end_line": 6289
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6291,
+          "end_line": 6291
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6292,
+          "end_line": 6304
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6306,
+          "end_line": 6306
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6307,
+          "end_line": 6316
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6318,
+          "end_line": 6318
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6319,
+          "end_line": 6323
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "max_source_lines": 69,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-009.json"
+    },
+    {
+      "group_id": "wg-d1-008-010",
+      "source_block_ids": [
+        "lblock-001445",
+        "lblock-001447",
+        "lblock-001448",
+        "lblock-001450",
+        "lblock-001451",
+        "lblock-001453",
+        "lblock-001454",
+        "lblock-001456",
+        "lblock-001457",
+        "lblock-001459",
+        "lblock-001460",
+        "lblock-001462",
+        "lblock-001463"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6325,
+          "end_line": 6325
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6327,
+          "end_line": 6327
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6328,
+          "end_line": 6336
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6338,
+          "end_line": 6338
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6339,
+          "end_line": 6355
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6357,
+          "end_line": 6357
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6358,
+          "end_line": 6365
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6367,
+          "end_line": 6367
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6368,
+          "end_line": 6382
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6384,
+          "end_line": 6384
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6385,
+          "end_line": 6393
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6395,
+          "end_line": 6395
+        },
+        {
+          "source_shard_id": "shard-0032",
+          "start_line": 6396,
+          "end_line": 6400
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0032"
+      ],
+      "max_source_lines": 70,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-008-010.json"
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-001257",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001259",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001262",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001265",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001268",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001271",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001274",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001277",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001280",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001283",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001286",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001289",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001292",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001295",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001298",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001300",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001303",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001306",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001310",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001313",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001316",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001319",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001322",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001325",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001328",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001331",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001334",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001337",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001340",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001342",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001345",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001348",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001351",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001354",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001359",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001362",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001365",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001368",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001371",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001374",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001377",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001380",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001383",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001385",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001388",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001391",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001394",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001397",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001400",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001403",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001405",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001408",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001412",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001415",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001418",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001421",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001424",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001426",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001429",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001432",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001435",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001438",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001441",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001444",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001446",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001449",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001452",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001455",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001458",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    },
+    {
+      "block_id": "lblock-001461",
+      "reason": "Pure structural newline-only spacer between adjacent ledger excerpts; no standalone obligation-bearing prose."
+    }
+  ]
+}

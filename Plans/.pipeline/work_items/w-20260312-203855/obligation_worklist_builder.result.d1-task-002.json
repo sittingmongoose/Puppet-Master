@@ -1,0 +1,931 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.1",
+  "subagent_task_id": "d1-task-002",
+  "work_groups": [
+    {
+      "group_id": "wg-d1-002-001",
+      "source_block_ids": [
+        "lblock-000026",
+        "lblock-000028",
+        "lblock-000029",
+        "lblock-000031",
+        "lblock-000032",
+        "lblock-000034",
+        "lblock-000035",
+        "lblock-000037",
+        "lblock-000038",
+        "lblock-000039",
+        "lblock-000041",
+        "lblock-000042",
+        "lblock-000044",
+        "lblock-000045",
+        "lblock-000047",
+        "lblock-000049",
+        "lblock-000050",
+        "lblock-000052",
+        "lblock-000053",
+        "lblock-000055",
+        "lblock-000056",
+        "lblock-000057",
+        "lblock-000059",
+        "lblock-000060"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 801,
+          "end_line": 825
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 827,
+          "end_line": 827
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 828,
+          "end_line": 897
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 899,
+          "end_line": 899
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 900,
+          "end_line": 913
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 915,
+          "end_line": 915
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 916,
+          "end_line": 922
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 924,
+          "end_line": 924
+        },
+        {
+          "source_shard_id": "shard-0005",
+          "start_line": 925,
+          "end_line": 1000
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1001,
+          "end_line": 1117
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1119,
+          "end_line": 1119
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1120,
+          "end_line": 1134
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1136,
+          "end_line": 1136
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1137,
+          "end_line": 1154
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1156,
+          "end_line": 1156
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1158,
+          "end_line": 1158
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1159,
+          "end_line": 1174
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1176,
+          "end_line": 1176
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1177,
+          "end_line": 1188
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1190,
+          "end_line": 1190
+        },
+        {
+          "source_shard_id": "shard-0006",
+          "start_line": 1191,
+          "end_line": 1200
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1201,
+          "end_line": 1202
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1204,
+          "end_line": 1204
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1205,
+          "end_line": 1212
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006",
+        "shard-0007"
+      ],
+      "max_source_lines": 401,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-002-001.json"
+    },
+    {
+      "group_id": "wg-d1-002-002",
+      "source_block_ids": [
+        "lblock-000062",
+        "lblock-000063",
+        "lblock-000065",
+        "lblock-000066",
+        "lblock-000068",
+        "lblock-000069",
+        "lblock-000071",
+        "lblock-000072",
+        "lblock-000074",
+        "lblock-000076",
+        "lblock-000078",
+        "lblock-000080",
+        "lblock-000082",
+        "lblock-000084",
+        "lblock-000086",
+        "lblock-000088",
+        "lblock-000090",
+        "lblock-000092",
+        "lblock-000094",
+        "lblock-000096",
+        "lblock-000098",
+        "lblock-000100",
+        "lblock-000102",
+        "lblock-000104"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1214,
+          "end_line": 1214
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1215,
+          "end_line": 1220
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1222,
+          "end_line": 1222
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1223,
+          "end_line": 1231
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1233,
+          "end_line": 1233
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1234,
+          "end_line": 1239
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1241,
+          "end_line": 1241
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1242,
+          "end_line": 1244
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1246,
+          "end_line": 1246
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1248,
+          "end_line": 1248
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1250,
+          "end_line": 1250
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1252,
+          "end_line": 1257
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1259,
+          "end_line": 1259
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1261,
+          "end_line": 1266
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1268,
+          "end_line": 1268
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1270,
+          "end_line": 1277
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1279,
+          "end_line": 1279
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1281,
+          "end_line": 1285
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1287,
+          "end_line": 1287
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1289,
+          "end_line": 1293
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1295,
+          "end_line": 1295
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1297,
+          "end_line": 1313
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1315,
+          "end_line": 1315
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1317,
+          "end_line": 1323
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "max_source_lines": 91,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-002-002.json"
+    },
+    {
+      "group_id": "wg-d1-002-003",
+      "source_block_ids": [
+        "lblock-000106",
+        "lblock-000108",
+        "lblock-000110",
+        "lblock-000112",
+        "lblock-000114",
+        "lblock-000116",
+        "lblock-000118",
+        "lblock-000120",
+        "lblock-000122",
+        "lblock-000124",
+        "lblock-000126",
+        "lblock-000128",
+        "lblock-000130",
+        "lblock-000132",
+        "lblock-000134",
+        "lblock-000136",
+        "lblock-000138",
+        "lblock-000140",
+        "lblock-000142",
+        "lblock-000144",
+        "lblock-000146",
+        "lblock-000148",
+        "lblock-000150",
+        "lblock-000152"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1325,
+          "end_line": 1325
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1327,
+          "end_line": 1334
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1336,
+          "end_line": 1336
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1338,
+          "end_line": 1338
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1340,
+          "end_line": 1340
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1342,
+          "end_line": 1365
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1367,
+          "end_line": 1367
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1369,
+          "end_line": 1373
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1375,
+          "end_line": 1375
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1377,
+          "end_line": 1384
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1386,
+          "end_line": 1386
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1388,
+          "end_line": 1392
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1394,
+          "end_line": 1394
+        },
+        {
+          "source_shard_id": "shard-0007",
+          "start_line": 1396,
+          "end_line": 1400
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1402,
+          "end_line": 1402
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1404,
+          "end_line": 1420
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1422,
+          "end_line": 1422
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1424,
+          "end_line": 1429
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1431,
+          "end_line": 1431
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1433,
+          "end_line": 1440
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1442,
+          "end_line": 1442
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1444,
+          "end_line": 1444
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1446,
+          "end_line": 1446
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1448,
+          "end_line": 1471
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0007",
+        "shard-0008"
+      ],
+      "max_source_lines": 124,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-002-003.json"
+    },
+    {
+      "group_id": "wg-d1-002-004",
+      "source_block_ids": [
+        "lblock-000154",
+        "lblock-000156",
+        "lblock-000158",
+        "lblock-000160",
+        "lblock-000162",
+        "lblock-000164",
+        "lblock-000166",
+        "lblock-000168",
+        "lblock-000170",
+        "lblock-000172",
+        "lblock-000174",
+        "lblock-000176",
+        "lblock-000178",
+        "lblock-000180",
+        "lblock-000182",
+        "lblock-000184",
+        "lblock-000186",
+        "lblock-000188",
+        "lblock-000190",
+        "lblock-000192",
+        "lblock-000194",
+        "lblock-000196"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1473,
+          "end_line": 1473
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1475,
+          "end_line": 1479
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1481,
+          "end_line": 1481
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1483,
+          "end_line": 1490
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1492,
+          "end_line": 1492
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1494,
+          "end_line": 1498
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1500,
+          "end_line": 1500
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1502,
+          "end_line": 1506
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1508,
+          "end_line": 1508
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1510,
+          "end_line": 1524
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1526,
+          "end_line": 1526
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1528,
+          "end_line": 1533
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1535,
+          "end_line": 1535
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1537,
+          "end_line": 1543
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1545,
+          "end_line": 1545
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1547,
+          "end_line": 1547
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1549,
+          "end_line": 1549
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1551,
+          "end_line": 1574
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1576,
+          "end_line": 1576
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1578,
+          "end_line": 1586
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1588,
+          "end_line": 1588
+        },
+        {
+          "source_shard_id": "shard-0008",
+          "start_line": 1590,
+          "end_line": 1600
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "max_source_lines": 107,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-002-004.json"
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-000027",
+      "reason": "Pure structural newline-only block between adjacent material spans (- trim parent and child objects into must-persist vs cacheable vs derived fields \u2192 ## Candidate Fixes / Design Directions); no material content."
+    },
+    {
+      "block_id": "lblock-000030",
+      "reason": "Pure structural newline-only block between adjacent material spans (- Start the next phase by clarifying which Orchestrator seam is in scope first: \u2192 ## Impacted Docs); no material content."
+    },
+    {
+      "block_id": "lblock-000033",
+      "reason": "Pure structural newline-only block between adjacent material spans (- `Plans/usage-feature.md` \u2192 ## Decisions Already Resolved); no material content."
+    },
+    {
+      "block_id": "lblock-000036",
+      "reason": "Pure structural newline-only block between adjacent material spans (- Mode for this work item is `research`. \u2192 ## Open Questions / Uncertainties); no material content."
+    },
+    {
+      "block_id": "lblock-000040",
+      "reason": "Pure structural newline-only block between adjacent material spans (- workflow completeness \u2192 ## Packetization Notes); no material content."
+    },
+    {
+      "block_id": "lblock-000043",
+      "reason": "Pure structural newline-only block between adjacent material spans (- Work item is currently `packetized` for run `r-20260312-203855-07`; reuse it for recover\u2026 \u2192 ## Do-Not-Forget Details); no material content."
+    },
+    {
+      "block_id": "lblock-000046",
+      "reason": "Pure structural newline-only block between adjacent material spans (- Later GUI help/tooltip generation will need: \u2192 ## Gemini Sweep Findings); no material content."
+    },
+    {
+      "block_id": "lblock-000048",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Gemini Sweep Findings \u2192 ## Highest-Impact Docs); no material content."
+    },
+    {
+      "block_id": "lblock-000051",
+      "reason": "Pure structural newline-only block between adjacent material spans (- `Plans/orchestrator-subagent-integration.md` \u2192 ## GUI / UX Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000054",
+      "reason": "Pure structural newline-only block between adjacent material spans (- `Plans/FinalGUISpec.md` \u2192 ## Runtime / Storage / Contract Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000058",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Impacted area:** Gating logic. \u2192 ## Settings / Provider / Persona / Account Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000061",
+      "reason": "Pure structural newline-only block between adjacent material spans (- `Plans/Multi-Account.md` \u2192 ## Worktree / SCM / Parallelism Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000064",
+      "reason": "Pure structural newline-only block between adjacent material spans (- `Plans/WorktreeGitImprovement.md` \u2192 ## Cleanup Priorities); no material content."
+    },
+    {
+      "block_id": "lblock-000067",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Priority 1 (Blocking)** \u2192 ## Contradictions To Resolve); no material content."
+    },
+    {
+      "block_id": "lblock-000070",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Worktree Strategy:** `chain-wizard-flexibility.md` mentions \"explicit no-worktrees\" wh\u2026 \u2192 ## Suggested Research Follow-Ups); no material content."
+    },
+    {
+      "block_id": "lblock-000073",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Lane Mapping:** How do we map \"Lanes\" to \"Worktrees\" exactly? Is it 1:1, or dynamic al\u2026 \u2192 ## Opus 4.6 Sweep Findings); no material content."
+    },
+    {
+      "block_id": "lblock-000075",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Opus 4.6 Sweep Findings \u2192 Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestr\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000077",
+      "reason": "Pure structural newline-only block between adjacent material spans (Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestr\u2026 \u2192 ## Highest-Impact Docs); no material content."
+    },
+    {
+      "block_id": "lblock-000079",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Highest-Impact Docs \u2192 - **`Plans/orchestrator-subagent-integration.md`** \u2014 Highest pressure of any doc (1201 leg\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000081",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **`Plans/orchestrator-subagent-integration.md`** \u2014 Highest pressure of any doc (1201 leg\u2026 \u2192 ## GUI / UX Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000083",
+      "reason": "Pure structural newline-only block between adjacent material spans (## GUI / UX Impacts \u2192 - **Tiers tab is obsolete as specified.** `widget.tier_tree` renders a Phase/Task/Subtask \u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000085",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Tiers tab is obsolete as specified.** `widget.tier_tree` renders a Phase/Task/Subtask \u2026 \u2192 ## Runtime / Storage / Contract Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000087",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Runtime / Storage / Contract Impacts \u2192 - **`active-agents.json` is incompatible with event-sourced state.** The orchestrator body\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000089",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **`active-agents.json` is incompatible with event-sourced state.** The orchestrator body\u2026 \u2192 ## Settings / Provider / Persona / Account Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000091",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Settings / Provider / Persona / Account Impacts \u2192 - **Requested vs. effective execution identity is partial.** `Multi-Account.md` defines pr\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000093",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Requested vs. effective execution identity is partial.** `Multi-Account.md` defines pr\u2026 \u2192 ## Worktree / SCM / Parallelism Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000095",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Worktree / SCM / Parallelism Impacts \u2192 - **Per-subtask worktree model is legacy.** `WorktreeGitImprovement.md` has 121 legacy tie\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000097",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Per-subtask worktree model is legacy.** `WorktreeGitImprovement.md` has 121 legacy tie\u2026 \u2192 ## Cleanup Priorities); no material content."
+    },
+    {
+      "block_id": "lblock-000099",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Cleanup Priorities \u2192 - **P0 \u2014 Blocking execution model conflicts:**); no material content."
+    },
+    {
+      "block_id": "lblock-000101",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **P0 \u2014 Blocking execution model conflicts:** \u2192 ## Contradictions To Resolve); no material content."
+    },
+    {
+      "block_id": "lblock-000103",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Contradictions To Resolve \u2192 1. **Tier permanence vs. node-graph canon.** `newfeatures.md` \u00a71.1-1.2 declares four-tier \u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000105",
+      "reason": "Pure structural newline-only block between adjacent material spans (1. **Tier permanence vs. node-graph canon.** `newfeatures.md` \u00a71.1-1.2 declares four-tier \u2026 \u2192 ## Suggested Research Follow-Ups); no material content."
+    },
+    {
+      "block_id": "lblock-000107",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Suggested Research Follow-Ups \u2192 1. **Package/seam overseer spec.** Define the dual-overseer governance model (package over\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000109",
+      "reason": "Pure structural newline-only block between adjacent material spans (1. **Package/seam overseer spec.** Define the dual-overseer governance model (package over\u2026 \u2192 ## Sonnet 4.6 Sweep Findings); no material content."
+    },
+    {
+      "block_id": "lblock-000111",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Sonnet 4.6 Sweep Findings \u2192 Model-wave synthesis from Claude Sonnet 4.6 fleet sweep across `Plans/**`. Sonnet strongly\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000113",
+      "reason": "Pure structural newline-only block between adjacent material spans (Model-wave synthesis from Claude Sonnet 4.6 fleet sweep across `Plans/**`. Sonnet strongly\u2026 \u2192 ## Highest-Impact Docs); no material content."
+    },
+    {
+      "block_id": "lblock-000115",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Highest-Impact Docs \u2192 - **`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/C\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000117",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/C\u2026 \u2192 ## GUI / UX Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000119",
+      "reason": "Pure structural newline-only block between adjacent material spans (## GUI / UX Impacts \u2192 - **Tiers-first UI is now misleading.** The Tiers tab, `widget.tier_tree`, phase-grouped g\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000121",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Tiers-first UI is now misleading.** The Tiers tab, `widget.tier_tree`, phase-grouped g\u2026 \u2192 ## Runtime / Storage / Contract Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000123",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Runtime / Storage / Contract Impacts \u2192 - **Schema contradictions are already live.**); no material content."
+    },
+    {
+      "block_id": "lblock-000125",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Schema contradictions are already live.** \u2192 ## Settings / Provider / Persona / Account Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000127",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Settings / Provider / Persona / Account Impacts \u2192 - **Multi-account fallback is structurally under-specified.** Sonnet found no canonical `r\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000129",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Multi-account fallback is structurally under-specified.** Sonnet found no canonical `r\u2026 \u2192 ## Worktree / SCM / Parallelism Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000131",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Worktree / SCM / Parallelism Impacts \u2192 - **Per-subtask worktrees conflict with package-based lane pools.** Sonnet consistently fo\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000133",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Per-subtask worktrees conflict with package-based lane pools.** Sonnet consistently fo\u2026 \u2192 ## Cleanup Priorities); no material content."
+    },
+    {
+      "block_id": "lblock-000135",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Cleanup Priorities \u2192 - **Priority 1 \u2014 Lock the runtime schema anchors**); no material content."
+    },
+    {
+      "block_id": "lblock-000137",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Priority 1 \u2014 Lock the runtime schema anchors** \u2192 ## Contradictions To Resolve); no material content."
+    },
+    {
+      "block_id": "lblock-000139",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Contradictions To Resolve \u2192 1. **Scored scheduler vs lexicographic schema lock.** Runtime docs define a scored ready-s\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000141",
+      "reason": "Pure structural newline-only block between adjacent material spans (1. **Scored scheduler vs lexicographic schema lock.** Runtime docs define a scored ready-s\u2026 \u2192 ## Suggested Research Follow-Ups); no material content."
+    },
+    {
+      "block_id": "lblock-000143",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Suggested Research Follow-Ups \u2192 1. **Define the dual-overseer runtime model canonically.** Lock package overseer vs seam o\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000145",
+      "reason": "Pure structural newline-only block between adjacent material spans (1. **Define the dual-overseer runtime model canonically.** Lock package overseer vs seam o\u2026 \u2192 ## GPT-5.2 Sweep Findings); no material content."
+    },
+    {
+      "block_id": "lblock-000147",
+      "reason": "Pure structural newline-only block between adjacent material spans (## GPT-5.2 Sweep Findings \u2192 Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the \u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000149",
+      "reason": "Pure structural newline-only block between adjacent material spans (Model-wave synthesis from GPT-5.2 fleet sweep across `Plans/**`. This pass reinforced the \u2026 \u2192 ## Highest-Impact Docs); no material content."
+    },
+    {
+      "block_id": "lblock-000151",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Highest-Impact Docs \u2192 - **`Plans/Contracts_V0.md` + `Plans/Executor_Protocol.md` + `Plans/Orchestrator_Page.md`*\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000153",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **`Plans/Contracts_V0.md` + `Plans/Executor_Protocol.md` + `Plans/Orchestrator_Page.md`*\u2026 \u2192 ## GUI / UX Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000155",
+      "reason": "Pure structural newline-only block between adjacent material spans (## GUI / UX Impacts \u2192 - **Attention flow exists, but is fragmented.** GPT-5.2 found strong pieces of Dashboard C\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000157",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Attention flow exists, but is fragmented.** GPT-5.2 found strong pieces of Dashboard C\u2026 \u2192 ## Runtime / Storage / Contract Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000159",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Runtime / Storage / Contract Impacts \u2192 - **Schema-level contradictions are active, not hypothetical.**); no material content."
+    },
+    {
+      "block_id": "lblock-000161",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Schema-level contradictions are active, not hypothetical.** \u2192 ## Settings / Provider / Persona / Account Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000163",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Settings / Provider / Persona / Account Impacts \u2192 - **Automation-first conflicts with existing defaults.** `regular`/HTE defaults, `visual_m\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000165",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Automation-first conflicts with existing defaults.** `regular`/HTE defaults, `visual_m\u2026 \u2192 ## Worktree / SCM / Parallelism Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000167",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Worktree / SCM / Parallelism Impacts \u2192 - **Package-based lane pools are the missing parallelism contract.** Many docs already dis\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000169",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Package-based lane pools are the missing parallelism contract.** Many docs already dis\u2026 \u2192 ## Cleanup Priorities); no material content."
+    },
+    {
+      "block_id": "lblock-000171",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Cleanup Priorities \u2192 - **Priority 1 \u2014 Fix canonical contracts and schemas**); no material content."
+    },
+    {
+      "block_id": "lblock-000173",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Priority 1 \u2014 Fix canonical contracts and schemas** \u2192 ## Contradictions To Resolve); no material content."
+    },
+    {
+      "block_id": "lblock-000175",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Contradictions To Resolve \u2192 1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph \u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000177",
+      "reason": "Pure structural newline-only block between adjacent material spans (1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph \u2026 \u2192 ## Suggested Research Follow-Ups); no material content."
+    },
+    {
+      "block_id": "lblock-000179",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Suggested Research Follow-Ups \u2192 1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and sche\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000181",
+      "reason": "Pure structural newline-only block between adjacent material spans (1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and sche\u2026 \u2192 ## GPT-5.4 Sweep Findings); no material content."
+    },
+    {
+      "block_id": "lblock-000183",
+      "reason": "Pure structural newline-only block between adjacent material spans (## GPT-5.4 Sweep Findings \u2192 Model-wave synthesis from GPT-5.4 fleet sweep across `Plans/**`. This pass surfaced the st\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000185",
+      "reason": "Pure structural newline-only block between adjacent material spans (Model-wave synthesis from GPT-5.4 fleet sweep across `Plans/**`. This pass surfaced the st\u2026 \u2192 ## Highest-Impact Docs); no material content."
+    },
+    {
+      "block_id": "lblock-000187",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Highest-Impact Docs \u2192 - **`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`*\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000189",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`*\u2026 \u2192 ## GUI / UX Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000191",
+      "reason": "Pure structural newline-only block between adjacent material spans (## GUI / UX Impacts \u2192 - **Tiers are still productized even where node graph is supposed to be canonical.** GPT-5\u2026); no material content."
+    },
+    {
+      "block_id": "lblock-000193",
+      "reason": "Pure structural newline-only block between adjacent material spans (- **Tiers are still productized even where node graph is supposed to be canonical.** GPT-5\u2026 \u2192 ## Runtime / Storage / Contract Impacts); no material content."
+    },
+    {
+      "block_id": "lblock-000195",
+      "reason": "Pure structural newline-only block between adjacent material spans (## Runtime / Storage / Contract Impacts \u2192 - **Old and new scheduler contracts actively disagree.**); no material content."
+    }
+  ]
+}

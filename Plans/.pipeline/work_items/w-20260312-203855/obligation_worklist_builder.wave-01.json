@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.wave_artifact.v3.2.1",
+  "prompt_id": "D1",
+  "prompt_version": "pm.d1.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "wave_number": 1,
+  "timestamp_utc": "20260507T211200Z",
+  "invocations": [
+    {
+      "subagent_invocation_id": "sa-a17cb863-d1-task-001",
+      "subagent_task_id": "d1-task-001",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-001]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-001.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "sa-0330a48c-d1-task-002-redo",
+      "subagent_task_id": "d1-task-002",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-002]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-002.json",
+      "status": "complete",
+      "notes": "Second invocation after invalid field-name output from first wave attempt."
+    },
+    {
+      "subagent_invocation_id": "sa-7861dae6-d1-task-003",
+      "subagent_task_id": "d1-task-003",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-003]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-003.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "sa-f2d8a158-d1-task-004",
+      "subagent_task_id": "d1-task-004",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-004]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-004.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "sa-86053d15-d1-task-005",
+      "subagent_task_id": "d1-task-005",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-005]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-005.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "sa-d548e80a-d1-task-006",
+      "subagent_task_id": "d1-task-006",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-006]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-006.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "sa-5659d683-d1-task-007-redo",
+      "subagent_task_id": "d1-task-007",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-007]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-007.json",
+      "status": "complete",
+      "notes": "Second invocation; first parallel wave did not produce file."
+    },
+    {
+      "subagent_invocation_id": "sa-8b384d69-d1-task-008-plus-mechanical-align",
+      "subagent_task_id": "d1-task-008",
+      "input_bounds_ref": "obligation_worklist_builder.fanout_worklist.json#tasks[d1-task-008]",
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.result.d1-task-008.json",
+      "status": "complete",
+      "notes": "Main agent mechanically aligned source_line_ranges per block_id using ledger_obligation_seed.json after merged-range output."
+    }
+  ]
+}

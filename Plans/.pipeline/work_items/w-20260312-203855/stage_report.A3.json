@@ -1,7 +1,7 @@
 {
-  "schema_id": "pm.stage_report.a3.v3.1.15",
+  "schema_id": "pm.stage_report.A3.v3.2.1",
   "prompt_id": "A3",
-  "prompt_version": "pm.a3.v3.1.15",
+  "prompt_version": "pm.a3.v3.2.1",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
   "subagents_required": false,
@@ -12,17 +12,11 @@
       "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
       "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json"
     ],
-    "operations": [
-      "deterministic route_state.json creation",
-      "single next prompt assignment per run_mode rule",
-      "meta/current_state update for A4 handoff"
-    ],
+    "operation": "create/refresh route_state with single next prompt request for fresh_restart",
     "semantic_artifacts_inspected": false,
-    "coverage_proof": "route_state.json created with exactly one next prompt request and required roots/section fields."
+    "coverage_proof": "A3 wrote route_state.json including run_mode, roots, current_section, and exactly one next_prompt_request."
   },
-  "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
   "status": "COMPLETE",
   "next_prompt_request": "A4",
-  "next_prompt_name": "Section Exit: Run Control",
-  "timestamp_utc": "20260507T164653Z"
+  "next_prompt_name": "Section Exit: Run Control"
 }

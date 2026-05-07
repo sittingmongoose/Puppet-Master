@@ -1,0 +1,1085 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.1",
+  "subagent_task_id": "d1-task-003",
+  "work_groups": [
+    {
+      "group_id": "wg-d1-003-001",
+      "source_block_ids": [
+        "lblock-000197",
+        "lblock-000199",
+        "lblock-000201",
+        "lblock-000203",
+        "lblock-000205",
+        "lblock-000207",
+        "lblock-000209",
+        "lblock-000211",
+        "lblock-000213",
+        "lblock-000215",
+        "lblock-000217",
+        "lblock-000219",
+        "lblock-000221",
+        "lblock-000223",
+        "lblock-000225",
+        "lblock-000227",
+        "lblock-000229",
+        "lblock-000231",
+        "lblock-000233",
+        "lblock-000235",
+        "lblock-000237",
+        "lblock-000239",
+        "lblock-000241",
+        "lblock-000243",
+        "lblock-000245"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1601,
+          "end_line": 1607
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1609,
+          "end_line": 1609
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1611,
+          "end_line": 1620
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1622,
+          "end_line": 1622
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1624,
+          "end_line": 1635
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1637,
+          "end_line": 1637
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1663,
+          "end_line": 1663
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1693,
+          "end_line": 1693
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1713,
+          "end_line": 1713
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1715,
+          "end_line": 1715
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1762,
+          "end_line": 1762
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1780,
+          "end_line": 1780
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1802,
+          "end_line": 1802
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1816,
+          "end_line": 1816
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1830,
+          "end_line": 1830
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1862,
+          "end_line": 1862
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "max_source_lines": 238,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-003-001.json"
+    },
+    {
+      "group_id": "wg-d1-003-002",
+      "source_block_ids": [
+        "lblock-000247",
+        "lblock-000249",
+        "lblock-000251",
+        "lblock-000253",
+        "lblock-000255",
+        "lblock-000256",
+        "lblock-000258",
+        "lblock-000259",
+        "lblock-000261",
+        "lblock-000262",
+        "lblock-000264",
+        "lblock-000265",
+        "lblock-000267",
+        "lblock-000268",
+        "lblock-000270",
+        "lblock-000271",
+        "lblock-000273",
+        "lblock-000275",
+        "lblock-000276",
+        "lblock-000277",
+        "lblock-000279",
+        "lblock-000280",
+        "lblock-000282",
+        "lblock-000283",
+        "lblock-000285"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1892,
+          "end_line": 1892
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1910
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1912,
+          "end_line": 1912
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1914,
+          "end_line": 1914
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1915,
+          "end_line": 1921
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1923,
+          "end_line": 1923
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1924,
+          "end_line": 1940
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1942,
+          "end_line": 1942
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1943,
+          "end_line": 1959
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1961,
+          "end_line": 1961
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1962,
+          "end_line": 1972
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1974,
+          "end_line": 1974
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1975,
+          "end_line": 1991
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1993,
+          "end_line": 1993
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1994,
+          "end_line": 1995
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1997,
+          "end_line": 1997
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1999,
+          "end_line": 1999
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 2000,
+          "end_line": 2000
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2001,
+          "end_line": 2007
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2009,
+          "end_line": 2009
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2010,
+          "end_line": 2027
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2029,
+          "end_line": 2029
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2030,
+          "end_line": 2039
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2041,
+          "end_line": 2041
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0011"
+      ],
+      "max_source_lines": 164,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-003-002.json"
+    },
+    {
+      "group_id": "wg-d1-003-003",
+      "source_block_ids": [
+        "lblock-000286",
+        "lblock-000288",
+        "lblock-000289",
+        "lblock-000291",
+        "lblock-000292",
+        "lblock-000294",
+        "lblock-000296",
+        "lblock-000297",
+        "lblock-000299",
+        "lblock-000300",
+        "lblock-000302",
+        "lblock-000303",
+        "lblock-000305",
+        "lblock-000306",
+        "lblock-000308",
+        "lblock-000309",
+        "lblock-000311",
+        "lblock-000312",
+        "lblock-000314",
+        "lblock-000315",
+        "lblock-000317",
+        "lblock-000318",
+        "lblock-000320",
+        "lblock-000321",
+        "lblock-000323"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2042,
+          "end_line": 2046
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2048,
+          "end_line": 2048
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2049,
+          "end_line": 2055
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2057,
+          "end_line": 2057
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2058,
+          "end_line": 2062
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2064,
+          "end_line": 2064
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2066,
+          "end_line": 2066
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2067,
+          "end_line": 2074
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2076,
+          "end_line": 2076
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2077,
+          "end_line": 2094
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2096,
+          "end_line": 2096
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2097,
+          "end_line": 2106
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2108,
+          "end_line": 2108
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2109,
+          "end_line": 2113
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2115,
+          "end_line": 2115
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2116,
+          "end_line": 2123
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2125,
+          "end_line": 2125
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2126,
+          "end_line": 2151
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2153,
+          "end_line": 2153
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2154,
+          "end_line": 2167
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2169,
+          "end_line": 2169
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2170,
+          "end_line": 2181
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2183,
+          "end_line": 2183
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2184,
+          "end_line": 2193
+        },
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2195,
+          "end_line": 2195
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "max_source_lines": 141,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-003-003.json"
+    },
+    {
+      "group_id": "wg-d1-003-004",
+      "source_block_ids": [
+        "lblock-000324",
+        "lblock-000325",
+        "lblock-000327",
+        "lblock-000329",
+        "lblock-000330",
+        "lblock-000332",
+        "lblock-000333",
+        "lblock-000335",
+        "lblock-000336",
+        "lblock-000338",
+        "lblock-000339",
+        "lblock-000341",
+        "lblock-000342",
+        "lblock-000344",
+        "lblock-000346",
+        "lblock-000347",
+        "lblock-000349",
+        "lblock-000350",
+        "lblock-000352",
+        "lblock-000354",
+        "lblock-000355",
+        "lblock-000357",
+        "lblock-000358",
+        "lblock-000360",
+        "lblock-000361"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0011",
+          "start_line": 2196,
+          "end_line": 2200
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2201,
+          "end_line": 2203
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2205,
+          "end_line": 2205
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2207,
+          "end_line": 2207
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2208,
+          "end_line": 2208
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2210,
+          "end_line": 2210
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2211,
+          "end_line": 2215
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2217,
+          "end_line": 2217
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2218,
+          "end_line": 2228
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2230,
+          "end_line": 2230
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2231,
+          "end_line": 2232
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2234,
+          "end_line": 2234
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2235,
+          "end_line": 2243
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2245,
+          "end_line": 2245
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2247,
+          "end_line": 2247
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2248,
+          "end_line": 2248
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2250,
+          "end_line": 2250
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2251,
+          "end_line": 2260
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2262,
+          "end_line": 2262
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2264,
+          "end_line": 2264
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2265,
+          "end_line": 2268
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2270,
+          "end_line": 2270
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2271,
+          "end_line": 2284
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2286,
+          "end_line": 2286
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2287,
+          "end_line": 2300
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0012"
+      ],
+      "max_source_lines": 92,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-003-004.json"
+    },
+    {
+      "group_id": "wg-d1-003-005",
+      "source_block_ids": [
+        "lblock-000363",
+        "lblock-000364",
+        "lblock-000366",
+        "lblock-000367",
+        "lblock-000369",
+        "lblock-000370",
+        "lblock-000372",
+        "lblock-000373",
+        "lblock-000375",
+        "lblock-000376",
+        "lblock-000378",
+        "lblock-000379",
+        "lblock-000381",
+        "lblock-000382",
+        "lblock-000384",
+        "lblock-000386",
+        "lblock-000387",
+        "lblock-000389",
+        "lblock-000390"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2302,
+          "end_line": 2302
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2303,
+          "end_line": 2318
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2320,
+          "end_line": 2320
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2321,
+          "end_line": 2334
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2336,
+          "end_line": 2336
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2337,
+          "end_line": 2344
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2346,
+          "end_line": 2346
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2347,
+          "end_line": 2363
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2365,
+          "end_line": 2365
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2366,
+          "end_line": 2375
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2377,
+          "end_line": 2377
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2378,
+          "end_line": 2382
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2384,
+          "end_line": 2384
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2385,
+          "end_line": 2387
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2389,
+          "end_line": 2389
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2391,
+          "end_line": 2391
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2392,
+          "end_line": 2396
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2398,
+          "end_line": 2398
+        },
+        {
+          "source_shard_id": "shard-0012",
+          "start_line": 2399,
+          "end_line": 2400
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "max_source_lines": 90,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_d2_inputs/wg-d1-003-005.json"
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-000198",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000200",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000202",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000204",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000206",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000208",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000210",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000212",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000214",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000216",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000218",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000220",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000222",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000224",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000226",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000228",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000230",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000232",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000234",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000236",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000238",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000240",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000242",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000244",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000246",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000248",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000250",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000252",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000254",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000257",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000260",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000263",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000266",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000269",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000272",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000274",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000278",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000281",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000284",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000287",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000290",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000293",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000295",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000298",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000301",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000304",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000307",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000310",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000313",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000316",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000319",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000322",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000326",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000328",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000331",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000334",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000337",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000340",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000343",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000345",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000348",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000351",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000353",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000356",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000359",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000362",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000365",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000368",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000371",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000374",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000377",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000380",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000383",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000385",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    },
+    {
+      "block_id": "lblock-000388",
+      "reason": "Pure structural whitespace-only newline block separating adjacent prose in the stitched ledger excerpt; preserved in seed losslessly but emits no substantive obligation-bearing text."
+    }
+  ]
+}

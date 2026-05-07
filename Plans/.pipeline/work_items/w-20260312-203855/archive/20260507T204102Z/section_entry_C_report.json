@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.section_entry_C.v3.1.15",
+  "prompt_id": "C0",
+  "prompt_version": "pm.c0.v3.1.15",
+  "execution_type": "mechanical_tool_operation",
+  "work_id": "w-20260312-203855",
+  "source_section_exit_b_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
+  "ledger_intake_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "accepted_sources_verified": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "exists": true,
+      "non_empty": true,
+      "line_count": 18244,
+      "byte_size": 1044305,
+      "sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1"
+    }
+  ],
+  "section_b_handoff_consistent": true,
+  "next_prompt_id": "C1",
+  "next_prompt_name": "Ledger Condenser",
+  "next_prompt_request": "Paste prompt C1 — Ledger Condenser v3.1.15.",
+  "status": "complete",
+  "timestamp_utc": "20260507T165700Z"
+}
