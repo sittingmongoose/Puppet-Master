@@ -1,0 +1,983 @@
+{
+  "schema_id": "pm.transfer_coverage_reducer_task_result.v3.2.2",
+  "subagent_task_id": "e3-task-015",
+  "subagent_invocation_id": "47680308-b1c7-4754-ad6f-bc69198f2115",
+  "status": "complete",
+  "rows": [
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-124",
+      "row_hash": "98ab294c676d7288751fbed9b91043e880c99736e27a2b5dafc3128a1bfd6f3c",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000291"
+      ],
+      "source_group_ids": [
+        "wg-003-019"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1665,
+          "end_line": 1667
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-125",
+      "row_hash": "27bc9cb607015385a33d7390dba46804aee83aa1f2c3aeaf644b3823db9acde6",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000293"
+      ],
+      "source_group_ids": [
+        "wg-003-020"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1669,
+          "end_line": 1671
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-126",
+      "row_hash": "30259fbd608359797f11d071a65534cacdd9f5a507b301a4d57274d059c02e4f",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000295"
+      ],
+      "source_group_ids": [
+        "wg-003-021"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1673,
+          "end_line": 1675
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-127",
+      "row_hash": "ea0796efd3038b67a3f2dca1a7601d52229ae70246d5ac55b200d6981a638b13",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000297"
+      ],
+      "source_group_ids": [
+        "wg-003-022"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1677,
+          "end_line": 1679
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-128",
+      "row_hash": "bddd4e691f9031f9f659e3a6dcdf2147c374e460b1c875ce65570647145d0f4b",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000299"
+      ],
+      "source_group_ids": [
+        "wg-003-023"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1681,
+          "end_line": 1683
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-129",
+      "row_hash": "b65a5b45c81f5d75f79c62a6105ec7744b118f8e3004b9b261bad4c244024546",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000301"
+      ],
+      "source_group_ids": [
+        "wg-003-024"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1685,
+          "end_line": 1687
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-130",
+      "row_hash": "1aaf60d8e1338dd94149f0bde1dab591eed305fd73186ec0ace69f2880bb104c",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000303"
+      ],
+      "source_group_ids": [
+        "wg-003-025"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1689,
+          "end_line": 1691
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-131",
+      "row_hash": "b4346d0f5c168be86737b9cd922f287894b6ef3ca0a0fffaf4fd4691b0c88766",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000307"
+      ],
+      "source_group_ids": [
+        "wg-003-027"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1695,
+          "end_line": 1696
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-132",
+      "row_hash": "ca33a4d95c5398d606ce5ff37545bba873890822ea840f7a2d871de487b822af",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000309"
+      ],
+      "source_group_ids": [
+        "wg-003-028"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1698,
+          "end_line": 1699
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-133",
+      "row_hash": "26d3a30ee33e4dd78bb7ea3ebf888207cce4edf0c4fc1441da7397fc7e6354b2",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000311"
+      ],
+      "source_group_ids": [
+        "wg-003-029"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1701,
+          "end_line": 1702
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-134",
+      "row_hash": "559f16792669f816869ebb60eb7e3baeffcaa7f7396e672374f7447ea6ca5788",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000313"
+      ],
+      "source_group_ids": [
+        "wg-003-030"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1704,
+          "end_line": 1705
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-135",
+      "row_hash": "9ff386a595559c64d0826c29dad8e6bf850cb9ff9395ce30e558da558a5d46bf",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000315"
+      ],
+      "source_group_ids": [
+        "wg-003-031"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1707,
+          "end_line": 1708
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-136",
+      "row_hash": "d5e1d662be97c0b178dbdb0d41ff07853174a5a6dee8e055c5f4fb9fd92fefc6",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000317"
+      ],
+      "source_group_ids": [
+        "wg-003-032"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1710,
+          "end_line": 1711
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Synthesize and update plans per heading 'untitled' — incorporate block finding into canonical contracts and UI/runtime alignment."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-015-g013",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-137",
+      "row_hash": "6dfe1188f1c39a23bd4c5d436f9c67223e49d6726c1b20492fbe8db5c071a7d0",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000323"
+      ],
+      "source_group_ids": [
+        "wg-003-035"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1717,
+          "end_line": 1720
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g006",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0683,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-138",
+      "row_hash": "98888021a97c444ebd130e27f23d3053877f9d85fc1652cbc057b1bd3bc9c081",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000325"
+      ],
+      "source_group_ids": [
+        "wg-003-036"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1722,
+          "end_line": 1725
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g003",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0449,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-139",
+      "row_hash": "075dbbbe733dab1a376927e64a6e40820868d96cf5aa3126af90d5e2dfe1e16a",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000327"
+      ],
+      "source_group_ids": [
+        "wg-003-037"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1727,
+          "end_line": 1730
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g002",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1273,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-140",
+      "row_hash": "3efeabd5512f0414d0a437cdcd54ebc0de894b5715ae5c6e53ef4d004d18e760",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000329"
+      ],
+      "source_group_ids": [
+        "wg-003-038"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1732,
+          "end_line": 1735
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g008",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0892,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-141",
+      "row_hash": "4c47bc73f202d3a691e51c4f91712efe0ccad9980eee24367b2423114faceb37",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000331"
+      ],
+      "source_group_ids": [
+        "wg-003-039"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1737,
+          "end_line": 1740
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g011",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1492,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-142",
+      "row_hash": "1542466e631b6bcfb5746fcf94b05d129babbbe4ce4020e737316b4e94611633",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000333"
+      ],
+      "source_group_ids": [
+        "wg-003-040"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1742,
+          "end_line": 1745
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g009",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0362,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-143",
+      "row_hash": "1c89112c3e090d7426bbf7c34a55d269492ecd651ef4dc3c7089a74004b2926b",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000335"
+      ],
+      "source_group_ids": [
+        "wg-003-041"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1747,
+          "end_line": 1750
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g007",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0777,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-144",
+      "row_hash": "aaeba799bb873aef9ab2b14e2f15d3bfd4df6050b917aa75e5e06025bd574a82",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000337"
+      ],
+      "source_group_ids": [
+        "wg-003-042"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1752,
+          "end_line": 1755
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/project_plan_graph_index.schema.json"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g012",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0767,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-145",
+      "row_hash": "8677ba3175c0d7ae80f18168cc8febd3232e2b629c92842ca916cf03beb8a514",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000339"
+      ],
+      "source_group_ids": [
+        "wg-003-043"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1757,
+          "end_line": 1760
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Glossary.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Glossary.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g001",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0943,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-146",
+      "row_hash": "b4ec5a42297e65175d4aefce1d6e077693c4076b0afc3a7ead35c8df7e925a4f",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000343"
+      ],
+      "source_group_ids": [
+        "wg-003-045"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1764,
+          "end_line": 1766
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g005",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1004,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-147",
+      "row_hash": "5a05277a3ec5e218ffa8e96b8c9713ffd5d3e5173523f806a99ebca1cfa6b995",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000345"
+      ],
+      "source_group_ids": [
+        "wg-003-046"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1768,
+          "end_line": 1770
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g004",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1567,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-003-148",
+      "row_hash": "7552e295e8b84509105d8257348a5fcfb5bbdce3fd5b1ff805d5e17fbb81de6e",
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_block_ids": [
+        "lblock-000347"
+      ],
+      "source_group_ids": [
+        "wg-003-047"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 1772,
+          "end_line": 1774
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-015-g010",
+      "obligation_category": "architecture_note",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1459,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    }
+  ]
+}

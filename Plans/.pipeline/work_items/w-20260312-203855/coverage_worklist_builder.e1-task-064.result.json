@@ -1,0 +1,341 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-064",
+  "subagent_invocation_id": "cb722e6d-6809-4c7e-8406-ba2eb4697e5b",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|concrete_plans_targets|Plans/Orchestrator_Page.md|Plans/Run_Graph_View.md|Plans/assistant-chat-design.md|Plans/usage-feature.md",
+      "obligation_ids": [
+        "obl-015-110"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1273,
+          "window_index": 3,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 401,
+          "line_end": 716,
+          "window_index": 1,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3201,
+          "line_end": 3230,
+          "window_index": 8,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 801,
+          "line_end": 1178,
+          "window_index": 2,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|Contracts_V0.md|Tools.md|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-112"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Contracts_V0.md",
+        "Tools.md",
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|Runtime_Artifacts_Panel.md",
+      "obligation_ids": [
+        "obl-015-113",
+        "obl-015-114"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|Tools.md",
+      "obligation_ids": [
+        "obl-015-111"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Tools.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|chain-wizard-flexibility.md",
+      "obligation_ids": [
+        "obl-015-124"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "chain-wizard-flexibility.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g006",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|interview-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-126"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "interview-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g007",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-109",
+        "obl-015-115",
+        "obl-015-116",
+        "obl-015-117",
+        "obl-015-118",
+        "obl-015-119",
+        "obl-015-120",
+        "obl-015-121",
+        "obl-015-122",
+        "obl-015-123",
+        "obl-015-125",
+        "obl-015-127",
+        "obl-015-128",
+        "obl-015-129"
+      ],
+      "obligation_record_count": 14,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g008",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Prompt_Pipeline.md",
+      "obligation_ids": [
+        "obl-015-133"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Prompt_Pipeline.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g009",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|chain-wizard-flexibility.md|interview-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-132"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "chain-wizard-flexibility.md",
+        "interview-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g010",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-130",
+        "obl-015-131"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

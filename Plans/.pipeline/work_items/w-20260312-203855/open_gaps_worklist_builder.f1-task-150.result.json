@@ -1,0 +1,598 @@
+{
+  "schema_id": "pm.open_gaps_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "f1-task-150",
+  "subagent_invocation_id": "ae3dbdb7-0eba-454e-8c07-ae2a96c2e6e1",
+  "status": "complete",
+  "coverage_rows": [
+    {
+      "coverage_row_index": 3725,
+      "obligation_id": "obl-024-010",
+      "row_hash": "82751a74465e232a8cb1115c84ef86614baac63161b759bf1ed012d98f5c68bf",
+      "coverage_task_id": "cov-e1-e1-task-150-g002",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0081",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress contradictions/gaps surfaced for this seam verbatim from the Working Ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3726,
+      "obligation_id": "obl-024-011",
+      "row_hash": "bf48fb4b4fde36015eb358602e3e47cea63cc8623356a00945f8a99ef83ad8eb",
+      "coverage_task_id": "cov-e1-e1-task-150-g001",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0081",
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/FileSafe.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/LSPSupport.md",
+        "Plans/MiscPlan.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Plugins_System.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Skills_System.md",
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3727,
+      "obligation_id": "obl-024-012",
+      "row_hash": "fdb46abf00af94d0c9c9390de450b841a63b987fdefa10872b781658bf235ce4",
+      "coverage_task_id": "cov-e1-e1-task-150-g002",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0081",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve the 'Do-not-forget details' captured for this research-progress seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3728,
+      "obligation_id": "obl-024-013",
+      "row_hash": "06dfd4ba75ea08ec3323f7cf2085cbad250fea7441d9305934997e1c3936d792",
+      "coverage_task_id": "cov-e1-e1-task-150-g002",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0081",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress key findings exactly as recorded in the Working Ledger for this seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3729,
+      "obligation_id": "obl-024-014",
+      "row_hash": "e529838ecd1e2085a35841ee2d11c3509dfe4e85dc71e8a85f392190ce6434e1",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress contradictions/gaps surfaced for this seam verbatim from the Working Ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3730,
+      "obligation_id": "obl-024-015",
+      "row_hash": "bd854f585497a09625e4e548ff4b0a6021a87fec156eb5d03383352263a561c2",
+      "coverage_task_id": "cov-e1-e1-task-150-g003",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/FileSafe.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/LSPSupport.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MiscPlan.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/Plugins_System.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Skills_System.md",
+        "Plans/agent-rules-context.md",
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3731,
+      "obligation_id": "obl-024-016",
+      "row_hash": "ded1cb05da05f9678685a805ff2dfeb090483cdbeb05cb8fa602ca90c5f39978",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve the 'Do-not-forget details' captured for this research-progress seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3732,
+      "obligation_id": "obl-024-017",
+      "row_hash": "b2d79e46bbd60ec10d7a51f6de7a208e9309d81036fe8f2cfdbcac17fee8ac4a",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress key findings exactly as recorded in the Working Ledger for this seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3733,
+      "obligation_id": "obl-024-018",
+      "row_hash": "9c762a2c35b2014787fcb32d80ce34a720ddbf978dd1cd18d2daae4cd9cc2445",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress contradictions/gaps surfaced for this seam verbatim from the Working Ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3734,
+      "obligation_id": "obl-024-019",
+      "row_hash": "0af146ca0b8f1c6d94568891e76db603295770677bb3990fc21a72cf36cdef8b",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Carry forward the candidate fixes recorded in this research-progress entry for reconciliation consideration."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3735,
+      "obligation_id": "obl-024-020",
+      "row_hash": "5340c1f5a167cbd8185e940dbb6cf2b940c4c59e551f90082e7e4e1460ce50ff",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve the 'Do-not-forget details' captured for this research-progress seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3736,
+      "obligation_id": "obl-024-021",
+      "row_hash": "4f2875c1877472f57a577cf3800e0559ce5df56b64882da5b0dd3094f06d204f",
+      "coverage_task_id": "cov-e1-e1-task-150-g004",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Log.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3737,
+      "obligation_id": "obl-024-022",
+      "row_hash": "61ecd5869634625402c3d0357f0d157d3aa9742272ec7830bbdb918765718a6c",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress contradictions/gaps surfaced for this seam verbatim from the Working Ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3738,
+      "obligation_id": "obl-024-023",
+      "row_hash": "342602de1cfc226f5f6ba0d5ff3521a7d03dcc710916de3f1530c7397aec0b05",
+      "coverage_task_id": "cov-e1-e1-task-150-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0082",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Carry forward the candidate fixes recorded in this research-progress entry for reconciliation consideration."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3739,
+      "obligation_id": "obl-024-024",
+      "row_hash": "a708e7b78d2badb4c15fb84e9c6f0cf12bb60f34751773c5dde1e73a2477cc49",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Carry forward the candidate fixes recorded in this research-progress entry for reconciliation consideration."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3740,
+      "obligation_id": "obl-024-025",
+      "row_hash": "1dba9b37966effed22bbe1757d40406757201582133b4f386c4ff08c24a9a17c",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve the 'Do-not-forget details' captured for this research-progress seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3741,
+      "obligation_id": "obl-024-026",
+      "row_hash": "e30ae824aebfaa8a8b4c15b51d7e2e943efca867c79a2ad913cea0b9927c8939",
+      "coverage_task_id": "cov-e1-e1-task-150-g006",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3742,
+      "obligation_id": "obl-024-027",
+      "row_hash": "0dc0765be8517d893a2839fd6b1dc5594c27554b4a8716ddbb1dc6c994ace0e3",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress contradictions/gaps surfaced for this seam verbatim from the Working Ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3743,
+      "obligation_id": "obl-024-028",
+      "row_hash": "8942f85d7204c42ef9baafd8ffe5c4e447aaa4005286ddc7e2135fd3724bbb5d",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Carry forward the candidate fixes recorded in this research-progress entry for reconciliation consideration."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3744,
+      "obligation_id": "obl-024-029",
+      "row_hash": "7840dea2251ed266914295fc8ab04a816505d8b2df2dd04fe6c58c03d8976e31",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve the 'Do-not-forget details' captured for this research-progress seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3745,
+      "obligation_id": "obl-024-030",
+      "row_hash": "b14db40015a1b83393caf72477440fdbe09d56383d86bd4f886b22c5be0f313e",
+      "coverage_task_id": "cov-e1-e1-task-150-g007",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3746,
+      "obligation_id": "obl-024-031",
+      "row_hash": "dce59996d88b069a2c627503947a7c054dc58ac515bd6e0fa330509a7ec431db",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress key findings exactly as recorded in the Working Ledger for this seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3747,
+      "obligation_id": "obl-024-032",
+      "row_hash": "143b3c10523fd3e4c380667b0c5dd6fbeee4f83120ad4e40591eb81f8147ba76",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress key findings exactly as recorded in the Working Ledger for this seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3748,
+      "obligation_id": "obl-024-033",
+      "row_hash": "bcb3f6118653001b3261d6cb21ad48665981f5610c85ce582c691b37e6a41334",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve research-progress contradictions/gaps surfaced for this seam verbatim from the Working Ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3749,
+      "obligation_id": "obl-024-034",
+      "row_hash": "dd0a74ddad53298d586eec7414c1001ec993d096247894c4c512c3680f94bd96",
+      "coverage_task_id": "cov-e1-e1-task-150-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0083",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Carry forward the candidate fixes recorded in this research-progress entry for reconciliation consideration."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    }
+  ]
+}

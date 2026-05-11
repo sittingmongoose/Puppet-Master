@@ -1,0 +1,713 @@
+{
+  "schema_id": "pm.d1.task_result.v3.2.2",
+  "prompt_id": "D1",
+  "subagent_task_id": "d1-task-011",
+  "work_id": "w-20260312-203855",
+  "assigned_shard_ids": [
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044"
+  ],
+  "assigned_block_id_first": "lblock-002070",
+  "assigned_block_id_last": "lblock-002293",
+  "assigned_block_ids_total": 224,
+  "blocks_observed_in_assigned_shards": 224,
+  "blocks_assigned_to_groups": 149,
+  "blocks_excluded_with_reason": 75,
+  "exclusions": [
+    {
+      "block_id": "lblock-002071",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002074",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002077",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002080",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002083",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002085",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002088",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002091",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002094",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002097",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002100",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002103",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002106",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002108",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002111",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002114",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002117",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002125",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002128",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002131",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002134",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002137",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002139",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002142",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002145",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002148",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002151",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002154",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002157",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002159",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002162",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002165",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002168",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002171",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002174",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002177",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002179",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002182",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002186",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002189",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002192",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002195",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002198",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002200",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002203",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002208",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002211",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002214",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002217",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002220",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002223",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002225",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002228",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002231",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002234",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002237",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002240",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002243",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002245",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002248",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002251",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002254",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002257",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002260",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002263",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002265",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002268",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002271",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002274",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002277",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002280",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002283",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002286",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002288",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002291",
+      "reason": "blank_line_only_non_material_separator"
+    }
+  ],
+  "work_groups": [
+    {
+      "work_group_id": "wg-011-001",
+      "source_block_ids": [
+        "lblock-002070",
+        "lblock-002072",
+        "lblock-002073",
+        "lblock-002075",
+        "lblock-002076",
+        "lblock-002078",
+        "lblock-002079",
+        "lblock-002081",
+        "lblock-002082"
+      ],
+      "source_block_id_first": "lblock-002070",
+      "source_block_id_last": "lblock-002082",
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8001,
+          "end_line": 8051
+        }
+      ],
+      "max_source_lines": 51,
+      "blocks_total": 9,
+      "heading_context": "untitled",
+      "grouping_rationale": "preamble_or_pre_heading",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-001]"
+    },
+    {
+      "work_group_id": "wg-011-002",
+      "source_block_ids": [
+        "lblock-002084",
+        "lblock-002086",
+        "lblock-002087",
+        "lblock-002089",
+        "lblock-002090",
+        "lblock-002092",
+        "lblock-002093",
+        "lblock-002095",
+        "lblock-002096",
+        "lblock-002098",
+        "lblock-002099",
+        "lblock-002101",
+        "lblock-002102",
+        "lblock-002104",
+        "lblock-002105"
+      ],
+      "source_block_id_first": "lblock-002084",
+      "source_block_id_last": "lblock-002105",
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8053,
+          "end_line": 8145
+        }
+      ],
+      "max_source_lines": 93,
+      "blocks_total": 15,
+      "heading_context": "## Research Progress - 2026-03-16 - operational identity and actor-role disclosure cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-002]"
+    },
+    {
+      "work_group_id": "wg-011-003",
+      "source_block_ids": [
+        "lblock-002107",
+        "lblock-002109",
+        "lblock-002110",
+        "lblock-002112",
+        "lblock-002113",
+        "lblock-002115",
+        "lblock-002116",
+        "lblock-002118",
+        "lblock-002119",
+        "lblock-002120",
+        "lblock-002121",
+        "lblock-002122",
+        "lblock-002123",
+        "lblock-002124",
+        "lblock-002126",
+        "lblock-002127",
+        "lblock-002129",
+        "lblock-002130",
+        "lblock-002132",
+        "lblock-002133",
+        "lblock-002135",
+        "lblock-002136"
+      ],
+      "source_block_id_first": "lblock-002107",
+      "source_block_id_last": "lblock-002136",
+      "source_shard_ids": [
+        "shard-0041",
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8147,
+          "end_line": 8257
+        }
+      ],
+      "max_source_lines": 111,
+      "blocks_total": 22,
+      "heading_context": "## Research Progress - 2026-03-16 - account switch-history and pressure-episode cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-003]"
+    },
+    {
+      "work_group_id": "wg-011-004",
+      "source_block_ids": [
+        "lblock-002138",
+        "lblock-002140",
+        "lblock-002141",
+        "lblock-002143",
+        "lblock-002144",
+        "lblock-002146",
+        "lblock-002147",
+        "lblock-002149",
+        "lblock-002150",
+        "lblock-002152",
+        "lblock-002153",
+        "lblock-002155",
+        "lblock-002156"
+      ],
+      "source_block_id_first": "lblock-002138",
+      "source_block_id_last": "lblock-002156",
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8259,
+          "end_line": 8316
+        }
+      ],
+      "max_source_lines": 58,
+      "blocks_total": 13,
+      "heading_context": "## Research Progress - 2026-03-16 - Opus GUI / Surface Contract Deepening",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-004]"
+    },
+    {
+      "work_group_id": "wg-011-005",
+      "source_block_ids": [
+        "lblock-002158",
+        "lblock-002160",
+        "lblock-002161",
+        "lblock-002163",
+        "lblock-002164",
+        "lblock-002166",
+        "lblock-002167",
+        "lblock-002169",
+        "lblock-002170",
+        "lblock-002172",
+        "lblock-002173",
+        "lblock-002175",
+        "lblock-002176"
+      ],
+      "source_block_id_first": "lblock-002158",
+      "source_block_id_last": "lblock-002176",
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8318,
+          "end_line": 8375
+        }
+      ],
+      "max_source_lines": 58,
+      "blocks_total": 13,
+      "heading_context": "## Research Progress - 2026-03-16 - Opus Conversational / HITL / Tooling Deepening",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-005]"
+    },
+    {
+      "work_group_id": "wg-011-006",
+      "source_block_ids": [
+        "lblock-002178",
+        "lblock-002180",
+        "lblock-002181",
+        "lblock-002183",
+        "lblock-002184",
+        "lblock-002185",
+        "lblock-002187",
+        "lblock-002188",
+        "lblock-002190",
+        "lblock-002191",
+        "lblock-002193",
+        "lblock-002194",
+        "lblock-002196",
+        "lblock-002197"
+      ],
+      "source_block_id_first": "lblock-002178",
+      "source_block_id_last": "lblock-002197",
+      "source_shard_ids": [
+        "shard-0042",
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8377,
+          "end_line": 8432
+        }
+      ],
+      "max_source_lines": 56,
+      "blocks_total": 14,
+      "heading_context": "## Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-006]"
+    },
+    {
+      "work_group_id": "wg-011-007",
+      "source_block_ids": [
+        "lblock-002199",
+        "lblock-002201",
+        "lblock-002202",
+        "lblock-002204",
+        "lblock-002205",
+        "lblock-002206",
+        "lblock-002207",
+        "lblock-002209",
+        "lblock-002210",
+        "lblock-002212",
+        "lblock-002213",
+        "lblock-002215",
+        "lblock-002216",
+        "lblock-002218",
+        "lblock-002219",
+        "lblock-002221",
+        "lblock-002222"
+      ],
+      "source_block_id_first": "lblock-002199",
+      "source_block_id_last": "lblock-002222",
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8434,
+          "end_line": 8504
+        }
+      ],
+      "max_source_lines": 71,
+      "blocks_total": 17,
+      "heading_context": "## Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-007]"
+    },
+    {
+      "work_group_id": "wg-011-008",
+      "source_block_ids": [
+        "lblock-002224",
+        "lblock-002226",
+        "lblock-002227",
+        "lblock-002229",
+        "lblock-002230",
+        "lblock-002232",
+        "lblock-002233",
+        "lblock-002235",
+        "lblock-002236",
+        "lblock-002238",
+        "lblock-002239",
+        "lblock-002241",
+        "lblock-002242"
+      ],
+      "source_block_id_first": "lblock-002224",
+      "source_block_id_last": "lblock-002242",
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8506,
+          "end_line": 8596
+        }
+      ],
+      "max_source_lines": 91,
+      "blocks_total": 13,
+      "heading_context": "## Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-008]"
+    },
+    {
+      "work_group_id": "wg-011-009",
+      "source_block_ids": [
+        "lblock-002244",
+        "lblock-002246",
+        "lblock-002247",
+        "lblock-002249",
+        "lblock-002250",
+        "lblock-002252",
+        "lblock-002253",
+        "lblock-002255",
+        "lblock-002256",
+        "lblock-002258",
+        "lblock-002259",
+        "lblock-002261",
+        "lblock-002262"
+      ],
+      "source_block_id_first": "lblock-002244",
+      "source_block_id_last": "lblock-002262",
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8598,
+          "end_line": 8669
+        }
+      ],
+      "max_source_lines": 72,
+      "blocks_total": 13,
+      "heading_context": "## Research Progress - 2026-03-16 - Execution-core consolidation boundary",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-009]"
+    },
+    {
+      "work_group_id": "wg-011-010",
+      "source_block_ids": [
+        "lblock-002264",
+        "lblock-002266",
+        "lblock-002267",
+        "lblock-002269",
+        "lblock-002270",
+        "lblock-002272",
+        "lblock-002273",
+        "lblock-002275",
+        "lblock-002276",
+        "lblock-002278",
+        "lblock-002279",
+        "lblock-002281",
+        "lblock-002282",
+        "lblock-002284",
+        "lblock-002285"
+      ],
+      "source_block_id_first": "lblock-002264",
+      "source_block_id_last": "lblock-002285",
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8671,
+          "end_line": 8780
+        }
+      ],
+      "max_source_lines": 110,
+      "blocks_total": 15,
+      "heading_context": "## Research Progress - 2026-03-16 - Execution-context replacement shape",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-010]"
+    },
+    {
+      "work_group_id": "wg-011-011",
+      "source_block_ids": [
+        "lblock-002287",
+        "lblock-002289",
+        "lblock-002290",
+        "lblock-002292",
+        "lblock-002293"
+      ],
+      "source_block_id_first": "lblock-002287",
+      "source_block_id_last": "lblock-002293",
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8782,
+          "end_line": 8800
+        }
+      ],
+      "max_source_lines": 19,
+      "blocks_total": 5,
+      "heading_context": "## Research Progress - 2026-03-16 - Approval scope / HITL anchoring",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-011-011]"
+    }
+  ],
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "no_group_over_25_blocks": true,
+    "no_group_over_800_lines": true,
+    "no_block_in_two_groups": true,
+    "blocks_in_assigned_shards_only": true
+  },
+  "status": "complete"
+}

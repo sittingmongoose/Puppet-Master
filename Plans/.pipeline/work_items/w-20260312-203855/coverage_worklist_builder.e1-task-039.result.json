@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-039",
+  "subagent_invocation_id": "ed30cce6-753c-4b65-8be5-e95e0ee2d8d1",
+  "status": "complete",
+  "excluded_obligations": [
+    {
+      "obligation_id": "obl-011-033",
+      "exclusion_reason": "obligation_category_prompt_defect_no_section_e_live_doc_coverage_sweep",
+      "obligation_category": "prompt_defect",
+      "source_shard_id": "shard-0030"
+    }
+  ],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-039-g001",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0030",
+      "grouping_key": "shard-0030|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-011-034",
+        "obl-011-035",
+        "obl-011-036",
+        "obl-011-037",
+        "obl-011-038",
+        "obl-011-039"
+      ],
+      "obligation_record_count": 6,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-039-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0031",
+      "grouping_key": "shard-0031|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-011-040",
+        "obl-011-041",
+        "obl-011-042",
+        "obl-011-043",
+        "obl-011-044",
+        "obl-011-045",
+        "obl-011-046",
+        "obl-011-047",
+        "obl-011-048",
+        "obl-011-049",
+        "obl-011-050",
+        "obl-011-051",
+        "obl-011-052",
+        "obl-011-053",
+        "obl-011-054",
+        "obl-011-055",
+        "obl-011-056",
+        "obl-011-057"
+      ],
+      "obligation_record_count": 18,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

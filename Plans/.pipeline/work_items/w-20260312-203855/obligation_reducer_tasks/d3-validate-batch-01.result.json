@@ -1,0 +1,2493 @@
+{
+  "schema_id": "pm.d3.task_result.v3.2.2",
+  "prompt_id": "D3",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "d3-validate-batch-01",
+  "assigned_slice_ids": [
+    "slice-001",
+    "slice-002",
+    "slice-003",
+    "slice-004",
+    "slice-005",
+    "slice-006",
+    "slice-007"
+  ],
+  "per_slice_findings": [
+    {
+      "slice_id": "slice-001",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-001.json",
+      "schema_ok": true,
+      "plan_coverage": {
+        "source_block_ids_match": true,
+        "source_group_ids_match": true,
+        "blocks_observed_matches": true,
+        "expected_block_count": 21,
+        "actual_block_count": 21,
+        "missing_block_ids": [],
+        "extra_block_ids": []
+      },
+      "block_coverage": {
+        "all_blocks_referenced": true,
+        "missing_block_ids": [],
+        "orphan_block_ids": []
+      },
+      "counts": {
+        "obligations": 88,
+        "open_questions": 5,
+        "doc_hints": 14,
+        "excluded_blocks": 8,
+        "blocked_blocks": 0,
+        "doc_hints_by_type": {
+          "missing_doc": 1,
+          "process_artifact_ref": 1,
+          "affected_doc": 8,
+          "candidate_doc": 4
+        },
+        "obligations_by_category": {
+          "fact_observation": 5,
+          "acceptance_criterion": 8,
+          "directive": 9,
+          "constraint": 8,
+          "design_choice": 19,
+          "routing_rule": 11,
+          "data_shape": 2,
+          "architecture_note": 11,
+          "enum_definition": 10,
+          "schema_definition": 3,
+          "stage_definition": 1,
+          "prompt_defect": 1
+        },
+        "obligations_by_action": {
+          "preserve": 10,
+          "document": 14,
+          "implement": 60,
+          "open_decision": 3,
+          "manual_decision_required": 1
+        }
+      },
+      "lineage_checks": {
+        "obligations_with_full_lineage": 88,
+        "obligations_missing_fields": [],
+        "obligations_out_of_scope_blocks": [],
+        "obligations_invalid_category": [],
+        "obligations_invalid_action": [],
+        "obligations_excerpt_too_long": []
+      },
+      "open_question_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_action": [],
+        "answered_in_text": []
+      },
+      "doc_hint_checks": {
+        "ok": false,
+        "missing_fields": [],
+        "invalid_type": [],
+        "path_not_plans": [
+          "dh-001-010"
+        ],
+        "candidate_promoted_to_affected": []
+      },
+      "exclusion_checks": {
+        "ok": true,
+        "missing_reason": []
+      },
+      "blocked_checks": {
+        "ok": true,
+        "missing_action": []
+      },
+      "defects": [
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-001-010: path 'packet_plan.json'",
+          "example_ids": [
+            "dh-001-010"
+          ]
+        }
+      ],
+      "routing_recommendation": "targeted_repair",
+      "status": "targeted_repair"
+    },
+    {
+      "slice_id": "slice-002",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-002.json",
+      "schema_ok": true,
+      "plan_coverage": {
+        "source_block_ids_match": true,
+        "source_group_ids_match": true,
+        "blocks_observed_matches": true,
+        "expected_block_count": 49,
+        "actual_block_count": 49,
+        "missing_block_ids": [],
+        "extra_block_ids": []
+      },
+      "block_coverage": {
+        "all_blocks_referenced": true,
+        "missing_block_ids": [],
+        "orphan_block_ids": []
+      },
+      "counts": {
+        "obligations": 139,
+        "open_questions": 24,
+        "doc_hints": 47,
+        "excluded_blocks": 22,
+        "blocked_blocks": 0,
+        "doc_hints_by_type": {
+          "missing_doc": 0,
+          "process_artifact_ref": 5,
+          "affected_doc": 40,
+          "candidate_doc": 2
+        },
+        "obligations_by_category": {
+          "architecture_note": 57,
+          "fact_observation": 8,
+          "design_choice": 19,
+          "directive": 41,
+          "enum_definition": 4,
+          "constraint": 6,
+          "acceptance_criterion": 2,
+          "process_artifact_ref": 1,
+          "non_goal": 1
+        },
+        "obligations_by_action": {
+          "document": 107,
+          "preserve": 25,
+          "reference": 1,
+          "open_decision": 6
+        }
+      },
+      "lineage_checks": {
+        "obligations_with_full_lineage": 139,
+        "obligations_missing_fields": [],
+        "obligations_out_of_scope_blocks": [],
+        "obligations_invalid_category": [],
+        "obligations_invalid_action": [],
+        "obligations_excerpt_too_long": []
+      },
+      "open_question_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_action": [],
+        "answered_in_text": []
+      },
+      "doc_hint_checks": {
+        "ok": false,
+        "missing_fields": [],
+        "invalid_type": [],
+        "path_not_plans": [
+          "dh-002-009",
+          "dh-002-010",
+          "dh-002-011",
+          "dh-002-012",
+          "dh-002-013"
+        ],
+        "candidate_promoted_to_affected": []
+      },
+      "exclusion_checks": {
+        "ok": false,
+        "missing_reason": [
+          "lblock-000032",
+          "lblock-000035",
+          "lblock-000038",
+          "lblock-000041",
+          "lblock-000045",
+          "lblock-000048",
+          "lblock-000051",
+          "lblock-000053",
+          "lblock-000056",
+          "lblock-000059",
+          "lblock-000063",
+          "lblock-000066",
+          "lblock-000069",
+          "lblock-000072",
+          "lblock-000075",
+          "lblock-000078",
+          "lblock-000082",
+          "lblock-000086",
+          "lblock-000090",
+          "lblock-000094",
+          "lblock-000098",
+          "lblock-000102"
+        ]
+      },
+      "blocked_checks": {
+        "ok": true,
+        "missing_action": []
+      },
+      "defects": [
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-002-009: path 'canonical_obligations.json'",
+          "example_ids": [
+            "dh-002-009"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-002-010: path 'section_obligation_map.json'",
+          "example_ids": [
+            "dh-002-010"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-002-011: path 'coverage_collection.json'",
+          "example_ids": [
+            "dh-002-011"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-002-012: path 'bucket_plan.json'",
+          "example_ids": [
+            "dh-002-012"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-002-013: path 'packet_plan.json'",
+          "example_ids": [
+            "dh-002-013"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000032' empty reason",
+          "example_ids": [
+            "lblock-000032"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000035' empty reason",
+          "example_ids": [
+            "lblock-000035"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000038' empty reason",
+          "example_ids": [
+            "lblock-000038"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000041' empty reason",
+          "example_ids": [
+            "lblock-000041"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000045' empty reason",
+          "example_ids": [
+            "lblock-000045"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000048' empty reason",
+          "example_ids": [
+            "lblock-000048"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000051' empty reason",
+          "example_ids": [
+            "lblock-000051"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000053' empty reason",
+          "example_ids": [
+            "lblock-000053"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000056' empty reason",
+          "example_ids": [
+            "lblock-000056"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000059' empty reason",
+          "example_ids": [
+            "lblock-000059"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000063' empty reason",
+          "example_ids": [
+            "lblock-000063"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000066' empty reason",
+          "example_ids": [
+            "lblock-000066"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000069' empty reason",
+          "example_ids": [
+            "lblock-000069"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000072' empty reason",
+          "example_ids": [
+            "lblock-000072"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000075' empty reason",
+          "example_ids": [
+            "lblock-000075"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000078' empty reason",
+          "example_ids": [
+            "lblock-000078"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000082' empty reason",
+          "example_ids": [
+            "lblock-000082"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000086' empty reason",
+          "example_ids": [
+            "lblock-000086"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000090' empty reason",
+          "example_ids": [
+            "lblock-000090"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000094' empty reason",
+          "example_ids": [
+            "lblock-000094"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000098' empty reason",
+          "example_ids": [
+            "lblock-000098"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000102' empty reason",
+          "example_ids": [
+            "lblock-000102"
+          ]
+        }
+      ],
+      "routing_recommendation": "targeted_repair",
+      "status": "targeted_repair"
+    },
+    {
+      "slice_id": "slice-003",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-003.json",
+      "schema_ok": true,
+      "plan_coverage": {
+        "source_block_ids_match": true,
+        "source_group_ids_match": true,
+        "blocks_observed_matches": true,
+        "expected_block_count": 131,
+        "actual_block_count": 131,
+        "missing_block_ids": [],
+        "extra_block_ids": []
+      },
+      "block_coverage": {
+        "all_blocks_referenced": true,
+        "missing_block_ids": [],
+        "orphan_block_ids": []
+      },
+      "counts": {
+        "obligations": 158,
+        "open_questions": 1,
+        "doc_hints": 128,
+        "excluded_blocks": 34,
+        "blocked_blocks": 0,
+        "doc_hints_by_type": {
+          "missing_doc": 0,
+          "process_artifact_ref": 0,
+          "affected_doc": 118,
+          "candidate_doc": 10
+        },
+        "obligations_by_category": {
+          "directive": 23,
+          "fact_observation": 43,
+          "architecture_note": 80,
+          "constraint": 12
+        },
+        "obligations_by_action": {
+          "open_decision": 35,
+          "document": 123
+        }
+      },
+      "lineage_checks": {
+        "obligations_with_full_lineage": 158,
+        "obligations_missing_fields": [],
+        "obligations_out_of_scope_blocks": [],
+        "obligations_invalid_category": [],
+        "obligations_invalid_action": [],
+        "obligations_excerpt_too_long": []
+      },
+      "open_question_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_action": [],
+        "answered_in_text": []
+      },
+      "doc_hint_checks": {
+        "ok": false,
+        "missing_fields": [],
+        "invalid_type": [],
+        "path_not_plans": [
+          "dh-003-017",
+          "dh-003-018",
+          "dh-003-019",
+          "dh-003-020",
+          "dh-003-021",
+          "dh-003-022",
+          "dh-003-023",
+          "dh-003-041",
+          "dh-003-042",
+          "dh-003-043"
+        ],
+        "candidate_promoted_to_affected": []
+      },
+      "exclusion_checks": {
+        "ok": false,
+        "missing_reason": [
+          "lblock-000112",
+          "lblock-000116",
+          "lblock-000120",
+          "lblock-000124",
+          "lblock-000136",
+          "lblock-000140",
+          "lblock-000144",
+          "lblock-000148",
+          "lblock-000152",
+          "lblock-000162",
+          "lblock-000166",
+          "lblock-000170",
+          "lblock-000174",
+          "lblock-000186",
+          "lblock-000190",
+          "lblock-000194",
+          "lblock-000198",
+          "lblock-000202",
+          "lblock-000212",
+          "lblock-000216",
+          "lblock-000220",
+          "lblock-000224",
+          "lblock-000236",
+          "lblock-000248",
+          "lblock-000261",
+          "lblock-000271",
+          "lblock-000281",
+          "lblock-000289",
+          "lblock-000305",
+          "lblock-000319",
+          "lblock-000321",
+          "lblock-000341",
+          "lblock-000351",
+          "lblock-000363"
+        ]
+      },
+      "blocked_checks": {
+        "ok": true,
+        "missing_action": []
+      },
+      "defects": [
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-017: path 'Run_Modes.md'",
+          "example_ids": [
+            "dh-003-017"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-018: path 'Glossary.md'",
+          "example_ids": [
+            "dh-003-018"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-019: path 'Crosswalk.md'",
+          "example_ids": [
+            "dh-003-019"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-020: path 'Decision_Policy.md'",
+          "example_ids": [
+            "dh-003-020"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-021: path '00-plans-index.md'",
+          "example_ids": [
+            "dh-003-021"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-022: path 'Run_Modes.md'",
+          "example_ids": [
+            "dh-003-022"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-023: path 'newtools.md'",
+          "example_ids": [
+            "dh-003-023"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-041: path 'Glossary.md'",
+          "example_ids": [
+            "dh-003-041"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-042: path 'Crosswalk.md'",
+          "example_ids": [
+            "dh-003-042"
+          ]
+        },
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-003-043: path 'Decision_Policy.md'",
+          "example_ids": [
+            "dh-003-043"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000112' empty reason",
+          "example_ids": [
+            "lblock-000112"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000116' empty reason",
+          "example_ids": [
+            "lblock-000116"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000120' empty reason",
+          "example_ids": [
+            "lblock-000120"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000124' empty reason",
+          "example_ids": [
+            "lblock-000124"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000136' empty reason",
+          "example_ids": [
+            "lblock-000136"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000140' empty reason",
+          "example_ids": [
+            "lblock-000140"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000144' empty reason",
+          "example_ids": [
+            "lblock-000144"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000148' empty reason",
+          "example_ids": [
+            "lblock-000148"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000152' empty reason",
+          "example_ids": [
+            "lblock-000152"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000162' empty reason",
+          "example_ids": [
+            "lblock-000162"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000166' empty reason",
+          "example_ids": [
+            "lblock-000166"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000170' empty reason",
+          "example_ids": [
+            "lblock-000170"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000174' empty reason",
+          "example_ids": [
+            "lblock-000174"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000186' empty reason",
+          "example_ids": [
+            "lblock-000186"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000190' empty reason",
+          "example_ids": [
+            "lblock-000190"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000194' empty reason",
+          "example_ids": [
+            "lblock-000194"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000198' empty reason",
+          "example_ids": [
+            "lblock-000198"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000202' empty reason",
+          "example_ids": [
+            "lblock-000202"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000212' empty reason",
+          "example_ids": [
+            "lblock-000212"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000216' empty reason",
+          "example_ids": [
+            "lblock-000216"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000220' empty reason",
+          "example_ids": [
+            "lblock-000220"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000224' empty reason",
+          "example_ids": [
+            "lblock-000224"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000236' empty reason",
+          "example_ids": [
+            "lblock-000236"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000248' empty reason",
+          "example_ids": [
+            "lblock-000248"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000261' empty reason",
+          "example_ids": [
+            "lblock-000261"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000271' empty reason",
+          "example_ids": [
+            "lblock-000271"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000281' empty reason",
+          "example_ids": [
+            "lblock-000281"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000289' empty reason",
+          "example_ids": [
+            "lblock-000289"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000305' empty reason",
+          "example_ids": [
+            "lblock-000305"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000319' empty reason",
+          "example_ids": [
+            "lblock-000319"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000321' empty reason",
+          "example_ids": [
+            "lblock-000321"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000341' empty reason",
+          "example_ids": [
+            "lblock-000341"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000351' empty reason",
+          "example_ids": [
+            "lblock-000351"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000363' empty reason",
+          "example_ids": [
+            "lblock-000363"
+          ]
+        }
+      ],
+      "routing_recommendation": "targeted_repair",
+      "status": "targeted_repair"
+    },
+    {
+      "slice_id": "slice-004",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-004.json",
+      "schema_ok": true,
+      "plan_coverage": {
+        "source_block_ids_match": true,
+        "source_group_ids_match": true,
+        "blocks_observed_matches": true,
+        "expected_block_count": 98,
+        "actual_block_count": 98,
+        "missing_block_ids": [],
+        "extra_block_ids": []
+      },
+      "block_coverage": {
+        "all_blocks_referenced": false,
+        "missing_block_ids": [
+          "lblock-000373",
+          "lblock-000383",
+          "lblock-000391",
+          "lblock-000407",
+          "lblock-000421",
+          "lblock-000423",
+          "lblock-000426",
+          "lblock-000429",
+          "lblock-000432",
+          "lblock-000435",
+          "lblock-000438",
+          "lblock-000441",
+          "lblock-000443",
+          "lblock-000447",
+          "lblock-000450",
+          "lblock-000453",
+          "lblock-000456",
+          "lblock-000459",
+          "lblock-000462",
+          "lblock-000464",
+          "lblock-000467",
+          "lblock-000470",
+          "lblock-000473",
+          "lblock-000476",
+          "lblock-000479",
+          "lblock-000482",
+          "lblock-000485",
+          "lblock-000488",
+          "lblock-000491",
+          "lblock-000495",
+          "lblock-000497",
+          "lblock-000500",
+          "lblock-000503",
+          "lblock-000506",
+          "lblock-000509",
+          "lblock-000512",
+          "lblock-000514",
+          "lblock-000517",
+          "lblock-000520",
+          "lblock-000522",
+          "lblock-000525",
+          "lblock-000528",
+          "lblock-000531"
+        ],
+        "orphan_block_ids": []
+      },
+      "counts": {
+        "obligations": 68,
+        "open_questions": 6,
+        "doc_hints": 92,
+        "excluded_blocks": 43,
+        "blocked_blocks": 0,
+        "doc_hints_by_type": {
+          "missing_doc": 1,
+          "process_artifact_ref": 0,
+          "affected_doc": 64,
+          "candidate_doc": 27
+        },
+        "obligations_by_category": {
+          "directive": 24,
+          "architecture_note": 15,
+          "routing_rule": 8,
+          "design_choice": 5,
+          "enum_definition": 3,
+          "constraint": 8,
+          "schema_definition": 1,
+          "acceptance_criterion": 3,
+          "data_shape": 1
+        },
+        "obligations_by_action": {
+          "document": 47,
+          "reference": 5,
+          "implement": 12,
+          "preserve": 4
+        }
+      },
+      "lineage_checks": {
+        "obligations_with_full_lineage": 68,
+        "obligations_missing_fields": [],
+        "obligations_out_of_scope_blocks": [],
+        "obligations_invalid_category": [],
+        "obligations_invalid_action": [],
+        "obligations_excerpt_too_long": []
+      },
+      "open_question_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_action": [],
+        "answered_in_text": []
+      },
+      "doc_hint_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_type": [],
+        "path_not_plans": [],
+        "candidate_promoted_to_affected": []
+      },
+      "exclusion_checks": {
+        "ok": false,
+        "missing_reason": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "blocked_checks": {
+        "ok": true,
+        "missing_action": []
+      },
+      "defects": [
+        {
+          "defect_type": "missing_block_coverage",
+          "severity": "block_isolated",
+          "details": "43 blocks never referenced in obligations/questions/hints/excluded/blocked",
+          "example_ids": [
+            "lblock-000373",
+            "lblock-000383",
+            "lblock-000391",
+            "lblock-000407",
+            "lblock-000421",
+            "lblock-000423",
+            "lblock-000426",
+            "lblock-000429",
+            "lblock-000432",
+            "lblock-000435",
+            "lblock-000438",
+            "lblock-000441",
+            "lblock-000443",
+            "lblock-000447",
+            "lblock-000450",
+            "lblock-000453",
+            "lblock-000456",
+            "lblock-000459",
+            "lblock-000462",
+            "lblock-000464",
+            "lblock-000467",
+            "lblock-000470",
+            "lblock-000473",
+            "lblock-000476",
+            "lblock-000479"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded None empty reason",
+          "example_ids": []
+        }
+      ],
+      "routing_recommendation": "targeted_repair",
+      "status": "targeted_repair"
+    },
+    {
+      "slice_id": "slice-005",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-005.json",
+      "schema_ok": true,
+      "plan_coverage": {
+        "source_block_ids_match": true,
+        "source_group_ids_match": true,
+        "blocks_observed_matches": true,
+        "expected_block_count": 91,
+        "actual_block_count": 91,
+        "missing_block_ids": [],
+        "extra_block_ids": []
+      },
+      "block_coverage": {
+        "all_blocks_referenced": true,
+        "missing_block_ids": [],
+        "orphan_block_ids": []
+      },
+      "counts": {
+        "obligations": 80,
+        "open_questions": 12,
+        "doc_hints": 24,
+        "excluded_blocks": 46,
+        "blocked_blocks": 0,
+        "doc_hints_by_type": {
+          "missing_doc": 0,
+          "process_artifact_ref": 0,
+          "affected_doc": 4,
+          "candidate_doc": 20
+        },
+        "obligations_by_category": {
+          "constraint": 14,
+          "design_choice": 2,
+          "non_goal": 1,
+          "routing_rule": 19,
+          "directive": 10,
+          "data_shape": 3,
+          "architecture_note": 11,
+          "fact_observation": 3,
+          "acceptance_criterion": 7,
+          "enum_definition": 4,
+          "schema_definition": 4,
+          "stage_definition": 1,
+          "command_definition": 1
+        },
+        "obligations_by_action": {
+          "document": 37,
+          "implement": 32,
+          "preserve": 6,
+          "open_decision": 5
+        }
+      },
+      "lineage_checks": {
+        "obligations_with_full_lineage": 80,
+        "obligations_missing_fields": [],
+        "obligations_out_of_scope_blocks": [],
+        "obligations_invalid_category": [],
+        "obligations_invalid_action": [],
+        "obligations_excerpt_too_long": []
+      },
+      "open_question_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_action": [],
+        "answered_in_text": []
+      },
+      "doc_hint_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_type": [],
+        "path_not_plans": [],
+        "candidate_promoted_to_affected": []
+      },
+      "exclusion_checks": {
+        "ok": false,
+        "missing_reason": [
+          "lblock-000534",
+          "lblock-000537",
+          "lblock-000540",
+          "lblock-000543",
+          "lblock-000546",
+          "lblock-000549",
+          "lblock-000552",
+          "lblock-000554",
+          "lblock-000557",
+          "lblock-000561",
+          "lblock-000564",
+          "lblock-000567",
+          "lblock-000570",
+          "lblock-000573",
+          "lblock-000576",
+          "lblock-000579",
+          "lblock-000582",
+          "lblock-000584",
+          "lblock-000587",
+          "lblock-000590",
+          "lblock-000593",
+          "lblock-000596",
+          "lblock-000599",
+          "lblock-000602",
+          "lblock-000605",
+          "lblock-000609",
+          "lblock-000612",
+          "lblock-000615",
+          "lblock-000618",
+          "lblock-000621",
+          "lblock-000623",
+          "lblock-000626",
+          "lblock-000629",
+          "lblock-000632",
+          "lblock-000635",
+          "lblock-000638",
+          "lblock-000641",
+          "lblock-000644",
+          "lblock-000647",
+          "lblock-000650",
+          "lblock-000653",
+          "lblock-000656",
+          "lblock-000659",
+          "lblock-000661",
+          "lblock-000664",
+          "lblock-000668"
+        ]
+      },
+      "blocked_checks": {
+        "ok": true,
+        "missing_action": []
+      },
+      "defects": [
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000534' empty reason",
+          "example_ids": [
+            "lblock-000534"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000537' empty reason",
+          "example_ids": [
+            "lblock-000537"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000540' empty reason",
+          "example_ids": [
+            "lblock-000540"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000543' empty reason",
+          "example_ids": [
+            "lblock-000543"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000546' empty reason",
+          "example_ids": [
+            "lblock-000546"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000549' empty reason",
+          "example_ids": [
+            "lblock-000549"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000552' empty reason",
+          "example_ids": [
+            "lblock-000552"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000554' empty reason",
+          "example_ids": [
+            "lblock-000554"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000557' empty reason",
+          "example_ids": [
+            "lblock-000557"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000561' empty reason",
+          "example_ids": [
+            "lblock-000561"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000564' empty reason",
+          "example_ids": [
+            "lblock-000564"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000567' empty reason",
+          "example_ids": [
+            "lblock-000567"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000570' empty reason",
+          "example_ids": [
+            "lblock-000570"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000573' empty reason",
+          "example_ids": [
+            "lblock-000573"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000576' empty reason",
+          "example_ids": [
+            "lblock-000576"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000579' empty reason",
+          "example_ids": [
+            "lblock-000579"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000582' empty reason",
+          "example_ids": [
+            "lblock-000582"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000584' empty reason",
+          "example_ids": [
+            "lblock-000584"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000587' empty reason",
+          "example_ids": [
+            "lblock-000587"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000590' empty reason",
+          "example_ids": [
+            "lblock-000590"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000593' empty reason",
+          "example_ids": [
+            "lblock-000593"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000596' empty reason",
+          "example_ids": [
+            "lblock-000596"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000599' empty reason",
+          "example_ids": [
+            "lblock-000599"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000602' empty reason",
+          "example_ids": [
+            "lblock-000602"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000605' empty reason",
+          "example_ids": [
+            "lblock-000605"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000609' empty reason",
+          "example_ids": [
+            "lblock-000609"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000612' empty reason",
+          "example_ids": [
+            "lblock-000612"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000615' empty reason",
+          "example_ids": [
+            "lblock-000615"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000618' empty reason",
+          "example_ids": [
+            "lblock-000618"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000621' empty reason",
+          "example_ids": [
+            "lblock-000621"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000623' empty reason",
+          "example_ids": [
+            "lblock-000623"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000626' empty reason",
+          "example_ids": [
+            "lblock-000626"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000629' empty reason",
+          "example_ids": [
+            "lblock-000629"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000632' empty reason",
+          "example_ids": [
+            "lblock-000632"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000635' empty reason",
+          "example_ids": [
+            "lblock-000635"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000638' empty reason",
+          "example_ids": [
+            "lblock-000638"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000641' empty reason",
+          "example_ids": [
+            "lblock-000641"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000644' empty reason",
+          "example_ids": [
+            "lblock-000644"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000647' empty reason",
+          "example_ids": [
+            "lblock-000647"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000650' empty reason",
+          "example_ids": [
+            "lblock-000650"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000653' empty reason",
+          "example_ids": [
+            "lblock-000653"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000656' empty reason",
+          "example_ids": [
+            "lblock-000656"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000659' empty reason",
+          "example_ids": [
+            "lblock-000659"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000661' empty reason",
+          "example_ids": [
+            "lblock-000661"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000664' empty reason",
+          "example_ids": [
+            "lblock-000664"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000668' empty reason",
+          "example_ids": [
+            "lblock-000668"
+          ]
+        }
+      ],
+      "routing_recommendation": "targeted_repair",
+      "status": "targeted_repair"
+    },
+    {
+      "slice_id": "slice-006",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-006.json",
+      "schema_ok": true,
+      "plan_coverage": {
+        "source_block_ids_match": true,
+        "source_group_ids_match": true,
+        "blocks_observed_matches": true,
+        "expected_block_count": 80,
+        "actual_block_count": 80,
+        "missing_block_ids": [],
+        "extra_block_ids": []
+      },
+      "block_coverage": {
+        "all_blocks_referenced": true,
+        "missing_block_ids": [],
+        "orphan_block_ids": []
+      },
+      "counts": {
+        "obligations": 90,
+        "open_questions": 7,
+        "doc_hints": 12,
+        "excluded_blocks": 40,
+        "blocked_blocks": 0,
+        "doc_hints_by_type": {
+          "missing_doc": 0,
+          "process_artifact_ref": 1,
+          "affected_doc": 11,
+          "candidate_doc": 0
+        },
+        "obligations_by_category": {
+          "constraint": 15,
+          "enum_definition": 11,
+          "data_shape": 7,
+          "architecture_note": 5,
+          "directive": 9,
+          "acceptance_criterion": 10,
+          "schema_definition": 7,
+          "routing_rule": 17,
+          "non_goal": 1,
+          "fact_observation": 1,
+          "design_choice": 3,
+          "command_definition": 4
+        },
+        "obligations_by_action": {
+          "implement": 58,
+          "document": 29,
+          "preserve": 3
+        }
+      },
+      "lineage_checks": {
+        "obligations_with_full_lineage": 90,
+        "obligations_missing_fields": [],
+        "obligations_out_of_scope_blocks": [],
+        "obligations_invalid_category": [],
+        "obligations_invalid_action": [],
+        "obligations_excerpt_too_long": []
+      },
+      "open_question_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_action": [],
+        "answered_in_text": []
+      },
+      "doc_hint_checks": {
+        "ok": false,
+        "missing_fields": [],
+        "invalid_type": [],
+        "path_not_plans": [
+          "dh-006-006"
+        ],
+        "candidate_promoted_to_affected": []
+      },
+      "exclusion_checks": {
+        "ok": true,
+        "missing_reason": []
+      },
+      "blocked_checks": {
+        "ok": true,
+        "missing_action": []
+      },
+      "defects": [
+        {
+          "defect_type": "doc_hint_path_not_plans",
+          "severity": "block_isolated",
+          "details": "dh-006-006: path 'existing concern entries in this working ledger'",
+          "example_ids": [
+            "dh-006-006"
+          ]
+        }
+      ],
+      "routing_recommendation": "targeted_repair",
+      "status": "targeted_repair"
+    },
+    {
+      "slice_id": "slice-007",
+      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-007.json",
+      "schema_ok": true,
+      "plan_coverage": {
+        "source_block_ids_match": true,
+        "source_group_ids_match": true,
+        "blocks_observed_matches": true,
+        "expected_block_count": 94,
+        "actual_block_count": 94,
+        "missing_block_ids": [],
+        "extra_block_ids": []
+      },
+      "block_coverage": {
+        "all_blocks_referenced": true,
+        "missing_block_ids": [],
+        "orphan_block_ids": []
+      },
+      "counts": {
+        "obligations": 114,
+        "open_questions": 5,
+        "doc_hints": 17,
+        "excluded_blocks": 47,
+        "blocked_blocks": 0,
+        "doc_hints_by_type": {
+          "missing_doc": 0,
+          "process_artifact_ref": 0,
+          "affected_doc": 0,
+          "candidate_doc": 17
+        },
+        "obligations_by_category": {
+          "constraint": 14,
+          "directive": 21,
+          "architecture_note": 63,
+          "fact_observation": 5,
+          "design_choice": 5,
+          "data_shape": 6
+        },
+        "obligations_by_action": {
+          "implement": 22,
+          "document": 89,
+          "open_decision": 1,
+          "reference": 2
+        }
+      },
+      "lineage_checks": {
+        "obligations_with_full_lineage": 114,
+        "obligations_missing_fields": [],
+        "obligations_out_of_scope_blocks": [],
+        "obligations_invalid_category": [],
+        "obligations_invalid_action": [],
+        "obligations_excerpt_too_long": []
+      },
+      "open_question_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_action": [],
+        "answered_in_text": []
+      },
+      "doc_hint_checks": {
+        "ok": true,
+        "missing_fields": [],
+        "invalid_type": [],
+        "path_not_plans": [],
+        "candidate_promoted_to_affected": []
+      },
+      "exclusion_checks": {
+        "ok": false,
+        "missing_reason": [
+          "lblock-000791",
+          "lblock-000794",
+          "lblock-000797",
+          "lblock-000800",
+          "lblock-000802",
+          "lblock-000805",
+          "lblock-000808",
+          "lblock-000812",
+          "lblock-000815",
+          "lblock-000818",
+          "lblock-000821",
+          "lblock-000824",
+          "lblock-000827",
+          "lblock-000830",
+          "lblock-000833",
+          "lblock-000836",
+          "lblock-000839",
+          "lblock-000842",
+          "lblock-000845",
+          "lblock-000847",
+          "lblock-000850",
+          "lblock-000853",
+          "lblock-000856",
+          "lblock-000859",
+          "lblock-000863",
+          "lblock-000866",
+          "lblock-000869",
+          "lblock-000872",
+          "lblock-000875",
+          "lblock-000878",
+          "lblock-000881",
+          "lblock-000884",
+          "lblock-000886",
+          "lblock-000889",
+          "lblock-000892",
+          "lblock-000895",
+          "lblock-000898",
+          "lblock-000901",
+          "lblock-000904",
+          "lblock-000907",
+          "lblock-000910",
+          "lblock-000913",
+          "lblock-000916",
+          "lblock-000920",
+          "lblock-000923",
+          "lblock-000926",
+          "lblock-000929"
+        ]
+      },
+      "blocked_checks": {
+        "ok": true,
+        "missing_action": []
+      },
+      "defects": [
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000791' empty reason",
+          "example_ids": [
+            "lblock-000791"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000794' empty reason",
+          "example_ids": [
+            "lblock-000794"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000797' empty reason",
+          "example_ids": [
+            "lblock-000797"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000800' empty reason",
+          "example_ids": [
+            "lblock-000800"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000802' empty reason",
+          "example_ids": [
+            "lblock-000802"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000805' empty reason",
+          "example_ids": [
+            "lblock-000805"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000808' empty reason",
+          "example_ids": [
+            "lblock-000808"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000812' empty reason",
+          "example_ids": [
+            "lblock-000812"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000815' empty reason",
+          "example_ids": [
+            "lblock-000815"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000818' empty reason",
+          "example_ids": [
+            "lblock-000818"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000821' empty reason",
+          "example_ids": [
+            "lblock-000821"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000824' empty reason",
+          "example_ids": [
+            "lblock-000824"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000827' empty reason",
+          "example_ids": [
+            "lblock-000827"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000830' empty reason",
+          "example_ids": [
+            "lblock-000830"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000833' empty reason",
+          "example_ids": [
+            "lblock-000833"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000836' empty reason",
+          "example_ids": [
+            "lblock-000836"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000839' empty reason",
+          "example_ids": [
+            "lblock-000839"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000842' empty reason",
+          "example_ids": [
+            "lblock-000842"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000845' empty reason",
+          "example_ids": [
+            "lblock-000845"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000847' empty reason",
+          "example_ids": [
+            "lblock-000847"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000850' empty reason",
+          "example_ids": [
+            "lblock-000850"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000853' empty reason",
+          "example_ids": [
+            "lblock-000853"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000856' empty reason",
+          "example_ids": [
+            "lblock-000856"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000859' empty reason",
+          "example_ids": [
+            "lblock-000859"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000863' empty reason",
+          "example_ids": [
+            "lblock-000863"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000866' empty reason",
+          "example_ids": [
+            "lblock-000866"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000869' empty reason",
+          "example_ids": [
+            "lblock-000869"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000872' empty reason",
+          "example_ids": [
+            "lblock-000872"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000875' empty reason",
+          "example_ids": [
+            "lblock-000875"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000878' empty reason",
+          "example_ids": [
+            "lblock-000878"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000881' empty reason",
+          "example_ids": [
+            "lblock-000881"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000884' empty reason",
+          "example_ids": [
+            "lblock-000884"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000886' empty reason",
+          "example_ids": [
+            "lblock-000886"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000889' empty reason",
+          "example_ids": [
+            "lblock-000889"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000892' empty reason",
+          "example_ids": [
+            "lblock-000892"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000895' empty reason",
+          "example_ids": [
+            "lblock-000895"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000898' empty reason",
+          "example_ids": [
+            "lblock-000898"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000901' empty reason",
+          "example_ids": [
+            "lblock-000901"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000904' empty reason",
+          "example_ids": [
+            "lblock-000904"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000907' empty reason",
+          "example_ids": [
+            "lblock-000907"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000910' empty reason",
+          "example_ids": [
+            "lblock-000910"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000913' empty reason",
+          "example_ids": [
+            "lblock-000913"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000916' empty reason",
+          "example_ids": [
+            "lblock-000916"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000920' empty reason",
+          "example_ids": [
+            "lblock-000920"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000923' empty reason",
+          "example_ids": [
+            "lblock-000923"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000926' empty reason",
+          "example_ids": [
+            "lblock-000926"
+          ]
+        },
+        {
+          "defect_type": "excluded_block_missing_reason",
+          "severity": "block_isolated",
+          "details": "excluded 'lblock-000929' empty reason",
+          "example_ids": [
+            "lblock-000929"
+          ]
+        }
+      ],
+      "routing_recommendation": "targeted_repair",
+      "status": "targeted_repair"
+    }
+  ],
+  "summary": {
+    "slices_validated": 7,
+    "slices_pass": 0,
+    "slices_targeted_repair": 7,
+    "slices_systemic": 0,
+    "total_obligations": 737,
+    "total_open_questions": 60,
+    "total_doc_hints": 334,
+    "total_excluded_blocks": 240,
+    "total_blocked_blocks": 0,
+    "total_defects_by_severity": {
+      "warn": 0,
+      "block_isolated": 210,
+      "block_systemic": 0
+    }
+  },
+  "subagent_execution": {
+    "subagent_task_id": "d3-validate-batch-01",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "status": "complete"
+}

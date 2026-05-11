@@ -1,0 +1,1299 @@
+{
+  "schema_id": "pm.coverage_evidence_classifier_input.v3.2.2",
+  "subagent_task_id": "e2-task-003",
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-008-g021",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-002-099",
+        "obl-002-106",
+        "obl-002-107",
+        "obl-002-111"
+      ],
+      "obligation_record_count": 4,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g001",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|.puppet-master/project/plan_graph/",
+      "obligation_ids": [
+        "obl-002-115"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        ".puppet-master/project/plan_graph/"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|AGENTS.md|prd.json|progress.txt",
+      "obligation_ids": [
+        "obl-002-119"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "AGENTS.md",
+        "prd.json",
+        "progress.txt"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Contracts_V0.md|Executor_Protocol.md",
+      "obligation_ids": [
+        "obl-002-113",
+        "obl-002-136"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Contracts_V0.md",
+        "Executor_Protocol.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|FinalGUISpec.md",
+      "obligation_ids": [
+        "obl-002-133"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "FinalGUISpec.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|GitHub_Integration.md",
+      "obligation_ids": [
+        "obl-002-124"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "GitHub_Integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g006",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Glossary.md",
+      "obligation_ids": [
+        "obl-002-132"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Glossary.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g007",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|MiscPlan.md|WorktreeGitImprovement.md",
+      "obligation_ids": [
+        "obl-002-126"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "MiscPlan.md",
+        "WorktreeGitImprovement.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g008",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Models_System.md",
+      "obligation_ids": [
+        "obl-002-122"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Models_System.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g009",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Multi-Account.md|Personas.md",
+      "obligation_ids": [
+        "obl-002-120"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Multi-Account.md",
+        "Personas.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g010",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Orchestrator_Page.md",
+      "obligation_ids": [
+        "obl-002-135"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Orchestrator_Page.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g011",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Personas.md",
+      "obligation_ids": [
+        "obl-002-121"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Personas.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g012",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Progression_Gates.md",
+      "obligation_ids": [
+        "obl-002-114"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Progression_Gates.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g013",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Prompt_Pipeline.md",
+      "obligation_ids": [
+        "obl-002-116"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Prompt_Pipeline.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g014",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|Widget_System.md",
+      "obligation_ids": [
+        "obl-002-134"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Widget_System.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g015",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|WorktreeGitImprovement.md",
+      "obligation_ids": [
+        "obl-002-125"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "WorktreeGitImprovement.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g016",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|WorktreeGitImprovement.md|chain-wizard-flexibility.md",
+      "obligation_ids": [
+        "obl-002-128"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "WorktreeGitImprovement.md",
+        "chain-wizard-flexibility.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g017",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|chain-wizard-flexibility.md|newfeatures.md",
+      "obligation_ids": [
+        "obl-002-118",
+        "obl-002-131"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "chain-wizard-flexibility.md",
+        "newfeatures.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g018",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|newfeatures.md",
+      "obligation_ids": [
+        "obl-002-129"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "newfeatures.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g019",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|orchestrator-subagent-integration.md",
+      "obligation_ids": [
+        "obl-002-130"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "orchestrator-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g020",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|doc_discovery|storage-plan.md",
+      "obligation_ids": [
+        "obl-002-137"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g021",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-002-117",
+        "obl-002-123",
+        "obl-002-127"
+      ],
+      "obligation_record_count": 3,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-010-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|concrete_plans_targets|Plans/00-plans-index.md|Plans/Crosswalk.md|Plans/Decision_Policy.md|Plans/Glossary.md",
+      "obligation_ids": [
+        "obl-003-014"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Glossary.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 445,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/00-plans-index.md",
+          "line_start": 401,
+          "line_end": 445,
+          "window_index": 1,
+          "total_lines_in_doc": 445,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 830,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 830,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 801,
+          "line_end": 830,
+          "window_index": 2,
+          "total_lines_in_doc": 830,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Decision_Policy.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 714,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Decision_Policy.md",
+          "line_start": 401,
+          "line_end": 714,
+          "window_index": 1,
+          "total_lines_in_doc": 714,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 528,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 401,
+          "line_end": 528,
+          "window_index": 1,
+          "total_lines_in_doc": 528,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-001",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Package/seam overseer spec.** Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc. Include: spawning rules, validation subagent pair, escalation paths, persona/model assig",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-002",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Widget catalog refresh.** Design replacements for `widget.tier_tree` and `widget.progress_bars` that visualize packages, seams, lanes, and parallel execution. Determine if the Tiers tab is renamed or replaced.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-003",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Effective identity contract.** Define how requested vs. effective execution identity (provider, model, account, persona) is tracked, stored, and displayed at each governance level (node, package, seam, lane).",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-004",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Lane ↔ worktree mapping.** Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid. Define contamination detection and safe-point restore for cross-lane worktree reuse.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-005",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Pathing migration.** Design the replacement for `<phase>/<task>/<subtask>` canonical paths. Candidates: `<package_id>/<node_id>`, `<seam_id>/<package_id>/<node_id>`, or content-addressed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-006",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-007",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **HITL boundary redesign.** Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries. Address automation-first default vs. the UX expectation of manual review.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-008",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 8. **Dashboard → Orchestrator → Thread attention flow.** Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 445,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Plans Index (authoritative map)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Cleanup Priorities\n\n#### Source target target-0029\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Cleanup Priorities\n- Exact required items represented:\n  - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.\n  - Clarify which docs own [retired-token-3] vs UI-only overlays.\n  - `Plans/00-plans-index.md`\n  - Plans/00-plans-index.md\n  - Search can index the shared envelope fields while preserving family-specific filters.\n  - stop-reason and auth-state vocabularies still do not map cleanly onto Multi-Account switch-trigger and availability-state vocabularies\n  - projection-derived warnings should still appear, but their rows need trust qualification and should not pretend to be equally authoritative\n  - `mutation_capable` is declared as authoritative but still barely integrated into schema/event/policy surfaces\n  - mutation_capable\n  - Recommended owner map\n  - `Runtime_Artifacts_Panel.md` still points at schema files that do not exist and an index key not registered in storage-plan.\n  - Runtime_Artifacts_Panel.md\n  - The clearest missing family is the runtime-artifact index side:\n  - missing/corrupt index rows must degrade to record-backed views rather than implying artifact loss\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Many current payloads already expose stable canonical IDs that can map directly into `object_kind/object_id` without inventing route-local IDs.\n  - object_kind/object_id\n  - with `Plans/00-plans-index.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` important as drift-multipliers.\n  - Plans/GUI_Rebuild_Requirements_Checklist.md\n  - with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor.\n  - Plans/Plugins_System.md\n  - Plans/Skills_System.md\n  - Plans/Formatters_System.md\n  - The routing tranche is now structurally complete enough to map directly onto owner docs.\n  - Remove the duplicated `cost_usage` section during reconciliation so there is one authoritative consumer section.\n  - cost_usage\n  - blocked-state actions map from ordered `allowed_action_ids[]`\n  - allowed_action_ids[]\n  - blocked-state actions map from canonical `allowed_action_ids[]`\n  - `Formatters_System.md` still has no authoritative rule for formatter-vs-LSP ownership, DAE non-triggering host writes, or overlapping formatter detectors.\n  - Formatters_System.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `Plans/.evidence/**`\n  - Plans/.evidence/**\n  - `action_available` still does not have a discoverable owner or consumer presence in the live Plans docs.\n  - action_available\n  - summary: Audited the three remaining unresolved transfer-coverage blockers (`cov-034`, `cov-511`, `cov-526`) against the live Plans docs and confirmed that all three remain unresolved owner-definition gaps rather than missing evidence-collection gaps.\n  - cov-034\n  - cov-511\n  - cov-526\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.\n\n\n## Change Summary\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0031\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings re"
+        },
+        {
+          "path": "Plans/00-plans-index.md",
+          "line_start": 401,
+          "line_end": 445,
+          "window_index": 1,
+          "total_lines_in_doc": 445,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 2960,
+          "text_excerpt": "- event/contracts and storage for attempts, safe points, and remediation lineage\n- blocked-state UX and recovery actions\n- provider/auth/permission mappings into runtime taxonomy\n- glossary ownership for new runtime terms\n\nIndex descriptions for this packet MUST point readers to:\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md\n- `Plans/Contracts_V0.md` for canonical events, enums, identities, and action fields\n- `Plans/Executor_Protocol.md` for scheduler semantics, attempt lifecycle, and graph-lock behavior\n- `Plans/storage-plan.md` for persistence and restart rules\n- `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md` for rendering and interaction\n- `Plans/chain-wizard-flexibility.md`, `Plans/assistant-chat-design.md`, and `Plans/interview-subagent-integration.md` for paused/degraded planning-state semantics\n- `Plans/Glossary.md` for canonical runtime terminology\n\n## 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager\n\n- `Plans/GitHub_Integration.md` now owns two distinct operational surfaces: Git-first Source Control and GitHub Actions.\n- `Plans/WorktreeGitImprovement.md` remains canonical for worktree correctness and runtime alignment, but Source Control is the primary user-facing worktree surface.\n- `Plans/Containers_Registry_and_Unraid.md` is the canonical owner for Docker Manager, including Publish / Unraid and project-focused Kubernetes placement.\n- `Plans/newtools.md` remains canonical for Docker/Actions doctor and result minima and must be read alongside the feature-owner docs.\n- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Permissions_System.md`, and `Plans/usage-feature.md` are required anti-drift companions for this packet.\n\nContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md\n\n\n## Web Tools + Firecrawl + Lost-Spec Recovery reconciliation note (2026-03-30)\n\nThe reconciled owner and consumer set for web tools, Firecrawl, questions, planning/TODO, permissions, runtime identity, and MCP now spans:\n- `Plans/Tools.md`\n- `Plans/assistant-chat-design.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Permissions_System.md`\n- `Plans/storage-plan.md`\n- `Plans/Commands_System.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Skills_System.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Run_Modes.md`\n- `Plans/Section15_MVP_Promoted_Features_Spec.md`\n- `Plans/MCP_Integration.md`\n\nContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Tools.md\n\nConsumer summaries in orchestration, interview, provider, account, and index surfaces defer to those repaired owner sections instead of keeping competing canon. Verify-only docs were checked during reconciliation and are intentionally out of packet scope because no edits were required."
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 830,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Crosswalk (Canonical)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Highest-Impact Docs\n  - Cleanup Priorities\n\n#### Source target target-0157\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Highest-Impact Docs\n  - Cleanup Priorities\n- Exact required items represented:\n  - Replace tier-rooted execution with package/seam/lane model\n  - Define package overseer + seam overseer roles\n  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage\n  - Redefine gates to package-complete / seam-complete\n  - Rename or retire Tiers UI/tab and tier_tree/progress bars\n  - Extend Glossary.md, [retired-token-12], Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.\n  - Clarify which docs own [retired-token-11] vs UI-only overlays.\n  - rewrite-era primitives like `Seglog`, evidence-bundle style outputs, and capability-gating concepts still lack Crosswalk routing, so adjacent docs can cite primitives that Crosswalk cannot resolve.\n  - Seglog\n  - `[retired-token-12]` is not just duplicate-numbered; its `References` section is non-terminal, its §2 routing table omits many already-defined primitives, and adjacent docs are already citing primitives like `Seglog` that Crosswalk cannot route.\n  - [retired-token-12]\n  - References\n  - missing primitive routing is now sharper: `Seglog`, `ArtifactStore`, PR/issues surface ownership, and capability-gating ownership all still lack clean Crosswalk routing.\n  - ArtifactStore\n  - Highest-signal docs remain the same core owner set, with `Commands_System.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Project_Output_Artifacts.md`, `FileManager.md`, `[retired-token-12]`, `Decision_Policy.md`, `Run_Modes.md`, `Progression_Gates.md`, `newtools.md`, and `assistant-memory-subsystem.md` still worth pushing through the final pass.\n  - Commands_System.md\n  - Wiring_Matrix.md\n  - UI_Wiring_Rules.md\n  - Project_Output_Artifacts.md\n  - FileManager.md\n  - Decision_Policy.md\n  - Run_Modes.md\n  - PR/issues, `Seglog`, `ArtifactStore`, and capability-gating routing remain unresolved in Crosswalk.\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity, or make one primitive explicitly cover both layers if kept tight.\n  - `[retired-token-12]` still names `Primitive:UICommand` and `Primitive:DocumentPane`, but it has no primitive boundary for route-target navigation or identity-native open/focus behavior.\n  - Primitive:UICommand\n  - Primitive:DocumentPane\n  - crosswalk owns the primitive boundary\n  - The contract conclusions are now stronger than several owner docs, especially `Contracts_V0.md`, `[retired-token-12]`, `UI_Command_Catalog.md`, and `FinalGUISpec.md`.\n  - Contracts_V0.md\n  - UI_Command_Catalog.md\n  - FinalGUISpec.md\n  - `Plans/[retired-token-12]` still does not declare the routing/open-by-identity primitives that these behaviors require.\n  - Plans/[retired-token-12]\n  - `[retired-token-12]` still names `UICommand`, `DocumentPane`, and `DocumentCheckpoint` ownership without naming the route-target / subject-open primitive that sits between them.\n  - UICommand\n  - DocumentPane\n  - DocumentCheckpoint\n  - `[retired-token-12]` also still carries stale Orchestrator ownership text:\n  - `Plans/[retired-token-12]` has duplicated section numbering:\n  - `[retired-token-12]` is especially risky because duplicate numbering weakens its role as a precedence document.\n  - `DRY_Rules.md`, `[retired-token-12]`, `Progression_Gates.md`, and `Contracts_V0.md` now show concrete `ContractRef` format, anchor, and duplicate-section failures that would break deterministic traceability rather than just weaken it.\n  - DRY_Rules.md\n  - Progression_Gates.md\n  - ContractRef\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - `[retired-token-12]`, `DRY_Rules.md`, `Progression_Gates.md`, and `Decision_Log.md` now have explicitly cited duplicate section numbers, misbound `ContractRef`s, line-level gate semantics that do not match adjacent canon usage, and missing rewrite-era governance records.\n  - Decision_Log.md\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `Plans/[retired-token-12]` still publishes stale top-level ownership guidance for the rewrite:\n  - `[retired-token-12]` still routes readers into stale Orchestrator and widget canon\n  - The duplicated `[retired-token-12]` numbering is not cosmetic. It undermines `ContractRef` stability and gateable traceability.\n  - The duplicated runtime-recovery addendum means the gate doc now has same-file canon duplication similar to the problems already logged in `[retired-token-12]`, `human-in-the-loop.md`, and `storage-plan.md`.\n  - human-in-the-loop.md\n  - storage-plan.md\n  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/[retired-token-12]`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`\n  - Plans/Contracts_V0.md\n  - Plans/storage-plan.md\n  - Plans/UI_Command_Catalog.md\n  - Plans/Wiring_Matrix.md\n  - Plans/Progression_Gates.md\n  -"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 830,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Source Control rows expose `owner run/tier when present`\n  - owner run/tier when present\n  - glossary/help/labels for lane/worktree terminology\n  - preserve Source Control as Git/worktree-first\n  - lane/worktree records\n  - lane/worktree objects\n  - Source Control still needs a more concrete worktree-first vocabulary.\n  - This should stay worktree-first in Source Control, with lane/package/run metadata attached.\n  - revoked/reopened flow leaves an old lane/worktree no longer needed live\n  - Source Control / lane/worktree language\n  - Treat `acknowledged` as escalation/noise control and ownership visibility, not semantic closure and not blocker removal by itself\n  - acknowledged\n  - Source Control is compact and worktree-first\n  - no clean lane/worktree binding exists\n  - lane/worktree refs\n  - Source Control / repo/worktree/branch\n  - Source Control remains worktree-first.\n  - FileManager handoff to Source Control must preserve `repo_id` and `worktree_id`\n  - repo_id\n  - worktree_id\n  - lane/worktree state\n  - `worktree-first` Source Control with lane/worktree split\n  - worktree-first\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nFileManager owns the git/worktree model and lane assignments. Crosswalk clarifies when navigation crosses lanes and how that affects artifact visibility and approval scope.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/FileManager.md\n### 3.5 Assistant thread worktree binding ownership\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0166\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Requested binding`\n  - Requested binding\n  - workspace binding: `workspace`, `worktree_path`\n  - workspace\n  - worktree_path\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\nThread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.\n\n| Aspect | Owner doc | Consumer docs |\n|---|---|---|\n| Binding data model (1:1, thread↔worktree) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md |\n| Seglog events (`chat.thread_worktree_*`) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |\n| Commands (`cmd.chat.worktree.*`) | assistant-chat-design.md | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |\n| Settings (10 keys) | assistant-chat-design.md | storage-plan.md, FinalGUISpec.md |\n| Merge-back flow | assistant-chat-design.md | GitHub_Integration.md, Executor_Protocol.md |\n| Pre-merge test gate | assistant-chat-design.md | storage-plan.md, Executor_Protocol.md |\n| SC accordion & filter | GitHub_Integration.md | storage-plan.md, FinalGUISpec.md, Wiring_Matrix.md |\n| Worktree record extension (`owner_thread_id`) | storage-plan.md | WorktreeGitImprovement.md, Orchestrator_Page.md |\n| File manager worktree toggle | FileManager.md | assistant-chat-design.md, storage-plan.md |\n| LSP worktree root_identity | LSPSupport.md | assistant-chat-design.md, Executor_Protocol.md |\n\n**Freshness / health projection:** Thread worktree binding state follows the two-dimensional projection model (freshness=current|refreshing|stale × health=healthy|degraded|unavailable) defined in storage-plan.md §Projection state.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md\n\n### 3.6 Projection-state ownership\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0167\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - preview/browser `trust_tier` should not be casually reused as the generic projection-state term\n  - trust_tier\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity ref"
+        }
+      ],
+      "_remaining_windows_count": 5
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-010-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|concrete_plans_targets|Plans/Contracts_V0.md|Plans/Executor_Protocol.md|Plans/orchestrator-subagent-integration.md",
+      "obligation_ids": [
+        "obl-003-010"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4401,
+          "line_end": 4548,
+          "window_index": 11,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 801,
+          "line_end": 1140,
+          "window_index": 2,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 4801,
+          "line_end": 5200,
+          "window_index": 12,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 5201,
+          "line_end": 5600,
+          "window_index": 13,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 5601,
+          "line_end": 6000,
+          "window_index": 14,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 6001,
+          "line_end": 6400,
+          "window_index": 15,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 6401,
+          "line_end": 6750,
+          "window_index": 16,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-001",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Package/seam overseer spec.** Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc. Include: spawning rules, validation subagent pair, escalation paths, persona/model assig",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-002",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Widget catalog refresh.** Design replacements for `widget.tier_tree` and `widget.progress_bars` that visualize packages, seams, lanes, and parallel execution. Determine if the Tiers tab is renamed or replaced.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-003",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Effective identity contract.** Define how requested vs. effective execution identity (provider, model, account, persona) is tracked, stored, and displayed at each governance level (node, package, seam, lane).",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-004",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Lane ↔ worktree mapping.** Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid. Define contamination detection and safe-point restore for cross-lane worktree reuse.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-005",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Pathing migration.** Design the replacement for `<phase>/<task>/<subtask>` canonical paths. Candidates: `<package_id>/<node_id>`, `<seam_id>/<package_id>/<node_id>`, or content-addressed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-006",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-007",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **HITL boundary redesign.** Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries. Address automation-first default vs. the UX expectation of manual review.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-008",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 8. **Dashboard → Orchestrator → Thread attention flow.** Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Contracts V0 (Canonical)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Emerging execution-settings direction\n  - runtime/model precedence\n  - Highest-Impact Docs\n  - Runtime / Storage / Contract Impacts\n  - Cleanup Priorities\n\n#### Source target target-0106\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Emerging execution-settings direction\n  - runtime/model precedence\n  - Highest-Impact Docs\n  - Runtime / Storage / Contract Impacts\n  - Cleanup Priorities\n- Exact required items represented:\n  - Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work package overseer, feature seam overseer, and overseer-delegated node worker levels.\n  - Make requested vs effective provider/model visible at all levels where [retired-token-3] can occur.\n  - Specify node [retired-token-5] selection as dynamic-by-default from node scope/type; node-worker [retired-token-5] override is policy-owned, not per-node [retired-token-1].\n  - Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers.\n  - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels\n  - whether seam/package/node provider-model settings are hard constraints, defaults, or hints\n  - whether an overseer can do direct node work or only delegate/review\n  - if direct node work is allowed, whether it uses overseer-[retired-token-6] or node-[retired-token-6]\n  - how dynamic node [retired-token-5]s interact with explicit node overrides and overseer-controlled delegation\n  - Replace tier-rooted execution with package/seam/lane model\n  - Define package overseer + seam overseer roles\n  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage\n  - Redefine gates to package-complete / seam-complete\n  - Rename or retire Tiers UI/tab and tier_tree/progress bars\n  - Add node_id\n  - Add package_id\n  - Add seam_id\n  - Add lane_id\n  - Add attempt_id\n  - Add effective_identity\n  - Normalize requested/effective account identity shapes\n  - Normalize blocked_[retired-token-25]/allowed_action_ids and safe-point/restore-point/rollback terminology\n  - Relax or replace stale graph-schema constants `[retired-token-23]` and [retired-token-24].\n  - Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.\n  - Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts.\n  - Priority 1 — Canonical contracts that cannot safely coexist with the new model**\n  - 4. **`requested_[retired-token-5]_id` vs canonical `requested_[retired-token-5]`**\n  - requested_[retired-token-5]_id\n  - requested_[retired-token-5]\n  - Why it matters: GPT-5.4 found almost no owner docs that actually define these objects, even where many other contracts now depend on them.\n  - impacted contract/runtime/storage area: identity fields.\n  - this collides with the newer package-based lane-pool model\n  - `suspect`\n  - suspect\n  - `restoring`\n  - restoring\n  - `retained`\n  - retained\n  - `cleanup_eligible`\n  - cleanup_eligible\n  - now needs explicit requested/effective identity, trust-state, and governance-record drill-in contracts to stay viable as the graph-native surface\n  - `worktree_id`\n  - worktree_id\n  - owning package/lane identity when applicable\n  - owner run/package/lane\n  - from `TierChanged` / `IterationStart` / `TierTree`\n  - TierChanged\n  - IterationStart\n  - TierTree\n  - `refreshing`\n  - refreshing\n  - `active_run_id?`\n  - active_run_id?\n  - `focused_run_id?`\n  - focused_run_id?\n  - `focus_mode = live` when `focused_run_id == active_run_id`\n  - focus_mode = live\n  - focused_run_id == active_run_id\n  - inspect evidence\n  - Candidate fields:\n  - `focus_mode`\n  - focus_mode\n  - `last_live_run_id?`\n  - last_live_run_id?\n  - evidence/artifact when directly addressable\n  - `focused_run_id`\n  - focused_run_id\n  - and/or command-palette integrated\n  - canonical names/titles\n  - `Reopened by New Evidence`\n  - Reopened by New Evidence\n  - Compared with attempts/blocked/remediation, concerns currently lack:\n  - `seam_id?`\n  - seam_id?\n  - `package_id?`\n  - package_id?\n  - `lane_id?`\n  - lane_id?\n  - `worktree_id?`\n  - worktree_id?\n  - `owner_ref?`\n  - owner_ref?\n  - `created_by_ref?`\n  - created_by_ref?\n  - `first_seen_at_utc`\n  - first_seen_at_utc\n  - `last_seen_at_utc`\n  - last_seen_at_utc\n  - `resolved_at_utc?`\n  - resolved_at_utc?\n  - `dismissed_at_utc?`\n  - dismissed_at_utc?\n  - `acknowledged_at_utc?`\n  - acknowledged_at_utc?\n  - `artifact_refs[]`\n  - artifact_refs[]\n  - `parent_concern_id?`\n  - parent_concern_id?\n  - `superseded_by_concern_id?`\n  - superseded_by_concern_id?\n  - `merged_into_concern_id?`\n  - merged_into_concern_id?\n  - `split_from_concern_id?`\n  - split_from_concern_id?\n  - `state_contract`\n  - state_contract\n  - `design_architecture`\n  - design_architecture\n  - `evidence_gap`\n  - evidence_gap\n  - `account_usage_pressure`\n  - account_usage_pressure\n  - append sources/evidence\n  - `Seams`\n  - Seams\n  - `strong`\n  - strong\n  - `hard_gate`\n  - hard_gate\n  - `immediate_undo`\n  - immediate_undo\n  - `compensating_action_only`\n  - compensating_action_only\n  - `non_reversible`\n  - non_reversible\n  - `Reapply`\n  - Reapply\n  - merge/split should be `strong`\n  - strong confirmations should be consequence-specific, not generic \"Are you sure?\"\n  - `record_id`\n  - record_id\n  - `record_kind`\n  - record_kind\n  - `promotion_id?`\n  - promotion_id?\n  - `concern_id?`\n  - concern_id?\n  - `created_at_utc`\n  - created_at_utc\n  - `superseded_b"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "  - `dismissibility_kind`\n  - dismissibility_kind\n  - There is still no canonical internal `route_payload` or equivalent schema in the contracts docs.\n  - route_payload\n  - `project_id?`\n  - project_id?\n  - `historical_mode?`\n  - historical_mode?\n  - `account_switch_reason` and `recent_switch_reason` exist\n  - current `working_ledger.md`\n  - working_ledger.md\n  - `requested_account_id?`\n  - requested_account_id?\n  - `effective_account_id?`\n  - effective_account_id?\n  - `account_switch_reason?`\n  - account_switch_reason?\n  - `requested_account_binding?`\n  - requested_account_binding?\n  - Bridged contracts still cannot legally carry all correlation/account/trust metadata their addenda already imply.\n  - current canonical fields cover provider/model/auth/account identity\n  - `requested_operational_identity?`\n  - requested_operational_identity?\n  - `effective_operational_identity?`\n  - effective_operational_identity?\n  - `node_worker`\n  - node_worker\n  - `recovery_actor`\n  - recovery_actor\n  - `requested_ref?`\n  - requested_ref?\n  - `effective_ref?`\n  - effective_ref?\n  - `selection_reason?`\n  - selection_reason?\n  - `partial_capability?`\n  - partial_capability?\n  - `github_api_account`\n  - github_api_account\n  - `registry_namespace`\n  - registry_namespace\n  - `kubernetes_context`\n  - kubernetes_context\n  - overload provider/account fields incorrectly\n  - `signal_confidence`\n  - signal_confidence\n  - role/account interactions\n  - `account_pressure_episode`\n  - account_pressure_episode\n  - `account_switch_event`\n  - account_switch_event\n  - `execution_role?`\n  - execution_role?\n  - `pressure_kind`\n  - pressure_kind\n  - `projected_remaining?`\n  - projected_remaining?\n  - `reset_at?`\n  - reset_at?\n  - `started_at_utc`\n  - started_at_utc\n  - `ended_at_utc?`\n  - ended_at_utc?\n  - `switch_event_id`\n  - switch_event_id\n  - `from_account_id?`\n  - from_account_id?\n  - `to_account_id?`\n  - to_account_id?\n  - `source_episode_id?`\n  - source_episode_id?\n  - Widget/page drill contracts still lack strong, typed route payloads tied to canonical identity/trust/linkage fields.\n  - The Orchestrator/Usage/GitHub deep-link story is now blocked more by missing route payload/trust contracts than by missing page chrome.\n  - `last_projected_at_utc`\n  - last_projected_at_utc\n  - `degraded_[retired-token-25]?`\n  - degraded_[retired-token-25]?\n  - `refresh_in_progress?`\n  - refresh_in_progress?\n  - `project_summary`\n  - project_summary\n  - `project_attention_item`\n  - project_attention_item\n  - Before reconciliation, define an explicit owner table for the remaining open contracts so downstream edits do not keep re-litigating field placement.\n  - `owner run/tier`\n  - owner run/tier\n  - `get_tier_worktree([retired-token-10])`\n  - get_tier_worktree([retired-token-10])\n  - `feature_seam_id?`\n  - feature_seam_id?\n  - `work_package_id?`\n  - work_package_id?\n  - `scheduler_lane`\n  - scheduler_lane\n  - `manual_priority?`\n  - manual_priority?\n  - `remediation_root_id?`\n  - remediation_root_id?\n  - `remediation_parent_attempt_id?`\n  - remediation_parent_attempt_id?\n  - `safe_point_id?`\n  - safe_point_id?\n  - `workspace_path`\n  - workspace_path\n  - `worktree_path?`\n  - worktree_path?\n  - `snapshot_ref?`\n  - snapshot_ref?\n  - `requested_account_policy?`\n  - requested_account_policy?\n  - `operational_identity?`\n  - operational_identity?\n  - `blocked_[retired-token-25]?`\n  - blocked_[retired-token-25]?\n  - `allowed_action_ids[]?`\n  - allowed_action_ids[]?\n  - `permission_snapshot_id?`\n  - permission_snapshot_id?\n  - `model_snapshot_id?`\n  - model_snapshot_id?\n  - `provider_attempt_ref?`\n  - provider_attempt_ref?\n  - `waiting_approval` is `blocked_[retired-token-25] = waiting_approval`\n  - waiting_approval\n  - blocked_[retired-token-25] = waiting_approval\n  - still leaves pre-run governance lineage under-keyed relative to adjacent canonical event/artifact contracts.\n  - receipts and evidence\n  - `handoff_source`\n  - handoff_source\n  - `handoff_reason`\n  - handoff_reason\n  - `origin_thread_id`\n  - origin_thread_id\n  - `origin_message_id`\n  - origin_message_id\n  - `default_intent`\n  - default_intent\n  - `requested_[retired-token-5]?` / `effective_[retired-token-5]?`\n  - requested_[retired-token-5]?\n  - effective_[retired-token-5]?\n  - `requested_platform?` / `effective_platform?`\n  - requested_platform?\n  - effective_platform?\n  - `requested_model?` / `effective_model?`\n  - requested_model?\n  - effective_model?\n  - grouped by `workflow_run_id`\n  - workflow_run_id\n  - `phase_plan_ref?`\n  - phase_plan_ref?\n  - `scheduler_pass_record`\n  - scheduler_pass_record\n  - `artifacts_index.v1:{project_id}:{artifact_id}`\n  - artifacts_index.v1:{project_id}:{artifact_id}\n  - `artifacts_project_state.v1:{project_id}`\n  - artifacts_project_state.v1:{project_id}\n  - `worktree_record.v1:{project_id}:{worktree_id}`\n  - worktree_record.v1:{project_id}:{worktree_id}\n  - `lane_record.v1:{project_id}:{lane_id}`\n  - lane_record.v1:{project_id}:{lane_id}\n  - `repo_id`\n  - repo_id\n  - `branch_ref`\n  - branch_ref\n  - `baseline_ref?`\n  - baseline_ref?\n  - `created_by_run_id?`\n  - created_by_run_id?\n  - `created_by_attempt_id?`\n  - created_by_attempt_id?\n  - `historical_lineage_refs[]?`\n  - historical_lineage_refs[]?\n  - `dirty_state`\n  - dirty_state\n  - `conflict_state`\n  - conflict_state\n  - `owner_run_id?`\n  - owner_run_id?\n  - `owner_attempt_id?`\n  - owner_attempt_id?\n  - latest `blocked_[retired-token-25]?`\n  - `wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ...`\n  - wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ...\n  - `decomposition_context` or `selection_context`\n  - decomposition_context\n  - selection_context\n  - `blocked_sequence?`\n  - blocked_sequence?\n  - `workspace_ref` or canonical path ref\n  - workspace_ref\n  - `[retired-token-18]?`\n  - [retired-token-18]?\n  - `effective_auth_mode?`\n  - effective_auth_mode?\n  - `tier_type`\n  - tier_type\n  - `[retired-"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "  - `object_id = safe_point_id`\n  - object_id = safe_point_id\n  - `object_id = remediation_root_id`\n  - object_id = remediation_root_id\n  - `object_id = attempt_id`\n  - object_id = attempt_id\n  - Stratum 1: owner docs\n  - Treat the routing tranche as structurally closed after the owner-doc contracts are added.\n  - subsection `7.2 WiringEntry`\n  - 7.2 WiringEntry\n  - `handler_location`\n  - handler_location\n  - `expected_event_types`\n  - expected_event_types\n  - unknown-command rejection\n  - report/evidence refs\n  - `workflow_refs`\n  - workflow_refs\n  - `docker_refs`\n  - docker_refs\n  - `kubernetes_refs`\n  - kubernetes_refs\n  - `attempt_record` with scheduler/safe-point/remediation/runtime identity fields\n  - they correctly carry blocked/wizard state\n  - wizard-blocked keeps wizard-specific clarification/report fields\n  - `usage_record` with `[retired-token-10]`\n  - usage_record\n  - tier-adjacent `evidence_record`\n  - `thread_blocked_notice` / `wizard_runtime_state` with `resume_url?`\n  - resume_url?\n  - exact command-arg mismatches\n  - `requested_[retired-token-5]`\n  - `effective_[retired-token-5]`\n  - effective_[retired-token-5]\n  - `requested_platform`\n  - requested_platform\n  - `effective_platform`\n  - effective_platform\n  - `requested_model`\n  - requested_model\n  - `effective_model`\n  - effective_model\n  - `requested_[retired-token-5]_id`\n  - `effective_[retired-token-5]_id`\n  - effective_[retired-token-5]_id\n  - `worker_provider`\n  - worker_provider\n  - `worker_model`\n  - worker_model\n  - `verifier_provider`\n  - verifier_provider\n  - `verifier_model`\n  - verifier_model\n  - `request_id`\n  - request_id\n  - `request_kind = tier_boundary_approval`\n  - request_kind = tier_boundary_approval\n  - Strong aligned owner:\n  - with `request_id` args\n  - `PuppetMasterEvent::TierChanged`\n  - PuppetMasterEvent::TierChanged\n  - `PuppetMasterEvent::IterationStart`\n  - PuppetMasterEvent::IterationStart\n  - `PuppetMasterEvent::EvidenceStored`\n  - PuppetMasterEvent::EvidenceStored\n  - `IterationStart`\n  - `GateStart`\n  - GateStart\n  - `GateComplete`\n  - GateComplete\n  - `EvidenceStored`\n  - EvidenceStored\n  - Strong owner docs:\n  - `hitl_request_id`\n  - hitl_request_id\n  - Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model.\n  - GraphNode\n  - GraphNodeUI\n  - `Orchestrator_Page.md`\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `3.13` appears twice\n  - 3.13\n  - `3.14` appears twice\n  - 3.14\n  - `3.15` appears twice\n  - 3.15\n  - `DRY_Rules.md` second\n  - DRY_Rules.md\n  - `Decision_Log.md` third\n  - Decision_Log.md\n  - `DRY_Rules.md` needs:\n  - `Decision_Log.md` needs:\n  - `plan_or_tier_default`\n  - plan_or_tier_default\n  - `Orchestrator_Page.md` needs:\n  - mixed-canon owner docs\n  - MUST RECONCILE\n  - MUST VERIFY\n  ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2\n  - `Plans/_shards/**`\n  - Plans/_shards/**\n  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`\n  - [retired-token-30]\n  - Plans/storage-plan.md\n  - Plans/FinalGUISpec.md\n  - Plans/UI_Command_Catalog.md\n  - 1. Reconcile owner contracts and schemas first.\n  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`\n  - Plans/Decision_Policy.md\n  - The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts:\n  - pressure-summary field\n  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`\n  - Plans/Crosswalk.md\n  - Plans/Wiring_Matrix.md\n  - Plans/Progression_Gates.md\n  - Plans/FileManager.md\n  - Plans/Project_Output_Artifacts.md\n  - `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `[retired-token-30]` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.\n  - Plans/Executor_Protocol.md\n  - execution_unit_context\n  - ### 5.1B Persona/Runtime Snapshot Payload Contract\n  - `[retired-token-30]:778-806`\n  - [retired-token-30]:778-806\n  - `[retired-token-30]:684-692`\n  - [retired-token-30]:684-692\n  - `[retired-token-30]:1218-1229`\n  - [retired-token-30]:1218-1229\n  - `[retired-token-30]:461-465`\n  - [retired-token-30]:461-465\n  - `gap-001` sharpened: the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `[retired-token-30]` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though the surrounding canon expects requested/effective identity carry-through.\n  - gap-001\n  - requested_account_binding\n  - requested_account_policy\n  - operational_identity\n  - `[retired-token-30]:557-624`\n  - [retired-token-30]:557-624\n  - `[retired-token-35]` sharpened: `[retired-token-30]` still points at the missing `Plans/storage-plan.md#[retired-token-29]` anchor, and both `[retired-token-31]` and `[retired-token-32]` still point at the missing `[retired-token-34]` anchor in addition to the already-carried missing `[retired-token-29]` heading.\n  - [retired-token-35]\n  - Plans/storage-plan.md#[retired-token-29]\n  - [retired-token-31]\n  - [retired-token-32]\n  - [retired-token-34]\n  - [retired-token-29]\n  - `[retired-token-30]:55-60`\n  - [retired-token-30]:55-60\n  - `[retired-token-30]:800-807`\n  - [retired-token-30]:800-807\n  - `[retired-token-30]:50-58`\n  - [retired-token-30]:50-58\n  - `[retired-token-30]:800-806`\n  - [retired-token-30]:800-806\n  - `cov-034` / `obl-"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "  - Research Progress - 2026-03-16 - Runtime-artifact envelope minimum contract\n  - Recommended contract rule\n  - The missing piece is no longer “we need schemas”; it is “the common envelope contract is underspecified.”\n  - Research Progress - 2026-03-16 - FileManager open-by-identity contract split\n  - That preview contract is effectively the model FileManager now wants more broadly.\n  - Recommended contract split\n  - add a second canonical open contract for identity-native objects, e.g.:\n  - Split FileManager’s canonical open contract into:\n  - the file-open contract in `FinalGUISpec.md`\n  - FinalGUISpec.md\n  - `OpenFile { path }` is directly incompatible with generated/runtime identity opens; the missing contract is now clearly an open-by-identity router, not a bigger `OpenFile`.\n  - OpenFile { path }\n  - OpenFile\n  - The matrix/schema mismatch is now the same kind of issue as earlier gate/evidence mismatches: prose is promising stronger guarantees than the machine-readable contract can support.\n  - This is now the gate-side version of the same drift pattern seen in the matrix/schema seam: the prose is expanding faster than the verifiable contract.\n  - shared route-payload contract\n  - shared subject-open/open-by-identity contract\n  - `FileManager.md` is now the main lagging owner. It still presents `OpenFile { path... }` as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects.\n  - FileManager.md\n  - OpenFile { path... }\n  - The storage/UI model already admits identity-native preview subjects, but the universal open contract in `FileManager.md` still assumes everything meaningful is a path.\n  - Research Progress - 2026-03-16 - Missing canonical route-target contract in Contracts_V0\n  - The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract.\n  - `Project_Output_Artifacts.md` gets canonical persistence right, but does not itself own the GUI/open-resolution contract.\n  - Project_Output_Artifacts.md\n  - Link the planning/output docs back to the same canonical route-target / subject-open contract once that owner exists.\n  - pass-report finality is still tied to `workflow_run_id` without that key being fully carried through the base artifact-event contract.\n  - workflow_run_id\n  - Usage/artifact/search/attention all now look like natural consumers of the same route-target contract.\n  - `FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents.\n  - identity-native open contract\n  - workspace-path contract only\n  - This means many existing ad hoc payloads should collapse into a smaller vocabulary rather than being copied verbatim into the new contract.\n  - Allow some object-family-specific anchors, but force them to justify themselves instead of defaulting every special case into the base route contract.\n  - `FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement.\n  - FileSafe.md\n  - mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract.\n  - lsp\n  - mutation_capable: bool\n  - scroll offsets except when the target contract explicitly depends on them\n  - Keep shell/workspace persistence in the shell/storage docs, not in the base route contract.\n  - Shell persistence and route identity should cooperate, but they should not collapse into one contract.\n  - Define a controlled coarse destination enum/family in the route contract layer.\n  - `cmd.panel.switch` currently accepts contextual object refs (`repo_id`, `worktree_id`, `workflow_run_id`, `publish_result_id`, `k8s_ref`) even though the shell model increasingly wants object targeting to route through a shared target contract instead of the panel-switch primitive.\n  - cmd.panel.switch\n  - repo_id\n  - worktree_id\n  - publish_result_id\n  - k8s_ref\n  - Research Progress - 2026-03-17 - Exact shape of the command-normalization contract\n  - The normalization contract needs to stay deliberately small.\n  - Add a minimal command-classification / normalization contract to the command-definition layer:\n  - route contract owns route-target structure\n  - The ledger should preserve firm contract language instead of drifting into ambiguous wording.\n  - `FinalGUISpec.md`, `FileManager.md`, and `UI_Command_Catalog.md` are also consumers. They should reference the route contract and the primitive boundary instead of restating them.\n  - UI_Command_Catalog.md\n  - another subject-native preview/open path defined by the subject contract\n  - If `OpenSubject` starts carrying panel/tab/shell destination semantics, it will collapse back into a second route contract.\n  - OpenSubject\n  - `assistant-chat-design.md` and `FinalGUISpec.md` already treat `open_source` as a real action, but the action still lacks a contract owner.\n  - assistant-chat-design.md\n  - open_source\n  - Keep resolver-support metadata out of the contract.\n  - `wizard_step` is sub-selection, not base route identity. It belongs in serialized deep-link detail or another narrower subtarget contract.\n  - wizard_step\n  - Keep destination-local refinements outside the enum and outside the base route contract.\n  - internal canonical contract:\n  - The contract now has enough shape to define concrete route normalization for the most common user-facing flows.\n  - Keep wizard-step focus in serialized anchor detail, not in the base route contract.\n  - These examples are the pressure test for the contract.\n  - State that invalid route payloads are contract failures, not “best effort” cases.\n  - Keep panel-subview and shell-tab identities outside the route base contract.\n  - base route contract stays small\n  - The route contract does not need to grow extra top-level scope"
+        }
+      ],
+      "_remaining_windows_count": 28
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-010-g003",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0007",
+      "grouping_key": "shard-0007|concrete_plans_targets|Plans/FileSafe.md|Plans/WorktreeGitImprovement.md|Plans/newtools.md",
+      "obligation_ids": [
+        "obl-003-013"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/FileSafe.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/newtools.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 2801,
+          "line_end": 3187,
+          "window_index": 7,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 1201,
+          "line_end": 1204,
+          "window_index": 3,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/newtools.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1389,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/newtools.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1389,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/newtools.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1389,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/newtools.md",
+          "line_start": 1201,
+          "line_end": 1389,
+          "window_index": 3,
+          "total_lines_in_doc": 1389,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-001",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Package/seam overseer spec.** Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc. Include: spawning rules, validation subagent pair, escalation paths, persona/model assig",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-002",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Widget catalog refresh.** Design replacements for `widget.tier_tree` and `widget.progress_bars` that visualize packages, seams, lanes, and parallel execution. Determine if the Tiers tab is renamed or replaced.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-003",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Effective identity contract.** Define how requested vs. effective execution identity (provider, model, account, persona) is tracked, stored, and displayed at each governance level (node, package, seam, lane).",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-004",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Lane ↔ worktree mapping.** Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid. Define contamination detection and safe-point restore for cross-lane worktree reuse.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-005",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Pathing migration.** Design the replacement for `<phase>/<task>/<subtask>` canonical paths. Candidates: `<package_id>/<node_id>`, `<seam_id>/<package_id>/<node_id>`, or content-addressed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-006",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Addenda consolidation pass.** FinalGUISpec (22), orchestrator-subagent-integration (8), and feature-list (13) need merge-and-dedup. Determine ownership: which addenda content should live in the body vs. be retired.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-007",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **HITL boundary redesign.** Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries. Address automation-first default vs. the UX expectation of manual review.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-008",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 8. **Dashboard → Orchestrator → Thread attention flow.** Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# FileSafe -- Implementation Plan\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - worktree behavior\n  - Worktree / SCM / Parallelism Impacts\n  - Cleanup Priorities\n\n#### Source target target-0220\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - worktree behavior\n  - Worktree / SCM / Parallelism Impacts\n  - Cleanup Priorities\n- Exact required items represented:\n  - how are worktrees assigned for parallel nodes within the same package or seam\n  - what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work\n  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result\n  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism\n  - Define lane↔worktree mapping\n  - Specify [retired-token-14] detection and cross-lane reuse rules\n  - Define [retired-token-11] restore for lane/package context\n  - Resolve [retired-token-4] vs [retired-token-3] contradiction\n  - Register PM-managed worktrees in source control visibility\n  - Remove legacy `[retired-token-9]` / `[retired-token-10]` drift and [retired-token-15].\n  - Normalize [retired-token-11] / [retired-token-12] / [retired-token-13] / [retired-token-14] terminology into one authoritative mapping and event taxonomy.\n  - `Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook:\n  - Runtime_Artifacts_Panel.md\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - Missing field schemas will cause different implementation agents to invent incompatible shapes.\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n"
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "                \"Pattern file not found: {}. Fail closed until a trustworthy baseline is available.\",\n                pattern_file.display()\n            ));\n        };\n        \n        // 4. Check config file for bash_guard setting (if config available)\n        // This will be wired when config system is integrated\n        let enabled = true; // Default: enabled\n        \n        Ok(Self {\n            patterns,\n            allow_destructive,\n            enabled,\n            approved_commands: Vec::new(),  // Populated from FileSafeConfig\n        })\n    }\n    \n    // DRY:FN:find_bundled_patterns_file — Locate bundled pattern file\n    /// Find the bundled destructive-commands.txt file\n    ///\n    /// Searches in order:\n    /// 1. `puppet-master-rs/config/destructive-commands.txt` (dev/build)\n    /// 2. `../config/destructive-commands.txt` (relative to binary)\n    /// 3. `config/destructive-commands.txt` (relative to binary)\n    fn find_bundled_patterns_file() -> Result<PathBuf> {\n        // Try multiple locations\n        let candidates = vec![\n            PathBuf::from(\"puppet-master-rs/config/destructive-commands.txt\"),\n            PathBuf::from(\"../config/destructive-commands.txt\"),\n            PathBuf::from(\"config/destructive-commands.txt\"),\n            // For installed binary, try relative to executable\n            std::env::current_exe()\n                .ok()\n                .and_then(|exe| exe.parent().map(|p| p.join(\"config/destructive-commands.txt\"))),\n        ];\n        \n        for candidate in candidates.into_iter().flatten() {\n            if candidate.exists() {\n                return Ok(candidate);\n            }\n        }\n        \n        // Return a path even if not found (caller will handle missing file)\n        Ok(PathBuf::from(\"config/destructive-commands.txt\"))\n    }\n    \n    // DRY:FN:disabled — Create a disabled guard instance\n    /// Create an explicitly disabled guard instance for deliberate config-off states, not init-failure fallback\n    pub fn disabled() -> Self {\n        Self {\n            patterns: Vec::new(),\n            allow_destructive: false,\n            enabled: false,\n            approved_commands: Vec::new(),\n        }\n    }\n    \n    /// Check if a command should be blocked\n    pub fn check_command(&self, command: &str) -> Result<(), GuardError> {\n        if !self.enabled || self.allow_destructive {\n            return Ok(());\n        }\n        // If command is in approved list (from settings / Assistant chat), allow it\n        if self.approved_commands.iter().any(|c| commands_match(c, command)) {\n            return Ok(());\n        }\n        // Match against blocklist patterns\n        for pattern in &self.patterns {\n            if pattern.is_match(command) {\n                return Err(GuardError::DestructiveCommand {\n                    command: command.to_string(),\n                    pattern: pattern.as_str().to_string(),\n                });\n            }\n        }\n        \n        Ok(())\n    }\n}\n\n// DRY:HELPER:commands_match — Compare approved (whitelist) entry to actual command\n/// Returns true if the approved pattern matches the command (normalized comparison).\n/// Handles: exact match, prefix match (approved is prefix of command), and normalized\n/// whitespace (collapse multiple spaces, trim).\nfn commands_match(approved: &str, command: &str) -> bool {\n    let norm = |s: &str| s.trim().split_whitespace().collect::<Vec<_>>().join(\" \");\n    let a = norm(approved);\n    let c = norm(command);\n    c == a || c.starts_with(a.as_str())\n}\n```\n\n### 2.3 Pattern Loading\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0237\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `generated://<artifact_id>` exists in preview restore behavior, but that identity pattern has not yet been generalized for other artifact/report opens.\n  - generated://<artifact_id>\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n```rust\n// FileSafe pattern-loading helper example\n\nuse regex::Regex;\nuse std::fs;\nuse std::path::Path;\nuse anyhow::{Context, Result};\n\n// DRY:FN:load_patterns — Load destructive command patterns from file\n/// Load destructive command patterns from file\n///\n/// # File Format\n///\n/// - One regex pattern per line\n/// - Lines starting with `#` are comments (ignored)\n/// - Empty lines are ignored\n/// - Patterns are case-insensitive (automatically prefixed with `(?i)`)\n/// - Patterns match against the full command string\n///\n/// # Examples\n///\n/// ```\n/// # PHP / Laravel\n/// artisan\\s+migrate:(fresh|reset|refresh)\n/// artisan\\s+db:(wipe|seed\\s+--force)\n/// ```\n///\n/// # Errors\n///\n/// - Returns error if file cannot be read\n/// - Returns error if any pattern is invalid regex\n/// - Invalid patterns stop loading (fail-fast)\npub fn load_patterns(pattern_file: &Path) -> Result<Vec<Regex>> {\n    let content = fs::read_to_string(pattern_file)\n        .with_context(|| format!(\"Failed to read pattern file: {}\", pattern_file.display()))?;\n    \n    let mut patterns = Vec::new();\n    let mut line_number = 0;\n    \n    for line in content.lines() {\n        line_number += 1;\n        "
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "                    BashGuard::disabled()\n                })\n        );\n        \n        // Initialize write scope (needs plan metadata, will be populated per-request)\n        let file_guard = Arc::new(FileGuard::new(HashSet::new(), true));\n        \n        // Initialize security filter\n        let security_filter = Arc::new(\n            SecurityFilter::new()\n                .unwrap_or_else(|e| {\n                    warn!(\"Failed to initialize security filter: {}. Filter disabled.\", e);\n                    SecurityFilter::disabled()\n                })\n        );\n        \n        Self {\n            // ... existing fields ...\n            bash_guard,\n        }\n    }\n    \n    pub async fn execute_command(\n        &self,\n        request: &ExecutionRequest,\n        args: Vec<String>,\n        stdin_input: Option<String>,\n    ) -> Result<ExecutionResult> {\n        // ... existing checks ...\n        \n        // Build full command string for guard check\n        let full_command = format!(\"{} {}\", self.command, args.join(\" \"));\n        \n        // Check bash guard BEFORE spawning\n        if let Err(e) = self.bash_guard.check_command(&full_command) {\n            // Log blocked command\n            warn!(\"Blocked destructive command: {}\", e);\n            \n            // Log to event log if available\n            self.log_blocked_command(&full_command, &e).await;\n            \n            return Err(anyhow!(\n                \"Destructive command blocked: {}. \\\n                Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override, \\\n                or run the command manually outside Puppet Master.\",\n                e\n            ));\n        }\n        \n        // ... continue with existing spawn logic ...\n    }\n}\n```\n\n### 3.2 Platform Runner Integration Example\n\n**Complete Integration Flow (Cursor Example):**\n\n```rust\n// In CursorRunner::execute() (src/platforms/cursor.rs)\nasync fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {\n    // 1. Compile context files into prompt\n    let mut effective_request = request.clone();\n    effective_request.prompt = append_prompt_attachments(\n        &request.prompt,\n        &request.context_files,\n        \"\",  // Cursor uses empty prefix\n    );\n    \n    // 2. CHECK COMPILED PROMPT (after context compilation)\n    if let Err(e) = self.base.bash_guard.check_prompt(&effective_request.prompt) {\n        // Check if verification gate operation (allow destructive during QA)\n        if self.base.is_verification_gate_operation(request) {\n            warn!(\"Destructive command in compiled prompt allowed during verification gate: {}\", e);\n        } else {\n            // Log blocked command\n            self.base.log_blocked_command(\n                &effective_request.prompt,\n                &e,\n                request,\n            ).await?;\n            \n            return Err(anyhow!(\n                \"Destructive command in prompt blocked: {}. \\\n                Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override.\",\n                e\n            ));\n        }\n    }\n    \n    // 3. CHECK CONTEXT FILES (security filter)\n    for context_file in &request.context_files {\n        if let Err(e) = self.base.security_filter.check_file_access(context_file) {\n            // Allow during interview if configured\n            if self.base.is_interview_operation(request) \n                && self.base.security_filter.allow_during_interview {\n                warn!(\"Sensitive context file allowed during interview: {}\", e);\n            } else {\n                return Err(anyhow!(\n                    \"Sensitive context file blocked: {}. \\\n                    File: {}\",\n                    e,\n                    context_file.display()\n                ));\n            }\n        }\n    }\n    \n    // 4. Build CLI args (now safe to proceed)\n    let args = self.build_args(&effective_request);\n    \n    // 5. Continue with execution via BaseRunner\n    // (BaseRunner will check command string again before spawning)\n    self.base.execute_command(&effective_request, args, stdin_input).await\n}\n```\n\n**Key Points:**\n- Check **compiled prompt** (after `append_prompt_attachments()`)\n- Check **context files** separately (security filter)\n- Check **before** building CLI args (early failure)\n- Respect verification gate and interview operation type (`PUPPET_MASTER_OPERATION_TYPE`)\n- Log all blocked operations to event log\n\n### 3.3 BaseRunner Integration\n`BaseRunner::execute_command()` performs FileSafe validation after request expansion but before spawn. FileSafe-managed path checks are fail-closed: candidate paths are resolved relative to `working_directory`, canonicalized, and denied if canonicalization fails.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md\n\n```rust\nlet candidate_path = if file_path.is_absolute() {\n    file_path.clone()\n} else {\n    request.working_directory.join(&file_path)\n};\n\nlet normalized_path = candidate_path\n    .canonicalize()\n    .map_err(|e| anyhow!(\n        \"File write blocked: canonical path required for FileSafe scope checks ({}): {}\",\n        candidate_path.display(),\n        e\n    ))?;\n\nself.file_guard\n    .check_file_write(&normalized_path, &request.working_directory, &allowed_files)?;\nself.security_filter.check_file_access(&normalized_path)?;\n```\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md\n\nThe fallback pattern `canonicalize().unwrap_or_else(|_| resolved_path)` is prohibited in FileSafe-managed write-scope code paths. If PM cannot compute the canonical real path, it denies access instead of comparing against a symlink alias or unresolved relative path.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md\n### 3.4 Multi-Provider Support\n\nThe guard must work across all providers:\n\n- **Cursor:** `agent -p \"...\"` -- check compiled prompt content\n- **Codex:** `codex exec \"...\"` -- check compiled prompt content\n- **Claude Code"
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3187,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "    pub guard_type: String,\n    pub pattern_matched: String,\n    pub command_preview: String,\n    pub agent: Option<String>,\n    pub timestamp: DateTime<Utc>,\n    pub allowed: bool,\n}\n```\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md\n\nLogging call semantics:\n- guard blocks and approved overrides are emitted on the main execution path before the user-facing result is returned\n- event-write failure MUST surface as a structured diagnostic; it is not silently ignored\n- analytics, dashboards, and gate reports read FileSafe history from the canonical event stream or its derived projections\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md\n## 7. Error Messages\n\nUser-friendly error messages:\n\n```rust\nmatch error {\n    GuardError::DestructiveCommand { command, pattern } => {\n        format!(\n            \"Blocked: destructive command detected ({})\\n\\\n             Command: {}\\n\\\n             Hint: Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override, \\\n             or run the command manually outside Puppet Master.\\n\\\n             See: config/destructive-commands.txt for the full blocklist.\",\n            pattern,\n            command.chars().take(100).collect::<String>()\n        )\n    }\n    GuardError::ParseError { message } => {\n        format!(\"Blocked: cannot validate command ({})\", message)\n    }\n}\n```\n\n---\n\n## 8. Testing\n\n### 8.1 Unit Tests\n\n```rust\n#[cfg(test)]\nmod tests {\n    use super::*;\n    \n    #[test]\n    fn test_blocks_migrate_fresh() {\n        let guard = BashGuard::new(None).unwrap();\n        let cmd = \"php artisan migrate:fresh --seed\";\n        assert!(guard.check_command(cmd).is_err());\n    }\n    \n    #[test]\n    fn test_allows_safe_migrate() {\n        let guard = BashGuard::new(None).unwrap();\n        let cmd = \"php artisan migrate\";\n        assert!(guard.check_command(cmd).is_ok());\n    }\n    \n    #[test]\n    fn test_respects_override() {\n        std::env::set_var(\"PUPPET_MASTER_ALLOW_DESTRUCTIVE\", \"1\");\n        let guard = BashGuard::new(None).unwrap();\n        let cmd = \"php artisan migrate:fresh\";\n        assert!(guard.check_command(cmd).is_ok());\n        std::env::remove_var(\"PUPPET_MASTER_ALLOW_DESTRUCTIVE\");\n    }\n    \n    #[test]\n    fn test_allows_safe_commands() {\n        let guard = BashGuard::new(None).unwrap();\n        let safe_commands = vec![\n            \"php artisan migrate\",\n            \"npm install\",\n            \"cargo build\",\n            \"git status\",\n            \"ls -la\",\n        ];\n        for cmd in safe_commands {\n            assert!(guard.check_command(cmd).is_ok(), \"Safe command blocked: {}\", cmd);\n        }\n    }\n    \n    #[test]\n    fn test_blocks_various_destructive_patterns() {\n        let guard = BashGuard::new(None).unwrap();\n        let destructive_commands = vec![\n            \"php artisan migrate:fresh\",\n            \"rails db:drop\",\n            \"django-admin flush\",\n            \"prisma migrate reset\",\n            \"diesel database reset\",\n            \"mix ecto.drop\",\n        ];\n        for cmd in destructive_commands {\n            assert!(guard.check_command(cmd).is_err(), \"Destructive command allowed: {}\", cmd);\n        }\n    }\n    \n    #[test]\n    fn test_prompt_extraction() {\n        let guard = BashGuard::new(None).unwrap();\n        let prompt = r#\"\n        Please run this command:\n        ```bash\n        php artisan migrate:fresh --seed\n        ```\n        \"#;\n        assert!(guard.check_prompt(prompt).is_err());\n    }\n    \n    #[test]\n    fn test_disabled_guard_allows_all() {\n        let guard = BashGuard::disabled();\n        assert!(guard.check_command(\"php artisan migrate:fresh\").is_ok());\n    }\n}\n```\n\n### 8.2 Integration Tests\n\nTest with actual platform runners:\n\n```rust\n#[tokio::test]\nasync fn test_runner_blocks_destructive() {\n    let runner = BaseRunner::new(\"php\".to_string(), Platform::Cursor);\n    let request = ExecutionRequest {\n        prompt: \"Run php artisan migrate:fresh\".to_string(),\n        // ...\n    };\n    \n    let result = runner.execute(&request).await;\n    assert!(result.is_err());\n    assert!(result.unwrap_err().to_string().contains(\"Blocked\"));\n}\n```\n\n---\n\n## 9. Implementation Checklist\nThis checklist tracks implementation work for the already-locked FileSafe canon. Checklist items must implement the owner rules in Sections 11.1.1-11.1.2a and MUST NOT reopen those rules as design questions.\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md\n\n- [ ] **Create FileSafe module structure**\n  - [ ] Create `src-tauri/src/filesafe/mod.rs`\n  - [ ] Create `src-tauri/src/filesafe/types.rs`\n  - [ ] Create `src-tauri/src/filesafe/scope.rs`\n  - [ ] Create `src-tauri/src/filesafe/bash_guard.rs`\n  - [ ] Create `src-tauri/src/filesafe/snapshot.rs`\n  - [ ] Create `src-tauri/src/filesafe/validator.rs`\n- [ ] **Port pattern file**\n  - [ ] Copy destructive command patterns from OpenCode `backend/src/security/bash.ts`\n  - [ ] Convert JS regex patterns to Rust `regex::Regex`\n  - [ ] Port scope checking logic from OpenCode `backend/src/security/bash.ts`\n  - [ ] Adapt to PM project model and remote-mode path handling\n- [ ] **Implement BashGuard**\n  - [ ] Port `buildScopeRegex()` logic from OpenCode\n  - [ ] Port `bashCommandBlocks` array from OpenCode\n  - [ ] Port `fileEditBlocks` array from OpenCode\n  - [ ] Implement `check_bash_command()` for shell execution\n  - [ ] Implement `check_file_edit()` for edit operations\n  - [ ] Add PM-specific safe zones and allowlisted temp patterns\n- [ ] **Integrate with BaseRunner**\n  - [ ] Add `filesafe: Arc<FileSafe>` field to `BaseRunner`\n  - [ ] Initialize FileSafe in runner construction\n  - [ ] Add guard checks in platform runners after context compilation:\n    - [ ] Compile context files into a prompt view and run compiled-output validation\n    - [ ] Validate referenced context files against scope and safety policy\n    - [ ] Check whethe"
+        }
+      ],
+      "_remaining_windows_count": 12
+    }
+  ]
+}

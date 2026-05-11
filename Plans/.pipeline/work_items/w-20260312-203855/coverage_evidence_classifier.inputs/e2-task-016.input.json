@@ -1,0 +1,921 @@
+{
+  "schema_id": "pm.coverage_evidence_classifier_input.v3.2.2",
+  "subagent_task_id": "e2-task-016",
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|orchestrator-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-170"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "orchestrator-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g006",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-163"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g007",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-159",
+        "obl-015-161",
+        "obl-015-162",
+        "obl-015-164",
+        "obl-015-165",
+        "obl-015-167",
+        "obl-015-169",
+        "obl-015-171",
+        "obl-015-172",
+        "obl-015-174",
+        "obl-015-175",
+        "obl-015-176",
+        "obl-015-177",
+        "obl-015-178",
+        "obl-015-179",
+        "obl-015-180",
+        "obl-015-181",
+        "obl-015-182",
+        "obl-015-183"
+      ],
+      "obligation_record_count": 19,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|concrete_plans_targets|Plans/Project_Output_Artifacts.md|Plans/usage-feature.md",
+      "obligation_ids": [
+        "obl-015-194"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 801,
+          "line_end": 1088,
+          "window_index": 2,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 801,
+          "line_end": 1178,
+          "window_index": 2,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Puppet Master — User-Project Project Plan Package Outputs (SSOT)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0446\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Work Package`\n  - Work Package\n  - owning package\n  - `superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs.\n  - superseded\n  - revoked\n  - reopened\n  - `Overridden by Package override`\n  - Overridden by Package override\n  - main reason the project needs attention\n  - `project health`\n  - project health\n  - `project activity`\n  - project activity\n  - `project attention`\n  - project attention\n  - Recommended top-level project card fields\n  - when a project is in blocked/attention state, the Projects page should show the dominant current owner of that state\n  - Similar to runs, project cards should not imply that “historical project” is a real semantic class unless the product introduces archiving.\n  - archived/unregistered project\n  - project health and project attention are different things and should not share one overloaded dot\n  - the UI should make it clear when a project is using the inherited app-default layout versus a project-specific override\n  - `activity` = is anything actively happening for this project\n  - activity\n  - severity and routing should not collapse into one generic red project badge\n  - Current docs do not yet define how unrelated concurrent or historical runs should roll up into one project badge/card.\n  - project summaries must preserve the distinction between user-attention problems and internal degraded-trust warnings\n  - project badges need aggregation; attention center rows need precision\n  - That means project summary and project attention should NOT be jammed into either:\n  - project summary derives from canonical runtime/thread/wizard/usage/auth/source-control records and from active attention rows\n  - follow `artifact_id` / `linked_artifact_id` for renderable outputs and evidence objects\n  - artifact_id\n  - linked_artifact_id\n  - do not conflate runtime artifacts with Project Plan Package artifacts\n  - Make explicit that staged/generated planning outputs enter the UI as `artifact:<artifact_id>` subjects before any backing path exists.\n  - artifact:<artifact_id>\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Project Plan Package artifacts are canonically persisted and filesystem materializations are staging/export/cache\n  - per-surface project state like `source_control.project_state.{project_id}`\n  - source_control.project_state.{project_id}\n  - `cmd.project.open` is already implicitly route-consuming navigation rather than shell-state mutation; the docs just do not say that in one shared place.\n  - cmd.project.open\n  - `cmd.project.open`\n  - work package:\n  - `PuppetMasterEvent::Output`\n  - PuppetMasterEvent::Output\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`\n  - tier_id\n  - project `activity_state` enum\n  - activity_state\n  - project `attention_state` enum\n  - attention_state\n  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`\n  - Plans/Contracts_V0.md\n  - Plans/storage-plan.md\n  - Plans/UI_Command_Catalog.md\n  - Plans/Crosswalk.md\n  - Plans/Wiring_Matrix.md\n  - Plans/Progression_Gates.md\n  - Plans/FileManager.md\n  - Plans/Project_Output_Artifacts.md\n  - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.\n  - Plans/Runtime_Artifacts_Panel.md\n  - Plans/interview-subagent-integration.md\n  - validation artifact lineage\n  - bridge-field viewer\n  - validation/report section\n  - `Plans/Project_Output_Artifacts.md:1-24`\n  - Plans/Project_Output_Artifacts.md:1-24\n  - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.\n  - gap-003\n  - gap-004\n  - gap-005\n  - Plans/usage-feature.md\n  - `Plans/Project_Output_Artifacts.md:16-24`\n  - Plans/Project_Output_Artifacts.md:16-24\n  - `Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` in the validation-pass-report lineage, so `gap-004`'s unresolved work is now the missing receipt owner heading plus missing consumer anchors rather than those fields wholesale.\n  - phase_plan_ref\n  - requirements_quality_report_ref\n  - pass_verdict\n  - `Plans/Project_Output_Artifacts.md:485-530`\n  - Plans/Project_Output_Artifacts.md:485-53"
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "\n#### Required: `contracts/index.json` (Project Contract Pack index)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0457\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `meta.json` now uses `pm.work_item_meta.v2`.\n  - meta.json\n  - pm.work_item_meta.v2\n  - `current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.\n  - current_state.md\n  - canon_inventory.json\n  - open_gaps.json\n  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.\n  - Ledger Condenser\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n- Path: `.puppet-master/project/contracts/index.json`\n- Schema: `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)\n- Purpose: canonical mapping from `ProjectContract:*` → `{ kind, path, sha256, ... }`\n  - `contracts[].contract_id` is the canonical ID (must match `^ProjectContract:` per schema)\n  - `contracts[].path` MUST be contract-pack relative (relative to `.puppet-master/project/contracts/`)\n\nContractRef: SchemaID:pm.project_contracts_index.schema.v1\n\nDRY rule (normative): node shard `contract_refs` and acceptance check `contract_refs` MUST reference `contracts[].contract_id` values from this index.\n\nContractRef: SchemaID:pm.project_contracts_index.schema.v1, ContractName:Plans/DRY_Rules.md#7\n\n## 5. DRY enforcement (contract-referenced graph)\n\n### 5.1 Node shards MUST reference Project Contract IDs\n\n- Every plan node shard (`plan_graph/nodes/<node_id>.json`) MUST include `contract_refs` with **at least one**\n  `ProjectContract:*` entry (required by schema).\n- Node shards MUST NOT repeat or inline the contract pack’s canonical specifications; use `contract_refs` instead.\n\nContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/DRY_Rules.md#7\n\n### 5.2 Acceptance is cross-referenced, not duplicated\n\n- `acceptance_manifest.json` MUST reference:\n  - node IDs via `nodes[].node_id`\n  - project contract IDs via `nodes[].checks[].contract_refs` (include relevant `ProjectContract:*` entries)\n- Acceptance manifest checks MUST cover node checks:\n  - Every node shard `acceptance[].check_id` MUST appear under that same `node_id` in `acceptance_manifest.json`.\n\nContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md\n\n### 5.3 Human plan may repeat summary, but must point to canonical contracts\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0451\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - workers may nominate but should not mint canonical concerns directly\n  - Current settings/inheritance may still be shown elsewhere, but must not overwrite history.\n  - should be chronological but windowed\n  - Those may overlap, but they are not the same field.\n  - but not an equally canonical `requested_account_id`\n  - requested_account_id\n  - But it should not try to encode:\n  - Owner docs were updated, but **consumer docs were not canon-collapsed**.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n`plan.md` is for humans; it may summarize for readability, but any repeated spec text MUST include a canonical pointer:\n\nContractRef: ContractName:Plans/DRY_Rules.md#7\n\n`Canonical source: ProjectContract:<...>`\n\nContractRef: ContractName:Plans/DRY_Rules.md#7\n\n## 6. Autonomy + decision logging (no human-required decisions)\n\n- Deterministic defaults are defined in `Plans/Decision_Policy.md` and MUST be applied autonomously.\n  - ContractRef: `PolicyRule:Decision_Policy.md`\n- All ambiguities (where multiple valid options exist) MUST be recorded to `.puppet-master/project/auto_decisions.jsonl`\n  (newline-delimited JSON; each row conforms to `Plans/auto_decisions.schema.json`).\n- `.puppet-master/project/auto_decisions.jsonl` is the canonical user-project decision log only; Puppet Master internal SSOT maintenance decisions continue to use `Plans/auto_decisions.jsonl`.\n- User-project auto-decision rows MUST conform to `pm.auto_decisions.schema.v1` exactly.\n- For user-project outputs, canonical persistence remains seglog first; decision rows are projected to `.puppet-master/project/auto_decisions.jsonl` as a regenerable file"
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 801,
+          "line_end": 1088,
+          "window_index": 2,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "   - orchestration can run headless from `plan_graph/index.json` + referenced node shards alone\n   - no dependency on `plan.md`, GUI artifacts, or optional monolithic exports for ordering/policy enforcement\n\nContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009\n\n7) **Optional derived export consistency (if present)**\n   - `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` validates (`pm.project-plan-graph.v1`)\n   - it is consistent with the canonical sharded graph (same node IDs, same node fields, same `entrypoints`)\n\n8) **Validation sweep artifact completeness (see §10)**\n   - Exactly three `validation_pass_report` events in seglog for each validation sweep run (pass_number 1, 2, 3 sharing the same `workflow_run_id`)\n   - Pass 3 report `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md); derived outputs such as `quickstart.md` may be regenerated\n   - All pass report `content_hash` values match the SHA-256 of their `content_bytes`\n   - For each pass number `N`, report `provider` and `model` match resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` from sweep start (`Plans/assistant-chat-design.md §26`)\n   - Reports come from a deterministic, headless sweep with no human approval gates between Pass 1, Pass 2, and Pass 3 (`Plans/chain-wizard-flexibility.md §12`)\n\n9) **Post-pass artifact finality**\n   - The canonical `.puppet-master/project/**` artifact tree validated by this document MUST represent the post-sweep artifact set (after Pass 2 and Pass 3 corrections for the associated `workflow_run_id`)\n   - Validator hash checks apply to post-pass corrected bytes, not pre-sweep intermediates\nContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md\n\n10) **Traceability output integrity (see §11)**\n    - `.puppet-master/project/traceability/requirements_quality_report.json` validates against `Plans/requirements_quality_report.schema.json` (`pm.requirements_quality_report.schema.v1`)\n    - `.puppet-master/project/traceability/requirements_coverage.json` validates against `Plans/requirements_coverage.schema.json` (`pm.requirements_coverage.schema.v1`)\n    - `summary.total_requirements` == `len(requirements[])`\n    - `summary.covered` + `summary.partially_covered` + `summary.uncovered` == `summary.total_requirements`\n    - `len(uncovered_requirements[])` == `summary.uncovered`\n    - `len(orphaned_node_requirement_refs[])` == `summary.orphaned_refs`\n    - `len(uncovered_acceptance[])` == `summary.uncovered_acceptance_count`\n    - `requirements_coverage.md` requirement ID lists match `requirements_coverage.json` exactly\n11) **Quickstart integrity (if present — see §12)**\n    - `.puppet-master/project/quickstart.md` is derived convenience output only\n    - orchestration, planning, and validator correctness MUST NOT depend on `quickstart.md`\n    - each executable command line in `quickstart.md` MUST exist verbatim in `.puppet-master/project/acceptance_manifest.json` (`nodes[].checks[].commands[].cmd`)\n    - `quickstart.md` command count MUST be <= 20 and file size MUST be <= 16384 bytes\n\nContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md\n\nValidation pass reports remain upstream governance artifacts, but they require stronger lineage into execution and artifact history.\n\nRequired lineage fields include:\n- `project_id`\n- `wizard_id?`\n- `thread_id?`\n- `phase_plan_ref?`\n- staged bundle refs\n- `requirements_quality_report_ref?`\n- promoted artifact refs\n- `workflow_run_id`\n- requested/effective runtime identity snapshot refs when a provider/model executed the pass\n- `effective_account_id?`\n- `execution_role`\n- launched `run_id?` when execution later starts from the validated output\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md\n\nRules:\n- validation pass reports do not become runtime attempts\n- validation reports must be traceable both backward to planning/wizard state and forward to launched execution when that bridge exists\n- pass reports remain first-class records in History/Ledger and first-class export members in manifests\n\nContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md\n\nContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)\n\nRequired fields:\n- pass_number\n- pass_name\n- pass_verdict\n- verdict_reason\n- staged_bundle_ref\n\nCanonical terms and values:\n- validation_pass_report\n- pass_number\n- pass_name\n- pass_verdict\n- verdict_reason\n- staged_bundle_ref\n- skipped\n\nBehavioral rules:\n- Validation pass reports remain upstream artifacts.\n- Pass reports must bridge into launchable execution through explicit lineage fields.\n\nPermission carry-through:\n- effective runtime/account identity must survive from pass report into downstream execution handoff\n## 11. Traceability outputs\n\nThis section defines the **normative generation rules and integrity requirements** for derived verification outputs under `.puppet-master/project/traceability/`. These files are:\n- **derived** (not planning inputs)\n- **non-canonical** with respect to planning decisions\n- **canonical** with respect to verification outputs (requirements quality + coverage reports)\n\nContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011\n\n### 11.1 `traceability/requirements_quality_report.json` (machine-readable)\n\n- Path: `.puppet-master/project/traceability/requirements_quality_report.json`\n- Schema: `Plans/requirements_"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Usage Feature -- App/GUI Plan\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Orchestrator ownership boundaries\n  - Cleanup Priorities\n\n#### Source target target-0693\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Orchestrator ownership boundaries\n  - Cleanup Priorities\n- Exact required items represented:\n  - Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.\n  - Pin the primary discussion seam first: UI surface/IA vs runtime state model vs cross-surface lineage/receipts vs blocked/recovery/remediation UX.\n  - Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation.\n  - Carry forward requested-vs-effective state wherever persona/provider/model fallback can occur.\n  - Remove legacy `[retired-token-4]` / `[retired-token-5]` drift and [retired-token-10].\n  - Normalize [retired-token-6] / [retired-token-7] / [retired-token-8] / [retired-token-9] terminology into one authoritative mapping and event taxonomy.\n  - `Feature Seam`\n  - Feature Seam\n  - `Provider_Stream_Mapping_External_Reference_A2A.md` maps usage and diagnostics without effective-account attribution\n  - Provider_Stream_Mapping_External_Reference_A2A.md\n  - `widget_layout:v1:usage`\n  - widget_layout:v1:usage\n  - `shares feature seam with run ...`\n  - shares feature seam with run ...\n  - keep `Feature Seam`\n  - ELI5/help can say “A feature seam is where related packages have to work together cleanly”\n  - Usage explicitly worries about stale data and requires `[retired-token-11]` + refresh behavior\n  - [retired-token-11]\n  - `Feature Seams`\n  - Feature Seams\n  - preserve canonical usage identity\n  - for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer\n  - `usage` may need explicit app-wide vs project-scoped mode rather than silently reusing one layout for both contexts\n  - usage\n  - `Orchestrator_Page.md` and `Run_Graph_View.md` still pivot usage and identity with `tier_id`-centric addressing even though storage/runtime contracts have moved to attempt/receipt-based truth.\n  - Orchestrator_Page.md\n  - Run_Graph_View.md\n  - tier_id\n  - usage is still attributed to `effective_account_id`\n  - effective_account_id\n  - but canonical usage records still omit `account_switch_reason` and any durable switch/signal pointer\n  - account_switch_reason\n  - now clearly needs switch-history and actor/role-aware projection families plus Usage parity\n  - Extend canonical usage records with `account_switch_reason?` plus `switch_event_ref?` or equivalent durable linkage.\n  - account_switch_reason?\n  - switch_event_ref?\n  - but the shared effective-resolution/runtime records and usage records still do not identify which role actually executed the attempt/message\n  - `Orchestrator_Page.md` still describes worker identity and per-node usage in terms that lag the stronger runtime/account/attempt model.\n  - spot-checks against `Plans/storage-plan.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/usage-feature.md`\n  - Plans/storage-plan.md\n  - Plans/Runtime_Artifacts_Panel.md\n  - Plans/usage-feature.md\n  - resolves canonical Usage/Ledger identity from `usage_event_ref` or equivalent usage target\n  - usage_event_ref\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - `object_id = <usage_event_ref or stable usage id>`\n  - object_id = <usage_event_ref or stable usage id>\n  - may reuse current Usage layout/filter chrome if it still reveals the requested usage target\n  - Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section.\n  - inspector_target = usage\n  - `thread_id = <thread_id>` when thread-scoped usage is required\n  - thread_id = <thread_id>\n  - `inspector_target = usage`\n  - `inspector_target = details | evidence | usage | history`\n  - inspector_target = details | evidence | usage | history\n  - feature seam:\n  - `Plans/usage-feature.md` duplicates the entire `Cost_usage runtime artifact and Show in Ledger / Show in Usage` section back-to-back.\n  - Cost_usage runtime artifact and Show in Ledger / Show in Usage\n  - usage and evidence families stop using `tier_id` as their primary cross-surface key\n  - Usage and evidence are now the strongest remaining cross-surface families still tied to tier-era correlation.\n  - “View in Usage” filters by `tier_id`\n  - usage correlation is explicitly by `tier_id`\n  - Reconcile usage and evidence families away from tier-first cross-surface correlation.\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - graph-owned `Feature Seam` / `Work Package`\n  - Work Package\n  - `View in Usage` still filters by `tier_id`\n  - View in Usage\n  - usage correlation moved off `tier_id` as primary cross-surface key\n  - historical/current usage navigation aligned to canonical route/open primitives\n  - `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`\n  - Plans/FinalGUISpec.md\n  - Plans/Glossary.md\n  - Plans/Orchestrator_Page.md\n  - `gap-008` is overstated as `missing_data_shape`: the owner "
+        }
+      ],
+      "_remaining_windows_count": 2
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|Orchestrator_Page.md|WorktreeGitImprovement.md|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-190"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Orchestrator_Page.md",
+        "WorktreeGitImprovement.md",
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|Runtime_Artifacts_Panel.md|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-189",
+        "obl-015-195"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md",
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|WorktreeGitImprovement.md",
+      "obligation_ids": [
+        "obl-015-197"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "WorktreeGitImprovement.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-187",
+        "obl-015-188",
+        "obl-015-202"
+      ],
+      "obligation_record_count": 3,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g006",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-184",
+        "obl-015-185",
+        "obl-015-186",
+        "obl-015-191",
+        "obl-015-192",
+        "obl-015-193",
+        "obl-015-196",
+        "obl-015-198",
+        "obl-015-199",
+        "obl-015-200",
+        "obl-015-201",
+        "obl-015-203",
+        "obl-015-204",
+        "obl-015-205",
+        "obl-015-206",
+        "obl-015-207",
+        "obl-015-208"
+      ],
+      "obligation_record_count": 17,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-068-g001",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|Runtime_Artifacts_Panel.md",
+      "obligation_ids": [
+        "obl-015-228"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-068-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|WorktreeGitImprovement.md",
+      "obligation_ids": [
+        "obl-015-227"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "WorktreeGitImprovement.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-068-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-209",
+        "obl-015-226",
+        "obl-015-232"
+      ],
+      "obligation_record_count": 3,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-068-g004",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-210",
+        "obl-015-211",
+        "obl-015-212",
+        "obl-015-213",
+        "obl-015-214",
+        "obl-015-215",
+        "obl-015-216",
+        "obl-015-217",
+        "obl-015-218",
+        "obl-015-219",
+        "obl-015-220",
+        "obl-015-221",
+        "obl-015-222",
+        "obl-015-223",
+        "obl-015-224",
+        "obl-015-225",
+        "obl-015-229",
+        "obl-015-230",
+        "obl-015-231",
+        "obl-015-233"
+      ],
+      "obligation_record_count": 20,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-069-g001",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-234",
+        "obl-015-235",
+        "obl-015-236",
+        "obl-015-237"
+      ],
+      "obligation_record_count": 4,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-069-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-016-001",
+        "obl-016-002",
+        "obl-016-003",
+        "obl-016-004",
+        "obl-016-005",
+        "obl-016-006",
+        "obl-016-007",
+        "obl-016-008",
+        "obl-016-009",
+        "obl-016-010",
+        "obl-016-011",
+        "obl-016-012",
+        "obl-016-013",
+        "obl-016-014",
+        "obl-016-015",
+        "obl-016-016",
+        "obl-016-017",
+        "obl-016-018",
+        "obl-016-019",
+        "obl-016-020",
+        "obl-016-021"
+      ],
+      "obligation_record_count": 21,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|concrete_plans_targets|Plans/Commands_System.md",
+      "obligation_ids": [
+        "obl-016-042"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Commands_System.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 931,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 931,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 801,
+          "line_end": 931,
+          "window_index": 2,
+          "total_lines_in_doc": 931,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 931,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Commands System (Canonical SSOT)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0071\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `UI_Command_Catalog.md` already gives several useful route-like commands:\n  - UI_Command_Catalog.md\n  - still violates canonical field naming in its own SSOT and still has no structural slot for overseer-class actor types\n  - cross-surface pivot commands still need `project_id` or an equally strong derivation rule for multi-project correctness\n  - project_id\n  - reconciliation-heavy gaps where the direction exists but SSOT ownership/field naming/event families still conflict**\n  - `UI_Command_Catalog.md` still lacks a projection-freshness gating rule for mutating/recovery commands\n  - graph-local retry/HITL commands still cannot actually be thin aliases to runtime commands because they omit runtime-minimum anchors like `run_id`, `attempt_id`, and `blocked_sequence`.\n  - run_id\n  - attempt_id\n  - blocked_sequence\n  - domain-specific “open in X” commands can still exist where they express a meaningful product action, but they should be wrappers over the same route/subject model rather than custom arg families\n  - it stops `resume_url` from being more capable than in-app commands\n  - resume_url\n  - navigation commands should be able to carry:\n  - Tighten `UI_Wiring_Rules.md` so reusable navigation commands and subject-open commands are treated as first-class wiring shapes rather than smuggled through generic `args`.\n  - UI_Wiring_Rules.md\n  - args\n  - wrapper commands over a canonical navigation primitive\n  - `UI_Command_Catalog.md` already contains several navigation-like or cross-surface commands:\n  - Navigation-related commands are described as layout/UI-state only, but the docs still lack a shared rule for when those commands must carry `project_id`, `focused_run_id`, `thread_id`, or other context needed to restore scope correctly.\n  - focused_run_id\n  - thread_id\n  - If the route/subject model stays on track, introduce a small canonical family such as `cmd.nav.*` and let surface-specific commands either wrap it or be declared as typed specializations.\n  - cmd.nav.*\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - focus/open wrapper commands in `cmd.nav.*`\n  - specialized operation payloads (`OpenFile`, `OpenSubject`, or object-specific commands)\n  - OpenFile\n  - OpenSubject\n  - Wrapper commands are currently real and useful, but the docs still lack a rule for when they are canonical UX affordances versus deprecated raw transport shapes.\n  - Let wrapper commands remain if they provide real UX meaning, but make the underlying target model canonical.\n  - `cmd.panel.switch` and similar shell commands are useful, but they should not become the de facto universal navigation primitive.\n  - cmd.panel.switch\n  - Treat commands like `cmd.panel.switch` as shell/view commands that can consume normalized routing context, not replace it.\n  - Pure shell/view-state commands should stay local and lightweight. They change what panel/subview/layout is visible, but they do not own canonical target identity.\n  - Route-consuming navigation commands are the ones that must reveal a specific object or scope. They should normalize through the emerging `route_target` model even if the user-facing command name stays domain-specific.\n  - route_target\n  - `UI_Command_Catalog.md` currently mixes shell commands and object-targeting navigation commands in the same \"layout/UI state only\" bucket, even when payloads already carry object identity.\n  - Keep `cmd.panel.switch` and `cmd.source_control.switch_subview` as pure shell/view-state commands with controlled destination vocabularies.\n  - cmd.source_control.switch_subview\n  - Treat commands like `cmd.source_control.select_worktree` as object-selection/navigation commands that should normalize through canonical target identity if they remain first-class.\n  - cmd.source_control.select_worktree\n  - Shell commands should not accumulate object identity until they quietly become undocumented route commands.\n  - There is still no canonical navigation primitive in the contract layer, so wrapper commands remain forced to carry semantics in prose.\n  - The wiring/gate model is command-ID-centric, but it has no first-class notion of wrapper commands normalizing to one shared route primitive.\n  - wrapper commands should instead declare something like `normalizes_to` / `canonical_target_contract` / `canonical_route_kind`\n  - normalizes_to\n  - canonical_target_contract\n  - canonical_route_kind\n  - For wrapper commands, `normalizes_to_contract` should stay narrow and contract-level, for example:\n  - normalizes_to_contract\n  - Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have.\n  - classify commands as `shell_view`, `navigation_wrapper`, or `domain_action`\n  - shell_view\n  - navigation_wrapper\n  - domain_action\n  - The routing rewrite requires stable wrapper commands that normalize to shared contracts, but the wiring model still treats every command as either direct or UI-only.\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passe"
+        },
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 931,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "| `model_override` | Optional | `string` | Requested model override. |\n| `permissions_profile_override` | Optional | `string` | Permissions profile override, subject to the central permission system. |\n| `override_builtin` | Optional | `boolean` | Reserved for future non-chat extension points. It MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes. |\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md\n\n### 3.3 Template body\n\nThe Markdown body following the frontmatter is the prompt template. It supports three dynamic features: placeholders, file includes, and shell output injection.\n\n<a id=\"TEMPLATE-PLACEHOLDERS\"></a>\n#### 3.3.1 Placeholders\n\n| Placeholder | Meaning |\n|-------------|---------|\n| `$ARGUMENTS` | All remaining text after the command name. |\n| `$1`, `$2`, ... `$N` | Positional arguments, space-separated from the invocation text. |\n\nPlaceholder extraction: At load time, the template is scanned for `$ARGUMENTS` and `$N` patterns. The extracted list is stored as `hints` for autocomplete display.\n\nUnresolved placeholders (no value provided) are replaced with empty string.\n\n<a id=\"TEMPLATE-FILE-INCLUDE\"></a>\n#### 3.3.2 File includes (`@path`)\n\nThe pattern `@path/to/file` in the template body causes the referenced file's contents to be included at that position during template resolution. Directory references (`@path/to/dir`) include a listing of the directory contents.\n\n**Permission guard:** File inclusion is checked against the `read` permission key (`Plans/Permissions_System.md` §5). If the active permission resolves to `deny` for the referenced path, the include is blocked and an error message is substituted. If `ask`, the approval UI is shown.\n\nContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS\n\n<a id=\"TEMPLATE-SHELL-INJECTION\"></a>\n#### 3.3.3 Shell output injection (`` !`command` ``)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0084\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - The broader rewrite still lacks a strong single source for several cross-cutting concerns: command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, and actor-scope/rules injection.\n  - `cmd.source_control.select_worktree` is not just a generic shell toggle. It is an object-targeting selection command. If it remains canonical, it should resolve through normalized target identity rather than stay a one-off ad hoc selection primitive.\n  - cmd.source_control.select_worktree\n  - `FinalGUISpec.md` correctly treats activity-bar navigation as a shell concern, but local docs elsewhere keep slipping object context into the same command family.\n  - FinalGUISpec.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\nThe pattern `` !`shell-command` `` in the template body executes the shell command and injects its stdout at that position during template resolution.\n\n**Permission guard:** Shell injection is checked against the `bash` permission key (`Plans/Permissions_System.md` §5). If the active permission resolves to `deny`, the injection is blocked and an error message is substituted. If `ask`, the approval UI is shown and the user's response (`deny`/`once`/`for session`/`always`) is respected per `Plans/Permissions_System.md` §6.\n\nContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS, ContractName:Plans/Permissions_System.md#ASK-FLOW\n\n---\n\n## 4. Execution semantics\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0074\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - the UI should show these semantics explicitly and consistently, not infer them ad hoc by color or disappearance\n  - conversational actors and document-production actors share provider/runtime identity semantics, but they are not orchestration execution objects\n  - `Runtime_Artifacts_Panel.md` is missing `attempt_id` in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly\n  - Runtime_Artifacts_Panel.md\n  - attempt_id\n  - Reserve `trust_tier` for preview/browser semantics only unless those docs are later explicitly renamed too.\n  - trust_tier\n  - `Formatters_System.md`, `LSPSupport.md`, `Plugins_System.md`, and `Skills_System.md` still lack clean ownership boundaries for mutation-capable semantics, hosted-vs-DAE execution reachability, tool/event identity, and plugin/skill introspection or isolation guarantees.\n  - Formatters_System.md\n  - LSPSupport.md\n  - Plugins_System.md\n  - Skills_System.md\n- Exact acceptance checks represented:\n  - All"
+        },
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 801,
+          "line_end": 931,
+          "window_index": 2,
+          "total_lines_in_doc": 931,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 9056,
+          "text_excerpt": "- /web remains discoverable in catalog\n- deprecated aliases shown distinctly from active commands\n- reserved commands shown as non-editable in catalog\n## 7. UICommand catalog entry\n\n<a id=\"UICOMMAND-ENTRY\"></a>\n\nThe following UICommand ID is registered in `Plans/UI_Command_Catalog.md` for dispatching User Command execution from any invocation surface:\n\n| Command ID | Args schema (keys only) | Expected events | Affected surfaces |\n|---|---|---|---|\n| `cmd.chat.run_user_command` | `{ command_name, arguments? }` | `tool.invoked` (if subtask) or `chat.message.submitted` | Assistant chat, Command palette |\n\nReserved slash-command UICommand IDs (`cmd.chat.new`, `cmd.chat.model`, etc.) are defined in `Plans/UI_Command_Catalog.md` §2.7 and are distinct from User Command execution.\n\nContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#UICommand\n\n### 7.1 Debug Mode dispatch family\n\nDebug Mode actions use a separate canonical UICommand family, `cmd.debug.*`, for assistant-thread investigation control. These dispatch IDs are internal wiring identifiers, not User Commands, and they let Assistant Chat, the editor, and debug-adjacent surfaces invoke investigation lifecycle actions without overloading the User Command namespace.\n\n| command_id | label | description | precondition |\n|---|---|---|---|\n| `cmd.debug.start` | Start Investigation | Begins a new debug investigation in current thread | `chat_active && !investigation_active` |\n| `cmd.debug.stop` | End Investigation | Concludes the active investigation | `investigation_active` |\n| `cmd.debug.pause` | Pause Investigation | Pauses evidence collection | `investigation_active` |\n| `cmd.debug.resume` | Resume Investigation | Resumes paused investigation | `investigation_paused` |\n| `cmd.debug.add_breakpoint` | Add Breakpoint | Adds a breakpoint at current editor position | `editor_active && investigation_active` |\n| `cmd.debug.remove_breakpoint` | Remove Breakpoint | Removes selected breakpoint | `breakpoint_selected` |\n| `cmd.debug.clear_breakpoints` | Clear All Breakpoints | Removes all breakpoints | `investigation_active && has_breakpoints` |\n| `cmd.debug.view_evidence` | View Evidence | Opens evidence panel for current investigation | `investigation_active` |\n| `cmd.debug.step` | Step Through | Advances to next execution point | `investigation_active && at_breakpoint` |\n| `cmd.debug.collect_snapshot` | Collect Snapshot | Captures current state as evidence | `investigation_active` |\n\nThese Debug Mode dispatch IDs complement, rather than replace, the reserved slash-command surface described in `Plans/assistant-chat-design.md` and the broader UI command catalog in `Plans/UI_Command_Catalog.md`.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Glossary.md\n\n---\n\n## 8. OpenCode baseline and Puppet Master deltas\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0076\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - The next uncovered owner-doc tranche is producing high-signal deltas, not low-value tail noise.\n  - Continue the ordered sequence on this same 22-doc tranche into `GPT-5.4`; Sonnet still produced real new deltas across almost every doc.\n  - GPT-5.4\n  - The `GPT-5.4` wave still produced substantive owner-level deltas across the entire remaining partial tranche. This is not yet a convergence zone.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n<a id=\"BASELINE-DELTAS\"></a>\n\nPer `Plans/OpenCode_Deep_Extraction.md` §7D and §9D:\n\n### 8.1 Baseline\n\nOpenCode loads commands from four sources: built-in commands (`init`, `review`), config-defined commands, MCP prompts (converted to commands), and skills (registered as commands if no name collision). Discovery paths: `.opencode/commands/<name>.md` (project) and `~/.config/opencode/commands/<name>.md` (global). Template features: `$ARGUMENTS`, `$1`/`$2` positional args, `` !`shell` `` injection, `@file` inclusion. `subtask: true` runs as a subagent task. `model` override uses `provider_id/model_id` format. Custom commands can override built-in commands by name; when a user-defined command has the same name as a built-in command, the user-defined version takes precedence.\n\n### 8.2 Puppet Master deltas\n\n1. **Discovery paths:** Puppet Master uses `.puppet-master/commands/<name>.md` (project) and `~/.config/puppet-master/commands/<name>.md` (global) instead of `.opencode/` paths.\n2. **Persona integration:** OpenCode commands specify `agent` (agent name). Puppet Master commands specify `persona` (Persona ID per `Plans/Personas.md`), which is a higher-level role definition decoupled from provider-native agent concepts.\n3. **Permissions profile override:** OpenCode commands have no per-command permissions override. Puppet Master adds `permissions_profile_override` for fine-grained control.\n4. **No built-in commands:** OpenCode bundles `init` and `review` as built-in commands. Puppet Master does not bundle built-in User Commands; equivalent functionality is provided through reserved slash commands (`Pla"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|concrete_plans_targets|Plans/FileManager.md",
+      "obligation_ids": [
+        "obl-016-044"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/FileManager.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 472,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 401,
+          "line_end": 472,
+          "window_index": 1,
+          "total_lines_in_doc": 472,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 472,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# File Manager & IDE-style Editor -- Plan\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0213\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Plans/FileManager.md`\n  - Plans/FileManager.md\n  - The coordination-canon contradiction in `[retired-token-1]` is now explicit in the same file.\n  - [retired-token-1]\n  - The runtime-artifact docs now name an envelope file, but they still do not define the common envelope field family strongly enough in prose.\n  - Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in `Runtime_Artifacts_Panel.md`.\n  - Runtime_Artifacts_Panel.md\n  - That means the docs have already outgrown a path-only open contract, even though the main body still acts as if all opens resolve to a workspace file path first.\n  - UI callers should not reconstruct file paths heuristically when a stable identity exists\n  - current “Open in Editor” wording in Orchestrator/Evidence surfaces risks implying raw-path opens even when the correct target is an artifact-backed or report-backed subject.\n  - `Open in Editor` for file/document-backed targets\n  - Open in Editor\n  - `generated://<artifact_id>` is already the proof that the system needs non-path editor targets.\n  - generated://<artifact_id>\n  - `Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.\n  - Narrow `Plans/FileManager.md` so `OpenFile { path... }` is explicitly the workspace-document path contract only, not the universal object-open contract.\n  - OpenFile { path... }\n  - `Project_Output_Artifacts.md` is clear that canonical persistence is seglog-first and filesystem materialization under `.puppet-master/project/**` is staging/export/cache only.\n  - Project_Output_Artifacts.md\n  - .puppet-master/project/**\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - `FileManager.md`: owns workspace-file open semantics and editor realization only\n  - FileManager.md\n  - remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known\n  - Several rewrite-era object families now clearly need stable target kinds even though older docs still mostly pivot by `run_id`, `tier_id`, or file path.\n  - run_id\n  - tier_id\n  - Docker Manager: `active_subview`, runtime/context/registry/namespace focus, publish state\n  - active_subview\n  - `FileManager.md` should stay focused on path-based editor realization and should not become the owner of cross-surface identity navigation just because `OpenFile` is important there.\n  - OpenFile\n  - Keep `OpenFile` as the path-based editor contract only.\n  - `OpenFile` = path-based editor open\n  - Research Progress - 2026-03-17 - File open versus subject open consumer split\n  - `Plans/FileManager.md` still states one universal open primitive:\n  - many earlier event examples in the file still center `tier_id`\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - the file is self-referential in its compliance line and therefore cannot serve as an independent example of owner-routing discipline\n  - `remediation.resolved` is also internally inconsistent inside the same file:\n  - remediation.resolved\n  - The file still claims HITL semantics must not change, while later sections already change the meaning from request-centric tier-boundary approvals to blocked/runtime overlays.\n  - The file still treats tier boundaries as the approval scope anchor, while newer runtime canon requires blocked-episode identity anchored by run/node/blocked sequence.\n  - This file is still teaching consumers how to persist approval state. Leaving the old section in place will keep recreating the same storage and command drift.\n  - the same file later defines canonical `cmd.runtime.*` recovery commands keyed by `run_id`, `node_id`, and `blocked_sequence`\n  - cmd.runtime.*\n  - node_id\n  - blocked_sequence\n  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`\n  - Plans/Contracts_V0.md\n  - Plans/storage-plan.md\n  - Plans/UI_Command_Catalog.md\n  - Plans/Crosswalk.md\n  - Plans/Wiring_Matrix.md\n  - Plans/Progression_Gates.md\n  - Plans/Project_Output_Artifacts.md\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated,"
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 401,
+          "line_end": 472,
+          "window_index": 1,
+          "total_lines_in_doc": 472,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 4447,
+          "text_excerpt": "\n---\n\n## 3. @ mention in chat\nContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md\n\nThe `@` mention system is project-scoped and identity-preserving.\n\nRules:\n- invoking `@` opens a picker rooted in the active project context\n- sources may include recent files, modified files, folder navigation, and symbol-aware results when LSP data exists\n- the inserted mention preserves the canonical file identity/path needed by prompt assembly and click-to-open behavior\n- mentions work in Assistant and Interview chat surfaces\n- when the referenced file is already open, mention navigation resolves to the existing editor state instead of opening duplicate buffers unnecessarily\n## 4. Integration: File Manager, editor, and chat\n\n- File Manager, editor, and chat share the **same project context**.\n- `@` mention resolution uses the same file list as the File Manager (single source of truth for project files).\n- Clicking a file path or code block in chat opens the file in the editor; see §5.\n\n### 4.1 Open-file contract\n\nFileManager is the canonical owner of the file-open and artifact-storage contract. When a file is opened (via GUI, CLI, or internal routing), the following rules apply:\n\n1. **Identity-based routing**: If the file path includes a route_target scheme (e.g., `github://owner/repo/file.md`), the open request is resolved through the shared route/open semantics in Contracts_V0.md, not a raw filesystem read.\n2. **Worktree binding**: Opened files are bound to the active worktree via an execution_unit_context; artifacts opened in different worktrees have separate identity chains.\n3. **Artifact-by-identity**: Artifacts (outputs, logs, diffs) are stored by content hash and indexed by (concern_id, route_target, artifact_type, timestamp); raw paths are deprecated.\n4. **Open-file visibility**: The open-file list visible in the GUI is filtered by the active execution_role and the current approval_scope. Files opened in restricted approval scopes are not shown to unprivileged users.\n\n### Route/open rules\n\n#### Acceptance carry-through\n- Let Contracts_V0 own canonical route_target and OpenSubject contracts\n- Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based\n- Keep route_target small with subject_id or object_kind/object_id identity\n- Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state\n\n### Error recovery in file/artifact access\n\nIf a file path is broken or a route_target is unreachable:\n- Log a visibility deferral (do not fail the entire run).\n- Emit a navigable error in the concern record so the user can inspect what went wrong.\n- Provide a fallback route (e.g., workspace://project/concern) for results if the primary route was unavailable.\n\n## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0214\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `OpenFile { path }` is now unambiguously workspace-root-only, proving that generated/runtime opens need a separate open-by-identity router.\n  - OpenFile { path }\n  - subject-open / open-by-identity\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n#### Acceptance carry-through\n- Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage\n- Resolve artifact open flows by artifact_id and then by linked envelope refs"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g003",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|concrete_plans_targets|Plans/Glossary.md",
+      "obligation_ids": [
+        "obl-016-045"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Glossary.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 528,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 401,
+          "line_end": 528,
+          "window_index": 1,
+          "total_lines_in_doc": 528,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 528,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Glossary (Canonical)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Highest-Impact Docs\n  - Cleanup Priorities\n\n#### Source target target-0337\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Highest-Impact Docs\n  - Cleanup Priorities\n- Exact required items represented:\n  - Replace tier-rooted execution with package/seam/lane model\n  - Define package overseer + seam overseer roles\n  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage\n  - Redefine gates to package-complete / seam-complete\n  - Rename or retire Tiers UI/tab and tier_tree/progress bars\n  - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.\n  - Clarify which docs own [retired-token-11] vs UI-only overlays.\n  - `Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`\n  - Plans/00-plans-index.md\n  - Plans/Crosswalk.md\n  - Plans/Glossary.md\n  - `[retired-token-12]`\n  - [retired-token-12]\n  - There is not yet one shared semantic glossary for `historical` / `superseded` / `revoked` / `reopened` / `archived` / `removed`.\n  - historical\n  - superseded\n  - revoked\n  - reopened\n  - archived\n  - removed\n  - `canonical term system`\n  - canonical term system\n  - Glossary = canonical short definitions\n  - Keep canonical term names stable across Expert and ELI5.\n  - Use Glossary as the canonical short-definition inventory.\n  - Terms that now need canonical glossary ownership\n  - glossary owns short canonical definitions\n  - when a more precise canonical term is required\n  - `Glossary.md` is still too small and too pre-rewrite to anchor the newer Orchestrator vocabulary.\n  - Glossary.md\n  - canonical concept definition / glossary entry\n  - canonical term names do not change between Expert and ELI5\n  - `attention center` exists in the glossary, but there is no concrete payload/schema for attention-center items.\n  - attention center\n  - `Executor_Protocol.md` still has a broken Glossary forward reference, an incomplete wake-reason set, no real `blocked_reason_code` table, no `blocked_sequence` integration, and no actor/lifecycle model for reviewer/corroboration flows.\n  - Executor_Protocol.md\n  - blocked_reason_code\n  - blocked_sequence\n  - missing advertised sections and dead glossary references\n  - `Overseer` is currently a dead glossary reference in multiple rewrite-owner docs.\n  - Overseer\n  - `glossary` and execution-evidence style artifact types remain unregistered in the canonical artifact-type table.\n  - glossary\n  - multiple adjacent docs cite `Plans/Glossary.md §2` for `Overseer`, but no such entry exists.\n  - Plans/Glossary.md §2\n  - `attempt` / `attempt_id`, `safe point`, `lane`, `work package`, and related rewrite-era vocabulary still have no Glossary owner.\n  - attempt\n  - attempt_id\n  - safe point\n  - lane\n  - work package\n  - Glossary's broad `effective state` wording now shadows the narrower requested/effective execution-identity model used elsewhere.\n  - effective state\n  - add missing Glossary entries for rewrite-era terms,\n  - with `Plans/Glossary.md` and `Plans/Crosswalk.md` still high-risk due to SSOT routing/term ownership failures.\n  - `Glossary.md` is still being cited as the owner of `Overseer` while not defining it, and `effective state` is now clearly too broad to safely stand in for requested/effective runtime identity.\n  - runtime nouns like `attempt_id`, `safe_point_id`, `scheduler_lane`, `blocked_sequence`, `provider_attempt_ref`, and handoff/promotion namespaces still lack Glossary ownership.\n  - safe_point_id\n  - scheduler_lane\n  - provider_attempt_ref\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - `Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`\n  - Plans/Orchestrator_Page.md\n  - Plans/FinalGUISpec.md\n  - `Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`\n  - Plans/storage-plan.md\n  - Plans/usage-feature.md\n  - `Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.\n  - `Plans/Glossary.md:34-67`\n  - Plans/Glossary.md:34-67\n  - `Plans/Glossary.md:102-126`\n  - Plans/Glossary.md:102-126\n  - `Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.\n  - why it matters\n  - what it is not\n  - related concepts\n  - gap-006\n  - `Plans/Glossary.md:30-127`\n  - Plans/Glossary.md:30-127\n  - Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.\n  - gap-002\n  - gap-007\n  - Plans/UI_Command_Catalog.md\n  - Plans/GitHub_Integration.md\n  - `Plans/Glossary.md` al"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 401,
+          "line_end": 528,
+          "window_index": 1,
+          "total_lines_in_doc": 528,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 7956,
+          "text_excerpt": "\n- **Help Entry Architecture** -- the dedicated help-entry architecture with related-concept linking. Each help entry is keyed by canonical concern/state terms and can expose related concepts without renaming the underlying canon.\n- **Project `activity_state`** -- the project-wide activity summary (`planning`, `running`, `waiting`, `blocked`, `cooling_down`, `archived`) that answers what the project is doing now.\n- **Project `attention_state`** -- the project-wide urgency summary (`quiet`, `watch`, `needs_attention`, `urgent`) that answers how strongly the project should surface alerts, badges, and resurfacing reminders.\n- **Blocked-owner taxonomy** -- the canonical owner classes for who must act next (`runtime_owner`, `approval_owner`, `account_owner`, `route_owner`, `policy_owner`).\n- **Escalation ladder** -- the deterministic progression from inline help to context help to canonical help entry to owner-targeted remediation to explicit human escalation.\n- **Resurfacing / aging rules** -- the thresholds that age unresolved blockers, raise `attention_state`, and resurface the same help entry until the blocker is resolved, dismissed, or reassigned.\n\nThis section defines project `activity_state`, project `attention_state`, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules so the same vocabulary can be reused across Orchestrator, project inspectors, and help surfaces.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md\n\n### Help-entry template and related-concept clusters\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0343\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\nA dedicated help-entry template and related-concept linking cluster uses this canonical shape:\n\n```text\nTitle\nCanonical definition\nWhen this appears\nAffected execution context or surface\nRecovery steps\nEscalation path\nRelated concepts\nEvidence / inspector links\n```\n\nRelated-concept clusters group help entries by canonical concern/state families such as `auth`, `approval`, `route/open`, `runtime recovery`, and `projection health`. Each cluster keeps durable links between sibling help entries so inline help, context help, and full help views can pivot without inventing new terminology.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md\n\n## 4. Evidence\n- **Evidence bundle** -- a structured record of commands/checks/artifacts that demonstrates a requirement is met.\n\nContractRef: SchemaID:evidence.schema.json\n\n---\n\n## 5. Secret handling\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0339\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - still needs explicit auth/account/role disclosure and thread-level switch/trust handling\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n- **Secret** -- any credential/token or material that could authenticate/authorize.\n- **Credential store** -- OS-backed keychain/credential manager; the only allowed persistence for secrets.\n\nContractRef: Invariant:INV-002\n\n---\n\n## 6. Primitives\n\n### DRYRules\nThe reuse-first methodology and tagging system (`DRY:WIDGET`, `DRY:DATA`, `DRY:FN`, `DRY:HELPER`) used to prevent code duplication. Canonical definition in `Plans/DRY_Rules.md`.\n\nContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md\n\n### PatchPipeline\nThe Git + PR workflow pipeline covering worktrees, branches, commits, push, and hosting operations. Local git operations are owned by `Plans/WorktreeGitImprovement.md`; hosting operations are owned by `Plans/GitHub_API_Auth_and_Flows.md`.\n\nContractRef: Primitive:PatchPipeline, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md\n\n### SessionStore\nThe persistent storage boundary for sessions, runs, events, and artifacts. Implementation uses seglog (append-only event ledger), redb (durable KV state/projections), and Tantivy (full-text search). Secrets are forbidden.\n\nContractRef: Primitive:SessionStore, ContractName:Plans/storage-plan.md, PolicyRule:no"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|concrete_plans_targets|Plans/Project_Output_Artifacts.md",
+      "obligation_ids": [
+        "obl-016-043"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 801,
+          "line_end": 1088,
+          "window_index": 2,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Puppet Master — User-Project Project Plan Package Outputs (SSOT)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0446\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Work Package`\n  - Work Package\n  - owning package\n  - `superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs.\n  - superseded\n  - revoked\n  - reopened\n  - `Overridden by Package override`\n  - Overridden by Package override\n  - main reason the project needs attention\n  - `project health`\n  - project health\n  - `project activity`\n  - project activity\n  - `project attention`\n  - project attention\n  - Recommended top-level project card fields\n  - when a project is in blocked/attention state, the Projects page should show the dominant current owner of that state\n  - Similar to runs, project cards should not imply that “historical project” is a real semantic class unless the product introduces archiving.\n  - archived/unregistered project\n  - project health and project attention are different things and should not share one overloaded dot\n  - the UI should make it clear when a project is using the inherited app-default layout versus a project-specific override\n  - `activity` = is anything actively happening for this project\n  - activity\n  - severity and routing should not collapse into one generic red project badge\n  - Current docs do not yet define how unrelated concurrent or historical runs should roll up into one project badge/card.\n  - project summaries must preserve the distinction between user-attention problems and internal degraded-trust warnings\n  - project badges need aggregation; attention center rows need precision\n  - That means project summary and project attention should NOT be jammed into either:\n  - project summary derives from canonical runtime/thread/wizard/usage/auth/source-control records and from active attention rows\n  - follow `artifact_id` / `linked_artifact_id` for renderable outputs and evidence objects\n  - artifact_id\n  - linked_artifact_id\n  - do not conflate runtime artifacts with Project Plan Package artifacts\n  - Make explicit that staged/generated planning outputs enter the UI as `artifact:<artifact_id>` subjects before any backing path exists.\n  - artifact:<artifact_id>\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Project Plan Package artifacts are canonically persisted and filesystem materializations are staging/export/cache\n  - per-surface project state like `source_control.project_state.{project_id}`\n  - source_control.project_state.{project_id}\n  - `cmd.project.open` is already implicitly route-consuming navigation rather than shell-state mutation; the docs just do not say that in one shared place.\n  - cmd.project.open\n  - `cmd.project.open`\n  - work package:\n  - `PuppetMasterEvent::Output`\n  - PuppetMasterEvent::Output\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`\n  - tier_id\n  - project `activity_state` enum\n  - activity_state\n  - project `attention_state` enum\n  - attention_state\n  - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`\n  - Plans/Contracts_V0.md\n  - Plans/storage-plan.md\n  - Plans/UI_Command_Catalog.md\n  - Plans/Crosswalk.md\n  - Plans/Wiring_Matrix.md\n  - Plans/Progression_Gates.md\n  - Plans/FileManager.md\n  - Plans/Project_Output_Artifacts.md\n  - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.\n  - Plans/Runtime_Artifacts_Panel.md\n  - Plans/interview-subagent-integration.md\n  - validation artifact lineage\n  - bridge-field viewer\n  - validation/report section\n  - `Plans/Project_Output_Artifacts.md:1-24`\n  - Plans/Project_Output_Artifacts.md:1-24\n  - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.\n  - gap-003\n  - gap-004\n  - gap-005\n  - Plans/usage-feature.md\n  - `Plans/Project_Output_Artifacts.md:16-24`\n  - Plans/Project_Output_Artifacts.md:16-24\n  - `Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` in the validation-pass-report lineage, so `gap-004`'s unresolved work is now the missing receipt owner heading plus missing consumer anchors rather than those fields wholesale.\n  - phase_plan_ref\n  - requirements_quality_report_ref\n  - pass_verdict\n  - `Plans/Project_Output_Artifacts.md:485-530`\n  - Plans/Project_Output_Artifacts.md:485-53"
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "\n#### Required: `contracts/index.json` (Project Contract Pack index)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0457\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `meta.json` now uses `pm.work_item_meta.v2`.\n  - meta.json\n  - pm.work_item_meta.v2\n  - `current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.\n  - current_state.md\n  - canon_inventory.json\n  - open_gaps.json\n  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.\n  - Ledger Condenser\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n- Path: `.puppet-master/project/contracts/index.json`\n- Schema: `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)\n- Purpose: canonical mapping from `ProjectContract:*` → `{ kind, path, sha256, ... }`\n  - `contracts[].contract_id` is the canonical ID (must match `^ProjectContract:` per schema)\n  - `contracts[].path` MUST be contract-pack relative (relative to `.puppet-master/project/contracts/`)\n\nContractRef: SchemaID:pm.project_contracts_index.schema.v1\n\nDRY rule (normative): node shard `contract_refs` and acceptance check `contract_refs` MUST reference `contracts[].contract_id` values from this index.\n\nContractRef: SchemaID:pm.project_contracts_index.schema.v1, ContractName:Plans/DRY_Rules.md#7\n\n## 5. DRY enforcement (contract-referenced graph)\n\n### 5.1 Node shards MUST reference Project Contract IDs\n\n- Every plan node shard (`plan_graph/nodes/<node_id>.json`) MUST include `contract_refs` with **at least one**\n  `ProjectContract:*` entry (required by schema).\n- Node shards MUST NOT repeat or inline the contract pack’s canonical specifications; use `contract_refs` instead.\n\nContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/DRY_Rules.md#7\n\n### 5.2 Acceptance is cross-referenced, not duplicated\n\n- `acceptance_manifest.json` MUST reference:\n  - node IDs via `nodes[].node_id`\n  - project contract IDs via `nodes[].checks[].contract_refs` (include relevant `ProjectContract:*` entries)\n- Acceptance manifest checks MUST cover node checks:\n  - Every node shard `acceptance[].check_id` MUST appear under that same `node_id` in `acceptance_manifest.json`.\n\nContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md\n\n### 5.3 Human plan may repeat summary, but must point to canonical contracts\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0451\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - workers may nominate but should not mint canonical concerns directly\n  - Current settings/inheritance may still be shown elsewhere, but must not overwrite history.\n  - should be chronological but windowed\n  - Those may overlap, but they are not the same field.\n  - but not an equally canonical `requested_account_id`\n  - requested_account_id\n  - But it should not try to encode:\n  - Owner docs were updated, but **consumer docs were not canon-collapsed**.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n`plan.md` is for humans; it may summarize for readability, but any repeated spec text MUST include a canonical pointer:\n\nContractRef: ContractName:Plans/DRY_Rules.md#7\n\n`Canonical source: ProjectContract:<...>`\n\nContractRef: ContractName:Plans/DRY_Rules.md#7\n\n## 6. Autonomy + decision logging (no human-required decisions)\n\n- Deterministic defaults are defined in `Plans/Decision_Policy.md` and MUST be applied autonomously.\n  - ContractRef: `PolicyRule:Decision_Policy.md`\n- All ambiguities (where multiple valid options exist) MUST be recorded to `.puppet-master/project/auto_decisions.jsonl`\n  (newline-delimited JSON; each row conforms to `Plans/auto_decisions.schema.json`).\n- `.puppet-master/project/auto_decisions.jsonl` is the canonical user-project decision log only; Puppet Master internal SSOT maintenance decisions continue to use `Plans/auto_decisions.jsonl`.\n- User-project auto-decision rows MUST conform to `pm.auto_decisions.schema.v1` exactly.\n- For user-project outputs, canonical persistence remains seglog first; decision rows are projected to `.puppet-master/project/auto_decisions.jsonl` as a regenerable file"
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 801,
+          "line_end": 1088,
+          "window_index": 2,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "   - orchestration can run headless from `plan_graph/index.json` + referenced node shards alone\n   - no dependency on `plan.md`, GUI artifacts, or optional monolithic exports for ordering/policy enforcement\n\nContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009\n\n7) **Optional derived export consistency (if present)**\n   - `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` validates (`pm.project-plan-graph.v1`)\n   - it is consistent with the canonical sharded graph (same node IDs, same node fields, same `entrypoints`)\n\n8) **Validation sweep artifact completeness (see §10)**\n   - Exactly three `validation_pass_report` events in seglog for each validation sweep run (pass_number 1, 2, 3 sharing the same `workflow_run_id`)\n   - Pass 3 report `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md); derived outputs such as `quickstart.md` may be regenerated\n   - All pass report `content_hash` values match the SHA-256 of their `content_bytes`\n   - For each pass number `N`, report `provider` and `model` match resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` from sweep start (`Plans/assistant-chat-design.md §26`)\n   - Reports come from a deterministic, headless sweep with no human approval gates between Pass 1, Pass 2, and Pass 3 (`Plans/chain-wizard-flexibility.md §12`)\n\n9) **Post-pass artifact finality**\n   - The canonical `.puppet-master/project/**` artifact tree validated by this document MUST represent the post-sweep artifact set (after Pass 2 and Pass 3 corrections for the associated `workflow_run_id`)\n   - Validator hash checks apply to post-pass corrected bytes, not pre-sweep intermediates\nContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md\n\n10) **Traceability output integrity (see §11)**\n    - `.puppet-master/project/traceability/requirements_quality_report.json` validates against `Plans/requirements_quality_report.schema.json` (`pm.requirements_quality_report.schema.v1`)\n    - `.puppet-master/project/traceability/requirements_coverage.json` validates against `Plans/requirements_coverage.schema.json` (`pm.requirements_coverage.schema.v1`)\n    - `summary.total_requirements` == `len(requirements[])`\n    - `summary.covered` + `summary.partially_covered` + `summary.uncovered` == `summary.total_requirements`\n    - `len(uncovered_requirements[])` == `summary.uncovered`\n    - `len(orphaned_node_requirement_refs[])` == `summary.orphaned_refs`\n    - `len(uncovered_acceptance[])` == `summary.uncovered_acceptance_count`\n    - `requirements_coverage.md` requirement ID lists match `requirements_coverage.json` exactly\n11) **Quickstart integrity (if present — see §12)**\n    - `.puppet-master/project/quickstart.md` is derived convenience output only\n    - orchestration, planning, and validator correctness MUST NOT depend on `quickstart.md`\n    - each executable command line in `quickstart.md` MUST exist verbatim in `.puppet-master/project/acceptance_manifest.json` (`nodes[].checks[].commands[].cmd`)\n    - `quickstart.md` command count MUST be <= 20 and file size MUST be <= 16384 bytes\n\nContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md\n\nValidation pass reports remain upstream governance artifacts, but they require stronger lineage into execution and artifact history.\n\nRequired lineage fields include:\n- `project_id`\n- `wizard_id?`\n- `thread_id?`\n- `phase_plan_ref?`\n- staged bundle refs\n- `requirements_quality_report_ref?`\n- promoted artifact refs\n- `workflow_run_id`\n- requested/effective runtime identity snapshot refs when a provider/model executed the pass\n- `effective_account_id?`\n- `execution_role`\n- launched `run_id?` when execution later starts from the validated output\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md\n\nRules:\n- validation pass reports do not become runtime attempts\n- validation reports must be traceable both backward to planning/wizard state and forward to launched execution when that bridge exists\n- pass reports remain first-class records in History/Ledger and first-class export members in manifests\n\nContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md\n\nContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)\n\nRequired fields:\n- pass_number\n- pass_name\n- pass_verdict\n- verdict_reason\n- staged_bundle_ref\n\nCanonical terms and values:\n- validation_pass_report\n- pass_number\n- pass_name\n- pass_verdict\n- verdict_reason\n- staged_bundle_ref\n- skipped\n\nBehavioral rules:\n- Validation pass reports remain upstream artifacts.\n- Pass reports must bridge into launchable execution through explicit lineage fields.\n\nPermission carry-through:\n- effective runtime/account identity must survive from pass report into downstream execution handoff\n## 11. Traceability outputs\n\nThis section defines the **normative generation rules and integrity requirements** for derived verification outputs under `.puppet-master/project/traceability/`. These files are:\n- **derived** (not planning inputs)\n- **non-canonical** with respect to planning decisions\n- **canonical** with respect to verification outputs (requirements quality + coverage reports)\n\nContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011\n\n### 11.1 `traceability/requirements_quality_report.json` (machine-readable)\n\n- Path: `.puppet-master/project/traceability/requirements_quality_report.json`\n- Schema: `Plans/requirements_"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|concrete_plans_targets|Plans/UI_Command_Catalog.md",
+      "obligation_ids": [
+        "obl-016-041"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1317,
+          "window_index": 3,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# UI Command Catalog (Canonical)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Cleanup Priorities\n\n#### Source target target-0515\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Cleanup Priorities\n- Exact required items represented:\n  - Replace or demote [retired-token-1] widgets and layouts.\n  - Add package/seam/lane-aware identity, worktree, and attention surfaces.\n  - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-5].\n  - `[retired-token-9]`\n  - [retired-token-9]\n  - `[retired-token-9]`, `Plans/[retired-token-7]`\n  - Plans/[retired-token-7]\n  - `FinalGUISpec.md` already defines a global command palette.\n  - FinalGUISpec.md\n  - command palette results\n  - The platform already has a strong shared command foundation:\n  - `Ctrl+K` / `Ctrl+P` command palette\n  - Ctrl+K\n  - Ctrl+P\n  - treat the command palette as a universal navigation and precise-action surface, not as a blanket permission to expose every dangerous runtime mutation as one keystroke away\n  - then command palette and shortcut surfaces must still honor the same gating and preview requirements.\n  - Reuse one shared routing payload across command palette, shortcuts, widgets, search, and deep links.\n  - command palette entries\n  - subtle mismatches between command palette, search, widgets, and deep links\n  - command payloads with generic `page: string` or tier-bound filters will quietly undermine any native-surface cleanup if they are not constrained at the same time\n  - page: string\n  - `[retired-token-9]` + `Plans/Runtime_Artifacts_Panel.md`\n  - Plans/Runtime_Artifacts_Panel.md\n  - `GitHub_Integration.md` still carries a split-brain command table that diverges from `UI_Command_Catalog.md`\n  - GitHub_Integration.md\n  - UI_Command_Catalog.md\n  - `[retired-token-9]` + `Plans/storage-plan.md`\n  - Plans/storage-plan.md\n  - GitHub Integration command IDs/args still diverge from the command catalog.\n  - The command catalog is already stronger than most surface docs:\n  - `cmd.panel.switch` also already acts like a coarse route command with `panel_id`, optional `project_id`, and context block\n  - cmd.panel.switch\n  - panel_id\n  - project_id\n  - Recommended command model:\n  - `cmd.panel.switch` can stay as a concrete command, but it should align with the richer route model rather than becoming a second navigation language\n  - UI / projection / command contracts are still structurally incomplete:\n  - Command and wiring SSOTs still cannot mechanically express freshness/health gating or canonical mutation ownership.\n  - Remove or alias stale/non-canonical `[retired-token-6]` and template/example command IDs so the catalog is truly the only stable command owner.\n  - [retired-token-6]\n  - Command / wiring ownership is materially weaker than the downstream surface docs assumed:\n  - `assistant-memory-subsystem.md` surfaces a new storage-owner gap: memory event families, AutoRunBoundary/AutoMilestone triggers, `attention_required` thread state persistence, and HITL/dashboard CTA command families still have no canonical event/command registration in storage-plan or the command catalog.\n  - assistant-memory-subsystem.md\n  - attention_required\n  - Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere.\n  - The command catalog already contains many specific pivots:\n  - it reduces command sprawl\n  - add a canonical navigation/open command family to the command catalog\n  - The catalog gap is now structural, not just a few missing IDs.\n  - a surface-specific wrapper command that resolves to the same route target\n  - The matrix cannot encode whether a command is a canonical navigation primitive, a deprecated alias, or a surface wrapper over a shared route target.\n  - Clean stale/ghost command examples out of `[retired-token-7]` before relying on it for automated extraction or coverage.\n  - [retired-token-7]\n  - Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation\n  - surface-specific wrapper command\n  - Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes.\n  - The command catalog is not hostile to the new navigation model, but it is still too flat to describe it cleanly.\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - `Contracts_V0.md` already wants a small reusable command envelope, which argues for a shared target object under `UICommand.args` rather than every command inventing its own payload.\n  - Contracts_V0.md\n  - UICommand.args\n  - Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just “command id exists.”\n  - The goal is not to delete every surface-specific command.\n  - The goal is to stop every surface-specific command from inventing its own private navigation semantics.\n  - `[retired-token-9]` (Gemini backfill)\n  - `[retired-token-8]` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.\n  - [retired-token-8]\n  - `Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and still defines auth/publish/repo-management command families absent from the catalog.\n  - Containers_Registry_and_Unraid.md\n  - Some current command payloads and surface docs still blur destination intent with shell-state realization.\n  - The command layer wants a three-way s"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nCommand families stay normalized around shared navigation, search routing, and runtime recovery ownership.\n\n### 2.0 Command entry contract (doc-level)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0518\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.\n  - That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.\n  - element -> command -> handler\n  - `Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:\n  - Contracts_V0.md\n  - That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:\n  - keeps `OpenFile` as the path-based file-open contract reference point for UI command work\n  - OpenFile\n  - Remove the graph-specific approval command contract as a primary action model.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nRequired command metadata:\n- `command_kind`\n- `normalization.kind`\n- `normalizes_to_contract`\n- `alias_of_command_id`\n\nRules:\n- `route_target` owns canonical open and focus identity.\n- command normalization remains discoverable at the doc-level contract.\n\n### 2.0B Action-surface policy\n\nActions available on the UI are scoped by:\n- User role and execution_role (from Permissions_System.md)\n- Active run mode (automate, interactive, diagnostic)\n- Concern state and blocked_sequence\n- approval_scope_key and approval_id context\n- DAE jail posture\n\nRules:\n- User cannot take an action unless the approval_scope_key allows it AND the operation is not contradicted by blocked_sequence or DAE jail posture.\n- Run mode changes, approval decisions, and blocked recovery are Orchestrator-owned; UI surfaces them but does not make the decision locally.\n- Actions that trigger external side-effects (file mutations, provider calls, route/open ops) MUST route through Permissions and route/open contracts.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md\n\n### Canonical route payload and route/open tail rules\n\nUI commands that route or open MUST preserve:\n- `route_target`: destination for output or side-effect (file path, GitHub issue URL, workspace concern, etc.)\n- `OpenSubject`: resource being opened (file, concern, help entry, project state)\n- `execution_unit_context`: which run, seam, package, or node is executing the command\n- `approval_scope_key`: reusable approval join key\n- `operational_identity`: attribution\nContractRef: Primitive:RouteTarget, Primitive:OpenSubject, Primitive:ExecutionContext, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md\n\nRoute side-effect rules:\n- File mutations go through FileSafe and route/open guards before execution.\n- Provider mutations (PRs, issue comments) go through Permissions and provider-identity checks.\n- Route completion refs are immutable once recorded; they form an audit trail of what was actually modified.\n- If route_target becomes unreachable between command build and execution, the UI displays an error and does not attempt fallback mutation.\n\n### Command normalization model\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0524\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - still needs command normalization, trust-state gating, and stronger project/account binding for resumed flows\n  - UI command / route normalization across existing commands\n  - `GATE-010` can verify command coverage, but it cannot yet verify wrapper normalization consistency.\n  - GATE-010\n  - normalization metadata is internally consistent with the command kind\n  - Keep the matrix row itself relatively small; let it reference a command that already carries normalization meaning.\n  - command wrapper normalization\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary subs"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "| `cmd.actions.rerun` | Rerun Workflow | Re-triggers the selected workflow run | — | `actions_panel_visible && selected_run` |\n| `cmd.actions.rerun_failed` | Rerun Failed Jobs | Re-triggers only failed jobs in selected run | — | `actions_panel_visible && selected_run && has_failed_jobs` |\n| `cmd.actions.cancel` | Cancel Run | Cancels the in-progress workflow run | — | `actions_panel_visible && selected_run && run_in_progress` |\n| `cmd.actions.pin` | Pin Workflow | Pins a workflow to the actions panel header for quick access | — | `actions_panel_visible && selected_workflow` |\n| `cmd.actions.unpin` | Unpin Workflow | Removes a pinned workflow from header | — | `actions_panel_visible && pinned_workflow_selected` |\n| `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | — | `actions_panel_visible && selected_job` |\n| `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | — | `actions_panel_visible && selected_run` |\n\nContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md\n\n#### Docker Manager command family\n\n| Command ID | Label | Description | Preconditions |\n|---|---|---|---|\n| `cmd.docker.build` | Build Image | Builds a Docker image from selected Dockerfile | `docker_available && dockerfile_selected` |\n| `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |\n| `cmd.docker.stop` | Stop Container | Stops a running container | `docker_available && container_running` |\n| `cmd.docker.restart` | Restart Container | Restarts a container | `docker_available && container_selected` |\n| `cmd.docker.remove` | Remove Container | Removes a stopped container | `docker_available && container_stopped` |\n| `cmd.docker.logs` | View Logs | Shows container log output | `docker_available && container_selected` |\n| `cmd.docker.exec` | Exec Shell | Opens interactive shell in container | `docker_available && container_running` |\n| `cmd.docker.compose_up` | Compose Up | Runs docker-compose up for selected compose file | `docker_available && compose_file_selected` |\n| `cmd.docker.compose_down` | Compose Down | Runs docker-compose down | `docker_available && compose_running` |\n| `cmd.docker.inspect` | Inspect | Shows detailed container/image info | `docker_available && resource_selected` |\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md\n\n### 2.5B Kubernetes command family\n\n| Command ID | Label | Description | Preconditions |\n|---|---|---|---|\n| `cmd.k8s.get_pods` | Get Pods | Lists pods in selected namespace | `k8s_connected` |\n| `cmd.k8s.describe` | Describe Resource | Shows detailed resource description | `k8s_connected && resource_selected` |\n| `cmd.k8s.logs` | View Pod Logs | Shows log output for selected pod | `k8s_connected && pod_selected` |\n| `cmd.k8s.exec` | Exec Shell | Opens shell in selected pod/container | `k8s_connected && pod_running` |\n| `cmd.k8s.apply` | Apply Manifest | Applies a Kubernetes manifest file | `k8s_connected && manifest_selected` |\n| `cmd.k8s.delete` | Delete Resource | Deletes selected Kubernetes resource | `k8s_connected && resource_selected` |\n| `cmd.k8s.scale` | Scale Deployment | Adjusts replica count for deployment | `k8s_connected && deployment_selected` |\n| `cmd.k8s.port_forward` | Port Forward | Sets up port forwarding to selected pod | `k8s_connected && pod_selected` |\n| `cmd.k8s.switch_context` | Switch Context | Changes active Kubernetes context | `k8s_available` |\n| `cmd.k8s.switch_namespace` | Switch Namespace | Changes active namespace | `k8s_connected` |\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md\n\n### 2.5C Project-scope git worktree commands\n\nThese commands manage repository-level worktree inventory and lifecycle. They complement, but do not replace, the assistant thread-scoped `cmd.chat.worktree.*` family defined in §2.6.1.\n\n| Command ID | Label | Description | Preconditions |\n|---|---|---|---|\n| `cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path | `git_available && !worktree_limit_reached` |\n| `cmd.git.worktree.remove` | Remove Worktree | Removes an existing worktree | `git_available && worktree_selected && worktree_clean` |\n| `cmd.git.worktree.list` | List Worktrees | Shows all worktrees for current repo | `git_available` |\n| `cmd.git.worktree.switch` | Switch to Worktree | Opens/focuses the selected worktree | `git_available && worktree_selected` |\n| `cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree | `git_available && worktree_selected` |\n| `cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree | `git_available && worktree_locked` |\n\nRules:\n- `cmd.git.worktree.*` owns project-scope worktree inventory, lock state, and navigation.\n- `cmd.chat.worktree.*` remains the thread-scoped wrapper family and MAY normalize internally to project-scope worktree operations.\n\nContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md\n### 2.6 Chat context usage commands\n\n#### Context Lens commands\n\n| Command ID | Purpose | Notes |\n|---|---|---|\n| `cmd.chat.context_lens.toggle` | Open or close the Context Lens dropdown | Owner control lives in the top-right of the chat window, immediately to the right of the search bar. |\n| `cmd.chat.context_lens.set_mode` | Set active mode to `mute`, `focus`, or `subcompact` | Multi-select is supported in all modes. |\n| `cmd.chat.context_lens.turn_off` | Exit Context Lens mode and clear active selection state | Dropdown entry label is `Turn Off`. |\n| `cmd.chat.context_lens.toggle_message_selection` | Toggle one message into or out of the active selection set | Applies immediately in `mute` and `focus`. |\n| `cmd.chat.context_lens.clear_selection` | Cl"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1317,
+          "window_index": 3,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 6303,
+          "text_excerpt": "  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n| Command ID | Parameters | Behavior |\n| --- | --- | --- |\n| `cmd.search.show` | `{ project_id, focus? }` | Reveal or focus the Search side panel. |\n| `cmd.search.find_in_files` | `{ project_id, query?, scope? }` | Run or rerun find-in-files in the Search panel. |\n| `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview or apply flow in the Search panel. |\n| `cmd.search.open_result` | `{ project_id, query_session_id, subject_id, disposition? }` | Open a Search result through `route_target` and the canonical file-open path. |\n| `cmd.search.replace_selected` | `{ project_id, query_session_id, subject_id }` | Apply replacement to one selected result identified by canonical subject identity. |\n\nRules:\n- Search command routing resolves through `route_target`.\n- Search commands remain side-panel scoped and preserve query-session state.\n- Search routing policy is owned by `Plans/Orchestrator_Page.md#search-routing-and-action-policy`.\n## References\n- `Plans/Contracts_V0.md#UICommand`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/LSPSupport.md`\n- `Plans/Widget_System.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/assistant-chat-design.md`\n- `Plans/UI_Wiring_Rules.md`\n- `Plans/Wiring_Matrix.schema.json`\n- `Plans/Wiring_Matrix.md`\n\nCanonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy recovery command namespaces are deprecated aliases only.\n\n| `allowed_action_id` | canonical command id | minimum args |\n| --- | --- | --- |\n| `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |\n| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id }` |\n| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id? }` |\n| `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |\n| `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |\n| `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |\n| `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |\n\n### Navigation commands\n- `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`\n- `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`\n- `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`\n\n### Pre-attempt blocked rule\nWhen a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.\n\nContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)\n\n### Recovery command definitions\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0526\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - widget-local definitions of blocked/completed/integration status\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nAll blocked-state recovery buttons and menu entries in GUI, chat, graph, and orchestrator surfaces MUST map from `allowed_action_ids[]` to one of the canonical runtime commands above.\n\nNo surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.\n\nContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), ContractName:Plans/Wiring_Matrix.md#UI command handler rule\n\nRequired command metadata:\n- `command_kind`\n- `normalization.kind`\n- `normalizes_to_contract`\n- `alias_of_command_id`\n- `approval_scope_key`\n- `allowed_action_ids[]`\n- `route_target`\n- `open_subject?`\n- `ref_family?`\n\nCanonical terms and values:\n- command_kind\n- normalization\n- approval_scope_key\n- route_target\n- ref_family\n\nLabels:\n- Approve\n- Decline\n- Resume after prerequisite\n- Blocked\n- Retry\n- Review\n- Resolve\n\nBehavioral rules:\n- blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands\n- no surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics\n- recovery commands must bind to blocked-episode identity rather than request-level surrogates\n- normalization metadata m"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g006",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|doc_discovery|Commands_System.md|UI_Command_Catalog.md|UI_Wiring_Rules.md|assistant-chat-design.md|newtools.md",
+      "obligation_ids": [
+        "obl-016-038"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Commands_System.md",
+        "UI_Command_Catalog.md",
+        "UI_Wiring_Rules.md",
+        "assistant-chat-design.md",
+        "newtools.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g007",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|doc_discovery|Contracts_V0.md|Executor_Protocol.md",
+      "obligation_ids": [
+        "obl-016-030"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Contracts_V0.md",
+        "Executor_Protocol.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g008",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|doc_discovery|Crosswalk.md|Decision_Policy.md|Glossary.md|Progression_Gates.md|Run_Modes.md|orchestrator-subagent-integration.md",
+      "obligation_ids": [
+        "obl-016-040"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Crosswalk.md",
+        "Decision_Policy.md",
+        "Glossary.md",
+        "Progression_Gates.md",
+        "Run_Modes.md",
+        "orchestrator-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g009",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|doc_discovery|Decision_Policy.md|Executor_Protocol.md",
+      "obligation_ids": [
+        "obl-016-033"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Decision_Policy.md",
+        "Executor_Protocol.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-070-g010",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0049",
+      "grouping_key": "shard-0049|doc_discovery|FileManager.md|Project_Output_Artifacts.md|assistant-memory-subsystem.md",
+      "obligation_ids": [
+        "obl-016-039"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "FileManager.md",
+        "Project_Output_Artifacts.md",
+        "assistant-memory-subsystem.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    }
+  ]
+}

@@ -1,23 +1,42 @@
 {
   "schema_id": "pm.section_entry_A_report.v1",
   "prompt_id": "A0",
-  "prompt_version": "pm.a0.v3.2.1",
+  "prompt_version": "pm.a0.v3.2.2",
   "work_id": "w-20260312-203855",
   "run_mode": "fresh_restart",
   "run_mode_source": "default_task_rule_no_explicit_user_mode",
   "execution_type": "mechanical_tool_operation",
   "subagents_required": false,
+  "subagents": {
+    "used": false
+  },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "fanout_proof_mechanical": {
+    "required_subagent_tasks_total": 0,
+    "wave_artifacts_total": 0,
+    "wave_artifacts_expected_min": 0,
+    "wave_artifact_paths": [],
+    "completed_task_ids_from_wave_artifacts": [],
+    "pending_task_ids_from_wave_artifacts": [],
+    "blocked_task_ids_from_wave_artifacts": [],
+    "subagent_invocation_ids_from_wave_artifacts": [],
+    "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+    "task_to_invocation_map": {},
+    "invocation_to_task_map": {},
+    "omnibus_invocation_detected": false,
+    "main_agent_bulk_output_detected": false
+  },
   "deterministic_verification": {
     "inputs_used": [
-      "user prompt (explicit work_id and A0 instructions)"
+      "user prompt (explicit work_id w-20260312-203855; A0 v3.2.2 instructions; no explicit run_mode)"
     ],
     "tooling": [
-      "glob listing for meta.json presence",
       "bounded JSON write to Plans/.pipeline/section_entry_A_report.json"
     ],
     "semantic_artifacts_inspected": false,
-    "coverage_proof": "A0 requires only run_mode selection and next-prompt routing; both were derived deterministically from prompt rules."
+    "repo_meta_json_listing_performed": false,
+    "repo_meta_json_listing_reason": "work_id supplied explicitly; A0 READ allows listing only when needed",
+    "coverage_proof": "run_mode=fresh_restart from A0 TASK default; next prompt A2 from VALID NEXT PROMPT REQUESTS (explicit work_id + fresh_restart)."
   },
   "status": "COMPLETE",
   "next_prompt_request": "A2",
@@ -25,7 +44,8 @@
   "notes": [
     "work_id supplied explicitly by user and locked",
     "no explicit run_mode supplied; default fresh_restart applied per A0 TASK",
-    "next prompt selected from A0 VALID NEXT PROMPT REQUESTS",
-    "no subagents launched; no fan-out required for mechanical_tool_operation"
+    "next prompt A2 per A0 VALID NEXT PROMPT REQUESTS",
+    "execution_type mechanical_tool_operation; subagent wave proof not applicable",
+    "stage_report.A0.json content recorded in this artifact per pipeline convention"
   ]
 }

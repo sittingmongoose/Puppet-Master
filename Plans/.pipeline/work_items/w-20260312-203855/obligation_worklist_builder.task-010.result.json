@@ -1,0 +1,699 @@
+{
+  "schema_id": "pm.d1.task_result.v3.2.2",
+  "prompt_id": "D1",
+  "subagent_task_id": "d1-task-010",
+  "work_id": "w-20260312-203855",
+  "assigned_shard_ids": [
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040"
+  ],
+  "assigned_block_id_first": "lblock-001854",
+  "assigned_block_id_last": "lblock-002069",
+  "assigned_block_ids_total": 216,
+  "blocks_observed_in_assigned_shards": 216,
+  "blocks_assigned_to_groups": 143,
+  "blocks_excluded_with_reason": 73,
+  "exclusions": [
+    {
+      "block_id": "lblock-001855",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001858",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001861",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001864",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001867",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001874",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001877",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001879",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001882",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001885",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001888",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001891",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001894",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001897",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001899",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001902",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001905",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001909",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001912",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001915",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001918",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001920",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001923",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001926",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001929",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001932",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001935",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001938",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001940",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001943",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001946",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001949",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001952",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001956",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001959",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001961",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001964",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001967",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001970",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001973",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001976",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001979",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001981",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001984",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001987",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001990",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001993",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001996",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-001999",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002001",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002004",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002007",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002011",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002014",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002017",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002020",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002022",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002025",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002028",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002031",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002034",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002037",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002040",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002043",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002045",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002048",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002051",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002054",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002057",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002060",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002063",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002065",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002068",
+      "reason": "blank_line_only_non_material_separator"
+    }
+  ],
+  "work_groups": [
+    {
+      "work_group_id": "wg-010-001",
+      "source_block_ids": [
+        "lblock-001854",
+        "lblock-001856",
+        "lblock-001857",
+        "lblock-001859",
+        "lblock-001860",
+        "lblock-001862",
+        "lblock-001863",
+        "lblock-001865",
+        "lblock-001866",
+        "lblock-001868",
+        "lblock-001869",
+        "lblock-001870",
+        "lblock-001871",
+        "lblock-001872",
+        "lblock-001873",
+        "lblock-001875",
+        "lblock-001876"
+      ],
+      "source_block_id_first": "lblock-001854",
+      "source_block_id_last": "lblock-001876",
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7201,
+          "end_line": 7285
+        }
+      ],
+      "max_source_lines": 85,
+      "blocks_total": 17,
+      "heading_context": "Research Progress - 2026-03-16 - attention center and project-attention routing cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-001]"
+    },
+    {
+      "work_group_id": "wg-010-002",
+      "source_block_ids": [
+        "lblock-001878",
+        "lblock-001880",
+        "lblock-001881",
+        "lblock-001883",
+        "lblock-001884",
+        "lblock-001886",
+        "lblock-001887",
+        "lblock-001889",
+        "lblock-001890",
+        "lblock-001892",
+        "lblock-001893",
+        "lblock-001895",
+        "lblock-001896"
+      ],
+      "source_block_id_first": "lblock-001878",
+      "source_block_id_last": "lblock-001896",
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7287,
+          "end_line": 7353
+        }
+      ],
+      "max_source_lines": 67,
+      "blocks_total": 13,
+      "heading_context": "Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-002]"
+    },
+    {
+      "work_group_id": "wg-010-003",
+      "source_block_ids": [
+        "lblock-001898",
+        "lblock-001900",
+        "lblock-001901",
+        "lblock-001903",
+        "lblock-001904",
+        "lblock-001906",
+        "lblock-001907",
+        "lblock-001908",
+        "lblock-001910",
+        "lblock-001911",
+        "lblock-001913",
+        "lblock-001914",
+        "lblock-001916",
+        "lblock-001917"
+      ],
+      "source_block_id_first": "lblock-001898",
+      "source_block_id_last": "lblock-001917",
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0038"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7355,
+          "end_line": 7424
+        }
+      ],
+      "max_source_lines": 70,
+      "blocks_total": 14,
+      "heading_context": "Research Progress - 2026-03-16 - GPT-5.4 Bridged Runtime / Permissions / Trust Deepening",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-003]"
+    },
+    {
+      "work_group_id": "wg-010-004",
+      "source_block_ids": [
+        "lblock-001919",
+        "lblock-001921",
+        "lblock-001922",
+        "lblock-001924",
+        "lblock-001925",
+        "lblock-001927",
+        "lblock-001928",
+        "lblock-001930",
+        "lblock-001931",
+        "lblock-001933",
+        "lblock-001934",
+        "lblock-001936",
+        "lblock-001937"
+      ],
+      "source_block_id_first": "lblock-001919",
+      "source_block_id_last": "lblock-001937",
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7426,
+          "end_line": 7532
+        }
+      ],
+      "max_source_lines": 107,
+      "blocks_total": 13,
+      "heading_context": "Research Progress - 2026-03-16 - project summary and attention storage contract cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-004]"
+    },
+    {
+      "work_group_id": "wg-010-005",
+      "source_block_ids": [
+        "lblock-001939",
+        "lblock-001941",
+        "lblock-001942",
+        "lblock-001944",
+        "lblock-001945",
+        "lblock-001947",
+        "lblock-001948",
+        "lblock-001950",
+        "lblock-001951",
+        "lblock-001953",
+        "lblock-001954",
+        "lblock-001955",
+        "lblock-001957",
+        "lblock-001958"
+      ],
+      "source_block_id_first": "lblock-001939",
+      "source_block_id_last": "lblock-001958",
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0039"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7534,
+          "end_line": 7624
+        }
+      ],
+      "max_source_lines": 91,
+      "blocks_total": 14,
+      "heading_context": "Research Progress - 2026-03-16 - route payload and `resume_url` normalization cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-005]"
+    },
+    {
+      "work_group_id": "wg-010-006",
+      "source_block_ids": [
+        "lblock-001960",
+        "lblock-001962",
+        "lblock-001963",
+        "lblock-001965",
+        "lblock-001966",
+        "lblock-001968",
+        "lblock-001969",
+        "lblock-001971",
+        "lblock-001972",
+        "lblock-001974",
+        "lblock-001975",
+        "lblock-001977",
+        "lblock-001978"
+      ],
+      "source_block_id_first": "lblock-001960",
+      "source_block_id_last": "lblock-001978",
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7626,
+          "end_line": 7692
+        }
+      ],
+      "max_source_lines": 67,
+      "blocks_total": 13,
+      "heading_context": "Research Progress - 2026-03-16 - GPT-5.2 Identity Semantics / Role-Routing Clarifications",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-006]"
+    },
+    {
+      "work_group_id": "wg-010-007",
+      "source_block_ids": [
+        "lblock-001980",
+        "lblock-001982",
+        "lblock-001983",
+        "lblock-001985",
+        "lblock-001986",
+        "lblock-001988",
+        "lblock-001989",
+        "lblock-001991",
+        "lblock-001992",
+        "lblock-001994",
+        "lblock-001995",
+        "lblock-001997",
+        "lblock-001998"
+      ],
+      "source_block_id_first": "lblock-001980",
+      "source_block_id_last": "lblock-001998",
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7694,
+          "end_line": 7759
+        }
+      ],
+      "max_source_lines": 66,
+      "blocks_total": 13,
+      "heading_context": "Research Progress - 2026-03-16 - GPT-5.2 Bridge / OpenCode / Permission Scope Clarifications",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-007]"
+    },
+    {
+      "work_group_id": "wg-010-008",
+      "source_block_ids": [
+        "lblock-002000",
+        "lblock-002002",
+        "lblock-002003",
+        "lblock-002005",
+        "lblock-002006",
+        "lblock-002008",
+        "lblock-002009",
+        "lblock-002010",
+        "lblock-002012",
+        "lblock-002013",
+        "lblock-002015",
+        "lblock-002016",
+        "lblock-002018",
+        "lblock-002019"
+      ],
+      "source_block_id_first": "lblock-002000",
+      "source_block_id_last": "lblock-002019",
+      "source_shard_ids": [
+        "shard-0039",
+        "shard-0040"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7761,
+          "end_line": 7835
+        }
+      ],
+      "max_source_lines": 75,
+      "blocks_total": 14,
+      "heading_context": "Research Progress - 2026-03-16 - readiness posture and remaining-open-seams cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-008]"
+    },
+    {
+      "work_group_id": "wg-010-009",
+      "source_block_ids": [
+        "lblock-002021",
+        "lblock-002023",
+        "lblock-002024",
+        "lblock-002026",
+        "lblock-002027",
+        "lblock-002029",
+        "lblock-002030",
+        "lblock-002032",
+        "lblock-002033",
+        "lblock-002035",
+        "lblock-002036",
+        "lblock-002038",
+        "lblock-002039",
+        "lblock-002041",
+        "lblock-002042"
+      ],
+      "source_block_id_first": "lblock-002021",
+      "source_block_id_last": "lblock-002042",
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7837,
+          "end_line": 7925
+        }
+      ],
+      "max_source_lines": 89,
+      "blocks_total": 15,
+      "heading_context": "Research Progress - 2026-03-16 - requested concrete-account ownership cluster",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-009]"
+    },
+    {
+      "work_group_id": "wg-010-010",
+      "source_block_ids": [
+        "lblock-002044",
+        "lblock-002046",
+        "lblock-002047",
+        "lblock-002049",
+        "lblock-002050",
+        "lblock-002052",
+        "lblock-002053",
+        "lblock-002055",
+        "lblock-002056",
+        "lblock-002058",
+        "lblock-002059",
+        "lblock-002061",
+        "lblock-002062"
+      ],
+      "source_block_id_first": "lblock-002044",
+      "source_block_id_last": "lblock-002062",
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7927,
+          "end_line": 7986
+        }
+      ],
+      "max_source_lines": 60,
+      "blocks_total": 13,
+      "heading_context": "Research Progress - 2026-03-16 - GPT-5.3-Codex Identity / Projection Closure",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-010]"
+    },
+    {
+      "work_group_id": "wg-010-011",
+      "source_block_ids": [
+        "lblock-002064",
+        "lblock-002066",
+        "lblock-002067",
+        "lblock-002069"
+      ],
+      "source_block_id_first": "lblock-002064",
+      "source_block_id_last": "lblock-002069",
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 7988,
+          "end_line": 8000
+        }
+      ],
+      "max_source_lines": 13,
+      "blocks_total": 4,
+      "heading_context": "Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-010-011]"
+    }
+  ],
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "no_group_over_25_blocks": true,
+    "no_group_over_800_lines": true,
+    "no_block_in_two_groups": true,
+    "blocks_in_assigned_shards_only": true
+  },
+  "status": "complete"
+}

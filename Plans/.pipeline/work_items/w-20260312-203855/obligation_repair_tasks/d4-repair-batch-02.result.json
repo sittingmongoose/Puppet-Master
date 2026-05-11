@@ -1,0 +1,251 @@
+{
+  "schema_id": "pm.d4.task_result.v3.2.2",
+  "prompt_id": "D4",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "d4-repair-batch-02",
+  "assigned_slice_ids": [
+    "slice-006",
+    "slice-007",
+    "slice-008",
+    "slice-009",
+    "slice-011"
+  ],
+  "per_slice_repairs": [
+    {
+      "slice_id": "slice-006",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-006.json",
+      "pre_repair_sha256": "8a2c2967a6d945d16cbd46a8a8f92a30793c0730471a2c61ccd3fb45ea0ec184",
+      "post_repair_sha256": "f6706f6148c3c1e23f1141c59d1bc27f83a35cd2c9c1b03a1014927a7a9870f5",
+      "families_applied": [
+        "doc_hint_path_normalization"
+      ],
+      "excluded_blocks_normalized_total": 0,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 1,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [
+        {
+          "hint_id": "dh-006-006",
+          "original_path": "existing concern entries in this working ledger",
+          "drop_reason": "dropped_non_path"
+        }
+      ],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "meta_slice_identity_unchanged": true,
+        "obligations_deep_equal": true,
+        "blocked_blocks_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "doc_hints_count_monotone": true,
+        "subagent_execution_unchanged": true
+      },
+      "post_repair_check": {
+        "schema_id_valid": true,
+        "prompt_work_ids": true,
+        "excluded_blocks_canonical": true,
+        "doc_hints_paths_ok": true,
+        "open_questions_length_ok": true,
+        "validation_flags_true": true,
+        "status_complete": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-007",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-007.json",
+      "pre_repair_sha256": "e77ae6c088b95b14ee6615361a7cbea9b8608564109bdeef9d54162ee0d612ca",
+      "post_repair_sha256": "d6f1859801342e3fcfd6aab36ef581c625be99a2ce2dcb02840c45b2f7890d67",
+      "families_applied": [
+        "excluded_blocks_field_name_normalization"
+      ],
+      "excluded_blocks_normalized_total": 47,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "meta_slice_identity_unchanged": true,
+        "obligations_deep_equal": true,
+        "blocked_blocks_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "doc_hints_count_monotone": true,
+        "subagent_execution_unchanged": true
+      },
+      "post_repair_check": {
+        "schema_id_valid": true,
+        "prompt_work_ids": true,
+        "excluded_blocks_canonical": true,
+        "doc_hints_paths_ok": true,
+        "open_questions_length_ok": true,
+        "validation_flags_true": true,
+        "status_complete": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-008",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-008.json",
+      "pre_repair_sha256": "59d0e2c054d595effb6b8d9bbc39e5f36e20b6f83545d1f1e843c8a522a746d4",
+      "post_repair_sha256": "7325677b56ce3c23aa9bd591432bcce44a145607bd42a16830a85a30dcbc6e6d",
+      "families_applied": [
+        "excluded_blocks_field_name_normalization",
+        "doc_hint_path_normalization"
+      ],
+      "excluded_blocks_normalized_total": 43,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 4,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [
+        {
+          "hint_id": "dh-008-001",
+          "original_path": "## Research Progress - 2026-03-16 - Auto Persona Resolution Rules",
+          "drop_reason": "dropped_heading"
+        },
+        {
+          "hint_id": "dh-008-008",
+          "original_path": "## Research Progress - 2026-03-16 - Help System Contract",
+          "drop_reason": "dropped_heading"
+        },
+        {
+          "hint_id": "dh-008-016",
+          "original_path": "## Research Progress - 2026-03-16 - Projects Page Blocked-Owner / Status Model",
+          "drop_reason": "dropped_heading"
+        },
+        {
+          "hint_id": "dh-008-022",
+          "original_path": "## Research Progress - 2026-03-16 - Notifications / Escalation Cadence",
+          "drop_reason": "dropped_heading"
+        }
+      ],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "meta_slice_identity_unchanged": true,
+        "obligations_deep_equal": true,
+        "blocked_blocks_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "doc_hints_count_monotone": true,
+        "subagent_execution_unchanged": true
+      },
+      "post_repair_check": {
+        "schema_id_valid": true,
+        "prompt_work_ids": true,
+        "excluded_blocks_canonical": true,
+        "doc_hints_paths_ok": true,
+        "open_questions_length_ok": true,
+        "validation_flags_true": true,
+        "status_complete": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-009",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-009.json",
+      "pre_repair_sha256": "bc04fa0a7530a1b3bec4e93fcc05b1fe696ca77979bd461e2f9d3e1f6dd44027",
+      "post_repair_sha256": "4cd46e24333e58f47776a5a2315445b1a6a72aa50c4de08795637e094f3d972d",
+      "families_applied": [
+        "excluded_blocks_field_name_normalization",
+        "doc_hint_path_normalization"
+      ],
+      "excluded_blocks_normalized_total": 52,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 4,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [
+        {
+          "hint_id": "dh-009-001",
+          "original_path": "## Research Progress - 2026-03-16 - Scale / Performance Model",
+          "drop_reason": "dropped_heading"
+        },
+        {
+          "hint_id": "dh-009-002",
+          "original_path": "## Research Progress - 2026-03-16 - Command Palette / Shortcuts / Bulk Actions",
+          "drop_reason": "dropped_heading"
+        },
+        {
+          "hint_id": "dh-009-003",
+          "original_path": "## Research Progress - 2026-03-16 - Projection Health / Stale-Data Trust Execution Policy",
+          "drop_reason": "dropped_heading"
+        },
+        {
+          "hint_id": "dh-009-004",
+          "original_path": "## Research Progress - 2026-03-16 - Shared Record Envelope / Artifact Normalization",
+          "drop_reason": "dropped_heading"
+        }
+      ],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "meta_slice_identity_unchanged": true,
+        "obligations_deep_equal": true,
+        "blocked_blocks_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "doc_hints_count_monotone": true,
+        "subagent_execution_unchanged": true
+      },
+      "post_repair_check": {
+        "schema_id_valid": true,
+        "prompt_work_ids": true,
+        "excluded_blocks_canonical": true,
+        "doc_hints_paths_ok": true,
+        "open_questions_length_ok": true,
+        "validation_flags_true": true,
+        "status_complete": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-011",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-011.json",
+      "pre_repair_sha256": "b0493cb1f06c1e156b177944e75ef7bd58307b2702132324aefe358665553839",
+      "post_repair_sha256": "6878142275477b2d9e86771106a16c589ac96a7aa5aa15d7bc103582c7819209",
+      "families_applied": [
+        "excluded_blocks_field_name_normalization"
+      ],
+      "excluded_blocks_normalized_total": 71,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "meta_slice_identity_unchanged": true,
+        "obligations_deep_equal": true,
+        "blocked_blocks_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "doc_hints_count_monotone": true,
+        "subagent_execution_unchanged": true
+      },
+      "post_repair_check": {
+        "schema_id_valid": true,
+        "prompt_work_ids": true,
+        "excluded_blocks_canonical": true,
+        "doc_hints_paths_ok": true,
+        "open_questions_length_ok": true,
+        "validation_flags_true": true,
+        "status_complete": true
+      },
+      "notes": []
+    }
+  ],
+  "summary": {
+    "slices_repaired_total": 5,
+    "slices_pass_repaired": 5,
+    "slices_blocked": 0,
+    "excluded_blocks_normalized_total": 213,
+    "doc_hints_normalized_total": 0,
+    "doc_hints_dropped_total": 9,
+    "doc_hints_reclassified_total": 0,
+    "open_questions_trimmed_total": 0
+  },
+  "subagent_execution": {
+    "subagent_task_id": "d4-repair-batch-02",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "status": "complete"
+}

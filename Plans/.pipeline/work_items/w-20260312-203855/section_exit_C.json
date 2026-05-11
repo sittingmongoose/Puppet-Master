@@ -1,30 +1,28 @@
 {
-  "schema_id": "pm.section_exit.v3.2.1",
+  "schema_id": "pm.section_exit.v3.2.2",
   "prompt_id": "C5",
-  "prompt_version": "pm.c5.v3.2.1",
+  "prompt_version": "pm.c5.v3.2.2",
+  "timestamp_utc": "20260511T165517Z",
   "section_id": "C",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260507T205324Z",
   "status": "complete",
+  "ledger_preparation_complete": true,
   "c4_validation_mode": "lossless_inventory_mechanical",
   "c4_completeness_status": "pass",
   "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
   "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
   "ledger_inventory_blocks_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_blocks.json",
-  "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.1",
-  "seed_mode": "lossless_raw_blocks",
-  "raw_seed_blocks_total": 4860,
+  "ledger_shards_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
   "source_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
-  "summary_counts_from_c4": {
-    "manifest_shards_total": 92,
-    "inventory_blocks_total": 4860,
-    "source_lines_total": 18244,
-    "coverage_gaps": 0,
-    "coverage_overlaps": 0,
-    "text_mismatch_blocks": 0,
-    "seed_block_reference_errors": 0
-  },
-  "semantic_seed_groups_required": false,
+  "raw_seed_blocks_total": 5065,
+  "inventory_blocks_total": 5065,
+  "manifest_shards_total": 92,
+  "source_lines_total": 18244,
   "next_section": "D_Obligation_Conversion",
-  "next_prompt_request": "Paste prompt D0 — Section Entry: Obligation Conversion v3.2.1."
+  "next_prompt_request": "Paste prompt D0 — Section Entry: Obligation Conversion v3.2.2.",
+  "next_preferred_prompt": "D0",
+  "semantic_seed_groups_required": false,
+  "notes": [
+    "Section C exit v3.2.2: mechanical lossless inventory + raw seed carrier only; semantic obligation conversion starts in D0 from ledger_obligation_seed.json."
+  ]
 }

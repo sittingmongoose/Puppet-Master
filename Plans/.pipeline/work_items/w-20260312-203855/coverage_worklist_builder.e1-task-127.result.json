@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-127",
+  "subagent_invocation_id": "658a2ee7-a0b4-44fc-b8ab-70678fccec32",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-127-g001",
+      "doc_resolution_status": "doc_hint_only",
+      "source_shard_id": "shard-0070",
+      "grouping_key": "shard-0070|doc_hint_only|",
+      "obligation_ids": [
+        "obl-021-081"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-021-081",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Capture and document the ledger routing research note in owner contracts.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-127-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0070",
+      "grouping_key": "shard-0070|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-021-072",
+        "obl-021-073",
+        "obl-021-074",
+        "obl-021-075",
+        "obl-021-076",
+        "obl-021-077",
+        "obl-021-078",
+        "obl-021-079",
+        "obl-021-080",
+        "obl-021-082"
+      ],
+      "obligation_record_count": 10,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-021-081",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Capture and document the ledger routing research note in owner contracts.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-127-g003",
+      "doc_resolution_status": "doc_hint_only",
+      "source_shard_id": "shard-0071",
+      "grouping_key": "shard-0071|doc_hint_only|",
+      "obligation_ids": [
+        "obl-021-083",
+        "obl-021-084"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-021-083",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Capture and document the ledger routing research note in owner contracts.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-021-084",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Capture and document the ledger routing research note in owner contracts.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-127-g004",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0071",
+      "grouping_key": "shard-0071|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-021-085",
+        "obl-021-086",
+        "obl-021-087",
+        "obl-021-088",
+        "obl-021-089",
+        "obl-021-090",
+        "obl-021-091",
+        "obl-021-092",
+        "obl-021-093",
+        "obl-021-094",
+        "obl-021-095",
+        "obl-021-096"
+      ],
+      "obligation_record_count": 12,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-021-083",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Capture and document the ledger routing research note in owner contracts.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-021-084",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Capture and document the ledger routing research note in owner contracts.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    }
+  ]
+}

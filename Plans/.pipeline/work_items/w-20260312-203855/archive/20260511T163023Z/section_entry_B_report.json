@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.section_entry_B_report.v3.2.1",
+  "prompt_id": "B0",
+  "prompt_version": "pm.b0.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260507T204605Z",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "derived_from": {
+    "section_exit_A_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+    "section_exit_A_prompt_id": "A4",
+    "section_exit_A_timestamp_utc": "20260507T204407Z",
+    "section_exit_A_next_section": "B"
+  },
+  "intake_selection": {
+    "next_prompt_id": "B4",
+    "next_prompt_name": "Ledger Intake Decision",
+    "selection_rule_applied": "default_no_explicit_intake_path",
+    "operator_explicit_intake_path_stated": false,
+    "discovered_intake_fields_checked": [
+      "intake_path",
+      "next_intake_prompt",
+      "next_prompt_id"
+    ],
+    "discovered_intake_fields_found": []
+  },
+  "alignment_notes": [
+    "route_state.json next_prompt_request still references A4 while section_exit_A.json records Section A complete and next_section B; work_id is consistent across section_exit_A.json, route_state.json, and meta.json."
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "D4",
+  "prompt_id": "D4",
+  "prompt_version": "pm.d4.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-001",
+  "wave_index": 1,
+  "wave_timestamp_utc": "2026-05-11T18:53:43Z",
+  "run_basis": "d4_round_2_repair",
+  "subagent_wave_size": 3,
+  "tasks_in_wave_total": 3,
+  "completed_task_ids": [
+    "d4r2-repair-batch-01",
+    "d4r2-repair-batch-02",
+    "d4r2-repair-batch-03"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "task_entries": [
+    {
+      "subagent_task_id": "d4r2-repair-batch-01",
+      "subagent_invocation_id": "d4r2-repair-batch-01-invocation",
+      "task_kind": "targeted_slice_repair_round_2",
+      "repair_submodes_applied": [
+        "semantic_conversion_gap"
+      ],
+      "assigned_slice_ids": [
+        "slice-008",
+        "slice-009"
+      ],
+      "input_bounds": {
+        "slices": 2,
+        "missing_blocks_target": 8,
+        "doc_hint_defects_target": 0
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-01.result.json",
+      "updated_slice_files": [
+        "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-008.json",
+        "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-009.json"
+      ],
+      "status": "complete"
+    },
+    {
+      "subagent_task_id": "d4r2-repair-batch-02",
+      "subagent_invocation_id": "d4r2-repair-batch-02-invocation",
+      "task_kind": "targeted_slice_repair_round_2",
+      "repair_submodes_applied": [
+        "semantic_conversion_gap"
+      ],
+      "assigned_slice_ids": [
+        "slice-016",
+        "slice-017"
+      ],
+      "input_bounds": {
+        "slices": 2,
+        "missing_blocks_target": 17,
+        "doc_hint_defects_target": 0
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-02.result.json",
+      "updated_slice_files": [
+        "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-016.json",
+        "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-017.json"
+      ],
+      "status": "complete"
+    },
+    {
+      "subagent_task_id": "d4r2-repair-batch-03",
+      "subagent_invocation_id": "d4r2-repair-batch-03-invocation",
+      "task_kind": "targeted_slice_repair_round_2",
+      "repair_submodes_applied": [
+        "semantic_conversion_gap",
+        "missing_doc_hint"
+      ],
+      "assigned_slice_ids": [
+        "slice-019",
+        "slice-020"
+      ],
+      "input_bounds": {
+        "slices": 2,
+        "missing_blocks_target": 22,
+        "doc_hint_defects_target": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-03.result.json",
+      "updated_slice_files": [
+        "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-019.json",
+        "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-020.json"
+      ],
+      "status": "complete"
+    }
+  ],
+  "distinct_subagent_invocations_total": 3,
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "task_to_invocation_map": {
+    "d4r2-repair-batch-01": "d4r2-repair-batch-01-invocation",
+    "d4r2-repair-batch-02": "d4r2-repair-batch-02-invocation",
+    "d4r2-repair-batch-03": "d4r2-repair-batch-03-invocation"
+  },
+  "invocation_to_task_map": {
+    "d4r2-repair-batch-01-invocation": "d4r2-repair-batch-01",
+    "d4r2-repair-batch-02-invocation": "d4r2-repair-batch-02",
+    "d4r2-repair-batch-03-invocation": "d4r2-repair-batch-03"
+  }
+}

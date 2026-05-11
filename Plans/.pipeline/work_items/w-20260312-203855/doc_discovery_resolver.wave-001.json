@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "F5",
+  "prompt_id": "F5",
+  "prompt_version": "pm.f5.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 1,
+  "wave_id": "wave-001",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "f5-task-001",
+    "f5-task-002",
+    "f5-task-003",
+    "f5-task-004",
+    "f5-task-005",
+    "f5-task-006",
+    "f5-task-007",
+    "f5-task-008"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "09a8bbad-f35b-4348-9a93-9d87d9fe10c0",
+      "subagent_task_id": "f5-task-001",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 0,
+        "instruction_slice_end_exclusive": 25,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-001.result.json",
+      "result_artifact_sha256": "173dcd6d961627abb9f661c208f990cdfc1a02c0cdacca57e592cb3fc8806bca",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "26c8a3cb-7a0a-4f46-8658-4e5b90a27b8d",
+      "subagent_task_id": "f5-task-002",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 25,
+        "instruction_slice_end_exclusive": 50,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-002.result.json",
+      "result_artifact_sha256": "caf68cb03a7b79befe4e09d3aeaad5c3144e8662e3cef9d2336b137713b719a7",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "fe3ce60e-2392-4c4b-a6ec-8bc103d98e15",
+      "subagent_task_id": "f5-task-003",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 50,
+        "instruction_slice_end_exclusive": 75,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-003.result.json",
+      "result_artifact_sha256": "c7c8de42f773b807a3c6ddfac178cae71d58006def4ffaab021033a659930e02",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "5304285f-5d2f-412b-9070-12ba9998d622",
+      "subagent_task_id": "f5-task-004",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 75,
+        "instruction_slice_end_exclusive": 100,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-004.result.json",
+      "result_artifact_sha256": "739f29fe5f8f00a0863a230a70d22cf7410b353ec4586d9053f9a5b1266b4e31",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "75393a99-fd45-47bf-860e-824227ab5210",
+      "subagent_task_id": "f5-task-005",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 100,
+        "instruction_slice_end_exclusive": 125,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-005.result.json",
+      "result_artifact_sha256": "0b0c8b2331a0180f0a1d3de325340b390eb644f082975b8602a2386466e374ec",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "6ddabad8-faa3-40bf-96f1-f01d79b09481",
+      "subagent_task_id": "f5-task-006",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 125,
+        "instruction_slice_end_exclusive": 150,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-006.result.json",
+      "result_artifact_sha256": "37571c451e457111a06298924f79b4789a0839f6e525e1eaca72b35110bd2dfc",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "d9995a03-42c5-4b57-aa1d-afd35de11618",
+      "subagent_task_id": "f5-task-007",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 150,
+        "instruction_slice_end_exclusive": 175,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-007.result.json",
+      "result_artifact_sha256": "43a3cb2fc74117bb21f559e45cda4a8d98eabce21a2cf53648b36910184997ed",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "13d4d17d-8494-4829-a848-c54533c46731",
+      "subagent_task_id": "f5-task-008",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+      "input_bounds": {
+        "instruction_slice_start": 175,
+        "instruction_slice_end_exclusive": 200,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.f5-task-008.result.json",
+      "result_artifact_sha256": "0b0a30310e4bc590d042ed025994f763da4ba0aef4d3afc2e271ba506c54c797",
+      "status": "complete"
+    }
+  ]
+}

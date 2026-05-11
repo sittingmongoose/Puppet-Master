@@ -1,0 +1,1556 @@
+{
+  "schema_id": "pm.d1.task_result.v3.2.2",
+  "prompt_id": "D1",
+  "subagent_task_id": "d1-task-002",
+  "work_id": "w-20260312-203855",
+  "assigned_shard_ids": [
+    "shard-0005",
+    "shard-0006",
+    "shard-0007",
+    "shard-0008"
+  ],
+  "assigned_block_id_first": "lblock-000030",
+  "assigned_block_id_last": "lblock-000254",
+  "assigned_block_ids_total": 225,
+  "blocks_observed_in_assigned_shards": 225,
+  "blocks_assigned_to_groups": 121,
+  "blocks_excluded_with_reason": 104,
+  "exclusions": [
+    {
+      "block_id": "lblock-000031",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000034",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000037",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000040",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000044",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000047",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000050",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000052",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000055",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000058",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000062",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000065",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000068",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000071",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000074",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000077",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000079",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000081",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000083",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000085",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000087",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000089",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000091",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000093",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000095",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000097",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000099",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000101",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000103",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000105",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000107",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000109",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000111",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000113",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000115",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000117",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000119",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000121",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000123",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000125",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000127",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000129",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000131",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000133",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000135",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000137",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000139",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000141",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000143",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000145",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000147",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000149",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000151",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000153",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000155",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000157",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000159",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000161",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000163",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000165",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000167",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000169",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000171",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000173",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000175",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000177",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000179",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000181",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000183",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000185",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000187",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000189",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000191",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000193",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000195",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000197",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000199",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000201",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000203",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000205",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000207",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000209",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000211",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000213",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000215",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000217",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000219",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000221",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000223",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000225",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000227",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000229",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000231",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000233",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000235",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000237",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000239",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000241",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000243",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000245",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000247",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000249",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000251",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-000253",
+      "reason": "blank_line_only_non_material_separator"
+    }
+  ],
+  "work_groups": [
+    {
+      "work_group_id": "wg-002-001",
+      "source_block_ids": [
+        "lblock-000030"
+      ],
+      "source_block_id_first": "lblock-000030",
+      "source_block_id_last": "lblock-000030",
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 801,
+          "end_line": 825
+        }
+      ],
+      "max_source_lines": 25,
+      "blocks_total": 1,
+      "heading_context": "untitled",
+      "grouping_rationale": "preamble_or_pre_heading",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-001]"
+    },
+    {
+      "work_group_id": "wg-002-002",
+      "source_block_ids": [
+        "lblock-000032",
+        "lblock-000033"
+      ],
+      "source_block_id_first": "lblock-000032",
+      "source_block_id_last": "lblock-000033",
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 827,
+          "end_line": 897
+        }
+      ],
+      "max_source_lines": 71,
+      "blocks_total": 2,
+      "heading_context": "## Candidate Fixes / Design Directions",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-002]"
+    },
+    {
+      "work_group_id": "wg-002-003",
+      "source_block_ids": [
+        "lblock-000035",
+        "lblock-000036"
+      ],
+      "source_block_id_first": "lblock-000035",
+      "source_block_id_last": "lblock-000036",
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 899,
+          "end_line": 913
+        }
+      ],
+      "max_source_lines": 15,
+      "blocks_total": 2,
+      "heading_context": "## Impacted Docs",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-003]"
+    },
+    {
+      "work_group_id": "wg-002-004",
+      "source_block_ids": [
+        "lblock-000038",
+        "lblock-000039"
+      ],
+      "source_block_id_first": "lblock-000038",
+      "source_block_id_last": "lblock-000039",
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 915,
+          "end_line": 922
+        }
+      ],
+      "max_source_lines": 8,
+      "blocks_total": 2,
+      "heading_context": "## Decisions Already Resolved",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-004]"
+    },
+    {
+      "work_group_id": "wg-002-005",
+      "source_block_ids": [
+        "lblock-000041",
+        "lblock-000042",
+        "lblock-000043"
+      ],
+      "source_block_id_first": "lblock-000041",
+      "source_block_id_last": "lblock-000043",
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 924,
+          "end_line": 1117
+        }
+      ],
+      "max_source_lines": 194,
+      "blocks_total": 3,
+      "heading_context": "## Open Questions / Uncertainties",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-005]"
+    },
+    {
+      "work_group_id": "wg-002-006",
+      "source_block_ids": [
+        "lblock-000045",
+        "lblock-000046"
+      ],
+      "source_block_id_first": "lblock-000045",
+      "source_block_id_last": "lblock-000046",
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1119,
+          "end_line": 1134
+        }
+      ],
+      "max_source_lines": 16,
+      "blocks_total": 2,
+      "heading_context": "## Packetization Notes",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-006]"
+    },
+    {
+      "work_group_id": "wg-002-007",
+      "source_block_ids": [
+        "lblock-000048",
+        "lblock-000049"
+      ],
+      "source_block_id_first": "lblock-000048",
+      "source_block_id_last": "lblock-000049",
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1136,
+          "end_line": 1154
+        }
+      ],
+      "max_source_lines": 19,
+      "blocks_total": 2,
+      "heading_context": "## Do-Not-Forget Details",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-007]"
+    },
+    {
+      "work_group_id": "wg-002-008",
+      "source_block_ids": [
+        "lblock-000051"
+      ],
+      "source_block_id_first": "lblock-000051",
+      "source_block_id_last": "lblock-000051",
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1156,
+          "end_line": 1156
+        }
+      ],
+      "max_source_lines": 1,
+      "blocks_total": 1,
+      "heading_context": "## Gemini Sweep Findings",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-008]"
+    },
+    {
+      "work_group_id": "wg-002-009",
+      "source_block_ids": [
+        "lblock-000053",
+        "lblock-000054"
+      ],
+      "source_block_id_first": "lblock-000053",
+      "source_block_id_last": "lblock-000054",
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1158,
+          "end_line": 1174
+        }
+      ],
+      "max_source_lines": 17,
+      "blocks_total": 2,
+      "heading_context": "## Highest-Impact Docs",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-009]"
+    },
+    {
+      "work_group_id": "wg-002-010",
+      "source_block_ids": [
+        "lblock-000056",
+        "lblock-000057"
+      ],
+      "source_block_id_first": "lblock-000056",
+      "source_block_id_last": "lblock-000057",
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1176,
+          "end_line": 1188
+        }
+      ],
+      "max_source_lines": 13,
+      "blocks_total": 2,
+      "heading_context": "## GUI / UX Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-010]"
+    },
+    {
+      "work_group_id": "wg-002-011",
+      "source_block_ids": [
+        "lblock-000059",
+        "lblock-000060",
+        "lblock-000061"
+      ],
+      "source_block_id_first": "lblock-000059",
+      "source_block_id_last": "lblock-000061",
+      "source_shard_ids": [
+        "shard-0006",
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1190,
+          "end_line": 1202
+        }
+      ],
+      "max_source_lines": 13,
+      "blocks_total": 3,
+      "heading_context": "## Runtime / Storage / Contract Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-011]"
+    },
+    {
+      "work_group_id": "wg-002-012",
+      "source_block_ids": [
+        "lblock-000063",
+        "lblock-000064"
+      ],
+      "source_block_id_first": "lblock-000063",
+      "source_block_id_last": "lblock-000064",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1204,
+          "end_line": 1212
+        }
+      ],
+      "max_source_lines": 9,
+      "blocks_total": 2,
+      "heading_context": "## Settings / Provider / Persona / Account Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-012]"
+    },
+    {
+      "work_group_id": "wg-002-013",
+      "source_block_ids": [
+        "lblock-000066",
+        "lblock-000067"
+      ],
+      "source_block_id_first": "lblock-000066",
+      "source_block_id_last": "lblock-000067",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1214,
+          "end_line": 1220
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Worktree / SCM / Parallelism Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-013]"
+    },
+    {
+      "work_group_id": "wg-002-014",
+      "source_block_ids": [
+        "lblock-000069",
+        "lblock-000070"
+      ],
+      "source_block_id_first": "lblock-000069",
+      "source_block_id_last": "lblock-000070",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1222,
+          "end_line": 1231
+        }
+      ],
+      "max_source_lines": 10,
+      "blocks_total": 2,
+      "heading_context": "## Cleanup Priorities",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-014]"
+    },
+    {
+      "work_group_id": "wg-002-015",
+      "source_block_ids": [
+        "lblock-000072",
+        "lblock-000073"
+      ],
+      "source_block_id_first": "lblock-000072",
+      "source_block_id_last": "lblock-000073",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1233,
+          "end_line": 1239
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Contradictions To Resolve",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-015]"
+    },
+    {
+      "work_group_id": "wg-002-016",
+      "source_block_ids": [
+        "lblock-000075",
+        "lblock-000076"
+      ],
+      "source_block_id_first": "lblock-000075",
+      "source_block_id_last": "lblock-000076",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1241,
+          "end_line": 1244
+        }
+      ],
+      "max_source_lines": 4,
+      "blocks_total": 2,
+      "heading_context": "## Suggested Research Follow-Ups",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-016]"
+    },
+    {
+      "work_group_id": "wg-002-017",
+      "source_block_ids": [
+        "lblock-000078",
+        "lblock-000080"
+      ],
+      "source_block_id_first": "lblock-000078",
+      "source_block_id_last": "lblock-000080",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1246,
+          "end_line": 1248
+        }
+      ],
+      "max_source_lines": 3,
+      "blocks_total": 2,
+      "heading_context": "## Opus 4.6 Sweep Findings",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-017]"
+    },
+    {
+      "work_group_id": "wg-002-018",
+      "source_block_ids": [
+        "lblock-000082",
+        "lblock-000084"
+      ],
+      "source_block_id_first": "lblock-000082",
+      "source_block_id_last": "lblock-000084",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1250,
+          "end_line": 1257
+        }
+      ],
+      "max_source_lines": 8,
+      "blocks_total": 2,
+      "heading_context": "## Highest-Impact Docs",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-018]"
+    },
+    {
+      "work_group_id": "wg-002-019",
+      "source_block_ids": [
+        "lblock-000086",
+        "lblock-000088"
+      ],
+      "source_block_id_first": "lblock-000086",
+      "source_block_id_last": "lblock-000088",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1259,
+          "end_line": 1266
+        }
+      ],
+      "max_source_lines": 8,
+      "blocks_total": 2,
+      "heading_context": "## GUI / UX Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-019]"
+    },
+    {
+      "work_group_id": "wg-002-020",
+      "source_block_ids": [
+        "lblock-000090",
+        "lblock-000092"
+      ],
+      "source_block_id_first": "lblock-000090",
+      "source_block_id_last": "lblock-000092",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1268,
+          "end_line": 1277
+        }
+      ],
+      "max_source_lines": 10,
+      "blocks_total": 2,
+      "heading_context": "## Runtime / Storage / Contract Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-020]"
+    },
+    {
+      "work_group_id": "wg-002-021",
+      "source_block_ids": [
+        "lblock-000094",
+        "lblock-000096"
+      ],
+      "source_block_id_first": "lblock-000094",
+      "source_block_id_last": "lblock-000096",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1279,
+          "end_line": 1285
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Settings / Provider / Persona / Account Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-021]"
+    },
+    {
+      "work_group_id": "wg-002-022",
+      "source_block_ids": [
+        "lblock-000098",
+        "lblock-000100"
+      ],
+      "source_block_id_first": "lblock-000098",
+      "source_block_id_last": "lblock-000100",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1287,
+          "end_line": 1293
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Worktree / SCM / Parallelism Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-022]"
+    },
+    {
+      "work_group_id": "wg-002-023",
+      "source_block_ids": [
+        "lblock-000102",
+        "lblock-000104",
+        "lblock-000106",
+        "lblock-000108",
+        "lblock-000110"
+      ],
+      "source_block_id_first": "lblock-000102",
+      "source_block_id_last": "lblock-000110",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1295,
+          "end_line": 1313
+        }
+      ],
+      "max_source_lines": 19,
+      "blocks_total": 5,
+      "heading_context": "## Cleanup Priorities",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-023]"
+    },
+    {
+      "work_group_id": "wg-002-024",
+      "source_block_ids": [
+        "lblock-000112",
+        "lblock-000114"
+      ],
+      "source_block_id_first": "lblock-000112",
+      "source_block_id_last": "lblock-000114",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1315,
+          "end_line": 1323
+        }
+      ],
+      "max_source_lines": 9,
+      "blocks_total": 2,
+      "heading_context": "## Contradictions To Resolve",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-024]"
+    },
+    {
+      "work_group_id": "wg-002-025",
+      "source_block_ids": [
+        "lblock-000116",
+        "lblock-000118"
+      ],
+      "source_block_id_first": "lblock-000116",
+      "source_block_id_last": "lblock-000118",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1325,
+          "end_line": 1334
+        }
+      ],
+      "max_source_lines": 10,
+      "blocks_total": 2,
+      "heading_context": "## Suggested Research Follow-Ups",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-025]"
+    },
+    {
+      "work_group_id": "wg-002-026",
+      "source_block_ids": [
+        "lblock-000120",
+        "lblock-000122"
+      ],
+      "source_block_id_first": "lblock-000120",
+      "source_block_id_last": "lblock-000122",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1336,
+          "end_line": 1338
+        }
+      ],
+      "max_source_lines": 3,
+      "blocks_total": 2,
+      "heading_context": "## Sonnet 4.6 Sweep Findings",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-026]"
+    },
+    {
+      "work_group_id": "wg-002-027",
+      "source_block_ids": [
+        "lblock-000124",
+        "lblock-000126",
+        "lblock-000128",
+        "lblock-000130",
+        "lblock-000132",
+        "lblock-000134"
+      ],
+      "source_block_id_first": "lblock-000124",
+      "source_block_id_last": "lblock-000134",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1340,
+          "end_line": 1365
+        }
+      ],
+      "max_source_lines": 26,
+      "blocks_total": 6,
+      "heading_context": "## Highest-Impact Docs",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-027]"
+    },
+    {
+      "work_group_id": "wg-002-028",
+      "source_block_ids": [
+        "lblock-000136",
+        "lblock-000138"
+      ],
+      "source_block_id_first": "lblock-000136",
+      "source_block_id_last": "lblock-000138",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1367,
+          "end_line": 1373
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## GUI / UX Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-028]"
+    },
+    {
+      "work_group_id": "wg-002-029",
+      "source_block_ids": [
+        "lblock-000140",
+        "lblock-000142"
+      ],
+      "source_block_id_first": "lblock-000140",
+      "source_block_id_last": "lblock-000142",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1375,
+          "end_line": 1384
+        }
+      ],
+      "max_source_lines": 10,
+      "blocks_total": 2,
+      "heading_context": "## Runtime / Storage / Contract Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-029]"
+    },
+    {
+      "work_group_id": "wg-002-030",
+      "source_block_ids": [
+        "lblock-000144",
+        "lblock-000146"
+      ],
+      "source_block_id_first": "lblock-000144",
+      "source_block_id_last": "lblock-000146",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1386,
+          "end_line": 1392
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Settings / Provider / Persona / Account Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-030]"
+    },
+    {
+      "work_group_id": "wg-002-031",
+      "source_block_ids": [
+        "lblock-000148",
+        "lblock-000150"
+      ],
+      "source_block_id_first": "lblock-000148",
+      "source_block_id_last": "lblock-000150",
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1394,
+          "end_line": 1400
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Worktree / SCM / Parallelism Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-031]"
+    },
+    {
+      "work_group_id": "wg-002-032",
+      "source_block_ids": [
+        "lblock-000152",
+        "lblock-000154",
+        "lblock-000156",
+        "lblock-000158",
+        "lblock-000160"
+      ],
+      "source_block_id_first": "lblock-000152",
+      "source_block_id_last": "lblock-000160",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1402,
+          "end_line": 1420
+        }
+      ],
+      "max_source_lines": 19,
+      "blocks_total": 5,
+      "heading_context": "## Cleanup Priorities",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-032]"
+    },
+    {
+      "work_group_id": "wg-002-033",
+      "source_block_ids": [
+        "lblock-000162",
+        "lblock-000164"
+      ],
+      "source_block_id_first": "lblock-000162",
+      "source_block_id_last": "lblock-000164",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1422,
+          "end_line": 1429
+        }
+      ],
+      "max_source_lines": 8,
+      "blocks_total": 2,
+      "heading_context": "## Contradictions To Resolve",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-033]"
+    },
+    {
+      "work_group_id": "wg-002-034",
+      "source_block_ids": [
+        "lblock-000166",
+        "lblock-000168"
+      ],
+      "source_block_id_first": "lblock-000166",
+      "source_block_id_last": "lblock-000168",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1431,
+          "end_line": 1440
+        }
+      ],
+      "max_source_lines": 10,
+      "blocks_total": 2,
+      "heading_context": "## Suggested Research Follow-Ups",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-034]"
+    },
+    {
+      "work_group_id": "wg-002-035",
+      "source_block_ids": [
+        "lblock-000170",
+        "lblock-000172"
+      ],
+      "source_block_id_first": "lblock-000170",
+      "source_block_id_last": "lblock-000172",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1442,
+          "end_line": 1444
+        }
+      ],
+      "max_source_lines": 3,
+      "blocks_total": 2,
+      "heading_context": "## GPT-5.2 Sweep Findings",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-035]"
+    },
+    {
+      "work_group_id": "wg-002-036",
+      "source_block_ids": [
+        "lblock-000174",
+        "lblock-000176",
+        "lblock-000178",
+        "lblock-000180",
+        "lblock-000182",
+        "lblock-000184"
+      ],
+      "source_block_id_first": "lblock-000174",
+      "source_block_id_last": "lblock-000184",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1446,
+          "end_line": 1471
+        }
+      ],
+      "max_source_lines": 26,
+      "blocks_total": 6,
+      "heading_context": "## Highest-Impact Docs",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-036]"
+    },
+    {
+      "work_group_id": "wg-002-037",
+      "source_block_ids": [
+        "lblock-000186",
+        "lblock-000188"
+      ],
+      "source_block_id_first": "lblock-000186",
+      "source_block_id_last": "lblock-000188",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1473,
+          "end_line": 1479
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## GUI / UX Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-037]"
+    },
+    {
+      "work_group_id": "wg-002-038",
+      "source_block_ids": [
+        "lblock-000190",
+        "lblock-000192"
+      ],
+      "source_block_id_first": "lblock-000190",
+      "source_block_id_last": "lblock-000192",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1481,
+          "end_line": 1490
+        }
+      ],
+      "max_source_lines": 10,
+      "blocks_total": 2,
+      "heading_context": "## Runtime / Storage / Contract Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-038]"
+    },
+    {
+      "work_group_id": "wg-002-039",
+      "source_block_ids": [
+        "lblock-000194",
+        "lblock-000196"
+      ],
+      "source_block_id_first": "lblock-000194",
+      "source_block_id_last": "lblock-000196",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1492,
+          "end_line": 1498
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Settings / Provider / Persona / Account Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-039]"
+    },
+    {
+      "work_group_id": "wg-002-040",
+      "source_block_ids": [
+        "lblock-000198",
+        "lblock-000200"
+      ],
+      "source_block_id_first": "lblock-000198",
+      "source_block_id_last": "lblock-000200",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1500,
+          "end_line": 1506
+        }
+      ],
+      "max_source_lines": 7,
+      "blocks_total": 2,
+      "heading_context": "## Worktree / SCM / Parallelism Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-040]"
+    },
+    {
+      "work_group_id": "wg-002-041",
+      "source_block_ids": [
+        "lblock-000202",
+        "lblock-000204",
+        "lblock-000206",
+        "lblock-000208",
+        "lblock-000210"
+      ],
+      "source_block_id_first": "lblock-000202",
+      "source_block_id_last": "lblock-000210",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1508,
+          "end_line": 1524
+        }
+      ],
+      "max_source_lines": 17,
+      "blocks_total": 5,
+      "heading_context": "## Cleanup Priorities",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-041]"
+    },
+    {
+      "work_group_id": "wg-002-042",
+      "source_block_ids": [
+        "lblock-000212",
+        "lblock-000214"
+      ],
+      "source_block_id_first": "lblock-000212",
+      "source_block_id_last": "lblock-000214",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1526,
+          "end_line": 1533
+        }
+      ],
+      "max_source_lines": 8,
+      "blocks_total": 2,
+      "heading_context": "## Contradictions To Resolve",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-042]"
+    },
+    {
+      "work_group_id": "wg-002-043",
+      "source_block_ids": [
+        "lblock-000216",
+        "lblock-000218"
+      ],
+      "source_block_id_first": "lblock-000216",
+      "source_block_id_last": "lblock-000218",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1535,
+          "end_line": 1543
+        }
+      ],
+      "max_source_lines": 9,
+      "blocks_total": 2,
+      "heading_context": "## Suggested Research Follow-Ups",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-043]"
+    },
+    {
+      "work_group_id": "wg-002-044",
+      "source_block_ids": [
+        "lblock-000220",
+        "lblock-000222"
+      ],
+      "source_block_id_first": "lblock-000220",
+      "source_block_id_last": "lblock-000222",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1545,
+          "end_line": 1547
+        }
+      ],
+      "max_source_lines": 3,
+      "blocks_total": 2,
+      "heading_context": "## GPT-5.4 Sweep Findings",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-044]"
+    },
+    {
+      "work_group_id": "wg-002-045",
+      "source_block_ids": [
+        "lblock-000224",
+        "lblock-000226",
+        "lblock-000228",
+        "lblock-000230",
+        "lblock-000232",
+        "lblock-000234"
+      ],
+      "source_block_id_first": "lblock-000224",
+      "source_block_id_last": "lblock-000234",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1549,
+          "end_line": 1574
+        }
+      ],
+      "max_source_lines": 26,
+      "blocks_total": 6,
+      "heading_context": "## Highest-Impact Docs",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-045]"
+    },
+    {
+      "work_group_id": "wg-002-046",
+      "source_block_ids": [
+        "lblock-000236",
+        "lblock-000238",
+        "lblock-000240",
+        "lblock-000242",
+        "lblock-000244",
+        "lblock-000246"
+      ],
+      "source_block_id_first": "lblock-000236",
+      "source_block_id_last": "lblock-000246",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1576,
+          "end_line": 1586
+        }
+      ],
+      "max_source_lines": 11,
+      "blocks_total": 6,
+      "heading_context": "## GUI / UX Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-046]"
+    },
+    {
+      "work_group_id": "wg-002-047",
+      "source_block_ids": [
+        "lblock-000248",
+        "lblock-000250",
+        "lblock-000252",
+        "lblock-000254"
+      ],
+      "source_block_id_first": "lblock-000248",
+      "source_block_id_last": "lblock-000254",
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1588,
+          "end_line": 1600
+        }
+      ],
+      "max_source_lines": 13,
+      "blocks_total": 4,
+      "heading_context": "## Runtime / Storage / Contract Impacts",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-002-047]"
+    }
+  ],
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "no_group_over_25_blocks": true,
+    "no_group_over_800_lines": true,
+    "no_block_in_two_groups": true,
+    "blocks_in_assigned_shards_only": true
+  },
+  "status": "complete"
+}

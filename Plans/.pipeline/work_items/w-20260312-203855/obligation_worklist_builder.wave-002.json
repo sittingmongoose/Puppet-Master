@@ -1,0 +1,327 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "D1",
+  "prompt_id": "D1",
+  "prompt_version": "pm.d1.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 2,
+  "wave_id": "wave-002",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "d1-task-009",
+    "d1-task-010",
+    "d1-task-011",
+    "d1-task-012",
+    "d1-task-013",
+    "d1-task-014",
+    "d1-task-015",
+    "d1-task-016"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "c495006e-d0cd-4433-9602-acf4bf822782",
+      "subagent_task_id": "d1-task-009",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0033",
+          "shard-0034",
+          "shard-0035",
+          "shard-0036"
+        ],
+        "assigned_block_id_first": "lblock-001636",
+        "assigned_block_id_last": "lblock-001853",
+        "assigned_block_ids_total": 218,
+        "assigned_source_line_range": {
+          "start_line": 6401,
+          "end_line": 7200
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-009.result.json",
+      "result_artifact_sha256": "aeddf2fc8df67d312e46a645968f3fd843c6fb08303d1f2cd436bfd46bc12a3b",
+      "result_summary": {
+        "blocks_observed": 218,
+        "blocks_assigned_to_groups": 142,
+        "blocks_excluded_with_reason": 76,
+        "work_groups_total": 11,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "fa55d01d-c3ea-40e0-9aec-b19b5cf7e678",
+      "subagent_task_id": "d1-task-010",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0037",
+          "shard-0038",
+          "shard-0039",
+          "shard-0040"
+        ],
+        "assigned_block_id_first": "lblock-001854",
+        "assigned_block_id_last": "lblock-002069",
+        "assigned_block_ids_total": 216,
+        "assigned_source_line_range": {
+          "start_line": 7201,
+          "end_line": 8000
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-010.result.json",
+      "result_artifact_sha256": "7e35bf602df6b8771c941ad296d260d582d2447cefcda816d4ae12b580624f1c",
+      "result_summary": {
+        "blocks_observed": 216,
+        "blocks_assigned_to_groups": 143,
+        "blocks_excluded_with_reason": 73,
+        "work_groups_total": 11,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "09a0cb8c-6482-4f11-aa3a-903355d82f67",
+      "subagent_task_id": "d1-task-011",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0041",
+          "shard-0042",
+          "shard-0043",
+          "shard-0044"
+        ],
+        "assigned_block_id_first": "lblock-002070",
+        "assigned_block_id_last": "lblock-002293",
+        "assigned_block_ids_total": 224,
+        "assigned_source_line_range": {
+          "start_line": 8001,
+          "end_line": 8800
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-011.result.json",
+      "result_artifact_sha256": "904e5977f9419509922ac4db0ce3709f08d2f01d3f111d10c31536711ceb22ad",
+      "result_summary": {
+        "blocks_observed": 224,
+        "blocks_assigned_to_groups": 149,
+        "blocks_excluded_with_reason": 75,
+        "work_groups_total": 11,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "c9bfaab5-07f4-4d16-83b9-36321882ed21",
+      "subagent_task_id": "d1-task-012",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0045",
+          "shard-0046",
+          "shard-0047",
+          "shard-0048"
+        ],
+        "assigned_block_id_first": "lblock-002294",
+        "assigned_block_id_last": "lblock-002498",
+        "assigned_block_ids_total": 205,
+        "assigned_source_line_range": {
+          "start_line": 8801,
+          "end_line": 9600
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-012.result.json",
+      "result_artifact_sha256": "a97931b9830de39605d5af0cce9abb0ea57a2ffa470206a2306a8f33098ba4bf",
+      "result_summary": {
+        "blocks_observed": 205,
+        "blocks_assigned_to_groups": 135,
+        "blocks_excluded_with_reason": 70,
+        "work_groups_total": 10,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "c0ded453-96c8-4f25-a6c4-e6828fb28e6e",
+      "subagent_task_id": "d1-task-013",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0049",
+          "shard-0050",
+          "shard-0051",
+          "shard-0052"
+        ],
+        "assigned_block_id_first": "lblock-002499",
+        "assigned_block_id_last": "lblock-002728",
+        "assigned_block_ids_total": 230,
+        "assigned_source_line_range": {
+          "start_line": 9601,
+          "end_line": 10400
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-013.result.json",
+      "result_artifact_sha256": "ff4faecd9b74473aa7a025d47f62a2d77ba15cef62c05869fbecebbd3f9f0a82",
+      "result_summary": {
+        "blocks_observed": 230,
+        "blocks_assigned_to_groups": 151,
+        "blocks_excluded_with_reason": 79,
+        "work_groups_total": 10,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "9b362c9d-677b-45af-a002-1ed72eec1df6",
+      "subagent_task_id": "d1-task-014",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0053",
+          "shard-0054",
+          "shard-0055",
+          "shard-0056"
+        ],
+        "assigned_block_id_first": "lblock-002729",
+        "assigned_block_id_last": "lblock-002968",
+        "assigned_block_ids_total": 240,
+        "assigned_source_line_range": {
+          "start_line": 10401,
+          "end_line": 11200
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-014.result.json",
+      "result_artifact_sha256": "bbf42e5166fb3cb67ddec15f4ad9fcd7ed30f4822feac249a0792ff7ac2bb26c",
+      "result_summary": {
+        "blocks_observed": 240,
+        "blocks_assigned_to_groups": 159,
+        "blocks_excluded_with_reason": 81,
+        "work_groups_total": 9,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "c20d01c7-d9e7-494e-adf0-b2a02c72e683",
+      "subagent_task_id": "d1-task-015",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0057",
+          "shard-0058",
+          "shard-0059",
+          "shard-0060"
+        ],
+        "assigned_block_id_first": "lblock-002969",
+        "assigned_block_id_last": "lblock-003227",
+        "assigned_block_ids_total": 259,
+        "assigned_source_line_range": {
+          "start_line": 11201,
+          "end_line": 12000
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-015.result.json",
+      "result_artifact_sha256": "6b5fcb51ae3d5d53b96f3bc66e9939c96f5215981f391db762593c25d8d61cec",
+      "result_summary": {
+        "blocks_observed": 259,
+        "blocks_assigned_to_groups": 170,
+        "blocks_excluded_with_reason": 89,
+        "work_groups_total": 13,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "8241bada-fd0b-4f97-b6d4-6bdc633b4774",
+      "subagent_task_id": "d1-task-016",
+      "subagent_type": "generalPurpose",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "input_bounds": {
+        "assigned_shard_ids": [
+          "shard-0061",
+          "shard-0062",
+          "shard-0063",
+          "shard-0064"
+        ],
+        "assigned_block_id_first": "lblock-003228",
+        "assigned_block_id_last": "lblock-003494",
+        "assigned_block_ids_total": 267,
+        "assigned_source_line_range": {
+          "start_line": 12001,
+          "end_line": 12800
+        }
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist_builder.task-016.result.json",
+      "result_artifact_sha256": "ee2aefaa8a88f34babbbe870552f8371c0558d927715b8748d7e4bb8c2c6a41e",
+      "result_summary": {
+        "blocks_observed": 267,
+        "blocks_assigned_to_groups": 176,
+        "blocks_excluded_with_reason": 91,
+        "work_groups_total": 11,
+        "validation": {
+          "all_assigned_blocks_accounted_for": true,
+          "no_group_over_25_blocks": true,
+          "no_group_over_800_lines": true,
+          "no_block_in_two_groups": true,
+          "blocks_in_assigned_shards_only": true
+        }
+      },
+      "status": "complete"
+    }
+  ],
+  "distinct_subagent_invocations_total": 8,
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false
+}

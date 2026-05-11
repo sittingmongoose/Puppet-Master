@@ -1,0 +1,144 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-090",
+  "subagent_invocation_id": "f639acb9-ca2a-4443-a74d-dd3ebcef1966",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-090-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0057",
+      "grouping_key": "shard-0057|concrete_plans_targets|Plans/evidence.schema.json",
+      "obligation_ids": [
+        "obl-018-046"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/evidence.schema.json"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/evidence.schema.json",
+          "line_start": 1,
+          "line_end": 367,
+          "window_index": 0,
+          "total_lines_in_doc": 367,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-018-047",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Align `GATE-010` with the machine-readable-detail pattern already used by `GATE-011` / `GATE-012` instead of relying on text-heavy `details`.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-018-049",
+          "doc_hints": [
+            {
+              "hint_excerpt": "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-090-g002",
+      "doc_resolution_status": "doc_hint_only",
+      "source_shard_id": "shard-0057",
+      "grouping_key": "shard-0057|doc_hint_only|",
+      "obligation_ids": [
+        "obl-018-047",
+        "obl-018-049"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-018-047",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Align `GATE-010` with the machine-readable-detail pattern already used by `GATE-011` / `GATE-012` instead of relying on text-heavy `details`.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-018-049",
+          "doc_hints": [
+            {
+              "hint_excerpt": "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-090-g003",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0057",
+      "grouping_key": "shard-0057|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-018-041",
+        "obl-018-042",
+        "obl-018-043",
+        "obl-018-044",
+        "obl-018-045",
+        "obl-018-048",
+        "obl-018-050",
+        "obl-018-051",
+        "obl-018-052",
+        "obl-018-053",
+        "obl-018-054",
+        "obl-018-055",
+        "obl-018-056",
+        "obl-018-057",
+        "obl-018-058",
+        "obl-018-059",
+        "obl-018-060",
+        "obl-018-061",
+        "obl-018-062",
+        "obl-018-063",
+        "obl-018-064",
+        "obl-018-065"
+      ],
+      "obligation_record_count": 22,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-018-047",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Align `GATE-010` with the machine-readable-detail pattern already used by `GATE-011` / `GATE-012` instead of relying on text-heavy `details`.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-018-049",
+          "doc_hints": [
+            {
+              "hint_excerpt": "If route-aware navigation becomes canonical, keeping `GATE-010` unchanged will make the strongest navigation rules effectively unenforced.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    }
+  ]
+}

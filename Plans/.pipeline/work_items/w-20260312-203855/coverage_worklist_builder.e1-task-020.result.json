@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-020",
+  "subagent_invocation_id": "24c2435d-c26e-469e-b5bb-47a4766ff8fc",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-020-g001",
+      "doc_resolution_status": "doc_hint_only",
+      "source_shard_id": "shard-0013",
+      "grouping_key": "shard-0013|doc_hint_only|",
+      "obligation_ids": [
+        "obl-005-023"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-005-023",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Define an explicit shared trust policy for all projection-backed surfaces, especially Orchestrator tabs (still missing per source).",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-020-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0013",
+      "grouping_key": "shard-0013|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-005-024",
+        "obl-005-025",
+        "obl-005-026",
+        "obl-005-027",
+        "obl-005-028",
+        "obl-005-029",
+        "obl-005-030",
+        "obl-005-031",
+        "obl-005-032",
+        "obl-005-033",
+        "obl-005-034",
+        "obl-005-035",
+        "obl-005-036",
+        "obl-005-037",
+        "obl-005-038",
+        "obl-005-039",
+        "obl-005-040",
+        "obl-005-041",
+        "obl-005-042",
+        "obl-005-043",
+        "obl-005-044",
+        "obl-005-045",
+        "obl-005-046",
+        "obl-005-047"
+      ],
+      "obligation_record_count": 24,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-005-023",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Define an explicit shared trust policy for all projection-backed surfaces, especially Orchestrator tabs (still missing per source).",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-092",
+  "subagent_invocation_id": "41eb75e9-7644-45c2-9a84-38ca46900be8",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-092-g001",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0057",
+      "grouping_key": "shard-0057|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-018-091",
+        "obl-018-092",
+        "obl-018-093",
+        "obl-018-094",
+        "obl-018-095",
+        "obl-018-096",
+        "obl-018-097",
+        "obl-018-098",
+        "obl-018-099",
+        "obl-018-100"
+      ],
+      "obligation_record_count": 10,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-092-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0058",
+      "grouping_key": "shard-0058|concrete_plans_targets|Plans/FileManager.md",
+      "obligation_ids": [
+        "obl-018-102"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/FileManager.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 472,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 401,
+          "line_end": 472,
+          "window_index": 1,
+          "total_lines_in_doc": 472,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-092-g003",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0058",
+      "grouping_key": "shard-0058|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-018-101",
+        "obl-018-103",
+        "obl-018-104",
+        "obl-018-105",
+        "obl-018-106",
+        "obl-018-107",
+        "obl-018-108",
+        "obl-018-109",
+        "obl-018-110",
+        "obl-018-111",
+        "obl-018-112",
+        "obl-018-113",
+        "obl-018-114",
+        "obl-018-115"
+      ],
+      "obligation_record_count": 14,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

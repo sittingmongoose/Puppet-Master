@@ -1,0 +1,710 @@
+{
+  "schema_id": "pm.d1.task_result.v3.2.2",
+  "prompt_id": "D1",
+  "subagent_task_id": "d1-task-013",
+  "work_id": "w-20260312-203855",
+  "assigned_shard_ids": [
+    "shard-0049",
+    "shard-0050",
+    "shard-0051",
+    "shard-0052"
+  ],
+  "assigned_block_id_first": "lblock-002499",
+  "assigned_block_id_last": "lblock-002728",
+  "assigned_block_ids_total": 230,
+  "blocks_observed_in_assigned_shards": 230,
+  "blocks_assigned_to_groups": 151,
+  "blocks_excluded_with_reason": 79,
+  "exclusions": [
+    {
+      "block_id": "lblock-002499",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002501",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002504",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002507",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002510",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002513",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002516",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002518",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002521",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002526",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002529",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002532",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002535",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002538",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002541",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002544",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002547",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002549",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002552",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002555",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002559",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002562",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002565",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002568",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002570",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002573",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002576",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002579",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002582",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002585",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002588",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002591",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002594",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002597",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002600",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002602",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002605",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002608",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002612",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002615",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002618",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002621",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002624",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002627",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002629",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002632",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002635",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002637",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002640",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002643",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002646",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002649",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002652",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002655",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002658",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002661",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002664",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002667",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002669",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002672",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002675",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002678",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002682",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002685",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002688",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002691",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002694",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002697",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002699",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002702",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002705",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002708",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002711",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002714",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002717",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002719",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002722",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002725",
+      "reason": "blank_line_only_non_material_separator"
+    },
+    {
+      "block_id": "lblock-002728",
+      "reason": "blank_line_only_non_material_separator"
+    }
+  ],
+  "work_groups": [
+    {
+      "work_group_id": "wg-013-001",
+      "source_block_ids": [
+        "lblock-002500",
+        "lblock-002502",
+        "lblock-002503",
+        "lblock-002505",
+        "lblock-002506",
+        "lblock-002508",
+        "lblock-002509",
+        "lblock-002511",
+        "lblock-002512",
+        "lblock-002514",
+        "lblock-002515"
+      ],
+      "source_block_id_first": "lblock-002500",
+      "source_block_id_last": "lblock-002515",
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 9602,
+          "end_line": 9666
+        }
+      ],
+      "max_source_lines": 65,
+      "blocks_total": 11,
+      "heading_context": "## Research Progress - 2026-03-16 - Revised readiness posture after owner-doc and storage passes",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-001]"
+    },
+    {
+      "work_group_id": "wg-013-002",
+      "source_block_ids": [
+        "lblock-002517",
+        "lblock-002519",
+        "lblock-002520",
+        "lblock-002522",
+        "lblock-002523",
+        "lblock-002524",
+        "lblock-002525",
+        "lblock-002527",
+        "lblock-002528",
+        "lblock-002530",
+        "lblock-002531",
+        "lblock-002533",
+        "lblock-002534",
+        "lblock-002536",
+        "lblock-002537",
+        "lblock-002539",
+        "lblock-002540",
+        "lblock-002542",
+        "lblock-002543",
+        "lblock-002545",
+        "lblock-002546"
+      ],
+      "source_block_id_first": "lblock-002517",
+      "source_block_id_last": "lblock-002546",
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 9668,
+          "end_line": 9754
+        }
+      ],
+      "max_source_lines": 87,
+      "blocks_total": 21,
+      "heading_context": "## Research Progress - 2026-03-16 - Blocked episode ownership and startup-recovery handshake",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-002]"
+    },
+    {
+      "work_group_id": "wg-013-003",
+      "source_block_ids": [
+        "lblock-002548",
+        "lblock-002550",
+        "lblock-002551",
+        "lblock-002553",
+        "lblock-002554",
+        "lblock-002556",
+        "lblock-002557",
+        "lblock-002558",
+        "lblock-002560",
+        "lblock-002561",
+        "lblock-002563",
+        "lblock-002564",
+        "lblock-002566",
+        "lblock-002567"
+      ],
+      "source_block_id_first": "lblock-002548",
+      "source_block_id_last": "lblock-002567",
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0050"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 9756,
+          "end_line": 9829
+        }
+      ],
+      "max_source_lines": 74,
+      "blocks_total": 14,
+      "heading_context": "## Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-003]"
+    },
+    {
+      "work_group_id": "wg-013-004",
+      "source_block_ids": [
+        "lblock-002569",
+        "lblock-002571",
+        "lblock-002572",
+        "lblock-002574",
+        "lblock-002575",
+        "lblock-002577",
+        "lblock-002578",
+        "lblock-002580",
+        "lblock-002581",
+        "lblock-002583",
+        "lblock-002584",
+        "lblock-002586",
+        "lblock-002587",
+        "lblock-002589",
+        "lblock-002590",
+        "lblock-002592",
+        "lblock-002593",
+        "lblock-002595",
+        "lblock-002596",
+        "lblock-002598",
+        "lblock-002599"
+      ],
+      "source_block_id_first": "lblock-002569",
+      "source_block_id_last": "lblock-002599",
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 9831,
+          "end_line": 9961
+        }
+      ],
+      "max_source_lines": 131,
+      "blocks_total": 21,
+      "heading_context": "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-004]"
+    },
+    {
+      "work_group_id": "wg-013-005",
+      "source_block_ids": [
+        "lblock-002601",
+        "lblock-002603",
+        "lblock-002604",
+        "lblock-002606",
+        "lblock-002607",
+        "lblock-002609",
+        "lblock-002610",
+        "lblock-002611",
+        "lblock-002613",
+        "lblock-002614",
+        "lblock-002616",
+        "lblock-002617",
+        "lblock-002619",
+        "lblock-002620",
+        "lblock-002622",
+        "lblock-002623",
+        "lblock-002625",
+        "lblock-002626"
+      ],
+      "source_block_id_first": "lblock-002601",
+      "source_block_id_last": "lblock-002626",
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0051"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 9963,
+          "end_line": 10033
+        }
+      ],
+      "max_source_lines": 71,
+      "blocks_total": 18,
+      "heading_context": "## Research Progress - 2026-03-16 - `tier_runtime_record` as derived overlay and downstream surface drift",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-005]"
+    },
+    {
+      "work_group_id": "wg-013-006",
+      "source_block_ids": [
+        "lblock-002628",
+        "lblock-002630",
+        "lblock-002631",
+        "lblock-002633",
+        "lblock-002634",
+        "lblock-002636",
+        "lblock-002638",
+        "lblock-002639",
+        "lblock-002641",
+        "lblock-002642",
+        "lblock-002644",
+        "lblock-002645",
+        "lblock-002647",
+        "lblock-002648",
+        "lblock-002650",
+        "lblock-002651",
+        "lblock-002653",
+        "lblock-002654",
+        "lblock-002656",
+        "lblock-002657",
+        "lblock-002659",
+        "lblock-002660",
+        "lblock-002662",
+        "lblock-002663",
+        "lblock-002665"
+      ],
+      "source_block_id_first": "lblock-002628",
+      "source_block_id_last": "lblock-002665",
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 10035,
+          "end_line": 10155
+        }
+      ],
+      "max_source_lines": 121,
+      "blocks_total": 25,
+      "heading_context": "## Research Progress - 2026-03-16 - Concrete executor-facing `execution_unit_context` field contract",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-006]"
+    },
+    {
+      "work_group_id": "wg-013-007",
+      "source_block_ids": [
+        "lblock-002666"
+      ],
+      "source_block_id_first": "lblock-002666",
+      "source_block_id_last": "lblock-002666",
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 10156,
+          "end_line": 10161
+        }
+      ],
+      "max_source_lines": 6,
+      "blocks_total": 1,
+      "heading_context": "### Do-not-forget details",
+      "grouping_rationale": "size_split",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-007]"
+    },
+    {
+      "work_group_id": "wg-013-008",
+      "source_block_ids": [
+        "lblock-002668",
+        "lblock-002670",
+        "lblock-002671",
+        "lblock-002673",
+        "lblock-002674",
+        "lblock-002676",
+        "lblock-002677",
+        "lblock-002679",
+        "lblock-002680",
+        "lblock-002681",
+        "lblock-002683",
+        "lblock-002684",
+        "lblock-002686",
+        "lblock-002687",
+        "lblock-002689",
+        "lblock-002690",
+        "lblock-002692",
+        "lblock-002693",
+        "lblock-002695",
+        "lblock-002696"
+      ],
+      "source_block_id_first": "lblock-002668",
+      "source_block_id_last": "lblock-002696",
+      "source_shard_ids": [
+        "shard-0051",
+        "shard-0052"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 10163,
+          "end_line": 10251
+        }
+      ],
+      "max_source_lines": 89,
+      "blocks_total": 20,
+      "heading_context": "## Research Progress - 2026-03-16 - Placement of `execution_role` and `operational_identity`",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-008]"
+    },
+    {
+      "work_group_id": "wg-013-009",
+      "source_block_ids": [
+        "lblock-002698",
+        "lblock-002700",
+        "lblock-002701",
+        "lblock-002703",
+        "lblock-002704",
+        "lblock-002706",
+        "lblock-002707",
+        "lblock-002709",
+        "lblock-002710",
+        "lblock-002712",
+        "lblock-002713",
+        "lblock-002715",
+        "lblock-002716"
+      ],
+      "source_block_id_first": "lblock-002698",
+      "source_block_id_last": "lblock-002716",
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 10253,
+          "end_line": 10360
+        }
+      ],
+      "max_source_lines": 108,
+      "blocks_total": 13,
+      "heading_context": "## Research Progress - 2026-03-16 - Sonnet owner-doc tranche synthesis",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-009]"
+    },
+    {
+      "work_group_id": "wg-013-010",
+      "source_block_ids": [
+        "lblock-002718",
+        "lblock-002720",
+        "lblock-002721",
+        "lblock-002723",
+        "lblock-002724",
+        "lblock-002726",
+        "lblock-002727"
+      ],
+      "source_block_id_first": "lblock-002718",
+      "source_block_id_last": "lblock-002727",
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 10362,
+          "end_line": 10399
+        }
+      ],
+      "max_source_lines": 38,
+      "blocks_total": 7,
+      "heading_context": "## Research Progress - 2026-03-16 - Unified runtime/tool/artifact attribution packet",
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-013-010]"
+    }
+  ],
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "no_group_over_25_blocks": true,
+    "no_group_over_800_lines": true,
+    "no_block_in_two_groups": true,
+    "blocks_in_assigned_shards_only": true
+  },
+  "status": "complete"
+}

@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "E1",
+  "prompt_id": "E1",
+  "prompt_version": "pm.e1.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 19,
+  "wave_id": "wave-019",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "e1-task-145",
+    "e1-task-146",
+    "e1-task-147",
+    "e1-task-148",
+    "e1-task-149",
+    "e1-task-150",
+    "e1-task-151",
+    "e1-task-152"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "ea81131d-8148-4d6c-a0ba-62c1cf07e366",
+      "subagent_task_id": "e1-task-145",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-023-087",
+        "obligation_id_last": "obl-023-111",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-145.result.json",
+      "result_artifact_sha256": "20181614cf26e859bbe2b09bdc3d0c5849e46cff5f4b0c52a2c36dfe38110eb9",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "026fc9ff-37b0-4e12-8b69-1b8cab4c31cb",
+      "subagent_task_id": "e1-task-146",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-023-112",
+        "obligation_id_last": "obl-023-136",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-146.result.json",
+      "result_artifact_sha256": "b728ac5f92b82c80db83383e7c5fbf7d6f65d89c7c468c8dfdbcb44840c2111e",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "46b926c1-eb45-4023-9b1a-c861391cab92",
+      "subagent_task_id": "e1-task-147",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-023-137",
+        "obligation_id_last": "obl-023-161",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-147.result.json",
+      "result_artifact_sha256": "31f5c00c5ef52804b122e0809a7621c0f1f35da2c36e5347418e4f1a9e76962e",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "f3850064-105f-4530-be90-56e25b711b96",
+      "subagent_task_id": "e1-task-148",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-023-162",
+        "obligation_id_last": "obl-023-186",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-148.result.json",
+      "result_artifact_sha256": "65a465fadc3fcbf398f671ca9da9d63522d44118f6e4054a96ba4e0f83e00ff9",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "01f1e5ee-fc0f-4a60-bd12-293c703d9c4c",
+      "subagent_task_id": "e1-task-149",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-023-187",
+        "obligation_id_last": "obl-024-009",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-149.result.json",
+      "result_artifact_sha256": "7e7c7ed8622c6b6a8b7f5de92541df175c82afe795e539de71cfd5f7dd326a6d",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "096413c5-65cb-4301-9d39-384beacb69dd",
+      "subagent_task_id": "e1-task-150",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-024-010",
+        "obligation_id_last": "obl-024-034",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-150.result.json",
+      "result_artifact_sha256": "3e9ef197867e58ccd72bdbef2310e8a2d117c878d09e5fdfcf26729032848ddf",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "869f29a9-01fe-4cd9-b78a-aa682d323357",
+      "subagent_task_id": "e1-task-151",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-024-035",
+        "obligation_id_last": "obl-025-016",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-151.result.json",
+      "result_artifact_sha256": "d7aa489564b43ece8dd0e90646065c299df5f62692c6454ea9595e5ed304600a",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "96f65899-ed8a-4d5b-848b-a2bdfa0b69ec",
+      "subagent_task_id": "e1-task-152",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "input_bounds": {
+        "obligation_id_first": "obl-025-017",
+        "obligation_id_last": "obl-025-041",
+        "obligation_records_in_task": 25,
+        "max_obligations_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_builder.e1-task-152.result.json",
+      "result_artifact_sha256": "24618ae6d7d2c50d090bee1b8d3b34ec6b48f6fd56ed60df26ee88a67bdcfa82",
+      "status": "complete"
+    }
+  ]
+}

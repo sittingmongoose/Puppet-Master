@@ -1,35 +1,66 @@
 {
-  "schema_id": "pm.section_entry_D_report.v3.2.1",
+  "schema_id": "pm.section_entry.v3.2.2",
   "prompt_id": "D0",
-  "prompt_version": "pm.d0.v3.2.1",
+  "prompt_version": "pm.d0.v3.2.2",
+  "timestamp_utc": "20260511T165801Z",
+  "section_id": "D",
+  "section_name": "Obligation_Conversion",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260507T205502Z",
-  "status": "COMPLETE",
-  "execution_type": "mechanical_tool_operation",
-  "derived_from": {
+  "status": "complete",
+  "entry_gate_status": "pass",
+  "upstream_section": "C",
+  "upstream_section_exit": {
+    "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+    "sha256": "acc19172258cec74002a55fc607ee2bf039579fbbee76ee04b35ebe5dc841df2",
+    "status": "complete",
+    "prompt_id": "C5",
+    "prompt_version": "pm.c5.v3.2.2",
+    "next_section": "D_Obligation_Conversion",
+    "next_preferred_prompt": "D0",
+    "ledger_preparation_complete": true,
+    "c4_completeness_status": "pass",
+    "c4_validation_mode": "lossless_inventory_mechanical",
+    "semantic_seed_groups_required": false
+  },
+  "active_inputs_present": {
+    "section_exit_C": true,
+    "ledger_obligation_seed": true,
+    "ledger_seed_completeness_report": true
+  },
+  "active_inputs": {
     "section_exit_C_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
-    "section_exit_C_prompt_id": "C5",
-    "section_exit_C_timestamp_utc": "20260507T205324Z",
-    "section_exit_C_next_section": "D_Obligation_Conversion",
-    "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
-    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+  },
+  "active_inputs_sha256": {
+    "section_exit_C.json": "acc19172258cec74002a55fc607ee2bf039579fbbee76ee04b35ebe5dc841df2",
+    "ledger_obligation_seed.json": "03f76451360b5f3c740d60ec2511ddfe67929b09a8a3dca76a7d56775ffd7e9f",
+    "ledger_seed_completeness_report.json": "f0ffd76f569646ba8c972e7fc50255d80e8ddc7379791a278408d3735057515e"
   },
   "seed_completeness": {
-    "ledger_seed_completeness_report_status": "pass",
-    "ledger_seed_completeness_report_validation_mode": "lossless_inventory_mechanical",
-    "blocking_items_count": 0,
-    "source_ledger_sha256_hex_aligned_with_section_exit_C": true
+    "status": "pass",
+    "validation_mode": "lossless_inventory_mechanical",
+    "raw_seed_blocks_total": 5065,
+    "inventory_blocks_total": 5065,
+    "manifest_shards_total": 92,
+    "source_lines_total": 18244,
+    "represented_nonblank_lines_total": 16453,
+    "excluded_blank_lines_total": 1791,
+    "coverage_gaps": 0,
+    "coverage_overlaps": 0,
+    "text_mismatch_blocks": 0,
+    "seed_block_reference_errors": 0,
+    "blocking_items": []
   },
-  "final_gate": {
-    "passed": true,
-    "ledger_seed_completeness_report_exists": true,
-    "ledger_obligation_seed_exists": true,
-    "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.1",
-    "raw_seed_blocks_total": 4860,
-    "work_id_alignment": {
-      "section_exit_C": "w-20260312-203855",
-      "ledger_obligation_seed": "w-20260312-203855",
-      "ledger_seed_completeness_report": "w-20260312-203855"
-    }
-  }
+  "source_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+  "final_gate_status": "pass",
+  "stale_or_archive_reads": "none",
+  "old_obligation_artifacts_read": false,
+  "next_prompt_request": "Paste prompt D1 — Obligation Worklist Builder v3.2.2.",
+  "notes": [
+    "Section D entry: work_id resolved from section_exit_C.json (only present exit file).",
+    "Ledger seed completeness report status=pass with zero coverage gaps/overlaps/mismatches/reference errors.",
+    "Section C semantic_seed_groups_required=false; D-section will derive obligation worklist from ledger_obligation_seed.json starting in D1.",
+    "Mechanical entry/handoff stage; no subagents required."
+  ]
 }

@@ -1,0 +1,127 @@
+{
+  "schema_id": "pm.fanout_worklist.v3.2.2",
+  "stage_id": "D4",
+  "prompt_id": "D4",
+  "prompt_version": "pm.d4.v3.2.2",
+  "run_basis": "d4_round_2_repair",
+  "work_id": "w-20260312-203855",
+  "execution_type": "semantic_chunk_processing",
+  "skip_gate_evaluated": true,
+  "skip_gate_passed": false,
+  "skip_gate_reasoning": "6 target slices + 51 isolated defects across 2 failure families requires per-slice atomic repair with bounded subagents per D4 v3.2.2 classification.",
+  "batching_strategy": {
+    "unit": "slice_repair_batch",
+    "max_slices_per_task": 2,
+    "max_records_per_task": 25
+  },
+  "required_subagent_tasks_total": 3,
+  "wave_size": 3,
+  "expected_waves_total": 1,
+  "wave_plan": [
+    {
+      "wave_index": 1,
+      "wave_id": "wave-001",
+      "task_ids": [
+        "d4r2-repair-batch-01",
+        "d4r2-repair-batch-02",
+        "d4r2-repair-batch-03"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "subagent_task_id": "d4r2-repair-batch-01",
+      "wave_assigned": "wave-001",
+      "task_kind": "targeted_slice_repair_round_2",
+      "repair_mode": "mixed_targeted",
+      "repair_submodes": [
+        "semantic_conversion_gap"
+      ],
+      "assigned_slice_ids": [
+        "slice-008",
+        "slice-009"
+      ],
+      "assigned_missing_block_count": 8,
+      "assigned_doc_hint_defect_count": 0,
+      "input_paths": {
+        "repair_request": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_request.json",
+        "repair_payload_helper": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/_round2_block_payloads.json",
+        "slice_files": [
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-008.json",
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-009.json"
+        ]
+      },
+      "output_paths": {
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-01.result.json",
+        "updated_slice_files": [
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-008.json",
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-009.json"
+        ]
+      },
+      "status": "pending"
+    },
+    {
+      "subagent_task_id": "d4r2-repair-batch-02",
+      "wave_assigned": "wave-001",
+      "task_kind": "targeted_slice_repair_round_2",
+      "repair_mode": "mixed_targeted",
+      "repair_submodes": [
+        "semantic_conversion_gap"
+      ],
+      "assigned_slice_ids": [
+        "slice-016",
+        "slice-017"
+      ],
+      "assigned_missing_block_count": 17,
+      "assigned_doc_hint_defect_count": 0,
+      "input_paths": {
+        "repair_request": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_request.json",
+        "repair_payload_helper": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/_round2_block_payloads.json",
+        "slice_files": [
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-016.json",
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-017.json"
+        ]
+      },
+      "output_paths": {
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-02.result.json",
+        "updated_slice_files": [
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-016.json",
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-017.json"
+        ]
+      },
+      "status": "pending"
+    },
+    {
+      "subagent_task_id": "d4r2-repair-batch-03",
+      "wave_assigned": "wave-001",
+      "task_kind": "targeted_slice_repair_round_2",
+      "repair_mode": "mixed_targeted",
+      "repair_submodes": [
+        "semantic_conversion_gap",
+        "missing_doc_hint"
+      ],
+      "assigned_slice_ids": [
+        "slice-019",
+        "slice-020"
+      ],
+      "assigned_missing_block_count": 22,
+      "assigned_doc_hint_defect_count": 4,
+      "input_paths": {
+        "repair_request": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_request.json",
+        "repair_payload_helper": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/_round2_block_payloads.json",
+        "slice_files": [
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-019.json",
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-020.json"
+        ]
+      },
+      "output_paths": {
+        "result_artifact": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-03.result.json",
+        "updated_slice_files": [
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-019.json",
+          "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-020.json"
+        ]
+      },
+      "status": "pending"
+    }
+  ]
+}

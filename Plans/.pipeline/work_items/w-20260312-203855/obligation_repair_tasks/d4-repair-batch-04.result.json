@@ -1,0 +1,315 @@
+{
+  "schema_id": "pm.d4.task_result.v3.2.2",
+  "prompt_id": "D4",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "d4-repair-batch-04",
+  "assigned_slice_ids": [
+    "slice-018",
+    "slice-019",
+    "slice-020",
+    "slice-021",
+    "slice-022"
+  ],
+  "per_slice_repairs": [
+    {
+      "slice_id": "slice-018",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-018.json",
+      "pre_repair_sha256": "d0a2c28c39e0dbf23d9cd411c5bf28febcadad82038601492afca7764766e199",
+      "post_repair_sha256": "c7dadd4db98a5407f005c601b11fd1c24f8cc2f3de5bf6a028955fbc583e96bd",
+      "families_applied": [
+        "doc_hints_path_normalized"
+      ],
+      "excluded_blocks_normalized_total": 0,
+      "doc_hints_path_normalized_total": 8,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-019",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-019.json",
+      "pre_repair_sha256": "934aeace91eb1254e1c5ddf05372b5ca6361d3456140f7390c1db4508a28614e",
+      "post_repair_sha256": "d7a63a7300f2a82d1aec093c95ff810c04d2923193a6caaedfa60523c49fe27e",
+      "families_applied": [
+        "excluded_blocks_field_name_normalized",
+        "doc_hints_path_normalized"
+      ],
+      "excluded_blocks_normalized_total": 80,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 10,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [
+        {
+          "hint_id": "dh-019-009",
+          "original_path": "## Research Progress - 2026-03-16 - Controlled vocabulary for `subject_id` families and `object_kind`",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-024",
+          "original_path": "## Research Progress - 2026-03-16 - Sub-selection and `inspector_target` should stay secondary",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-037",
+          "original_path": "## Research Progress - 2026-03-16 - Migration pattern for `route_target` and navigation wrappers",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-049",
+          "original_path": "## Research Progress - 2026-03-16 - Opus uncovered tranche synthesis",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-097",
+          "original_path": "## Research Progress - 2026-03-16 - `resume_url` / deep-link serialization should be a narrowed transport",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-108",
+          "original_path": "## Research Progress - 2026-03-16 - Shell/workspace state should remain adjacent to routing, not inside it",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-121",
+          "original_path": "## Research Progress - 2026-03-16 - Destination-surface vocabulary should stay controlled and coarse",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-133",
+          "original_path": "## Research Progress - 2026-03-16 - Subviews and panel-local selectors belong to view state, not target identity",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-143",
+          "original_path": "## Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary",
+          "slice_id": "slice-019"
+        },
+        {
+          "hint_id": "dh-019-156",
+          "original_path": "## Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis",
+          "slice_id": "slice-019"
+        }
+      ],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-020",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-020.json",
+      "pre_repair_sha256": "41d774e62b2c0c8e4b703030e4fc2697a3abff5b425f4d7b763285c91717fcb9",
+      "post_repair_sha256": "53bd628687ab5027642d318cc680d7d0b052cee6ec9c8295efa0975ddb8e2282",
+      "families_applied": [
+        "excluded_blocks_field_name_normalized",
+        "doc_hints_path_normalized"
+      ],
+      "excluded_blocks_normalized_total": 75,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 12,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [
+        {
+          "hint_id": "dh-020-001",
+          "original_path": "## Research Progress - 2026-03-16 - Command boundary: pure view commands vs route-consuming navigation",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-018",
+          "original_path": "## Research Progress - 2026-03-16 - Wrapper commands vs explicit `cmd.nav.*` family",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-031",
+          "original_path": "## Research Progress - 2026-03-17 - Wrapper/alias contract in wiring and gates",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-045",
+          "original_path": "## Research Progress - 2026-03-17 - Exact shape of the command-normalization contract",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-056",
+          "original_path": "## Research Progress - 2026-03-17 - Wording rule reinforcement",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-057",
+          "original_path": "## Research Progress - 2026-03-17 - `route_target` owner placement",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-070",
+          "original_path": "## Research Progress - 2026-03-17 - `route_target` vs `OpenSubject`",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-084",
+          "original_path": "## Research Progress - 2026-03-17 - Exact minimum field set for `OpenSubject`",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-096",
+          "original_path": "## Research Progress - 2026-03-17 - Exact minimum field set for `route_target`",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-108",
+          "original_path": "## Research Progress - 2026-03-17 - Exact `target_kind` vocabulary",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-118",
+          "original_path": "## Research Progress - 2026-03-17 - Selector precedence inside `route_target`",
+          "slice_id": "slice-020"
+        },
+        {
+          "hint_id": "dh-020-128",
+          "original_path": "## Research Progress - 2026-03-17 - `resume_url` serialization boundaries",
+          "slice_id": "slice-020"
+        }
+      ],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-021",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-021.json",
+      "pre_repair_sha256": "8294ee84a2c6e8cfc6b7cff30a43d0859dac722d04d2ddc22ecf5e94f25c5f5d",
+      "post_repair_sha256": "8a44be4d13f0a9f273a795a3a6d676e5c94d1a94247e673412d9595334f41072",
+      "families_applied": [
+        "excluded_blocks_field_name_normalized"
+      ],
+      "excluded_blocks_normalized_total": 83,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-022",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-022.json",
+      "pre_repair_sha256": "9a4f44828fae0826d4817666ec2f749136dcc1e2d2021c2cbbceff7b66fddb0e",
+      "post_repair_sha256": "6f8ee95be5e0ec0578b3dc8c0a398f50dabd7df2ae495ef173bb03a3ff8dd72d",
+      "families_applied": [
+        "excluded_blocks_field_name_normalized"
+      ],
+      "excluded_blocks_normalized_total": 101,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    }
+  ],
+  "summary": {
+    "slices_repaired_total": 5,
+    "slices_pass_repaired": 5,
+    "slices_blocked": 0,
+    "excluded_blocks_normalized_total": 339,
+    "doc_hints_normalized_total": 8,
+    "doc_hints_dropped_total": 22,
+    "doc_hints_reclassified_total": 0,
+    "open_questions_trimmed_total": 0
+  },
+  "subagent_execution": {
+    "subagent_task_id": "d4-repair-batch-04",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "status": "complete"
+}

@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.stage_report.v3.2.1",
+  "prompt_id": "C1",
+  "prompt_version": "pm.c1.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260507T204835Z",
+  "status": "COMPLETE",
+  "execution_type": "hybrid_mechanical_and_semantic",
+  "execution_branch": "mode_a_existing_working_ledger_mechanical_preservation",
+  "subagents": {
+    "used": false,
+    "reason": "MODE_A_existing_working_ledger_skip_semantic_condensation_per_manifest"
+  },
+  "required_subagent_tasks_total": 0,
+  "distinct_subagent_invocations_total": 0,
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "task_to_invocation_map": {},
+  "fanout_proof_status": "pass",
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "invocation_to_task_map": {},
+  "deterministic_verification": {
+    "inputs_read": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_entry_C_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md (bounded: manifest alignment + mechanical stats + headline/entry samples only; no full semantic pass)"
+    ],
+    "working_ledger_write": "preserved_unchanged_sha256_6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "tools_run_summary": "test -f/-s; wc -l/-c; sha256sum; grep heading counts; file -b; bounded Read tool head/tail windows for structure sanity"
+  },
+  "summary": "MODE A: validated working_ledger.md (18,244 lines, UTF-8, hash matches B4 manifest); structured markdown with ~1,649 ATX headings; preserved file bytes unchanged; ledger_condenser_report mode existing_working_ledger_preserved."
+}

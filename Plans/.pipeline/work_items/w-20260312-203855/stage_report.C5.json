@@ -1,39 +1,43 @@
 {
-  "schema_id": "pm.stage_report.v3.2.1",
+  "schema_id": "pm.stage_report.v3.2.2",
   "prompt_id": "C5",
-  "prompt_version": "pm.c5.v3.2.1",
+  "prompt_version": "pm.c5.v3.2.2",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260507T205324Z",
+  "timestamp_utc": "20260511T165517Z",
   "status": "COMPLETE",
   "execution_type": "mechanical_tool_operation",
   "subagents": {
     "used": false,
-    "reason": "section_exit_handoff"
+    "reason": "mechanical_tool_operation"
   },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
   "distinct_subagent_invocations_total": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "task_to_invocation_map": {},
   "deterministic_verification": {
-    "inputs_json_loaded": [
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
-    ],
-    "checks": [
-      "ledger_seed_completeness_report.status == pass",
-      "ledger_seed_completeness_report.validation_mode == lossless_inventory_mechanical",
-      "ledger_seed_completeness_report.blocking_items length == 0",
-      "ledger_obligation_seed.schema_id == pm.ledger_obligation_seed.v3.2.1",
-      "ledger_obligation_seed.seed_mode == lossless_raw_blocks",
-      "len(raw_blocks) == 4860 per python3 json load"
-    ],
-    "outputs_written": [
-      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C5.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
-    ]
+    "ledger_seed_completeness_report": {
+      "status": "pass",
+      "validation_mode": "lossless_inventory_mechanical",
+      "coverage_gaps": 0,
+      "coverage_overlaps": 0
+    },
+    "ledger_obligation_seed": {
+      "schema_id": "pm.ledger_obligation_seed.v3.2.2",
+      "seed_mode": "lossless_raw_blocks",
+      "raw_blocks_total": 5065
+    },
+    "gate_pass": true
   },
-  "summary": "Section C exit: C4 mechanical pass confirmed; obligation seed v3.2.1 lossless_raw_blocks with 4860 raw_blocks; section_exit_C.json routes to D0."
+  "summary": "C5 section exit: C4 mechanical pass confirmed; section_exit_C.json records raw seed and inventory paths for D0 obligation conversion."
 }

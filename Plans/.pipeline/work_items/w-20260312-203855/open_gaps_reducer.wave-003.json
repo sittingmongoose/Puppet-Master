@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "F3",
+  "prompt_id": "F3",
+  "prompt_version": "pm.f3.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 3,
+  "wave_id": "wave-003",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "f3-task-017",
+    "f3-task-018",
+    "f3-task-019",
+    "f3-task-020",
+    "f3-task-021",
+    "f3-task-022",
+    "f3-task-023",
+    "f3-task-024"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "a4f4ceae-7127-4424-ba9f-3a84f7a9f01f",
+      "subagent_task_id": "f3-task-017",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 350,
+        "slice_end_exclusive": 375,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-017.result.json",
+      "result_artifact_sha256": "8dc5ca381756eb8837513d8a3680d11a86130df96058520d7f10d8e95ff877c0",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "80174dfd-183a-4e8f-b400-7224ecbe7247",
+      "subagent_task_id": "f3-task-018",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 375,
+        "slice_end_exclusive": 400,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-018.result.json",
+      "result_artifact_sha256": "c6d5b3ff4a84f479c033bb8b992becbf552a223fe1611c766806ed34c49eda3c",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "91ef2b92-5bd8-4b3c-8b2a-e4c2d235f0d9",
+      "subagent_task_id": "f3-task-019",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 400,
+        "slice_end_exclusive": 425,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-019.result.json",
+      "result_artifact_sha256": "81dc36df1d2de6e1a35a248fbf9709486e3469be1b522d55f372eb802f7b6061",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "7f3935cb-f670-40b0-9f14-f0cab9814f3c",
+      "subagent_task_id": "f3-task-020",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 425,
+        "slice_end_exclusive": 450,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-020.result.json",
+      "result_artifact_sha256": "783dfcb5181025d6f93982eff5cdb1339c0e0e80a4df02f80a73e5dfa3f6eb05",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "b73413ae-5c1d-4653-8466-ac1ad860d619",
+      "subagent_task_id": "f3-task-021",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 450,
+        "slice_end_exclusive": 475,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-021.result.json",
+      "result_artifact_sha256": "df62cf736fc7c4efb3980d5860ff0851fa6b0014193c8a0c3e0b6e477aa32bca",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "5e4350f7-3b24-427b-815f-f2441edd7030",
+      "subagent_task_id": "f3-task-022",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 475,
+        "slice_end_exclusive": 500,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-022.result.json",
+      "result_artifact_sha256": "9ae13af30186560725d855c58db10d9433c7b7f030fb95f718fef4641ff2ab9d",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "880df136-1198-44c5-aa21-8bc25c13256d",
+      "subagent_task_id": "f3-task-023",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 500,
+        "slice_end_exclusive": 525,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-023.result.json",
+      "result_artifact_sha256": "7c7d1198b5cc100476af8a1d71a0889594fb2416b6be59c3c9a43fa0b1b4104e",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "a14ac1d6-adae-489f-adff-b98c43800e86",
+      "subagent_task_id": "f3-task-024",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifications/gaps.doc_discovery_exhaustion.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 525,
+        "slice_end_exclusive": 550,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer.f3-task-024.result.json",
+      "result_artifact_sha256": "bfdbc5d116578ebe44690f3ac5e60cd36aa2ab80f2b1290db5e4ce4eddc0341d",
+      "status": "complete"
+    }
+  ]
+}

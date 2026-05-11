@@ -1,0 +1,1557 @@
+{
+  "schema_id": "pm.d1.task_result.v3.2.2",
+  "prompt_id": "D1",
+  "subagent_task_id": "d1-task-019",
+  "work_id": "w-20260312-203855",
+  "assigned_shard_ids": [
+    "shard-0073",
+    "shard-0074",
+    "shard-0075",
+    "shard-0076"
+  ],
+  "assigned_block_id_first": "lblock-003995",
+  "assigned_block_id_last": "lblock-004296",
+  "assigned_block_ids_total": 302,
+  "blocks_observed_in_assigned_shards": 302,
+  "blocks_assigned_to_groups": 197,
+  "blocks_excluded_with_reason": 105,
+  "exclusions": [
+    {
+      "block_id": "lblock-003996",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14414,
+        "end_line": 14414
+      }
+    },
+    {
+      "block_id": "lblock-003999",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14418,
+        "end_line": 14418
+      }
+    },
+    {
+      "block_id": "lblock-004002",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14427,
+        "end_line": 14427
+      }
+    },
+    {
+      "block_id": "lblock-004005",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14431,
+        "end_line": 14431
+      }
+    },
+    {
+      "block_id": "lblock-004007",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14433,
+        "end_line": 14433
+      }
+    },
+    {
+      "block_id": "lblock-004010",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14439,
+        "end_line": 14439
+      }
+    },
+    {
+      "block_id": "lblock-004013",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14456,
+        "end_line": 14456
+      }
+    },
+    {
+      "block_id": "lblock-004016",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14466,
+        "end_line": 14466
+      }
+    },
+    {
+      "block_id": "lblock-004019",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14473,
+        "end_line": 14473
+      }
+    },
+    {
+      "block_id": "lblock-004022",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14492,
+        "end_line": 14492
+      }
+    },
+    {
+      "block_id": "lblock-004025",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14498,
+        "end_line": 14498
+      }
+    },
+    {
+      "block_id": "lblock-004027",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14500,
+        "end_line": 14500
+      }
+    },
+    {
+      "block_id": "lblock-004030",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14503,
+        "end_line": 14503
+      }
+    },
+    {
+      "block_id": "lblock-004033",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14517,
+        "end_line": 14517
+      }
+    },
+    {
+      "block_id": "lblock-004036",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14525,
+        "end_line": 14525
+      }
+    },
+    {
+      "block_id": "lblock-004039",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14530,
+        "end_line": 14530
+      }
+    },
+    {
+      "block_id": "lblock-004042",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14538,
+        "end_line": 14538
+      }
+    },
+    {
+      "block_id": "lblock-004045",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14542,
+        "end_line": 14542
+      }
+    },
+    {
+      "block_id": "lblock-004047",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14544,
+        "end_line": 14544
+      }
+    },
+    {
+      "block_id": "lblock-004050",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14548,
+        "end_line": 14548
+      }
+    },
+    {
+      "block_id": "lblock-004053",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14564,
+        "end_line": 14564
+      }
+    },
+    {
+      "block_id": "lblock-004056",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14574,
+        "end_line": 14574
+      }
+    },
+    {
+      "block_id": "lblock-004059",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14579,
+        "end_line": 14579
+      }
+    },
+    {
+      "block_id": "lblock-004062",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14585,
+        "end_line": 14585
+      }
+    },
+    {
+      "block_id": "lblock-004065",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14589,
+        "end_line": 14589
+      }
+    },
+    {
+      "block_id": "lblock-004067",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14591,
+        "end_line": 14591
+      }
+    },
+    {
+      "block_id": "lblock-004070",
+      "source_shard_id": "shard-0073",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14595,
+        "end_line": 14595
+      }
+    },
+    {
+      "block_id": "lblock-004074",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14611,
+        "end_line": 14611
+      }
+    },
+    {
+      "block_id": "lblock-004077",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14622,
+        "end_line": 14622
+      }
+    },
+    {
+      "block_id": "lblock-004080",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14629,
+        "end_line": 14629
+      }
+    },
+    {
+      "block_id": "lblock-004083",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14634,
+        "end_line": 14634
+      }
+    },
+    {
+      "block_id": "lblock-004086",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14638,
+        "end_line": 14638
+      }
+    },
+    {
+      "block_id": "lblock-004088",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14640,
+        "end_line": 14640
+      }
+    },
+    {
+      "block_id": "lblock-004091",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14646,
+        "end_line": 14646
+      }
+    },
+    {
+      "block_id": "lblock-004094",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14658,
+        "end_line": 14658
+      }
+    },
+    {
+      "block_id": "lblock-004097",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14667,
+        "end_line": 14667
+      }
+    },
+    {
+      "block_id": "lblock-004100",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14672,
+        "end_line": 14672
+      }
+    },
+    {
+      "block_id": "lblock-004103",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14681,
+        "end_line": 14681
+      }
+    },
+    {
+      "block_id": "lblock-004106",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14685,
+        "end_line": 14685
+      }
+    },
+    {
+      "block_id": "lblock-004108",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14687,
+        "end_line": 14687
+      }
+    },
+    {
+      "block_id": "lblock-004111",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14694,
+        "end_line": 14694
+      }
+    },
+    {
+      "block_id": "lblock-004114",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14700,
+        "end_line": 14700
+      }
+    },
+    {
+      "block_id": "lblock-004117",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14718,
+        "end_line": 14718
+      }
+    },
+    {
+      "block_id": "lblock-004120",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14723,
+        "end_line": 14723
+      }
+    },
+    {
+      "block_id": "lblock-004123",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14728,
+        "end_line": 14728
+      }
+    },
+    {
+      "block_id": "lblock-004126",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14732,
+        "end_line": 14732
+      }
+    },
+    {
+      "block_id": "lblock-004128",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14734,
+        "end_line": 14734
+      }
+    },
+    {
+      "block_id": "lblock-004131",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14738,
+        "end_line": 14738
+      }
+    },
+    {
+      "block_id": "lblock-004134",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14760,
+        "end_line": 14760
+      }
+    },
+    {
+      "block_id": "lblock-004137",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14765,
+        "end_line": 14765
+      }
+    },
+    {
+      "block_id": "lblock-004140",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14772,
+        "end_line": 14772
+      }
+    },
+    {
+      "block_id": "lblock-004143",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14782,
+        "end_line": 14782
+      }
+    },
+    {
+      "block_id": "lblock-004146",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14786,
+        "end_line": 14786
+      }
+    },
+    {
+      "block_id": "lblock-004148",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14788,
+        "end_line": 14788
+      }
+    },
+    {
+      "block_id": "lblock-004151",
+      "source_shard_id": "shard-0074",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14792,
+        "end_line": 14792
+      }
+    },
+    {
+      "block_id": "lblock-004155",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14807,
+        "end_line": 14807
+      }
+    },
+    {
+      "block_id": "lblock-004158",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14812,
+        "end_line": 14812
+      }
+    },
+    {
+      "block_id": "lblock-004161",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14821,
+        "end_line": 14821
+      }
+    },
+    {
+      "block_id": "lblock-004164",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14831,
+        "end_line": 14831
+      }
+    },
+    {
+      "block_id": "lblock-004167",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14835,
+        "end_line": 14835
+      }
+    },
+    {
+      "block_id": "lblock-004169",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14837,
+        "end_line": 14837
+      }
+    },
+    {
+      "block_id": "lblock-004172",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14844,
+        "end_line": 14844
+      }
+    },
+    {
+      "block_id": "lblock-004175",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14866,
+        "end_line": 14866
+      }
+    },
+    {
+      "block_id": "lblock-004178",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14875,
+        "end_line": 14875
+      }
+    },
+    {
+      "block_id": "lblock-004181",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14880,
+        "end_line": 14880
+      }
+    },
+    {
+      "block_id": "lblock-004184",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14889,
+        "end_line": 14889
+      }
+    },
+    {
+      "block_id": "lblock-004187",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14893,
+        "end_line": 14893
+      }
+    },
+    {
+      "block_id": "lblock-004189",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14895,
+        "end_line": 14895
+      }
+    },
+    {
+      "block_id": "lblock-004192",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14901,
+        "end_line": 14901
+      }
+    },
+    {
+      "block_id": "lblock-004195",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14916,
+        "end_line": 14916
+      }
+    },
+    {
+      "block_id": "lblock-004198",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14923,
+        "end_line": 14923
+      }
+    },
+    {
+      "block_id": "lblock-004201",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14928,
+        "end_line": 14928
+      }
+    },
+    {
+      "block_id": "lblock-004204",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14934,
+        "end_line": 14934
+      }
+    },
+    {
+      "block_id": "lblock-004207",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14938,
+        "end_line": 14938
+      }
+    },
+    {
+      "block_id": "lblock-004209",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14940,
+        "end_line": 14940
+      }
+    },
+    {
+      "block_id": "lblock-004212",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14947,
+        "end_line": 14947
+      }
+    },
+    {
+      "block_id": "lblock-004215",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14962,
+        "end_line": 14962
+      }
+    },
+    {
+      "block_id": "lblock-004218",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14972,
+        "end_line": 14972
+      }
+    },
+    {
+      "block_id": "lblock-004221",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14977,
+        "end_line": 14977
+      }
+    },
+    {
+      "block_id": "lblock-004224",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14988,
+        "end_line": 14988
+      }
+    },
+    {
+      "block_id": "lblock-004227",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14992,
+        "end_line": 14992
+      }
+    },
+    {
+      "block_id": "lblock-004229",
+      "source_shard_id": "shard-0075",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 14994,
+        "end_line": 14994
+      }
+    },
+    {
+      "block_id": "lblock-004232",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15001,
+        "end_line": 15001
+      }
+    },
+    {
+      "block_id": "lblock-004235",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15019,
+        "end_line": 15019
+      }
+    },
+    {
+      "block_id": "lblock-004238",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15028,
+        "end_line": 15028
+      }
+    },
+    {
+      "block_id": "lblock-004241",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15033,
+        "end_line": 15033
+      }
+    },
+    {
+      "block_id": "lblock-004244",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15048,
+        "end_line": 15048
+      }
+    },
+    {
+      "block_id": "lblock-004247",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15052,
+        "end_line": 15052
+      }
+    },
+    {
+      "block_id": "lblock-004249",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15054,
+        "end_line": 15054
+      }
+    },
+    {
+      "block_id": "lblock-004252",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15061,
+        "end_line": 15061
+      }
+    },
+    {
+      "block_id": "lblock-004255",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15080,
+        "end_line": 15080
+      }
+    },
+    {
+      "block_id": "lblock-004258",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15090,
+        "end_line": 15090
+      }
+    },
+    {
+      "block_id": "lblock-004261",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15097,
+        "end_line": 15097
+      }
+    },
+    {
+      "block_id": "lblock-004264",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15104,
+        "end_line": 15104
+      }
+    },
+    {
+      "block_id": "lblock-004267",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15108,
+        "end_line": 15108
+      }
+    },
+    {
+      "block_id": "lblock-004269",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15110,
+        "end_line": 15110
+      }
+    },
+    {
+      "block_id": "lblock-004272",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15115,
+        "end_line": 15115
+      }
+    },
+    {
+      "block_id": "lblock-004275",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15141,
+        "end_line": 15141
+      }
+    },
+    {
+      "block_id": "lblock-004278",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15148,
+        "end_line": 15148
+      }
+    },
+    {
+      "block_id": "lblock-004281",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15153,
+        "end_line": 15153
+      }
+    },
+    {
+      "block_id": "lblock-004284",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15166,
+        "end_line": 15166
+      }
+    },
+    {
+      "block_id": "lblock-004287",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15170,
+        "end_line": 15170
+      }
+    },
+    {
+      "block_id": "lblock-004289",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15172,
+        "end_line": 15172
+      }
+    },
+    {
+      "block_id": "lblock-004292",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15179,
+        "end_line": 15179
+      }
+    },
+    {
+      "block_id": "lblock-004295",
+      "source_shard_id": "shard-0076",
+      "reason": "excludable_blank_or_rule_separator",
+      "source_line_range": {
+        "start_line": 15199,
+        "end_line": 15199
+      }
+    }
+  ],
+  "work_groups": [
+    {
+      "work_group_id": "wg-019-001",
+      "source_block_ids": [
+        "lblock-003995",
+        "lblock-003997",
+        "lblock-003998",
+        "lblock-004000",
+        "lblock-004001",
+        "lblock-004003",
+        "lblock-004004"
+      ],
+      "source_block_id_first": "lblock-003995",
+      "source_block_id_last": "lblock-004004",
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14401,
+          "end_line": 14430
+        }
+      ],
+      "max_source_lines": 30,
+      "blocks_total": 7,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": null
+      },
+      "grouping_rationale": "preamble_or_pre_heading",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-001]"
+    },
+    {
+      "work_group_id": "wg-019-002",
+      "source_block_ids": [
+        "lblock-004006",
+        "lblock-004008",
+        "lblock-004009",
+        "lblock-004011",
+        "lblock-004012",
+        "lblock-004014",
+        "lblock-004015",
+        "lblock-004017",
+        "lblock-004018",
+        "lblock-004020",
+        "lblock-004021",
+        "lblock-004023",
+        "lblock-004024"
+      ],
+      "source_block_id_first": "lblock-004006",
+      "source_block_id_last": "lblock-004024",
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14432,
+          "end_line": 14497
+        }
+      ],
+      "max_source_lines": 66,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Routing collision with tier-era consumer docs"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-002]"
+    },
+    {
+      "work_group_id": "wg-019-003",
+      "source_block_ids": [
+        "lblock-004026",
+        "lblock-004028",
+        "lblock-004029",
+        "lblock-004031",
+        "lblock-004032",
+        "lblock-004034",
+        "lblock-004035",
+        "lblock-004037",
+        "lblock-004038",
+        "lblock-004040",
+        "lblock-004041",
+        "lblock-004043",
+        "lblock-004044"
+      ],
+      "source_block_id_first": "lblock-004026",
+      "source_block_id_last": "lblock-004044",
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14499,
+          "end_line": 14541
+        }
+      ],
+      "max_source_lines": 43,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Usage surfaces versus object-first routing"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-003]"
+    },
+    {
+      "work_group_id": "wg-019-004",
+      "source_block_ids": [
+        "lblock-004046",
+        "lblock-004048",
+        "lblock-004049",
+        "lblock-004051",
+        "lblock-004052",
+        "lblock-004054",
+        "lblock-004055",
+        "lblock-004057",
+        "lblock-004058",
+        "lblock-004060",
+        "lblock-004061",
+        "lblock-004063",
+        "lblock-004064"
+      ],
+      "source_block_id_first": "lblock-004046",
+      "source_block_id_last": "lblock-004064",
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14543,
+          "end_line": 14588
+        }
+      ],
+      "max_source_lines": 46,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - File open versus subject open consumer split"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-004]"
+    },
+    {
+      "work_group_id": "wg-019-005",
+      "source_block_ids": [
+        "lblock-004066",
+        "lblock-004068",
+        "lblock-004069",
+        "lblock-004071",
+        "lblock-004072",
+        "lblock-004073",
+        "lblock-004075",
+        "lblock-004076",
+        "lblock-004078",
+        "lblock-004079",
+        "lblock-004081",
+        "lblock-004082",
+        "lblock-004084",
+        "lblock-004085"
+      ],
+      "source_block_id_first": "lblock-004066",
+      "source_block_id_last": "lblock-004085",
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0074"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14590,
+          "end_line": 14637
+        }
+      ],
+      "max_source_lines": 48,
+      "blocks_total": 14,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Worktree and SCM routing consumers"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-005]"
+    },
+    {
+      "work_group_id": "wg-019-006",
+      "source_block_ids": [
+        "lblock-004087",
+        "lblock-004089",
+        "lblock-004090",
+        "lblock-004092",
+        "lblock-004093",
+        "lblock-004095",
+        "lblock-004096",
+        "lblock-004098",
+        "lblock-004099",
+        "lblock-004101",
+        "lblock-004102",
+        "lblock-004104",
+        "lblock-004105"
+      ],
+      "source_block_id_first": "lblock-004087",
+      "source_block_id_last": "lblock-004105",
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14639,
+          "end_line": 14684
+        }
+      ],
+      "max_source_lines": 46,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-006]"
+    },
+    {
+      "work_group_id": "wg-019-007",
+      "source_block_ids": [
+        "lblock-004107",
+        "lblock-004109",
+        "lblock-004110",
+        "lblock-004112",
+        "lblock-004113",
+        "lblock-004115",
+        "lblock-004116",
+        "lblock-004118",
+        "lblock-004119",
+        "lblock-004121",
+        "lblock-004122",
+        "lblock-004124",
+        "lblock-004125"
+      ],
+      "source_block_id_first": "lblock-004107",
+      "source_block_id_last": "lblock-004125",
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14686,
+          "end_line": 14731
+        }
+      ],
+      "max_source_lines": 46,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Routing tranche closure and reconciliation strata"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-007]"
+    },
+    {
+      "work_group_id": "wg-019-008",
+      "source_block_ids": [
+        "lblock-004127",
+        "lblock-004129",
+        "lblock-004130",
+        "lblock-004132",
+        "lblock-004133",
+        "lblock-004135",
+        "lblock-004136",
+        "lblock-004138",
+        "lblock-004139",
+        "lblock-004141",
+        "lblock-004142",
+        "lblock-004144",
+        "lblock-004145"
+      ],
+      "source_block_id_first": "lblock-004127",
+      "source_block_id_last": "lblock-004145",
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14733,
+          "end_line": 14785
+        }
+      ],
+      "max_source_lines": 53,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-008]"
+    },
+    {
+      "work_group_id": "wg-019-009",
+      "source_block_ids": [
+        "lblock-004147",
+        "lblock-004149",
+        "lblock-004150",
+        "lblock-004152",
+        "lblock-004153",
+        "lblock-004154",
+        "lblock-004156",
+        "lblock-004157",
+        "lblock-004159",
+        "lblock-004160",
+        "lblock-004162",
+        "lblock-004163",
+        "lblock-004165",
+        "lblock-004166"
+      ],
+      "source_block_id_first": "lblock-004147",
+      "source_block_id_last": "lblock-004166",
+      "source_shard_ids": [
+        "shard-0074",
+        "shard-0075"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14787,
+          "end_line": 14834
+        }
+      ],
+      "max_source_lines": 48,
+      "blocks_total": 14,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Command catalog and GUI-shell adoption points"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-009]"
+    },
+    {
+      "work_group_id": "wg-019-010",
+      "source_block_ids": [
+        "lblock-004168",
+        "lblock-004170",
+        "lblock-004171",
+        "lblock-004173",
+        "lblock-004174",
+        "lblock-004176",
+        "lblock-004177",
+        "lblock-004179",
+        "lblock-004180",
+        "lblock-004182",
+        "lblock-004183",
+        "lblock-004185",
+        "lblock-004186"
+      ],
+      "source_block_id_first": "lblock-004168",
+      "source_block_id_last": "lblock-004186",
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14836,
+          "end_line": 14892
+        }
+      ],
+      "max_source_lines": 57,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Wiring, matrix, and evidence normalization limits"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-010]"
+    },
+    {
+      "work_group_id": "wg-019-011",
+      "source_block_ids": [
+        "lblock-004188",
+        "lblock-004190",
+        "lblock-004191",
+        "lblock-004193",
+        "lblock-004194",
+        "lblock-004196",
+        "lblock-004197",
+        "lblock-004199",
+        "lblock-004200",
+        "lblock-004202",
+        "lblock-004203",
+        "lblock-004205",
+        "lblock-004206"
+      ],
+      "source_block_id_first": "lblock-004188",
+      "source_block_id_last": "lblock-004206",
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14894,
+          "end_line": 14937
+        }
+      ],
+      "max_source_lines": 44,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Spec-integrity defects in routing-adjacent docs"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-011]"
+    },
+    {
+      "work_group_id": "wg-019-012",
+      "source_block_ids": [
+        "lblock-004208",
+        "lblock-004210",
+        "lblock-004211",
+        "lblock-004213",
+        "lblock-004214",
+        "lblock-004216",
+        "lblock-004217",
+        "lblock-004219",
+        "lblock-004220",
+        "lblock-004222",
+        "lblock-004223",
+        "lblock-004225",
+        "lblock-004226"
+      ],
+      "source_block_id_first": "lblock-004208",
+      "source_block_id_last": "lblock-004226",
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14939,
+          "end_line": 14991
+        }
+      ],
+      "max_source_lines": 53,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - `resume_url` transport versus shadow-routing contract"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-012]"
+    },
+    {
+      "work_group_id": "wg-019-013",
+      "source_block_ids": [
+        "lblock-004228",
+        "lblock-004230",
+        "lblock-004231",
+        "lblock-004233",
+        "lblock-004234",
+        "lblock-004236",
+        "lblock-004237",
+        "lblock-004239",
+        "lblock-004240",
+        "lblock-004242",
+        "lblock-004243",
+        "lblock-004245",
+        "lblock-004246"
+      ],
+      "source_block_id_first": "lblock-004228",
+      "source_block_id_last": "lblock-004246",
+      "source_shard_ids": [
+        "shard-0075",
+        "shard-0076"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 14993,
+          "end_line": 15051
+        }
+      ],
+      "max_source_lines": 59,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Ref-family split: inspection refs versus navigation refs"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-013]"
+    },
+    {
+      "work_group_id": "wg-019-014",
+      "source_block_ids": [
+        "lblock-004248",
+        "lblock-004250",
+        "lblock-004251",
+        "lblock-004253",
+        "lblock-004254",
+        "lblock-004256",
+        "lblock-004257",
+        "lblock-004259",
+        "lblock-004260",
+        "lblock-004262",
+        "lblock-004263",
+        "lblock-004265",
+        "lblock-004266"
+      ],
+      "source_block_id_first": "lblock-004248",
+      "source_block_id_last": "lblock-004266",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 15053,
+          "end_line": 15107
+        }
+      ],
+      "max_source_lines": 55,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Blocked/thread/wizard storage families still straddle two execution eras"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-014]"
+    },
+    {
+      "work_group_id": "wg-019-015",
+      "source_block_ids": [
+        "lblock-004268",
+        "lblock-004270",
+        "lblock-004271",
+        "lblock-004273",
+        "lblock-004274",
+        "lblock-004276",
+        "lblock-004277",
+        "lblock-004279",
+        "lblock-004280",
+        "lblock-004282",
+        "lblock-004283",
+        "lblock-004285",
+        "lblock-004286"
+      ],
+      "source_block_id_first": "lblock-004268",
+      "source_block_id_last": "lblock-004286",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 15109,
+          "end_line": 15169
+        }
+      ],
+      "max_source_lines": 61,
+      "blocks_total": 13,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Blocked-family contracts are still uneven across node, wizard, and thread surfaces"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-015]"
+    },
+    {
+      "work_group_id": "wg-019-016",
+      "source_block_ids": [
+        "lblock-004288",
+        "lblock-004290",
+        "lblock-004291",
+        "lblock-004293",
+        "lblock-004294",
+        "lblock-004296"
+      ],
+      "source_block_id_first": "lblock-004288",
+      "source_block_id_last": "lblock-004296",
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 15171,
+          "end_line": 15200
+        }
+      ],
+      "max_source_lines": 30,
+      "blocks_total": 6,
+      "heading_context": {
+        "heading_l1": null,
+        "heading_l2": "## Research Progress - 2026-03-17 - Usage and evidence families still use tier-era correlation"
+      },
+      "grouping_rationale": "heading_section",
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json#/work_groups[wg-019-016]"
+    }
+  ],
+  "validation": {
+    "count_match": true,
+    "budgets_per_group": true,
+    "blocks_partition": true
+  },
+  "status": "complete"
+}
