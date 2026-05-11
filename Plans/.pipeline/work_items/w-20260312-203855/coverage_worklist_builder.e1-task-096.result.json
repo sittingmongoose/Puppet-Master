@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-096",
+  "subagent_invocation_id": "57beb103-955a-47bc-87e2-8e9f6a9e94e7",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-096-g001",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0058",
+      "grouping_key": "shard-0058|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-018-191",
+        "obl-018-192",
+        "obl-018-193",
+        "obl-018-194",
+        "obl-018-195",
+        "obl-018-196",
+        "obl-018-197"
+      ],
+      "obligation_record_count": 7,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-096-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0059",
+      "grouping_key": "shard-0059|doc_discovery|Plans/*.md",
+      "obligation_ids": [
+        "obl-018-213"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/*.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-096-g003",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0059",
+      "grouping_key": "shard-0059|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-018-198",
+        "obl-018-199",
+        "obl-018-200",
+        "obl-018-201",
+        "obl-018-202",
+        "obl-018-203",
+        "obl-018-204",
+        "obl-018-205",
+        "obl-018-206",
+        "obl-018-207",
+        "obl-018-208",
+        "obl-018-209",
+        "obl-018-210",
+        "obl-018-211",
+        "obl-018-212",
+        "obl-018-214",
+        "obl-018-215"
+      ],
+      "obligation_record_count": 17,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

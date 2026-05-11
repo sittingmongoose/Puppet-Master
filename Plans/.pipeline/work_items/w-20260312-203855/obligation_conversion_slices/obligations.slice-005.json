@@ -1,0 +1,3941 @@
+{
+  "schema_id": "pm.obligation_conversion_slice.v3.2.2",
+  "prompt_id": "D2",
+  "work_id": "w-20260312-203855",
+  "slice_id": "slice-005",
+  "source_group_ids_represented": [
+    "wg-003-123",
+    "wg-003-124",
+    "wg-003-125",
+    "wg-003-126",
+    "wg-003-127",
+    "wg-003-128",
+    "wg-003-129",
+    "wg-003-130",
+    "wg-003-131",
+    "wg-004-001",
+    "wg-004-002",
+    "wg-004-003",
+    "wg-004-004",
+    "wg-004-005",
+    "wg-004-006",
+    "wg-004-007",
+    "wg-004-008",
+    "wg-004-009",
+    "wg-004-010",
+    "wg-004-011",
+    "wg-004-012",
+    "wg-004-013",
+    "wg-004-014",
+    "wg-004-015",
+    "wg-004-016",
+    "wg-004-017",
+    "wg-004-018",
+    "wg-004-019",
+    "wg-004-020",
+    "wg-004-021",
+    "wg-004-022",
+    "wg-004-023",
+    "wg-004-024",
+    "wg-004-025",
+    "wg-004-026",
+    "wg-004-027",
+    "wg-004-028",
+    "wg-004-029",
+    "wg-004-030",
+    "wg-004-031",
+    "wg-004-032",
+    "wg-004-033",
+    "wg-004-034",
+    "wg-004-035",
+    "wg-004-036",
+    "wg-004-037",
+    "wg-004-038"
+  ],
+  "source_block_ids_represented": [
+    "lblock-000534",
+    "lblock-000535",
+    "lblock-000537",
+    "lblock-000538",
+    "lblock-000540",
+    "lblock-000541",
+    "lblock-000543",
+    "lblock-000544",
+    "lblock-000546",
+    "lblock-000547",
+    "lblock-000549",
+    "lblock-000550",
+    "lblock-000552",
+    "lblock-000554",
+    "lblock-000555",
+    "lblock-000557",
+    "lblock-000558",
+    "lblock-000559",
+    "lblock-000561",
+    "lblock-000562",
+    "lblock-000564",
+    "lblock-000565",
+    "lblock-000567",
+    "lblock-000568",
+    "lblock-000570",
+    "lblock-000571",
+    "lblock-000573",
+    "lblock-000574",
+    "lblock-000576",
+    "lblock-000577",
+    "lblock-000579",
+    "lblock-000580",
+    "lblock-000582",
+    "lblock-000584",
+    "lblock-000585",
+    "lblock-000587",
+    "lblock-000588",
+    "lblock-000590",
+    "lblock-000591",
+    "lblock-000593",
+    "lblock-000594",
+    "lblock-000596",
+    "lblock-000597",
+    "lblock-000599",
+    "lblock-000600",
+    "lblock-000602",
+    "lblock-000603",
+    "lblock-000605",
+    "lblock-000606",
+    "lblock-000607",
+    "lblock-000609",
+    "lblock-000610",
+    "lblock-000612",
+    "lblock-000613",
+    "lblock-000615",
+    "lblock-000616",
+    "lblock-000618",
+    "lblock-000619",
+    "lblock-000621",
+    "lblock-000623",
+    "lblock-000624",
+    "lblock-000626",
+    "lblock-000627",
+    "lblock-000629",
+    "lblock-000630",
+    "lblock-000632",
+    "lblock-000633",
+    "lblock-000635",
+    "lblock-000636",
+    "lblock-000638",
+    "lblock-000639",
+    "lblock-000641",
+    "lblock-000642",
+    "lblock-000644",
+    "lblock-000645",
+    "lblock-000647",
+    "lblock-000648",
+    "lblock-000650",
+    "lblock-000651",
+    "lblock-000653",
+    "lblock-000654",
+    "lblock-000656",
+    "lblock-000657",
+    "lblock-000659",
+    "lblock-000661",
+    "lblock-000662",
+    "lblock-000664",
+    "lblock-000665",
+    "lblock-000666",
+    "lblock-000668",
+    "lblock-000669"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0012",
+    "shard-0013",
+    "shard-0014",
+    "shard-0015"
+  ],
+  "source_line_ranges_represented": [
+    {
+      "start_line": 2320,
+      "end_line": 2829
+    }
+  ],
+  "blocks_observed": 91,
+  "blocks_converted": 45,
+  "blocks_excluded": 46,
+  "blocks_blocked": 0,
+  "obligations": [
+    {
+      "obligation_id": "obl-005-001",
+      "obligation_text": "Distinguish `page/tab filters` from `widget presentation config`.",
+      "obligation_category": "constraint",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-123"
+      ],
+      "source_block_ids": [
+        "lblock-000535"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2321,
+          "end_line": 2334
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `page/tab filters` from `widget presentation config`\n  - widget config may control presentation and local emphasis\n  - widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules\n- Example:\n  - acceptable widget config:\n    - compact vs expanded view\n    - item count\n    - sort mode\n    - whether to show ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-002",
+      "obligation_text": "Allow widget configuration to control presentation and local emphasis only; do not let it invent alternate scoping semantics that diverge from the tab's canonical projection rules.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-003-123"
+      ],
+      "source_block_ids": [
+        "lblock-000535"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2321,
+          "end_line": 2334
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `page/tab filters` from `widget presentation config`\n  - widget config may control presentation and local emphasis\n  - widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules\n- Example:\n  - acceptable widget config:\n    - compact vs expanded view\n    - item count\n    - sort mode\n    - whether to show ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-003",
+      "obligation_text": "Treat compact vs expanded view, item count, sort mode, and whether to show durations or cost as acceptable widget-local presentation options.",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-123"
+      ],
+      "source_block_ids": [
+        "lblock-000535"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2321,
+          "end_line": 2334
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `page/tab filters` from `widget presentation config`\n  - widget config may control presentation and local emphasis\n  - widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules\n- Example:\n  - acceptable widget config:\n    - compact vs expanded view\n    - item count\n    - sort mode\n    - whether to show ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-004",
+      "obligation_text": "Do not use widget-local custom object models, custom state classification rules, or widget-local definitions of blocked/completed/integration status.",
+      "obligation_category": "non_goal",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-003-123"
+      ],
+      "source_block_ids": [
+        "lblock-000535"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2321,
+          "end_line": 2334
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `page/tab filters` from `widget presentation config`\n  - widget config may control presentation and local emphasis\n  - widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules\n- Example:\n  - acceptable widget config:\n    - compact vs expanded view\n    - item count\n    - sort mode\n    - whether to show ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-005",
+      "obligation_text": "Allow many `Progress` widgets to be hostable on `Dashboard`; do not host non-Orchestrator widgets on the Orchestrator page; do not assume every Orchestrator tab becomes a portable widget.",
+      "obligation_category": "constraint",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-124"
+      ],
+      "source_block_ids": [
+        "lblock-000538"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2337,
+          "end_line": 2344
+        }
+      ],
+      "exact_source_excerpt": "- Current rewrite direction already implies a narrower hostability policy:\n  - many `Progress` widgets may also be hostable on `Dashboard`\n  - non-Orchestrator widgets should not be hostable on the Orchestrator page\n  - not every Orchestrator tab surface should become a portable widget\n- Recommendation:\n  - `Dashboard` can host a curated subset of `Progress` widgets and some `Usage` widgets\n  - `P",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-006",
+      "obligation_text": "Let `Dashboard` host a curated subset of `Progress` widgets and some `Usage` widgets; let `Progress` host orchestrator operational summary widgets; keep deep inspection surfaces as non-hostable native tabs.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-124"
+      ],
+      "source_block_ids": [
+        "lblock-000538"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2337,
+          "end_line": 2344
+        }
+      ],
+      "exact_source_excerpt": "- Current rewrite direction already implies a narrower hostability policy:\n  - many `Progress` widgets may also be hostable on `Dashboard`\n  - non-Orchestrator widgets should not be hostable on the Orchestrator page\n  - not every Orchestrator tab surface should become a portable widget\n- Recommendation:\n  - `Dashboard` can host a curated subset of `Progress` widgets and some `Usage` widgets\n  - `P",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-007",
+      "obligation_text": "Preserve layout keys `widget_layout:v1:dashboard`, `widget_layout:v1:usage`, and `widget_layout:v1:orchestrator:progress` when rewriting widget persistence.",
+      "obligation_category": "directive",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-003-125"
+      ],
+      "source_block_ids": [
+        "lblock-000541"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2347,
+          "end_line": 2363
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.\n- Likely rewrite direction:\n  - keep:\n    - `widget_layout:v1:dashboard`\n    - `widget_layout:v1:usage`\n    - `widget_layout:v1:orchestrator:progress`\n  - likely remove or deprecate:\n    - `widget_layout:v1:orchestrator:tiers`\n    - `widget_layout:v1:orchestrator:evidence`\n    - `widget_layout:v1:orchestrator:",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-008",
+      "obligation_text": "Deprecate or remove `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, and `widget_layout:v1:orchestrator:ledger` per the stated rewrite direction.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-003-125"
+      ],
+      "source_block_ids": [
+        "lblock-000541"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2347,
+          "end_line": 2363
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.\n- Likely rewrite direction:\n  - keep:\n    - `widget_layout:v1:dashboard`\n    - `widget_layout:v1:usage`\n    - `widget_layout:v1:orchestrator:progress`\n  - likely remove or deprecate:\n    - `widget_layout:v1:orchestrator:tiers`\n    - `widget_layout:v1:orchestrator:evidence`\n    - `widget_layout:v1:orchestrator:",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-009",
+      "obligation_text": "Give fixed Orchestrator tabs their own view-state persistence for filters, selection, split positions, inspector state, and last-focused object.",
+      "obligation_category": "data_shape",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-003-125"
+      ],
+      "source_block_ids": [
+        "lblock-000541"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2347,
+          "end_line": 2363
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.\n- Likely rewrite direction:\n  - keep:\n    - `widget_layout:v1:dashboard`\n    - `widget_layout:v1:usage`\n    - `widget_layout:v1:orchestrator:progress`\n  - likely remove or deprecate:\n    - `widget_layout:v1:orchestrator:tiers`\n    - `widget_layout:v1:orchestrator:evidence`\n    - `widget_layout:v1:orchestrator:",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-010",
+      "obligation_text": "Rewrite the widget catalog around current operational summary widgets rather than tier widgets.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-127"
+      ],
+      "source_block_ids": [
+        "lblock-000547"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2378,
+          "end_line": 2382
+        }
+      ],
+      "exact_source_excerpt": "- Rewrite the widget catalog around current operational summary widgets rather than tier widgets.\n- Make `Progress` the only widget-composed Orchestrator tab.\n- Move all widget data contracts off legacy tier events and onto stable projections / canonical records.\n- Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widge",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-011",
+      "obligation_text": "Make `Progress` the only widget-composed Orchestrator tab.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-127"
+      ],
+      "source_block_ids": [
+        "lblock-000547"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2378,
+          "end_line": 2382
+        }
+      ],
+      "exact_source_excerpt": "- Rewrite the widget catalog around current operational summary widgets rather than tier widgets.\n- Make `Progress` the only widget-composed Orchestrator tab.\n- Move all widget data contracts off legacy tier events and onto stable projections / canonical records.\n- Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widge",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-012",
+      "obligation_text": "Move widget data contracts off legacy tier events onto stable projections and canonical records.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-003-127"
+      ],
+      "source_block_ids": [
+        "lblock-000547"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2378,
+          "end_line": 2382
+        }
+      ],
+      "exact_source_excerpt": "- Rewrite the widget catalog around current operational summary widgets rather than tier widgets.\n- Make `Progress` the only widget-composed Orchestrator tab.\n- Move all widget data contracts off legacy tier events and onto stable projections / canonical records.\n- Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widge",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-013",
+      "obligation_text": "Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widget canvases.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-127"
+      ],
+      "source_block_ids": [
+        "lblock-000547"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2378,
+          "end_line": 2382
+        }
+      ],
+      "exact_source_excerpt": "- Rewrite the widget catalog around current operational summary widgets rather than tier widgets.\n- Make `Progress` the only widget-composed Orchestrator tab.\n- Move all widget data contracts off legacy tier events and onto stable projections / canonical records.\n- Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widge",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-014",
+      "obligation_text": "Ensure page-native semantics win over widget-local semantics.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-003-127"
+      ],
+      "source_block_ids": [
+        "lblock-000547"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2378,
+          "end_line": 2382
+        }
+      ],
+      "exact_source_excerpt": "- Rewrite the widget catalog around current operational summary widgets rather than tier widgets.\n- Make `Progress` the only widget-composed Orchestrator tab.\n- Move all widget data contracts off legacy tier events and onto stable projections / canonical records.\n- Add explicit hostability rules so `Dashboard` and `Progress` can share summary widgets without turning deep inspection tabs into widge",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-015",
+      "obligation_text": "Keep widget usage focused on wider surfaces such as `Dashboard` and `Orchestrator / Progress` rather than as a universal composition strategy (e.g., narrow Source Control panel).",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-128"
+      ],
+      "source_block_ids": [
+        "lblock-000550"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2385,
+          "end_line": 2387
+        }
+      ],
+      "exact_source_excerpt": "- Source Control being a narrow panel reinforces the need to keep widget usage focused on wider surfaces like `Dashboard` and `Orchestrator / Progress`, not as a universal composition strategy everywhere.\n- `Node Graph` remains a fixed native surface with right-side inspector, not a widget.\n- `History` vs `Ledger` separation should not be undermined by making both \"just widget pages.\"\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-016",
+      "obligation_text": "Keep `Node Graph` a fixed native surface with right-side inspector; do not make it a widget.",
+      "obligation_category": "constraint",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-003-128"
+      ],
+      "source_block_ids": [
+        "lblock-000550"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2385,
+          "end_line": 2387
+        }
+      ],
+      "exact_source_excerpt": "- Source Control being a narrow panel reinforces the need to keep widget usage focused on wider surfaces like `Dashboard` and `Orchestrator / Progress`, not as a universal composition strategy everywhere.\n- `Node Graph` remains a fixed native surface with right-side inspector, not a widget.\n- `History` vs `Ledger` separation should not be undermined by making both \"just widget pages.\"\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-017",
+      "obligation_text": "Preserve the separation between `History` and `Ledger` without collapsing both into generic widget pages.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-003-128"
+      ],
+      "source_block_ids": [
+        "lblock-000550"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2385,
+          "end_line": 2387
+        }
+      ],
+      "exact_source_excerpt": "- Source Control being a narrow panel reinforces the need to keep widget usage focused on wider surfaces like `Dashboard` and `Orchestrator / Progress`, not as a universal composition strategy everywhere.\n- `Node Graph` remains a fixed native surface with right-side inspector, not a widget.\n- `History` vs `Ledger` separation should not be undermined by making both \"just widget pages.\"\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-018",
+      "obligation_text": "Treat `seglog` as canonical in the storage posture for projection freshness work.",
+      "obligation_category": "fact_observation",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-003-131"
+      ],
+      "source_block_ids": [
+        "lblock-000558"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2399,
+          "end_line": 2400
+        }
+      ],
+      "exact_source_excerpt": "- The storage model already establishes the right underlying posture:\n  - `seglog` is canonical\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-019",
+      "obligation_text": "Treat redb/Tantivy/JSONL as disposable projections; target replay/rebuild to a deterministic `target_seq`.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-001"
+      ],
+      "source_block_ids": [
+        "lblock-000559"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2401,
+          "end_line": 2412
+        }
+      ],
+      "exact_source_excerpt": "  - redb/Tantivy/JSONL are disposable projections\n  - replay/rebuild targets a deterministic `target_seq`\n  - UI freshness notifications should derive from committed projection state, not ad-hoc polling\n- Usage already names the user-trust problem clearly:\n  - stale values surprise users\n  - trust drops when the UI presents old numbers as if they are current\n  - current mitigation pattern is `Last",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-020",
+      "obligation_text": "Derive UI freshness notifications from committed projection state, not ad-hoc polling.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-001"
+      ],
+      "source_block_ids": [
+        "lblock-000559"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2401,
+          "end_line": 2412
+        }
+      ],
+      "exact_source_excerpt": "  - redb/Tantivy/JSONL are disposable projections\n  - replay/rebuild targets a deterministic `target_seq`\n  - UI freshness notifications should derive from committed projection state, not ad-hoc polling\n- Usage already names the user-trust problem clearly:\n  - stale values surprise users\n  - trust drops when the UI presents old numbers as if they are current\n  - current mitigation pattern is `Last",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-021",
+      "obligation_text": "Mitigate stale Usage values with `Last updated` plus explicit `Refresh`; do not present old numbers as current without signaling staleness.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-001"
+      ],
+      "source_block_ids": [
+        "lblock-000559"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2401,
+          "end_line": 2412
+        }
+      ],
+      "exact_source_excerpt": "  - redb/Tantivy/JSONL are disposable projections\n  - replay/rebuild targets a deterministic `target_seq`\n  - UI freshness notifications should derive from committed projection state, not ad-hoc polling\n- Usage already names the user-trust problem clearly:\n  - stale values surprise users\n  - trust drops when the UI presents old numbers as if they are current\n  - current mitigation pattern is `Last",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-022",
+      "obligation_text": "Keep event/projection streams as the correctness source; do not imply hidden fallback or hidden retry behavior; bind blocked/recovery actions to canonical projections/records per FinalGUISpec-compatible rules.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-004-001"
+      ],
+      "source_block_ids": [
+        "lblock-000559"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2401,
+          "end_line": 2412
+        }
+      ],
+      "exact_source_excerpt": "  - redb/Tantivy/JSONL are disposable projections\n  - replay/rebuild targets a deterministic `target_seq`\n  - UI freshness notifications should derive from committed projection state, not ad-hoc polling\n- Usage already names the user-trust problem clearly:\n  - stale values surprise users\n  - trust drops when the UI presents old numbers as if they are current\n  - current mitigation pattern is `Last",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-023",
+      "obligation_text": "Define an explicit shared trust policy for all projection-backed surfaces, especially Orchestrator tabs (still missing per source).",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-001"
+      ],
+      "source_block_ids": [
+        "lblock-000559"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2401,
+          "end_line": 2412
+        }
+      ],
+      "exact_source_excerpt": "  - redb/Tantivy/JSONL are disposable projections\n  - replay/rebuild targets a deterministic `target_seq`\n  - UI freshness notifications should derive from committed projection state, not ad-hoc polling\n- Usage already names the user-trust problem clearly:\n  - stale values surprise users\n  - trust drops when the UI presents old numbers as if they are current\n  - current mitigation pattern is `Last",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Source states gap; required_action on obligation is open_decision."
+    },
+    {
+      "obligation_id": "obl-005-024",
+      "obligation_text": "Use projection trust states `current`, `refreshing`, `stale`, `degraded`, and `unavailable` with the working interpretations given in the source block.",
+      "obligation_category": "enum_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-002"
+      ],
+      "source_block_ids": [
+        "lblock-000562"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2415,
+          "end_line": 2426
+        }
+      ],
+      "exact_source_excerpt": "- Recommended projection trust states:\n  - `current`\n  - `refreshing`\n  - `stale`\n  - `degraded`\n  - `unavailable`\n- Working interpretation:\n  - `current`: projection is caught up enough for normal use\n  - `refreshing`: old committed projection still visible while refresh/rebuild runs\n  - `stale`: projection is usable for context but may not reflect current runtime truth\n  - `degraded`: projector/",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-025",
+      "obligation_text": "Allow read-only navigation on `stale` and some `degraded` projections when the UI states trust clearly; tighten live mutating and decision-bearing actions based on trust state.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-003"
+      ],
+      "source_block_ids": [
+        "lblock-000565"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2429,
+          "end_line": 2439
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - read-only navigation may continue on `stale` and some `degraded` projections if the UI says so clearly\n  - live mutating / decision-bearing actions must tighten on trust state\n- Suggested policy:\n  - `current`: all normal actions allowed\n  - `refreshing`: allow normal read actions; mutating actions may continue if backed by runtime truth rather than stale page cache\n  ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-026",
+      "obligation_text": "Follow the suggested per-state action policy for `current`, `refreshing`, `stale`, `degraded`, and `unavailable` as described in the source.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-003"
+      ],
+      "source_block_ids": [
+        "lblock-000565"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2429,
+          "end_line": 2439
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - read-only navigation may continue on `stale` and some `degraded` projections if the UI says so clearly\n  - live mutating / decision-bearing actions must tighten on trust state\n- Suggested policy:\n  - `current`: all normal actions allowed\n  - `refreshing`: allow normal read actions; mutating actions may continue if backed by runtime truth rather than stale page cache\n  ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-027",
+      "obligation_text": "Never let page state silently stand in for runtime state when freshness or trust is insufficient.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-003"
+      ],
+      "source_block_ids": [
+        "lblock-000565"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2429,
+          "end_line": 2439
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - read-only navigation may continue on `stale` and some `degraded` projections if the UI says so clearly\n  - live mutating / decision-bearing actions must tighten on trust state\n- Suggested policy:\n  - `current`: all normal actions allowed\n  - `refreshing`: allow normal read actions; mutating actions may continue if backed by runtime truth rather than stale page cache\n  ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-028",
+      "obligation_text": "Prefer native projection-backed surfaces when trust is `current`; when trust drops, keep the surface open and show trust badge, last-updated time, degraded reason, and refresh/recover actions.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-004"
+      ],
+      "source_block_ids": [
+        "lblock-000568"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2442,
+          "end_line": 2456
+        }
+      ],
+      "exact_source_excerpt": "- Recommended fallback hierarchy:\n  - prefer native projection-backed surface when trust is `current`\n  - if trust drops, keep the surface open but show:\n    - trust badge\n    - last-updated time\n    - degraded reason\n    - refresh / recover action\n  - when necessary, fall back to canonical record-backed views:\n    - `History`\n    - `Ledger`\n    - direct evidence/record inspectors\n- This fits the ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-029",
+      "obligation_text": "Fall back to canonical record-backed views (`History`, `Ledger`, direct evidence/record inspectors) when necessary while preserving auditability.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-004"
+      ],
+      "source_block_ids": [
+        "lblock-000568"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2442,
+          "end_line": 2456
+        }
+      ],
+      "exact_source_excerpt": "- Recommended fallback hierarchy:\n  - prefer native projection-backed surface when trust is `current`\n  - if trust drops, keep the surface open but show:\n    - trust badge\n    - last-updated time\n    - degraded reason\n    - refresh / recover action\n  - when necessary, fall back to canonical record-backed views:\n    - `History`\n    - `Ledger`\n    - direct evidence/record inspectors\n- This fits the ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-030",
+      "obligation_text": "Expose trust state, last updated time, degraded/stale reason when not current, and whether actions are partially gated on every projection-backed operational surface.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-005"
+      ],
+      "source_block_ids": [
+        "lblock-000571"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2459,
+          "end_line": 2469
+        }
+      ],
+      "exact_source_excerpt": "- Every projection-backed operational surface should expose at least:\n  - trust state\n  - last updated time\n  - degraded/stale reason when not current\n  - whether actions are partially gated\n- Likely good surface behavior:\n  - `Progress`: show run-level trust banner or chip when projections are stale/degraded\n  - `Seams`: allow browsing, but gate actions that depend on current promotion/blocker tr",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-031",
+      "obligation_text": "Apply tab-specific behaviors for `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` as described for stale/degraded trust and action gating.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-005"
+      ],
+      "source_block_ids": [
+        "lblock-000571"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2459,
+          "end_line": 2469
+        }
+      ],
+      "exact_source_excerpt": "- Every projection-backed operational surface should expose at least:\n  - trust state\n  - last updated time\n  - degraded/stale reason when not current\n  - whether actions are partially gated\n- Likely good surface behavior:\n  - `Progress`: show run-level trust banner or chip when projections are stale/degraded\n  - `Seams`: allow browsing, but gate actions that depend on current promotion/blocker tr",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-032",
+      "obligation_text": "Add a shared projection health/trust contract used by Orchestrator, Usage, Source Control, and other projection-backed surfaces.",
+      "obligation_category": "schema_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-007"
+      ],
+      "source_block_ids": [
+        "lblock-000577"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2477,
+          "end_line": 2487
+        }
+      ],
+      "exact_source_excerpt": "- Add a shared projection health/trust contract used by:\n  - Orchestrator\n  - Usage\n  - Source Control\n  - other projection-backed surfaces\n- Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.\n- Define which commands require:\n  - current projection\n  - direct runtime confirmation\n  - or are safe from stale views because they operate on durable records only\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-033",
+      "obligation_text": "Make trust state and last updated first-class UI fields on projection-backed surfaces.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-007"
+      ],
+      "source_block_ids": [
+        "lblock-000577"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2477,
+          "end_line": 2487
+        }
+      ],
+      "exact_source_excerpt": "- Add a shared projection health/trust contract used by:\n  - Orchestrator\n  - Usage\n  - Source Control\n  - other projection-backed surfaces\n- Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.\n- Define which commands require:\n  - current projection\n  - direct runtime confirmation\n  - or are safe from stale views because they operate on durable records only\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-034",
+      "obligation_text": "Define which commands require current projection, direct runtime confirmation, or are safe from stale views because they operate on durable records only.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-007"
+      ],
+      "source_block_ids": [
+        "lblock-000577"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2477,
+          "end_line": 2487
+        }
+      ],
+      "exact_source_excerpt": "- Add a shared projection health/trust contract used by:\n  - Orchestrator\n  - Usage\n  - Source Control\n  - other projection-backed surfaces\n- Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.\n- Define which commands require:\n  - current projection\n  - direct runtime confirmation\n  - or are safe from stale views because they operate on durable records only\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-035",
+      "obligation_text": "Define explicit record-backed fallback behavior when projections are stale, degraded, or unavailable.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-007"
+      ],
+      "source_block_ids": [
+        "lblock-000577"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2477,
+          "end_line": 2487
+        }
+      ],
+      "exact_source_excerpt": "- Add a shared projection health/trust contract used by:\n  - Orchestrator\n  - Usage\n  - Source Control\n  - other projection-backed surfaces\n- Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces.\n- Define which commands require:\n  - current projection\n  - direct runtime confirmation\n  - or are safe from stale views because they operate on durable records only\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-036",
+      "obligation_text": "Keep showing the last committed projection while `refreshing` instead of blanking the page.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-008"
+      ],
+      "source_block_ids": [
+        "lblock-000580"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2490,
+          "end_line": 2492
+        }
+      ],
+      "exact_source_excerpt": "- `refreshing` should continue showing the last committed projection rather than blanking the page.\n- stale/degraded trust must be visible without making the UI feel broken or unusable.\n- the system should never quietly present stale operational truth as if it were live truth.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-037",
+      "obligation_text": "Make stale/degraded trust visible without making the UI feel broken or unusable.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-008"
+      ],
+      "source_block_ids": [
+        "lblock-000580"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2490,
+          "end_line": 2492
+        }
+      ],
+      "exact_source_excerpt": "- `refreshing` should continue showing the last committed projection rather than blanking the page.\n- stale/degraded trust must be visible without making the UI feel broken or unusable.\n- the system should never quietly present stale operational truth as if it were live truth.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-038",
+      "obligation_text": "Never quietly present stale operational truth as if it were live truth.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-008"
+      ],
+      "source_block_ids": [
+        "lblock-000580"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2490,
+          "end_line": 2492
+        }
+      ],
+      "exact_source_excerpt": "- `refreshing` should continue showing the last committed projection rather than blanking the page.\n- stale/degraded trust must be visible without making the UI feel broken or unusable.\n- the system should never quietly present stale operational truth as if it were live truth.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-039",
+      "obligation_text": "Document the mode contract for the whole Orchestrator page after a historical run is selected (gap: not yet clear per source).",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-011"
+      ],
+      "source_block_ids": [
+        "lblock-000588"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2504,
+          "end_line": 2519
+        }
+      ],
+      "exact_source_excerpt": "- Current docs already imply that Orchestrator can focus either:\n  - an active run\n  - or a selected historical run\n- Existing wording is not enough yet:\n  - `Orchestrator_Page.md` says the graph renders when a run is active or a historical run is selected\n  - `History` rows can load a historical run into the graph/evidence\n  - `Ledger` filters to the current/selected run\n  - but there is no clear",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-040",
+      "obligation_text": "Add an `orchestrator.project_state.{project_id}` (or equivalent) carrying focused/selected run state because storage-plan coverage is incomplete for this seam per source.",
+      "obligation_category": "data_shape",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-011"
+      ],
+      "source_block_ids": [
+        "lblock-000588"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2504,
+          "end_line": 2519
+        }
+      ],
+      "exact_source_excerpt": "- Current docs already imply that Orchestrator can focus either:\n  - an active run\n  - or a selected historical run\n- Existing wording is not enough yet:\n  - `Orchestrator_Page.md` says the graph renders when a run is active or a historical run is selected\n  - `History` rows can load a historical run into the graph/evidence\n  - `Ledger` filters to the current/selected run\n  - but there is no clear",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-041",
+      "obligation_text": "Clarify how active background runs interact with a currently focused historical run in Orchestrator semantics.",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-011"
+      ],
+      "source_block_ids": [
+        "lblock-000588"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2504,
+          "end_line": 2519
+        }
+      ],
+      "exact_source_excerpt": "- Current docs already imply that Orchestrator can focus either:\n  - an active run\n  - or a selected historical run\n- Existing wording is not enough yet:\n  - `Orchestrator_Page.md` says the graph renders when a run is active or a historical run is selected\n  - `History` rows can load a historical run into the graph/evidence\n  - `Ledger` filters to the current/selected run\n  - but there is no clear",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-042",
+      "obligation_text": "Distinguish `active run truth` from `focused run context` using conceptual fields `active_run_id?`, `focused_run_id?`, and `focus_mode = live | historical` as proposed.",
+      "obligation_category": "data_shape",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-012"
+      ],
+      "source_block_ids": [
+        "lblock-000591"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2522,
+          "end_line": 2534
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `active run truth` from `focused run context`\n- Proposed fields conceptually:\n  - `active_run_id?`\n  - `focused_run_id?`\n  - `focus_mode = live | historical`\n- Working interpretation:\n  - `active_run_id` = currently running/paused/interrupted run for the project, if any\n  - `focused_run_id` = the run whose data the Orchestrator tabs are currently showing\n  ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-043",
+      "obligation_text": "Define `active_run_id` as the running/paused/interrupted run if any; define `focused_run_id` as the run whose data Orchestrator tabs show; set `focus_mode = live` when focused equals active, and `historical` when inspecting a non-active run.",
+      "obligation_category": "enum_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-012"
+      ],
+      "source_block_ids": [
+        "lblock-000591"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2522,
+          "end_line": 2534
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `active run truth` from `focused run context`\n- Proposed fields conceptually:\n  - `active_run_id?`\n  - `focused_run_id?`\n  - `focus_mode = live | historical`\n- Working interpretation:\n  - `active_run_id` = currently running/paused/interrupted run for the project, if any\n  - `focused_run_id` = the run whose data the Orchestrator tabs are currently showing\n  ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-044",
+      "obligation_text": "In `Historical Run Mode`, show the focused historical `run_id` on all tabs, show a persistent banner that data is historical, remove or disable controls that only apply to the active run, and route actions against the focused run only when historical-safe.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-013"
+      ],
+      "source_block_ids": [
+        "lblock-000594"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2537,
+          "end_line": 2555
+        }
+      ],
+      "exact_source_excerpt": "- Recommended explicit mode:\n  - `Historical Run Mode`\n- Required behavior:\n  - all tabs clearly show the focused historical `run_id`\n  - the page displays a persistent banner/chip that the user is viewing historical data\n  - controls that only make sense for the active run are disabled or removed\n  - actions route against the focused run only when they are historical-safe\n- Historical-safe action",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-045",
+      "obligation_text": "Treat inspect graph, inspect evidence, inspect ledger, export, view lineage, and related historical context opens as historical-safe; disable pause/resume/cancel, live retry/remediation, approvals requiring current runtime, and commands implying mutating live run context.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-013"
+      ],
+      "source_block_ids": [
+        "lblock-000594"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2537,
+          "end_line": 2555
+        }
+      ],
+      "exact_source_excerpt": "- Recommended explicit mode:\n  - `Historical Run Mode`\n- Required behavior:\n  - all tabs clearly show the focused historical `run_id`\n  - the page displays a persistent banner/chip that the user is viewing historical data\n  - controls that only make sense for the active run are disabled or removed\n  - actions route against the focused run only when they are historical-safe\n- Historical-safe action",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-046",
+      "obligation_text": "When focused on the live run, keep live cards/widgets active and CTAs operating on current runtime truth; let background and live state update focused tabs directly.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-014"
+      ],
+      "source_block_ids": [
+        "lblock-000597"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2558,
+          "end_line": 2568
+        }
+      ],
+      "exact_source_excerpt": "- When focused on the live run:\n  - live cards/widgets are active\n  - CTAs operate on current runtime truth\n  - background events and live state changes update the focused tabs directly\n- If a new run becomes active while the user is viewing history:\n  - do not forcibly yank focus away from the historical run\n  - instead show a clear notice such as:\n    - active run exists\n    - switch to live run",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-047",
+      "obligation_text": "If a new run becomes active while the user views history, do not forcibly yank focus; show a clear notice with active-run existence, switch-to-live option, and background run status/count.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-014"
+      ],
+      "source_block_ids": [
+        "lblock-000597"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2558,
+          "end_line": 2568
+        }
+      ],
+      "exact_source_excerpt": "- When focused on the live run:\n  - live cards/widgets are active\n  - CTAs operate on current runtime truth\n  - background events and live state changes update the focused tabs directly\n- If a new run becomes active while the user is viewing history:\n  - do not forcibly yank focus away from the historical run\n  - instead show a clear notice such as:\n    - active run exists\n    - switch to live run",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-048",
+      "obligation_text": "Treat background run presence as global project state and focused run as local Orchestrator viewing state; surface background activity without silently replacing focused historical context.",
+      "obligation_category": "architecture_note",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-015"
+      ],
+      "source_block_ids": [
+        "lblock-000600"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2571,
+          "end_line": 2579
+        }
+      ],
+      "exact_source_excerpt": "- Recommended rule:\n  - background run presence is global project state\n  - focused run is local Orchestrator viewing state\n- Implication:\n  - a user may be viewing one historical run while another run is actively progressing in the background\n  - Orchestrator should surface that without silently replacing the focused context\n- Good model:\n  - background/live-run strip or compact banner remains vi",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-049",
+      "obligation_text": "Keep a background/live-run strip or compact banner visible even in historical mode; let the user explicitly switch focus to the active run.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-015"
+      ],
+      "source_block_ids": [
+        "lblock-000600"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2571,
+          "end_line": 2579
+        }
+      ],
+      "exact_source_excerpt": "- Recommended rule:\n  - background run presence is global project state\n  - focused run is local Orchestrator viewing state\n- Implication:\n  - a user may be viewing one historical run while another run is actively progressing in the background\n  - Orchestrator should surface that without silently replacing the focused context\n- Good model:\n  - background/live-run strip or compact banner remains vi",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-050",
+      "obligation_text": "Introduce `orchestrator.project_state.{project_id}` with candidate fields `focused_run_id?`, `focus_mode`, `last_live_run_id?`, `selected_tab`, per-tab view state refs, and optionally `auto_return_to_live = false` by default.",
+      "obligation_category": "schema_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-016"
+      ],
+      "source_block_ids": [
+        "lblock-000603"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2582,
+          "end_line": 2595
+        }
+      ],
+      "exact_source_excerpt": "- Likely missing project-state record:\n  - `orchestrator.project_state.{project_id}`\n- Candidate fields:\n  - `focused_run_id?`\n  - `focus_mode`\n  - `last_live_run_id?`\n  - `selected_tab`\n  - per-tab view state refs\n  - maybe `auto_return_to_live = false` by default\n- Working recommendation:\n  - persist the last focused run per project\n  - on restart/project reopen:\n    - if that run still exists a",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-051",
+      "obligation_text": "Persist the last focused run per project; on restart, restore historical focus when that run still exists; when an active run also exists, show a clear live-run notice instead of overriding focus silently.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-016"
+      ],
+      "source_block_ids": [
+        "lblock-000603"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2582,
+          "end_line": 2595
+        }
+      ],
+      "exact_source_excerpt": "- Likely missing project-state record:\n  - `orchestrator.project_state.{project_id}`\n- Candidate fields:\n  - `focused_run_id?`\n  - `focus_mode`\n  - `last_live_run_id?`\n  - `selected_tab`\n  - per-tab view state refs\n  - maybe `auto_return_to_live = false` by default\n- Working recommendation:\n  - persist the last focused run per project\n  - on restart/project reopen:\n    - if that run still exists a",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-052",
+      "obligation_text": "Share one focused `run_id` across all Orchestrator tabs.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-017"
+      ],
+      "source_block_ids": [
+        "lblock-000606"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2598,
+          "end_line": 2600
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - all Orchestrator tabs share the same focused `run_id`\n- Implications:\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-053",
+      "obligation_text": "When `History` selection changes, update the whole page's focused run; pivot `Node Graph`, `Evidence`, and `Ledger` to the same `run_id`; in historical mode, make `Progress` a historical summary or reduced/locked state with switch-back-to-live CTA instead of pretending to be a live dashboard.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-017"
+      ],
+      "source_block_ids": [
+        "lblock-000607"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2601,
+          "end_line": 2605
+        }
+      ],
+      "exact_source_excerpt": "  - `History` selection changes the whole page's focused run\n  - `Node Graph`, `Evidence`, and `Ledger` all pivot to the same `run_id`\n  - `Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA\n- This is important:\n  - otherwise each tab can drift into a different ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-054",
+      "obligation_text": "Prevent each tab from drifting to a different run context.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-017"
+      ],
+      "source_block_ids": [
+        "lblock-000607"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2601,
+          "end_line": 2605
+        }
+      ],
+      "exact_source_excerpt": "  - `History` selection changes the whole page's focused run\n  - `Node Graph`, `Evidence`, and `Ledger` all pivot to the same `run_id`\n  - `Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA\n- This is important:\n  - otherwise each tab can drift into a different ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-055",
+      "obligation_text": "Define an explicit `Progress` behavior contract when the focused run is historical: use historical-summary rendering or disabled/live-unavailable states with explanation for live-only widgets.",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-018"
+      ],
+      "source_block_ids": [
+        "lblock-000610"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2608,
+          "end_line": 2615
+        }
+      ],
+      "exact_source_excerpt": "- Current `Progress` tab language is heavily live-run oriented.\n- If Orchestrator shares one focused run across all tabs, then `Progress` needs an explicit historical behavior.\n- Likely good direction:\n  - in historical mode, `Progress` becomes a historical run summary surface\n  - live-only widgets either:\n    - switch to historical-summary rendering\n    - or show disabled/live-unavailable state w",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-056",
+      "obligation_text": "Add explicit `active_run_id` vs `focused_run_id` semantics and a first-class `Historical Run Mode` UI contract for Orchestrator.",
+      "obligation_category": "stage_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-020"
+      ],
+      "source_block_ids": [
+        "lblock-000616"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2625,
+          "end_line": 2632
+        }
+      ],
+      "exact_source_excerpt": "- Add explicit `active_run_id` vs `focused_run_id` semantics.\n- Add a first-class `Historical Run Mode` UI contract for Orchestrator.\n- Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.\n- Define which commands are:\n  - live-run only\n  - historical-safe\n  - record-only/export-only\n- Define how `Progress` behaves when the focused run is historical.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-057",
+      "obligation_text": "Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.",
+      "obligation_category": "schema_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-020"
+      ],
+      "source_block_ids": [
+        "lblock-000616"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2625,
+          "end_line": 2632
+        }
+      ],
+      "exact_source_excerpt": "- Add explicit `active_run_id` vs `focused_run_id` semantics.\n- Add a first-class `Historical Run Mode` UI contract for Orchestrator.\n- Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.\n- Define which commands are:\n  - live-run only\n  - historical-safe\n  - record-only/export-only\n- Define how `Progress` behaves when the focused run is historical.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-058",
+      "obligation_text": "Define which commands are live-run only, historical-safe, or record-only/export-only.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-020"
+      ],
+      "source_block_ids": [
+        "lblock-000616"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2625,
+          "end_line": 2632
+        }
+      ],
+      "exact_source_excerpt": "- Add explicit `active_run_id` vs `focused_run_id` semantics.\n- Add a first-class `Historical Run Mode` UI contract for Orchestrator.\n- Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.\n- Define which commands are:\n  - live-run only\n  - historical-safe\n  - record-only/export-only\n- Define how `Progress` behaves when the focused run is historical.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-059",
+      "obligation_text": "Define how `Progress` behaves when the focused run is historical.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-020"
+      ],
+      "source_block_ids": [
+        "lblock-000616"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2625,
+          "end_line": 2632
+        }
+      ],
+      "exact_source_excerpt": "- Add explicit `active_run_id` vs `focused_run_id` semantics.\n- Add a first-class `Historical Run Mode` UI contract for Orchestrator.\n- Add `orchestrator.project_state.{project_id}` with focused run and per-tab state.\n- Define which commands are:\n  - live-run only\n  - historical-safe\n  - record-only/export-only\n- Define how `Progress` behaves when the focused run is historical.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-060",
+      "obligation_text": "Do not auto-switch focus away from a historical run when live activity appears; always show whether the user views the active or a historical run.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-021"
+      ],
+      "source_block_ids": [
+        "lblock-000619"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2635,
+          "end_line": 2637
+        }
+      ],
+      "exact_source_excerpt": "- The page must not auto-switch focus away from a historical run just because live activity appears.\n- The user should always know whether they are looking at the active run or a historical run.\n- Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-061",
+      "obligation_text": "Preserve focused `run_id` across cross-tab deep links so History → Graph → Evidence → Ledger stays coherent.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-021"
+      ],
+      "source_block_ids": [
+        "lblock-000619"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2635,
+          "end_line": 2637
+        }
+      ],
+      "exact_source_excerpt": "- The page must not auto-switch focus away from a historical run just because live activity appears.\n- The user should always know whether they are looking at the active run or a historical run.\n- Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-062",
+      "obligation_text": "Recognize that cross-surface navigation exists in fragments today; design a unified Orchestrator search contract that is object-first rather than page-first.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-024"
+      ],
+      "source_block_ids": [
+        "lblock-000627"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2649,
+          "end_line": 2663
+        }
+      ],
+      "exact_source_excerpt": "- Existing docs mostly define local/tab-specific search and filtering:\n  - Run Graph has node search/filter\n  - Evidence has local search/filter\n  - Ledger has local filter/sort\n  - History is currently a list/table view\n- Cross-surface navigation exists in fragments:\n  - graph detail can open Evidence\n  - graph can open Usage\n  - History rows can open Graph/Evidence\n  - Ledger can open Usage\n- St",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-063",
+      "obligation_text": "Leverage seglog as canonical and Tantivy as the intended full-text/search layer with project-scoped indices per storage model.",
+      "obligation_category": "fact_observation",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-004-024"
+      ],
+      "source_block_ids": [
+        "lblock-000627"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2649,
+          "end_line": 2663
+        }
+      ],
+      "exact_source_excerpt": "- Existing docs mostly define local/tab-specific search and filtering:\n  - Run Graph has node search/filter\n  - Evidence has local search/filter\n  - Ledger has local filter/sort\n  - History is currently a list/table view\n- Cross-surface navigation exists in fragments:\n  - graph detail can open Evidence\n  - graph can open Usage\n  - History rows can open Graph/Evidence\n  - Ledger can open Usage\n- St",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-064",
+      "obligation_text": "Distinguish global object search from tab-local filtering; define `Orchestrator search` as object-first, run-aware, cross-tab routing and tab-local search as narrowing within the active tab.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-025"
+      ],
+      "source_block_ids": [
+        "lblock-000630"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2666,
+          "end_line": 2685
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `global object search` from `tab-local filtering`\n- Proposed split:\n  - `Orchestrator search`\n    - object-first, run-aware, cross-tab routing\n  - `tab-local search`\n    - local narrowing/filtering within the active tab/view\n- Object-first search targets should include at minimum:\n  - run\n  - seam\n  - package\n  - node\n  - lane / worktree\n  - concern\n  - pro",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-065",
+      "obligation_text": "Include at minimum runs, seams, packages, nodes, lanes/worktrees, concerns, promotions, reviews, corroborations, graph patches, recovery/safe-point objects, and addressable evidence/artifacts as object-first search targets.",
+      "obligation_category": "enum_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-025"
+      ],
+      "source_block_ids": [
+        "lblock-000630"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2666,
+          "end_line": 2685
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - distinguish `global object search` from `tab-local filtering`\n- Proposed split:\n  - `Orchestrator search`\n    - object-first, run-aware, cross-tab routing\n  - `tab-local search`\n    - local narrowing/filtering within the active tab/view\n- Object-first search targets should include at minimum:\n  - run\n  - seam\n  - package\n  - node\n  - lane / worktree\n  - concern\n  - pro",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-066",
+      "obligation_text": "Attach a canonical route target to each search result: `focused_run_id`, destination tab, selected object id, optional filter payload, optional inspector/detail target—do not only highlight text.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-026"
+      ],
+      "source_block_ids": [
+        "lblock-000633"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2688,
+          "end_line": 2700
+        }
+      ],
+      "exact_source_excerpt": "- Search results should not merely highlight text.\n- Each result should carry a canonical route target:\n  - `focused_run_id`\n  - destination tab\n  - selected object id\n  - optional filter payload\n  - optional inspector/detail target\n- Examples:\n  - seam/package -> `Seams` tab with correct hierarchy expanded\n  - node -> `Node Graph` with node selected and inspector open\n  - evidence/artifact -> `Ev",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-067",
+      "obligation_text": "Make Orchestrator search run-aware: default scope to current focused run; allow widening to project-wide; when a result belongs to another run, switch focused run explicitly and disclose the change—never silently.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-027"
+      ],
+      "source_block_ids": [
+        "lblock-000636"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2703,
+          "end_line": 2711
+        }
+      ],
+      "exact_source_excerpt": "- Orchestrator search must be run-aware.\n- Recommended behavior:\n  - default scope = current focused run for quick local relevance\n  - user can widen to project-wide / all runs within the project\n  - when a result belongs to another run, selecting it should explicitly switch the focused run\n  - the UI should disclose that the focused run changed because of the search result\n- This pairs directly w",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-068",
+      "obligation_text": "Expose `Search in this tab` for local filter/text match and `Search Orchestrator` for object-first cross-tab route-aware search.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-028"
+      ],
+      "source_block_ids": [
+        "lblock-000639"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2714,
+          "end_line": 2723
+        }
+      ],
+      "exact_source_excerpt": "- Recommended user model:\n  - `Search in this tab`\n    - local filter / text match / list narrowing\n  - `Search Orchestrator`\n    - object-first, cross-tab, route-aware\n- Good fit:\n  - tab-local search stays embedded in tabs like Graph/Evidence/Ledger\n  - Orchestrator search can be:\n    - a page-level search box\n    - and/or command-palette integrated\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-069",
+      "obligation_text": "Expose Orchestrator object results through the global command palette per `FinalGUISpec.md`, routing object selections through the same deep-link contract as Orchestrator search.",
+      "obligation_category": "command_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-029"
+      ],
+      "source_block_ids": [
+        "lblock-000642"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2726,
+          "end_line": 2730
+        }
+      ],
+      "exact_source_excerpt": "- `FinalGUISpec.md` already defines a global command palette.\n- Recommended contract:\n  - command palette can expose Orchestrator object results, not just commands/pages\n  - selecting an object result should route through the same deep-link contract as Orchestrator search\n- This avoids building two incompatible navigation systems.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-070",
+      "obligation_text": "Prefer stable object identity matches first and text/full-text results after for ids, canonical names/titles, and long textual payloads.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-030"
+      ],
+      "source_block_ids": [
+        "lblock-000645"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2733,
+          "end_line": 2742
+        }
+      ],
+      "exact_source_excerpt": "- Likely backend split:\n  - exact structured object lookup from redb projections / record indices\n  - text search from Tantivy where summaries/descriptions/content matter\n- Good rule:\n  - search should prefer stable object identity matches first\n  - text/full-text results come after exact object hits\n- This matters for:\n  - object ids\n  - canonical names/titles\n  - historical records with long tex",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-071",
+      "obligation_text": "Present search result rows with object type, label/title, run context, parent context, current state/severity when relevant, and target tab (including parent contexts like seam > package > node).",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-031"
+      ],
+      "source_block_ids": [
+        "lblock-000648"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2745,
+          "end_line": 2756
+        }
+      ],
+      "exact_source_excerpt": "- Good result row fields:\n  - object type\n  - label/title\n  - run context\n  - parent context\n  - current state / severity when relevant\n  - target tab\n- Example parent context:\n  - seam > package > node\n  - package > lane\n  - run > graph patch\n  - node > concern\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-072",
+      "obligation_text": "Define a canonical Orchestrator search result contract with object identity, object type, focused-run implications, destination tab, and selection/filter payload.",
+      "obligation_category": "schema_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-033"
+      ],
+      "source_block_ids": [
+        "lblock-000654"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2765,
+          "end_line": 2777
+        }
+      ],
+      "exact_source_excerpt": "- Define a canonical Orchestrator search result contract with:\n  - object identity\n  - object type\n  - focused-run implications\n  - destination tab\n  - selection/filter payload\n- Separate page-level Orchestrator search from tab-local filtering.\n- Reuse the same routing contract for:\n  - search results\n  - command palette results\n  - cross-tab deep links\n  - `Show in ...` actions\n- Make search obje",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-073",
+      "obligation_text": "Reuse the same routing contract for search results, command palette results, cross-tab deep links, and `Show in ...` actions.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-033"
+      ],
+      "source_block_ids": [
+        "lblock-000654"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2765,
+          "end_line": 2777
+        }
+      ],
+      "exact_source_excerpt": "- Define a canonical Orchestrator search result contract with:\n  - object identity\n  - object type\n  - focused-run implications\n  - destination tab\n  - selection/filter payload\n- Separate page-level Orchestrator search from tab-local filtering.\n- Reuse the same routing contract for:\n  - search results\n  - command palette results\n  - cross-tab deep links\n  - `Show in ...` actions\n- Make search obje",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-074",
+      "obligation_text": "Make search object-first and run-aware, not text-match-first.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-033"
+      ],
+      "source_block_ids": [
+        "lblock-000654"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2765,
+          "end_line": 2777
+        }
+      ],
+      "exact_source_excerpt": "- Define a canonical Orchestrator search result contract with:\n  - object identity\n  - object type\n  - focused-run implications\n  - destination tab\n  - selection/filter payload\n- Separate page-level Orchestrator search from tab-local filtering.\n- Reuse the same routing contract for:\n  - search results\n  - command palette results\n  - cross-tab deep links\n  - `Show in ...` actions\n- Make search obje",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-075",
+      "obligation_text": "Design search to find the right object without requiring users to know the owning tab first; keep richer cross-object search in Orchestrator and command-palette flows vs narrow Source Control panel.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-034"
+      ],
+      "source_block_ids": [
+        "lblock-000657"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2780,
+          "end_line": 2782
+        }
+      ],
+      "exact_source_excerpt": "- Search should help the user find the right object, not force them to know which tab owns it first.\n- A narrow Source Control panel reinforces that richer cross-object search belongs more naturally in Orchestrator / command-palette flows than in side-panel SCM UI.\n- Historical results must preserve run context clearly so search does not create silent run-focus jumps.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-076",
+      "obligation_text": "Show run context clearly on historical results so search never causes silent run-focus jumps.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-004-034"
+      ],
+      "source_block_ids": [
+        "lblock-000657"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2780,
+          "end_line": 2782
+        }
+      ],
+      "exact_source_excerpt": "- Search should help the user find the right object, not force them to know which tab owns it first.\n- A narrow Source Control panel reinforces that richer cross-object search belongs more naturally in Orchestrator / command-palette flows than in side-panel SCM UI.\n- Historical results must preserve run context clearly so search does not create silent run-focus jumps.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-077",
+      "obligation_text": "Preserve historical semantics already in storage/runtime: `stale_historical` attempts, blocked projections remaining historical after resolution, historical lineage visibility, and remediation outcomes including `fixed`, `superseded`, `abandoned`, `replan_required`.",
+      "obligation_category": "fact_observation",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-004-037"
+      ],
+      "source_block_ids": [
+        "lblock-000665"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2794,
+          "end_line": 2800
+        }
+      ],
+      "exact_source_excerpt": "- The storage/runtime model already contains some strong historical semantics:\n  - attempts from older generations can become `stale_historical`\n  - blocked projections remain historical after resolution\n  - historical lineage must remain visible even when live targets disappear\n  - remediation resolution already includes `fixed`, `superseded`, `abandoned`, `replan_required`\n- The problem is uneve",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-078",
+      "obligation_text": "Align higher-level objects (promotions, concerns, graph patches, recovery records, lane/worktree lifecycle states) on one shared semantic vocabulary instead of uneven application.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-037"
+      ],
+      "source_block_ids": [
+        "lblock-000666"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2801,
+          "end_line": 2810
+        }
+      ],
+      "exact_source_excerpt": "  - higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary\n- There are several similar-but-different concepts in play:\n  - `historical`\n  - `stale_historical`\n  - `superseded`\n  - `revoked`\n  - `reopened`\n  - `archived`\n  - `deleted` / `removed`\n- These should not collapse into a generic \"",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-079",
+      "obligation_text": "Separate `time status`, `replacement status`, and `validity status` when labeling historical and superseded objects.",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-038"
+      ],
+      "source_block_ids": [
+        "lblock-000669"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2813,
+          "end_line": 2829
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - separate `time status`, `replacement status`, and `validity status`\n- Working interpretation:\n  - `historical`\n    - no longer current/live, but still part of valid history\n  - `stale_historical`\n    - historical and specifically not resumable/reusable as live execution state\n  - `superseded`\n    - replaced by a newer canonical successor for the same semantic slot\n  - ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-005-080",
+      "obligation_text": "Apply the working interpretations for `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, and `removed` exactly as stated in the source.",
+      "obligation_category": "enum_definition",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-004-038"
+      ],
+      "source_block_ids": [
+        "lblock-000669"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2813,
+          "end_line": 2829
+        }
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - separate `time status`, `replacement status`, and `validity status`\n- Working interpretation:\n  - `historical`\n    - no longer current/live, but still part of valid history\n  - `stale_historical`\n    - historical and specifically not resumable/reusable as live execution state\n  - `superseded`\n    - replaced by a newer canonical successor for the same semantic slot\n  - ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    }
+  ],
+  "open_questions": [
+    {
+      "question_id": "q-005-001",
+      "question_text": "There is no sharp current rule yet for:\n  - widget-level filters vs tab-level filters\n  - widget action scope vs page-native action scope\n  - which widgets are hostable where after the seam/package rewrite",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-003-126"
+      ],
+      "source_block_ids": [
+        "lblock-000544"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2366,
+          "end_line": 2375
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n  - still assumes a tier-first widget catalog and broad widgetization of Orchestrator tabs.\n- `Plans/Orchestrator_Page.md`\n  - still describes `Tiers` as a widget-based tab and carries old default layouts.\n- `Plans/FinalGUISpec.md`\n  - likely still needs explicit cross-reference that only certain pages/tabs are widget-composed.\n- There is no sharp current rule yet for:\n "
+    },
+    {
+      "question_id": "q-005-002",
+      "question_text": "No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-006"
+      ],
+      "source_block_ids": [
+        "lblock-000574"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2472,
+          "end_line": 2474
+        }
+      ],
+      "exact_source_excerpt": "- No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces.\n- Usage has concrete stale-data mitigations, but Orchestrator currently lacks equally explicit stale/degraded trust copy and action rules.\n- FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for"
+    },
+    {
+      "question_id": "q-005-003",
+      "question_text": "FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for projection-backed tabs/widgets/panels.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-006"
+      ],
+      "source_block_ids": [
+        "lblock-000574"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2472,
+          "end_line": 2474
+        }
+      ],
+      "exact_source_excerpt": "- No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces.\n- Usage has concrete stale-data mitigations, but Orchestrator currently lacks equally explicit stale/degraded trust copy and action rules.\n- FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for"
+    },
+    {
+      "question_id": "q-005-004",
+      "question_text": "No explicit `historical-run mode` contract yet.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-019"
+      ],
+      "source_block_ids": [
+        "lblock-000613"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2618,
+          "end_line": 2622
+        }
+      ],
+      "exact_source_excerpt": "- No explicit `historical-run mode` contract yet.\n- No obvious `orchestrator.project_state.{project_id}` for focused run persistence.\n- `History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.\n- `Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to repres"
+    },
+    {
+      "question_id": "q-005-005",
+      "question_text": "No obvious `orchestrator.project_state.{project_id}` for focused run persistence.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-019"
+      ],
+      "source_block_ids": [
+        "lblock-000613"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2618,
+          "end_line": 2622
+        }
+      ],
+      "exact_source_excerpt": "- No explicit `historical-run mode` contract yet.\n- No obvious `orchestrator.project_state.{project_id}` for focused run persistence.\n- `History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.\n- `Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to repres"
+    },
+    {
+      "question_id": "q-005-006",
+      "question_text": "`History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.",
+      "required_action": "manual_decision_required",
+      "source_group_ids": [
+        "wg-004-019"
+      ],
+      "source_block_ids": [
+        "lblock-000613"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2618,
+          "end_line": 2622
+        }
+      ],
+      "exact_source_excerpt": "- No explicit `historical-run mode` contract yet.\n- No obvious `orchestrator.project_state.{project_id}` for focused run persistence.\n- `History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.\n- `Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to repres"
+    },
+    {
+      "question_id": "q-005-007",
+      "question_text": "`Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to represent historical runs coherently.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-019"
+      ],
+      "source_block_ids": [
+        "lblock-000613"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2618,
+          "end_line": 2622
+        }
+      ],
+      "exact_source_excerpt": "- No explicit `historical-run mode` contract yet.\n- No obvious `orchestrator.project_state.{project_id}` for focused run persistence.\n- `History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.\n- `Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to repres"
+    },
+    {
+      "question_id": "q-005-008",
+      "question_text": "Background runs exist in Dashboard, but Orchestrator focus rules for live-vs-historical switching are not yet specified.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-019"
+      ],
+      "source_block_ids": [
+        "lblock-000613"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2618,
+          "end_line": 2622
+        }
+      ],
+      "exact_source_excerpt": "- No explicit `historical-run mode` contract yet.\n- No obvious `orchestrator.project_state.{project_id}` for focused run persistence.\n- `History` currently includes `Delete Run`, which may conflict with durable historical/audit expectations unless delete semantics are defined carefully.\n- `Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to repres"
+    },
+    {
+      "question_id": "q-005-009",
+      "question_text": "There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-032"
+      ],
+      "source_block_ids": [
+        "lblock-000651"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2759,
+          "end_line": 2762
+        }
+      ],
+      "exact_source_excerpt": "- Current docs define many local filters but not a unified Orchestrator search object model.\n- There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.\n- Search scope behavior across current focused run vs all project runs is not yet defined.\n- `Tantivy` is clearly intended for search, but the object/record side of Orchestrator search is not yet spe"
+    },
+    {
+      "question_id": "q-005-010",
+      "question_text": "Search scope behavior across current focused run vs all project runs is not yet defined.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-032"
+      ],
+      "source_block_ids": [
+        "lblock-000651"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2759,
+          "end_line": 2762
+        }
+      ],
+      "exact_source_excerpt": "- Current docs define many local filters but not a unified Orchestrator search object model.\n- There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.\n- Search scope behavior across current focused run vs all project runs is not yet defined.\n- `Tantivy` is clearly intended for search, but the object/record side of Orchestrator search is not yet spe"
+    },
+    {
+      "question_id": "q-005-011",
+      "question_text": "`Tantivy` is clearly intended for search, but the object/record side of Orchestrator search is not yet specified enough to rely on full-text alone.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-032"
+      ],
+      "source_block_ids": [
+        "lblock-000651"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2759,
+          "end_line": 2762
+        }
+      ],
+      "exact_source_excerpt": "- Current docs define many local filters but not a unified Orchestrator search object model.\n- There is no current canonical routing payload shared across search, deep links, and cross-tab navigation.\n- Search scope behavior across current focused run vs all project runs is not yet defined.\n- `Tantivy` is clearly intended for search, but the object/record side of Orchestrator search is not yet spe"
+    },
+    {
+      "question_id": "q-005-012",
+      "question_text": "Several similar-but-different concepts are in play (`historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, `deleted` / `removed`); these should not collapse into a generic \"old\" state.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-004-037"
+      ],
+      "source_block_ids": [
+        "lblock-000666"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2801,
+          "end_line": 2810
+        }
+      ],
+      "exact_source_excerpt": "  - higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary\n- There are several similar-but-different concepts in play:\n  - `historical`\n  - `stale_historical`\n  - `superseded`\n  - `revoked`\n  - `reopened`\n  - `archived`\n  - `deleted` / `removed`\n- These should not collapse into a generic \""
+    }
+  ],
+  "doc_hints": [
+    {
+      "hint_id": "dh-005-001",
+      "hint_type": "affected_doc",
+      "path": "Plans/Widget_System.md",
+      "source_group_ids": [
+        "wg-003-125"
+      ],
+      "source_block_ids": [
+        "lblock-000541"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2347,
+          "end_line": 2363
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs.\n- Likely rewrite direction:\n  - keep:\n    - `widget_layout:v1:dashboard`\n    - `widget_layout:v1:usage`\n    - `widget_layout:v1:orchestrator:progress`\n  - likely remove or deprecate:\n    - `widget_layout:v1:orchestrator:tiers`\n    - `widget_layout:v1:orchestrator:evidence`\n    - `widget_layout:v1:orchestrator:",
+      "notes": "Source names layout keys and rewrite direction."
+    },
+    {
+      "hint_id": "dh-005-002",
+      "hint_type": "affected_doc",
+      "path": "Plans/Widget_System.md",
+      "source_group_ids": [
+        "wg-003-126"
+      ],
+      "source_block_ids": [
+        "lblock-000544"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2366,
+          "end_line": 2375
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n  - still assumes a tier-first widget catalog and broad widgetization of Orchestrator tabs.\n- `Plans/Orchestrator_Page.md`\n  - still describes `Tiers` as a widget-based tab and carries old default layouts.\n- `Plans/FinalGUISpec.md`\n  - likely still needs explicit cross-reference that only certain pages/tabs are widget-composed.\n- There is no sharp current rule yet for:\n "
+    },
+    {
+      "hint_id": "dh-005-003",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-003-126"
+      ],
+      "source_block_ids": [
+        "lblock-000544"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2366,
+          "end_line": 2375
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n  - still assumes a tier-first widget catalog and broad widgetization of Orchestrator tabs.\n- `Plans/Orchestrator_Page.md`\n  - still describes `Tiers` as a widget-based tab and carries old default layouts.\n- `Plans/FinalGUISpec.md`\n  - likely still needs explicit cross-reference that only certain pages/tabs are widget-composed.\n- There is no sharp current rule yet for:\n "
+    },
+    {
+      "hint_id": "dh-005-004",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-003-126"
+      ],
+      "source_block_ids": [
+        "lblock-000544"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2366,
+          "end_line": 2375
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n  - still assumes a tier-first widget catalog and broad widgetization of Orchestrator tabs.\n- `Plans/Orchestrator_Page.md`\n  - still describes `Tiers` as a widget-based tab and carries old default layouts.\n- `Plans/FinalGUISpec.md`\n  - likely still needs explicit cross-reference that only certain pages/tabs are widget-composed.\n- There is no sharp current rule yet for:\n "
+    },
+    {
+      "hint_id": "dh-005-005",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-003-130"
+      ],
+      "source_block_ids": [
+        "lblock-000555"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2392,
+          "end_line": 2396
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Contracts_V0.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-006",
+      "hint_type": "candidate_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-003-130"
+      ],
+      "source_block_ids": [
+        "lblock-000555"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2392,
+          "end_line": 2396
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Contracts_V0.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-007",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-003-130"
+      ],
+      "source_block_ids": [
+        "lblock-000555"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2392,
+          "end_line": 2396
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Contracts_V0.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-008",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-003-130"
+      ],
+      "source_block_ids": [
+        "lblock-000555"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2392,
+          "end_line": 2396
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Contracts_V0.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-009",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_group_ids": [
+        "wg-003-130"
+      ],
+      "source_block_ids": [
+        "lblock-000555"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2392,
+          "end_line": 2396
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Contracts_V0.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-010",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-004-010"
+      ],
+      "source_block_ids": [
+        "lblock-000585"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2497,
+          "end_line": 2501
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-011",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_group_ids": [
+        "wg-004-010"
+      ],
+      "source_block_ids": [
+        "lblock-000585"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2497,
+          "end_line": 2501
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-012",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-004-010"
+      ],
+      "source_block_ids": [
+        "lblock-000585"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2497,
+          "end_line": 2501
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-013",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-004-010"
+      ],
+      "source_block_ids": [
+        "lblock-000585"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2497,
+          "end_line": 2501
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-014",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Widget_System.md",
+      "source_group_ids": [
+        "wg-004-010"
+      ],
+      "source_block_ids": [
+        "lblock-000585"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2497,
+          "end_line": 2501
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-015",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-004-023"
+      ],
+      "source_block_ids": [
+        "lblock-000624"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2642,
+          "end_line": 2646
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-016",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_group_ids": [
+        "wg-004-023"
+      ],
+      "source_block_ids": [
+        "lblock-000624"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2642,
+          "end_line": 2646
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-017",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-004-023"
+      ],
+      "source_block_ids": [
+        "lblock-000624"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2642,
+          "end_line": 2646
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-018",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-004-023"
+      ],
+      "source_block_ids": [
+        "lblock-000624"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2642,
+          "end_line": 2646
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-019",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Widget_System.md",
+      "source_group_ids": [
+        "wg-004-023"
+      ],
+      "source_block_ids": [
+        "lblock-000624"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2642,
+          "end_line": 2646
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-020",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-004-036"
+      ],
+      "source_block_ids": [
+        "lblock-000662"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2787,
+          "end_line": 2791
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-021",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_group_ids": [
+        "wg-004-036"
+      ],
+      "source_block_ids": [
+        "lblock-000662"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2787,
+          "end_line": 2791
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-022",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_group_ids": [
+        "wg-004-036"
+      ],
+      "source_block_ids": [
+        "lblock-000662"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2787,
+          "end_line": 2791
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-023",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-004-036"
+      ],
+      "source_block_ids": [
+        "lblock-000662"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2787,
+          "end_line": 2791
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n",
+      "notes": "Listed under targeted docs read."
+    },
+    {
+      "hint_id": "dh-005-024",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-004-036"
+      ],
+      "source_block_ids": [
+        "lblock-000662"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2787,
+          "end_line": 2791
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n",
+      "notes": "Listed under targeted docs read."
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-000534",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-123"
+      ],
+      "source_block_ids": [
+        "lblock-000534"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2320,
+          "end_line": 2320
+        }
+      ],
+      "exact_source_excerpt": "### Widget filter / persistence direction\n"
+    },
+    {
+      "block_id": "lblock-000537",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-124"
+      ],
+      "source_block_ids": [
+        "lblock-000537"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2336,
+          "end_line": 2336
+        }
+      ],
+      "exact_source_excerpt": "### Hostability direction\n"
+    },
+    {
+      "block_id": "lblock-000540",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-125"
+      ],
+      "source_block_ids": [
+        "lblock-000540"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2346,
+          "end_line": 2346
+        }
+      ],
+      "exact_source_excerpt": "### Persistence impact\n"
+    },
+    {
+      "block_id": "lblock-000543",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-126"
+      ],
+      "source_block_ids": [
+        "lblock-000543"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2365,
+          "end_line": 2365
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced\n"
+    },
+    {
+      "block_id": "lblock-000546",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-127"
+      ],
+      "source_block_ids": [
+        "lblock-000546"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2377,
+          "end_line": 2377
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward\n"
+    },
+    {
+      "block_id": "lblock-000549",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-128"
+      ],
+      "source_block_ids": [
+        "lblock-000549"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2384,
+          "end_line": 2384
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details\n"
+    },
+    {
+      "block_id": "lblock-000552",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-129"
+      ],
+      "source_block_ids": [
+        "lblock-000552"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2389,
+          "end_line": 2389
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Projection Freshness / Stale-Trust Model\n"
+    },
+    {
+      "block_id": "lblock-000554",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-130"
+      ],
+      "source_block_ids": [
+        "lblock-000554"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2391,
+          "end_line": 2391
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000557",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-003-131"
+      ],
+      "source_block_ids": [
+        "lblock-000557"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2398,
+          "end_line": 2398
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000561",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-002"
+      ],
+      "source_block_ids": [
+        "lblock-000561"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2414,
+          "end_line": 2414
+        }
+      ],
+      "exact_source_excerpt": "### Recommended trust-state model\n"
+    },
+    {
+      "block_id": "lblock-000564",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-003"
+      ],
+      "source_block_ids": [
+        "lblock-000564"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2428,
+          "end_line": 2428
+        }
+      ],
+      "exact_source_excerpt": "### Action-gating direction\n"
+    },
+    {
+      "block_id": "lblock-000567",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-004"
+      ],
+      "source_block_ids": [
+        "lblock-000567"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2441,
+          "end_line": 2441
+        }
+      ],
+      "exact_source_excerpt": "### Fallback-view direction\n"
+    },
+    {
+      "block_id": "lblock-000570",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-005"
+      ],
+      "source_block_ids": [
+        "lblock-000570"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2458,
+          "end_line": 2458
+        }
+      ],
+      "exact_source_excerpt": "### UI contract direction\n"
+    },
+    {
+      "block_id": "lblock-000573",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-006"
+      ],
+      "source_block_ids": [
+        "lblock-000573"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2471,
+          "end_line": 2471
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced\n"
+    },
+    {
+      "block_id": "lblock-000576",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-007"
+      ],
+      "source_block_ids": [
+        "lblock-000576"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2476,
+          "end_line": 2476
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward\n"
+    },
+    {
+      "block_id": "lblock-000579",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-008"
+      ],
+      "source_block_ids": [
+        "lblock-000579"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2489,
+          "end_line": 2489
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details\n"
+    },
+    {
+      "block_id": "lblock-000582",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-009"
+      ],
+      "source_block_ids": [
+        "lblock-000582"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2494,
+          "end_line": 2494
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Multi-Run Behavior Inside One Project\n"
+    },
+    {
+      "block_id": "lblock-000584",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-010"
+      ],
+      "source_block_ids": [
+        "lblock-000584"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2496,
+          "end_line": 2496
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000587",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-011"
+      ],
+      "source_block_ids": [
+        "lblock-000587"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2503,
+          "end_line": 2503
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000590",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-012"
+      ],
+      "source_block_ids": [
+        "lblock-000590"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2521,
+          "end_line": 2521
+        }
+      ],
+      "exact_source_excerpt": "### Recommended run-focus model\n"
+    },
+    {
+      "block_id": "lblock-000593",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-013"
+      ],
+      "source_block_ids": [
+        "lblock-000593"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2536,
+          "end_line": 2536
+        }
+      ],
+      "exact_source_excerpt": "### Historical-run mode direction\n"
+    },
+    {
+      "block_id": "lblock-000596",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-014"
+      ],
+      "source_block_ids": [
+        "lblock-000596"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2557,
+          "end_line": 2557
+        }
+      ],
+      "exact_source_excerpt": "### Current-run mode direction\n"
+    },
+    {
+      "block_id": "lblock-000599",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-015"
+      ],
+      "source_block_ids": [
+        "lblock-000599"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2570,
+          "end_line": 2570
+        }
+      ],
+      "exact_source_excerpt": "### Background-runs interaction\n"
+    },
+    {
+      "block_id": "lblock-000602",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-016"
+      ],
+      "source_block_ids": [
+        "lblock-000602"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2581,
+          "end_line": 2581
+        }
+      ],
+      "exact_source_excerpt": "### Persistence direction\n"
+    },
+    {
+      "block_id": "lblock-000605",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-017"
+      ],
+      "source_block_ids": [
+        "lblock-000605"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2597,
+          "end_line": 2597
+        }
+      ],
+      "exact_source_excerpt": "### Cross-tab behavior direction\n"
+    },
+    {
+      "block_id": "lblock-000609",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-018"
+      ],
+      "source_block_ids": [
+        "lblock-000609"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2607,
+          "end_line": 2607
+        }
+      ],
+      "exact_source_excerpt": "### Progress-tab implication\n"
+    },
+    {
+      "block_id": "lblock-000612",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-019"
+      ],
+      "source_block_ids": [
+        "lblock-000612"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2617,
+          "end_line": 2617
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced\n"
+    },
+    {
+      "block_id": "lblock-000615",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-020"
+      ],
+      "source_block_ids": [
+        "lblock-000615"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2624,
+          "end_line": 2624
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward\n"
+    },
+    {
+      "block_id": "lblock-000618",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-021"
+      ],
+      "source_block_ids": [
+        "lblock-000618"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2634,
+          "end_line": 2634
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details\n"
+    },
+    {
+      "block_id": "lblock-000621",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-022"
+      ],
+      "source_block_ids": [
+        "lblock-000621"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2639,
+          "end_line": 2639
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Search Across Orchestrator Tabs\n"
+    },
+    {
+      "block_id": "lblock-000623",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-023"
+      ],
+      "source_block_ids": [
+        "lblock-000623"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2641,
+          "end_line": 2641
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000626",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-024"
+      ],
+      "source_block_ids": [
+        "lblock-000626"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2648,
+          "end_line": 2648
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000629",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-025"
+      ],
+      "source_block_ids": [
+        "lblock-000629"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2665,
+          "end_line": 2665
+        }
+      ],
+      "exact_source_excerpt": "### Recommended search model\n"
+    },
+    {
+      "block_id": "lblock-000632",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-026"
+      ],
+      "source_block_ids": [
+        "lblock-000632"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2687,
+          "end_line": 2687
+        }
+      ],
+      "exact_source_excerpt": "### Routing contract direction\n"
+    },
+    {
+      "block_id": "lblock-000635",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-027"
+      ],
+      "source_block_ids": [
+        "lblock-000635"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2702,
+          "end_line": 2702
+        }
+      ],
+      "exact_source_excerpt": "### Focused-run interaction\n"
+    },
+    {
+      "block_id": "lblock-000638",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-028"
+      ],
+      "source_block_ids": [
+        "lblock-000638"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2713,
+          "end_line": 2713
+        }
+      ],
+      "exact_source_excerpt": "### Global vs local search distinction\n"
+    },
+    {
+      "block_id": "lblock-000641",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-029"
+      ],
+      "source_block_ids": [
+        "lblock-000641"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2725,
+          "end_line": 2725
+        }
+      ],
+      "exact_source_excerpt": "### Command palette integration direction\n"
+    },
+    {
+      "block_id": "lblock-000644",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-030"
+      ],
+      "source_block_ids": [
+        "lblock-000644"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2732,
+          "end_line": 2732
+        }
+      ],
+      "exact_source_excerpt": "### Indexing / backend direction\n"
+    },
+    {
+      "block_id": "lblock-000647",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-031"
+      ],
+      "source_block_ids": [
+        "lblock-000647"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2744,
+          "end_line": 2744
+        }
+      ],
+      "exact_source_excerpt": "### Search-result presentation direction\n"
+    },
+    {
+      "block_id": "lblock-000650",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-032"
+      ],
+      "source_block_ids": [
+        "lblock-000650"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2758,
+          "end_line": 2758
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced\n"
+    },
+    {
+      "block_id": "lblock-000653",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-033"
+      ],
+      "source_block_ids": [
+        "lblock-000653"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2764,
+          "end_line": 2764
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward\n"
+    },
+    {
+      "block_id": "lblock-000656",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-034"
+      ],
+      "source_block_ids": [
+        "lblock-000656"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2779,
+          "end_line": 2779
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details\n"
+    },
+    {
+      "block_id": "lblock-000659",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-035"
+      ],
+      "source_block_ids": [
+        "lblock-000659"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2784,
+          "end_line": 2784
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Historical vs Current Record Semantics\n"
+    },
+    {
+      "block_id": "lblock-000661",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-036"
+      ],
+      "source_block_ids": [
+        "lblock-000661"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2786,
+          "end_line": 2786
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000664",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-037"
+      ],
+      "source_block_ids": [
+        "lblock-000664"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2793,
+          "end_line": 2793
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000668",
+      "reason": "section_heading_only_no_additional_propositions",
+      "exclusion_rationale": "section_heading_only_no_additional_propositions",
+      "source_group_ids": [
+        "wg-004-038"
+      ],
+      "source_block_ids": [
+        "lblock-000668"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2812,
+          "end_line": 2812
+        }
+      ],
+      "exact_source_excerpt": "### Recommended semantic split\n"
+    }
+  ],
+  "blocked_blocks": [],
+  "conversion_notes": [
+    "Per-block CUSTOM handlers used for highest-signal research notes; remaining blocks classified with doc_hints from Plans paths, open_question_triggers where verbatim gaps appear, or default architecture obligations.",
+    "Heading-only markdown blocks recorded as excluded_blocks with full linkage.",
+    "candidate_doc hints used for targeted reading lists; affected_doc used where contradictions/gaps name specific plan files.",
+    "D4 structure_only repair applied: excluded_blocks_field_name_normalized"
+  ],
+  "subagent_execution": {
+    "subagent_task_id": "d2-slice-005",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "every_obligation_has_source_linkage": true,
+    "open_questions_not_answered_silently": true,
+    "doc_hints_preserved_separately": true
+  },
+  "status": "complete"
+}

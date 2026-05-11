@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.stage_report.v3.2.1",
+  "prompt_id": "C4",
+  "prompt_version": "pm.c4.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260507T205244Z",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "completeness_status": "pass",
+  "summary": {
+    "manifest_shards_total": 92,
+    "inventory_blocks_total": 4860,
+    "raw_seed_blocks_total": 4860,
+    "source_lines_total": 18244,
+    "represented_nonblank_lines_total": 16453,
+    "excluded_blank_lines_total": 1791,
+    "coverage_gaps": 0,
+    "coverage_overlaps": 0,
+    "text_mismatch_blocks": 0,
+    "seed_block_reference_errors": 0
+  }
+}

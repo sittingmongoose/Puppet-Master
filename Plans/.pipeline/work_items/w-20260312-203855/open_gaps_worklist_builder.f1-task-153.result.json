@@ -1,0 +1,590 @@
+{
+  "schema_id": "pm.open_gaps_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "f1-task-153",
+  "subagent_invocation_id": "005abc25-d41f-4d9f-81ef-3c3186874eb4",
+  "status": "complete",
+  "coverage_rows": [
+    {
+      "coverage_row_index": 3800,
+      "obligation_id": "obl-025-042",
+      "row_hash": "e574004e4688b45a5ff4206e1552685b2b5fe03487995b0c8844ab5af0da17db",
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve raw findings themes before deduplication from the transfer-fidelity audit ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3801,
+      "obligation_id": "obl-025-043",
+      "row_hash": "7cff01c99c75ee00c982caa2b1df093d8089610d42e2fb6ba35dfbd1b19d06ef",
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve recurring drift pattern analysis (refinement layer omitted after base primitive transfer) from the transfer-fidelity audit ledger."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3802,
+      "obligation_id": "obl-025-044",
+      "row_hash": "7057d81299bfe982f783b6a2aa662d23baba1f13419459a6aa19f3a95cfb403f",
+      "coverage_task_id": "cov-e1-e1-task-153-g010",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3803,
+      "obligation_id": "obl-025-045",
+      "row_hash": "ace36c394a66d443a9b4651182f4130362306ff458fc21ccd5bb073dcdd7a701",
+      "coverage_task_id": "cov-e1-e1-task-153-g011",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3804,
+      "obligation_id": "obl-025-046",
+      "row_hash": "de08c5a167ca3ed576c003b876770e66729af87ac6761c68a08809f402c1fd68",
+      "coverage_task_id": "cov-e1-e1-task-153-g006",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Tools.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3805,
+      "obligation_id": "obl-025-047",
+      "row_hash": "b29c03594b27e7865552a77916c0f1fde863779739c467b0ebda2f725505fc12",
+      "coverage_task_id": "cov-e1-e1-task-153-g004",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3806,
+      "obligation_id": "obl-025-048",
+      "row_hash": "e30afc876beaf11666335ba7f698fddae5f095056387ac41439d04700bc27855",
+      "coverage_task_id": "cov-e1-e1-task-153-g008",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3807,
+      "obligation_id": "obl-025-049",
+      "row_hash": "e6cb702f626c42ccff1951ba814e32ea85fefffa926a5e7b770f4e6d9cbbeeae",
+      "coverage_task_id": "cov-e1-e1-task-153-g005",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3808,
+      "obligation_id": "obl-025-050",
+      "row_hash": "80b44fc9f800f6ae8c36a1cb1faa522f14f305d192f34e80175466bee4f26a71",
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve additional buildability gaps noted during the transfer-fidelity audit (including prose-only primitive boundaries)."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3809,
+      "obligation_id": "obl-025-051",
+      "row_hash": "62b318f548a2b10c8033227526d6e7084171b136dcc495467062a66784d4ea70",
+      "coverage_task_id": "cov-e1-e1-task-153-g001",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3810,
+      "obligation_id": "obl-025-052",
+      "row_hash": "95fb73fa0126ab0079961a9d20f3450c3afd899f79e26778d12247fec4548764",
+      "coverage_task_id": "cov-e1-e1-task-153-g003",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "classifier_union_gap_missing_live_targets_e4_route",
+      "aggregated_task_label": "open_decision",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_section_exit_coverage",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3811,
+      "obligation_id": "obl-025-053",
+      "row_hash": "bdef7a2803f8790af0c293cfea8fe3f27fa679c9264e019ef38a905a21ec7648",
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Carry forward the candidate reconciliation direction steps from the transfer-fidelity audit for reconciliation planning."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3812,
+      "obligation_id": "obl-025-054",
+      "row_hash": "04ceb2c1fcf65c0fea39832e7c744d435d8613bec9c47e492dbb56a307fc9961",
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve the do-not-forget details captured for this ledger seam."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3813,
+      "obligation_id": "obl-026-001",
+      "row_hash": "48497e1dbb20fa4b59ef29aa29d225b34fd7eb0ea7af462793586713e3d319cb",
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: This rerun was requested specifically to re-check the transfer audit with **smaller chunked subauditors**, because several owner/consumer docs are too large for one subauditor to read cleanly end-to-end."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3814,
+      "obligation_id": "obl-026-002",
+      "row_hash": "f38255628fe0d9f8083c48fddcc818210c3643007469286cf5253fa587fc86c2",
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives."
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3815,
+      "obligation_id": "obl-026-003",
+      "row_hash": "5ba68d1779eb8f478ade5eb4cf8039660496e026916c50cfb1f756cf9b2b8a65",
+      "coverage_task_id": "cov-e1-e1-task-153-g007",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3816,
+      "obligation_id": "obl-026-004",
+      "row_hash": "c7af42656248235903a59d0cc3b941567d9ac8de376d434c48e1f431a7e9b027",
+      "coverage_task_id": "cov-e1-e1-task-153-g009",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3817,
+      "obligation_id": "obl-026-005",
+      "row_hash": "29ac15370e49e7fb94f2bf1d49d3b2ea1c7580bf9be75c84e8785faa4a683848",
+      "coverage_task_id": "cov-e1-e1-task-153-g002",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0087",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3818,
+      "obligation_id": "obl-026-006",
+      "row_hash": "9783c493e7cf3df3ec34bfe85b8f7cbe57a4b36d0a542b4c4fe84c601d6f1430",
+      "coverage_task_id": "cov-e1-e1-task-153-g017",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0088",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: 3-level reversibility taxonomy"
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3819,
+      "obligation_id": "obl-026-007",
+      "row_hash": "f5b72465e0efbbf8f9c4f887115d7081c44965b8bbbb5ba17e42a296e9ce2efd",
+      "coverage_task_id": "cov-e1-e1-task-153-g016",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0088",
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3820,
+      "obligation_id": "obl-026-008",
+      "row_hash": "216ef2f184ae646896e53064ca752d992c7567a4776d1d025cdaaf7fa2abbfb4",
+      "coverage_task_id": "cov-e1-e1-task-153-g015",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0088",
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3821,
+      "obligation_id": "obl-026-009",
+      "row_hash": "35ab8ccd9ba8ab6fd1018c8c50848c55a4156ef8fd1ec8c8add2ca471dad79e8",
+      "coverage_task_id": "cov-e1-e1-task-153-g014",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0088",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3822,
+      "obligation_id": "obl-026-010",
+      "row_hash": "7c633f126750b6d4305cdad0ea60fedfa06985e042a78f9130b2d9c0d6e04a17",
+      "coverage_task_id": "cov-e1-e1-task-153-g013",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0088",
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md",
+        "Plans/Tools.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 3823,
+      "obligation_id": "obl-026-011",
+      "row_hash": "b0d6f35233d1aa210a8d28334c1d35159147a3f0f7922ac23b5d68d8c4f9c56c",
+      "coverage_task_id": "cov-e1-e1-task-153-g017",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0088",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: The chunked recheck **did not** re-open the already-correct false-positive exclusions:"
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 3824,
+      "obligation_id": "obl-026-012",
+      "row_hash": "2455b45918b3e4dbbf37f0f4c2a627f4a7170c7cbf7b3172e91441b03f8d7ebe",
+      "coverage_task_id": "cov-e1-e1-task-153-g017",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0088",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: The rerun found **more concrete transfer misses**, especially in:"
+      ],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    }
+  ]
+}

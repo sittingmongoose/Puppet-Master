@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.stage_report.v3.2.1",
+  "prompt_id": "C0",
+  "prompt_version": "pm.c0.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260507T204753Z",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "reason": "mechanical_tool_operation_no_semantic_fanout"
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification": {
+    "coverage": "section_exit_B.json and ledger_intake_manifest.json read; working_ledger.md verified by filesystem, byte count, and SHA-256 against manifest",
+    "commands_equivalent": [
+      "test -f Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "wc -c < Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "sha256sum Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+    ],
+    "working_ledger_bytes_observed": 1044305,
+    "working_ledger_sha256_hex_observed": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "gate_pass": true
+  },
+  "summary": "Locked work_id w-20260312-203855 from section_exit_B.json; ledger_intake_manifest.json present; source_mode existing_working_ledger; working_ledger.md exists, non-empty, SHA-256 matches manifest deterministic_source_checks."
+}

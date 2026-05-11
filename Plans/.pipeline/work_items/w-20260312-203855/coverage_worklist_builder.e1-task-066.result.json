@@ -1,0 +1,145 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-066",
+  "subagent_invocation_id": "55715c8d-3ba1-4764-b103-065e191ebe50",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g001",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Orchestrator_Page.md",
+      "obligation_ids": [
+        "obl-015-166"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Orchestrator_Page.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Project_Output_Artifacts.md|chain-wizard-flexibility.md",
+      "obligation_ids": [
+        "obl-015-173"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Project_Output_Artifacts.md",
+        "chain-wizard-flexibility.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Runtime_Artifacts_Panel.md",
+      "obligation_ids": [
+        "obl-015-168"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|UI_Command_Catalog.md",
+      "obligation_ids": [
+        "obl-015-160"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "UI_Command_Catalog.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|orchestrator-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-170"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "orchestrator-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g006",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-163"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g007",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-159",
+        "obl-015-161",
+        "obl-015-162",
+        "obl-015-164",
+        "obl-015-165",
+        "obl-015-167",
+        "obl-015-169",
+        "obl-015-171",
+        "obl-015-172",
+        "obl-015-174",
+        "obl-015-175",
+        "obl-015-176",
+        "obl-015-177",
+        "obl-015-178",
+        "obl-015-179",
+        "obl-015-180",
+        "obl-015-181",
+        "obl-015-182",
+        "obl-015-183"
+      ],
+      "obligation_record_count": 19,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

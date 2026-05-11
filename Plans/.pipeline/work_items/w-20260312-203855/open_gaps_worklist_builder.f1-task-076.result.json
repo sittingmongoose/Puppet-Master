@@ -1,0 +1,567 @@
+{
+  "schema_id": "pm.open_gaps_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "f1-task-076",
+  "subagent_invocation_id": "d305cb83-7e9b-4384-ba34-1103c911dc48",
+  "status": "complete",
+  "coverage_rows": [
+    {
+      "coverage_row_index": 1875,
+      "obligation_id": "obl-016-172",
+      "row_hash": "573631e9cf5716dcfdb32f2fbb8b0cf969407a5240592dba10ec72711432876b",
+      "coverage_task_id": "cov-e1-e1-task-076-g008",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1876,
+      "obligation_id": "obl-016-173",
+      "row_hash": "0b93d0c007ae23cb67611fabe1ab589c32f993a67396839e125b2af021f716d8",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1877,
+      "obligation_id": "obl-016-174",
+      "row_hash": "3f3f066dbc1e33c8f70d4031c6f92a9fb1c677daba6688fb724cce34003b774b",
+      "coverage_task_id": "cov-e1-e1-task-076-g004",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "Contracts_V0.md",
+        "storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1878,
+      "obligation_id": "obl-016-175",
+      "row_hash": "f5da8af69755ab547addb0a484a03869da32b56f678729eaa04dee9f1201fa54",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1879,
+      "obligation_id": "obl-016-176",
+      "row_hash": "76be8a84dc2c7d2417c05447665432fcbd64d3bf2bc9652c86c4d3a986c0f8af",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1880,
+      "obligation_id": "obl-016-177",
+      "row_hash": "2a72ac3fd0066778e97ef1edfa65281b63abe84e3385fb4254b6b0ed274342ed",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1881,
+      "obligation_id": "obl-016-178",
+      "row_hash": "c8c05ffb0902017a54488d9686f61b3d0fa526634a852776ed4d03b1386fde85",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1882,
+      "obligation_id": "obl-016-179",
+      "row_hash": "34718e644b34bef012a5fd81dd5a5528905117f3e795b03705070def703228bb",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1883,
+      "obligation_id": "obl-016-180",
+      "row_hash": "5cee6286e942caa887f2d6c6e66c79ac64dab256cc8dd8df2919cf10d3e661a6",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1884,
+      "obligation_id": "obl-016-181",
+      "row_hash": "cac669699b7c4bb067837f11cb01f6394e1f8eda8d2f51d4f11d86486eeb6846",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1885,
+      "obligation_id": "obl-016-182",
+      "row_hash": "bb988275e175441b06e223c529cc820c9348eea0c3fdb97e2be3e1d07d557628",
+      "coverage_task_id": "cov-e1-e1-task-076-g003",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "Commands_System.md",
+        "UI_Wiring_Rules.md",
+        "Wiring_Matrix.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1886,
+      "obligation_id": "obl-016-183",
+      "row_hash": "5ebecbe7fc9c754f67b9b6bed1c304bc02ae1b2148023c0eaa676c3959f05142",
+      "coverage_task_id": "cov-e1-e1-task-076-g006",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "FileManager.md",
+        "Project_Output_Artifacts.md",
+        "assistant-memory-subsystem.md",
+        "newtools.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1887,
+      "obligation_id": "obl-016-184",
+      "row_hash": "531090923e53b13666c24cae4b802d2a5d3e3d8670a0ea187f4d562ea7a0a5b3",
+      "coverage_task_id": "cov-e1-e1-task-076-g007",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "Plans/Glossary.md §2"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1888,
+      "obligation_id": "obl-016-185",
+      "row_hash": "697d7cf6025e1fc8daa7e2814ffec0c8118b997ef87725b86d79da66936a52f9",
+      "coverage_task_id": "cov-e1-e1-task-076-g005",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "Decision_Policy.md",
+        "Progression_Gates.md",
+        "Run_Modes.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1889,
+      "obligation_id": "obl-016-186",
+      "row_hash": "e92297e502d4e548f30ecf7c80d4a5924f2905dfdaca475f9a46ff3ba7427c1d",
+      "coverage_task_id": "cov-e1-e1-task-076-g001",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "Plans/Commands_System.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FileManager.md",
+        "Plans/Glossary.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Modes.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/newtools.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 1890,
+      "obligation_id": "obl-016-187",
+      "row_hash": "a76edc1ec1a1e645bd6267c0ea9c2bffb97afa90f2b23d5206bb2ab7456e2258",
+      "coverage_task_id": "cov-e1-e1-task-076-g002",
+      "gap_bucket": "process_followup",
+      "assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "aggregated_task_label": "missing",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "doc_resolution_status": "concrete_plans_targets",
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified"
+    },
+    {
+      "coverage_row_index": 1891,
+      "obligation_id": "obl-016-188",
+      "row_hash": "0ca138df5b7fc4f1c221e23f5e2197396899afc366b87cac21b8815668675b6d",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1892,
+      "obligation_id": "obl-016-189",
+      "row_hash": "8d5f89808359820ed0811c421fe3fa33c516e316b8f6c6ecf0e129e28efec563",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1893,
+      "obligation_id": "obl-016-190",
+      "row_hash": "4560259931d337501e586815cfe015a3aee8ef85aa1f474a0c0d7b90278e3ecf",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1894,
+      "obligation_id": "obl-016-191",
+      "row_hash": "7c72f7fa46e2cc76c76809ac6bd13426c6d47662173c3b75e2e7535cc0c51ea1",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1895,
+      "obligation_id": "obl-016-192",
+      "row_hash": "57da0f302f3741f1b8706ad0cfca09ff797f2b1efa1f967de0b779b2d890fc6b",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1896,
+      "obligation_id": "obl-016-193",
+      "row_hash": "71f534b5d4a17a3bd6eb709ce53e26077ca77c29be8414a280b80c2db75b5266",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1897,
+      "obligation_id": "obl-016-194",
+      "row_hash": "6d5d09e29ae8ff12e1297ba0366ffeca4980a3c18aa8d64d8d5a27e6fc0b310f",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1898,
+      "obligation_id": "obl-016-195",
+      "row_hash": "f43640084eb1709c0d5bc59a2ef43539c1eac9c6235db7d2c35eb0249acfc447",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    },
+    {
+      "coverage_row_index": 1899,
+      "obligation_id": "obl-016-196",
+      "row_hash": "d0d38b621dbc254a10b1ffd0e76215df544413cc9bc2a1a9e05c9bc1332a6171",
+      "coverage_task_id": "cov-e1-e1-task-076-g009",
+      "gap_bucket": "doc_discovery_exhaustion",
+      "assignment_reason_code": "terminal_or_exhausted_attempt_state_v3_2_2_hotfix",
+      "aggregated_task_label": "missing_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "doc_resolution_status": "unresolved_no_live_target",
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "source_shard_id": "shard-0052",
+      "live_doc_targets_union": [],
+      "candidate_doc_hints": [],
+      "transfer_row_kind": "classified",
+      "assignment_context": {
+        "terminal_unresolved_doc_discovery": true,
+        "doc_discovery_attempt_state": "exhausted_doc_discovery"
+      }
+    }
+  ]
+}

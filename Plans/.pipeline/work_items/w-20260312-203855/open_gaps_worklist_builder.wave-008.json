@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "F1",
+  "prompt_id": "F1",
+  "prompt_version": "pm.f1.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 8,
+  "wave_id": "wave-008",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "f1-task-057",
+    "f1-task-058",
+    "f1-task-059",
+    "f1-task-060",
+    "f1-task-061",
+    "f1-task-062",
+    "f1-task-063",
+    "f1-task-064"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "de8afd06-80d1-4c01-82ed-f8243f4916b1",
+      "subagent_task_id": "f1-task-057",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1400,
+        "coverage_row_index_end_exclusive": 1425,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-014-008",
+        "obligation_id_last": "obl-014-032"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-057.result.json",
+      "result_artifact_sha256": "fbd3d1f6d73841d0321a6f768e05038bf8e2a4bc898b605b0b1c4b53dfc6ac96",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "3a8b7152-e98a-4e05-a4d0-30b1c12b5619",
+      "subagent_task_id": "f1-task-058",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1425,
+        "coverage_row_index_end_exclusive": 1450,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-014-033",
+        "obligation_id_last": "obl-014-057"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-058.result.json",
+      "result_artifact_sha256": "afe0fbed0159db9be8b14d70bd07535d727e6d63b6d6c044dbc46f3e771ed11a",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "16123778-7e82-497b-99d9-f51c0ae45107",
+      "subagent_task_id": "f1-task-059",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1450,
+        "coverage_row_index_end_exclusive": 1475,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-014-058",
+        "obligation_id_last": "obl-015-008"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-059.result.json",
+      "result_artifact_sha256": "a354ce1dde1a672cff2953047748e645df9bff41c338a05d611b6bfaf26aa899",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "96f3ad80-a91f-407d-afe8-7d7d6451ec80",
+      "subagent_task_id": "f1-task-060",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1475,
+        "coverage_row_index_end_exclusive": 1500,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-015-009",
+        "obligation_id_last": "obl-015-033"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-060.result.json",
+      "result_artifact_sha256": "ccf41bb3666cee16361467c792003911de59200fdfeb9c12002c5d619bbe7aca",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "5bf3e915-9bf7-4fd8-8f90-99c6ca62c18f",
+      "subagent_task_id": "f1-task-061",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1500,
+        "coverage_row_index_end_exclusive": 1525,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-015-034",
+        "obligation_id_last": "obl-015-058"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-061.result.json",
+      "result_artifact_sha256": "4a2ea1df9704750827148c68aca77f6e842131b6d3ad69687e15f960d16dda74",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "bd37c613-e61a-4d0e-b086-2761d567310e",
+      "subagent_task_id": "f1-task-062",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1525,
+        "coverage_row_index_end_exclusive": 1550,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-015-059",
+        "obligation_id_last": "obl-015-083"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-062.result.json",
+      "result_artifact_sha256": "374b88e56051c040431221a3cd224e27b6b960dde9d56c2f75e12ce21d5598c4",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "b286c201-f1bf-47dc-b35a-21f4a2bb8b68",
+      "subagent_task_id": "f1-task-063",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1550,
+        "coverage_row_index_end_exclusive": 1575,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-015-084",
+        "obligation_id_last": "obl-015-108"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-063.result.json",
+      "result_artifact_sha256": "720eaceb65bbde102e972cb4c9b687b340772b2c9c80ad73f166bdc49cce80ff",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "eb533880-763c-49e1-bee2-6ef4024c74cb",
+      "subagent_task_id": "f1-task-064",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "input_bounds": {
+        "coverage_row_index_start": 1575,
+        "coverage_row_index_end_exclusive": 1600,
+        "coverage_rows_in_task": 25,
+        "max_coverage_rows_per_task_budget": 25,
+        "obligation_id_first": "obl-015-109",
+        "obligation_id_last": "obl-015-133"
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist_builder.f1-task-064.result.json",
+      "result_artifact_sha256": "a7de826b741dc3853eddeaac74572af271e99a0c4f070a7204ad43098792b77d",
+      "status": "complete"
+    }
+  ]
+}

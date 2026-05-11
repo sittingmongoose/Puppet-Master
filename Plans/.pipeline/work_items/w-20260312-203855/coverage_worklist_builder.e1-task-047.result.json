@@ -1,0 +1,293 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-047",
+  "subagent_invocation_id": "791a37e3-7669-4cf8-a8a6-81dcae5c0203",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-047-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0035",
+      "grouping_key": "shard-0035|concrete_plans_targets|Plans/Contracts_V0.md",
+      "obligation_ids": [
+        "obl-012-135"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4401,
+          "line_end": 4548,
+          "window_index": 11,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-047-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0035",
+      "grouping_key": "shard-0035|concrete_plans_targets|Plans/Executor_Protocol.md|Plans/human-in-the-loop.md",
+      "obligation_ids": [
+        "obl-012-137"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 801,
+          "line_end": 1140,
+          "window_index": 2,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 401,
+          "line_end": 682,
+          "window_index": 1,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-047-g003",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0035",
+      "grouping_key": "shard-0035|concrete_plans_targets|Plans/Multi-Account.md",
+      "obligation_ids": [
+        "obl-012-136"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Multi-Account.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 869,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 869,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 801,
+          "line_end": 869,
+          "window_index": 2,
+          "total_lines_in_doc": 869,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-047-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0035",
+      "grouping_key": "shard-0035|concrete_plans_targets|Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "obligation_ids": [
+        "obl-012-134"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 527,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "line_start": 401,
+          "line_end": 527,
+          "window_index": 1,
+          "total_lines_in_doc": 527,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-047-g005",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0035",
+      "grouping_key": "shard-0035|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-012-118",
+        "obl-012-119",
+        "obl-012-120",
+        "obl-012-121",
+        "obl-012-122",
+        "obl-012-123",
+        "obl-012-124",
+        "obl-012-125",
+        "obl-012-126",
+        "obl-012-127",
+        "obl-012-128",
+        "obl-012-129",
+        "obl-012-130",
+        "obl-012-131",
+        "obl-012-132",
+        "obl-012-133",
+        "obl-012-138",
+        "obl-012-139",
+        "obl-012-140",
+        "obl-012-141",
+        "obl-012-142"
+      ],
+      "obligation_record_count": 21,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

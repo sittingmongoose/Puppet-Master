@@ -1,0 +1,5226 @@
+{
+  "schema_id": "pm.obligation_conversion_slice.v3.2.2",
+  "prompt_id": "D2",
+  "work_id": "w-20260312-203855",
+  "slice_id": "slice-004",
+  "source_group_ids_represented": [
+    "wg-003-060",
+    "wg-003-061",
+    "wg-003-062",
+    "wg-003-063",
+    "wg-003-064",
+    "wg-003-065",
+    "wg-003-066",
+    "wg-003-067",
+    "wg-003-068",
+    "wg-003-069",
+    "wg-003-070",
+    "wg-003-071",
+    "wg-003-072",
+    "wg-003-073",
+    "wg-003-074",
+    "wg-003-075",
+    "wg-003-076",
+    "wg-003-077",
+    "wg-003-078",
+    "wg-003-079",
+    "wg-003-080",
+    "wg-003-081",
+    "wg-003-082",
+    "wg-003-083",
+    "wg-003-084",
+    "wg-003-085",
+    "wg-003-086",
+    "wg-003-087",
+    "wg-003-088",
+    "wg-003-089",
+    "wg-003-090",
+    "wg-003-091",
+    "wg-003-092",
+    "wg-003-093",
+    "wg-003-094",
+    "wg-003-095",
+    "wg-003-096",
+    "wg-003-097",
+    "wg-003-098",
+    "wg-003-099",
+    "wg-003-100",
+    "wg-003-101",
+    "wg-003-102",
+    "wg-003-103",
+    "wg-003-104",
+    "wg-003-105",
+    "wg-003-106",
+    "wg-003-107",
+    "wg-003-108",
+    "wg-003-109",
+    "wg-003-110",
+    "wg-003-111",
+    "wg-003-112",
+    "wg-003-113",
+    "wg-003-114",
+    "wg-003-115",
+    "wg-003-116",
+    "wg-003-117",
+    "wg-003-118",
+    "wg-003-119",
+    "wg-003-120",
+    "wg-003-121",
+    "wg-003-122"
+  ],
+  "source_block_ids_represented": [
+    "lblock-000373",
+    "lblock-000375",
+    "lblock-000377",
+    "lblock-000379",
+    "lblock-000381",
+    "lblock-000383",
+    "lblock-000385",
+    "lblock-000387",
+    "lblock-000389",
+    "lblock-000391",
+    "lblock-000393",
+    "lblock-000395",
+    "lblock-000397",
+    "lblock-000399",
+    "lblock-000401",
+    "lblock-000403",
+    "lblock-000405",
+    "lblock-000407",
+    "lblock-000409",
+    "lblock-000411",
+    "lblock-000413",
+    "lblock-000415",
+    "lblock-000417",
+    "lblock-000419",
+    "lblock-000421",
+    "lblock-000423",
+    "lblock-000424",
+    "lblock-000426",
+    "lblock-000427",
+    "lblock-000429",
+    "lblock-000430",
+    "lblock-000432",
+    "lblock-000433",
+    "lblock-000435",
+    "lblock-000436",
+    "lblock-000438",
+    "lblock-000439",
+    "lblock-000441",
+    "lblock-000443",
+    "lblock-000444",
+    "lblock-000445",
+    "lblock-000447",
+    "lblock-000448",
+    "lblock-000450",
+    "lblock-000451",
+    "lblock-000453",
+    "lblock-000454",
+    "lblock-000456",
+    "lblock-000457",
+    "lblock-000459",
+    "lblock-000460",
+    "lblock-000462",
+    "lblock-000464",
+    "lblock-000465",
+    "lblock-000467",
+    "lblock-000468",
+    "lblock-000470",
+    "lblock-000471",
+    "lblock-000473",
+    "lblock-000474",
+    "lblock-000476",
+    "lblock-000477",
+    "lblock-000479",
+    "lblock-000480",
+    "lblock-000482",
+    "lblock-000483",
+    "lblock-000485",
+    "lblock-000486",
+    "lblock-000488",
+    "lblock-000489",
+    "lblock-000491",
+    "lblock-000492",
+    "lblock-000493",
+    "lblock-000495",
+    "lblock-000497",
+    "lblock-000498",
+    "lblock-000500",
+    "lblock-000501",
+    "lblock-000503",
+    "lblock-000504",
+    "lblock-000506",
+    "lblock-000507",
+    "lblock-000509",
+    "lblock-000510",
+    "lblock-000512",
+    "lblock-000514",
+    "lblock-000515",
+    "lblock-000517",
+    "lblock-000518",
+    "lblock-000520",
+    "lblock-000522",
+    "lblock-000523",
+    "lblock-000525",
+    "lblock-000526",
+    "lblock-000528",
+    "lblock-000529",
+    "lblock-000531",
+    "lblock-000532"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0010",
+    "shard-0011",
+    "shard-0012"
+  ],
+  "source_line_ranges_represented": [
+    {
+      "start_line": 1816,
+      "end_line": 2318
+    }
+  ],
+  "blocks_observed": 98,
+  "blocks_converted": 55,
+  "blocks_excluded": 43,
+  "blocks_blocked": 0,
+  "obligations": [
+    {
+      "obligation_id": "obl-004-001",
+      "obligation_text": "Update `Plans/WorktreeGitImprovement.md` so it no longer encodes the tier/thread-era issue described in source: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000375"
+      ],
+      "source_group_ids": [
+        "wg-003-061"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1818,
+          "end_line": 1819
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.\n",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-002",
+      "obligation_text": "Update `Plans/GitHub_Integration.md` so it no longer encodes the tier/thread-era issue described in source: Source Control ownership and GitHub actions remain branch/worktree-centric, without package/seam/lane-aware visibility.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000377"
+      ],
+      "source_group_ids": [
+        "wg-003-062"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1821,
+          "end_line": 1822
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely issue: Source Control ownership and GitHub actions remain branch/worktree-centric, without package/seam/lane-aware visibility.\n",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-003",
+      "obligation_text": "Update `Plans/feature-list.md` so it no longer encodes the tier/thread-era issue described in source: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000379"
+      ],
+      "source_group_ids": [
+        "wg-003-063"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1824,
+          "end_line": 1825
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n",
+      "exact_paths_mentioned": [
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md",
+        "Plans/MiscPlan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-004",
+      "obligation_text": "Update `Plans/assistant-chat-design.md` so it no longer encodes the tier/thread-era issue described in source: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000381"
+      ],
+      "source_group_ids": [
+        "wg-003-064"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1827,
+          "end_line": 1828
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/assistant-chat-design.md`\n  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration.\n",
+      "exact_paths_mentioned": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-005",
+      "obligation_text": "Remediate or retire priority-1 Plans docs that cannot safely coexist with the new package/seam/lane model.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json"
+      ],
+      "schema_ids_mentioned": [
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json"
+      ],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-006",
+      "obligation_text": "Correct misleading priority-2 Plans docs to match package/seam/lane orchestration truth.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Widget_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/newtools.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-007",
+      "obligation_text": "Normalize terminology and projections in priority-3 Plans docs without blocking core rewrite work.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n",
+      "exact_paths_mentioned": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Glossary.md",
+        "Plans/feature-list.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/usage-feature.md",
+        "Plans/auto_decisions.schema.json"
+      ],
+      "schema_ids_mentioned": [
+        "Plans/auto_decisions.schema.json"
+      ],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-008",
+      "obligation_text": "Resolve the documented cross-doc contradiction in the cited Plans set so canonical contracts agree.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000393"
+      ],
+      "source_group_ids": [
+        "wg-003-070"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1864,
+          "end_line": 1866
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`\n  - why it matters: canonical persona field names already disagree before account identity is added.\n",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Preserve exact field names and paths from source when reconciling."
+    },
+    {
+      "obligation_id": "obl-004-009",
+      "obligation_text": "Resolve the documented cross-doc contradiction in the cited Plans set so canonical contracts agree.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000395"
+      ],
+      "source_group_ids": [
+        "wg-003-071"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1868,
+          "end_line": 1870
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`\n  - why it matters: blocked action IDs cannot be wired safely while both `allowed_actions[]` and `allowed_action_ids[]` remain canonical.\n",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Preserve exact field names and paths from source when reconciling."
+    },
+    {
+      "obligation_id": "obl-004-010",
+      "obligation_text": "Resolve the documented cross-doc contradiction in the cited Plans set so canonical contracts agree.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000397"
+      ],
+      "source_group_ids": [
+        "wg-003-072"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1872,
+          "end_line": 1874
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`\n  - why it matters: scheduler truth is split between lexicographic, scored, and UI-derived recovery models.\n",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Progression_Gates.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/Run_Graph_View.md"
+      ],
+      "schema_ids_mentioned": [
+        "Plans/plan_graph.schema.json"
+      ],
+      "enum_names_mentioned": [],
+      "notes": "Preserve exact field names and paths from source when reconciling."
+    },
+    {
+      "obligation_id": "obl-004-011",
+      "obligation_text": "Resolve the documented cross-doc contradiction in the cited Plans set so canonical contracts agree.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000399"
+      ],
+      "source_group_ids": [
+        "wg-003-073"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1876,
+          "end_line": 1878
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`\n  - why it matters: one doc says HITL is tier-boundary only while another allows mid-tier approval nodes.\n",
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Preserve exact field names and paths from source when reconciling."
+    },
+    {
+      "obligation_id": "obl-004-012",
+      "obligation_text": "Resolve the documented cross-doc contradiction in the cited Plans set so canonical contracts agree.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000401"
+      ],
+      "source_group_ids": [
+        "wg-003-074"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1880,
+          "end_line": 1882
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`\n  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.\n",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/feature-list.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Preserve exact field names and paths from source when reconciling."
+    },
+    {
+      "obligation_id": "obl-004-013",
+      "obligation_text": "Resolve the documented cross-doc contradiction in the cited Plans set so canonical contracts agree.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000403"
+      ],
+      "source_group_ids": [
+        "wg-003-075"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1884,
+          "end_line": 1886
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Containers_Registry_and_Unraid.md`\n  - why it matters: `needs_review` and blocked/failure payload semantics disagree inside the same doc, which will leak into automation-first operator flows.\n",
+      "exact_paths_mentioned": [
+        "Plans/Containers_Registry_and_Unraid.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Preserve exact field names and paths from source when reconciling."
+    },
+    {
+      "obligation_id": "obl-004-014",
+      "obligation_text": "Resolve the documented cross-doc contradiction in the cited Plans set so canonical contracts agree.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000405"
+      ],
+      "source_group_ids": [
+        "wg-003-076"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1888,
+          "end_line": 1890
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`\n  - why it matters: fallback chunk-line settings disagree, showing state/decision drift even in supporting planning machinery.\n",
+      "exact_paths_mentioned": [
+        "Plans/sharding_config.json",
+        "Plans/auto_decisions.jsonl"
+      ],
+      "schema_ids_mentioned": [
+        "Plans/auto_decisions.jsonl"
+      ],
+      "enum_names_mentioned": [],
+      "notes": "Preserve exact field names and paths from source when reconciling."
+    },
+    {
+      "obligation_id": "obl-004-015",
+      "obligation_text": "Cross-check listed Plans docs against canonical contracts and rewrite direction before treating them as SSOT.",
+      "obligation_category": "routing_rule",
+      "required_action": "reference",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-016",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000427"
+      ],
+      "source_group_ids": [
+        "wg-003-086"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1924,
+          "end_line": 1940
+        }
+      ],
+      "exact_source_excerpt": "- Existing docs already establish a strong surface split:\n  - `Source Control` is the primary operational surface for worktree inventory and user actions.\n  - `Orchestrator` consumes worktree identity, ownership, blocked state, and lineage for run/history/recovery views.\n  - `Settings > Branching` and `Settings > Health` expose config/diagnostics, not primary active-worktree management.\n- Existing",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-017",
+      "obligation_text": "Encode recommended Orchestrator vs Source Control operational boundary from source: lane-pool truth vs Git/worktree execution surface.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000430"
+      ],
+      "source_group_ids": [
+        "wg-003-087"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1943,
+          "end_line": 1959
+        }
+      ],
+      "exact_source_excerpt": "- Recommended boundary:\n  - `Orchestrator` owns package lane-pool operational truth for the active run:\n    - which package owns which lane pool\n    - which lane is baseline vs active vs suspect/restoring vs historical/retired\n    - why a lane is blocked, weakly integrated, or cleanup-eligible\n    - which action is allowed from runtime/governance state\n  - `Source Control` owns repo/worktree execu",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-018",
+      "obligation_text": "Treat Lane as the primary operational object in Orchestrator; keep Worktree as concrete filesystem/Git backing for a lane instance; allow historical lane identity after live worktree cleanup.",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000433"
+      ],
+      "source_group_ids": [
+        "wg-003-088"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1962,
+          "end_line": 1972
+        }
+      ],
+      "exact_source_excerpt": "- Existing doc wording implies `worktree` is the primary user-visible object.\n- Rewrite direction implies a new object stack:\n  - `Feature Seam`\n  - `Work Package`\n  - `Lane`\n  - `Worktree`\n- Recommended modeling rule:\n  - `Lane` becomes the primary operational object in Orchestrator.\n  - `Worktree` remains the concrete filesystem/Git backing for a lane instance.\n  - a lane may preserve historical",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Feature Seam",
+        "Work Package",
+        "Lane",
+        "Worktree"
+      ],
+      "notes": "Source recommends lane-primary orchestration with worktree as backing asset."
+    },
+    {
+      "obligation_id": "obl-004-019",
+      "obligation_text": "Standardize lane/worktree lifecycle vocabulary across docs: baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical — with distinctions per source excerpt.",
+      "obligation_category": "enum_definition",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000436"
+      ],
+      "source_group_ids": [
+        "wg-003-089"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1975,
+          "end_line": 1991
+        }
+      ],
+      "exact_source_excerpt": "- Current docs have action verbs like `recover`, `prune`, `remove`, and `Clean all worktrees`, but not a strong shared lane lifecycle.\n- Recommended lane/worktree lifecycle vocabulary:\n  - `baseline`\n  - `active`\n  - `suspect`\n  - `restoring`\n  - `retained`\n  - `cleanup_eligible`\n  - `archived`\n  - `removed`\n  - `historical`\n- Working interpretation:\n  - `historical` is record truth and can coexis",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "baseline",
+        "active",
+        "suspect",
+        "restoring",
+        "retained",
+        "cleanup_eligible",
+        "archived",
+        "removed",
+        "historical"
+      ]
+    },
+    {
+      "obligation_id": "obl-004-020",
+      "obligation_text": "Allow Orchestrator to initiate scoped lane/worktree actions from run context while Source Control remains the Git-native execution surface.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000439"
+      ],
+      "source_group_ids": [
+        "wg-003-090"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1994,
+          "end_line": 1995
+        }
+      ],
+      "exact_source_excerpt": "- Recommended no-ambiguity rule:\n  - Orchestrator may initiate scoped actions on a lane/worktree from run context.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-021",
+      "obligation_text": "Cross-check listed Plans docs against canonical contracts and rewrite direction before treating them as SSOT.",
+      "obligation_category": "routing_rule",
+      "required_action": "reference",
+      "source_block_ids": [
+        "lblock-000444"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2000,
+          "end_line": 2000
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-022",
+      "obligation_text": "Cross-check listed Plans docs against canonical contracts and rewrite direction before treating them as SSOT.",
+      "obligation_category": "routing_rule",
+      "required_action": "reference",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "exact_paths_mentioned": [
+        "Plans/Models_System.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Permissions_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-023",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000448"
+      ],
+      "source_group_ids": [
+        "wg-003-093"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2010,
+          "end_line": 2027
+        }
+      ],
+      "exact_source_excerpt": "- The requested/effective execution identity model is still strongest on the effective side and still weak on the requested side:\n  - `Prompt_Pipeline.md` and `Contracts_V0.md` preserve `requested_account_policy`\n  - no canonical requested concrete-account anchor exists when a user pins a specific account\n  - `Models_System.md`, `Personas.md`, and bridged-provider docs still behave as if provider/",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-024",
+      "obligation_text": "Align Multi-Account, Prompt_Pipeline, Contracts_V0, bridged-provider docs, and Permissions_System with one requested/effective execution identity model (including concrete requested account anchoring).",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Personas.md",
+        "Plans/Permissions_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-025",
+      "obligation_text": "Replace tier-bound ownership and scheduling language with node/package/seam/lane-aware semantics across Orchestrator, Source Control, and storage docs.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Personas.md",
+        "Plans/Permissions_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-026",
+      "obligation_text": "Make lane the primary operational object in Orchestrator while worktree remains concrete Git/filesystem backing; route Git-native mutations through Source Control with preserved context.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Personas.md",
+        "Plans/Permissions_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-027",
+      "obligation_text": "Eliminate prohibited canonical persona field names in runtime-facing sections; reconcile Personas.md with Contracts_V0 canonical naming.",
+      "obligation_category": "constraint",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Personas.md",
+        "Plans/Permissions_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-028",
+      "obligation_text": "Unify bridged-provider request/persistence envelopes with the same auth/account fields used in Contracts_V0 and Prompt_Pipeline.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e",
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Personas.md",
+        "Plans/Permissions_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-029",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000454"
+      ],
+      "source_group_ids": [
+        "wg-003-095"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2042,
+          "end_line": 2046
+        }
+      ],
+      "exact_source_excerpt": "- `Personas.md` still uses `requested_persona_id` / `effective_persona_id` in a runtime-facing section even though `Contracts_V0.md` explicitly prohibits those names as canonical fields.\n- `Prompt_Pipeline.md` and `Contracts_V0.md` carry `requested_account_policy`, but no parallel requested-side concrete account field exists, so downstream docs are forced to guess how explicit account pinning is r",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-030",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000457"
+      ],
+      "source_group_ids": [
+        "wg-003-096"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2049,
+          "end_line": 2055
+        }
+      ],
+      "exact_source_excerpt": "- Add one canonical requested-side concrete-account field to the requested/effective runtime identity bundle, while retaining `requested_account_policy` as the routing rule rather than the selected account.\n- Add a governance rule for `provider_account_id`:\n  - either retire it\n  - or explicitly define it as provider-native metadata subordinate to stable internal `effective_account_id`\n- Unify bri",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-031",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000460"
+      ],
+      "source_group_ids": [
+        "wg-003-097"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2058,
+          "end_line": 2062
+        }
+      ],
+      "exact_source_excerpt": "- The missing requested-side account anchor is not just a UX gap; it blocks durable historical requested-vs-effective analysis.\n- The `provider_account_id` problem is now cross-doc, not local to usage: identity, storage, and provider docs all risk normalizing it differently.\n- OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not s",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-032",
+      "obligation_text": "Cross-check listed Plans docs against canonical contracts and rewrite direction before treating them as SSOT.",
+      "obligation_category": "routing_rule",
+      "required_action": "reference",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-033",
+      "obligation_text": "Keep Worktrees as the primary Source Control subview while enriching rows with package/lane/run ownership, lifecycle state, and blocked/recovery metadata.",
+      "obligation_category": "design_choice",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000468"
+      ],
+      "source_group_ids": [
+        "wg-003-100"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2077,
+          "end_line": 2094
+        }
+      ],
+      "exact_source_excerpt": "- `Contracts_V0.md` is now the clearest canonical owner for requested/effective runtime identity naming, but its downstream consumers remain materially weaker:\n  - requested/effective account identity is still asymmetric\n  - addendum consolidation is incomplete\n  - downstream usage/storage/UI docs still weaken or rename the canonical field set\n- Tier-era operator surfaces remain productized even w",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-034",
+      "obligation_text": "Avoid duplicating raw worktree inventory tables inside Orchestrator; use lane/worktree summaries, badges, and deep links into Source Control.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000468"
+      ],
+      "source_group_ids": [
+        "wg-003-100"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2077,
+          "end_line": 2094
+        }
+      ],
+      "exact_source_excerpt": "- `Contracts_V0.md` is now the clearest canonical owner for requested/effective runtime identity naming, but its downstream consumers remain materially weaker:\n  - requested/effective account identity is still asymmetric\n  - addendum consolidation is incomplete\n  - downstream usage/storage/UI docs still weaken or rename the canonical field set\n- Tier-era operator surfaces remain productized even w",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-035",
+      "obligation_text": "Align Multi-Account, Prompt_Pipeline, Contracts_V0, bridged-provider docs, and Permissions_System with one requested/effective execution identity model (including concrete requested account anchoring).",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-036",
+      "obligation_text": "Define one shared projection-health / trust-state record family for Orchestrator, widgets, and Run Graph with action gating and Ledger/direct-record fallback.",
+      "obligation_category": "schema_definition",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-037",
+      "obligation_text": "Bind GitHub identity to stable internal account_id while keeping login as provider-native disclosure metadata; preserve github_api vs copilot_github realm separation.",
+      "obligation_category": "constraint",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-038",
+      "obligation_text": "Retire tier-centric widget catalog assumptions (`widget.tier_tree`, TierChanged wiring) in Plans/Widget_System.md to match fixed-tab Orchestrator rewrite.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-039",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000474"
+      ],
+      "source_group_ids": [
+        "wg-003-102"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2109,
+          "end_line": 2113
+        }
+      ],
+      "exact_source_excerpt": "- `Contracts_V0.md` forbids `_persona_id` canonical names while downstream UI/runtime docs still consume or display them.\n- `usage-feature.md` and `storage-plan.md` still use `provider_account_id` without a canonical ownership/deconfliction rule.\n- `Orchestrator_Page.md` says Progress widgets are Dashboard-portable while `Widget_System.md` still excludes some of those widgets from Dashboard hostab",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-040",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000477"
+      ],
+      "source_group_ids": [
+        "wg-003-103"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2116,
+          "end_line": 2123
+        }
+      ],
+      "exact_source_excerpt": "- Reconcile downstream consumers to one canonical requested/effective identity block owned by `Contracts_V0.md`, including explicit account-switch/fallback disclosure fields.\n- Replace tier-first aggregation and event anchoring in usage/storage/UI docs with attempt/node/lane/package/seam-aware attribution, leaving tier terms only as compatibility aliases if needed.\n- Introduce one shared projectio",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-041",
+      "obligation_text": "Keep dirty_worktree and worktree_conflict as canonical blocked reasons visible in Orchestrator and Source Control without collapsing into generic SCM errors.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "preserve",
+      "source_block_ids": [
+        "lblock-000480"
+      ],
+      "source_group_ids": [
+        "wg-003-104"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2126,
+          "end_line": 2151
+        }
+      ],
+      "exact_source_excerpt": "- The biggest GPT-5.4 value-add was not just \"tier drift exists\"; it was showing where old and new models are both still treated as canonical in the same surface area.\n- Projection trust/freshness needs a separate vocabulary from preview/browser `trust_tier`; these are currently at risk of semantic collision.\n- Usage/UI requests for auth-mode/effective-account filtering are already present in adja",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "dirty_worktree",
+        "worktree_conflict"
+      ]
+    },
+    {
+      "obligation_id": "obl-004-042",
+      "obligation_text": "Preserve historical run/package/node/lane references after live worktree cleanup; render missing live worktrees as historical/retired/removed with lineage fields intact.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000483"
+      ],
+      "source_group_ids": [
+        "wg-003-105"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2154,
+          "end_line": 2167
+        }
+      ],
+      "exact_source_excerpt": "- Strong rule emerging from current docs + rewrite:\n  - historical run/package/node/lane references MUST survive after live worktree cleanup\n  - a missing live worktree must render as `historical/retired/removed`, not disappear\n  - lineage views must preserve:\n    - `worktree_id`\n    - path snapshot\n    - branch snapshot\n    - compare target / commit-range snapshot\n    - owning package/lane identi",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Lineage must retain worktree_id, path/branch/compare snapshots, owning package/lane when applicable."
+    },
+    {
+      "obligation_id": "obl-004-043",
+      "obligation_text": "Align Multi-Account, Prompt_Pipeline, Contracts_V0, bridged-provider docs, and Permissions_System with one requested/effective execution identity model (including concrete requested account anchoring).",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-044",
+      "obligation_text": "Replace tier-bound ownership and scheduling language with node/package/seam/lane-aware semantics across Orchestrator, Source Control, and storage docs.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-045",
+      "obligation_text": "Bind GitHub identity to stable internal account_id while keeping login as provider-native disclosure metadata; preserve github_api vs copilot_github realm separation.",
+      "obligation_category": "constraint",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-046",
+      "obligation_text": "Make lane the primary operational object in Orchestrator while worktree remains concrete Git/filesystem backing; route Git-native mutations through Source Control with preserved context.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-047",
+      "obligation_text": "Document Orchestrator vs Source Control boundary: Orchestrator owns lane-pool operational truth; Source Control owns repo/worktree execution and inspection operations with disabled reasons for destructive actions.",
+      "obligation_category": "routing_rule",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-048",
+      "obligation_text": "Adopt shared lane/worktree lifecycle vocabulary (baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical) across docs and distinguish policy queue state from filesystem removal.",
+      "obligation_category": "enum_definition",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "baseline",
+        "active",
+        "suspect",
+        "restoring",
+        "retained",
+        "cleanup_eligible",
+        "archived",
+        "removed",
+        "historical"
+      ]
+    },
+    {
+      "obligation_id": "obl-004-049",
+      "obligation_text": "Apply candidate fixes from source: separate lane lifecycle, worktree filesystem state, and runtime blocked/recovery state in documentation.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000489"
+      ],
+      "source_group_ids": [
+        "wg-003-107"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2184,
+          "end_line": 2193
+        }
+      ],
+      "exact_source_excerpt": "- Add a formal distinction between:\n  - `lane lifecycle state`\n  - `worktree filesystem state`\n  - `runtime blocked/recovery state`\n- Reword Source Control worktree rows from `owner run/tier` to something like:\n  - owner run/package/lane\n  - or owner package/lane with run reference secondary\n- Update Orchestrator contracts so the `Seams` tab and `Node Graph` show lane/worktree state through packag",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-050",
+      "obligation_text": "Reword Source Control worktree ownership labels away from run/tier toward run/package/lane (or package/lane-primary with run secondary).",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000489"
+      ],
+      "source_group_ids": [
+        "wg-003-107"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2184,
+          "end_line": 2193
+        }
+      ],
+      "exact_source_excerpt": "- Add a formal distinction between:\n  - `lane lifecycle state`\n  - `worktree filesystem state`\n  - `runtime blocked/recovery state`\n- Reword Source Control worktree rows from `owner run/tier` to something like:\n  - owner run/package/lane\n  - or owner package/lane with run reference secondary\n- Update Orchestrator contracts so the `Seams` tab and `Node Graph` show lane/worktree state through packag",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-051",
+      "obligation_text": "Keep dirty_worktree and worktree_conflict as canonical blocked reasons visible in Orchestrator and Source Control without collapsing into generic SCM errors.",
+      "obligation_category": "acceptance_criterion",
+      "required_action": "preserve",
+      "source_block_ids": [
+        "lblock-000492"
+      ],
+      "source_group_ids": [
+        "wg-003-108"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2196,
+          "end_line": 2200
+        }
+      ],
+      "exact_source_excerpt": "- `dirty_worktree` and `worktree_conflict` are canonical blocked reasons and must remain visible in both surfaces without becoming generic SCM errors.\n- project identity must stay stable across path moves/rebinds and across worktree-aware flows.\n- cleanup of files inside a worktree is not the same thing as removing the worktree itself.\n- later broader second sweep must revisit:\n  - Source Control-",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "dirty_worktree",
+        "worktree_conflict"
+      ]
+    },
+    {
+      "obligation_id": "obl-004-052",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000493"
+      ],
+      "source_group_ids": [
+        "wg-003-108"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2201,
+          "end_line": 2203
+        }
+      ],
+      "exact_source_excerpt": "  - project/dashboard interaction docs\n  - widget/projection contracts\n  - glossary/help/labels for lane/worktree terminology\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-053",
+      "obligation_text": "Keep Source Control worktree-first in UI/docs while Orchestrator stays package/seam/lane-first (asymmetric surfaces).",
+      "obligation_category": "design_choice",
+      "required_action": "preserve",
+      "source_block_ids": [
+        "lblock-000498"
+      ],
+      "source_group_ids": [
+        "wg-003-110"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2208,
+          "end_line": 2208
+        }
+      ],
+      "exact_source_excerpt": "- `Source Control` stays `worktree-first`.\n",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "notes": "Exact phrasing preserved in excerpt."
+    },
+    {
+      "obligation_id": "obl-004-054",
+      "obligation_text": "Keep Worktrees as the primary Source Control subview while enriching rows with package/lane/run ownership, lifecycle state, and blocked/recovery metadata.",
+      "obligation_category": "design_choice",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000501"
+      ],
+      "source_group_ids": [
+        "wg-003-111"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2211,
+          "end_line": 2215
+        }
+      ],
+      "exact_source_excerpt": "- Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.\n- Orchestrator should remain package/seam/lane-first and treat worktrees as backing execution assets shown in context.\n- The surfaces therefore stay intentionally asymmetric:\n  - Orchestrator = package/governance/execution truth\n  - Source Control = concrete Git/worktree inspectio",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-055",
+      "obligation_text": "Avoid duplicating raw worktree inventory tables inside Orchestrator; use lane/worktree summaries, badges, and deep links into Source Control.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000501"
+      ],
+      "source_group_ids": [
+        "wg-003-111"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2211,
+          "end_line": 2215
+        }
+      ],
+      "exact_source_excerpt": "- Source Control should keep `Worktrees` as the primary subview/object list rather than flipping to a lane-first list.\n- Orchestrator should remain package/seam/lane-first and treat worktrees as backing execution assets shown in context.\n- The surfaces therefore stay intentionally asymmetric:\n  - Orchestrator = package/governance/execution truth\n  - Source Control = concrete Git/worktree inspectio",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-056",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000504"
+      ],
+      "source_group_ids": [
+        "wg-003-112"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2218,
+          "end_line": 2228
+        }
+      ],
+      "exact_source_excerpt": "- Source Control worktree rows remain concrete and filesystem/Git oriented, but must show enough orchestration metadata to prevent isolation drift:\n  - owning package\n  - owning lane\n  - run reference when relevant\n  - lifecycle state\n  - blocked/recovery state when relevant\n- Orchestrator should not mirror a raw worktree inventory table.\n- Orchestrator should instead show:\n  - lane/worktree summa",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-057",
+      "obligation_text": "Do not hide worktree as the primary Source Control object; show Lane as ownership/context metadata, not a replacement primary list object.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_block_ids": [
+        "lblock-000507"
+      ],
+      "source_group_ids": [
+        "wg-003-113"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2231,
+          "end_line": 2232
+        }
+      ],
+      "exact_source_excerpt": "- Do not rename Source Control objects so aggressively that `worktree` becomes hidden or secondary there.\n- `Lane` is important for runtime/governance modeling, but in Source Control it should appear as ownership/context metadata for a worktree, not replace worktree as the primary object.\n",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-058",
+      "obligation_text": "Bind GitHub identity to stable internal account_id while keeping login as provider-native disclosure metadata; preserve github_api vs copilot_github realm separation.",
+      "obligation_category": "constraint",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000510"
+      ],
+      "source_group_ids": [
+        "wg-003-114"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2235,
+          "end_line": 2243
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely keep `Worktrees` subview name and worktree-row-first structure\n  - enrich row metadata with package/lane/run ownership and lifecycle state\n- `Plans/Orchestrator_Page.md`\n  - make package/lane state primary\n  - keep worktree references contextual, actionable, and deep-linkable\n- `Plans/FinalGUISpec.md`\n  - preserve Source Control as Git/worktree-first\n  - ",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-059",
+      "obligation_text": "Make lane the primary operational object in Orchestrator while worktree remains concrete Git/filesystem backing; route Git-native mutations through Source Control with preserved context.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000510"
+      ],
+      "source_group_ids": [
+        "wg-003-114"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2235,
+          "end_line": 2243
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely keep `Worktrees` subview name and worktree-row-first structure\n  - enrich row metadata with package/lane/run ownership and lifecycle state\n- `Plans/Orchestrator_Page.md`\n  - make package/lane state primary\n  - keep worktree references contextual, actionable, and deep-linkable\n- `Plans/FinalGUISpec.md`\n  - preserve Source Control as Git/worktree-first\n  - ",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-060",
+      "obligation_text": "Adopt shared lane/worktree lifecycle vocabulary (baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical) across docs and distinguish policy queue state from filesystem removal.",
+      "obligation_category": "enum_definition",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000510"
+      ],
+      "source_group_ids": [
+        "wg-003-114"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2235,
+          "end_line": 2243
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely keep `Worktrees` subview name and worktree-row-first structure\n  - enrich row metadata with package/lane/run ownership and lifecycle state\n- `Plans/Orchestrator_Page.md`\n  - make package/lane state primary\n  - keep worktree references contextual, actionable, and deep-linkable\n- `Plans/FinalGUISpec.md`\n  - preserve Source Control as Git/worktree-first\n  - ",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "baseline",
+        "active",
+        "suspect",
+        "restoring",
+        "retained",
+        "cleanup_eligible",
+        "archived",
+        "removed",
+        "historical"
+      ]
+    },
+    {
+      "obligation_id": "obl-004-061",
+      "obligation_text": "Treat Source Control as a constrained side panel: information-dense rows, compact chips, expandable details, deep-links to wider surfaces.",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000515"
+      ],
+      "source_group_ids": [
+        "wg-003-116"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2248,
+          "end_line": 2248
+        }
+      ],
+      "exact_source_excerpt": "- The `Source Control` panel is narrow/small and should be treated as a constrained side-panel surface, not a broad information canvas.\n",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-062",
+      "obligation_text": "Fold this ledger block into the canonical Plans rewrite: update cited paths and remove tier/thread-era mismatches described verbatim in excerpt.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000518"
+      ],
+      "source_group_ids": [
+        "wg-003-117"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2251,
+          "end_line": 2260
+        }
+      ],
+      "exact_source_excerpt": "- Source Control rows and tabs must stay information-dense but selective.\n- Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel.\n- Prefer:\n  - one strong primary line\n  - compact status chips/icons\n  - expandable row/detail affordances\n  - deep-link out to wider surfaces when context gets too large\n- This reinforces the surface split:\n  - Source ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-063",
+      "obligation_text": "Cross-check listed Plans docs against canonical contracts and rewrite direction before treating them as SSOT.",
+      "obligation_category": "routing_rule",
+      "required_action": "reference",
+      "source_block_ids": [
+        "lblock-000523"
+      ],
+      "source_group_ids": [
+        "wg-003-119"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2265,
+          "end_line": 2268
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/usage-feature.md`\n",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-064",
+      "obligation_text": "Retire tier-centric widget catalog assumptions (`widget.tier_tree`, TierChanged wiring) in Plans/Widget_System.md to match fixed-tab Orchestrator rewrite.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000526"
+      ],
+      "source_group_ids": [
+        "wg-003-120"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2271,
+          "end_line": 2284
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md` is still heavily aligned to the older orchestrator model:\n  - widget catalog is tier-centric\n  - `widget.tier_tree` is still canonical for `Orch/Tiers`\n  - `widget.current_task`, `widget.completed_prose`, and `widget.agent_terminal` all read as tier/task/subtask oriented\n  - push contracts are wired directly to older event names like `TierChanged`, `IterationStart`, and ",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-065",
+      "obligation_text": "Restrict general widget add/remove/move/resize behavior to Dashboard, Usage, and Orchestrator Progress; keep Seams, Node Graph, Evidence, History, and Ledger as fixed native layouts.",
+      "obligation_category": "design_choice",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000529"
+      ],
+      "source_group_ids": [
+        "wg-003-121"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2287,
+          "end_line": 2300
+        }
+      ],
+      "exact_source_excerpt": "- Recommended rule:\n  - widgets are allowed on:\n    - `Dashboard`\n    - `Usage`\n    - `Orchestrator / Progress`\n  - widgets are not the composition model for:\n    - `Orchestrator / Seams`\n    - `Orchestrator / Node Graph`\n    - `Orchestrator / Evidence`\n    - `Orchestrator / History`\n    - `Orchestrator / Ledger`\n- Practical implication:\n  - those non-Progress tabs may internally use reusable view",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-066",
+      "obligation_text": "Allow reusable view components inside non-Progress Orchestrator tabs without exposing them as user-composable widgets.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_block_ids": [
+        "lblock-000529"
+      ],
+      "source_group_ids": [
+        "wg-003-121"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2287,
+          "end_line": 2300
+        }
+      ],
+      "exact_source_excerpt": "- Recommended rule:\n  - widgets are allowed on:\n    - `Dashboard`\n    - `Usage`\n    - `Orchestrator / Progress`\n  - widgets are not the composition model for:\n    - `Orchestrator / Seams`\n    - `Orchestrator / Node Graph`\n    - `Orchestrator / Evidence`\n    - `Orchestrator / History`\n    - `Orchestrator / Ledger`\n- Practical implication:\n  - those non-Progress tabs may internally use reusable view",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-067",
+      "obligation_text": "Refactor widget contracts to consume stable orchestrator projections and canonical record/query contracts instead of legacy tier events/objects.",
+      "obligation_category": "data_shape",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000532"
+      ],
+      "source_group_ids": [
+        "wg-003-122"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2303,
+          "end_line": 2318
+        }
+      ],
+      "exact_source_excerpt": "- Recommended rule:\n  - widgets must consume stable orchestrator projections and canonical record/query contracts\n  - widgets must not define meaning by subscribing directly to legacy event names or tier-specific objects\n- Example shift:\n  - from `TierChanged` / `IterationStart` / `TierTree`\n  - toward projections such as:\n    - current run summary\n    - current activity projection\n    - attention",
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-004-068",
+      "obligation_text": "Deprecate widget wiring to legacy names such as TierChanged, IterationStart, and tier-tree objects; migrate to seam/package/lane projections listed in source.",
+      "obligation_category": "routing_rule",
+      "required_action": "implement",
+      "source_block_ids": [
+        "lblock-000532"
+      ],
+      "source_group_ids": [
+        "wg-003-122"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2303,
+          "end_line": 2318
+        }
+      ],
+      "exact_source_excerpt": "- Recommended rule:\n  - widgets must consume stable orchestrator projections and canonical record/query contracts\n  - widgets must not define meaning by subscribing directly to legacy event names or tier-specific objects\n- Example shift:\n  - from `TierChanged` / `IterationStart` / `TierTree`\n  - toward projections such as:\n    - current run summary\n    - current activity projection\n    - attention",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "TierChanged",
+        "IterationStart",
+        "Progress",
+        "TierTree"
+      ]
+    }
+  ],
+  "open_questions": [
+    {
+      "question_id": "q-004-001",
+      "question_text": "define one canonical field envelope for `{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}` so schemas stop drifting independently.",
+      "required_action": "open_decision",
+      "source_block_ids": [
+        "lblock-000409"
+      ],
+      "source_group_ids": [
+        "wg-003-078"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1894,
+          "end_line": 1895
+        }
+      ],
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: define one canonical field envelope for `{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}` so schemas stop drifting independently.\n"
+    },
+    {
+      "question_id": "q-004-002",
+      "question_text": "choose whether tier terms become pure derived UI aliases or are fully deprecated in orchestration/runtime contracts.",
+      "required_action": "open_decision",
+      "source_block_ids": [
+        "lblock-000411"
+      ],
+      "source_group_ids": [
+        "wg-003-079"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1897,
+          "end_line": 1898
+        }
+      ],
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: choose whether tier terms become pure derived UI aliases or are fully deprecated in orchestration/runtime contracts.\n"
+    },
+    {
+      "question_id": "q-004-003",
+      "question_text": "decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests.",
+      "required_action": "open_decision",
+      "source_block_ids": [
+        "lblock-000413"
+      ],
+      "source_group_ids": [
+        "wg-003-080"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1900,
+          "end_line": 1901
+        }
+      ],
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests.\n"
+    },
+    {
+      "question_id": "q-004-004",
+      "question_text": "formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model.",
+      "required_action": "open_decision",
+      "source_block_ids": [
+        "lblock-000415"
+      ],
+      "source_group_ids": [
+        "wg-003-081"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1903,
+          "end_line": 1904
+        }
+      ],
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model.\n"
+    },
+    {
+      "question_id": "q-004-005",
+      "question_text": "define package-based lane-pool worktree policy end-to-end, including contamination, safe-point, restore, and visibility rules shared by Orchestrator and Source Control.",
+      "required_action": "open_decision",
+      "source_block_ids": [
+        "lblock-000417"
+      ],
+      "source_group_ids": [
+        "wg-003-082"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1906,
+          "end_line": 1907
+        }
+      ],
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: define package-based lane-pool worktree policy end-to-end, including contamination, safe-point, restore, and visibility rules shared by Orchestrator and Source Control.\n"
+    },
+    {
+      "question_id": "q-004-006",
+      "question_text": "unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions.",
+      "required_action": "open_decision",
+      "source_block_ids": [
+        "lblock-000419"
+      ],
+      "source_group_ids": [
+        "wg-003-083"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1909,
+          "end_line": 1910
+        }
+      ],
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions.\n"
+    }
+  ],
+  "doc_hints": [
+    {
+      "hint_id": "dh-004-001",
+      "hint_type": "affected_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_block_ids": [
+        "lblock-000375"
+      ],
+      "source_group_ids": [
+        "wg-003-061"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1818,
+          "end_line": 1819
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.\n"
+    },
+    {
+      "hint_id": "dh-004-002",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000377"
+      ],
+      "source_group_ids": [
+        "wg-003-062"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1821,
+          "end_line": 1822
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely issue: Source Control ownership and GitHub actions remain branch/worktree-centric, without package/seam/lane-aware visibility.\n"
+    },
+    {
+      "hint_id": "dh-004-003",
+      "hint_type": "affected_doc",
+      "path": "Plans/feature-list.md",
+      "source_block_ids": [
+        "lblock-000379"
+      ],
+      "source_group_ids": [
+        "wg-003-063"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1824,
+          "end_line": 1825
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n"
+    },
+    {
+      "hint_id": "dh-004-004",
+      "hint_type": "affected_doc",
+      "path": "Plans/newfeatures.md",
+      "source_block_ids": [
+        "lblock-000379"
+      ],
+      "source_group_ids": [
+        "wg-003-063"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1824,
+          "end_line": 1825
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n"
+    },
+    {
+      "hint_id": "dh-004-005",
+      "hint_type": "affected_doc",
+      "path": "Plans/MiscPlan.md",
+      "source_block_ids": [
+        "lblock-000379"
+      ],
+      "source_group_ids": [
+        "wg-003-063"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1824,
+          "end_line": 1825
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n"
+    },
+    {
+      "hint_id": "dh-004-006",
+      "hint_type": "affected_doc",
+      "path": "Plans/assistant-chat-design.md",
+      "source_block_ids": [
+        "lblock-000381"
+      ],
+      "source_group_ids": [
+        "wg-003-064"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1827,
+          "end_line": 1828
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/assistant-chat-design.md`\n  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration.\n"
+    },
+    {
+      "hint_id": "dh-004-007",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-008",
+      "hint_type": "affected_doc",
+      "path": "Plans/Executor_Protocol.md",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-009",
+      "hint_type": "affected_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-010",
+      "hint_type": "affected_doc",
+      "path": "Plans/human-in-the-loop.md",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-011",
+      "hint_type": "affected_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-012",
+      "hint_type": "affected_doc",
+      "path": "Plans/plan_graph.schema.json",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-013",
+      "hint_type": "affected_doc",
+      "path": "Plans/project_plan_node.schema.json",
+      "source_block_ids": [
+        "lblock-000385"
+      ],
+      "source_group_ids": [
+        "wg-003-066"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1832,
+          "end_line": 1840
+        }
+      ],
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-014",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n"
+    },
+    {
+      "hint_id": "dh-004-015",
+      "hint_type": "affected_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n"
+    },
+    {
+      "hint_id": "dh-004-016",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n"
+    },
+    {
+      "hint_id": "dh-004-017",
+      "hint_type": "affected_doc",
+      "path": "Plans/Widget_System.md",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n"
+    },
+    {
+      "hint_id": "dh-004-018",
+      "hint_type": "affected_doc",
+      "path": "Plans/UI_Command_Catalog.md",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n"
+    },
+    {
+      "hint_id": "dh-004-019",
+      "hint_type": "affected_doc",
+      "path": "Plans/newtools.md",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n"
+    },
+    {
+      "hint_id": "dh-004-020",
+      "hint_type": "affected_doc",
+      "path": "Plans/assistant-chat-design.md",
+      "source_block_ids": [
+        "lblock-000387"
+      ],
+      "source_group_ids": [
+        "wg-003-067"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1842,
+          "end_line": 1850
+        }
+      ],
+      "exact_source_excerpt": "- priority 2\n  - docs that are misleading but not immediately blocking\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n"
+    },
+    {
+      "hint_id": "dh-004-021",
+      "hint_type": "affected_doc",
+      "path": "Plans/00-plans-index.md",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-022",
+      "hint_type": "affected_doc",
+      "path": "Plans/Crosswalk.md",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-023",
+      "hint_type": "affected_doc",
+      "path": "Plans/Glossary.md",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-024",
+      "hint_type": "affected_doc",
+      "path": "Plans/feature-list.md",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-025",
+      "hint_type": "affected_doc",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-026",
+      "hint_type": "affected_doc",
+      "path": "Plans/usage-feature.md",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-027",
+      "hint_type": "affected_doc",
+      "path": "Plans/auto_decisions.schema.json",
+      "source_block_ids": [
+        "lblock-000389"
+      ],
+      "source_group_ids": [
+        "wg-003-068"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1852,
+          "end_line": 1860
+        }
+      ],
+      "exact_source_excerpt": "- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`\n"
+    },
+    {
+      "hint_id": "dh-004-028",
+      "hint_type": "affected_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_block_ids": [
+        "lblock-000393"
+      ],
+      "source_group_ids": [
+        "wg-003-070"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1864,
+          "end_line": 1866
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`\n  - why it matters: canonical persona field names already disagree before account identity is added.\n"
+    },
+    {
+      "hint_id": "dh-004-029",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000393"
+      ],
+      "source_group_ids": [
+        "wg-003-070"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1864,
+          "end_line": 1866
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`\n  - why it matters: canonical persona field names already disagree before account identity is added.\n"
+    },
+    {
+      "hint_id": "dh-004-030",
+      "hint_type": "affected_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_block_ids": [
+        "lblock-000395"
+      ],
+      "source_group_ids": [
+        "wg-003-071"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1868,
+          "end_line": 1870
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`\n  - why it matters: blocked action IDs cannot be wired safely while both `allowed_actions[]` and `allowed_action_ids[]` remain canonical.\n"
+    },
+    {
+      "hint_id": "dh-004-031",
+      "hint_type": "affected_doc",
+      "path": "Plans/human-in-the-loop.md",
+      "source_block_ids": [
+        "lblock-000395"
+      ],
+      "source_group_ids": [
+        "wg-003-071"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1868,
+          "end_line": 1870
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`\n  - why it matters: blocked action IDs cannot be wired safely while both `allowed_actions[]` and `allowed_action_ids[]` remain canonical.\n"
+    },
+    {
+      "hint_id": "dh-004-032",
+      "hint_type": "affected_doc",
+      "path": "Plans/Executor_Protocol.md",
+      "source_block_ids": [
+        "lblock-000397"
+      ],
+      "source_group_ids": [
+        "wg-003-072"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1872,
+          "end_line": 1874
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`\n  - why it matters: scheduler truth is split between lexicographic, scored, and UI-derived recovery models.\n"
+    },
+    {
+      "hint_id": "dh-004-033",
+      "hint_type": "affected_doc",
+      "path": "Plans/Progression_Gates.md",
+      "source_block_ids": [
+        "lblock-000397"
+      ],
+      "source_group_ids": [
+        "wg-003-072"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1872,
+          "end_line": 1874
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`\n  - why it matters: scheduler truth is split between lexicographic, scored, and UI-derived recovery models.\n"
+    },
+    {
+      "hint_id": "dh-004-034",
+      "hint_type": "affected_doc",
+      "path": "Plans/plan_graph.schema.json",
+      "source_block_ids": [
+        "lblock-000397"
+      ],
+      "source_group_ids": [
+        "wg-003-072"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1872,
+          "end_line": 1874
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`\n  - why it matters: scheduler truth is split between lexicographic, scored, and UI-derived recovery models.\n"
+    },
+    {
+      "hint_id": "dh-004-035",
+      "hint_type": "affected_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_block_ids": [
+        "lblock-000397"
+      ],
+      "source_group_ids": [
+        "wg-003-072"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1872,
+          "end_line": 1874
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`\n  - why it matters: scheduler truth is split between lexicographic, scored, and UI-derived recovery models.\n"
+    },
+    {
+      "hint_id": "dh-004-036",
+      "hint_type": "affected_doc",
+      "path": "Plans/human-in-the-loop.md",
+      "source_block_ids": [
+        "lblock-000399"
+      ],
+      "source_group_ids": [
+        "wg-003-073"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1876,
+          "end_line": 1878
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`\n  - why it matters: one doc says HITL is tier-boundary only while another allows mid-tier approval nodes.\n"
+    },
+    {
+      "hint_id": "dh-004-037",
+      "hint_type": "affected_doc",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "source_block_ids": [
+        "lblock-000399"
+      ],
+      "source_group_ids": [
+        "wg-003-073"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1876,
+          "end_line": 1878
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`\n  - why it matters: one doc says HITL is tier-boundary only while another allows mid-tier approval nodes.\n"
+    },
+    {
+      "hint_id": "dh-004-038",
+      "hint_type": "affected_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_block_ids": [
+        "lblock-000401"
+      ],
+      "source_group_ids": [
+        "wg-003-074"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1880,
+          "end_line": 1882
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`\n  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.\n"
+    },
+    {
+      "hint_id": "dh-004-039",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000401"
+      ],
+      "source_group_ids": [
+        "wg-003-074"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1880,
+          "end_line": 1882
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`\n  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.\n"
+    },
+    {
+      "hint_id": "dh-004-040",
+      "hint_type": "affected_doc",
+      "path": "Plans/feature-list.md",
+      "source_block_ids": [
+        "lblock-000401"
+      ],
+      "source_group_ids": [
+        "wg-003-074"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1880,
+          "end_line": 1882
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`\n  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.\n"
+    },
+    {
+      "hint_id": "dh-004-041",
+      "hint_type": "affected_doc",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "source_block_ids": [
+        "lblock-000403"
+      ],
+      "source_group_ids": [
+        "wg-003-075"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1884,
+          "end_line": 1886
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Containers_Registry_and_Unraid.md`\n  - why it matters: `needs_review` and blocked/failure payload semantics disagree inside the same doc, which will leak into automation-first operator flows.\n"
+    },
+    {
+      "hint_id": "dh-004-042",
+      "hint_type": "affected_doc",
+      "path": "Plans/sharding_config.json",
+      "source_block_ids": [
+        "lblock-000405"
+      ],
+      "source_group_ids": [
+        "wg-003-076"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1888,
+          "end_line": 1890
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`\n  - why it matters: fallback chunk-line settings disagree, showing state/decision drift even in supporting planning machinery.\n"
+    },
+    {
+      "hint_id": "dh-004-043",
+      "hint_type": "affected_doc",
+      "path": "Plans/auto_decisions.jsonl",
+      "source_block_ids": [
+        "lblock-000405"
+      ],
+      "source_group_ids": [
+        "wg-003-076"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1888,
+          "end_line": 1890
+        }
+      ],
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`\n  - why it matters: fallback chunk-line settings disagree, showing state/decision drift even in supporting planning machinery.\n"
+    },
+    {
+      "hint_id": "dh-004-044",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-045",
+      "hint_type": "candidate_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-046",
+      "hint_type": "candidate_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-047",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-048",
+      "hint_type": "candidate_doc",
+      "path": "Plans/MiscPlan.md",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-049",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-050",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_block_ids": [
+        "lblock-000424"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1915,
+          "end_line": 1921
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/MiscPlan.md`\n- `Plans/storage-plan.md`\n- `Plans/Run_Graph_View.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-051",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Multi-Account.md",
+      "source_block_ids": [
+        "lblock-000444"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2000,
+          "end_line": 2000
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-052",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Models_System.md",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-053",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Personas.md",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-054",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Prompt_Pipeline.md",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-055",
+      "hint_type": "candidate_doc",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-056",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Provider_OpenCode.md",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-057",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-058",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Permissions_System.md",
+      "source_block_ids": [
+        "lblock-000445"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2001,
+          "end_line": 2007
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Models_System.md`\n- `Plans/Personas.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/CLI_Bridged_Providers.md`\n- `Plans/Provider_OpenCode.md`\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n- `Plans/Permissions_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-059",
+      "hint_type": "affected_doc",
+      "path": "Plans/Multi-Account.md",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e"
+    },
+    {
+      "hint_id": "dh-004-060",
+      "hint_type": "affected_doc",
+      "path": "Plans/Prompt_Pipeline.md",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e"
+    },
+    {
+      "hint_id": "dh-004-061",
+      "hint_type": "affected_doc",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e"
+    },
+    {
+      "hint_id": "dh-004-062",
+      "hint_type": "affected_doc",
+      "path": "Plans/Personas.md",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e"
+    },
+    {
+      "hint_id": "dh-004-063",
+      "hint_type": "affected_doc",
+      "path": "Plans/Permissions_System.md",
+      "source_block_ids": [
+        "lblock-000451"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2030,
+          "end_line": 2039
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n  - strongest owner for switch/pressure behavior, but still lacks durable switch-history storage and does not align cleanly with scheduler dispatch or usage/storage identity fields\n- `Plans/Prompt_Pipeline.md`\n  - remains the best place to lock requested/effective identity semantics, but currently stops short of requested concrete-account identity and still embeds tier-e"
+    },
+    {
+      "hint_id": "dh-004-064",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-065",
+      "hint_type": "candidate_doc",
+      "path": "Plans/usage-feature.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-066",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-067",
+      "hint_type": "candidate_doc",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-068",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-069",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-070",
+      "hint_type": "candidate_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-071",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Widget_System.md",
+      "source_block_ids": [
+        "lblock-000465"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2067,
+          "end_line": 2074
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/storage-plan.md`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/GitHub_Integration.md`\n- `Plans/Widget_System.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-072",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and"
+    },
+    {
+      "hint_id": "dh-004-073",
+      "hint_type": "affected_doc",
+      "path": "Plans/storage-plan.md",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and"
+    },
+    {
+      "hint_id": "dh-004-074",
+      "hint_type": "affected_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and"
+    },
+    {
+      "hint_id": "dh-004-075",
+      "hint_type": "affected_doc",
+      "path": "Plans/Widget_System.md",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and"
+    },
+    {
+      "hint_id": "dh-004-076",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and"
+    },
+    {
+      "hint_id": "dh-004-077",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000471"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2097,
+          "end_line": 2106
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - still acts as a practical UI SSOT while encoding the old tab/widget/tier structure\n- `Plans/storage-plan.md`\n  - still has the most consequential split-brain between old event tables and newer runtime records, and still lacks a durable projection-health object family\n- `Plans/Run_Graph_View.md`\n  - now needs explicit requested/effective identity, trust-state, and"
+    },
+    {
+      "hint_id": "dh-004-078",
+      "hint_type": "affected_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F"
+    },
+    {
+      "hint_id": "dh-004-079",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F"
+    },
+    {
+      "hint_id": "dh-004-080",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F"
+    },
+    {
+      "hint_id": "dh-004-081",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F"
+    },
+    {
+      "hint_id": "dh-004-082",
+      "hint_type": "affected_doc",
+      "path": "Plans/MiscPlan.md",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F"
+    },
+    {
+      "hint_id": "dh-004-083",
+      "hint_type": "affected_doc",
+      "path": "Plans/storage-plan.md",
+      "source_block_ids": [
+        "lblock-000486"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2170,
+          "end_line": 2181
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - still frames ownership around `tier` / `subtask` rather than package lane pools.\n- `Plans/Orchestrator_Page.md`\n  - still references `Tiers` and per-tier worktree ownership.\n- `Plans/GitHub_Integration.md`\n  - `Worktrees` subview is correct directionally, but object copy still centers raw worktree rows rather than lane-backed operational identity.\n- `Plans/F"
+    },
+    {
+      "hint_id": "dh-004-084",
+      "hint_type": "missing_doc",
+      "path": "Plans/* (second sweep backlog)",
+      "source_block_ids": [
+        "lblock-000492"
+      ],
+      "source_group_ids": [
+        "wg-003-108"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2196,
+          "end_line": 2200
+        }
+      ],
+      "exact_source_excerpt": "- `dirty_worktree` and `worktree_conflict` are canonical blocked reasons and must remain visible in both surfaces without becoming generic SCM errors.\n- project identity must stay stable across path moves/rebinds and across worktree-aware flows.\n- cleanup of files inside a worktree is not the same thing as removing the worktree itself.\n- later broader second sweep must revisit:\n  - Source Control-",
+      "notes": "Source lists follow-on doc families for a later sweep."
+    },
+    {
+      "hint_id": "dh-004-085",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_block_ids": [
+        "lblock-000510"
+      ],
+      "source_group_ids": [
+        "wg-003-114"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2235,
+          "end_line": 2243
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely keep `Worktrees` subview name and worktree-row-first structure\n  - enrich row metadata with package/lane/run ownership and lifecycle state\n- `Plans/Orchestrator_Page.md`\n  - make package/lane state primary\n  - keep worktree references contextual, actionable, and deep-linkable\n- `Plans/FinalGUISpec.md`\n  - preserve Source Control as Git/worktree-first\n  - "
+    },
+    {
+      "hint_id": "dh-004-086",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000510"
+      ],
+      "source_group_ids": [
+        "wg-003-114"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2235,
+          "end_line": 2243
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely keep `Worktrees` subview name and worktree-row-first structure\n  - enrich row metadata with package/lane/run ownership and lifecycle state\n- `Plans/Orchestrator_Page.md`\n  - make package/lane state primary\n  - keep worktree references contextual, actionable, and deep-linkable\n- `Plans/FinalGUISpec.md`\n  - preserve Source Control as Git/worktree-first\n  - "
+    },
+    {
+      "hint_id": "dh-004-087",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_block_ids": [
+        "lblock-000510"
+      ],
+      "source_group_ids": [
+        "wg-003-114"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2235,
+          "end_line": 2243
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/GitHub_Integration.md`\n  - likely keep `Worktrees` subview name and worktree-row-first structure\n  - enrich row metadata with package/lane/run ownership and lifecycle state\n- `Plans/Orchestrator_Page.md`\n  - make package/lane state primary\n  - keep worktree references contextual, actionable, and deep-linkable\n- `Plans/FinalGUISpec.md`\n  - preserve Source Control as Git/worktree-first\n  - "
+    },
+    {
+      "hint_id": "dh-004-088",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Widget_System.md",
+      "source_block_ids": [
+        "lblock-000523"
+      ],
+      "source_group_ids": [
+        "wg-003-119"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2265,
+          "end_line": 2268
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/usage-feature.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-089",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_block_ids": [
+        "lblock-000523"
+      ],
+      "source_group_ids": [
+        "wg-003-119"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2265,
+          "end_line": 2268
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/usage-feature.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-090",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_block_ids": [
+        "lblock-000523"
+      ],
+      "source_group_ids": [
+        "wg-003-119"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2265,
+          "end_line": 2268
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/usage-feature.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-091",
+      "hint_type": "candidate_doc",
+      "path": "Plans/usage-feature.md",
+      "source_block_ids": [
+        "lblock-000523"
+      ],
+      "source_group_ids": [
+        "wg-003-119"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2265,
+          "end_line": 2268
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/usage-feature.md`\n",
+      "notes": "Listed as targeted read during research; verify against rewrite decisions."
+    },
+    {
+      "hint_id": "dh-004-092",
+      "hint_type": "affected_doc",
+      "path": "Plans/Widget_System.md",
+      "source_block_ids": [
+        "lblock-000526"
+      ],
+      "source_group_ids": [
+        "wg-003-120"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2271,
+          "end_line": 2284
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Widget_System.md` is still heavily aligned to the older orchestrator model:\n  - widget catalog is tier-centric\n  - `widget.tier_tree` is still canonical for `Orch/Tiers`\n  - `widget.current_task`, `widget.completed_prose`, and `widget.agent_terminal` all read as tier/task/subtask oriented\n  - push contracts are wired directly to older event names like `TierChanged`, `IterationStart`, and "
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-000373",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000373"
+      ],
+      "source_group_ids": [
+        "wg-003-060"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1816,
+          "end_line": 1816
+        }
+      ],
+      "exact_source_excerpt": "## Worktree / SCM / Parallelism Impacts\n"
+    },
+    {
+      "block_id": "lblock-000383",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000383"
+      ],
+      "source_group_ids": [
+        "wg-003-065"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1830,
+          "end_line": 1830
+        }
+      ],
+      "exact_source_excerpt": "## Cleanup Priorities\n"
+    },
+    {
+      "block_id": "lblock-000391",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000391"
+      ],
+      "source_group_ids": [
+        "wg-003-069"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1862,
+          "end_line": 1862
+        }
+      ],
+      "exact_source_excerpt": "## Contradictions To Resolve\n"
+    },
+    {
+      "block_id": "lblock-000407",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000407"
+      ],
+      "source_group_ids": [
+        "wg-003-077"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1892,
+          "end_line": 1892
+        }
+      ],
+      "exact_source_excerpt": "## Suggested Research Follow-Ups\n"
+    },
+    {
+      "block_id": "lblock-000421",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000421"
+      ],
+      "source_group_ids": [
+        "wg-003-084"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1912,
+          "end_line": 1912
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Source Control / Worktree Handshake\n"
+    },
+    {
+      "block_id": "lblock-000423",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000423"
+      ],
+      "source_group_ids": [
+        "wg-003-085"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1914,
+          "end_line": 1914
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000426",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000426"
+      ],
+      "source_group_ids": [
+        "wg-003-086"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1923,
+          "end_line": 1923
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000429",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000429"
+      ],
+      "source_group_ids": [
+        "wg-003-087"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1942,
+          "end_line": 1942
+        }
+      ],
+      "exact_source_excerpt": "### Emerging boundary model\n"
+    },
+    {
+      "block_id": "lblock-000432",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000432"
+      ],
+      "source_group_ids": [
+        "wg-003-088"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1961,
+          "end_line": 1961
+        }
+      ],
+      "exact_source_excerpt": "### Candidate object model shift\n"
+    },
+    {
+      "block_id": "lblock-000435",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000435"
+      ],
+      "source_group_ids": [
+        "wg-003-089"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1974,
+          "end_line": 1974
+        }
+      ],
+      "exact_source_excerpt": "### Lifecycle state direction\n"
+    },
+    {
+      "block_id": "lblock-000438",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000438"
+      ],
+      "source_group_ids": [
+        "wg-003-090"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1993,
+          "end_line": 1993
+        }
+      ],
+      "exact_source_excerpt": "### CTA / action boundary\n"
+    },
+    {
+      "block_id": "lblock-000441",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000441"
+      ],
+      "source_group_ids": [
+        "wg-003-091"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1997,
+          "end_line": 1997
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Opus Identity / Runtime Batch\n"
+    },
+    {
+      "block_id": "lblock-000443",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000443"
+      ],
+      "source_group_ids": [
+        "wg-003-092"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 1999,
+          "end_line": 1999
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000447",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000447"
+      ],
+      "source_group_ids": [
+        "wg-003-093"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2009,
+          "end_line": 2009
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000450",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000450"
+      ],
+      "source_group_ids": [
+        "wg-003-094"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2029,
+          "end_line": 2029
+        }
+      ],
+      "exact_source_excerpt": "### Highest-risk impacted docs\n"
+    },
+    {
+      "block_id": "lblock-000453",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000453"
+      ],
+      "source_group_ids": [
+        "wg-003-095"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2041,
+          "end_line": 2041
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced\n"
+    },
+    {
+      "block_id": "lblock-000456",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000456"
+      ],
+      "source_group_ids": [
+        "wg-003-096"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2048,
+          "end_line": 2048
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward\n"
+    },
+    {
+      "block_id": "lblock-000459",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000459"
+      ],
+      "source_group_ids": [
+        "wg-003-097"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2057,
+          "end_line": 2057
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details\n"
+    },
+    {
+      "block_id": "lblock-000462",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000462"
+      ],
+      "source_group_ids": [
+        "wg-003-098"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2064,
+          "end_line": 2064
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - GPT-5.4 Hotspot Recheck\n"
+    },
+    {
+      "block_id": "lblock-000464",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000464"
+      ],
+      "source_group_ids": [
+        "wg-003-099"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2066,
+          "end_line": 2066
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000467",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000467"
+      ],
+      "source_group_ids": [
+        "wg-003-100"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2076,
+          "end_line": 2076
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000470",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000470"
+      ],
+      "source_group_ids": [
+        "wg-003-101"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2096,
+          "end_line": 2096
+        }
+      ],
+      "exact_source_excerpt": "### Highest-risk impacted docs\n"
+    },
+    {
+      "block_id": "lblock-000473",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000473"
+      ],
+      "source_group_ids": [
+        "wg-003-102"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2108,
+          "end_line": 2108
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced\n"
+    },
+    {
+      "block_id": "lblock-000476",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000476"
+      ],
+      "source_group_ids": [
+        "wg-003-103"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2115,
+          "end_line": 2115
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward\n"
+    },
+    {
+      "block_id": "lblock-000479",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000479"
+      ],
+      "source_group_ids": [
+        "wg-003-104"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2125,
+          "end_line": 2125
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details\n"
+    },
+    {
+      "block_id": "lblock-000482",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000482"
+      ],
+      "source_group_ids": [
+        "wg-003-105"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2153,
+          "end_line": 2153
+        }
+      ],
+      "exact_source_excerpt": "### Historical reference rule\n"
+    },
+    {
+      "block_id": "lblock-000485",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000485"
+      ],
+      "source_group_ids": [
+        "wg-003-106"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2169,
+          "end_line": 2169
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced\n"
+    },
+    {
+      "block_id": "lblock-000488",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000488"
+      ],
+      "source_group_ids": [
+        "wg-003-107"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2183,
+          "end_line": 2183
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward\n"
+    },
+    {
+      "block_id": "lblock-000491",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000491"
+      ],
+      "source_group_ids": [
+        "wg-003-108"
+      ],
+      "source_shard_ids": [
+        "shard-0011"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2195,
+          "end_line": 2195
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details\n"
+    },
+    {
+      "block_id": "lblock-000495",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000495"
+      ],
+      "source_group_ids": [
+        "wg-003-109"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2205,
+          "end_line": 2205
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Terminology Decision\n"
+    },
+    {
+      "block_id": "lblock-000497",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000497"
+      ],
+      "source_group_ids": [
+        "wg-003-110"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2207,
+          "end_line": 2207
+        }
+      ],
+      "exact_source_excerpt": "### Confirmed decision\n"
+    },
+    {
+      "block_id": "lblock-000500",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000500"
+      ],
+      "source_group_ids": [
+        "wg-003-111"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2210,
+          "end_line": 2210
+        }
+      ],
+      "exact_source_excerpt": "### Implications\n"
+    },
+    {
+      "block_id": "lblock-000503",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000503"
+      ],
+      "source_group_ids": [
+        "wg-003-112"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2217,
+          "end_line": 2217
+        }
+      ],
+      "exact_source_excerpt": "### Recommended UI contract from this decision\n"
+    },
+    {
+      "block_id": "lblock-000506",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000506"
+      ],
+      "source_group_ids": [
+        "wg-003-113"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2230,
+          "end_line": 2230
+        }
+      ],
+      "exact_source_excerpt": "### Terminology guardrail\n"
+    },
+    {
+      "block_id": "lblock-000509",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000509"
+      ],
+      "source_group_ids": [
+        "wg-003-114"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2234,
+          "end_line": 2234
+        }
+      ],
+      "exact_source_excerpt": "### Follow-on doc impact\n"
+    },
+    {
+      "block_id": "lblock-000512",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000512"
+      ],
+      "source_group_ids": [
+        "wg-003-115"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2245,
+          "end_line": 2245
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Source Control Panel Constraint\n"
+    },
+    {
+      "block_id": "lblock-000514",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000514"
+      ],
+      "source_group_ids": [
+        "wg-003-116"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2247,
+          "end_line": 2247
+        }
+      ],
+      "exact_source_excerpt": "### Confirmed constraint\n"
+    },
+    {
+      "block_id": "lblock-000517",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000517"
+      ],
+      "source_group_ids": [
+        "wg-003-117"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2250,
+          "end_line": 2250
+        }
+      ],
+      "exact_source_excerpt": "### Implications\n"
+    },
+    {
+      "block_id": "lblock-000520",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000520"
+      ],
+      "source_group_ids": [
+        "wg-003-118"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2262,
+          "end_line": 2262
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Widget System Contract\n"
+    },
+    {
+      "block_id": "lblock-000522",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000522"
+      ],
+      "source_group_ids": [
+        "wg-003-119"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2264,
+          "end_line": 2264
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read\n"
+    },
+    {
+      "block_id": "lblock-000525",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000525"
+      ],
+      "source_group_ids": [
+        "wg-003-120"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2270,
+          "end_line": 2270
+        }
+      ],
+      "exact_source_excerpt": "### Key findings\n"
+    },
+    {
+      "block_id": "lblock-000528",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000528"
+      ],
+      "source_group_ids": [
+        "wg-003-121"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2286,
+          "end_line": 2286
+        }
+      ],
+      "exact_source_excerpt": "### Recommended widget boundary\n"
+    },
+    {
+      "block_id": "lblock-000531",
+      "reason": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "exclusion_category": "structural_heading",
+      "exclusion_rationale": "Markdown heading only; substantive requirements live in adjacent blocks.",
+      "source_block_ids": [
+        "lblock-000531"
+      ],
+      "source_group_ids": [
+        "wg-003-122"
+      ],
+      "source_shard_ids": [
+        "shard-0012"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 2302,
+          "end_line": 2302
+        }
+      ],
+      "exact_source_excerpt": "### Stable data-contract direction\n"
+    }
+  ],
+  "blocked_blocks": [],
+  "conversion_notes": [
+    "Heuristic dispatch used for long research blocks; each block has >=1 emitted record with full linkage.",
+    "Open questions emitted only for explicit follow-up question bullets in slice-004.",
+    "Doc hints use verbatim Plans paths from source; no candidate_doc promoted to affected_doc without source signal.",
+    "D4 structure_only repair applied: excluded_blocks_field_name_normalized"
+  ],
+  "subagent_execution": {
+    "subagent_task_id": "d2-slice-004",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "every_obligation_has_source_linkage": true,
+    "open_questions_not_answered_silently": true,
+    "doc_hints_preserved_separately": true
+  },
+  "status": "complete"
+}

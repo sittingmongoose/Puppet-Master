@@ -1,0 +1,181 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-067",
+  "subagent_invocation_id": "18bd5956-90c4-41ad-a9a3-8d0ea08bf295",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|concrete_plans_targets|Plans/Project_Output_Artifacts.md|Plans/usage-feature.md",
+      "obligation_ids": [
+        "obl-015-194"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "line_start": 801,
+          "line_end": 1088,
+          "window_index": 2,
+          "total_lines_in_doc": 1088,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 801,
+          "line_end": 1178,
+          "window_index": 2,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|Orchestrator_Page.md|WorktreeGitImprovement.md|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-190"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Orchestrator_Page.md",
+        "WorktreeGitImprovement.md",
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|Runtime_Artifacts_Panel.md|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-189",
+        "obl-015-195"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md",
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|WorktreeGitImprovement.md",
+      "obligation_ids": [
+        "obl-015-197"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "WorktreeGitImprovement.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|doc_discovery|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-187",
+        "obl-015-188",
+        "obl-015-202"
+      ],
+      "obligation_record_count": 3,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-067-g006",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0048",
+      "grouping_key": "shard-0048|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-184",
+        "obl-015-185",
+        "obl-015-186",
+        "obl-015-191",
+        "obl-015-192",
+        "obl-015-193",
+        "obl-015-196",
+        "obl-015-198",
+        "obl-015-199",
+        "obl-015-200",
+        "obl-015-201",
+        "obl-015-203",
+        "obl-015-204",
+        "obl-015-205",
+        "obl-015-206",
+        "obl-015-207",
+        "obl-015-208"
+      ],
+      "obligation_record_count": 17,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

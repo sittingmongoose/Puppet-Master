@@ -1,0 +1,905 @@
+{
+  "schema_id": "pm.transfer_coverage_reducer_task_result.v3.2.2",
+  "subagent_task_id": "e3-task-046",
+  "subagent_invocation_id": "fc66e3db-04bb-46cf-aeb6-255512d16c35",
+  "status": "complete",
+  "rows": [
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-093",
+      "row_hash": "b883ca36690396bc14ca584a5f549c5eaf963e40e5b0ce93b6ec314f5d6489df",
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "source_block_ids": [
+        "lblock-001729"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6799,
+          "end_line": 6800
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-094",
+      "row_hash": "f7e7ff599ae113a3a9e5f5e15663ffef270f4f334272c29c901df4044df1023f",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001730"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6801,
+          "end_line": 6803
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-095",
+      "row_hash": "388cbc4f7db3ff14907cc40874a7c012e2405733870402aba6013c384ad541a8",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001730"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6801,
+          "end_line": 6803
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "constraint",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-096",
+      "row_hash": "3e1000e87d688107a5bbd6ff0b7e1b3ec66fa6243d2d2e1108cd7fe3903fd03d",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001730"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6801,
+          "end_line": 6803
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-097",
+      "row_hash": "48ab21f147e051e6600ec4ef81a410a98ddf9b3c7ee8ce5f1e48d4ddce83c419",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001733"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6806,
+          "end_line": 6810
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-098",
+      "row_hash": "c730d088e4c26bd0f299002cf826694782e3b56959e5dd15a210a265de4af16f",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001733"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6806,
+          "end_line": 6810
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-099",
+      "row_hash": "ab7d6d267541c58b204bfd8613c22e684ff9a4441fa9f60ed4d4455c9345901d",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001733"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6806,
+          "end_line": 6810
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-100",
+      "row_hash": "d68b4b1d7e1e0d59c197f2a0d772b06bffaebb259bcf215c3e1ff9b9d5dac176",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001733"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6806,
+          "end_line": 6810
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-101",
+      "row_hash": "2f190dde68939449bf1159285caa4953ff56e817fcc331e227e7521277122bad",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001736"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6813,
+          "end_line": 6816
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-102",
+      "row_hash": "c22decf57aa27cc564e394c8d8842ccb1d8c25cf7c5ee7265af8204cd2d862de",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001736"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6813,
+          "end_line": 6816
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-103",
+      "row_hash": "2257b77a90910ef00a05605a2f9f9266bd359dba1adef63523b9d8033781adc3",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001736"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6813,
+          "end_line": 6816
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-104",
+      "row_hash": "01766a3e64e17f572ad4562bf741e5697b25ea260d1ed026dc068ee5c7a54fe4",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001736"
+      ],
+      "source_group_ids": [
+        "wg-009-005"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6813,
+          "end_line": 6816
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-105",
+      "row_hash": "3c84c131a40966e15c090ff3dad296f02e8f04063e4bf0ef9158aa8155bacd36",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001744"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6831,
+          "end_line": 6851
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-106",
+      "row_hash": "ac613be9e35fe51a063f340e226774372c51cec6431cad26f6b68467a91d1dde",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001744"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6831,
+          "end_line": 6851
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "acceptance_criterion",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-107",
+      "row_hash": "53da264abc014ba953d6fa14afa2e83eafea5fff47a46f700448b04334365062",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001744"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6831,
+          "end_line": 6851
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-108",
+      "row_hash": "0a3b93287d872eab6573027253eb05f1d205f9f9eb535332774607c9defcac04",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001744"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6831,
+          "end_line": 6851
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "acceptance_criterion",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-109",
+      "row_hash": "2ad25d002f68d0b8b93d19f2b624150c96794ef1c9e989af808cebcb4e37f5e6",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001744"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6831,
+          "end_line": 6851
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "routing_rule",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-110",
+      "row_hash": "5823b80e7ed4395b62e0ac30191e5bc2f482a2ee012b4a946a44708f9e105bfc",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001747"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6854,
+          "end_line": 6863
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-046-g003",
+      "obligation_category": "directive",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1027,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-111",
+      "row_hash": "85ed6fc0c6e116c4624f73852328fb4a03f000e0b559213fb7fc57ba1d6d7bac",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001747"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6854,
+          "end_line": 6863
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-046-g005",
+      "obligation_category": "directive",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0705,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-112",
+      "row_hash": "34638b4a8ed2ca341693bee75e8a0344b9b02a66b2804c884efe5fec0768d977",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001747"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6854,
+          "end_line": 6863
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-046-g002",
+      "obligation_category": "directive",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0689,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-113",
+      "row_hash": "ebd39ec25599dd7221c52c8cbe43a93eddd764ad1f12602db212c240f375bdc1",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001747"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6854,
+          "end_line": 6863
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-046-g006",
+      "obligation_category": "directive",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0845,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-114",
+      "row_hash": "9cf87ec6c3f5271a15599b3577763fab88faa38b16632d08e6e25e4113ca5173",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001747"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6854,
+          "end_line": 6863
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-046-g004",
+      "obligation_category": "directive",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0938,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-115",
+      "row_hash": "645c6abb879c9521a5ac268ea709725952fb70de1494bf66f464e6dda07f89cf",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001750"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6866,
+          "end_line": 6870
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-116",
+      "row_hash": "73046dbfa564e0e4600f0f8285e6cbb7756cdbf0121181cdc20d6b3f886441c9",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001750"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6866,
+          "end_line": 6870
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-012-117",
+      "row_hash": "5337a8ac986a5b51a59449a6a1378d0f2e9394bd62c20165551a5a63b7853e37",
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "source_block_ids": [
+        "lblock-001750"
+      ],
+      "source_group_ids": [
+        "wg-009-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 6866,
+          "end_line": 6870
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-046-g007",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "missing_live_target",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "doc_discovery_attempt_state": "exhausted_doc_discovery",
+      "terminal_unresolved_doc_discovery": true,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": true,
+      "next_route_hint": "b3_or_b1_or_manual_decision_terminal_doc_discovery",
+      "exclusion": null
+    }
+  ]
+}

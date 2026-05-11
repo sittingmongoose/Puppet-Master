@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.section_entry_D_report.v3.2.1",
+  "prompt_id": "D0",
+  "prompt_version": "pm.d0.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "timestamp_utc": "20260507T205502Z",
+  "status": "COMPLETE",
+  "execution_type": "mechanical_tool_operation",
+  "derived_from": {
+    "section_exit_C_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+    "section_exit_C_prompt_id": "C5",
+    "section_exit_C_timestamp_utc": "20260507T205324Z",
+    "section_exit_C_next_section": "D_Obligation_Conversion",
+    "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+  },
+  "seed_completeness": {
+    "ledger_seed_completeness_report_status": "pass",
+    "ledger_seed_completeness_report_validation_mode": "lossless_inventory_mechanical",
+    "blocking_items_count": 0,
+    "source_ledger_sha256_hex_aligned_with_section_exit_C": true
+  },
+  "final_gate": {
+    "passed": true,
+    "ledger_seed_completeness_report_exists": true,
+    "ledger_obligation_seed_exists": true,
+    "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.1",
+    "raw_seed_blocks_total": 4860,
+    "work_id_alignment": {
+      "section_exit_C": "w-20260312-203855",
+      "ledger_obligation_seed": "w-20260312-203855",
+      "ledger_seed_completeness_report": "w-20260312-203855"
+    }
+  }
+}

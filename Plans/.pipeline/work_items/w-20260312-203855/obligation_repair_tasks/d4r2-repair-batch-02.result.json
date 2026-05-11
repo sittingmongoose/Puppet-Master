@@ -1,0 +1,44 @@
+{
+  "schema_id": "pm.obligation_repair_task_result.v3.2.2",
+  "subagent_task_id": "d4r2-repair-batch-02",
+  "subagent_invocation_id": "d4r2-repair-batch-02-invocation",
+  "wave_id": "wave-001",
+  "work_id": "w-20260312-203855",
+  "run_basis": "d4_round_2_repair",
+  "repair_mode": "mixed_targeted",
+  "repair_submodes_applied": [
+    "semantic_conversion_gap"
+  ],
+  "repaired_slice_ids": [
+    "slice-016",
+    "slice-017"
+  ],
+  "per_slice_repairs": [
+    {
+      "slice_id": "slice-016",
+      "missing_blocks_repaired": 9,
+      "doc_hints_repaired": 0,
+      "status": "complete"
+    },
+    {
+      "slice_id": "slice-017",
+      "missing_blocks_repaired": 8,
+      "doc_hints_repaired": 0,
+      "status": "complete"
+    }
+  ],
+  "totals": {
+    "slices_repaired": 2,
+    "missing_blocks_repaired": 17,
+    "doc_hints_repaired": 0
+  },
+  "preservation_checks": {
+    "only_target_slices_modified": true,
+    "no_obligations_added_or_removed": true,
+    "no_open_questions_added_or_removed": true,
+    "no_doc_hints_added_or_removed": true,
+    "no_blocked_blocks_added_or_removed": true,
+    "no_existing_excluded_blocks_modified": true
+  },
+  "status": "complete"
+}

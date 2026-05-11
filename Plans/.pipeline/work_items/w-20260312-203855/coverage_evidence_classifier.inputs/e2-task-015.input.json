@@ -1,0 +1,1173 @@
+{
+  "schema_id": "pm.coverage_evidence_classifier_input.v3.2.2",
+  "subagent_task_id": "e2-task-015",
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|concrete_plans_targets|Plans/Orchestrator_Page.md|Plans/Run_Graph_View.md|Plans/assistant-chat-design.md|Plans/usage-feature.md",
+      "obligation_ids": [
+        "obl-015-110"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1273,
+          "window_index": 3,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 401,
+          "line_end": 716,
+          "window_index": 1,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3201,
+          "line_end": 3230,
+          "window_index": 8,
+          "total_lines_in_doc": 3230,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 801,
+          "line_end": 1178,
+          "window_index": 2,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Orchestrator Page -- Single-Page 6-Tab Specification\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Storage/delivery clarification pressure from user\n  - New execution-policy settings requirement\n  - Current docs do say Orchestrator consumes the plan/node graph for execution\n  - Design discussion now has a concrete recommendation direction\n  - Parent-object field-shape direction now discussed\n  - Child-record field-shape direction now discussed\n  - GUI gap is now explicit\n  - Current docs are not fully simplified to \"graph only\"\n  - Orchestrator ownership boundaries\n  - Worktree gap is now explicit\n  - GUI / UX Impacts\n  - Cleanup Priorities\n\n#### Source target target-0406\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Storage/delivery clarification pressure from user\n  - New execution-policy settings requirement\n  - Current docs do say Orchestrator consumes the plan/node graph for execution\n  - Design discussion now has a concrete recommendation direction\n  - Parent-object field-shape direction now discussed\n  - Child-record field-shape direction now discussed\n  - GUI gap is now explicit\n  - Current docs are not fully simplified to \"graph only\"\n  - Orchestrator ownership boundaries\n  - Worktree gap is now explicit\n  - GUI / UX Impacts\n  - Cleanup Priorities\n- Exact required items represented:\n  - pin down whether handoff/retry artifacts are literally JSON/JSONL/redb-backed records/projections\n  - specify the concrete project-scoped paths or storage domains that own them\n  - specify how a worker receives the handoff packet: inline prompt block, referenced artifact, fetched context, or mixed model\n  - cover agent vs subagent\n  - cover fresh vs reused retry worker\n  - cover overseer delegation on/off\n  - cover delegated-worker provider/model/effort policy\n  - ensure consistent requested-vs-effective identity display across chat actors and orchestration actors\n  - Orchestrator must consume canonical runtime fields and event names from shared contracts\n  - use plan-graph index and node shard files as required execution inputs\n  - treat runnable graph nodes, DAG readiness, and dispatch from a global ready set as the scheduling model\n  - define the governing intelligence/control loop in a graph-canonical system\n  - resolve whether tiers remain only a derived human-facing lens or retain execution authority\n  - `feature_seam` should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage\n  - `work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage\n  - `run` should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture\n  - `resolution_thread` should persist trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage\n  - no documented GUI surface yet for `work package`\n  - no documented GUI surface yet for `feature seam`\n  - no documented seam-level acceptance / weak-integration / corroboration review affordance yet\n  - execution is documented against graph nodes\n  - orchestration identity, UI labels, and persona defaults still retain a tier hierarchy as a first-class overlay\n  - Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.\n  - Pin the primary discussion seam first: UI surface/IA vs runtime state model vs cross-surface lineage/receipts vs blocked/recovery/remediation UX.\n  - Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation.\n  - Carry forward requested-vs-effective state wherever persona/provider/model fallback can occur.\n  - Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch.\n  - Resolve package-based worktree preference vs [retired-token-16] for scale/manageability.\n  - Record worktree ownership/isolation rules after Orchestrator ownership boundaries are pinned.\n  - Expose source-control/worktree handshake as a remaining blind spot.\n  - Replace Tiers-first navigation\n  - Define Dashboard→Orchestrator→thread routing contract\n  - Add package/seam/lane visualization widgets\n  - Define which overseer's thread opens on click\n  - Make worktree/lane state visible and navigable\n  - Relax or replace stale graph-schema constants `[retired-token-25]` and [retired-token-26].\n  - Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.\n  - Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts.\n  - Replace or demote [retired-token-31] widgets and layouts.\n  - Add package/seam/lane-aware identity, worktree, and attention surfaces.\n  - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-35].\n  - `[retired-token-41]`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`\n  - [retired-token-41]\n  - Plans/Run_Graph_View.md\n  - Plans/Widget_System.md\n  - Plans/GUI_Rebuild_Requirements_Checklist.md\n  - likely issue: attention routing is thread-local or wizard-local, not explicitly Dashboard -> Orchestrator -> chat-thread for blocked and major-decision paths.\n  - Orchestrator still references `Tiers` and per-tier worktree ownership\n  - Tiers\n  - `orchestrator.receipt.{run_id}.{at"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "  - [retired-token-41]:437-437\n  - `[retired-token-54]` sharpened: `[retired-token-51]` still points at the missing `[retired-token-48]#[retired-token-50]` anchor, and both `[retired-token-41]` and `[retired-token-47]` still point at the missing `[retired-token-48]#Restart and stale history` anchor in addition to the already-carried missing `[retired-token-50]` heading.\n  - [retired-token-51]\n  - [retired-token-48]#Restart and stale history\n  - Wave 1 rechecked `gap-006` and `[retired-token-49]` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `[retired-token-41]#11. Source Control boundary` references.\n  - `[retired-token-41]:209-230`\n  - [retired-token-41]:209-230\n  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `[retired-token-41]:12-13` keeps concern and notification surfaces distinct from health/activity, `[retired-token-48]:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `[retired-token-51]:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.\n  - cov-034\n  - obl-016\n  - active\n  - acknowledged\n  - resolved\n  - dismissed\n  - resolution_kind\n  - accepted_risk\n  - `[retired-token-41]:12-13`\n  - [retired-token-41]:12-13\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #4 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #5 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #6 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #7 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #8 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #9 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #10 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #11 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #12 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #13 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #14 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #15 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #16 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #17 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #18 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #19 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #20 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #21 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.\n  - Retired token #22 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in l"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "- Acceptance checks represented:\n- Exact acceptance check: The heading `### Fidelity recovery cov-056: Action-surface policy` exists in `Plans/Orchestrator_Page.md`.\n- Exact acceptance check: The `cov-056` repair states the exact requirement: Default bulk actions to navigation and triage rather than live execution mutation\n- Exact acceptance check: The `cov-056` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.\n\n### Fidelity recovery cov-063: Glossary and help governance\n- Coverage rows: cov-063\n- Fidelity gap refs: cov-063\n- Required fidelity items:\n- Exact required item: Expand Glossary.md to cover rewrite-critical objects, states, and trust terms\n- Exact required item: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable\n- Acceptance checks represented:\n- Exact acceptance check: The heading `### Fidelity recovery cov-063: Glossary and help governance` exists in `Plans/Orchestrator_Page.md`.\n- Exact acceptance check: The `cov-063` repair states the exact requirement: Expand Glossary.md to cover rewrite-critical objects, states, and trust terms\n- Exact acceptance check: The `cov-063` repair states the exact requirement: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable\n- Exact acceptance check: The `cov-063` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.\n\n### Fidelity recovery cov-068: Notification routing policy\n- Coverage rows: cov-068\n- Fidelity gap refs: cov-068\n- Required fidelity items:\n- Exact required item: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust\n- Exact required item: Allow quiet windows for advisory warnings but not for canonical blocked episodes\n- Acceptance checks represented:\n- Exact acceptance check: The heading `### Fidelity recovery cov-068: Notification routing policy` exists in `Plans/Orchestrator_Page.md`.\n- Exact acceptance check: The `cov-068` repair states the exact requirement: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust\n- Exact acceptance check: The `cov-068` repair states the exact requirement: Allow quiet windows for advisory warnings but not for canonical blocked episodes\n- Exact acceptance check: The `cov-068` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.\n\n### Fidelity recovery cov-078: Project summary projection\n- Coverage rows: cov-078\n- Fidelity gap refs: cov-078\n- Required fidelity items:\n- Exact required item: Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure\n- Exact required item: Give canonical blocked episodes precedence over weaker derived warnings\n- Acceptance checks represented:\n- Exact acceptance check: The heading `### Fidelity recovery cov-078: Project summary projection` exists in `Plans/Orchestrator_Page.md`.\n- Exact acceptance check: The `cov-078` repair states the exact requirement: Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure\n- Exact acceptance check: The `cov-078` repair states the exact requirement: Give canonical blocked episodes precedence over weaker derived warnings\n- Exact acceptance check: The `cov-078` repair is in the owner section for `Plans/Orchestrator_Page.md` and is not only a downstream consumer note.\n\n### Fidelity recovery cov-081: Project attention projection\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0416\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.\n  - orchestrator status\n  - idle/running/paused\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n- Coverage rows: cov-081\n- Fidelity gap refs: cov-081\n- Required fidelity items:\n- Exact required item: Define project_attention_item with primary route payload and projection trust disclosure\n- Exact required item: Keep attention rows consumable across Orchestrator, Dashboard, and notifications\n- Acceptance checks represented:\n- Exact acceptance check: The heading `### Fidelity recovery cov-081: Project attention projection` exists in `Plans/Orchestrator_Page.md`.\n- Exact acceptance check: The `cov-081` repair states the exact requirement: Define project_attention_item with primary route payload and projection trust disclosure\n- Exact acceptance check: The `cov-081` repair states the exact requirement: Keep attention rows consumable across Orchestrator, Dashboard, and notifications\n- Exact acceptance check: The `cov-081` repair is in the owner section for `Plans/Orchestrator_Page.md` and is not only a downstream consumer note.\n\n### Fidelity recovery cov-093: Account switch and pressure history\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mappe"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1273,
+          "window_index": 3,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 4713,
+          "text_excerpt": "- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0422\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `assistant-chat-design.md` strengthens the same surface boundary at a higher level:\n  - assistant-chat-design.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n#### Promotion classes and gate evidence\n- Promotion classes are `lane_to_package`, `package_to_seam_available`, and `seam_complete`.\n- Each promotion class carries exact gate and evidence expectations: promotion gate verdict, lineage refs, required verification evidence, and promotion receipt refs.\n\n#### Source Control and worktree handshake\n- Orchestrator remains the lane-pool operational truth, while Source Control is the concrete repo/worktree operator.\n- Worktree rows display owning package, lane, and run refs together with lifecycle state and blocked/recovery state.\n\n### glossary/help references\n\n#### Glossary and help governance\n- Orchestrator depends on Glossary coverage for rewrite-critical objects, states, and trust terms.\n- Help is layered as inline help, context help, and canonical help-entry pages while canonical term names stay stable.\n\n#### Help entry template and related-concept clusters\n- Every help entry follows one template: canonical term, trigger conditions, operator meaning, primary routes, related concepts, and recovery guidance.\n- Related-concept clusters provide the dedicated linking structure for concept-to-concept navigation.\n\n### Owner-first fidelity recovery order\n- Apply owner-doc corrections before consumer and mirror cleanup.\n- Rerun fidelity audit only after owner and consumer corrections are in place.\n\n### Shared governance/runtime record envelope\n- One shared record envelope carries canonical lineage refs plus artifact and evidence refs.\n- Record objects stay distinct from artifacts, receipts, and rendered summaries.\n\n### Concern record family definition\n- Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request.\n- The owner contract defines `concern_id`, `project_id`, run refs, scope refs, evidence/source refs, lineage refs, severity, category, status, and governance metadata.\n\n### Concern lifecycle and resolution kinds\n- Lifecycle states are exactly `active`, `acknowledged`, `resolved`, and `dismissed`.\n- `resolution_kind` values are exactly `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`.\n\n### Concern lifecycle owner section\n- This owner section defines explicit semantics for `active`, `acknowledged`, `resolved`, and `dismissed`.\n- It carries `resolution_kind`, including `accepted_risk`, together with a concern-action confirmation matrix for acknowledge, dismiss, resolve, and lineage-edit operations.\n\n### Concern owner vs creator vs resolver separation\n- `owner_kind` / `owner_ref` are separate from `created_by_kind` / `created_by_ref`.\n- Resolver authority is modeled separately from both owner and creator.\n- Ownership may change without changing concern identity.\n\n### Concern source-event vs record vs projection split\n- `concern_source_event_ref`, `concern_record`, and `concern_projection` are separate structural layers.\n- Source events describe raw sightings, records describe durable state, and projections describe rendered consumer views.\n\n### Recommended minimum concern record shape\n- Required fields: `concern_id`, `project_id`, `run_ref`, `scope_ref`, `source_event_ref`, `evidence_refs[]`, `artifact_refs[]`, `lineage_refs[]`, `severity`, `category`, `status`, `visibility_level`, `attention_level`, `chatworthy`, `blocking_effect?`.\n- `blocking_effect` stays explicitly separate from `severity`.\n\n### Concern ownership / authority direction\n- Concern owner surfaces are exactly `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`.\n- `concern resolver` is distinct from owner and source roles.\n- Concern ownership can be reassigned without changing concern identity."
+        }
+      ],
+      "_remaining_windows_count": 14
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|Contracts_V0.md|Tools.md|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-112"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Contracts_V0.md",
+        "Tools.md",
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|Runtime_Artifacts_Panel.md",
+      "obligation_ids": [
+        "obl-015-113",
+        "obl-015-114"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|Tools.md",
+      "obligation_ids": [
+        "obl-015-111"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Tools.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|chain-wizard-flexibility.md",
+      "obligation_ids": [
+        "obl-015-124"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "chain-wizard-flexibility.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g006",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|doc_discovery|interview-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-126"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "interview-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g007",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0046",
+      "grouping_key": "shard-0046|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-109",
+        "obl-015-115",
+        "obl-015-116",
+        "obl-015-117",
+        "obl-015-118",
+        "obl-015-119",
+        "obl-015-120",
+        "obl-015-121",
+        "obl-015-122",
+        "obl-015-123",
+        "obl-015-125",
+        "obl-015-127",
+        "obl-015-128",
+        "obl-015-129"
+      ],
+      "obligation_record_count": 14,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g008",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Prompt_Pipeline.md",
+      "obligation_ids": [
+        "obl-015-133"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Prompt_Pipeline.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g009",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|chain-wizard-flexibility.md|interview-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-132"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "chain-wizard-flexibility.md",
+        "interview-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-064-g010",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-130",
+        "obl-015-131"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|concrete_plans_targets|Plans/Executor_Protocol.md",
+      "obligation_ids": [
+        "obl-015-151"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 801,
+          "line_end": 1140,
+          "window_index": 2,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Overseer Protocol (Canonical)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Child-record field-shape direction now discussed\n  - Emerging execution-settings direction\n  - Worktree gap is now explicit\n  - Highest-Impact Docs\n  - Runtime / Storage / Contract Impacts\n  - Cleanup Priorities\n\n#### Source target target-0197\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Child-record field-shape direction now discussed\n  - Emerging execution-settings direction\n  - Worktree gap is now explicit\n  - Highest-Impact Docs\n  - Runtime / Storage / Contract Impacts\n  - Cleanup Priorities\n- Exact required items represented:\n  - `attempt` should persist identity, actor type, requested vs effective provider/model/effort/persona/account, resolution/fallback metadata, lane/snapshot linkage, lifecycle/result, and evidence refs\n  - Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work package overseer, feature seam overseer, and overseer-delegated node worker levels.\n  - Make requested vs effective provider/model visible at all levels where [retired-token-3] can occur.\n  - Specify node persona selection as dynamic-by-default from node scope/type; node-worker persona override is policy-owned, not per-node [retired-token-1].\n  - Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers.\n  - Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch.\n  - Resolve package-based worktree preference vs [retired-token-4] for scale/manageability.\n  - Record worktree ownership/isolation rules after Orchestrator ownership boundaries are pinned.\n  - Expose source-control/worktree handshake as a remaining blind spot.\n  - Replace tier-rooted execution with package/seam/lane model\n  - Define package overseer + seam overseer roles\n  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage\n  - Redefine gates to package-complete / seam-complete\n  - Rename or retire Tiers UI/tab and tier_tree/progress bars\n  - Add node_id\n  - Add package_id\n  - Add seam_id\n  - Add lane_id\n  - Add attempt_id\n  - Add effective_identity\n  - Normalize requested/effective account identity shapes\n  - Normalize blocked_[retired-token-25]/allowed_action_ids and safe-point/restore-point/rollback terminology\n  - Relax or replace stale graph-schema constants `[retired-token-23]` and [retired-token-24].\n  - Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts.\n  - Define contamination and safe-point linkage explicitly in storage and blocked-payload contracts.\n  - The overseer Persona gap is structural because runtime docs now need package-overseer and seam-overseer identity without pretending they are ordinary delegated subagents.\n  - the rewrite now needs seam/package overseer scopes, blocked-owner attribution, and clearer separation between runtime/system/user authority\n  - The Overseer audit protocol is structurally incompatible with the rewrite:\n  - `[retired-token-29]` still assumes singular Overseer / Builder / Verifier semantics and lacks package/seam/corroboration/concern hooks\n  - [retired-token-29]\n  - `[retired-token-29]` has newer scheduler addenda that move toward the rewrite direction, but the base protocol still frames role semantics, lifecycle wording, and dispatch in a singular overseer model with no first-class package/seam governance, corroboration, or concern authority. The addenda add node/lane vocabulary without replacing the stale top-level ontology.\n  - `[retired-token-29]` still claims canonical execution roles as `Builder`, `Verifier`, and `Overseer`, but the rewrite now needs at least:\n  - Builder\n  - Verifier\n  - Overseer\n  - `Plans/[retired-token-29]` should own which execution-scoped context is required for scheduler/executor correctness.\n  - Plans/[retired-token-29]\n  - dead or fragile anchors/SSOT pointers still exist (`Overseer`, `AuthPolicy`, assistant-memory short anchors).\n  - AuthPolicy\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - the doc title and role model still say `Overseer Protocol` with `Builder`, `Verifier`, and `Overseer` as the primary execution framing\n  - Overseer Protocol\n  - `Plans/[retired-token-29]` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.\n  - execution_unit_context\n  - Plans/Contracts_V0.md\n  - ### 5.1B Persona/Runtime Snapshot Payload Contract\n  - `Plans/[retired-token-29]:110-130`\n  - Plans/[retired-token-29]:110-130\n  - `Plans/[retired-token-29]:110-175`\n  - Plans/[retired-token-29]:110-175\n  - `Plans/[retired-token-29]:548-557`\n  - Plans/[retired-token-29]:548-557\n  - `Plans/[retired-token-29]:134-160`\n  - Plans/[retired-token-29]:134-160\n  - `Plans/[retired-token-29]:134-178`\n  - Plans/[retired-token-29]:134-178\n- Legacy token retirement handling:\n  - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an "
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/Executor_Protocol.md\n\nWhen `verifier_result.outcome == \"fail\"`, Overseer sets node `status = \"failed\"`.\nContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md\n\n---\n\nThe canonical dispatch/runtime packet carries `execution_unit_context`.\n\n**Authoritative execution_unit_context fields**\n\n| Field | Requirement |\n| --- | --- |\n| `run_id` | Canonical run identity for execution lineage. |\n| `node_id` | Canonical node identity for dispatch and receipts. |\n| `attempt_id` | Immutable local execution-attempt identity. |\n| `lane_id` | Lane identity when the node is lane-bound. |\n| `package_id` | Package identity for orchestration joins. |\n| `seam_id` | Seam identity when dispatch is feature-scoped. |\n| `worktree_id` | Durable worktree identity when execution runs in a bound worktree. |\n| `execution_role` | Canonical execution-role disclosure for the packet. |\n| `requested_account_id` | Requested account identity before routing resolution. |\n| `requested_account_binding` | Binding mode that distinguishes preference from requirement. |\n| `requested_account_policy` | Requested account-policy selection for routing and approvals. |\n| `effective_account_id` | Effective resolved account identity. |\n| `operational_identity` | Stable runtime identity for audit and joins. |\n| `blocked_sequence` | Blocked-episode anchor when execution is paused or recovered through blocked state. |\n| `allowed_action_ids[]` | Ordered blocked-action set carried into recovery surfaces. |\n\nContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership\n\n### 5.1 Unified `DispatchContext` schema\nThe canonical dispatch view is the unified `DispatchContext` projection over `execution_unit_context`.\n\nThe canonical dispatch/runtime packet carries execution_unit_context.\n\nRequired fields:\n- `run_id`\n- `node_id`\n- `attempt_id`\n- `lane_id`\n- `package_id`\n- `seam_id`\n- `worktree_id`\n- `execution_role`\n- `requested_account_id`\n- `requested_account_binding`\n- `requested_account_policy`\n- `effective_account_id`\n- `operational_identity`\n- `blocked_sequence`\n- `approval_scope_key`\n\nBehavioral rules:\n- dispatch, recovery, remediation, and inspection read one execution-unit packet rather than tier-era compatibility objects.\n- downstream consumers join losslessly to attempt, worktree, permission, and runtime records.\n- blocked-action carrythrough stays anchored to blocked-episode lineage.\n\nContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md, Plans/Crosswalk.md#3.1 Runtime orchestration ownership\n## 6. Overseer dispatch algorithm (deterministic)\n\n1. Evaluate readiness predicate over all queued nodes.\n2. Select smallest lexical `node_id` among ready set.\n3. Dispatch Builder for selected node.\n4. On Builder completion, set `verify_pending` and dispatch Verifier.\n5. Apply auto-marking rule from Section 4 (`verified` → `done` on pass; `failed` on fail).\n6. Repeat until no ready nodes remain.\n\nOverseer MUST produce deterministic ordering for identical graph state and Spec Lock inputs.\nContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3\n\n### 6.1 Run-completion Document Packaging gate\n\nBefore a run is finalized, Overseer MUST enforce `Plans/Document_Packaging_Policy.md` for any Markdown/text artifact under `.puppet-master/**` produced by the run that reached packaging triggers.\n\nA run MUST NOT be marked complete when any required Document Set audit (reconstruction/line accounting/idempotency, index-manifest match, clean-room determinism) fails.\n\nScope note:\n- This run-completion gate applies to generated `.puppet-master/**` artifacts whether or not the current repo-local `run-gates` command enforces those artifact families directly.\n- Repo-local verifier coverage and generated-artifact validator coverage MAY be delivered by different commands, but the packaging contract remains mandatory before final completion.\n\nContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Progression_Gates.md#GATE-014\n\n## Runtime Scheduler Addendum (2026-03-08)\n\nThis addendum supersedes any earlier lexical-dispatch wording wherever they conflict.\n\n### 1. Canonical scheduler pass\n\nThe executor MUST process scheduling as a deterministic repeated pass:\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md\n1. Rebuild or refresh the candidate node set from canonical run state.\n2. Recompute readiness for all candidate nodes.\n3. Recompute blocked/backoff/capacity state.\n4. Build the ready set.\n5. Score ready nodes using the canonical ordered tuple.\n6. Select as many nodes as available capacity permits.\n7. Emit queue-analysis observability before dispatch.\n8. Dispatch selected nodes.\n\n### 2. Readiness rules\n\nA node is ready only if all of the following are true:\n- canonical node state is schedulable (`queued`, `reopened`, or equivalent ready-eligible state)\n- every blocker in `blockers[]` has completed successfully or reached a state explicitly declared as dependency-satisfying\n- no unresolved graph-integrity error exists for the node\n- node is not in active backoff\n- node is not blocked on HITL, clarification, external side-effect confirmation, permission denial, FileSafe, auth refresh, or replan-required state\n- the node's plan/spec generation is still valid for the active `replan_generation`\n- runtime capacity allows another dispatch in the applicable lane / pool\n\nInvalid blocker IDs remain invalid graph input and MUST keep the node non-ready.\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Contracts_V0.md\n\n### 3. Deterministic score tuple\n\nThe canonical ready-node selection tuple is:\n- `schedu"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 801,
+          "line_end": 1140,
+          "window_index": 2,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0207\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - It should define the minimum execution-unit identity/runtime anchors needed for dispatch, retry, blocked handling, and receipts.\n  - these fields are what make retry, blocked recovery, remediation, and restart behavior deterministic instead of heuristic\n  - This makes wizard-blocked behavior look like a special deep-link flow instead of a peer member of the canonical blocked family.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nThe executor MUST classify every non-success outcome before applying policy.\n\n- blocked episodes preserve local work, runtime identity, and explicit resume prerequisites.\n- FileSafe and external side-effect blocks do not auto-retry; they wait for the owning restore or approval action.\n- one decision path must not treat the same situation as both a failure class and a blocked-episode cause.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md\n\n### Runtime recovery attempt identity and safe points\nEvery dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md\n\n### Runtime recovery remediation lineage\nAutomatic fix cycles attach to a parent attempt using `remediation_root_id`, `remediation_parent_attempt_id`, `remediation_generation`, finding identifiers, and final resolution state. A new canonical graph node is created only when a replan changes canonical graph scope.\n\n### Degradation boundary\nInvalid pre-lock draft decomposition may degrade to deterministic flat draft sequencing with warning evidence. Invalid canonical graphs after graph lock are `graph_integrity` failures and MUST NOT silently degrade.\nContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md\n\n## Canonical Runtime Scheduler Reconciliation Addendum (2026-03-09)\n\nThis addendum is normative and supersedes earlier pure-lexicographic readiness and dispatch wording wherever conflicting.\n\n### Runtime scheduler readiness reconciliation\nA node is ready only when all of the following are true:\n1. lifecycle state is ready-eligible for dispatch\n2. every blocker resolves to an existing canonical node in the active graph\n3. every resolved blocker is in a dependency-satisfying state\n4. the node is not in active backoff\n5. the node is not blocked by any active runtime projection\n6. the node's `replan_generation` matches the active run generation\n7. no worktree/conflict rule forbids dispatch\n8. lane/pool capacity permits dispatch\n\nInvalid blocker IDs are `graph_integrity` problems and keep the node non-ready.\n\n### Node lifecycle versus runtime overlays\nNode lifecycle remains the graph-progress contract.\n\nRuntime overlays include blocked, backoff, retrying, remediation, and waiting-approval states.\n\nRules:\n- overlays do not replace canonical node lifecycle values\n- readiness consults both lifecycle state and active runtime overlays\n- `waiting_approval` is represented through blocked/runtime records rather than by mutating node lifecycle taxonomy\n- safe-point and remediation state likewise remain runtime overlays attached to attempts or blocked projections\n\nThis preserves one stable lifecycle contract for planning/graph semantics while allowing runtime recovery behavior to remain richly observable.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/human-in-the-loop.md\n\n### Runtime scheduler score term definitions\nThe canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.\n\nRules:\n- `scheduler_lane = remediation` only for remediation lineage work\n- `scheduler_lane = unblocker` when successful completion would increase the ready set for other nodes in the active generation\n- `scheduler_lane = normal` otherwise\n- `manual_priority` is an integer `0..100`; default `50`; higher wins\n- `transitive_unblock_count` counts currently blocked descendants in the active generation that would become ready if this node completed successfully now; invalid/cyclic relationships are excluded\n- `ready_since_utc` is reset whenever the node leaves the ready set for any reason and is retained only while the node stays continuously ready\n- `node_id` is the final tiebreak only\n\n### Capacity-aware dispatch cycle\nFor each scheduler wake:\n1. refresh candidate runtime state\n2. recompute readiness and score terms\n3. synchronously reevaluate directly affected dependents for the current wake\n4. build the global ready set\n5. emit queue-analysis observability keyed by `scheduler_pass_id`\n6. select up to `available_slots` in canonical score order\n7. dispatch selected attempts\n\n### Runtime blocked-to-runnable cascade timing\nWhen a dependency completes or a blocking condition clears:\n- direct dependents are reevaluated synchronously in the same wake cycle\n- newly ready nodes enter the same ready set befo"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|concrete_plans_targets|Plans/UI_Command_Catalog.md",
+      "obligation_ids": [
+        "obl-015-149"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1317,
+          "window_index": 3,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# UI Command Catalog (Canonical)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Cleanup Priorities\n\n#### Source target target-0515\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Cleanup Priorities\n- Exact required items represented:\n  - Replace or demote [retired-token-1] widgets and layouts.\n  - Add package/seam/lane-aware identity, worktree, and attention surfaces.\n  - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-5].\n  - `[retired-token-9]`\n  - [retired-token-9]\n  - `[retired-token-9]`, `Plans/[retired-token-7]`\n  - Plans/[retired-token-7]\n  - `FinalGUISpec.md` already defines a global command palette.\n  - FinalGUISpec.md\n  - command palette results\n  - The platform already has a strong shared command foundation:\n  - `Ctrl+K` / `Ctrl+P` command palette\n  - Ctrl+K\n  - Ctrl+P\n  - treat the command palette as a universal navigation and precise-action surface, not as a blanket permission to expose every dangerous runtime mutation as one keystroke away\n  - then command palette and shortcut surfaces must still honor the same gating and preview requirements.\n  - Reuse one shared routing payload across command palette, shortcuts, widgets, search, and deep links.\n  - command palette entries\n  - subtle mismatches between command palette, search, widgets, and deep links\n  - command payloads with generic `page: string` or tier-bound filters will quietly undermine any native-surface cleanup if they are not constrained at the same time\n  - page: string\n  - `[retired-token-9]` + `Plans/Runtime_Artifacts_Panel.md`\n  - Plans/Runtime_Artifacts_Panel.md\n  - `GitHub_Integration.md` still carries a split-brain command table that diverges from `UI_Command_Catalog.md`\n  - GitHub_Integration.md\n  - UI_Command_Catalog.md\n  - `[retired-token-9]` + `Plans/storage-plan.md`\n  - Plans/storage-plan.md\n  - GitHub Integration command IDs/args still diverge from the command catalog.\n  - The command catalog is already stronger than most surface docs:\n  - `cmd.panel.switch` also already acts like a coarse route command with `panel_id`, optional `project_id`, and context block\n  - cmd.panel.switch\n  - panel_id\n  - project_id\n  - Recommended command model:\n  - `cmd.panel.switch` can stay as a concrete command, but it should align with the richer route model rather than becoming a second navigation language\n  - UI / projection / command contracts are still structurally incomplete:\n  - Command and wiring SSOTs still cannot mechanically express freshness/health gating or canonical mutation ownership.\n  - Remove or alias stale/non-canonical `[retired-token-6]` and template/example command IDs so the catalog is truly the only stable command owner.\n  - [retired-token-6]\n  - Command / wiring ownership is materially weaker than the downstream surface docs assumed:\n  - `assistant-memory-subsystem.md` surfaces a new storage-owner gap: memory event families, AutoRunBoundary/AutoMilestone triggers, `attention_required` thread state persistence, and HITL/dashboard CTA command families still have no canonical event/command registration in storage-plan or the command catalog.\n  - assistant-memory-subsystem.md\n  - attention_required\n  - Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere.\n  - The command catalog already contains many specific pivots:\n  - it reduces command sprawl\n  - add a canonical navigation/open command family to the command catalog\n  - The catalog gap is now structural, not just a few missing IDs.\n  - a surface-specific wrapper command that resolves to the same route target\n  - The matrix cannot encode whether a command is a canonical navigation primitive, a deprecated alias, or a surface wrapper over a shared route target.\n  - Clean stale/ghost command examples out of `[retired-token-7]` before relying on it for automated extraction or coverage.\n  - [retired-token-7]\n  - Research Progress - 2026-03-16 - Command catalog wrapper/alias gap for navigation\n  - surface-specific wrapper command\n  - Make shared navigation context fields explicit at the catalog level instead of burying them in per-command notes.\n  - The command catalog is not hostile to the new navigation model, but it is still too flat to describe it cleanly.\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - `Contracts_V0.md` already wants a small reusable command envelope, which argues for a shared target object under `UICommand.args` rather than every command inventing its own payload.\n  - Contracts_V0.md\n  - UICommand.args\n  - Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just “command id exists.”\n  - The goal is not to delete every surface-specific command.\n  - The goal is to stop every surface-specific command from inventing its own private navigation semantics.\n  - `[retired-token-9]` (Gemini backfill)\n  - `[retired-token-8]` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity.\n  - [retired-token-8]\n  - `Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and still defines auth/publish/repo-management command families absent from the catalog.\n  - Containers_Registry_and_Unraid.md\n  - Some current command payloads and surface docs still blur destination intent with shell-state realization.\n  - The command layer wants a three-way s"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n  - All exact_stale_tokens_to_retire are removed, reframed as explicitly deprecated, or preserved only as documented legacy aliases.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nCommand families stay normalized around shared navigation, search routing, and runtime recovery ownership.\n\n### 2.0 Command entry contract (doc-level)\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0518\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.\n  - That is enough for a flat `element -> command -> handler` contract, but not for the route-aware/navigation-aware model the rewrite is moving toward.\n  - element -> command -> handler\n  - `Contracts_V0.md` currently gives the app only a very thin canonical UI command contract:\n  - Contracts_V0.md\n  - That is enough to standardize command dispatch mechanically, but not enough to standardize navigation semantics. There is still no canonical contract for:\n  - keeps `OpenFile` as the path-based file-open contract reference point for UI command work\n  - OpenFile\n  - Remove the graph-specific approval command contract as a primary action model.\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nRequired command metadata:\n- `command_kind`\n- `normalization.kind`\n- `normalizes_to_contract`\n- `alias_of_command_id`\n\nRules:\n- `route_target` owns canonical open and focus identity.\n- command normalization remains discoverable at the doc-level contract.\n\n### 2.0B Action-surface policy\n\nActions available on the UI are scoped by:\n- User role and execution_role (from Permissions_System.md)\n- Active run mode (automate, interactive, diagnostic)\n- Concern state and blocked_sequence\n- approval_scope_key and approval_id context\n- DAE jail posture\n\nRules:\n- User cannot take an action unless the approval_scope_key allows it AND the operation is not contradicted by blocked_sequence or DAE jail posture.\n- Run mode changes, approval decisions, and blocked recovery are Orchestrator-owned; UI surfaces them but does not make the decision locally.\n- Actions that trigger external side-effects (file mutations, provider calls, route/open ops) MUST route through Permissions and route/open contracts.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md\n\n### Canonical route payload and route/open tail rules\n\nUI commands that route or open MUST preserve:\n- `route_target`: destination for output or side-effect (file path, GitHub issue URL, workspace concern, etc.)\n- `OpenSubject`: resource being opened (file, concern, help entry, project state)\n- `execution_unit_context`: which run, seam, package, or node is executing the command\n- `approval_scope_key`: reusable approval join key\n- `operational_identity`: attribution\nContractRef: Primitive:RouteTarget, Primitive:OpenSubject, Primitive:ExecutionContext, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md\n\nRoute side-effect rules:\n- File mutations go through FileSafe and route/open guards before execution.\n- Provider mutations (PRs, issue comments) go through Permissions and provider-identity checks.\n- Route completion refs are immutable once recorded; they form an audit trail of what was actually modified.\n- If route_target becomes unreachable between command build and execution, the UI displays an error and does not attempt fallback mutation.\n\n### Command normalization model\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0524\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - still needs command normalization, trust-state gating, and stronger project/account binding for resumed flows\n  - UI command / route normalization across existing commands\n  - `GATE-010` can verify command coverage, but it cannot yet verify wrapper normalization consistency.\n  - GATE-010\n  - normalization metadata is internally consistent with the command kind\n  - Keep the matrix row itself relatively small; let it reference a command that already carries normalization meaning.\n  - command wrapper normalization\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary subs"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "| `cmd.actions.rerun` | Rerun Workflow | Re-triggers the selected workflow run | — | `actions_panel_visible && selected_run` |\n| `cmd.actions.rerun_failed` | Rerun Failed Jobs | Re-triggers only failed jobs in selected run | — | `actions_panel_visible && selected_run && has_failed_jobs` |\n| `cmd.actions.cancel` | Cancel Run | Cancels the in-progress workflow run | — | `actions_panel_visible && selected_run && run_in_progress` |\n| `cmd.actions.pin` | Pin Workflow | Pins a workflow to the actions panel header for quick access | — | `actions_panel_visible && selected_workflow` |\n| `cmd.actions.unpin` | Unpin Workflow | Removes a pinned workflow from header | — | `actions_panel_visible && pinned_workflow_selected` |\n| `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | — | `actions_panel_visible && selected_job` |\n| `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | — | `actions_panel_visible && selected_run` |\n\nContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md\n\n#### Docker Manager command family\n\n| Command ID | Label | Description | Preconditions |\n|---|---|---|---|\n| `cmd.docker.build` | Build Image | Builds a Docker image from selected Dockerfile | `docker_available && dockerfile_selected` |\n| `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |\n| `cmd.docker.stop` | Stop Container | Stops a running container | `docker_available && container_running` |\n| `cmd.docker.restart` | Restart Container | Restarts a container | `docker_available && container_selected` |\n| `cmd.docker.remove` | Remove Container | Removes a stopped container | `docker_available && container_stopped` |\n| `cmd.docker.logs` | View Logs | Shows container log output | `docker_available && container_selected` |\n| `cmd.docker.exec` | Exec Shell | Opens interactive shell in container | `docker_available && container_running` |\n| `cmd.docker.compose_up` | Compose Up | Runs docker-compose up for selected compose file | `docker_available && compose_file_selected` |\n| `cmd.docker.compose_down` | Compose Down | Runs docker-compose down | `docker_available && compose_running` |\n| `cmd.docker.inspect` | Inspect | Shows detailed container/image info | `docker_available && resource_selected` |\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md\n\n### 2.5B Kubernetes command family\n\n| Command ID | Label | Description | Preconditions |\n|---|---|---|---|\n| `cmd.k8s.get_pods` | Get Pods | Lists pods in selected namespace | `k8s_connected` |\n| `cmd.k8s.describe` | Describe Resource | Shows detailed resource description | `k8s_connected && resource_selected` |\n| `cmd.k8s.logs` | View Pod Logs | Shows log output for selected pod | `k8s_connected && pod_selected` |\n| `cmd.k8s.exec` | Exec Shell | Opens shell in selected pod/container | `k8s_connected && pod_running` |\n| `cmd.k8s.apply` | Apply Manifest | Applies a Kubernetes manifest file | `k8s_connected && manifest_selected` |\n| `cmd.k8s.delete` | Delete Resource | Deletes selected Kubernetes resource | `k8s_connected && resource_selected` |\n| `cmd.k8s.scale` | Scale Deployment | Adjusts replica count for deployment | `k8s_connected && deployment_selected` |\n| `cmd.k8s.port_forward` | Port Forward | Sets up port forwarding to selected pod | `k8s_connected && pod_selected` |\n| `cmd.k8s.switch_context` | Switch Context | Changes active Kubernetes context | `k8s_available` |\n| `cmd.k8s.switch_namespace` | Switch Namespace | Changes active namespace | `k8s_connected` |\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md\n\n### 2.5C Project-scope git worktree commands\n\nThese commands manage repository-level worktree inventory and lifecycle. They complement, but do not replace, the assistant thread-scoped `cmd.chat.worktree.*` family defined in §2.6.1.\n\n| Command ID | Label | Description | Preconditions |\n|---|---|---|---|\n| `cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path | `git_available && !worktree_limit_reached` |\n| `cmd.git.worktree.remove` | Remove Worktree | Removes an existing worktree | `git_available && worktree_selected && worktree_clean` |\n| `cmd.git.worktree.list` | List Worktrees | Shows all worktrees for current repo | `git_available` |\n| `cmd.git.worktree.switch` | Switch to Worktree | Opens/focuses the selected worktree | `git_available && worktree_selected` |\n| `cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree | `git_available && worktree_selected` |\n| `cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree | `git_available && worktree_locked` |\n\nRules:\n- `cmd.git.worktree.*` owns project-scope worktree inventory, lock state, and navigation.\n- `cmd.chat.worktree.*` remains the thread-scoped wrapper family and MAY normalize internally to project-scope worktree operations.\n\nContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md\n### 2.6 Chat context usage commands\n\n#### Context Lens commands\n\n| Command ID | Purpose | Notes |\n|---|---|---|\n| `cmd.chat.context_lens.toggle` | Open or close the Context Lens dropdown | Owner control lives in the top-right of the chat window, immediately to the right of the search bar. |\n| `cmd.chat.context_lens.set_mode` | Set active mode to `mute`, `focus`, or `subcompact` | Multi-select is supported in all modes. |\n| `cmd.chat.context_lens.turn_off` | Exit Context Lens mode and clear active selection state | Dropdown entry label is `Turn Off`. |\n| `cmd.chat.context_lens.toggle_message_selection` | Toggle one message into or out of the active selection set | Applies immediately in `mute` and `focus`. |\n| `cmd.chat.context_lens.clear_selection` | Cl"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1317,
+          "window_index": 3,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 6303,
+          "text_excerpt": "  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n| Command ID | Parameters | Behavior |\n| --- | --- | --- |\n| `cmd.search.show` | `{ project_id, focus? }` | Reveal or focus the Search side panel. |\n| `cmd.search.find_in_files` | `{ project_id, query?, scope? }` | Run or rerun find-in-files in the Search panel. |\n| `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview or apply flow in the Search panel. |\n| `cmd.search.open_result` | `{ project_id, query_session_id, subject_id, disposition? }` | Open a Search result through `route_target` and the canonical file-open path. |\n| `cmd.search.replace_selected` | `{ project_id, query_session_id, subject_id }` | Apply replacement to one selected result identified by canonical subject identity. |\n\nRules:\n- Search command routing resolves through `route_target`.\n- Search commands remain side-panel scoped and preserve query-session state.\n- Search routing policy is owned by `Plans/Orchestrator_Page.md#search-routing-and-action-policy`.\n## References\n- `Plans/Contracts_V0.md#UICommand`\n- `Plans/GitHub_API_Auth_and_Flows.md`\n- `Plans/LSPSupport.md`\n- `Plans/Widget_System.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/assistant-chat-design.md`\n- `Plans/UI_Wiring_Rules.md`\n- `Plans/Wiring_Matrix.schema.json`\n- `Plans/Wiring_Matrix.md`\n\nCanonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy recovery command namespaces are deprecated aliases only.\n\n| `allowed_action_id` | canonical command id | minimum args |\n| --- | --- | --- |\n| `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |\n| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id }` |\n| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id? }` |\n| `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |\n| `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |\n| `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |\n| `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |\n\n### Navigation commands\n- `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`\n- `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`\n- `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`\n\n### Pre-attempt blocked rule\nWhen a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.\n\nContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)\n\n### Recovery command definitions\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0526\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - widget-local definitions of blocked/completed/integration status\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\nAll blocked-state recovery buttons and menu entries in GUI, chat, graph, and orchestrator surfaces MUST map from `allowed_action_ids[]` to one of the canonical runtime commands above.\n\nNo surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.\n\nContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), ContractName:Plans/Wiring_Matrix.md#UI command handler rule\n\nRequired command metadata:\n- `command_kind`\n- `normalization.kind`\n- `normalizes_to_contract`\n- `alias_of_command_id`\n- `approval_scope_key`\n- `allowed_action_ids[]`\n- `route_target`\n- `open_subject?`\n- `ref_family?`\n\nCanonical terms and values:\n- command_kind\n- normalization\n- approval_scope_key\n- route_target\n- ref_family\n\nLabels:\n- Approve\n- Decline\n- Resume after prerequisite\n- Blocked\n- Retry\n- Review\n- Resolve\n\nBehavioral rules:\n- blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands\n- no surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics\n- recovery commands must bind to blocked-episode identity rather than request-level surrogates\n- normalization metadata m"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g003",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|concrete_plans_targets|Plans/chain-wizard-flexibility.md",
+      "obligation_ids": [
+        "obl-015-154"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 2401,
+          "line_end": 2405,
+          "window_index": 6,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Chain Wizard & Interview Flexibility -- Intent-Based Workflows\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0583\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`\n  - Plans/FinalGUISpec.md\n  - Plans/assistant-chat-design.md\n  - Plans/chain-wizard-flexibility.md\n  - `Resume Wizard`\n  - Resume Wizard\n  - Wizard / interview / worktree lineage gaps continue to sharpen at the seams:\n  - `thread_id: None` in interview examples is now a concrete drift signal, not just omitted detail\n  - thread_id: None\n  - Wizard / interview / worktree seams still expose the remaining high-risk lineage holes:\n  - wizard resume via `wizard_id + step`\n  - wizard_id + step\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - `object_kind = wizard`\n  - object_kind = wizard\n  - `puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`\n  - puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify\n  - must override to the wizard surface and the correct wizard/step context\n  - The concrete wizard deep-link format is defined, but there is still no owner doc that states what class of route data is allowed into serialized transport.\n  - The routing model now has a clear owner chain.\n  - Reconciliation should follow that owner chain or it will fragment again.\n  - concrete `puppet-master://wizard/...` format\n  - puppet-master://wizard/...\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.\n\n\n## Change Summary\n\n- 2026-02-25: Hardened §12 cross-doc contract consistency with `Plans/Project_Output_Artifacts.md §10.2`: normalized pass report field names and enums (`pass_name`, `pass_verdict`, `verdict_reason`, `findings[]`, `unresolved_findings[]`), replaced legacy wording (`pass_report`, `verdict`, `violations[]`, singular `unresolved_finding`), and clarified provider/model-to-report linkage.\n- 2026-02-25: Added §13 No-Wizard Project Management Flows — three project entry points (Add Existing, Create New Local, Create New GitHub Repo) with \"Run Chain Wizard later\" affordance; full spec in Plans/GitHub_Integration.md §D.\n- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. Per-pass provider/model selection in GUI settings (Plans/assistant-chat-design.md §26). Pass reports stored in seglog (artifact_type: validation_pass_report). Pass 3 never edits product requirements. Added 7 items to §10 Implementation Readiness Checklist.\n- 2026-02-24: Clarified OpenCode GUI contract coverage: provider enable/disable, connection method selection (direct server URL/port or CLI launcher/discovery fallback path), OpenCode auth/sign-in actions, and provider-contract model selection.\n- 2026-02-24: Added OpenCode as a server-bridged provider in provider selection UX; referenced Plans/Provider_OpenCode.md.\n- 2026-02-24: Added conditional UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to the Project Contract Pack when the user project includes a GUI; updated per-phase contract fragments (§6.6.1 Product/UX), Contract Unification Pass (§6.6.2), validation (§6.6.3), and user-project output artifacts (§11). Schema: `Plans/Wiring_Matrix.schema.json`, rules: `Plans/UI_Wiring_Rules.md`.\n- 2026-02-24: Updated user-project **Project Contract Pack + executable artifacts** under `.puppet-master/project/**` to make the plan graph **sharded-only and canonical** (`.puppet-master/project/plan_graph/`); removed any requirement that `.puppet-master/project/plan_graph.json` is required/canonical; monolithic export path (if materialized) is now `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`; explicitly no user-project `Plans/` assumption.\n- 2026-02-23: Added Contract Layer handoff section near Requirements Doc Builder/Interview describing Platform vs Project contracts, contract seeds, contract unification, and DRY contract-ID references (SSOT: `Plans/Project_Output_Artifacts.md`).\n- 2026-02-23: Updated Requirements Doc Builder and its Multi-Pass Review to generate and review Contract Layer seed content (assumptions, constraints, glossary, non-functional budgets) alongside `requirements.md`.\n- 2026-02-23: Updated Adaptive Interview Phases to require per-phase contract fragments plus a deterministic Contract Unification "
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "Canonical terms and values:\n- validation_pass_report\n- workflow_run_id\n- staged_bundle_ref\n- requirements_quality_report_ref\n- execution_role\n- effective_account_id\n- run_id\n- launch receipt\n- promoted package ref\n\nLabels:\n- handoff contract\n\nBehavioral rules:\n- Accepted or final sweep output must bridge into launched execution through a launch receipt or promoted package ref.\n- Pass reports must not masquerade as run, node, or attempt records.\n\nPermission carry-through:\n- effective runtime identity must survive downstream handoff\n### 2.3 Wizard Cancellation Cleanup\n\nWhen the wizard is cancelled (user clicks Cancel or closes the wizard), Puppet Master MUST execute the following cleanup sequence:\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md\n\n1. All running subagents are terminated: send cancel signal, wait up to 5 seconds, then force kill any remaining processes.\n2. All pending tool calls are aborted.\n3. Worktree branches created by this wizard run are cleaned up **only if** no commits exist on them; if commits exist, those branches are preserved and tagged with `[cancelled]`.\n4. Interview state is preserved for potential resume; it remains recoverable for 24 hours and is then pruned.\n5. Any partial plan artifacts are moved to a `.cancelled/` directory within the project.\n6. Usage tokens already consumed remain counted against the run budget.\n7. Emit a `wizard.cancelled` event with `{ wizard_id, phase_at_cancel, resources_cleaned[], resources_preserved[], token_usage }`.\n\n**Resume behavior:** Within 24 hours, the user may resume a cancelled wizard from the last completed phase. Resume MUST reuse preserved interview state and preserved artifacts, while also respecting the branch-preservation rules above.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md\n\n---\n\n## 3. GUI Updates\n\n### 3.1 Intent Selection at Flow Start\n\n#### 3.1A Feature / enhancement entry copy addendum (2026-03-08)\n\nThe Chain Wizard start surface MUST expose an explicit user-facing CTA labeled:\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md\n\n- **Add a new Feature or Enhancement**\n\nMapping rule:\n- This CTA maps to existing intent `EnhanceRewriteAdd`.\n- It does **not** create a new fifth intent.\n\nPlacement / reuse:\n- available in the Chain Wizard start surface\n- reusable as the recommendation CTA launched from Assistant Chat / Deep Plan\n- reusable as a deferred-wizard shortcut when the current project is already known\n\nHelper copy should make the scope clear:\n- use this when the user is working inside an existing project and wants to add a substantial feature, major enhancement, focused rewrite, or other scoped change that benefits from interview/spec generation before orchestration\n\n- **Placement:** When the user starts the flow (e.g. \"Start new project\" or \"Open project\" from Dashboard, or a dedicated \"Start flow\" entry), present **intent selection** before or as the first step of the wizard.\n- **UI:** Four options (cards, list, or radio group) with short descriptions and optional \"Learn more\":\n  - **New project** -- Greenfield; we'll create or use a new directory and optional GitHub repo.\n  - **Fork & evolve** -- You'll work from a fork of an existing repo; we can create the fork or you can use your own.\n  - **Enhance/rewrite/add** -- You have an existing project (new to Puppet Master); we'll scope changes and plan.\n  - **Contribute (PR)** -- You want to add a feature or fix and open a Pull Request; we'll guide fork, branch, and PR.\n- **Persistence:** Selected intent is stored in wizard/app state and passed to Interview and start chain. If the user goes back and changes intent, downstream state (e.g. requirements, interview phase) may need to be invalidated or confirmed.\n- **OpenCode provider:** OpenCode is a first-class provider in tier configuration. Availability is controlled by the Settings enable toggle (see `Plans/Provider_OpenCode.md`). No wizard flow changes are required.\n\n### 3.1.1 OpenCode Provider Settings Surface (GUI contract)\n\nOpenCode is a **first-class provider backend** configured in Settings, not a wizard-specific special case.\n\n- **Enable/disable:** Settings MUST expose a single OpenCode enable toggle.\n- **Connection method selection:** Settings MUST expose OpenCode connection method:\n  - **Direct server**: user supplies server host/port (or URL equivalent).\n  - **CLI launcher/discovery fallback**: user-configurable `opencode` path used only for local launch/discovery fallback, not for primary HTTP runtime transport.\n- **Auth/sign-in options:** Settings MUST expose server auth inputs and sign-in actions for OpenCode provider auth flows (see `Plans/Provider_OpenCode.md`).\n- **Model selection:** Tier model pickers MUST source OpenCode models through the shared Provider model contract (no OpenCode-only picker behavior).\n\nContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md\n\n### 3.2 Requirements Step Redesign\n\n- **Single prompt:** \"Provide your Requirements Document(s).\"\n- **Options (at least two):**\n  1. **Upload your own** -- Single or **multiple** files (see §4). Supported formats per REQUIREMENTS.md (md, pdf, txt, docx); store under `.puppet-master/requirements/`.\n  2. **Requirements Doc Builder** -- Button that opens Builder chat (section 5). The first Assistant message is context-sensitive per §5.1 (\"What are you building?\" / \"What are you adding or changing?\" / \"What are you adding or changing in this fork?\"). User describes the project (or delta, or feature); Assistant generates a requirements document after explicit user confirmation and hands it off to the flow. No re-upload required.\n- **Framing by intent:** The exact label or helper text can vary by intent (e.g. \"Describe the product\" vs \"Describe what you're adding or changing\" vs \"Describe the feature and acceptance criteria\").\n- **After requirements:** Proceed to Interv"
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "- MUST NOT trigger Multi-Pass Review\n- MAY answer questions without changing docs\n- Conflicting or stale mutating annotations are excluded from automatic revision until resolved\n- Allow one automatic retry on structured validation failure; then degrade or fail explicitly\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md\n\n#### 5.5.3 Acceptance criteria (workflow-level)\n\n- The selection palette appears on supported docs and creates durable annotations for `Comment`, `Replace`, `Insert after`, and `Remove`.\n- `Send selection to chat` creates a thread-scoped composer chip in the owning chat surface for the next turn.\n- Durable annotations persist and re-anchor deterministically; `anchor_not_found` remains explicit and never silent.\n- `Resubmit with Annotations` performs a targeted pass and never invokes Multi-Pass Review.\n- Final review cannot run until all docs are Approved/Done and no annotations remain open.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md\n\n### 5.6 Multi-Pass Review (Requirements Doc)\n\nMulti-Pass Review is the **final-review** step for the Requirements Doc Builder bundle. Cheap iteration happens through durable annotations plus `Resubmit with Annotations`, not by repeatedly running Multi-Pass Review.\n\n**Trigger (hard gate):**\n- Enabled only when all docs in the bundle are marked **Approved/Done**.\n- Enabled only when there are **no open annotations**; question/comment annotations count as open until the user resolves them.\n- User must explicitly click **Run Final Review**.\n- Must not auto-run when conditions become true.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md\n\n**Separation rules:**\n- `Send selection to chat` chips do not satisfy or bypass the final-review gate.\n- Targeted revision and final review remain separate runtime actions with separate audit trails.\n- Interrupted targeted revision cleanup must preserve safe-point lineage and unresolved annotations until terminal resolution.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/storage-plan.md\n\n### 5.7 Contract Layer (Requirements → Contracts → Plan → Execution)\n\nThis flow must insert an explicit **Contract Layer** between requirements and plans so large, parallel agent execution stays deterministic and DRY:\n\n`requirements.md` → `Project Contract Pack` → `plan.md` + `plan_graph/` (sharded plan graph; canonical) → execution\n\n**Purpose (why the Contract Layer exists):**\n\n- Requirements text is human-oriented and often ambiguous; a contract layer converts key statements into **stable, citable IDs**.\n- When many agents work in parallel, contract IDs prevent drift: plan nodes reference `ProjectContract:*` IDs instead of copying prose.\n\n**Two-layer contract model (do not mix them):**\n\n1. **Platform Contracts (Puppet Master SSOT; referenced by name/ID only):** Canonical event model, tool schemas/policy semantics, provider capability interface, patch pipeline contracts, session storage envelopes, UI command contracts. These live in SSOT docs such as:\n   - `Plans/Contracts_V0.md` (event envelopes, UICommand, auth)\n   - `Plans/Tools.md` (tool registry + permission semantics)\n   - `Plans/CLI_Bridged_Providers.md` (provider normalized streams)\n   - `Plans/Crosswalk.md` (ownership boundaries)\n   - `Plans/DRY_Rules.md` (ContractRef enforcement)\n   - **Rule:** Do **not** copy these internal `Plans/` schemas/docs into user projects. In user-project artifacts, Platform Contracts are referenced only by stable name/ID (e.g. `ContractName:*`, `SchemaID:*`), and user projects are not expected to have a `Plans/` folder.\n\n2. **Project Contracts (generated per user project):** The **Project Contract Pack** under `.puppet-master/project/contracts/`, indexed by required `contracts/index.json`, and referenced by stable `ProjectContract:*` IDs (SSOT: `Plans/Project_Output_Artifacts.md`).\n\n**Where the Contract Layer artifacts live (filesystem materialization):**\n\n- The required user-project artifact set is materialized under `.puppet-master/project/` (see §11 for the full list; SSOT: `Plans/Project_Output_Artifacts.md`).\n- The Requirements Doc Builder seed file `.puppet-master/requirements/contract-seeds.md` is a **staging input** used by the interview’s contract unification step (§6.6). It is not part of the canonical `.puppet-master/project/` artifact set.\n\n**Storage and referencing semantics (canonical):**\n\n- **Canonical source of truth is seglog**: artifacts are persisted as full-content artifact events (chunked deterministically when needed) with `sha256` integrity. Filesystem copies are materializations/cache and must be regenerable from seglog.\n- redb projections and Tantivy indexing must make these artifacts discoverable by logical path, artifact type, contract IDs, and content search.\n\n**DRY rule (critical):**\n\n- Execution nodes must reference project contracts via `contract_refs: [\"ProjectContract:...\"]` (resolvable via `contracts/index.json`) and must not embed contract content inline.\n- If plan.md repeats explanatory text for readability, it must include a pointer like `Canonical source: ProjectContract:<...>` so the canonical contract is unambiguous.\n\n**Acceptance criteria (testable; no manual checks):**\n\nA dry-run validator must be able to parse the `.puppet-master/project/` artifact set and verify (SSOT: `Plans/Project_Output_Artifacts.md` Validation Rules):\n\n- Every node shard contains `contract_refs` and references at least one resolvable `ProjectContract:*` ID (via `contracts/index.json`).\n- Every node shard `acceptance[].check_id` is present in `acceptance_manifest.json`.\n- Evidence outputs are defined and point to `.puppet-master/project/evidence/<node_id>.json` (schema `pm.evidence.schema.v1`).\n- Orchestrator can execute in "
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 2405,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "  **Resolution:** Contribute (PR) flow uses the main clone's feature branch for user work. Node/package worktree orchestration (if any) uses separate worktrees or branches; document that PR branch is the user-facing branch and is not replaced by orchestrator worktrees. Implementation: PR branch is the checked-out branch in the single clone; worktrees for subtasks (if used) are distinct and do not replace the PR branch ref.\n\n### 9.5 GUI and UX\n\n- **Wizard length:** Adding intent selection and more project setup may make the wizard feel longer. Consider **progress indicator** (e.g. \"Step 1 of N\") and optional **skip** for advanced users.\n  **Resolution:** Add a progress indicator showing current step index and total (e.g. \"Step 2 of 6\"). Skip-to-execution (\"I already have requirements and prd.json\") is deferred to a later phase; document as future work.\n\n- **Agent activity and progress (§3.5):** Implement embedded **agent activity view** and **progress indicator** for Requirements Doc Builder and Multi-Pass Review.\n  **Resolution:** Implement one shared \"agent activity view\" component (non-interactive, streaming). Use it on the requirements/wizard page for Builder and Multi-Pass Review (requirements), and on the Interview page for document creation and Multi-Pass Review (interview). Progress indicator shows current document/step and remaining count. Provide pause, cancel, resume; persist \"in progress\" in recovery so user sees \"interrupted\" and can resume or start over.\n- **Agent activity pane (layout and a11y):** Minimum pane height: 120px when embedded in wizard or Interview. Max visible lines in stream: 500 (then virtualize or \"Show older\"). Use monospace font for stream content. Progress bar or status strip must have `aria-live=\"polite\"` and `role=\"progressbar\"` with `aria-valuenow` / `aria-valuemax` when determinate; announce state changes (e.g. \"Review pass 2 of 3\") to screen readers. Pause/Cancel/Resume buttons must be keyboard-focusable and have clear labels for assistive tech. When reduced-motion is preferred, do not animate progress bar fill; use instant updates.\n\n- **Accessibility:** Intent selection and new buttons (Builder, Create fork, Open PR) must be keyboard-accessible and screen-reader friendly.\n  **Resolution:** Use existing widget catalog and patterns; ensure focus order, labels, and ARIA where needed. All new controls must be focusable and activatable via keyboard; screen reader text for intent options and primary actions.\n\n- **i18n:** New strings (intent labels, buttons, help text) should be in a place that supports future localization.\n  **Resolution:** Put all new user-facing strings in a single module or resource file (e.g. `strings.rs` or locale files) keyed by id; no inline hardcoded strings in view code for these features.\n\n### 9.6 Security and Safety\n\n- **No secrets in handoff:** Requirements doc and Builder output must not be used to pass tokens or secrets; Interview and PR body must not include them (MiscPlan §3.6).\n  **Resolution:** Builder and Interview do not accept or embed tokens/secrets in generated docs. PR body template (WorktreeGitImprovement/MiscPlan) must not include secrets; sanitize or exclude sensitive fields before opening PR. Add checklist item in implementation: no secrets in requirements doc, Builder output, or PR body.\n\n- **Fork/PR from untrusted upstream:** We don't execute code from upstream; we only clone and create a branch.\n  **Resolution:** Document clearly: we only clone and create a branch; we do not run upstream scripts or hooks during fork/clone. No execution of code from upstream; low risk. No code change required beyond documentation.\n\n### 9.7 Summary of Gaps to Resolve in Implementation\n\n- Define **merge order and precedence** for multiple uploads + Builder.\n  **Resolution:** See §9.2 (merge order: uploads first, Builder last; canonical = merge result).\n\n- Define **Builder output template** (sections).\n  **Resolution:** See §9.2 (required sections: Scope, Goals, Out of scope, Acceptance criteria, Non-goals).\n\n- Define **phase selector** output schema and **depth** semantics per phase.\n  **Resolution:** See §6.3 (PhasePlanEntry, depth Full/Short/Skip, fallback by intent).\n\n- Define **fallback** when phase selector fails.\n  **Resolution:** See §6.3 and §9.3 (rule-based by intent, no re-invoke).\n\n- Document **GitHub auth scopes** and **upstream default branch** detection.\n  **Resolution:** See §9.4 (scopes in docs/Doctor; detect default branch via GitHub API `GET /repos/{owner}/{repo}`).\n\n- Add **intent** and **wizard_step** to recovery snapshot.\n  **Resolution:** See §9.1 (recovery schema includes intent and wizard_step).\n\n- Define **\"intent change mid-flow\"** policy and UI.\n  **Resolution:** See §9.1 (modal Continue/Cancel; clear requirements and interview state on Continue).\n\n- Implement **agent activity view** and **progress indicator** (§3.5); **pause, cancel, resume** and recovery.\n  **Resolution:** See §9.5 (single shared component, placement, pause/cancel/resume, recovery state).\n\n---\n\n## 10. Implementation Readiness Checklist\n\nBefore implementation, an implementation agent must complete or have clear specs for the following. Use this list to derive implementation tasks; order may be adjusted by dependency.\n\n1. Add **WizardIntent** enum to app state: `NewProject | ForkAndEvolve | EnhanceRewriteAdd | ContributePr`.\n2. Persist **intent** in wizard/app state and in recovery snapshot (with `wizard_step`).\n3. Implement **merge_canonical_requirements(uploads, builder_path) → Path**: merge order uploads then Builder, write canonical doc, return path.\n4. Add **phase_plan** to interview state schema (e.g. `.puppet-master/interview/phase_plan.json` or embedded in existing interview state file).\n5. Define **PhasePlanEntry** (phase_id, depth: Full | Short | Skip) in types and JSON schema.\n6. Implement **phase selector** input (intent, requirements_summary first 2000 chars, codebase_summary Option, has_gui Option) and output (normalized"
+        }
+      ],
+      "_remaining_windows_count": 3
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|concrete_plans_targets|Plans/human-in-the-loop.md",
+      "obligation_ids": [
+        "obl-015-150"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 401,
+          "line_end": 682,
+          "window_index": 1,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Human-in-the-Loop (HITL) Mode -- Plan\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - seam review loop\n\n#### Source target target-0601\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - seam review loop\n- Exact required items represented:\n  - define concrete seam review loop behavior\n  - include trigger points, checks performed, corroboration thresholds, and emitted artifacts\n  - candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or [retired-token-3] recommendation, corroboration requirement and outcome when invoked\n  - 2. **Tier-boundary [retired-token-1] vs blocked-node/runtime-overlay [retired-token-1]**\n  - Docs involved: `UI_Command_Catalog.md`, `Wiring_Matrix.md`, `Run_Graph_View.md`, `[retired-token-8]`\n  - UI_Command_Catalog.md\n  - Wiring_Matrix.md\n  - Run_Graph_View.md\n  - [retired-token-8]\n  - what old assumption is present: tier-boundary [retired-token-1] payloads, incomplete execution identity, no account fallback fields.\n  - what old assumption is present: tier hierarchy, singular Overseer, tier-boundary [retired-token-1], old canonical owner map.\n  - neither doc yet gives a durable first-class account-switch / pressure-episode history model\n  - Actions that should generally be disabled in historical mode:\n  - `corroboration`\n  - corroboration\n  - `Corroboration`\n  - Corroboration\n  - app-level `Interaction Mode (Expert/ELI5)` controls authored help/tooltip/interviewer copy\n  - Interaction Mode (Expert/ELI5)\n  - [retired-token-1] approval required\n  - historical-run mode needs to be designed for widgets and graph/page surfaces, not just live mode\n  - moving between live and historical mode should not require per-widget manual retargeting\n  - `router/page scope`: `project_id`, `focused_run_id`, historical/live mode, deep-link target\n  - router/page scope\n  - project_id\n  - focused_run_id\n  - [retired-token-1] commands already require `request_id`\n  - request_id\n  - base headless `ask -> deny unless [retired-token-1] at current tier boundary` language is still tier-era and conflicts with unified blocked-overlay contracts\n  - ask -> deny unless [retired-token-1] at current tier boundary\n  - headless `ask -> deny unless [retired-token-1] at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing\n  - [retired-token-1] requests/resolutions still carry no actor/lane/account identity strong enough to answer who asked, who approved, and under which effective runtime identity\n  - Add actor/lane/account identity and approver provenance to [retired-token-1] request/resolution events.\n  - `[retired-token-4]` still publishes `[retired-token-1]Request` with legacy `[retired-token-6]` and `[retired-token-7]`, while the later correction in `[retired-token-8]` says deprecated field names must not appear in new canonical schemas.\n  - [retired-token-4]\n  - [retired-token-1]Request\n  - [retired-token-6]\n  - [retired-token-7]\n  - Reconcile [retired-token-1] so blocked/runtime semantics are canonical and tier-boundary examples become derived copy only.\n  - Conversational / [retired-token-1] / tooling contracts still break under shared-runtime and multi-lane execution:\n  - `[retired-token-8]` remains tier-keyed at its canonical request/storage layer, still lacks node/package/lane/attempt anchors, still has no approver identity on durable [retired-token-1] events, and still leaves session-scoped reject/always semantics lane-unsafe.\n  - restart persistence for [retired-token-1] is still effectively run-scoped (`checkpoints.hitl.{run_id}`), which is unsafe once multiple concurrent approval episodes exist in one run.\n  - checkpoints.hitl.{run_id}\n  - `[retired-token-6]` is still alive in neighboring docs even though [retired-token-1] addenda say it is deprecated.\n  - `UI_Command_Catalog.md` already routes canonical runtime actions by `blocked_sequence`, but graph-local [retired-token-1] commands still use `request_id`.\n  - blocked_sequence\n  - Recast [retired-token-1] surface state around blocked-episode identity first, with tier labels as explanatory metadata rather than canonical targeting.\n  - `[retired-token-9]` is now clearly overloaded across runtime-mode vs overlay semantics while the docs still expose only a single `[retired-token-10]` payload.\n  - [retired-token-9]\n  - [retired-token-10]\n  - `[retired-token-9]` is still unresolved, but GPT-5.2 made the payload ambiguity more concrete by showing it now collides across chat-overlay mode, runtime run mode, and User Command frontmatter.\n  - `[retired-token-9]` is now a payload-shape contradiction because the current single `[retired-token-10]` contract cannot carry the requested/effective overlay/runtime split already required elsewhere.\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - `hitl.approval_requested` with `request_id`, `tier_id`, `tier_type`, `allowed_actions`\n  - hitl.approval_requested\n  - tier_id\n  - tier_type\n  - allowed_actions\n  - [retired-token-1] request-era and blocked/runtime-era canon still coexisting\n  - `Plans/[retired-token-8]` is still explicitly built around:\n  - Plans/[retired-token-8]\n  - [retired-token-1] contracts still preserve `request_id` and `[retired-token-6]` as a distinct request-era family\n  - But [retired-token-1] owner docs still describe a parallel request-era approval model centered on `request_id`, `tier_id`, and `tier_type`.\n  - This is the cleanest remaining bridge betwe"
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 401,
+          "line_end": 682,
+          "window_index": 1,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "Canonical gate types:\n- `package_complete_gate` — fires when all nodes in a package have completed. Conditions: all node statuses are in `{completed, skipped}`. Actions: run package-level verification, emit `package.completed` event.\n- `seam_complete_gate` — fires when a seam transition is needed. Conditions: the source package is completed and the target package prerequisites are met. Actions: validate cross-package contracts, transfer context, emit `seam.transition` event.\n\nHITL approval behavior stays intact, but it now binds to these gate types. When HITL is enabled, the existing approve / decline / skip / abort flow applies after `package_complete_gate` or `seam_complete_gate` reaches its decision point.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md\n## Settings Model\n\n### Three Independent Toggles\n\n| Setting | Scope | Default | Effect when ON |\n|--------|--------|--------|----------------|\n| **HITL at phase** | After completing all tasks in the current phase | Off | Pause after phase end verification; wait for human approval before starting next phase. |\n| **HITL at task** | After completing all subtasks in the current task | Off | Pause after task end verification; wait for human approval before starting next task. |\n| **HITL at subtask** | After completing all iterations in the current subtask | Off | Pause after subtask end verification; wait for human approval before starting next subtask. |\n\n- Each toggle is **independent**: e.g. phase-only, or task+subtask, or all three.\n- **Off by default:** No HITL pause unless the user explicitly enables one or more levels.\nContractRef: PolicyRule:Decision_Policy.md§4\n- **Single source of truth:** These three settings live in one place in config (e.g. orchestrator or app config); GUI and run loop both read from that config. No duplicated semantics (DRY).\nContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7\n\n### GUI: Primary Place to Turn On and Configure HITL\nHITL is configured in the GUI and persisted in one canonical execution-affecting config block.\n\nCanonical config shape:\n\n```yaml\nhitl:\n  phase: false\n  task: false\n  subtask: false\n```\n\nRules:\n- this structure lives inside `GuiConfig`\n- it is persisted in redb at `config:gui.hitl`\n- GUI controls read and write this exact structure\n- Option B runtime config construction copies this structure unchanged into the run snapshot at run start\n- there is no second backend-only HITL key family for the same semantics\n\nUI requirements:\n- one visible place to enable or disable HITL per tier\n- phase/task/subtask toggles remain independent\n- execution-affecting changes apply to the next run without requiring a restart\n\nThis section replaces any prior wording that left key names or config location to implementation-time choice.\n\nContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md\n### Run-Loop Integration (Conceptual)\n\n1. Orchestrator runs as today: Phase → Task → Subtask → Iteration, with start/end verification at phase, task, and subtask per Plans/orchestrator-subagent-integration.md.\n2. When a **phase** is completed (end verification done):\n   - If **HITL at phase** is ON → **pause**. Show completion state and approval controls (see button labels below). On approval → advance to next phase.\n\n     **HITL Button Labels (Resolved):**\n     - **Primary action:** \"Approve\" (when next tier is not yet ready) or \"Approve & Continue\" (when next tier is ready to start immediately).\n     - **Reject action:** \"Reject\" — marks tier as `needs_review`, surfaces CtA.\n     - **Cancel action:** \"Cancel Run\" — aborts the entire orchestration run.\n     - **Skip action:** \"Skip\" — available in the reject CtA, advances past the current tier.\n     - Button order (left to right): [Approve / Approve & Continue] [Reject] [Cancel Run].\n\n     **On reject:** The run remains paused. The tier is marked as `needs_review` in the seglog. A Call-to-Action (CtA) appears in the Assistant chat: \"Phase [X] was rejected — [Re-run] [Skip Phase] [Abort Run].\" The user must choose an action to proceed. Re-run re-executes the same tier from the beginning. Skip Phase advances to the next tier. Abort Run stops the entire orchestration run.\n\n     **On cancel:** The current run is aborted. The tier is marked as `cancelled` in the seglog. All active subagents for this run receive a cancellation signal. The orchestrator returns to IDLE state. A seglog event `hitl.cancelled` is emitted with the node execution context.\n3. When a **task** is completed (end verification done):\n   - If **HITL at task** is ON → **pause**. Same idea: human reviews, approves or rejects; on approval → next task.\n4. When a **subtask** is completed (end verification done):\n   - If **HITL at subtask** is ON → **pause**. Same idea: human reviews, approves or rejects; on approval → next subtask.\n\nPause points are **only** at tier boundaries (after a full phase/task/subtask is done), not mid-tier. Within a tier, the system runs to completion before any HITL gate.\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md\n\n### What the Human Sees and Does\n\n- **At pause:** The UI should present that the current tier (phase/task/subtask) is complete and that approval is required to continue. The user can review progress, logs, artifacts, or evidence as needed.\n- **Approve:** \"Approve\" or \"Approve & Continue\" button (see button labels in §2 above) clears the pause and allows the orchestrator to advance to the next tier.\n- **Reject / Cancel:** \"Reject\" marks tier as `needs_review`, surfaces CtA with three options (Re-run, Skip, Abort). \"Cancel Run\" aborts run, emits `hitl.cancelled` event, returns to IDLE. See §2 for full specification.\n\n### Dashboard: Warnings and Calls to Action (CtA)\n\nWhen the orchestrator is paused for HITL, the **Dashboard** must surface this as a **warning or"
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|concrete_plans_targets|Plans/interview-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-153"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "line_start": 1,
+          "line_end": 112,
+          "window_index": 0,
+          "total_lines_in_doc": 112,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "line_start": 1,
+          "line_end": 112,
+          "window_index": 0,
+          "total_lines_in_doc": 112,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 9287,
+          "text_excerpt": "# Interview Feature Subagent Integration -- Implementation Plan\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0611\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - `Feature Seam` <-> `Work Package` <-> `Weak Integration` <-> `Seam Complete`\n  - Feature Seam\n  - Work Package\n  - Weak Integration\n  - Seam Complete\n  - `Plans/assistant-chat-design.md` + `Plans/interview-subagent-integration.md`\n  - Plans/assistant-chat-design.md\n  - Plans/interview-subagent-integration.md\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `Plans/interview-subagent-integration.md:257`\n  - Plans/interview-subagent-integration.md:257\n  - `Plans/interview-subagent-integration.md:1692-1698`\n  - Plans/interview-subagent-integration.md:1692-1698\n  - `Plans/interview-subagent-integration.md:1966`\n  - Plans/interview-subagent-integration.md:1966\n  - `Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`.\n  - ### Runtime identity visibility\n  - requested_account_binding\n  - operational_identity\n  - requested_account_policy\n  - tool_use_id\n  - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.\n  - Plans/Project_Output_Artifacts.md\n  - Plans/Runtime_Artifacts_Panel.md\n  - validation artifact lineage\n  - bridge-field viewer\n  - validation/report section\n  - `Plans/interview-subagent-integration.md:1686-1698`\n  - Plans/interview-subagent-integration.md:1686-1698\n  - `gap-001` now points at `Plans/interview-subagent-integration.md` — `### Runtime identity visibility` instead of a non-existent requested/effective identity heading.\n  - gap-001\n  - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.\n  - gap-003\n  - gap-004\n  - gap-005\n  - Plans/storage-plan.md\n  - Plans/usage-feature.md\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n## Fidelity recovery addendum\n\nThis addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.\n\n### Fidelity recovery cov-065: Shared conversational/runtime boundary\n- Coverage rows: cov-065\n- Fidelity gap refs: cov-065\n- Required fidelity items:\n- Exact required item: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator\n- Exact required item: They remain distinct actor/run kinds rather than package/seam/node execution objects\n- Acceptance checks represented:\n- Exact acceptance check: The heading `### Fidelity recovery cov-065: Shared conversational/runtime boundary` exists in `Plans/interview-subagent-integration.md`.\n- Exact acceptance check: The `cov-065` repair states the exact requirement: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator\n- Exact acceptance check: The `cov-065` repair states the exact requirement: They remain distinct actor/run kinds rather than package/seam/node execution objects\n- Exact acceptance check: The `cov-065` repair is in the owner section for `Plans/interview-subagent-integration.md` and is not only a downstream consumer note.\n\n> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.\n\n\n## Change Summary\n\n- 2026-02-26: Added capability introspection and media-generation gating requirements: Interview agent MUST call `capabilities.get` when offering media options and honor enabled/disabled gating; may propose media generation but only execute when enabled. SSOT: `Plans/Media_Generation_and_Capabilities.md`. ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM\n- 2026-02-24: Added UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to interview outputs for GUI projects; updated Phase 3 (Product/UX) subagent "
+        }
+      ],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g006",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|concrete_plans_targets|Plans/orchestrator-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-152"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 4801,
+          "line_end": 5200,
+          "window_index": 12,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 5201,
+          "line_end": 5600,
+          "window_index": 13,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 5601,
+          "line_end": 6000,
+          "window_index": 14,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 6001,
+          "line_end": 6400,
+          "window_index": 15,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 6401,
+          "line_end": 6750,
+          "window_index": 16,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "# Orchestrator Subagent Integration -- Implementation Plan\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n  - Current docs do say Orchestrator consumes the plan/node graph for execution\n  - Design discussion now has a concrete recommendation direction\n  - Emerging execution-settings direction\n  - Worktree gap is now explicit\n  - seam review loop\n  - runtime/model precedence\n  - worktree behavior\n  - Highest-Impact Docs\n\n#### Source target target-0616\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n  - Current docs do say Orchestrator consumes the plan/node graph for execution\n  - Design discussion now has a concrete recommendation direction\n  - Emerging execution-settings direction\n  - Worktree gap is now explicit\n  - seam review loop\n  - runtime/model precedence\n  - worktree behavior\n  - Highest-Impact Docs\n- Exact required items represented:\n  - Orchestrator must consume canonical runtime fields and event names from shared contracts\n  - use plan-graph index and node shard files as required execution inputs\n  - treat runnable graph nodes, DAG readiness, and dispatch from a global ready set as the scheduling model\n  - define the governing intelligence/control loop in a graph-canonical system\n  - resolve whether tiers remain only a derived human-facing lens or retain execution authority\n  - Define distinct defaults/overrides for provider/model at run/global, feature seam, work package, node, work [retired-token-11], feature seam overseer, and overseer-delegated node worker levels.\n  - Make requested vs effective provider/model visible at all levels where [retired-token-6] can occur.\n  - Specify node [retired-token-14] selection as dynamic-by-default from node scope/type; node-worker [retired-token-14] override is policy-owned, not per-node [retired-token-4].\n  - Specify whether overseers may use subagents for node work and what provider/model policy applies to delegated node workers.\n  - Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch.\n  - Resolve package-based worktree preference vs [retired-token-7] for scale/manageability.\n  - Record worktree ownership/isolation rules after Orchestrator ownership boundaries are pinned.\n  - Expose source-control/worktree handshake as a remaining blind spot.\n  - define concrete seam review loop behavior\n  - include trigger points, checks performed, corroboration thresholds, and emitted artifacts\n  - candidate outputs: seam review verdict, failure classes with severity, evidence bundle/rationale, remediation-node recommendation or [retired-token-12] recommendation, corroboration requirement and outcome when invoked\n  - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels\n  - whether seam/package/node provider-model settings are hard constraints, defaults, or hints\n  - whether an overseer can do direct node work or only delegate/review\n  - if direct node work is allowed, whether it uses overseer-[retired-token-15] or node-[retired-token-15]\n  - how dynamic node [retired-token-14]s interact with explicit node overrides and overseer-controlled delegation\n  - how are worktrees assigned for parallel nodes within the same package or seam\n  - what happens to worktree ownership during remediation, corroboration, or [retired-token-12]-triggered work\n  - for package-based worktree pools, whether downstream dependent nodes reuse the same worktree lane or start a fresh lane from the promoted upstream result\n  - preserve same-lane continuation by default; promote-then-fork only when it materially improves safe parallelism\n  - Replace tier-rooted execution with package/seam/lane model\n  - Define [retired-token-11] + seam overseer roles\n  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage\n  - Redefine gates to package-complete / seam-complete\n  - Rename or retire Tiers UI/tab and tier_tree/progress bars\n  - a seam overseer should not collapse into a narrow implementation [retired-token-14] just because a framework is detected\n  - `Seam integration default`\n  - Seam integration default\n  - `Seam integration blocked`\n  - Seam integration blocked\n  - The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage.\n  - Plans/*.md\n  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.\n  - 39\n  - 22\n  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.\n  - 61\n  - `[retired-token-26]` already carries an `[retired-token-27]` field block, but stale `[retired-token-18]` / `[retired-token-21]` residue still survives nearby.\n  - [retired-token-26]\n  - [retired-token-27]\n  - [retired-token-18]\n  - [retired-token-21]\n  - `[retired-token-26]:209-235`\n  - [retired-token-26]:209-235\n  - `[retired-token-26]:380-402`\n  - [retired-token-26]:380-402\n  - `[retired-token-26]:379-391`\n  - [retired-token-26]:379-391\n  - `[retired-token-26]:374-391`\n  - [retired-token-26]:374-391\n  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80`"
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "\n```rust\n// src/core/orchestrator.rs (additions)\n\npub struct Orchestrator {\n    // ... existing fields ...\n    subagent_selector: Arc<SubagentSelector>,\n    subagent_manager: Arc<SubagentManager>,\n}\n\nimpl Orchestrator {\n    pub fn new(config: OrchestratorConfig) -> Result<Self> {\n        // ... existing initialization ...\n\n        // Initialize subagent selector\n        let project_context = Self::detect_project_context(&config.paths.workspace)?;\n        let subagent_selector = Arc::new(SubagentSelector::new(project_context)?);\n\n        // Initialize subagent manager (from interview plan)\n        let subagent_manager = Arc::new(SubagentManager::new(&config.paths.workspace)?);\n\n        Ok(Self {\n            // ... existing fields ...\n            subagent_selector,\n            subagent_manager,\n        })\n    }\n\n    /// Select and invoke subagents for tier execution\n    async fn execute_tier_with_subagents(\n        &self,\n        tier_node: &TierNode,\n        context: &OrchestratorContext,\n    ) -> Result<()> {\n        // Build tier context\n        let tier_context = self.build_tier_context(tier_node, context)?;\n        // build_tier_context MUST populate workspace/worktree/runtime snapshot fields\n        // from the same frozen tier-start config snapshot used by validation/persistence.\n\n        // Select subagents\n        // DRY REQUIREMENT: SubagentSelector MUST use subagent_registry:: functions — NEVER hardcode subagent names\n        let mut subagent_names = self.subagent_selector.select_for_tier(\n            tier_node.tier_type,\n            &tier_context,\n        );\n\n        // Apply tier overrides (replace if non-empty, else use selected list)\n        // DRY REQUIREMENT: Validate override names using subagent_registry::is_valid_subagent_name()\n        if let Some(overrides) = self.get_tier_overrides(tier_node.tier_type) {\n            if !overrides.is_empty() {\n                // Validate all override names against canonical list\n                for name in &overrides {\n                    if !subagent_registry::is_valid_subagent_name(name) {\n                        return Err(anyhow!(\"Invalid subagent name in override: {}\", name));\n                    }\n                }\n                subagent_names = overrides;\n            }\n        }\n\n        // Filter disabled subagents\n        // DRY REQUIREMENT: Validate disabled names using subagent_registry::is_valid_subagent_name()\n        subagent_names.retain(|name| {\n            if !subagent_registry::is_valid_subagent_name(name) {\n                log::warn!(\"Invalid subagent name in disabled list: {}\", name);\n                false\n            } else {\n                !self.is_subagent_disabled(name)\n            }\n        });\n\n        // Add required subagents\n        // DRY REQUIREMENT: Validate required names using subagent_registry::is_valid_subagent_name()\n        if let Some(required) = self.get_required_subagents(tier_node.tier_type) {\n            for req in required {\n                if !subagent_registry::is_valid_subagent_name(&req) {\n                    return Err(anyhow!(\"Invalid subagent name in required list: {}\", req));\n                }\n                if !subagent_names.contains(&req) {\n                    subagent_names.push(req);\n                }\n            }\n        }\n\n        // Get platform and model for this tier\n        let platform = self.get_platform_for_tier(tier_node.tier_type)?;\n        let model = self.get_model_for_tier(tier_node.tier_type)?;\n\n        // Get coordination context\n        let coordination_context = self.coordinator.get_coordination_context(&tier_context.workspace).await?;\n\n        // Register agents in coordination state before execution\n        for subagent_name in &subagent_names {\n            let agent_id = format!(\"{}-{}\", subagent_name, tier_node.id);\n            self.coordinator.register_agent(ActiveAgent {\n                agent_id: agent_id.clone(),\n                platform,\n                node_id: tier_node.id.clone(),\n                worktree_path: context.worktree_path.clone(),\n                files_being_edited: Vec::new(), // Updated during execution\n                current_operation: format!(\"Executing {} tier\", tier_node.tier_type),\n                started_at: Utc::now(),\n                last_update: Utc::now(),\n            }).await?;\n        }\n\n        // Execute subagents (sequential or parallel based on config)\n        if self.config.enable_parallel_subagents {\n            // Execute subagents in parallel\n            let mut tasks = Vec::new();\n            for subagent_name in &subagent_names {\n                let task = self.execute_subagent_async(\n                    platform,\n                    &model,\n                    subagent_name,\n                    tier_node,\n                    &tier_context,\n                    &coordination_context,\n                );\n                tasks.push(task);\n            }\n\n            // Wait for all subagents to complete\n            let results = futures::future::join_all(tasks).await;\n\n            // Check for failures\n            for result in results {\n                result??; // Propagate errors\n            }\n        } else {\n            // Execute subagents sequentially\n            for subagent_name in &subagent_names {\n                self.execute_subagent(\n                    platform,\n                    &model,\n                    subagent_name,\n                    tier_node,\n                    &tier_context,\n                    &coordination_context,\n                ).await?;\n            }\n        }\n\n        // Unregister agents from coordination state after execution\n        for subagent_name in &subagent_names {\n            let agent_id = format!(\"{}-{}\", subagent_name, tier_node.id);\n            self.coordinator.unregister_agent(&agent_id).await?;\n        }\n\n        Ok(())\n    }\n\n    // DRY:FN:execute_subagent — Execute a single subagent for a tier\n    async fn execute_subagent(\n        &self,\n        platform: Platfo"
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "    if std::env::var(\"RUN_CURSOR_CLI_SMOKE\").is_err() {\n        return;\n    }\n    let binary = which_binary(\"agent\").or_else(|| which_binary(\"cursor-agent\"))\n        .expect(\"Cursor CLI not on PATH\");\n    let output = std::process::Command::new(binary)\n        .args([\"-p\", \"/code-reviewer Reply with only: SMOKE_OK\", \"--output-format\", \"json\"])\n        .output()\n        .expect(\"Failed to run Cursor CLI\");\n    assert!(output.status.success(), \"Cursor CLI failed: stderr = {:?}\", String::from_utf8_lossy(&output.stderr));\n    let stdout = String::from_utf8_lossy(&output.stdout);\n    assert!(!stdout.trim().is_empty(), \"Cursor CLI produced empty stdout\");\n    if let Ok(json) = serde_json::from_str::<serde_json::Value>(&stdout) {\n        assert!(json.is_object() || json.is_array(), \"Expected JSON object or array\");\n    }\n}\n```\n\nOther providers follow the same transport-specific pattern: check env gate, run the minimal connectivity probe for that provider transport (CLI, server handshake, or API), and assert success with non-empty/parseable output.\n\n---\n\n### 2. Subagent-Invocation Integration Tests\n\n**Purpose:** Verify that the **exact** command line the orchestrator would use for a given tier and subagent is built correctly and that executing it completes without unexpected failure. This catches regressions in argument construction, subagent naming, and platform-specific flags.\n\n**Scope:** At least one integration test per platform that (1) builds the invocation (command + args + env) as the orchestrator would, (2) runs it against the real CLI (or a script that mimics it), and (3) asserts that the run completes successfully and, where possible, that the invocation path (e.g. subagent name in the prompt) is correct.\n\n**Implementation:**\n\n- **Orchestrator invocation builder:** Use the same code path the orchestrator uses to build the CLI command (e.g. a function that takes `platform`, `tier_type`, `subagent_name`, `prompt`, `model` and returns `Command`). Do not duplicate logic in tests.\n- **Per-platform integration test:**\n  - Build the invocation for a fixed scenario (e.g. tier = Task, subagent = `code-reviewer`, minimal prompt).\n  - Execute it (real CLI or, if documented, a script that echoes the command and returns success for CI without auth).\n  - Assert: process success; optionally that stdout/stderr contain the subagent name or expected token; and that no \"unknown subagent\" or \"invalid flag\" style errors appear in stderr.\n- **Environment gating:** Same as smoke tests: skip when CLI is not available or auth is not configured; use env vars (e.g. `RUN_SUBAGENT_INVOCATION_TESTS=1`) and optional `#[ignore]` so CI without CLIs still passes.\n- **Artifacts:** Log the exact command and, if possible, a short excerpt of stdout/stderr to `.puppet-master/evidence/subagent-invocation-<platform>.log` for debugging.\n\n**Test location and naming:**\n\n- **File:** `puppet-master-rs/tests/subagent_invocation_integration.rs` (or under `puppet-master-rs/tests/integration/`).\n- **Tests:** `cursor_subagent_invocation`, `codex_subagent_invocation`, `claude_subagent_invocation`, `gemini_subagent_invocation`, `copilot_subagent_invocation`.\n- **Runner:** Same as smoke tests; run with env set or `cargo test --ignored` / `cargo test subagent_invocation`.\n\n**Fleshed-out example (invocation builder + one platform):**\n\n```rust\n// puppet-master-rs/tests/subagent_invocation_integration.rs\n\n/// Builds the exact Command the orchestrator would use for Cursor + subagent.\n// DRY requirement: must use platform_specs::cli_binary_names() — never hardcode \"agent\" or \"cursor-agent\"\n// DRY requirement: must use platform_specs::get_subagent_invocation_format() — never hardcode \"/{subagent} {prompt}\" format\nfn build_cursor_subagent_command(\n    subagent_name: &str,\n    prompt: &str,\n    model: &str,\n    workspace: &std::path::Path,\n) -> std::process::Command {\n    use std::process::Command;\n    // DRY: Use platform_specs for binary name — DO NOT hardcode \"agent\"\n    let binary = crate::platforms::platform_specs::cli_binary_names(crate::types::Platform::Cursor)\n        .first()\n        .copied()\n        .unwrap_or(\"agent\");\n    // DRY: Use platform_specs for invocation format — DO NOT hardcode \"/{subagent} {prompt}\"\n    let invocation_format = platform_specs::get_subagent_invocation_format(Platform::Cursor)\n        .unwrap_or_else(|_| \"/{} {}\".to_string());\n    let full_prompt = invocation_format\n        .replace(\"{subagent}\", subagent_name)\n        .replace(\"{task}\", prompt);\n    let mut cmd = Command::new(binary);\n    cmd.arg(\"-p\").arg(&full_prompt)\n        .arg(\"--output-format\").arg(\"json\");\n    if !model.is_empty() && model != \"auto\" {\n        cmd.arg(\"--model\").arg(model);\n    }\n    cmd.current_dir(workspace);\n    cmd\n}\n\n#[tokio::test]\n#[ignore = \"Requires Cursor CLI and auth; set RUN_SUBAGENT_INVOCATION_TESTS=1\"]\nasync fn cursor_subagent_invocation() {\n    if std::env::var(\"RUN_SUBAGENT_INVOCATION_TESTS\").is_err() {\n        return;\n    }\n    let workspace = tempfile::tempdir().unwrap();\n    let cmd = build_cursor_subagent_command(\n        \"code-reviewer\",\n        \"Reply with only: INVOKED\",\n        \"auto\",\n        workspace.path(),\n    );\n    let output = cmd.output().expect(\"Failed to run Cursor\");\n    assert!(output.status.success(), \"Invocation failed: {:?}\", String::from_utf8_lossy(&output.stderr));\n    let stdout = String::from_utf8_lossy(&output.stdout);\n    assert!(stdout.contains(\"code-reviewer\") || stdout.contains(\"INVOKED\") || !stdout.trim().is_empty(),\n            \"Expected subagent or echo in output: {}\", stdout);\n}\n```\n\nContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7\n\n**Summary table:**\n\n| Test type | What it runs | What it asserts | When to run |\n|-----------|---------------|-----------------|-------------|\n| Platform CLI smoke | Real CLI + minimal subagent cmd | Exit success, non-empty/parseable output | Env-gated or manual |\n| Subagent-invocation integration | Orchestrator's command/call for tier+s"
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 6750,
+          "max_lines_per_window": 400,
+          "excerpt_chars": 12015,
+          "text_excerpt": "1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.\n2. **Generic fallback:** Attempt generic text extraction — scan for completion signals (including legacy naming variants), error patterns (stack traces, \"error:\", \"fatal:\"), and file modification markers.\n3. **If generic succeeds:** Use extracted data; flag the turn as `parser_fallback_used` in seglog metadata.\n4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: \"Could not parse output from [Provider]. [Retry] [Skip] [View raw output].\"\n5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success.\n\n### 11. Subagent Persona info: storage, overrides, and injection\n\n### Reconciliation addendum\n\nThis addendum applies row-level transfer coverage requirements for the mapped owner anchor. Source IDs and exact source tokens are preserved in packet metadata; prose below uses canonical wording for retired legacy terms.\n\n- Required structural headings for this packet target:\n  - ### Reconciliation addendum\n\n#### Source target target-0625\n- Reconciliation action: insert_after\n- Replace scope: insert_only\n- Required structural headings represented:\n  - ### Reconciliation addendum\n- Exact required items represented:\n  - subagent overrides do not accidentally become package defaults\n- Exact acceptance checks represented:\n  - All coverage_row_ids listed on this target are represented without broad summary substitution.\n  - All source_obligation_ids, source_seed_ids, and source_shard_ids are preserved in packet metadata.\n  - Rows marked missing or partial receive concrete prose or structural additions under the mapped live anchor.\n- Source lineage is preserved in packet metadata for coverage rows, source obligations, source seeds, source shards, gaps, fidelity refs, span group, and writer role.\n\n- **Resolved:** Persona storage layout, schema, validation, GUI management, and context-injection rules are canonically defined in `Plans/Personas.md` (SSOT). This gap is closed; do not restate those definitions here.\n- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — project-local (`.puppet-master/personas/<id>/PERSONA.md`) overrides global (`~/.config/puppet-master/personas/<id>/PERSONA.md`). (2) **Overrides:** User edits Personas via the GUI (Settings > Advanced > Personas); edits persist to Puppet Master Persona storage only — never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).\n\nContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Personas.md#STORAGE-LAYOUT\n\n---\n\n## DRY Method Compliance\n\n**CRITICAL:** All code in this plan MUST follow DRY principles. This section documents DRY requirements and violations to avoid.\n\nContractRef: PolicyRule:Plans/DRY_Rules.md#dry-method-compliance\n\n### DRY Requirements\n\n1. **Platform Data -- ALWAYS use platform_specs:**\n   - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities\n   - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::get_subagent_invocation_format()`, `platform_specs::supports_effort()`)\n   - ✅ **ALWAYS** use `platform_specs::discover_platform_capabilities()` instead of platform match statements\n\n2. **Subagent Names -- ALWAYS use subagent_registry:**\n   - ❌ **NEVER** hardcode subagent names in match statements or mappings\n   - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)\n   - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` as the single source of truth\n\nContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7\n\n3. **Tag All Reusable Items:**\n   - ✅ Tag reusable functions: `// DRY:FN:<name> -- Description`\n   - ✅ Tag reusable data structures: `// DRY:DATA:<name> -- Description`\n   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> -- Description`\n   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> -- Description`\n\n4. **Widget Reuse:**\n   - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI\n   - ✅ **ALWAYS** use existing widgets from `src/widgets/`\n   - ✅ If bespoke UI is required, add `// UI-DRY-EXCEPTION: <reason>`\n\n### DRY Violations Fixed in This Plan\n\n- ✅ `build_subagent_invocation`: Now uses `platform_specs::get_subagent_invocation_format()` instead of hardcoded platform match\n- ✅ `language_to_subagent` / `framework_to_subagent`: Now use `subagent_registry::` functions instead of hardcoded mappings\n- ✅ `platform_agents_dir`: Now uses `platform_specs::get_agents_directory_name()` instead of hardcoded platform match\n- ✅ `invoke_subagent`: Now uses `platform_specs::get_subagent_invocation_format()` instead of hardcoded platform match\n- ✅ `discover_capabilities`: Now uses `platform_specs::discover_platform_capabilities()` instead of hardcoded platform match\n- ✅ Subagent registry: Created `DRY:DATA:subagent_registry` module as single source of truth for all subagent names and mappings\n\n### DRY Method and GUI Widget Catalog\n\nThe codebase follows the **DRY method** (reuse-first) and uses a **widget catalog** for UI. When implementing the plan-mode and subagent GUI (Config, Wizard, Doctor), follow these rules so new UI stays consistent and discoverable.\n\n### Widget catalog\n\n- **Before adding any new UI:** Check **`docs/gui-widget-catalog.md`** (the full widget and data-source catalog). Use existing wid"
+        }
+      ],
+      "_remaining_windows_count": 13
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g007",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Commands_System.md|FinalGUISpec.md|Orchestrator_Page.md|UI_Command_Catalog.md|Wiring_Matrix.md|assistant-chat-design.md",
+      "obligation_ids": [
+        "obl-015-145"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Commands_System.md",
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md",
+        "UI_Command_Catalog.md",
+        "Wiring_Matrix.md",
+        "assistant-chat-design.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g008",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Contracts_V0.md|Runtime_Artifacts_Panel.md|Tools.md|human-in-the-loop.md|storage-plan.md",
+      "obligation_ids": [
+        "obl-015-146"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Contracts_V0.md",
+        "Runtime_Artifacts_Panel.md",
+        "Tools.md",
+        "human-in-the-loop.md",
+        "storage-plan.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g009",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Executor_Protocol.md|orchestrator-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-147"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Executor_Protocol.md",
+        "orchestrator-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g010",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|WorktreeGitImprovement.md|chain-wizard-flexibility.md|interview-subagent-integration.md",
+      "obligation_ids": [
+        "obl-015-148"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "WorktreeGitImprovement.md",
+        "chain-wizard-flexibility.md",
+        "interview-subagent-integration.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-065-g011",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-015-134",
+        "obl-015-135",
+        "obl-015-136",
+        "obl-015-137",
+        "obl-015-138",
+        "obl-015-139",
+        "obl-015-140",
+        "obl-015-141",
+        "obl-015-142",
+        "obl-015-143",
+        "obl-015-144",
+        "obl-015-155",
+        "obl-015-156",
+        "obl-015-157",
+        "obl-015-158"
+      ],
+      "obligation_record_count": 15,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g001",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Orchestrator_Page.md",
+      "obligation_ids": [
+        "obl-015-166"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Orchestrator_Page.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Project_Output_Artifacts.md|chain-wizard-flexibility.md",
+      "obligation_ids": [
+        "obl-015-173"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Project_Output_Artifacts.md",
+        "chain-wizard-flexibility.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|Runtime_Artifacts_Panel.md",
+      "obligation_ids": [
+        "obl-015-168"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Runtime_Artifacts_Panel.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-066-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0047",
+      "grouping_key": "shard-0047|doc_discovery|UI_Command_Catalog.md",
+      "obligation_ids": [
+        "obl-015-160"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "UI_Command_Catalog.md"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": [],
+      "_window_excerpts_first_four": [],
+      "_remaining_windows_count": 0
+    }
+  ]
+}

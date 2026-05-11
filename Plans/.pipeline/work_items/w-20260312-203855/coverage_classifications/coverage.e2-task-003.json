@@ -1,0 +1,756 @@
+{
+  "schema_id": "pm.coverage_evidence_batch.v3.2.2",
+  "subagent_task_id": "e2-task-003",
+  "subagent_invocation_id": "666e1e93-6678-4190-ab43-eec6014575ca",
+  "status": "complete",
+  "classifications": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-008-g021",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "missing_live_target",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-099",
+          "obligation_category": "fact_observation",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        },
+        {
+          "obligation_id": "obl-002-106",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        },
+        {
+          "obligation_id": "obl-002-107",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        },
+        {
+          "obligation_id": "obl-002-111",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g001",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-115",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        ".puppet-master/project/plan_graph/"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g002",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-119",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "AGENTS.md",
+        "prd.json",
+        "progress.txt"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-113",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        },
+        {
+          "obligation_id": "obl-002-136",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Contracts_V0.md",
+        "Executor_Protocol.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g004",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-133",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "FinalGUISpec.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g005",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-124",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "GitHub_Integration.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g006",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-132",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Glossary.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g007",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-126",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "MiscPlan.md",
+        "WorktreeGitImprovement.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g008",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-122",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Models_System.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g009",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-120",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Multi-Account.md",
+        "Personas.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g010",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-135",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Orchestrator_Page.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g011",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-121",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Personas.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g012",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-114",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Progression_Gates.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g013",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-116",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Prompt_Pipeline.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g014",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-134",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Widget_System.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g015",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-125",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "WorktreeGitImprovement.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g016",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-128",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "WorktreeGitImprovement.md",
+        "chain-wizard-flexibility.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g017",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-118",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        },
+        {
+          "obligation_id": "obl-002-131",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "chain-wizard-flexibility.md",
+        "newfeatures.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g018",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-129",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "newfeatures.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g019",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-130",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "orchestrator-subagent-integration.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g020",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "needs_doc_discovery",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-137",
+          "obligation_category": "directive",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "storage-plan.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-009-g021",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "missing_live_target",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-002-117",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        },
+        {
+          "obligation_id": "obl-002-123",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        },
+        {
+          "obligation_id": "obl-002-127",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.0,
+          "classification": "needs_context_only",
+          "evidence_spans": [],
+          "uncertainty": 0.35,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.35
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-010-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "missing",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-003-014",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.1042,
+          "classification": "missing",
+          "evidence_spans": [],
+          "uncertainty": 0.4458,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md",
+        "Plans/Glossary.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.4458
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-010-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "missing",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-003-010",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.1578,
+          "classification": "missing",
+          "evidence_spans": [],
+          "uncertainty": 0.3922,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.3922
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-010-g003",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0007",
+      "aggregated_coverage_label": "missing",
+      "obligation_classifications": [
+        {
+          "obligation_id": "obl-003-013",
+          "obligation_category": "architecture_note",
+          "best_evidence_score": 0.1414,
+          "classification": "missing",
+          "evidence_spans": [],
+          "uncertainty": 0.4086,
+          "notes": []
+        }
+      ],
+      "missing_details": [],
+      "candidate_docs": [
+        "Plans/FileSafe.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/newtools.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.2",
+        "batch_input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-003.input.json"
+      },
+      "uncertainty": 0.4086
+    }
+  ]
+}

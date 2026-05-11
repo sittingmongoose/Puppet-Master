@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-023",
+  "subagent_invocation_id": "459851a6-cf31-451d-8e57-b603e4ab3184",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-023-g001",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0015",
+      "grouping_key": "shard-0015|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-006-018",
+        "obl-006-019",
+        "obl-006-020",
+        "obl-006-021",
+        "obl-006-022",
+        "obl-006-023",
+        "obl-006-024",
+        "obl-006-025",
+        "obl-006-026",
+        "obl-006-027",
+        "obl-006-028",
+        "obl-006-029",
+        "obl-006-030",
+        "obl-006-031",
+        "obl-006-032",
+        "obl-006-033",
+        "obl-006-034",
+        "obl-006-035",
+        "obl-006-036",
+        "obl-006-037",
+        "obl-006-038",
+        "obl-006-039",
+        "obl-006-040"
+      ],
+      "obligation_record_count": 23,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-023-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0016",
+      "grouping_key": "shard-0016|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-006-041",
+        "obl-006-042"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

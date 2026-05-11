@@ -1,0 +1,278 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-147",
+  "subagent_invocation_id": "46b926c1-eb45-4023-9b1a-c861391cab92",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-147-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0079",
+      "grouping_key": "shard-0079|concrete_plans_targets|Plans/Orchestrator_Page.md",
+      "obligation_ids": [
+        "obl-023-161"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1273,
+          "window_index": 3,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-147-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0079",
+      "grouping_key": "shard-0079|concrete_plans_targets|Plans/Run_Graph_View.md",
+      "obligation_ids": [
+        "obl-023-149"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 401,
+          "line_end": 716,
+          "window_index": 1,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-147-g003",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0079",
+      "grouping_key": "shard-0079|concrete_plans_targets|Plans/Run_Graph_View.md|Plans/UI_Command_Catalog.md",
+      "obligation_ids": [
+        "obl-023-151"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 401,
+          "line_end": 716,
+          "window_index": 1,
+          "total_lines_in_doc": 716,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1317,
+          "window_index": 3,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-147-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0079",
+      "grouping_key": "shard-0079|concrete_plans_targets|Plans/UI_Command_Catalog.md",
+      "obligation_ids": [
+        "obl-023-148"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1317,
+          "window_index": 3,
+          "total_lines_in_doc": 1317,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-147-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0079",
+      "grouping_key": "shard-0079|concrete_plans_targets|Plans/human-in-the-loop.md",
+      "obligation_ids": [
+        "obl-023-138"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "line_start": 401,
+          "line_end": 682,
+          "window_index": 1,
+          "total_lines_in_doc": 682,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-147-g006",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0079",
+      "grouping_key": "shard-0079|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-023-137",
+        "obl-023-139",
+        "obl-023-140",
+        "obl-023-141",
+        "obl-023-142",
+        "obl-023-143",
+        "obl-023-144",
+        "obl-023-145",
+        "obl-023-146",
+        "obl-023-147",
+        "obl-023-150",
+        "obl-023-152",
+        "obl-023-153",
+        "obl-023-154",
+        "obl-023-155",
+        "obl-023-156",
+        "obl-023-157",
+        "obl-023-158",
+        "obl-023-159",
+        "obl-023-160"
+      ],
+      "obligation_record_count": 20,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

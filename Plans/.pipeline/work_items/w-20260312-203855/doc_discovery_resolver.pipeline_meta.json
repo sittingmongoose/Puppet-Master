@@ -1,0 +1,55 @@
+{
+  "timestamp_utc": "20260511T200846Z",
+  "wave_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.wave-001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_resolver.wave-002.json"
+  ],
+  "task_to_invocation_map": {
+    "f5-task-001": "09a8bbad-f35b-4348-9a93-9d87d9fe10c0",
+    "f5-task-002": "26c8a3cb-7a0a-4f46-8658-4e5b90a27b8d",
+    "f5-task-003": "fe3ce60e-2392-4c4b-a6ec-8bc103d98e15",
+    "f5-task-004": "5304285f-5d2f-412b-9070-12ba9998d622",
+    "f5-task-005": "75393a99-fd45-47bf-860e-824227ab5210",
+    "f5-task-006": "6ddabad8-faa3-40bf-96f1-f01d79b09481",
+    "f5-task-007": "d9995a03-42c5-4b57-aa1d-afd35de11618",
+    "f5-task-008": "13d4d17d-8494-4829-a848-c54533c46731",
+    "f5-task-009": "f2a6e8d3-7571-422e-9a45-a8a7d8487255",
+    "f5-task-010": "962067fa-92b0-45ad-8533-948d103f08d7",
+    "f5-task-011": "7cd7a196-bbc7-43e4-8edd-19c3468373af",
+    "f5-task-012": "bfb66952-8433-4fe4-92a1-24925d606016",
+    "f5-task-013": "e73e106d-5d8f-4c37-b4a0-a3a9a078c4f3",
+    "f5-task-014": "ba6b8e2f-ad24-47a3-a5f5-6e5e282b94ab",
+    "f5-task-015": "65726acd-52cb-4ff7-9ed1-c730bf60f7ab"
+  },
+  "invocation_to_task_map": {
+    "09a8bbad-f35b-4348-9a93-9d87d9fe10c0": "f5-task-001",
+    "26c8a3cb-7a0a-4f46-8658-4e5b90a27b8d": "f5-task-002",
+    "fe3ce60e-2392-4c4b-a6ec-8bc103d98e15": "f5-task-003",
+    "5304285f-5d2f-412b-9070-12ba9998d622": "f5-task-004",
+    "75393a99-fd45-47bf-860e-824227ab5210": "f5-task-005",
+    "6ddabad8-faa3-40bf-96f1-f01d79b09481": "f5-task-006",
+    "d9995a03-42c5-4b57-aa1d-afd35de11618": "f5-task-007",
+    "13d4d17d-8494-4829-a848-c54533c46731": "f5-task-008",
+    "f2a6e8d3-7571-422e-9a45-a8a7d8487255": "f5-task-009",
+    "962067fa-92b0-45ad-8533-948d103f08d7": "f5-task-010",
+    "7cd7a196-bbc7-43e4-8edd-19c3468373af": "f5-task-011",
+    "bfb66952-8433-4fe4-92a1-24925d606016": "f5-task-012",
+    "e73e106d-5d8f-4c37-b4a0-a3a9a078c4f3": "f5-task-013",
+    "ba6b8e2f-ad24-47a3-a5f5-6e5e282b94ab": "f5-task-014",
+    "65726acd-52cb-4ff7-9ed1-c730bf60f7ab": "f5-task-015"
+  },
+  "merge": {
+    "material_resolution_delta": true,
+    "timestamp_only_delta": false,
+    "new_resolved_this_run": 0,
+    "newly_explicit_unresolved_this_run": 359,
+    "already_explicit_unresolved_this_run": 0,
+    "route": {
+      "next_prompt_id": "E3",
+      "next_prompt_name": "Coverage Reducer / Source Gate",
+      "next_prompt_request": "Paste prompt E3 — Coverage Reducer / Source Gate v3.2.2.",
+      "precedence_rule": "material_resolution_delta_or_new_explicit_state_requires_e3_once",
+      "selected_terminal_route_reason": null
+    }
+  }
+}

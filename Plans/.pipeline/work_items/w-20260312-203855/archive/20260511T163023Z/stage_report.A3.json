@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.stage_report.A3.v3.2.1",
+  "prompt_id": "A3",
+  "prompt_version": "pm.a3.v3.2.1",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "subagents_required": false,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification": {
+    "inputs_used": [
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+      "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json"
+    ],
+    "operation": "create/refresh route_state with single next prompt request for fresh_restart",
+    "semantic_artifacts_inspected": false,
+    "coverage_proof": "A3 wrote route_state.json including run_mode, roots, current_section, and exactly one next_prompt_request."
+  },
+  "status": "COMPLETE",
+  "next_prompt_request": "A4",
+  "next_prompt_name": "Section Exit: Run Control"
+}

@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "F2",
+  "prompt_id": "F2",
+  "prompt_version": "pm.f2.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 6,
+  "wave_id": "wave-006",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "f2-task-041",
+    "f2-task-042",
+    "f2-task-043",
+    "f2-task-044",
+    "f2-task-045",
+    "f2-task-046",
+    "f2-task-047",
+    "f2-task-048"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "180900fa-5e2a-41d2-a688-5f5591b1e7bf",
+      "subagent_task_id": "f2-task-041",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 950,
+        "slice_end_exclusive": 975,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-041.result.json",
+      "result_artifact_sha256": "66b7f28992212365e5a31e3321012d105be821acaf0b4cdb4dda1c14d823823a",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "c1eff54a-5403-49e1-ba64-af716e72cb95",
+      "subagent_task_id": "f2-task-042",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 975,
+        "slice_end_exclusive": 1000,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-042.result.json",
+      "result_artifact_sha256": "8d16d34ae9f50905efc9f0422be977be0b8f7d02f7f4168b728638a77395b3d0",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "fb105db2-0823-4978-9647-35cdc0f6311f",
+      "subagent_task_id": "f2-task-043",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 1000,
+        "slice_end_exclusive": 1025,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-043.result.json",
+      "result_artifact_sha256": "71bdec2c158ea3df6a8613f288c67b4cda67e6c476a47fec1361a118d0408f30",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "b579d655-2c99-4e7d-acf4-c59797e0219f",
+      "subagent_task_id": "f2-task-044",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 1025,
+        "slice_end_exclusive": 1050,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-044.result.json",
+      "result_artifact_sha256": "5790a05cb20a1b6ccd839bd41f5231b4cbe95913fe9dfbf5ca8e87fd91e141fa",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "74b24b95-bb0d-474f-a5a3-053dcafd2b18",
+      "subagent_task_id": "f2-task-045",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 1050,
+        "slice_end_exclusive": 1075,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-045.result.json",
+      "result_artifact_sha256": "ace9f95608aba4776ffc44877c5a13a6cc4acd3750e7103b9690339eb1aaf51d",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "a8439849-09f0-4cfb-9873-2d573a96aea4",
+      "subagent_task_id": "f2-task-046",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 1075,
+        "slice_end_exclusive": 1100,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-046.result.json",
+      "result_artifact_sha256": "0b17dc7738fac1edbe33a727e67c08657ced4ff37a6c9dd6b3dbca16a6277439",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "3adce237-47f0-4224-a158-8179734bcfbc",
+      "subagent_task_id": "f2-task-047",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 1100,
+        "slice_end_exclusive": 1125,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-047.result.json",
+      "result_artifact_sha256": "a09fe36ec4b8d5ec4536ff721c4f45d6cd941247dd75f44868d6d6db418dcbdb",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "8c7a1a6d-bbbc-4896-9614-db42be78d414",
+      "subagent_task_id": "f2-task-048",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_worklist.json",
+      "input_bounds": {
+        "gap_group_id": "doc_discovery_exhaustion",
+        "slice_start": 1125,
+        "slice_end_exclusive": 1150,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25,
+        "empty_gap_group": false
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_classifier.f2-task-048.result.json",
+      "result_artifact_sha256": "a2ed912da9cbb949cbd5c24e919ac9fd3c4d3432e155d7448d0b1cddd497928f",
+      "status": "complete"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.obligation_repair_task_result.v3.2.2",
+  "subagent_task_id": "d4r2-repair-batch-01",
+  "subagent_invocation_id": "d4r2-repair-batch-01-invocation",
+  "wave_id": "wave-001",
+  "work_id": "w-20260312-203855",
+  "run_basis": "d4_round_2_repair",
+  "repair_mode": "mixed_targeted",
+  "repair_submodes_applied": [
+    "semantic_conversion_gap"
+  ],
+  "repaired_slice_ids": [
+    "slice-008",
+    "slice-009"
+  ],
+  "per_slice_repairs": [
+    {
+      "slice_id": "slice-008",
+      "slice_file": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-008.json",
+      "missing_blocks_repaired": [
+        {
+          "block_id": "lblock-000932",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 43,
+          "source_group_id": "wg-005-057",
+          "source_shard_id": "shard-0020",
+          "source_line_range": {
+            "start_line": 3835,
+            "end_line": 3835
+          },
+          "exclusion_category": "section_heading_marker"
+        },
+        {
+          "block_id": "lblock-000974",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 44,
+          "source_group_id": "wg-006-003",
+          "source_shard_id": "shard-0021",
+          "source_line_range": {
+            "start_line": 4013,
+            "end_line": 4013
+          },
+          "exclusion_category": "section_heading_marker"
+        },
+        {
+          "block_id": "lblock-001018",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 45,
+          "source_group_id": "wg-006-018",
+          "source_shard_id": "shard-0021",
+          "source_line_range": {
+            "start_line": 4153,
+            "end_line": 4153
+          },
+          "exclusion_category": "section_heading_marker"
+        },
+        {
+          "block_id": "lblock-001062",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 46,
+          "source_group_id": "wg-006-032",
+          "source_shard_id": "shard-0022",
+          "source_line_range": {
+            "start_line": 4299,
+            "end_line": 4299
+          },
+          "exclusion_category": "section_heading_marker"
+        }
+      ],
+      "missing_blocks_count": 4,
+      "excluded_blocks_count_before": 43,
+      "excluded_blocks_count_after": 47,
+      "blocks_excluded_field_before": 43,
+      "blocks_excluded_field_after": 47,
+      "blocks_observed_unchanged": true,
+      "blocks_converted_unchanged": true,
+      "blocks_blocked_unchanged": true,
+      "obligations_unchanged": true,
+      "open_questions_unchanged": true,
+      "doc_hints_unchanged": true,
+      "coverage_verified": true,
+      "all_target_blocks_now_covered": true,
+      "atomic_write_ok": true
+    },
+    {
+      "slice_id": "slice-009",
+      "slice_file": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-009.json",
+      "missing_blocks_repaired": [
+        {
+          "block_id": "lblock-001101",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 52,
+          "source_group_id": "wg-006-045",
+          "source_shard_id": "shard-0023",
+          "source_line_range": {
+            "start_line": 4422,
+            "end_line": 4422
+          },
+          "exclusion_category": "section_heading_marker"
+        },
+        {
+          "block_id": "lblock-001133",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 53,
+          "source_group_id": "wg-006-056",
+          "source_shard_id": "shard-0023",
+          "source_line_range": {
+            "start_line": 4541,
+            "end_line": 4541
+          },
+          "exclusion_category": "section_heading_marker"
+        },
+        {
+          "block_id": "lblock-001172",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 54,
+          "source_group_id": "wg-006-069",
+          "source_shard_id": "shard-0024",
+          "source_line_range": {
+            "start_line": 4674,
+            "end_line": 4674
+          },
+          "exclusion_category": "section_heading_marker"
+        },
+        {
+          "block_id": "lblock-001207",
+          "added_as": "excluded_blocks",
+          "new_index_in_array": 55,
+          "source_group_id": "wg-006-081",
+          "source_shard_id": "shard-0024",
+          "source_line_range": {
+            "start_line": 4793,
+            "end_line": 4793
+          },
+          "exclusion_category": "section_heading_marker"
+        }
+      ],
+      "missing_blocks_count": 4,
+      "excluded_blocks_count_before": 52,
+      "excluded_blocks_count_after": 56,
+      "blocks_excluded_field_before": 52,
+      "blocks_excluded_field_after": 56,
+      "blocks_observed_unchanged": true,
+      "blocks_converted_unchanged": true,
+      "blocks_blocked_unchanged": true,
+      "obligations_unchanged": true,
+      "open_questions_unchanged": true,
+      "doc_hints_unchanged": true,
+      "coverage_verified": true,
+      "all_target_blocks_now_covered": true,
+      "atomic_write_ok": true
+    }
+  ],
+  "totals": {
+    "slices_repaired": 2,
+    "missing_blocks_repaired": 8,
+    "doc_hints_repaired": 0
+  },
+  "preservation_checks": {
+    "only_target_slices_modified": true,
+    "no_obligations_added_or_removed": true,
+    "no_open_questions_added_or_removed": true,
+    "no_doc_hints_added_or_removed": true,
+    "no_blocked_blocks_added_or_removed": true,
+    "no_existing_excluded_blocks_modified": true
+  },
+  "status": "complete"
+}

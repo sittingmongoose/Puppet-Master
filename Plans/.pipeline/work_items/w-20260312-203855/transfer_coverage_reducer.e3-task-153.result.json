@@ -1,0 +1,1097 @@
+{
+  "schema_id": "pm.transfer_coverage_reducer_task_result.v3.2.2",
+  "subagent_task_id": "e3-task-153",
+  "subagent_invocation_id": "9924fe30-f9d8-4753-a45f-249301c9bc16",
+  "status": "complete",
+  "rows": [
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-042",
+      "row_hash": "e574004e4688b45a5ff4206e1552685b2b5fe03487995b0c8844ab5af0da17db",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004925"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17222,
+          "end_line": 17232
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve raw findings themes before deduplication from the transfer-fidelity audit ledger."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-043",
+      "row_hash": "7cff01c99c75ee00c982caa2b1df093d8089610d42e2fb6ba35dfbd1b19d06ef",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004928"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17235,
+          "end_line": 17241
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve recurring drift pattern analysis (refinement layer omitted after base primitive transfer) from the transfer-fidelity audit ledger."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-044",
+      "row_hash": "7057d81299bfe982f783b6a2aa662d23baba1f13419459a6aa19f3a95cfb403f",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004933"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17246,
+          "end_line": 17251
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g010",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1658,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-045",
+      "row_hash": "ace36c394a66d443a9b4651182f4130362306ff458fc21ccd5bb073dcdd7a701",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004936"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17254,
+          "end_line": 17258
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g011",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.0774,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-046",
+      "row_hash": "de08c5a167ca3ed576c003b876770e66729af87ac6761c68a08809f402c1fd68",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004939"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17261,
+          "end_line": 17270
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Tools.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g006",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1749,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-047",
+      "row_hash": "b29c03594b27e7865552a77916c0f1fde863779739c467b0ebda2f725505fc12",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004942"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17273,
+          "end_line": 17288
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g004",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1405,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-048",
+      "row_hash": "e30afc876beaf11666335ba7f698fddae5f095056387ac41439d04700bc27855",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004945"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17291,
+          "end_line": 17296
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g008",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1336,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-049",
+      "row_hash": "e6cb702f626c42ccff1951ba814e32ea85fefffa926a5e7b770f4e6d9cbbeeae",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004948"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17299,
+          "end_line": 17304
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g005",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1517,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-050",
+      "row_hash": "80b44fc9f800f6ae8c36a1cb1faa522f14f305d192f34e80175466bee4f26a71",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004951"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17307,
+          "end_line": 17311
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve additional buildability gaps noted during the transfer-fidelity audit (including prose-only primitive boundaries)."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-051",
+      "row_hash": "62b318f548a2b10c8033227526d6e7084171b136dcc495467062a66784d4ea70",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004954"
+      ],
+      "source_group_ids": [
+        "wg-022-006"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17314,
+          "end_line": 17319
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g001",
+      "obligation_category": "directive",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1175,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-052",
+      "row_hash": "95fb73fa0126ab0079961a9d20f3450c3afd899f79e26778d12247fec4548764",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004957"
+      ],
+      "source_group_ids": [
+        "wg-022-007"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17322,
+          "end_line": 17339
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/usage-feature.md",
+        "Plans/FileManager.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g003",
+      "obligation_category": "routing_rule",
+      "obligation_level_classification": "open_decision",
+      "best_evidence_score": 0.1814,
+      "aggregated_task_label": "open_decision",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-053",
+      "row_hash": "bdef7a2803f8790af0c293cfea8fe3f27fa679c9264e019ef38a905a21ec7648",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004960"
+      ],
+      "source_group_ids": [
+        "wg-022-007"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17342,
+          "end_line": 17345
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Carry forward the candidate reconciliation direction steps from the transfer-fidelity audit for reconciliation planning."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "obligation_category": "directive",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-025-054",
+      "row_hash": "04ceb2c1fcf65c0fea39832e7c744d435d8613bec9c47e492dbb56a307fc9961",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004963"
+      ],
+      "source_group_ids": [
+        "wg-022-007"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17348,
+          "end_line": 17352
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve the do-not-forget details captured for this ledger seam."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-001",
+      "row_hash": "48497e1dbb20fa4b59ef29aa29d225b34fd7eb0ea7af462793586713e3d319cb",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004968"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17357,
+          "end_line": 17362
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: This rerun was requested specifically to re-check the transfer audit with **smaller chunked subauditors**, because several owner/consumer docs are too large for one subauditor to read cleanly end-to-end."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-002",
+      "row_hash": "f38255628fe0d9f8083c48fddcc818210c3643007469286cf5253fa587fc86c2",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004971"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17365,
+          "end_line": 17369
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives."
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g012",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-003",
+      "row_hash": "5ba68d1779eb8f478ade5eb4cf8039660496e026916c50cfb1f756cf9b2b8a65",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004976"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17374,
+          "end_line": 17378
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g007",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1262,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-004",
+      "row_hash": "c7af42656248235903a59d0cc3b941567d9ac8de376d434c48e1f431a7e9b027",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004979"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17381,
+          "end_line": 17389
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g009",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1324,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-005",
+      "row_hash": "29ac15370e49e7fb94f2bf1d49d3b2ea1c7580bf9be75c84e8785faa4a683848",
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "source_block_ids": [
+        "lblock-004982"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17392,
+          "end_line": 17400
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g002",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1219,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-006",
+      "row_hash": "9783c493e7cf3df3ec34bfe85b8f7cbe57a4b36d0a542b4c4fe84c601d6f1430",
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_block_ids": [
+        "lblock-004983"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17401,
+          "end_line": 17403
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: 3-level reversibility taxonomy"
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g017",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-007",
+      "row_hash": "f5b72465e0efbbf8f9c4f887115d7081c44965b8bbbb5ba17e42a296e9ce2efd",
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_block_ids": [
+        "lblock-004986"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17406,
+          "end_line": 17417
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g016",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1325,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-008",
+      "row_hash": "216ef2f184ae646896e53064ca752d992c7567a4776d1d025cdaaf7fa2abbfb4",
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_block_ids": [
+        "lblock-004989"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17420,
+          "end_line": 17433
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g015",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1086,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-009",
+      "row_hash": "35ab8ccd9ba8ab6fd1018c8c50848c55a4156ef8fd1ec8c8add2ca471dad79e8",
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_block_ids": [
+        "lblock-004992"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17436,
+          "end_line": 17445
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/storage-plan.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g014",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.2091,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-010",
+      "row_hash": "7c633f126750b6d4305cdad0ea60fedfa06985e042a78f9130b2d9c0d6e04a17",
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_block_ids": [
+        "lblock-004995"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17448,
+          "end_line": 17457
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md",
+        "Plans/Tools.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "coverage_task_id": "cov-e1-e1-task-153-g013",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "missing",
+      "best_evidence_score": 0.1092,
+      "aggregated_task_label": "missing",
+      "doc_resolution_status": "concrete_plans_targets",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-011",
+      "row_hash": "b0d6f35233d1aa210a8d28334c1d35159147a3f0f7922ac23b5d68d8c4f9c56c",
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_block_ids": [
+        "lblock-004998"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17460,
+          "end_line": 17465
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: The chunked recheck **did not** re-open the already-correct false-positive exclusions:"
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g017",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    },
+    {
+      "record_kind": "obligation_coverage",
+      "obligation_id": "obl-026-012",
+      "row_hash": "2455b45918b3e4dbbf37f0f4c2a627f4a7170c7cbf7b3172e91441b03f8d7ebe",
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "source_block_ids": [
+        "lblock-005001"
+      ],
+      "source_group_ids": [
+        "wg-022-008"
+      ],
+      "ledger_line_ranges": [
+        {
+          "start_line": 17468,
+          "end_line": 17482
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "candidate_doc_hints": [
+        "Preserve and reconcile the ledger transfer-fidelity narrative: The rerun found **more concrete transfer misses**, especially in:"
+      ],
+      "live_doc_targets_union": [],
+      "coverage_task_id": "cov-e1-e1-task-153-g017",
+      "obligation_category": "fact_observation",
+      "obligation_level_classification": "needs_context_only",
+      "best_evidence_score": 0.0,
+      "aggregated_task_label": "partial_binding_hint_only",
+      "doc_resolution_status": "doc_hint_only",
+      "doc_discovery_attempt_state": "no_doc_discovery_loop",
+      "terminal_unresolved_doc_discovery": false,
+      "f5_unresolved_explicit_preserved": false,
+      "mechanically_exhausted_preserved": false,
+      "next_route_hint": "e4_section_exit_coverage",
+      "exclusion": null
+    }
+  ]
+}

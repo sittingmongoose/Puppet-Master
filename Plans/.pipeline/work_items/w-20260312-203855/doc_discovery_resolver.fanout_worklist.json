@@ -1,0 +1,150 @@
+{
+  "schema_id": "pm.doc_discovery_resolver.fanout_worklist.v3.2.2",
+  "prompt_id": "F5",
+  "prompt_version": "pm.f5.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "doc_discovery_exhaustion_report_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_report.json",
+  "transfer_coverage_path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+  "f5_instructions_total": 359,
+  "tasks": [
+    {
+      "subagent_task_id": "f5-task-001",
+      "instruction_slice_start": 0,
+      "instruction_slice_end_exclusive": 25,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-001-003",
+      "obligation_id_last": "obl-002-120"
+    },
+    {
+      "subagent_task_id": "f5-task-002",
+      "instruction_slice_start": 25,
+      "instruction_slice_end_exclusive": 50,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-002-121",
+      "obligation_id_last": "obl-003-008"
+    },
+    {
+      "subagent_task_id": "f5-task-003",
+      "instruction_slice_start": 50,
+      "instruction_slice_end_exclusive": 75,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-003-009",
+      "obligation_id_last": "obl-003-092"
+    },
+    {
+      "subagent_task_id": "f5-task-004",
+      "instruction_slice_start": 75,
+      "instruction_slice_end_exclusive": 100,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-003-093",
+      "obligation_id_last": "obl-013-013"
+    },
+    {
+      "subagent_task_id": "f5-task-005",
+      "instruction_slice_start": 100,
+      "instruction_slice_end_exclusive": 125,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-013-054",
+      "obligation_id_last": "obl-015-106"
+    },
+    {
+      "subagent_task_id": "f5-task-006",
+      "instruction_slice_start": 125,
+      "instruction_slice_end_exclusive": 150,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-015-107",
+      "obligation_id_last": "obl-015-195"
+    },
+    {
+      "subagent_task_id": "f5-task-007",
+      "instruction_slice_start": 150,
+      "instruction_slice_end_exclusive": 175,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-015-197",
+      "obligation_id_last": "obl-016-098"
+    },
+    {
+      "subagent_task_id": "f5-task-008",
+      "instruction_slice_start": 175,
+      "instruction_slice_end_exclusive": 200,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-016-099",
+      "obligation_id_last": "obl-016-204"
+    },
+    {
+      "subagent_task_id": "f5-task-009",
+      "instruction_slice_start": 200,
+      "instruction_slice_end_exclusive": 225,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-016-205",
+      "obligation_id_last": "obl-017-145"
+    },
+    {
+      "subagent_task_id": "f5-task-010",
+      "instruction_slice_start": 225,
+      "instruction_slice_end_exclusive": 250,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-017-152",
+      "obligation_id_last": "obl-018-049"
+    },
+    {
+      "subagent_task_id": "f5-task-011",
+      "instruction_slice_start": 250,
+      "instruction_slice_end_exclusive": 275,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-018-213",
+      "obligation_id_last": "obl-020-107"
+    },
+    {
+      "subagent_task_id": "f5-task-012",
+      "instruction_slice_start": 275,
+      "instruction_slice_end_exclusive": 300,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-020-109",
+      "obligation_id_last": "obl-024-010"
+    },
+    {
+      "subagent_task_id": "f5-task-013",
+      "instruction_slice_start": 300,
+      "instruction_slice_end_exclusive": 325,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-024-012",
+      "obligation_id_last": "obl-024-042"
+    },
+    {
+      "subagent_task_id": "f5-task-014",
+      "instruction_slice_start": 325,
+      "instruction_slice_end_exclusive": 350,
+      "rows_in_task": 25,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-024-043",
+      "obligation_id_last": "obl-025-050"
+    },
+    {
+      "subagent_task_id": "f5-task-015",
+      "instruction_slice_start": 350,
+      "instruction_slice_end_exclusive": 359,
+      "rows_in_task": 9,
+      "max_rows_per_task_budget": 25,
+      "obligation_id_first": "obl-025-053",
+      "obligation_id_last": "obl-026-023"
+    }
+  ],
+  "summary": {
+    "fanout_tasks_total": 15,
+    "max_rows_per_task_budget": 25
+  }
+}

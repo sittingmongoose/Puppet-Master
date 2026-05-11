@@ -1,0 +1,963 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-013",
+  "subagent_invocation_id": "65f13bef-f546-47cb-b2ce-dfc120729189",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-013-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0008",
+      "grouping_key": "shard-0008|concrete_plans_targets|Plans/Contracts_V0.md|Plans/Executor_Protocol.md|Plans/Orchestrator_Page.md",
+      "obligation_ids": [
+        "obl-003-097"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4401,
+          "line_end": 4548,
+          "window_index": 11,
+          "total_lines_in_doc": 4548,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 801,
+          "line_end": 1140,
+          "window_index": 2,
+          "total_lines_in_doc": 1140,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1273,
+          "window_index": 3,
+          "total_lines_in_doc": 1273,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-083",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-084",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-085",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-086",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 4. **Tier identifiers vs node/package/seam identity.** Many UI, storage, and envelope contracts still key execution to tier concepts where package/node/seam IDs are now needed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-087",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-088",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 6. **Requested/effective state vs requested/effective execution identity.** The model exists for persona/model/platform but not yet for account or runtime actor identity.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-089",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-090",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-091",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-092",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-093",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Reconcile automation-first with local execution UX.** Decide how `regular`, `visual_mode`, manual confirmations, and optional HITL boundaries map into one coherent mode policy.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-094",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-095",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-013-g002",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0008",
+      "grouping_key": "shard-0008|concrete_plans_targets|Plans/plan_graph.schema.json|Plans/project_plan_node.schema.json|Plans/storage-plan.md|Plans/usage-feature.md",
+      "obligation_ids": [
+        "obl-003-098"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/plan_graph.schema.json",
+          "line_start": 1,
+          "line_end": 285,
+          "window_index": 0,
+          "total_lines_in_doc": 285,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/project_plan_node.schema.json",
+          "line_start": 1,
+          "line_end": 266,
+          "window_index": 0,
+          "total_lines_in_doc": 266,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2801,
+          "line_end": 3093,
+          "window_index": 7,
+          "total_lines_in_doc": 3093,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 801,
+          "line_end": 1178,
+          "window_index": 2,
+          "total_lines_in_doc": 1178,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-083",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-084",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-085",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-086",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 4. **Tier identifiers vs node/package/seam identity.** Many UI, storage, and envelope contracts still key execution to tier concepts where package/node/seam IDs are now needed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-087",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-088",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 6. **Requested/effective state vs requested/effective execution identity.** The model exists for persona/model/platform but not yet for account or runtime actor identity.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-089",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-090",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-091",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-092",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-093",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Reconcile automation-first with local execution UX.** Decide how `regular`, `visual_mode`, manual confirmations, and optional HITL boundaries map into one coherent mode policy.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-094",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-095",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-013-g003",
+      "doc_resolution_status": "doc_discovery",
+      "source_shard_id": "shard-0008",
+      "grouping_key": "shard-0008|doc_discovery|Plans/**",
+      "obligation_ids": [
+        "obl-003-096"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/**"
+      ],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-083",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-084",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-085",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-086",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 4. **Tier identifiers vs node/package/seam identity.** Many UI, storage, and envelope contracts still key execution to tier concepts where package/node/seam IDs are now needed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-087",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-088",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 6. **Requested/effective state vs requested/effective execution identity.** The model exists for persona/model/platform but not yet for account or runtime actor identity.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-089",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-090",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-091",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-092",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-093",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Reconcile automation-first with local execution UX.** Decide how `regular`, `visual_mode`, manual confirmations, and optional HITL boundaries map into one coherent mode policy.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-094",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-095",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-013-g004",
+      "doc_resolution_status": "doc_hint_only",
+      "source_shard_id": "shard-0008",
+      "grouping_key": "shard-0008|doc_hint_only|",
+      "obligation_ids": [
+        "obl-003-083",
+        "obl-003-084",
+        "obl-003-085",
+        "obl-003-086",
+        "obl-003-087",
+        "obl-003-088",
+        "obl-003-089",
+        "obl-003-090",
+        "obl-003-091",
+        "obl-003-092",
+        "obl-003-093",
+        "obl-003-094",
+        "obl-003-095"
+      ],
+      "obligation_record_count": 13,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-083",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-084",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-085",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-086",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 4. **Tier identifiers vs node/package/seam identity.** Many UI, storage, and envelope contracts still key execution to tier concepts where package/node/seam IDs are now needed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-087",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-088",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 6. **Requested/effective state vs requested/effective execution identity.** The model exists for persona/model/platform but not yet for account or runtime actor identity.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-089",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-090",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-091",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-092",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-093",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Reconcile automation-first with local execution UX.** Decide how `regular`, `visual_mode`, manual confirmations, and optional HITL boundaries map into one coherent mode policy.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-094",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-095",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-013-g005",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0008",
+      "grouping_key": "shard-0008|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-003-074",
+        "obl-003-075",
+        "obl-003-076",
+        "obl-003-077",
+        "obl-003-078",
+        "obl-003-079",
+        "obl-003-080",
+        "obl-003-081",
+        "obl-003-082"
+      ],
+      "obligation_record_count": 9,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-003-083",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-084",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-085",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-086",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 4. **Tier identifiers vs node/package/seam identity.** Many UI, storage, and envelope contracts still key execution to tier concepts where package/node/seam IDs are now needed.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-087",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 5. **Single worktree / single project context vs multi-project lane-based orchestration.** Too many surfaces and schemas still assume one active repo/worktree/thread context at a time.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-088",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Resolve planning contradiction: 6. **Requested/effective state vs requested/effective execution identity.** The model exists for persona/model/platform but not yet for account or runtime actor identity.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-089",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-090",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-091",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 3. **Specify package-based worktree lane pools.** Include lane allocation, SCM visibility, contamination detection, safe-point restore behavior, and cleanup boundaries.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-092",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-093",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 5. **Reconcile automation-first with local execution UX.** Decide how `regular`, `visual_mode`, manual confirmations, and optional HITL boundaries map into one coherent mode policy.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-094",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage.",
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "obligation_id": "obl-003-095",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Execute research follow-up: 7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    }
+  ]
+}

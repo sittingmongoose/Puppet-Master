@@ -1,0 +1,765 @@
+{
+  "schema_id": "pm.open_gaps_reducer_task_result.v3.2.2",
+  "subagent_task_id": "f3-task-152",
+  "subagent_invocation_id": "6dd6d672-a914-4515-8eff-c6d3dbfc8867",
+  "gap_group_id": "process_followup",
+  "status": "complete",
+  "gap_records": [
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3388,
+      "obligation_id": "obl-022-147",
+      "row_hash": "7b3c0841ceeaf0483b9136698494fea4478a317c915f3d8ee280d6c8affd0e6b",
+      "coverage_task_id": "cov-e1-e1-task-136-g007",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_set_hash": "14db7a1a4e5c2adf25b20e828fb77979d046700dc692f248636f9b669ca62df3",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3389,
+      "obligation_id": "obl-022-148",
+      "row_hash": "c8fdc27bea8cc7bd85d00962caed2aca8324204b57adb29b5019b3937718d1b4",
+      "coverage_task_id": "cov-e1-e1-task-136-g004",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_set_hash": "8cfa584324a17a067417e880fe5721929b4a8879eed8953b1a0ffe88b68be645",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3392,
+      "obligation_id": "obl-022-151",
+      "row_hash": "4ddabb7f855cb276901055cbb6555855bc64c98d9f1be79dfd9c4d5d0f7f558a",
+      "coverage_task_id": "cov-e1-e1-task-136-g008",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "candidate_doc_set_hash": "08c3c653c523d1f4dc1fb91f1a43964633dd536c198493a49ee279d513715b56",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3393,
+      "obligation_id": "obl-022-152",
+      "row_hash": "89df6495b4156d132f2bc76c2cde7b77bec70945ceb9388852f0ea877d7eb5cd",
+      "coverage_task_id": "cov-e1-e1-task-136-g010",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "candidate_doc_set_hash": "44e42b89f8c00a77c5913551ffdb8cb5b3cfec6ec6cf82ef8026cd9718aa8fa1",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3394,
+      "obligation_id": "obl-022-153",
+      "row_hash": "5995f9849ad3e49cc1ac91221dd9621d970c31e722a484f555388396398c63ac",
+      "coverage_task_id": "cov-e1-e1-task-136-g009",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "candidate_doc_set_hash": "e04a62ef4a2a60eb0b8043a7419dd562db9bdf2e5b1ac9458bc7d0d1123ecb16",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3395,
+      "obligation_id": "obl-022-154",
+      "row_hash": "bdcc67ae1ea647daba57101db37c8c8e04246c788cab08b0385986b9631170f2",
+      "coverage_task_id": "cov-e1-e1-task-136-g011",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/evidence.schema.json"
+      ],
+      "candidate_doc_set_hash": "fd1027185f4051276801dc8e53c65f63f96a2fe3e67a6b9bcddf1b309a7139bf",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3396,
+      "obligation_id": "obl-022-155",
+      "row_hash": "a50d91ab313baf5e1999cc45e960925464e4e35bcd0d50915b2aac808d2d195f",
+      "coverage_task_id": "cov-e1-e1-task-136-g006",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Progression_Gates.md"
+      ],
+      "candidate_doc_set_hash": "97565eb8afbca7503c34694b8ccae6764d8a587acfd013775005e181093cb9e6",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3399,
+      "obligation_id": "obl-022-158",
+      "row_hash": "20a96f1888f9fc4e8963f4e356947791dbb8421ce57c5dd1c6fc19f144175c40",
+      "coverage_task_id": "cov-e1-e1-task-136-g010",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Wiring_Matrix.schema.json"
+      ],
+      "candidate_doc_set_hash": "44e42b89f8c00a77c5913551ffdb8cb5b3cfec6ec6cf82ef8026cd9718aa8fa1",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3400,
+      "obligation_id": "obl-022-159",
+      "row_hash": "586efe07d8961bb2092747149ecb024829475d8c2c59a8a3dd318f61e312300e",
+      "coverage_task_id": "cov-e1-e1-task-137-g008",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/evidence.schema.json"
+      ],
+      "candidate_doc_set_hash": "fd1027185f4051276801dc8e53c65f63f96a2fe3e67a6b9bcddf1b309a7139bf",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3401,
+      "obligation_id": "obl-022-160",
+      "row_hash": "c081999c926b1c4b05695200e063ef162e7d88dff19575c7b17b7e844cf2d556",
+      "coverage_task_id": "cov-e1-e1-task-137-g005",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Progression_Gates.md"
+      ],
+      "candidate_doc_set_hash": "97565eb8afbca7503c34694b8ccae6764d8a587acfd013775005e181093cb9e6",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3402,
+      "obligation_id": "obl-022-161",
+      "row_hash": "18646d3bcc36bae8e06cb977edcd3afa5bed2963ee00d7b3a8c148558d2e9367",
+      "coverage_task_id": "cov-e1-e1-task-137-g006",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/evidence.schema.json"
+      ],
+      "candidate_doc_set_hash": "d19921b03f5fbc860cc976dcbbd4d00b6cd57865931d7d13bb52b3ccec75f51d",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3403,
+      "obligation_id": "obl-022-162",
+      "row_hash": "959cb3f670b980078cd0a9e7a6456a8bd3125f65a5253d10643caa0b9fdfc5c7",
+      "coverage_task_id": "cov-e1-e1-task-137-g007",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "candidate_doc_set_hash": "14db7a1a4e5c2adf25b20e828fb77979d046700dc692f248636f9b669ca62df3",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3413,
+      "obligation_id": "obl-022-172",
+      "row_hash": "fbbada60ba9947f010a56626e70c9116d59258e5a53f495e700813515c26408b",
+      "coverage_task_id": "cov-e1-e1-task-137-g001",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Crosswalk.md"
+      ],
+      "candidate_doc_set_hash": "d3a1d01d0ad63fad055bf46258ac9cec80f651f78ce1586b375d6819b8e980aa",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3414,
+      "obligation_id": "obl-022-173",
+      "row_hash": "14adeee5e69027d0ff0409b882f0d6e48c2da2a53964981d76510c0f91d45b2b",
+      "coverage_task_id": "cov-e1-e1-task-137-g009",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_set_hash": "cf91ae5e54fca2cfdb05d5a3b0164f081514699b4b01f92cc3a7e1228bea9c55",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3415,
+      "obligation_id": "obl-022-174",
+      "row_hash": "a10e857757ceb974b40758ffe4b16d175ca243ab1028348fc3a04776ae2c6025",
+      "coverage_task_id": "cov-e1-e1-task-137-g003",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_set_hash": "8cfa584324a17a067417e880fe5721929b4a8879eed8953b1a0ffe88b68be645",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3416,
+      "obligation_id": "obl-022-175",
+      "row_hash": "4aa4f8ff2c2f1daffcc831b8faf45044f311fa07fb505f655cb533764c588041",
+      "coverage_task_id": "cov-e1-e1-task-137-g004",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "candidate_doc_set_hash": "6bf26ac52f424f99cb10ca367ca1bb1c49906275f08c37864bc8b945ef474937",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3418,
+      "obligation_id": "obl-022-177",
+      "row_hash": "27d7ba69fc0c52057455a769ababcdce8f65f6c11ea4aab019ed63f98949d76d",
+      "coverage_task_id": "cov-e1-e1-task-137-g001",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Crosswalk.md"
+      ],
+      "candidate_doc_set_hash": "d3a1d01d0ad63fad055bf46258ac9cec80f651f78ce1586b375d6819b8e980aa",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3419,
+      "obligation_id": "obl-022-178",
+      "row_hash": "afa15330518aa6f2a6c126fe475520b183468d0118fd34a73a848628cde6200c",
+      "coverage_task_id": "cov-e1-e1-task-137-g009",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_set_hash": "cf91ae5e54fca2cfdb05d5a3b0164f081514699b4b01f92cc3a7e1228bea9c55",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3420,
+      "obligation_id": "obl-022-179",
+      "row_hash": "687cbf4a29901a3b0902d430e8f925116c885b53e0491cce65cf82532f4c8f34",
+      "coverage_task_id": "cov-e1-e1-task-137-g003",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_set_hash": "8cfa584324a17a067417e880fe5721929b4a8879eed8953b1a0ffe88b68be645",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3421,
+      "obligation_id": "obl-022-180",
+      "row_hash": "6126ccdd0b90d3e35eb694f93d7d056ec736bf00765b3889bea83146f74a74af",
+      "coverage_task_id": "cov-e1-e1-task-137-g004",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "candidate_doc_set_hash": "6bf26ac52f424f99cb10ca367ca1bb1c49906275f08c37864bc8b945ef474937",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3422,
+      "obligation_id": "obl-022-181",
+      "row_hash": "64a5d362a515cd98f72c802bce26ba34ea4ec7ccbb6476f4b4f93bf84bec676f",
+      "coverage_task_id": "cov-e1-e1-task-137-g002",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "candidate_doc_set_hash": "1083b5c7942220038619d27e537550da3270b87c7aeebcff54302ba80b44cd07",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3432,
+      "obligation_id": "obl-022-191",
+      "row_hash": "38b320c505d71f33af31cd54c407a8db7a3989a16a1ecc6d951355cfbf886aef",
+      "coverage_task_id": "cov-e1-e1-task-138-g001",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/Contracts_V0.md"
+      ],
+      "candidate_doc_set_hash": "dae3d66c9a2ef129106e0a56cebe9bfb394769f394948346482e1d8c7d949bab",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3433,
+      "obligation_id": "obl-022-192",
+      "row_hash": "04bc6457817d4ba4a496da28d2a1aafa7cf00f01e95b6974c5dabebef382bb16",
+      "coverage_task_id": "cov-e1-e1-task-138-g007",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/storage-plan.md"
+      ],
+      "candidate_doc_set_hash": "253cd1675fa104fa6f6ffe551077b5f2616e6a352e95b2b5b6809d4c32fdb4c5",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3434,
+      "obligation_id": "obl-022-193",
+      "row_hash": "0cab78ee2b50cc3e54eb6bdbc038d30a5671b1e6d657b6f651c612675e41ddf1",
+      "coverage_task_id": "cov-e1-e1-task-138-g003",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "candidate_doc_set_hash": "8cfa584324a17a067417e880fe5721929b4a8879eed8953b1a0ffe88b68be645",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    },
+    {
+      "record_kind": "gap_classification",
+      "gap_group_id": "process_followup",
+      "coverage_row_index": 3435,
+      "obligation_id": "obl-022-194",
+      "row_hash": "23ecbcc511f4ba0eefd41cca8204e342e408b70cc61a446c029a1171ac866400",
+      "coverage_task_id": "cov-e1-e1-task-138-g005",
+      "source_shard_id": "shard-0075",
+      "candidate_doc_hints": [],
+      "live_doc_targets_union": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "candidate_doc_set_hash": "5ea007144d8686a3bb301b45ae47e3701ef958817621c3e24ed299036436322e",
+      "prior_resolver_state": {
+        "doc_discovery_attempt_state": "no_doc_discovery_loop",
+        "terminal_unresolved_doc_discovery": false,
+        "mechanically_exhausted_preserved": false,
+        "f5_unresolved_explicit_preserved": false,
+        "doc_resolution_status": "concrete_plans_targets",
+        "next_route_hint": "e4_then_coverage_process_review_if_persistent",
+        "aggregated_task_label": "missing"
+      },
+      "unresolved_reason": "gap_group_id=process_followup; doc_discovery_attempt_state=no_doc_discovery_loop; doc_resolution_status=concrete_plans_targets; aggregated_task_label=missing; next_route_hint=e4_then_coverage_process_review_if_persistent; terminal_unresolved_doc_discovery=False; f5_unresolved_explicit_preserved=False; mechanically_exhausted_preserved=False",
+      "f1_assignment_reason_code": "e3_source_gate_process_defect_family_no_repeat_doc_discovery",
+      "blocker_classification": {
+        "blocker_type": "coverage_classifier_process_defect_or_source_intake_gap",
+        "planning_blocker": true,
+        "f2_route_hint": "b3_issue_or_coverage_process_review_not_repeat_doc_discovery"
+      }
+    }
+  ]
+}

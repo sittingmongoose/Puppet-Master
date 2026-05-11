@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-019",
+  "subagent_invocation_id": "c225d0e9-6bef-4d90-8fdf-24eda61da73c",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-019-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0012",
+      "grouping_key": "shard-0012|concrete_plans_targets|Plans/Widget_System.md",
+      "obligation_ids": [
+        "obl-004-066",
+        "obl-004-067",
+        "obl-005-007",
+        "obl-005-008",
+        "obl-005-009"
+      ],
+      "obligation_record_count": 5,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/Widget_System.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/Widget_System.md",
+          "line_start": 1,
+          "line_end": 341,
+          "window_index": 0,
+          "total_lines_in_doc": 341,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-019-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0012",
+      "grouping_key": "shard-0012|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-004-068",
+        "obl-005-001",
+        "obl-005-002",
+        "obl-005-003",
+        "obl-005-004",
+        "obl-005-005",
+        "obl-005-006",
+        "obl-005-010",
+        "obl-005-011",
+        "obl-005-012",
+        "obl-005-013",
+        "obl-005-014",
+        "obl-005-015",
+        "obl-005-016",
+        "obl-005-017",
+        "obl-005-018"
+      ],
+      "obligation_record_count": 16,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-019-g003",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0013",
+      "grouping_key": "shard-0013|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-005-019",
+        "obl-005-020",
+        "obl-005-021",
+        "obl-005-022"
+      ],
+      "obligation_record_count": 4,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    }
+  ]
+}

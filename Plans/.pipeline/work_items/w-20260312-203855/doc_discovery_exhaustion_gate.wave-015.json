@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "F4",
+  "prompt_id": "F4",
+  "prompt_version": "pm.f4.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 15,
+  "wave_id": "wave-015",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "f4-task-113",
+    "f4-task-114",
+    "f4-task-115",
+    "f4-task-116",
+    "f4-task-117",
+    "f4-task-118",
+    "f4-task-119",
+    "f4-task-120"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "dd199b8a-3c82-4d22-8abc-d2056f8d8d7f",
+      "subagent_task_id": "f4-task-113",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2800,
+        "slice_end_exclusive": 2825,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-113.result.json",
+      "result_artifact_sha256": "97532f6e2ab0c5436f74abe4c43e480dfd4bbfd8ac85732f8f69f654346bef85",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "6ce5749d-1fd1-4551-86db-4a495d2530c9",
+      "subagent_task_id": "f4-task-114",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2825,
+        "slice_end_exclusive": 2850,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-114.result.json",
+      "result_artifact_sha256": "b68f5f58839ee9d757b2c5cd06f5ac36e28676043fe9cfd1e261f1001669a5fb",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "f39145e9-46ac-4a12-aea3-7433ef823996",
+      "subagent_task_id": "f4-task-115",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2850,
+        "slice_end_exclusive": 2875,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-115.result.json",
+      "result_artifact_sha256": "5165934cdda95ae3aa9889ca2b8c45fe538423605f1c6d206cccb11d15822cb2",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "3aa91fef-958a-43d1-8e63-e56e3ad2e179",
+      "subagent_task_id": "f4-task-116",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2875,
+        "slice_end_exclusive": 2900,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-116.result.json",
+      "result_artifact_sha256": "45acdb71fe112c6556217bd3e6814bc6d3b023d24b3c1960e9a399ac48dd85bd",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "46bcb75f-8e56-4475-ba3e-833decdab900",
+      "subagent_task_id": "f4-task-117",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2900,
+        "slice_end_exclusive": 2925,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-117.result.json",
+      "result_artifact_sha256": "82372d2a7ac656961ddb6105334615698388d1ba74e3da4ba058ba9a4a1aee0c",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "989413cf-8e04-4a9f-b4f3-4bc2378afef6",
+      "subagent_task_id": "f4-task-118",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2925,
+        "slice_end_exclusive": 2950,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-118.result.json",
+      "result_artifact_sha256": "98372dfdfb39b443a22abf492c412582a9f13720573136fca41b4069aeb3f23e",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "35f18491-6dae-46bf-8506-ded546d2aeaa",
+      "subagent_task_id": "f4-task-119",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2950,
+        "slice_end_exclusive": 2975,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-119.result.json",
+      "result_artifact_sha256": "2b62973d2a0c1ce042923a12e198b9a6cf15f7dca6d17d9b3cba1aa628efdd47",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "b23eef16-1e5c-41d1-8a27-4c076227e919",
+      "subagent_task_id": "f4-task-120",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "input_bounds": {
+        "slice_start": 2975,
+        "slice_end_exclusive": 3000,
+        "rows_in_task": 25,
+        "max_rows_per_task_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/doc_discovery_exhaustion_gate.f4-task-120.result.json",
+      "result_artifact_sha256": "df08c0a891c06e551ce67f498b207237057135bf3274bffca12a13cda8a998c6",
+      "status": "complete"
+    }
+  ]
+}

@@ -1,11 +1,15 @@
 {
-  "schema_id": "pm.stage_report.B4.v3.2.1",
+  "schema_id": "pm.stage_report.B4.v3.2.2",
   "prompt_id": "B4",
-  "prompt_version": "pm.b4.v3.2.1",
+  "prompt_version": "pm.b4.v3.2.2",
+  "timestamp_utc": "20260511T163524Z",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260507T204628Z",
-  "status": "COMPLETE",
   "execution_type": "mechanical_tool_operation",
+  "status": "COMPLETE",
+  "subagents": {
+    "used": false,
+    "reason": "Intake selection used filesystem glob, byte/line metrics, and absence checks only."
+  },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "required_subagent_tasks_total": 0,
   "wave_artifacts_total": 0,
@@ -20,44 +24,33 @@
   "invocation_to_task_map": {},
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "distinct_subagent_invocations_total": 0,
-  "intake_decision": {
-    "rule_applied": "priority_1_existing_working_ledger_non_empty",
-    "source_mode": "existing_working_ledger",
-    "accepted_source_count": 1
-  },
   "deterministic_verification": {
-    "read_scope": [
-      "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "Plans/.pipeline/work_items/w-20260312-203855/session_notes/*.jsonl",
-      "Plans/.pipeline/work_items/w-20260312-203855/research_findings.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/feature_spec_audit_report.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json"
+    "work_id_lock": "w-20260312-203855 (continuity from prior Section B entry B0 in this run)",
+    "checks": [
+      "working_ledger.md exists under work item root",
+      "working_ledger.md byte_length == 1044305 (> 0)",
+      "working_ledger.md newline_byte_count == 18244",
+      "glob session_notes/*.jsonl under work item: 0 files",
+      "research_findings.json absent at work item root",
+      "feature_spec_audit_report.json absent at work item root",
+      "issue_process_adjudication_report.json absent at work item root"
     ],
-    "tools_used": [
-      "glob existence scan under work item root",
-      "stat byte size",
-      "wc -l -w -c",
-      "sha256sum"
-    ],
-    "working_ledger_nonempty_proof": {
-      "bytes_gt_zero": true,
-      "bytes": 1044305,
-      "lines": 18244,
-      "sha256_hex": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1"
-    },
-    "optional_inputs_present": {
-      "session_notes_jsonl": false,
-      "research_findings_json": false,
-      "feature_spec_audit_report_json": false,
-      "issue_process_adjudication_report_json": false
-    },
-    "full_semantic_read_avoided": true
+    "tool": "python3 pathlib/glob + binary read for counts only",
+    "exit_code": 0
+  },
+  "intake_decision": {
+    "source_mode": "existing_working_ledger",
+    "priority_applied": 1,
+    "blocked": false
   },
   "artifacts_written": [
     "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
     "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B4.json",
     "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json"
   ],
-  "next_prompt_request": "Paste prompt C0 — Section Entry: Ledger Preparation v3.2.1."
+  "next_prompt_request": {
+    "prompt_id": "C0",
+    "name": "Section Entry: Ledger Preparation",
+    "version": "pm.c0.v3.2.2"
+  }
 }

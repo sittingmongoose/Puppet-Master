@@ -1,0 +1,148 @@
+{
+  "schema_id": "pm.wave_artifact.v3.2.2",
+  "stage_id": "E2",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "wave_index": 2,
+  "wave_id": "wave-002",
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.fanout_worklist.json",
+  "tasks_in_wave_total": 8,
+  "tasks_completed": 8,
+  "tasks_blocked": 0,
+  "tasks_pending": 0,
+  "completed_task_ids": [
+    "e2-task-009",
+    "e2-task-010",
+    "e2-task-011",
+    "e2-task-012",
+    "e2-task-013",
+    "e2-task-014",
+    "e2-task-015",
+    "e2-task-016"
+  ],
+  "blocked_task_ids": [],
+  "pending_task_ids": [],
+  "invocations": [
+    {
+      "subagent_invocation_id": "632c829f-630c-4b74-a49b-467267e4af86",
+      "subagent_task_id": "e2-task-009",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-009.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 213,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-009.json",
+      "result_artifact_sha256": "1e19c8a32458af312e01c0faf0f0748f2a0285e0ddc279c83027c841a33d113a",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "1663362e-5558-4f20-86be-a06e45d0e982",
+      "subagent_task_id": "e2-task-010",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-010.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 100,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-010.json",
+      "result_artifact_sha256": "2581b54fb92e79f6b2dcfa4fc2f8c039d67d733f74b631f43dad9d1eed710e37",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "f6ba8448-1567-44a7-bad7-f54523c75445",
+      "subagent_task_id": "e2-task-011",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-011.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 126,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-011.json",
+      "result_artifact_sha256": "ac768c06f956fc066e24ce8bb46b115b0f6a476ec9bab2341d2e488b47b7fc0a",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "e67c7bf3-efa7-4d6c-993b-fd7b83665e42",
+      "subagent_task_id": "e2-task-012",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-012.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 117,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-012.json",
+      "result_artifact_sha256": "50149d9a2aa52f6c782761c7ee07348c58869098766bfc1f1ea0d4b8b9e64c78",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "6670aba6-79e1-4e8c-857c-775ba10df19a",
+      "subagent_task_id": "e2-task-013",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-013.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 48,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-013.json",
+      "result_artifact_sha256": "fc4ab06c212976d26266ecb73cd9b0bb0106d2228d1e39a7a349fca66b6c3181",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "b00f5cd1-8c3e-445b-8650-4ee34b1c728f",
+      "subagent_task_id": "e2-task-014",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-014.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 69,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-014.json",
+      "result_artifact_sha256": "71af6b0411a92db8525ac862ff240cbccc6488653b61e4435ae2e3d6f5f27589",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "a3b615d5-aa01-4018-931a-7b1661f342fb",
+      "subagent_task_id": "e2-task-015",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-015.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 54,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-015.json",
+      "result_artifact_sha256": "9ce8eaf32f477055815f52793c23060d903ab45c57cabb530378eb851a289953",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "a3368978-96b9-4221-a8c4-9bb801fa4fab",
+      "subagent_task_id": "e2-task-016",
+      "subagent_type": "shell_bounded_executor",
+      "input_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_evidence_classifier.inputs/e2-task-016.input.json",
+      "input_bounds": {
+        "coverage_tasks_in_batch": 25,
+        "obligation_records_upper_bound": 106,
+        "max_live_window_lines_per_window": 400,
+        "embedded_full_text_windows_per_task": 4
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classifications/coverage.e2-task-016.json",
+      "result_artifact_sha256": "84ae9b6b7d82680ef1adba7198718ab9742e1b76945a5e81bea57df17d5d04f2",
+      "status": "complete"
+    }
+  ]
+}

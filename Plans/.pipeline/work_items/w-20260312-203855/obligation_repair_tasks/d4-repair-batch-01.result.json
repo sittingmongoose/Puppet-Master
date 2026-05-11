@@ -1,0 +1,203 @@
+{
+  "schema_id": "pm.d4.task_result.v3.2.2",
+  "prompt_id": "D4",
+  "work_id": "w-20260312-203855",
+  "subagent_task_id": "d4-repair-batch-01",
+  "assigned_slice_ids": [
+    "slice-001",
+    "slice-002",
+    "slice-003",
+    "slice-004",
+    "slice-005"
+  ],
+  "per_slice_repairs": [
+    {
+      "slice_id": "slice-001",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-001.json",
+      "pre_repair_sha256": "bdaab1fb25e99c55fa0c7e558cc426a4d5f6e2e31b4283d5e3ff414e5c143c1d",
+      "post_repair_sha256": "bc3b168b350306a2862fc8125e999bbee1d2202f7081ed8144389190de1e7e6c",
+      "families_applied": [
+        "doc_hints_path_normalized"
+      ],
+      "excluded_blocks_normalized_total": 0,
+      "doc_hints_path_normalized_total": 1,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-002",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-002.json",
+      "pre_repair_sha256": "47731522280d29f159cfa18f1c97bf9392a938a2ed68c62bb12cfbb9070107f0",
+      "post_repair_sha256": "bc115998ca5f595068521cc38b77c7a262f69dd281271377e71772f0facbe893",
+      "families_applied": [
+        "doc_hints_path_normalized",
+        "excluded_blocks_field_name_normalized"
+      ],
+      "excluded_blocks_normalized_total": 22,
+      "doc_hints_path_normalized_total": 5,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-003",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-003.json",
+      "pre_repair_sha256": "9715926976c42dd6f0fba9b4a6f6a9f82ed24806357f47091e61d1a1bac7353c",
+      "post_repair_sha256": "74cbc4d06981f6c9363c7ae0d450c447f7b6625f5520b6fd5f2cfc6bed44c697",
+      "families_applied": [
+        "doc_hints_path_normalized",
+        "excluded_blocks_field_name_normalized"
+      ],
+      "excluded_blocks_normalized_total": 34,
+      "doc_hints_path_normalized_total": 10,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-004",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-004.json",
+      "pre_repair_sha256": "0cedcf72005de82942331eee228a839e881ae5fd4e3a0c6b91359d768530749c",
+      "post_repair_sha256": "8d008bae8ad6ccfeaff71b760db7a871141abf12aebe37f0ab3dc0025043f023",
+      "families_applied": [
+        "excluded_blocks_field_name_normalized"
+      ],
+      "excluded_blocks_normalized_total": 43,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    },
+    {
+      "slice_id": "slice-005",
+      "target_slice_file": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-005.json",
+      "pre_repair_sha256": "6fd9968e68b283e0c6a44aff5ab7637c67653368658be02779bb287fc123a7ab",
+      "post_repair_sha256": "62dbe3321b5c2bec6960c58de7da33764d0f19b7be113e40c997a0229f83f74d",
+      "families_applied": [
+        "excluded_blocks_field_name_normalized"
+      ],
+      "excluded_blocks_normalized_total": 46,
+      "doc_hints_path_normalized_total": 0,
+      "doc_hints_dropped_total": 0,
+      "doc_hints_reclassified_to_process_artifact_ref_total": 0,
+      "open_questions_trimmed_total": 0,
+      "dropped_doc_hints": [],
+      "reclassified_doc_hints": [],
+      "preservation_checks": {
+        "schema_id_unchanged": true,
+        "slice_id_unchanged": true,
+        "source_block_ids_represented_unchanged": true,
+        "source_group_ids_represented_unchanged": true,
+        "obligations_count_unchanged": true,
+        "open_questions_count_unchanged": true,
+        "excluded_blocks_count_unchanged": true,
+        "blocked_blocks_count_unchanged": true,
+        "obligations_lineage_intact": true,
+        "exact_source_excerpts_unchanged": true
+      },
+      "post_repair_check": {
+        "every_excluded_block_has_block_id_and_reason": true,
+        "every_doc_hint_path_starts_with_plans": true,
+        "every_open_question_text_<=400_chars": true
+      },
+      "notes": []
+    }
+  ],
+  "summary": {
+    "slices_repaired_total": 5,
+    "slices_pass_repaired": 5,
+    "slices_blocked": 0,
+    "excluded_blocks_normalized_total": 145,
+    "doc_hints_normalized_total": 16,
+    "doc_hints_dropped_total": 0,
+    "doc_hints_reclassified_total": 0,
+    "open_questions_trimmed_total": 0
+  },
+  "subagent_execution": {
+    "subagent_task_id": "d4-repair-batch-01",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "status": "complete"
+}

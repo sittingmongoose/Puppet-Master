@@ -1,19 +1,16 @@
 {
-  "schema_id": "pm.stage_report.v3.2.1",
+  "schema_id": "pm.stage_report.v3.2.2",
   "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.2.1",
+  "prompt_version": "pm.c3.v3.2.2",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260507T205146Z",
+  "timestamp_utc": "20260511T164314Z",
   "status": "COMPLETE",
   "execution_type": "mechanical_tool_operation",
   "subagents": {
     "used": false,
-    "reason": "deterministic_inventory_builder"
+    "reason": "mechanical_tool_operation"
   },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
-  "summary": "Built 4860 lossless blocks from 18244 source lines over 92 shards; raw_seed count 4860; block types: {'heading': 1649, 'blank_separator': 1686, 'list': 1519, 'paragraph': 6}.",
-  "deterministic_verification": {
-    "tool": "python3 markdown-ish segmenter on UTF-8 splitlines(keepends=True)",
-    "sha256_matches_manifest": true
-  }
+  "required_subagent_tasks_total": 0,
+  "summary": "Built 5065 lossless inventory blocks + 5065 raw seeds from 92 shards; coverage verified (no gaps/overlaps; nonblank lines once)."
 }

@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.coverage_worklist_builder_task_result.v3.2.2",
+  "subagent_task_id": "e1-task-001",
+  "subagent_invocation_id": "ad33a972-c634-41ae-bf81-d7df9bf0c3cd",
+  "status": "complete",
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-e1-task-001-g001",
+      "doc_resolution_status": "doc_hint_only",
+      "source_shard_id": "shard-0001",
+      "grouping_key": "shard-0001|doc_hint_only|",
+      "obligation_ids": [
+        "obl-001-003"
+      ],
+      "obligation_record_count": 1,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-001-003",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Audit orchestrator rewrite transfer fidelity, legacy-canon cleanup readiness, and reconciliation prep as the umbrella topic.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-e1-task-001-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0001",
+      "grouping_key": "shard-0001|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-001-001",
+        "obl-001-002",
+        "obl-001-004",
+        "obl-001-005",
+        "obl-001-006",
+        "obl-001-007",
+        "obl-001-008",
+        "obl-001-009",
+        "obl-001-010",
+        "obl-001-011",
+        "obl-001-012",
+        "obl-001-013",
+        "obl-001-014",
+        "obl-001-015",
+        "obl-001-016",
+        "obl-001-017",
+        "obl-001-018",
+        "obl-001-019",
+        "obl-001-020",
+        "obl-001-021",
+        "obl-001-022",
+        "obl-001-023",
+        "obl-001-024",
+        "obl-001-025"
+      ],
+      "obligation_record_count": 24,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "obligation_id": "obl-001-003",
+          "doc_hints": [
+            {
+              "hint_excerpt": "Audit orchestrator rewrite transfer fidelity, legacy-canon cleanup readiness, and reconciliation prep as the umbrella topic.",
+              "truncated": false
+            }
+          ]
+        }
+      ],
+      "cross_target_notes": []
+    }
+  ]
+}
