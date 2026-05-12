@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.f3_subagent_wave.v3.2.3",
+  "prompt_id": "F3",
+  "prompt_version": "pm.f3.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "wave_number": 1,
+  "timestamp_utc": "20260511T221200Z",
+  "required_subagent_tasks_total": 7,
+  "f2_upstream_proof_reference": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F2.json",
+  "wave_tasks": [
+    {
+      "subagent_invocation_id": "1f56367d-7574-4ec4-9cbf-617ddbba81db",
+      "subagent_task_id": "f3-r001",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001-input.json",
+        "coverage_row_index_start": 0,
+        "coverage_row_index_end_inclusive": 249,
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "6f85dd22-d675-462f-9e88-d9af6ef28f62",
+      "subagent_task_id": "f3-r002",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r002-input.json",
+        "coverage_row_index_start": 250,
+        "coverage_row_index_end_inclusive": 499,
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r002.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "d1449c05-4c9e-48ef-a30d-a7418d0cc95b",
+      "subagent_task_id": "f3-r003",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r003-input.json",
+        "coverage_row_index_start": 500,
+        "coverage_row_index_end_inclusive": 749,
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r003.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "3e7c7b90-5269-4fa0-9d52-cca798e9e677",
+      "subagent_task_id": "f3-r004",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r004-input.json",
+        "coverage_row_index_start": 750,
+        "coverage_row_index_end_inclusive": 999,
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r004.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "0951ac4c-2134-430a-b14f-e61758f77295",
+      "subagent_task_id": "f3-r005",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r005-input.json",
+        "coverage_row_index_start": 1000,
+        "coverage_row_index_end_inclusive": 1249,
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r005.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "23b3aa2f-90ec-48be-95e7-660c3bf14d6d",
+      "subagent_task_id": "f3-r006",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r006-input.json",
+        "coverage_row_index_start": 1250,
+        "coverage_row_index_end_inclusive": 1499,
+        "row_count": 250,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r006.json",
+      "status": "complete"
+    },
+    {
+      "subagent_invocation_id": "29875942-5ca0-4d27-b0db-b90f4f31f753",
+      "subagent_task_id": "f3-r007",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r007-input.json",
+        "coverage_row_index_start": 1500,
+        "coverage_row_index_end_inclusive": 1709,
+        "row_count": 210,
+        "max_rows_budget": 250
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r007.json",
+      "status": "complete"
+    }
+  ],
+  "pending_task_ids": [],
+  "blocked_task_ids": [],
+  "completed_task_ids": [
+    "f3-r001",
+    "f3-r002",
+    "f3-r003",
+    "f3-r004",
+    "f3-r005",
+    "f3-r006",
+    "f3-r007"
+  ]
+}

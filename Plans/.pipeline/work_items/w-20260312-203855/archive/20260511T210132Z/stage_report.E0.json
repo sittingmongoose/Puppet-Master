@@ -1,0 +1,88 @@
+{
+  "schema_id": "pm.stage_report.v3.2.2",
+  "prompt_id": "E0",
+  "prompt_version": "pm.e0.v3.2.2",
+  "timestamp_utc": "20260511T192200Z",
+  "section_id": "E",
+  "section_name": "Coverage",
+  "work_id": "w-20260312-203855",
+  "status": "complete",
+  "execution_type": "mechanical_tool_operation",
+  "execution_type_basis": "Section entry/handoff only (v3.2.2 local classification); deterministic existence and sha256 verification of Section D exit and canonical_obligations.json. No semantic reading of full obligation corpus.",
+  "stage_purpose": "Start Coverage from Section D handoff: derive work_id from section_exit_D, confirm canonical_obligations.json exists and matches exit fingerprints, gate entry to E1.",
+  "inputs_read": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
+      "sha256": "db448b6c0257203347ad97f5f897b63492f3d51dcf369509698592c92f15741d",
+      "line_count": 76,
+      "read_mode": "full_metadata_json"
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+      "sha256": "6ab0bb2721a89f0c4887853efd95ef9a5b77acddffd78e5877c20cd707b48906",
+      "line_count": 190894,
+      "read_mode": "existence_sha256_and_stat_only_no_full_content_read"
+    }
+  ],
+  "inputs_not_read": {
+    "archive": [
+      "Plans/.pipeline/work_items/w-20260312-203855/archive/**"
+    ],
+    "legacy_quarantine": [],
+    "canonical_obligations_full_semantic_scan": "not_performed_mechanical_stage"
+  },
+  "deterministic_verification": {
+    "tool": "glob+test+sha256sum+wc+stat",
+    "checks_performed": [
+      "Exactly one active section_exit_D.json under Plans/.pipeline/work_items/*/ (excluding archive path used for handoff selection)",
+      "section_exit_D.json present; status=complete; work_id=w-20260312-203855",
+      "section_exit_D.next_preferred_prompt == E0",
+      "section_exit_D.active_source_for_coverage path equals canonical_obligations.json under same work_id",
+      "canonical_obligations.json present (test -f)",
+      "sha256sum(canonical_obligations.json) == section_exit_D.canonical_obligations_sha256",
+      "section_exit_D.source_gate_status == pass",
+      "section_exit_D.obligation_conversion_complete == true",
+      "section_exit_D.canonical_obligations_merge_status == final"
+    ],
+    "checks_passed": 8,
+    "checks_failed": 0,
+    "canonical_obligations_stat_bytes": 6914820
+  },
+  "work_id_derivation": {
+    "method": "section_exit_D.json work_id field (active non-archive artifact)",
+    "section_exit_D_present": true,
+    "section_exit_D_candidates_in_pipeline_glob": 2,
+    "section_exit_D_selected_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
+    "section_exit_D_archive_ignored_for_handoff": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260507T150603Z/section_exit_D.json",
+    "conflict_detected": false,
+    "selected_work_id": "w-20260312-203855"
+  },
+  "subagents": {
+    "used": false,
+    "required": false,
+    "required_basis": "execution_type=mechanical_tool_operation; deterministic file and hash checks only.",
+    "fanout_proof_status": "not_applicable_mechanical_tool_operation"
+  },
+  "live_doc_writes": [],
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_E_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.E0.json"
+  ],
+  "final_gate": {
+    "name": "coverage_inputs_exist_and_match_section_d_exit",
+    "result": "pass",
+    "checks": [
+      "section_exit_D.json present and complete for work_id w-20260312-203855",
+      "canonical_obligations.json present at path declared in section_exit_D",
+      "canonical_obligations.json sha256 matches section_exit_D.canonical_obligations_sha256",
+      "section_exit_D source_gate and obligation_conversion handoff fields indicate ready Coverage input"
+    ]
+  },
+  "blockers": [],
+  "next_prompt_request": "Paste prompt E1 — Coverage Worklist Builder v3.2.2.",
+  "notes": [
+    "execution_type recorded per v3.2.2 stage classification rule.",
+    "fanout_proof_status not_applicable_mechanical_tool_operation; wave-artifact fan-out proof fields omitted as subagents not required.",
+    "Second glob match for section_exit_D.json is under archive/; handoff used only the active work_items/w-20260312-203855/section_exit_D.json per READ scope."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema_id": "pm.section_entry_B_report.v3.2.2",
+  "prompt_id": "B0",
+  "prompt_version": "pm.b0.v3.2.2",
+  "timestamp_utc": "20260511T163428Z",
+  "work_id": "w-20260312-203855",
+  "section_exit_A_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+  "section_exit_A_timestamp_utc": "20260511T163300Z",
+  "work_id_derivation": {
+    "source": "section_exit_A.json",
+    "field": "work_id",
+    "value": "w-20260312-203855",
+    "cross_checks": [
+      {
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+        "field": "work_id",
+        "match": true
+      },
+      {
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+        "field": "work_id",
+        "match": true
+      }
+    ]
+  },
+  "operator_intake_statement_in_prompt": false,
+  "routing_fields_found": {
+    "intake_path": null,
+    "next_intake_prompt": null,
+    "next_prompt_id_section_b": null,
+    "route_state_next_prompt_request": "A4 — Section Exit: Run Control",
+    "note_route_state_next_is_stale_relative_to_section_exit_A": true
+  },
+  "intake_selection": {
+    "selected_next_prompt_id": "B4",
+    "selected_next_prompt_name": "Ledger Intake Decision",
+    "rule_applied": "default_B4_no_explicit_or_discoverable_intake_path",
+    "priority_step": 3
+  },
+  "notes": [
+    "section_exit_A.json is the sole active section_exit_A under Plans/.pipeline/work_items/*/ (non-archive).",
+    "No B1/B2/B3 intake path in user message, section_exit_A, route_state.json, or meta.json."
+  ]
+}

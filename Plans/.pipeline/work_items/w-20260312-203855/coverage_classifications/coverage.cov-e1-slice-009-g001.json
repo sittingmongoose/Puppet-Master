@@ -1,0 +1,233 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-009-g001",
+  "obligation_record_count": 5,
+  "source_classification_slices": [
+    "e2-class-009"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-s012-056",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0044"
+        ],
+        "source_block_ids": [
+          "lblock-002069"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-09"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8601,
+            "end_line": 8604
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g001",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 922,
+          "line_end": 938,
+          "quote": "- `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `[retired-token-30]` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-058",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0044"
+        ],
+        "source_block_ids": [
+          "lblock-002075"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-09"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8627,
+            "end_line": 8636
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g001",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 922,
+          "line_end": 938,
+          "quote": "- `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `[retired-token-30]` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-062",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0044"
+        ],
+        "source_block_ids": [
+          "lblock-002089"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-09"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8674,
+            "end_line": 8678
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g001",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3586,
+          "line_end": 3600,
+          "quote": "| `Plans/orchestrator-subagent-integration.md` | Orchestrator, orchestrator controls, and node/package/lane/seam display. |",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-065",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0044"
+        ],
+        "source_block_ids": [
+          "lblock-002098"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-10"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8745,
+            "end_line": 8755
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g001",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3586,
+          "line_end": 3600,
+          "quote": "| `Plans/orchestrator-subagent-integration.md` | Orchestrator, orchestrator controls, and node/package/lane/seam display. |",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-069",
+      "coverage_task_id": "cov-e1-slice-009-g001",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0044"
+        ],
+        "source_block_ids": [
+          "lblock-002112"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-10"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8785,
+            "end_line": 8789
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g001",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3579,
+          "line_end": 3595,
+          "quote": "| `Plans/human-in-the-loop.md` | HITL settings, approval UI, and dashboard calls to action. |",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    }
+  ]
+}

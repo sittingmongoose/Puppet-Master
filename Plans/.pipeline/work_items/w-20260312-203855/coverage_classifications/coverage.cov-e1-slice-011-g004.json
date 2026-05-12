@@ -1,0 +1,805 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-011-g004",
+  "obligation_record_count": 18,
+  "source_classification_slices": [
+    "e2-class-011"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-016-022",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.47,
+      "uncertainty": 0.32,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 35,
+          "line_end": 59,
+          "rationale": "Weak token overlap only; treat as low-confidence partial pending deeper window read."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Low-confidence partial."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002853"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11401,
+            "end_line": 11401
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-03"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-023",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 23,
+          "line_end": 39,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002856"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11404,
+            "end_line": 11410
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-03"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-024",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 566,
+          "line_end": 582,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002859"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11413,
+            "end_line": 11415
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-03"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-025",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.67,
+      "uncertainty": 0.27,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 70,
+          "line_end": 90,
+          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm completeness under Section E."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002864"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11420,
+            "end_line": 11423
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-026",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 418,
+          "line_end": 434,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=91)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002867"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11426,
+            "end_line": 11439
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-027",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.62,
+      "uncertainty": 0.27,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 610,
+          "line_end": 630,
+          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm completeness under Section E."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002870"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11442,
+            "end_line": 11450
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-028",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 87,
+          "line_end": 103,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002873"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11453,
+            "end_line": 11455
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-029",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 216,
+          "line_end": 232,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002876"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11458,
+            "end_line": 11469
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-030",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 568,
+          "line_end": 584,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002879"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11472,
+            "end_line": 11474
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-031",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.74,
+      "uncertainty": 0.21,
+      "evidence_spans": [
+        {
+          "path": "Plans/Progression_Gates.md",
+          "line_start": 673,
+          "line_end": 689,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=37)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002884"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11479,
+            "end_line": 11482
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-032",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 25,
+          "line_end": 41,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002887"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11485,
+            "end_line": 11494
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-033",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.62,
+      "uncertainty": 0.27,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 610,
+          "line_end": 630,
+          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm completeness under Section E."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002890"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11497,
+            "end_line": 11506
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-034",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.69,
+      "uncertainty": 0.27,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 24,
+          "line_end": 44,
+          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm completeness under Section E."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002893"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11509,
+            "end_line": 11511
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-035",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.95,
+      "uncertainty": 0.06,
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 304,
+          "line_end": 320,
+          "rationale": "Strong excerpt/doc line correspondence (match_score=100)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002896"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11514,
+            "end_line": 11517
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-036",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.59,
+      "uncertainty": 0.27,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 17,
+          "line_end": 37,
+          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm completeness under Section E."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002899"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11520,
+            "end_line": 11522
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-037",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.91,
+      "uncertainty": 0.09,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 1,
+          "line_end": 36,
+          "rationale": "Obligation lists concrete Plans/** paths that exist in-repo; inventory-style coverage satisfied without deep prose match."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path inventory row."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002904"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11527,
+            "end_line": 11538
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-038",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "best_evidence_score": 0.66,
+      "uncertainty": 0.27,
+      "evidence_spans": [
+        {
+          "path": "Plans/Decision_Policy.md",
+          "line_start": 109,
+          "line_end": 129,
+          "rationale": "Partial grounding: excerpt tokens align with a line inside live_doc_targets_union (700-line head scan)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm completeness under Section E."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002907"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11541,
+            "end_line": 11575
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    },
+    {
+      "obligation_id": "obl-016-039",
+      "coverage_task_id": "cov-e1-slice-011-g004",
+      "source_shard_id": "shard-0058",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.91,
+      "uncertainty": 0.09,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 1,
+          "line_end": 36,
+          "rationale": "Obligation lists concrete Plans/** paths that exist in-repo; inventory-style coverage satisfied without deep prose match."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path inventory row."
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0058"
+        ],
+        "source_block_ids": [
+          "lblock-002910"
+        ],
+        "source_slice_id": "d2-slice-016",
+        "source_line_ranges": [
+          {
+            "source_shard_id": null,
+            "start_line": 11578,
+            "end_line": 11600
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T015-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-011-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      }
+    }
+  ]
+}

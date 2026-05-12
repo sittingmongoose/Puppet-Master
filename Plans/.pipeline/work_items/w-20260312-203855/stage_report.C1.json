@@ -1,19 +1,52 @@
 {
-  "schema_id": "pm.stage_report.v3.2.2",
+  "schema_id": "pm.stage_report.v1",
   "prompt_id": "C1",
-  "prompt_version": "pm.c1.v3.2.2",
+  "prompt_version": "pm.c1.v3.2.3",
+  "timestamp_utc": "20260511T210711Z",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260511T163810Z",
-  "status": "COMPLETE",
   "execution_type": "hybrid_mechanical_and_semantic",
-  "c1_branch": "MODE_A_existing_working_ledger",
-  "semantic_fanout_required": false,
-  "semantic_fanout_skip_reason": "MODE_A_preservation_only_manifest_source_mode_existing_working_ledger_no_condensation",
+  "hybrid_branch": {
+    "mode_a_existing_working_ledger": "executed_mechanical_preservation",
+    "mode_b_session_notes_or_reports": "not_selected_by_manifest"
+  },
+  "status": "complete",
   "subagents": {
     "used": false,
-    "reason": "MODE_A_mechanical_validation_and_preservation_no_bounded_condensation_tasks"
+    "reason": "manifest_source_mode_existing_working_ledger_no_condensation_or_normalization_subagent_tasks"
   },
-  "fanout_worklist_path": null,
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "fanout_proof_note": "No bounded semantic condensation fan-out: Mode A preservation only; Mode B subagent waves not applicable.",
+  "deterministic_verification": {
+    "commands_run": [
+      "test -f Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "test -s Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "wc -l -c Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "sha256sum Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+      "grep -c '^#' working_ledger.md",
+      "head -n 20 working_ledger.md",
+      "tail -n 15 working_ledger.md"
+    ],
+    "working_ledger_bytes": 1044305,
+    "working_ledger_lines": 18244,
+    "working_ledger_sha256_hex": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
+    "working_ledger_modified_in_c1": false,
+    "outputs_written_paths": [
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_condenser_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.C1.json"
+    ],
+    "gate_pass": true
+  },
+  "subagent_runtime_kind": "not_required_mechanical",
+  "actual_delegated_model_invocation": false,
+  "subagent_proof_artifact_paths": [],
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "local_worker_outputs_used": [
+    "bash: test, wc, sha256sum, grep -c, head, tail (bounded probes only)"
+  ],
+  "main_agent_batching_detected": false,
+  "shell_or_python_worker_misclassified_as_subagent_detected": false,
+  "real_subagent_proof_status": "not_required_mechanical",
   "required_subagent_tasks_total": 0,
   "wave_artifacts_total": 0,
   "wave_artifacts_expected_min": 0,
@@ -23,23 +56,8 @@
   "blocked_task_ids_from_wave_artifacts": [],
   "subagent_invocation_ids_from_wave_artifacts": [],
   "distinct_subagent_invocations_total_from_wave_artifacts": 0,
-  "task_to_invocation_map": {},
-  "invocation_to_task_map": {},
+  "distinct_subagent_invocations_total": 0,
   "omnibus_invocation_detected": false,
   "main_agent_bulk_output_detected": false,
-  "distinct_subagent_invocations_total": 0,
-  "fanout_proof_status": "pass",
-  "fanout_proof_notes": "Zero bounded subagent tasks scheduled for MODE A preservation; union empty; pending empty; proof obligations satisfied by deterministic verification only.",
-  "deterministic_verification": {
-    "commands_run": [
-      "test -f Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "wc -c < Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "wc -l < Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "sha256sum Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "head -n 8 Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-      "tail -n 8 Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
-    ],
-    "gate_pass": true
-  },
-  "summary": "MODE A: ledger_intake_manifest source_mode existing_working_ledger; working_ledger.md validated (1044305 bytes, 18244 lines, SHA-256 unchanged vs prior measurement); bounded head/tail samples show structured markdown; file preserved with no rewrite; ledger_condenser_report.json records preservation for C2."
+  "summary": "Hybrid stage: manifest selected Mode A (existing_working_ledger). Deterministic validation and bounded structure probes on working_ledger.md; file preserved unchanged (no rewrite). ledger_condenser_report.json records mode, counts, and SHA-256 for C2. No Mode B condensation; subagents and wave proof not required."
 }

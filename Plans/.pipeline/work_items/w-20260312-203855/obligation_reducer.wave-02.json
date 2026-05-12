@@ -1,0 +1,141 @@
+{
+  "schema_id": "pm.obligation_reducer.wave.v3.2.3",
+  "prompt_id": "D3",
+  "work_id": "w-20260312-203855",
+  "wave_index": 2,
+  "wave_timestamp_utc": "20260512T014500Z",
+  "assignments": [
+    {
+      "subagent_invocation_id": "582dd935-5b1a-4a6f-a0ac-302823502be7",
+      "subagent_task_id": "d3v2-d2-slice-009",
+      "slice_id": "d2-slice-009",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "verbatim_gate_u2026"
+      ]
+    },
+    {
+      "subagent_invocation_id": "01655a01-7df6-4128-a96d-39bcde8e3e7a",
+      "subagent_task_id": "d3v2-d2-slice-010",
+      "slice_id": "d2-slice-010",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-010.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "600bed09-017f-45fa-9fbe-d6b87746327e",
+      "subagent_task_id": "d3v2-d2-slice-011",
+      "slice_id": "d2-slice-011",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-011.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "f8693b53-6609-4a0c-a9cd-210b1d740e37",
+      "subagent_task_id": "d3v2-d2-slice-012",
+      "slice_id": "d2-slice-012",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-012.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "exact_paths_mentioned_not_in_excerpt"
+      ]
+    },
+    {
+      "subagent_invocation_id": "7b98ee42-5f9e-404b-90a8-5f09570429dc",
+      "subagent_task_id": "d3v2-d2-slice-013",
+      "slice_id": "d2-slice-013",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-013.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "excluded_block_trailing_newline_drift_optional",
+        "excerpt_length_advisory"
+      ]
+    },
+    {
+      "subagent_invocation_id": "90788450-7812-4a53-a5a3-d894d3151479",
+      "subagent_task_id": "d3v2-d2-slice-014",
+      "slice_id": "d2-slice-014",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-014.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "9d09b231-b9d9-44fd-930f-807f77ebeee5",
+      "subagent_task_id": "d3v2-d2-slice-015",
+      "slice_id": "d2-slice-015",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "path_hygiene_doc_hints",
+        "representation_duplicate_blocks"
+      ]
+    },
+    {
+      "subagent_invocation_id": "b9fda2c2-c47f-40a0-8fbb-d5bbf302defa",
+      "subagent_task_id": "d3v2-d2-slice-016",
+      "slice_id": "d2-slice-016",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-016.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-016.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "verbatim_indent_normalization_vs_seed"
+      ]
+    }
+  ]
+}

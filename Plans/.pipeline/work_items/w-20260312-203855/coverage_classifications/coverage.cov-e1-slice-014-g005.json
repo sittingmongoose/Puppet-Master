@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-014-g005",
+  "obligation_record_count": 2,
+  "source_classification_slices": [
+    "e2-class-014"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-020-024",
+      "coverage_task_id": "cov-e1-slice-014-g005",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.88,
+      "uncertainty": 0.36,
+      "evidence_spans": [
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 33)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-025",
+      "coverage_task_id": "cov-e1-slice-014-g005",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "best_evidence_score": 0.64,
+      "uncertainty": 0.38,
+      "evidence_spans": [
+        {
+          "path": "Plans/FileManager.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 70)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial anchor: longest normalized match falls below present threshold but exceeds noise floor."
+      ]
+    }
+  ]
+}

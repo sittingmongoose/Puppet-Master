@@ -1,813 +1,92 @@
 {
-  "schema_id": "pm.obligation_repair_report.v3.2.2",
+  "schema_id": "pm.obligation_repair_report.v3.2.3",
   "prompt_id": "D4",
-  "prompt_version": "pm.d4.v3.2.2",
+  "prompt_version": "pm.d4.v3.2.3",
+  "timestamp_utc": "20260512T031500Z",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "2026-05-11T18:54:51Z",
-  "status": "complete",
-  "run_basis": "d4_round_2_repair",
-  "repair_mode": "mixed_targeted",
-  "repair_submodes_applied": [
-    "semantic_conversion_gap",
-    "missing_doc_hint"
-  ],
-  "source_repair_request_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_request.json",
-  "request_round": 2,
-  "tasks": [
-    {
-      "subagent_task_id": "d4r2-repair-batch-01",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-01.result.json",
-      "repaired_slice_ids": [
-        "slice-008",
-        "slice-009"
-      ],
-      "totals": {
-        "slices_repaired": 2,
-        "missing_blocks_repaired": 8,
-        "doc_hints_repaired": 0
-      }
-    },
-    {
-      "subagent_task_id": "d4r2-repair-batch-02",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-02.result.json",
-      "repaired_slice_ids": [
-        "slice-016",
-        "slice-017"
-      ],
-      "totals": {
-        "slices_repaired": 2,
-        "missing_blocks_repaired": 17,
-        "doc_hints_repaired": 0
-      }
-    },
-    {
-      "subagent_task_id": "d4r2-repair-batch-03",
-      "result_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_tasks/d4r2-repair-batch-03.result.json",
-      "repaired_slice_ids": [
-        "slice-019",
-        "slice-020"
-      ],
-      "totals": {
-        "slices_repaired": 2,
-        "missing_blocks_repaired": 22,
-        "doc_hints_repaired": 4
-      }
-    }
-  ],
-  "totals": {
-    "target_slice_ids": [
-      "slice-008",
-      "slice-009",
-      "slice-016",
-      "slice-017",
-      "slice-019",
-      "slice-020"
+  "source_repair_request": "Plans/.pipeline/work_items/w-20260312-203855/obligation_repair_request.json",
+  "repair_summary": {
+    "target_slice_count": 4,
+    "slices_repaired_in_place": [
+      "d2-slice-002",
+      "d2-slice-009",
+      "d2-slice-015",
+      "d2-slice-018"
     ],
-    "target_slice_ids_repaired_total": 6,
-    "target_slice_ids_total": 6,
-    "target_block_ids_repaired_total": 47,
-    "target_block_ids_total": 47,
-    "doc_hint_defects_repaired_total": 4,
-    "doc_hint_defects_total": 4,
-    "exact_failures_total": 51,
-    "exact_failures_repaired_total": 51,
-    "exact_failures_unrepaired_total": 0
+    "delegated_subagent_invocations": 4,
+    "canonical_obligations_touched": false,
+    "notes": [
+      "Four bounded Cursor Task (delegated model) invocations verified slice JSON after deterministic baseline edits; see obligation_repair.wave-01.json for invocation_id ↔ task_id proof.",
+      "d2-slice-002 / d2-slice-009: obligation_text and open-question text aligned to ledger_obligation_seed.json exact_text for cited source_block_ids; exact_source_excerpt refreshed where it diverged from seed or contained synthetic U+2026 truncation (remaining U+2026 on 009 matches seed verbatim where present).",
+      "d2-slice-015: removed doc_hints whose source_block_ids overlapped excluded path-list blocks lblock-002576, lblock-002627, lblock-002709, lblock-002741, lblock-002762; doc_hints array empty; doc_hint_source_blocks set to 0 to match doc_hints_emitted.",
+      "d2-slice-018: process_artifact_ref doc_hints dh-d2-slice-018-127, -138, -147 — Plans/.pipeline/** and Plans/.evidence/** stripped from exact_paths_mentioned (path + process_artifact_ref retained). Post-delegation deterministic pass: obligations obl-d2-slice-018-057, obl-d2-slice-018-065, obl-d2-slice-018-073 — pipeline path removed from exact_paths_mentioned and appended to process_paths_quarantined_at_slice; obligation_text and exact_source_excerpt unchanged (verbatim ledger).",
+      "Re-run D3 merge + source gate; D4 does not write canonical_obligations.json."
+    ]
   },
   "per_slice_repairs": [
     {
-      "slice_id": "slice-008",
-      "slice_file": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-008.json",
-      "missing_blocks_repaired": [
-        {
-          "block_id": "lblock-000932",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 43,
-          "source_group_id": "wg-005-057",
-          "source_shard_id": "shard-0020",
-          "source_line_range": {
-            "start_line": 3835,
-            "end_line": 3835
-          },
-          "exclusion_category": "section_heading_marker"
-        },
-        {
-          "block_id": "lblock-000974",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 44,
-          "source_group_id": "wg-006-003",
-          "source_shard_id": "shard-0021",
-          "source_line_range": {
-            "start_line": 4013,
-            "end_line": 4013
-          },
-          "exclusion_category": "section_heading_marker"
-        },
-        {
-          "block_id": "lblock-001018",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 45,
-          "source_group_id": "wg-006-018",
-          "source_shard_id": "shard-0021",
-          "source_line_range": {
-            "start_line": 4153,
-            "end_line": 4153
-          },
-          "exclusion_category": "section_heading_marker"
-        },
-        {
-          "block_id": "lblock-001062",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 46,
-          "source_group_id": "wg-006-032",
-          "source_shard_id": "shard-0022",
-          "source_line_range": {
-            "start_line": 4299,
-            "end_line": 4299
-          },
-          "exclusion_category": "section_heading_marker"
-        }
+      "slice_id": "d2-slice-002",
+      "subagent_task_id": "d4-repair-d2-slice-002",
+      "subagent_invocation_id": "dae6ab5d-de52-48ed-b504-50abcbcaa290",
+      "repair_codes": [
+        "obligation_text_unicode_ellipsis_truncation"
       ],
-      "missing_blocks_count": 4,
-      "excluded_blocks_count_before": 43,
-      "excluded_blocks_count_after": 47,
-      "blocks_excluded_field_before": 43,
-      "blocks_excluded_field_after": 47,
-      "blocks_observed_unchanged": true,
-      "blocks_converted_unchanged": true,
-      "blocks_blocked_unchanged": true,
-      "obligations_unchanged": true,
-      "open_questions_unchanged": true,
-      "doc_hints_unchanged": true,
-      "coverage_verified": true,
-      "all_target_blocks_now_covered": true,
-      "atomic_write_ok": true
+      "target_block_ids": [],
+      "source_block_ids_cited": "per obligation/open_question per ledger seed join for obligation_text refresh",
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
+      "post_verify_notes": "Delegated post_repair_verdict=pass."
     },
     {
-      "slice_id": "slice-009",
-      "slice_file": "/mnt/Cursor/Puppet Master/Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.slice-009.json",
-      "missing_blocks_repaired": [
-        {
-          "block_id": "lblock-001101",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 52,
-          "source_group_id": "wg-006-045",
-          "source_shard_id": "shard-0023",
-          "source_line_range": {
-            "start_line": 4422,
-            "end_line": 4422
-          },
-          "exclusion_category": "section_heading_marker"
-        },
-        {
-          "block_id": "lblock-001133",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 53,
-          "source_group_id": "wg-006-056",
-          "source_shard_id": "shard-0023",
-          "source_line_range": {
-            "start_line": 4541,
-            "end_line": 4541
-          },
-          "exclusion_category": "section_heading_marker"
-        },
-        {
-          "block_id": "lblock-001172",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 54,
-          "source_group_id": "wg-006-069",
-          "source_shard_id": "shard-0024",
-          "source_line_range": {
-            "start_line": 4674,
-            "end_line": 4674
-          },
-          "exclusion_category": "section_heading_marker"
-        },
-        {
-          "block_id": "lblock-001207",
-          "added_as": "excluded_blocks",
-          "new_index_in_array": 55,
-          "source_group_id": "wg-006-081",
-          "source_shard_id": "shard-0024",
-          "source_line_range": {
-            "start_line": 4793,
-            "end_line": 4793
-          },
-          "exclusion_category": "section_heading_marker"
-        }
+      "slice_id": "d2-slice-009",
+      "subagent_task_id": "d4-repair-d2-slice-009",
+      "subagent_invocation_id": "e39e3099-33f2-48ae-906a-5aea6ecabc44",
+      "repair_codes": [
+        "obligation_text_unicode_ellipsis_truncation"
       ],
-      "missing_blocks_count": 4,
-      "excluded_blocks_count_before": 52,
-      "excluded_blocks_count_after": 56,
-      "blocks_excluded_field_before": 52,
-      "blocks_excluded_field_after": 56,
-      "blocks_observed_unchanged": true,
-      "blocks_converted_unchanged": true,
-      "blocks_blocked_unchanged": true,
-      "obligations_unchanged": true,
-      "open_questions_unchanged": true,
-      "doc_hints_unchanged": true,
-      "coverage_verified": true,
-      "all_target_blocks_now_covered": true,
-      "atomic_write_ok": true
+      "target_block_ids": [],
+      "source_block_ids_cited": "per obligation per ledger seed exact_text",
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-009.json",
+      "post_verify_notes": "Delegated post_repair_verdict=pass; some obligation_text retains U+2026 where seed exact_text contains the same typographic ellipsis (not synthetic truncation)."
     },
     {
-      "slice_id": "slice-016",
-      "missing_blocks_repaired": 9,
-      "doc_hints_repaired": 0,
-      "status": "complete"
+      "slice_id": "d2-slice-015",
+      "subagent_task_id": "d4-repair-d2-slice-015",
+      "subagent_invocation_id": "bc823be6-19c0-44cd-ba89-fd403dc04aaa",
+      "repair_codes": [
+        "path_hygiene_doc_hints",
+        "representation_duplicate_block_refs"
+      ],
+      "target_block_ids": [
+        "lblock-002576",
+        "lblock-002627",
+        "lblock-002709",
+        "lblock-002741",
+        "lblock-002762"
+      ],
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-015.json",
+      "post_verify_notes": "Delegated post_repair_verdict=pass; doc_hints empty; counter doc_hint_source_blocks normalized to 0."
     },
     {
-      "slice_id": "slice-017",
-      "missing_blocks_repaired": 8,
-      "doc_hints_repaired": 0,
-      "status": "complete"
-    },
-    {
-      "slice_id": "slice-019",
-      "slice_file": "obligations.slice-019.json",
-      "missing_blocks_repaired": [
-        "lblock-003242",
-        "lblock-003277",
-        "lblock-003310",
-        "lblock-003333",
-        "lblock-003353",
-        "lblock-003383",
-        "lblock-003406",
-        "lblock-003433",
-        "lblock-003453",
-        "lblock-003479"
+      "slice_id": "d2-slice-018",
+      "subagent_task_id": "d4-repair-d2-slice-018",
+      "subagent_invocation_id": "895884b9-75c9-4e7d-b3a9-3e3d045de75e",
+      "repair_codes": [
+        "process_artifact_doc_hint_exact_paths_pipeline",
+        "pipeline_path_in_obligation_exact_paths"
       ],
-      "missing_blocks_count": 10,
-      "doc_hints_repaired_count": 0,
-      "doc_hints_count_before": 187,
-      "doc_hints_count_after": 187,
-      "excluded_blocks_count_before": 80,
-      "excluded_blocks_count_after": 90,
-      "blocks_excluded_field_before": 80,
-      "blocks_excluded_field_after": 90,
-      "obligations_unchanged": true,
-      "open_questions_unchanged": true,
-      "blocked_blocks_unchanged": true,
-      "coverage_verified": true,
-      "all_target_blocks_now_covered": true,
-      "atomic_write_ok": true,
-      "doc_hints_repaired": []
-    },
-    {
-      "slice_id": "slice-020",
-      "slice_file": "obligations.slice-020.json",
-      "missing_blocks_repaired": [
-        "lblock-003500",
-        "lblock-003520",
-        "lblock-003540",
-        "lblock-003561",
-        "lblock-003581",
-        "lblock-003589",
-        "lblock-003609",
-        "lblock-003630",
-        "lblock-003650",
-        "lblock-003676",
-        "lblock-003702",
-        "lblock-003728"
+      "target_block_ids": [],
+      "doc_hint_ids": [
+        "dh-d2-slice-018-127",
+        "dh-d2-slice-018-138",
+        "dh-d2-slice-018-147"
       ],
-      "missing_blocks_count": 12,
-      "doc_hints_repaired_count": 4,
-      "doc_hints_count_before": 121,
-      "doc_hints_count_after": 117,
-      "excluded_blocks_count_before": 75,
-      "excluded_blocks_count_after": 87,
-      "blocks_excluded_field_before": 75,
-      "blocks_excluded_field_after": 87,
-      "obligations_unchanged": true,
-      "open_questions_unchanged": true,
-      "blocked_blocks_unchanged": true,
-      "coverage_verified": true,
-      "all_target_blocks_now_covered": true,
-      "atomic_write_ok": true,
-      "doc_hints_repaired": [
-        {
-          "hint_id": "dh-020-097",
-          "old_hint_type": "candidate_doc",
-          "old_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-          "action": "dropped"
-        },
-        {
-          "hint_id": "dh-020-109",
-          "old_hint_type": "candidate_doc",
-          "old_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-          "action": "dropped"
-        },
-        {
-          "hint_id": "dh-020-119",
-          "old_hint_type": "candidate_doc",
-          "old_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-          "action": "dropped"
-        },
-        {
-          "hint_id": "dh-020-132",
-          "old_hint_type": "candidate_doc",
-          "old_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
-          "action": "dropped"
-        }
+      "obligation_ids_additional_deterministic": [
+        "obl-d2-slice-018-057",
+        "obl-d2-slice-018-065",
+        "obl-d2-slice-018-073"
       ],
-      "no_pipeline_path_doc_hint_remaining_unless_process_artifact_ref": true
+      "output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-018.json",
+      "post_verify_notes": "Delegated post_repair_verdict=pass for named doc_hints; main-agent deterministic quarantine then removed Plans/.pipeline/** from obligation exact_paths_mentioned for obl-057/065/073 with process_paths_quarantined_at_slice."
     }
-  ],
-  "failure_repair_status": [
-    {
-      "failure_id": "f-001-slice-008-cov-lblock-000932",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-008",
-      "block_id": "lblock-000932",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-002-slice-008-cov-lblock-000974",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-008",
-      "block_id": "lblock-000974",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-003-slice-008-cov-lblock-001018",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-008",
-      "block_id": "lblock-001018",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-004-slice-008-cov-lblock-001062",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-008",
-      "block_id": "lblock-001062",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-005-slice-009-cov-lblock-001101",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-009",
-      "block_id": "lblock-001101",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-006-slice-009-cov-lblock-001133",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-009",
-      "block_id": "lblock-001133",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-007-slice-009-cov-lblock-001172",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-009",
-      "block_id": "lblock-001172",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-008-slice-009-cov-lblock-001207",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-009",
-      "block_id": "lblock-001207",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-009-slice-016-cov-lblock-002500",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002500",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-010-slice-016-cov-lblock-002517",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002517",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-011-slice-016-cov-lblock-002548",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002548",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-012-slice-016-cov-lblock-002569",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002569",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-013-slice-016-cov-lblock-002601",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002601",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-014-slice-016-cov-lblock-002628",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002628",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-015-slice-016-cov-lblock-002668",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002668",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-016-slice-016-cov-lblock-002698",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002698",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-017-slice-016-cov-lblock-002718",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-016",
-      "block_id": "lblock-002718",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-018-slice-017-cov-lblock-002756",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002756",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-019-slice-017-cov-lblock-002788",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002788",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-020-slice-017-cov-lblock-002821",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002821",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-021-slice-017-cov-lblock-002856",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002856",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-022-slice-017-cov-lblock-002889",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002889",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-023-slice-017-cov-lblock-002921",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002921",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-024-slice-017-cov-lblock-002942",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002942",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-025-slice-017-cov-lblock-002962",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-017",
-      "block_id": "lblock-002962",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-026-slice-019-cov-lblock-003242",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003242",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-027-slice-019-cov-lblock-003277",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003277",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-028-slice-019-cov-lblock-003310",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003310",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-029-slice-019-cov-lblock-003333",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003333",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-030-slice-019-cov-lblock-003353",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003353",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-031-slice-019-cov-lblock-003383",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003383",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-032-slice-019-cov-lblock-003406",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003406",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-033-slice-019-cov-lblock-003433",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003433",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-034-slice-019-cov-lblock-003453",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003453",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-035-slice-019-cov-lblock-003479",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-019",
-      "block_id": "lblock-003479",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-036-slice-020-cov-lblock-003500",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003500",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-037-slice-020-cov-lblock-003520",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003520",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-038-slice-020-cov-lblock-003540",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003540",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-039-slice-020-cov-lblock-003561",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003561",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-040-slice-020-cov-lblock-003581",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003581",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-041-slice-020-cov-lblock-003589",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003589",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-042-slice-020-cov-lblock-003609",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003609",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-043-slice-020-cov-lblock-003630",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003630",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-044-slice-020-cov-lblock-003650",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003650",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-045-slice-020-cov-lblock-003676",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003676",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-046-slice-020-cov-lblock-003702",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003702",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-047-slice-020-cov-lblock-003728",
-      "failure_category": "missing_block_coverage",
-      "slice_id": "slice-020",
-      "block_id": "lblock-003728",
-      "hint_id": null,
-      "repaired": true,
-      "repair_action": "added_as_excluded_blocks (section_heading_marker)"
-    },
-    {
-      "failure_id": "f-048-slice-020-dh-dh-020-097",
-      "failure_category": "doc_hint_pipeline_path_wrong_hint_type",
-      "slice_id": "slice-020",
-      "block_id": null,
-      "hint_id": "dh-020-097",
-      "repaired": true,
-      "repair_action": "dropped"
-    },
-    {
-      "failure_id": "f-049-slice-020-dh-dh-020-109",
-      "failure_category": "doc_hint_pipeline_path_wrong_hint_type",
-      "slice_id": "slice-020",
-      "block_id": null,
-      "hint_id": "dh-020-109",
-      "repaired": true,
-      "repair_action": "dropped"
-    },
-    {
-      "failure_id": "f-050-slice-020-dh-dh-020-119",
-      "failure_category": "doc_hint_pipeline_path_wrong_hint_type",
-      "slice_id": "slice-020",
-      "block_id": null,
-      "hint_id": "dh-020-119",
-      "repaired": true,
-      "repair_action": "dropped"
-    },
-    {
-      "failure_id": "f-051-slice-020-dh-dh-020-132",
-      "failure_category": "doc_hint_pipeline_path_wrong_hint_type",
-      "slice_id": "slice-020",
-      "block_id": null,
-      "hint_id": "dh-020-132",
-      "repaired": true,
-      "repair_action": "dropped"
-    }
-  ],
-  "unrepaired_failures": [],
-  "preservation_checks": {
-    "only_target_slices_modified": true,
-    "non_target_slices_count_unchanged": true,
-    "obligations_count_unchanged_globally": true,
-    "open_questions_count_unchanged_globally": true,
-    "blocked_blocks_count_unchanged_globally": true,
-    "doc_hints_count_delta": -4,
-    "excluded_blocks_count_delta": 47,
-    "no_raw_block_added_or_removed_from_any_slice": true,
-    "all_source_lineage_preserved_on_repaired_records": true
-  },
-  "global_totals_after_repair": {
-    "obligations": 3870,
-    "open_questions": 100,
-    "doc_hints": 2583,
-    "excluded_blocks": 1650,
-    "blocked_blocks": 0,
-    "covered_blocks_total": 3288,
-    "worklist_active_blocks_total": 3288,
-    "missing_blocks_total": 0
-  },
-  "post_repair_d3_gates_expected_status": {
-    "raw_block_coverage_gate": "pass",
-    "doc_hint_path_hygiene_gate": "pass",
-    "excluded_blocks_canonical_gate": "pass",
-    "lineage_gate": "pass",
-    "open_question_preservation_gate": "pass",
-    "obligation_taxonomy_gate": "pass",
-    "internal_consistency_gate": "pass",
-    "process_path_quarantine_gate": "pass",
-    "slice_to_d1_group_coverage_gate": "pass",
-    "overall_gate_status_expected": "pass"
-  },
-  "schema_note_on_batch_02_result_artifact": "batch-02 subagent emitted per_slice_repairs[*].missing_blocks_repaired as integer (count) rather than list-of-objects; the slice files themselves were correctly modified with 17 new excluded_blocks entries per the global post-repair audit (slice-016: +9, slice-017: +8). Item-level verification against the slice files confirms all 17 target_block_ids are now covered.",
-  "route_after_repair": "D3"
+  ]
 }

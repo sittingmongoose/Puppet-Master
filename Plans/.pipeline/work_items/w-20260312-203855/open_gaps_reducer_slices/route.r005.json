@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.open_gaps_reducer_slice_result.v3.2.3",
+  "subagent_task_id": "f3-r005",
+  "slice_id": "r005",
+  "status": "complete",
+  "row_index_range": {
+    "start": 1000,
+    "end": 1249
+  },
+  "row_count": 250,
+  "slice_summary": {
+    "counts_by_gap_group_id": {
+      "concrete_fix_backlog": 47,
+      "no_gap": 130,
+      "process_followup": 73
+    },
+    "planning_blocker_true": 120,
+    "counts_by_blocker_type": {
+      "concrete_evidence_gap": 47,
+      "coverage_classifier_process_defect_or_source_intake_gap": 73,
+      "none": 130
+    },
+    "doc_discovery_required_non_terminal": 0,
+    "doc_discovery_exhaustion_rows": 0,
+    "classifier_process_defect_rows": 73,
+    "notes": [
+      "Processed 250 gap_record(s); coverage_row_index range [1000, 1249].",
+      "Counts use gap_group_id and blocker_classification.blocker_type; planning_blocker_true counts records with planning_blocker==true."
+    ]
+  }
+}

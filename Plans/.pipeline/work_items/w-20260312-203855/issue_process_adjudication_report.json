@@ -1,0 +1,283 @@
+{
+  "schema_id": "pm.issue_process_adjudication_report.v1",
+  "prompt_id": "B3",
+  "prompt_version": "pm.b3.v3.2.3",
+  "timestamp_utc": "20260512T043812Z",
+  "work_id": "w-20260312-203855",
+  "execution_status": "in_progress_partial",
+  "reported_issue_sources": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json",
+      "summary": "Route to B3 due to classifier_process_defect_rows_total=253 and precedence over F4 doc-discovery repeat."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "filter": "blocker_classification.blocker_type == coverage_classifier_process_defect_or_source_intake_gap",
+      "matching_gap_record_count": 253
+    }
+  ],
+  "fanout_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/B3_fanout_worklist.json",
+  "required_bounded_tasks_total": 22,
+  "completed_bounded_tasks": [
+    "b3-t001"
+  ],
+  "pending_bounded_tasks": [
+    "b3-t002",
+    "b3-t003",
+    "b3-t004",
+    "b3-t005",
+    "b3-t006",
+    "b3-t007",
+    "b3-t008",
+    "b3-t009",
+    "b3-t010",
+    "b3-t011",
+    "b3-t012",
+    "b3-t013",
+    "b3-t014",
+    "b3-t015",
+    "b3-t016",
+    "b3-t017",
+    "b3-t018",
+    "b3-t019",
+    "b3-t020",
+    "b3-t021",
+    "b3-t022"
+  ],
+  "adjudication_summary_partial": {
+    "gap_records_adjudicated_in_completed_slices": 25,
+    "adjudication_classification_counts_slice_b3_t001": {
+      "doc_discovery_exhaustion": 25
+    },
+    "dominant_process_theme": "doc_discovery_exhaustion with classifier_union_no_live_targets and empty live_doc_targets_union after terminal exhaustion; secondary theme labels vary by shard-specific aggregated_task_label in remaining slices."
+  },
+  "slice_result_artifacts_completed": [
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t001.json"
+  ],
+  "slice_result_artifacts_pending": [
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t002.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t003.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t004.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t005.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t006.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t007.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t008.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t009.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t010.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t011.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t012.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t013.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t014.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t015.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t016.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t017.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t018.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t019.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t020.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t021.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t022.json"
+  ],
+  "adjudications_embedded_completed_slices": [
+    {
+      "gap_array_index": 0,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state is doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; candidate_doc_hints and live_doc_targets_union are empty while unresolved_reason lists classifier_union_no_live_targets and aggregated_task_label=no_live_doc_targets_in_classifier_union; blocker_classification.blocker_type=coverage_classifier_process_defect_or_source_intake_gap aligns with intake/classifier binding failure after discovery terminated.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 1,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Same exhaustion terminal state as sibling obligations: doc_discovery_attempt_state=doc_discovery_exhaustion and terminal_unresolved_doc_discovery=true in prior_resolver_state; empty candidate_doc_hints and live_doc_targets_union; unresolved_reason confirms classifier_union_no_live_targets and shard_only_pending_live_path_binding.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 2,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state=doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; both candidate_doc_hints and live_doc_targets_union are empty; unresolved_reason includes doc_discovery_exhaustion and assignment_reason_code=classifier_union_no_live_targets.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 3,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Terminal doc discovery flags match exhaustion (prior_resolver_state); no hints or live targets in candidate_doc_hints/live_doc_targets_union; blocker_classification identifies coverage_classifier_process_defect_or_source_intake_gap consistent with unresolved_reason.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 4,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state shows doc_discovery_exhaustion and terminal_unresolved_doc_discovery=true alongside doc_resolution_status=shard_only_pending_live_path_binding; zero candidate_doc_hints_count and live_doc_targets_union_count per unresolved_reason; empty arrays corroborate.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 5,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Exhaustion is explicit in prior_resolver_state.doc_discovery_attempt_state and mirrored in unresolved_reason; classifier_union_no_live_targets with empty unions implies discovery completed without binding live paths; planning_blocker blocker_type reinforces process/source intake gap.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 6,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state carries doc_discovery_exhaustion and terminal_unresolved_doc_discovery=true; candidate_doc_hints and live_doc_targets_union remain []; unresolved_reason obligations listing needs_doc_discovery with terminal_unresolved_doc_discovery=True closes the exhaustion diagnosis.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 7,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Evidence matches exhausted discovery path: doc_discovery_attempt_state=doc_discovery_exhaustion in prior_resolver_state and unresolved_reason; empty live_doc_targets_union despite obligation_level_classification=needs_doc_discovery in unresolved_reason.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 8,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.terminal_unresolved_doc_discovery=true with doc_discovery_attempt_state=doc_discovery_exhaustion; candidate_doc_hints=[] and live_doc_targets_union=[]; blocker_classification.blocker_type=coverage_classifier_process_defect_or_source_intake_gap matches resolver routing away from repeated discovery.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 9,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Same resolver terminal bundle: doc_discovery_exhaustion plus terminal_unresolved_doc_discovery=true in prior_resolver_state; unresolved_reason cites classifier_union_no_live_targets and zero-count hints/targets; live_doc_targets_union empty.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 10,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state is doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; missing candidate_doc_hints and empty live_doc_targets_union explain aggregated_task_label=no_live_doc_targets_in_classifier_union in unresolved_reason.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 11,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Doc discovery exhaustion persisted per prior_resolver_state and unresolved_reason strings; classifier_union_no_live_targets paired with empty union arrays indicates discovery ran without yielding bindable targets.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 12,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state shows doc_discovery_exhaustion and shard_only_pending_live_path_binding in doc_resolution_status; candidate_doc_hints and live_doc_targets_union are empty; blocker_classification.blocker_type flags classifier/process/intake gap.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 13,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "terminal_unresolved_doc_discovery=true and doc_discovery_attempt_state=doc_discovery_exhaustion in prior_resolver_state align with unresolved_reason doc_discovery_exhaustion token; empty hints/unions corroborate no_live_doc_targets_in_classifier_union.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 14,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state encodes exhausted discovery with terminal flags; unresolved_reason lists classifier_union_no_live_targets and counts zero for hints/targets; live_doc_targets_union=[] confirms union emptiness.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 15,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Repeated resolver footprint across obligations: doc_discovery_exhaustion plus terminal_unresolved_doc_discovery=true in prior_resolver_state; empty candidate_doc_hints and live_doc_targets_union; coverage_classifier_process_defect_or_source_intake_gap in blocker_classification.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 16,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state=doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; unresolved_reason ties gap_bucket=process_followup to doc_discovery_exhaustion and classifier_union_no_live_targets; unions remain empty.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 17,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Exhaustion evidenced by prior_resolver_state fields matching unresolved_reason narrative; candidate_doc_hints=[] and live_doc_targets_union=[] with next_route_hint=b3_issue_process_adjudicator indicates terminal discovery outcome.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 18,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state holds doc_discovery_exhaustion and terminal_unresolved_doc_discovery=true; assignment_reason_code classifier_union_no_live_targets matches empty live_doc_targets_union and candidate_doc_hints in the record.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 20,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state is doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; empty candidate_doc_hints and live_doc_targets_union support unresolved_reason classifier_union_no_live_targets counts.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 21,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Same exhaustion syndromes on prior_resolver_state as preceding rows; unresolved_reason repeats doc_discovery_exhaustion and shard_only_pending_live_path_binding; blocker_classification.blocker_type=coverage_classifier_process_defect_or_source_intake_gap.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 22,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state shows terminal doc discovery exhaustion with doc_resolution_status=shard_only_pending_live_path_binding; candidate_doc_hints and live_doc_targets_union are []; unresolved_reason confirms classifier_union_no_live_targets.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 23,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "Shard change does not alter exhaustion evidence: prior_resolver_state.doc_discovery_attempt_state=doc_discovery_exhaustion and terminal_unresolved_doc_discovery=true; empty candidate_doc_hints and live_doc_targets_union match unresolved_reason.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 24,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state mirrors doc_discovery_exhaustion terminal bundle; live_doc_targets_union remains empty despite obligation-level needs_doc_discovery implied in unresolved_reason; blocker_classification signals classifier/process intake gap.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    },
+    {
+      "gap_array_index": 25,
+      "adjudication_classification": "doc_discovery_exhaustion",
+      "rationale_brief": "prior_resolver_state.doc_discovery_attempt_state=doc_discovery_exhaustion with terminal_unresolved_doc_discovery=true; candidate_doc_hints=[] and live_doc_targets_union=[] align with aggregated_task_label=no_live_doc_targets_in_classifier_union in unresolved_reason for this coverage_task.",
+      "duplicate_of_gap_array_index": null,
+      "false_positive_reason": null,
+      "process_defect_root_cause": "Classifier union produced no live doc path bindings after shard doc discovery exhausted."
+    }
+  ],
+  "continuation_instructions": "Re-run B3 after Cursor delegated subagent quota is available; remaining 21 bounded tasks must each receive one distinct Task invocation; merge result.b3-t*.json into this report and recompute aggregates."
+}

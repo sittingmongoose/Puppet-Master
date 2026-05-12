@@ -1,0 +1,4304 @@
+{
+  "schema_id": "pm.obligation_conversion_slice.v3.2.3",
+  "prompt_id": "D2",
+  "work_id": "w-20260312-203855",
+  "slice_id": "d2-slice-007",
+  "source_obligation_worklist": "Plans/.pipeline/work_items/w-20260312-203855/obligation_worklist.json",
+  "source_ledger_obligation_seed": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+  "source_conversion_slices": "Plans/.pipeline/work_items/w-20260312-203855/obligation_converter.conversion_slices.json",
+  "source_group_ids": [
+    "wg-d1-T006-05",
+    "wg-d1-T006-06",
+    "wg-d1-T006-07",
+    "wg-d1-T006-08",
+    "wg-d1-T006-09",
+    "wg-d1-T006-10",
+    "wg-d1-T006-11",
+    "wg-d1-T006-12",
+    "wg-d1-T006-13",
+    "wg-d1-T006-14",
+    "wg-d1-T006-15",
+    "wg-d1-T006-16",
+    "wg-d1-T007-01",
+    "wg-d1-T007-02"
+  ],
+  "source_block_ids": [
+    "lblock-000852",
+    "lblock-000853",
+    "lblock-000854",
+    "lblock-000855",
+    "lblock-000856",
+    "lblock-000857",
+    "lblock-000858",
+    "lblock-000859",
+    "lblock-000860",
+    "lblock-000861",
+    "lblock-000862",
+    "lblock-000863",
+    "lblock-000864",
+    "lblock-000865",
+    "lblock-000866",
+    "lblock-000867",
+    "lblock-000868",
+    "lblock-000869",
+    "lblock-000870",
+    "lblock-000871",
+    "lblock-000872",
+    "lblock-000873",
+    "lblock-000874",
+    "lblock-000875",
+    "lblock-000876",
+    "lblock-000877",
+    "lblock-000878",
+    "lblock-000879",
+    "lblock-000880",
+    "lblock-000881",
+    "lblock-000882",
+    "lblock-000883",
+    "lblock-000884",
+    "lblock-000885",
+    "lblock-000886",
+    "lblock-000887",
+    "lblock-000888",
+    "lblock-000889",
+    "lblock-000890",
+    "lblock-000891",
+    "lblock-000892",
+    "lblock-000893",
+    "lblock-000894",
+    "lblock-000895",
+    "lblock-000896",
+    "lblock-000897",
+    "lblock-000898",
+    "lblock-000899",
+    "lblock-000900",
+    "lblock-000901",
+    "lblock-000902",
+    "lblock-000903",
+    "lblock-000904",
+    "lblock-000905",
+    "lblock-000906",
+    "lblock-000907",
+    "lblock-000908",
+    "lblock-000909",
+    "lblock-000910",
+    "lblock-000911",
+    "lblock-000912",
+    "lblock-000913",
+    "lblock-000914",
+    "lblock-000915",
+    "lblock-000916",
+    "lblock-000917",
+    "lblock-000918",
+    "lblock-000919",
+    "lblock-000920",
+    "lblock-000921",
+    "lblock-000922",
+    "lblock-000923",
+    "lblock-000924",
+    "lblock-000925",
+    "lblock-000926",
+    "lblock-000927",
+    "lblock-000928",
+    "lblock-000929",
+    "lblock-000930",
+    "lblock-000931",
+    "lblock-000932",
+    "lblock-000933",
+    "lblock-000934",
+    "lblock-000935",
+    "lblock-000936",
+    "lblock-000937",
+    "lblock-000938",
+    "lblock-000939",
+    "lblock-000940",
+    "lblock-000941",
+    "lblock-000942",
+    "lblock-000943",
+    "lblock-000944",
+    "lblock-000945",
+    "lblock-000946",
+    "lblock-000947",
+    "lblock-000948",
+    "lblock-000949",
+    "lblock-000950",
+    "lblock-000951",
+    "lblock-000952",
+    "lblock-000953",
+    "lblock-000954",
+    "lblock-000955",
+    "lblock-000956",
+    "lblock-000957",
+    "lblock-000958",
+    "lblock-000959",
+    "lblock-000960",
+    "lblock-000961",
+    "lblock-000962",
+    "lblock-000963",
+    "lblock-000964",
+    "lblock-000965",
+    "lblock-000966",
+    "lblock-000967",
+    "lblock-000968",
+    "lblock-000969",
+    "lblock-000970",
+    "lblock-000971",
+    "lblock-000972",
+    "lblock-000973",
+    "lblock-000974",
+    "lblock-000975",
+    "lblock-000976",
+    "lblock-000977",
+    "lblock-000978",
+    "lblock-000979",
+    "lblock-000980",
+    "lblock-000981",
+    "lblock-000982",
+    "lblock-000983",
+    "lblock-000984",
+    "lblock-000985",
+    "lblock-000986",
+    "lblock-000987",
+    "lblock-000988",
+    "lblock-000989",
+    "lblock-000990",
+    "lblock-000991",
+    "lblock-000992",
+    "lblock-000993",
+    "lblock-000994",
+    "lblock-000995",
+    "lblock-000996",
+    "lblock-000997",
+    "lblock-000998",
+    "lblock-000999",
+    "lblock-001000",
+    "lblock-001001",
+    "lblock-001002",
+    "lblock-001003",
+    "lblock-001004",
+    "lblock-001005",
+    "lblock-001006",
+    "lblock-001007",
+    "lblock-001008",
+    "lblock-001009",
+    "lblock-001010",
+    "lblock-001011",
+    "lblock-001012",
+    "lblock-001013",
+    "lblock-001014",
+    "lblock-001015",
+    "lblock-001016",
+    "lblock-001017",
+    "lblock-001018",
+    "lblock-001019",
+    "lblock-001020",
+    "lblock-001021",
+    "lblock-001022",
+    "lblock-001023",
+    "lblock-001024",
+    "lblock-001025",
+    "lblock-001026",
+    "lblock-001027",
+    "lblock-001028",
+    "lblock-001029",
+    "lblock-001030",
+    "lblock-001031",
+    "lblock-001032",
+    "lblock-001033",
+    "lblock-001034",
+    "lblock-001035",
+    "lblock-001036",
+    "lblock-001037",
+    "lblock-001038",
+    "lblock-001039",
+    "lblock-001040",
+    "lblock-001041",
+    "lblock-001042",
+    "lblock-001043",
+    "lblock-001044",
+    "lblock-001045",
+    "lblock-001046",
+    "lblock-001047",
+    "lblock-001048",
+    "lblock-001049",
+    "lblock-001050",
+    "lblock-001051",
+    "lblock-001052",
+    "lblock-001053",
+    "lblock-001054",
+    "lblock-001055",
+    "lblock-001056",
+    "lblock-001057",
+    "lblock-001058",
+    "lblock-001059",
+    "lblock-001060",
+    "lblock-001061",
+    "lblock-001062",
+    "lblock-001063",
+    "lblock-001064",
+    "lblock-001065",
+    "lblock-001066",
+    "lblock-001067",
+    "lblock-001068",
+    "lblock-001069",
+    "lblock-001070",
+    "lblock-001071",
+    "lblock-001072",
+    "lblock-001073"
+  ],
+  "source_shard_ids": [
+    "shard-0021",
+    "shard-0022",
+    "shard-0023",
+    "shard-0024",
+    "shard-0025"
+  ],
+  "source_line_ranges": [
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4153,
+      "end_line": 4153
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4154,
+      "end_line": 4154
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4155,
+      "end_line": 4155
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4156,
+      "end_line": 4160
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4161,
+      "end_line": 4161
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4162,
+      "end_line": 4162
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4163,
+      "end_line": 4178
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4179,
+      "end_line": 4179
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4180,
+      "end_line": 4180
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4181,
+      "end_line": 4192
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4193,
+      "end_line": 4193
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4194,
+      "end_line": 4194
+    },
+    {
+      "source_shard_id": "shard-0021",
+      "start_line": 4195,
+      "end_line": 4200
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4201,
+      "end_line": 4205
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4206,
+      "end_line": 4207
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4208,
+      "end_line": 4208
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4209,
+      "end_line": 4209
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4210,
+      "end_line": 4210
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4211,
+      "end_line": 4224
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4225,
+      "end_line": 4225
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4226,
+      "end_line": 4226
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4227,
+      "end_line": 4237
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4238,
+      "end_line": 4238
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4239,
+      "end_line": 4239
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4240,
+      "end_line": 4249
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4250,
+      "end_line": 4250
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4251,
+      "end_line": 4251
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4252,
+      "end_line": 4257
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4258,
+      "end_line": 4258
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4259,
+      "end_line": 4259
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4260,
+      "end_line": 4267
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4268,
+      "end_line": 4268
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4269,
+      "end_line": 4269
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4270,
+      "end_line": 4276
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4277,
+      "end_line": 4277
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4278,
+      "end_line": 4278
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4279,
+      "end_line": 4281
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4282,
+      "end_line": 4282
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4283,
+      "end_line": 4283
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4284,
+      "end_line": 4292
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4293,
+      "end_line": 4293
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4294,
+      "end_line": 4294
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4295,
+      "end_line": 4297
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4298,
+      "end_line": 4298
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4299,
+      "end_line": 4299
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4300,
+      "end_line": 4300
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4301,
+      "end_line": 4301
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4302,
+      "end_line": 4305
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4306,
+      "end_line": 4306
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4307,
+      "end_line": 4307
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4308,
+      "end_line": 4317
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4318,
+      "end_line": 4318
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4319,
+      "end_line": 4319
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4320,
+      "end_line": 4337
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4338,
+      "end_line": 4338
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4339,
+      "end_line": 4339
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4340,
+      "end_line": 4350
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4351,
+      "end_line": 4351
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4352,
+      "end_line": 4352
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4353,
+      "end_line": 4364
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4365,
+      "end_line": 4365
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4366,
+      "end_line": 4366
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4367,
+      "end_line": 4373
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4374,
+      "end_line": 4374
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4375,
+      "end_line": 4375
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4376,
+      "end_line": 4385
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4386,
+      "end_line": 4386
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4387,
+      "end_line": 4387
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4388,
+      "end_line": 4396
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4397,
+      "end_line": 4397
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4398,
+      "end_line": 4398
+    },
+    {
+      "source_shard_id": "shard-0022",
+      "start_line": 4399,
+      "end_line": 4400
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4401,
+      "end_line": 4404
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4405,
+      "end_line": 4405
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4406,
+      "end_line": 4406
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4407,
+      "end_line": 4409
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4410,
+      "end_line": 4410
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4411,
+      "end_line": 4411
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4412,
+      "end_line": 4415
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4416,
+      "end_line": 4416
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4417,
+      "end_line": 4417
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4418,
+      "end_line": 4420
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4421,
+      "end_line": 4421
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4422,
+      "end_line": 4422
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4423,
+      "end_line": 4423
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4424,
+      "end_line": 4424
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4425,
+      "end_line": 4428
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4429,
+      "end_line": 4429
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4430,
+      "end_line": 4430
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4431,
+      "end_line": 4448
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4449,
+      "end_line": 4449
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4450,
+      "end_line": 4450
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4451,
+      "end_line": 4464
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4465,
+      "end_line": 4465
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4466,
+      "end_line": 4466
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4467,
+      "end_line": 4489
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4490,
+      "end_line": 4490
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4491,
+      "end_line": 4491
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4492,
+      "end_line": 4499
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4500,
+      "end_line": 4500
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4501,
+      "end_line": 4501
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4502,
+      "end_line": 4509
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4510,
+      "end_line": 4510
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4511,
+      "end_line": 4511
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4512,
+      "end_line": 4517
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4518,
+      "end_line": 4518
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4519,
+      "end_line": 4519
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4520,
+      "end_line": 4527
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4528,
+      "end_line": 4528
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4529,
+      "end_line": 4529
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4530,
+      "end_line": 4534
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4535,
+      "end_line": 4535
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4536,
+      "end_line": 4536
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4537,
+      "end_line": 4539
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4540,
+      "end_line": 4540
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4541,
+      "end_line": 4541
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4542,
+      "end_line": 4542
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4543,
+      "end_line": 4543
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4544,
+      "end_line": 4548
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4549,
+      "end_line": 4549
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4550,
+      "end_line": 4550
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4551,
+      "end_line": 4563
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4564,
+      "end_line": 4564
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4565,
+      "end_line": 4565
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4566,
+      "end_line": 4578
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4579,
+      "end_line": 4579
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4580,
+      "end_line": 4580
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4581,
+      "end_line": 4594
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4595,
+      "end_line": 4595
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4596,
+      "end_line": 4596
+    },
+    {
+      "source_shard_id": "shard-0023",
+      "start_line": 4597,
+      "end_line": 4600
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4601,
+      "end_line": 4606
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4607,
+      "end_line": 4607
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4608,
+      "end_line": 4608
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4609,
+      "end_line": 4618
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4619,
+      "end_line": 4619
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4620,
+      "end_line": 4620
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4621,
+      "end_line": 4630
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4631,
+      "end_line": 4631
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4632,
+      "end_line": 4632
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4633,
+      "end_line": 4641
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4642,
+      "end_line": 4642
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4643,
+      "end_line": 4643
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4644,
+      "end_line": 4646
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4647,
+      "end_line": 4647
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4648,
+      "end_line": 4648
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4649,
+      "end_line": 4656
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4657,
+      "end_line": 4657
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4658,
+      "end_line": 4658
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4659,
+      "end_line": 4667
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4668,
+      "end_line": 4668
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4669,
+      "end_line": 4669
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4670,
+      "end_line": 4672
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4673,
+      "end_line": 4673
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4674,
+      "end_line": 4674
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4675,
+      "end_line": 4675
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4676,
+      "end_line": 4676
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4677,
+      "end_line": 4681
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4682,
+      "end_line": 4682
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4683,
+      "end_line": 4683
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4684,
+      "end_line": 4696
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4697,
+      "end_line": 4697
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4698,
+      "end_line": 4698
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4699,
+      "end_line": 4716
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4717,
+      "end_line": 4717
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4718,
+      "end_line": 4718
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4719,
+      "end_line": 4728
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4729,
+      "end_line": 4729
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4730,
+      "end_line": 4730
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4731,
+      "end_line": 4746
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4747,
+      "end_line": 4747
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4748,
+      "end_line": 4748
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4749,
+      "end_line": 4753
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4754,
+      "end_line": 4754
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4755,
+      "end_line": 4755
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4756,
+      "end_line": 4767
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4768,
+      "end_line": 4768
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4769,
+      "end_line": 4769
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4770,
+      "end_line": 4775
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4776,
+      "end_line": 4776
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4777,
+      "end_line": 4777
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4778,
+      "end_line": 4780
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4781,
+      "end_line": 4781
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4782,
+      "end_line": 4782
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4783,
+      "end_line": 4786
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4787,
+      "end_line": 4787
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4788,
+      "end_line": 4788
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4789,
+      "end_line": 4791
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4792,
+      "end_line": 4792
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4793,
+      "end_line": 4793
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4794,
+      "end_line": 4794
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4795,
+      "end_line": 4795
+    },
+    {
+      "source_shard_id": "shard-0024",
+      "start_line": 4796,
+      "end_line": 4800
+    },
+    {
+      "source_shard_id": "shard-0025",
+      "start_line": 4801,
+      "end_line": 4911
+    },
+    {
+      "source_shard_id": "shard-0025",
+      "start_line": 4912,
+      "end_line": 4917
+    }
+  ],
+  "blocks_observed": 222,
+  "blocks_converted": 74,
+  "blocks_excluded": 155,
+  "blocks_blocked": 0,
+  "doc_hint_source_blocks": 7,
+  "doc_hints_emitted": 29,
+  "obligations": [
+    {
+      "obligation_id": "obl-d2-slice-007-001",
+      "obligation_text": "The current Projects page contract is still fairly basic:\n  - project name/path\n  - language badges\n  - last opened\n  - orchestrator status (`idle/running/paused`)\n  - health indicator\n- Current project health indicators are mostly repo/con...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000858"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4163,
+          "end_line": 4178
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- The current Projects page contract is still fairly basic:\n  - project name/path\n  - language badges\n  - last opened\n  - orchestrator status (`idle/running/paused`)\n  - health indicator\n- Current project health indicators are mostly repo/config existence checks:\n  - green = directory exists / repo intact / config valid\n  - amber = stale config / missing optional files\n  - red = missing directory / corrupt repo / critical config errors\n- This is useful, but it does not express the newer operational state model:\n  - blocked ownership\n  - main reason the project needs attention\n  - multi-account pressure\n  - active-vs-historical run posture\n  - background activity"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-002",
+      "obligation_text": "Strong recommendation:\n  - separate:\n    - `project health`\n    - `project activity`\n    - `project attention`\n- Working interpretation:\n  - `project health`\n    - setup/integrity/config viability\n  - `project activity`\n    - whether runs a...",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000861"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4181,
+          "end_line": 4192
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Strong recommendation:\n  - separate:\n    - `project health`\n    - `project activity`\n    - `project attention`\n- Working interpretation:\n  - `project health`\n    - setup/integrity/config viability\n  - `project activity`\n    - whether runs are active/paused/queued/background\n  - `project attention`\n    - whether something actually needs user or operator action"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-003",
+      "obligation_text": "Likely required fields:\n  - project name\n  - path\n  - language/framework badges\n  - activity status\n  - attention status",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000864"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4195,
+          "end_line": 4200
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Likely required fields:\n  - project name\n  - path\n  - language/framework badges\n  - activity status\n  - attention status"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-004",
+      "obligation_text": "primary blocked/attention reason\n  - blocked owner / attention owner when relevant\n  - pressure summary\n  - last active / last opened\n- Good compact model:",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000865"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4201,
+          "end_line": 4205
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "  - primary blocked/attention reason\n  - blocked owner / attention owner when relevant\n  - pressure summary\n  - last active / last opened\n- Good compact model:"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-005",
+      "obligation_text": "`Activity`: `idle | running | paused | queued | background_active`\n  - `Attention`: `none | attention_required | blocked | degraded`",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000866"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4206,
+          "end_line": 4207
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Activity",
+        "Attention"
+      ],
+      "exact_source_excerpt": "  - `Activity`: `idle | running | paused | queued | background_active`\n  - `Attention`: `none | attention_required | blocked | degraded`"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-006",
+      "obligation_text": "`Health`: setup/config/repo integrity signal",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000867"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4208,
+          "end_line": 4208
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Health"
+      ],
+      "exact_source_excerpt": "  - `Health`: setup/config/repo integrity signal"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-007",
+      "obligation_text": "The user specifically flagged this seam earlier and it still looks underdefined.\n- Recommended rule:\n  - when a project is in blocked/attention state,...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-06"
+      ],
+      "source_block_ids": [
+        "lblock-000870"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4211,
+          "end_line": 4224
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Runtime",
+        "Corroboration",
+        "Recovery",
+        "User"
+      ],
+      "exact_source_excerpt": "- The user specifically flagged this seam earlier and it still looks underdefined.\n- Recommended rule:\n  - when a project is in blocked/attention state, the Projects page should show the dominant current owner of that state\n- Owner kinds already align with prior ledger work:\n  - `Runtime`\n  - `Package Overseer`\n  - `Seam Overseer`\n  - `Corroboration`\n  - `Graph Patch`\n  - `Recovery`\n  - `User`\n  - `External Resource`\n- This should answer:\n  - \"who/what is the project waiting on?\""
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-008",
+      "obligation_text": "Projects page should not try to summarize every problem.\n- Strong recommendation:\n  - show one `primary attention reason` / `primary blocked reason`\n  - with optional count badge for additional issues\n- Candidate examples:\n  - `Waiting on u...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-06"
+      ],
+      "source_block_ids": [
+        "lblock-000873"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4227,
+          "end_line": 4237
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Projects page should not try to summarize every problem.\n- Strong recommendation:\n  - show one `primary attention reason` / `primary blocked reason`\n  - with optional count badge for additional issues\n- Candidate examples:\n  - `Waiting on user approval`\n  - `Seam integration blocked`\n  - `Graph patch required`\n  - `Recovery in progress`\n  - `Provider/account pressure`\n  - `Projection trust degraded`"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-009",
+      "obligation_text": "Project cards likely need compact pressure signals, not full usage details.\n- Good compact summaries:\n  - provider/account pressure present\n  - quota pressure severity\n  - signal confidence if especially important\n- Example:\n  - `Gemini pre...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-06"
+      ],
+      "source_block_ids": [
+        "lblock-000876"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4240,
+          "end_line": 4249
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Project cards likely need compact pressure signals, not full usage details.\n- Good compact summaries:\n  - provider/account pressure present\n  - quota pressure severity\n  - signal confidence if especially important\n- Example:\n  - `Gemini pressure: high`\n  - `Account switch active`\n  - `Quota signal: heuristic`\n- This should stay short and deep-link into Usage/Authentication/Orchestrator as needed."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-010",
+      "obligation_text": "Similar to runs, project cards should not imply that “historical project” is a real semantic class unless the product introduces archiving.\n- Better distinction:\n  - active workspace/project\n  - recently active\n  - archived/unregistered pro...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-06"
+      ],
+      "source_block_ids": [
+        "lblock-000879"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4252,
+          "end_line": 4257
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Similar to runs, project cards should not imply that “historical project” is a real semantic class unless the product introduces archiving.\n- Better distinction:\n  - active workspace/project\n  - recently active\n  - archived/unregistered project\n- If a project has no active runs but lots of historical runs, that is not itself a problem state."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-011",
+      "obligation_text": "Background activity matters at project-card level.\n- Recommended rule:\n  - project card should surface background work independently from blocked attention\n- Example:\n  - a project can be:\n    - `background_active`\n    - with `attention_req...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-06"
+      ],
+      "source_block_ids": [
+        "lblock-000882"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4260,
+          "end_line": 4267
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "background_active",
+        "attention_required",
+        "blocked"
+      ],
+      "exact_source_excerpt": "- Background activity matters at project-card level.\n- Recommended rule:\n  - project card should surface background work independently from blocked attention\n- Example:\n  - a project can be:\n    - `background_active`\n    - with `attention_required`\n    - while still not globally `blocked`"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-012",
+      "obligation_text": "Projects page should summarize from canonical project-level projections rather than inventing its own status model.\n- Likely it needs a small project summary projection that rolls up:\n  - current active run state\n  - dominant concern/blocke...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-07"
+      ],
+      "source_block_ids": [
+        "lblock-000885"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4270,
+          "end_line": 4276
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Projects page should summarize from canonical project-level projections rather than inventing its own status model.\n- Likely it needs a small project summary projection that rolls up:\n  - current active run state\n  - dominant concern/blocked owner\n  - highest-severity attention state\n  - current pressure summary\n  - health/config integrity"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-013",
+      "obligation_text": "Current Projects page health/status model is too setup-centric for the rewrite.\n- There is no obvious current project-level rollup for blocked-owner and primary attention reason.\n- Existing `orchestrator status` (`idle/running/paused`) is t...",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-07"
+      ],
+      "source_block_ids": [
+        "lblock-000888"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4279,
+          "end_line": 4281
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Current Projects page health/status model is too setup-centric for the rewrite.\n- There is no obvious current project-level rollup for blocked-owner and primary attention reason.\n- Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-014",
+      "obligation_text": "Define a project-summary projection with:\n  - activity state\n  - attention state\n  - health state\n  - primary blocked/attention owner\n  - primary reason\n  - pressure summary\n- Keep project-card status compact and singular,...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-07"
+      ],
+      "source_block_ids": [
+        "lblock-000891"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4284,
+          "end_line": 4292
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Define a project-summary projection with:\n  - activity state\n  - attention state\n  - health state\n  - primary blocked/attention owner\n  - primary reason\n  - pressure summary\n- Keep project-card status compact and singular, with deep links for detail.\n- Avoid turning project cards into mini dashboards; one dominant reason is better than many badges."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-015",
+      "obligation_text": "blocked ownership should describe the dominant current issue, not every issue in the project\n- project health and project attention are different things and should not share one overloaded dot\n- a project with only historical runs is not in...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-07"
+      ],
+      "source_block_ids": [
+        "lblock-000894"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4295,
+          "end_line": 4297
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- blocked ownership should describe the dominant current issue, not every issue in the project\n- project health and project attention are different things and should not share one overloaded dot\n- a project with only historical runs is not inherently degraded or blocked"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-016",
+      "obligation_text": "The docs already define many local attention behaviors:\n  - Dashboard `Action Required` section\n  - thread badges\n  - run-graph/node blocked badges\n  - warnings/toasts/banners\n  - tray/system notifications for some events\n  - rate-limit war...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000902"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4308,
+          "end_line": 4317
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- The docs already define many local attention behaviors:\n  - Dashboard `Action Required` section\n  - thread badges\n  - run-graph/node blocked badges\n  - warnings/toasts/banners\n  - tray/system notifications for some events\n  - rate-limit warning banner with dismiss cooldown\n  - blocked and attention-required visual distinction\n- The current rules are mostly case-by-case.\n- What is still missing is a shared escalation ladder across concerns, blocked states, usage pressure, and persistent unresolved conditions."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-017",
+      "obligation_text": "Strong recommendation:\n  - define one shared progression:\n    - `info`\n    - `warning`\n    - `attention_required`\n    - `blocked`\n    - `system_notification`\n- Working interpretation:\n  - `info`\n    - visible in local context/history only...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000905"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4320,
+          "end_line": 4337
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "info",
+        "warning",
+        "attention_required",
+        "blocked",
+        "system_notification"
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - define one shared progression:\n    - `info`\n    - `warning`\n    - `attention_required`\n    - `blocked`\n    - `system_notification`\n- Working interpretation:\n  - `info`\n    - visible in local context/history only\n  - `warning`\n    - in-app banner/card/badge but not necessarily action-blocking\n  - `attention_required`\n    - user input helpful/needed, but background progress may still continue\n  - `blocked`\n    - cannot continue meaningfully until required action/precondition changes\n  - `system_notification`\n    - out-of-app signal for events important enough to interrupt or summon the user"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-018",
+      "obligation_text": "Recommended mapping:\n  - `History`\n    - receives everything chronologically\n  - `Progress` / `Dashboard`\n    - show active warnings / attention / blocked states\n  - badges\n    - show compressed counts/severity markers\n  - chat/thread surfa...",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000908"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4340,
+          "end_line": 4350
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "History",
+        "Progress",
+        "Dashboard"
+      ],
+      "exact_source_excerpt": "- Recommended mapping:\n  - `History`\n    - receives everything chronologically\n  - `Progress` / `Dashboard`\n    - show active warnings / attention / blocked states\n  - badges\n    - show compressed counts/severity markers\n  - chat/thread surfaces\n    - only for things that genuinely need user decision/input\n  - system notifications\n    - reserved for high-value, sparse events"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-019",
+      "obligation_text": "The ledger already established some aging behavior for operational items.\n- Strong next-step rule:\n  - unresolved conditions should resurface based on severity and persistence,...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000911"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4353,
+          "end_line": 4364
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- The ledger already established some aging behavior for operational items.\n- Strong next-step rule:\n  - unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update\n- Candidate cadence idea:\n  - immediate show on first activation\n  - suppress duplicate noise while unchanged\n  - resurface only when:\n    - severity increases\n    - owner changes\n    - blocked duration crosses threshold\n    - new action becomes available\n    - user returns focus after time away"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-020",
+      "obligation_text": "Persistent blockers should not become invisible just because the user dismissed a nearby warning once.\n- Good rule:\n  - advisory warnings may respect quiet/dismiss windows\n  - real blocked states should remain represented until underlying t...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000914"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4367,
+          "end_line": 4373
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "dismissed"
+      ],
+      "exact_source_excerpt": "- Persistent blockers should not become invisible just because the user dismissed a nearby warning once.\n- Good rule:\n  - advisory warnings may respect quiet/dismiss windows\n  - real blocked states should remain represented until underlying truth changes\n- This aligns with earlier concern and blocked-state work:\n  - `dismissed` is presentation state, not semantic resolution\n  - active blockers must not be dismissible into fake health"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-021",
+      "obligation_text": "System/tray notifications should stay narrow.\n- Good candidates:\n  - HITL approval required\n  - run complete\n  - major failure requiring attention\n  - maybe severe rate-limit/pressure event when it materially stops progress\n- Poor candidate...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000917"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4376,
+          "end_line": 4385
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- System/tray notifications should stay narrow.\n- Good candidates:\n  - HITL approval required\n  - run complete\n  - major failure requiring attention\n  - maybe severe rate-limit/pressure event when it materially stops progress\n- Poor candidates:\n  - routine warnings\n  - every blocked node in a large run\n  - repeated unresolved reminders without new information"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-022",
+      "obligation_text": "Usage warnings already suggest:\n  - configurable threshold\n  - dismiss/quiet window\n  - path to Usage/config\n- This is a good pattern for non-blocking pressure:\n  - warning banner\n  - optional toast\n  - quiet period\n  - escalate further onl...",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-09"
+      ],
+      "source_block_ids": [
+        "lblock-000920"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4388,
+          "end_line": 4396
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Usage warnings already suggest:\n  - configurable threshold\n  - dismiss/quiet window\n  - path to Usage/config\n- This is a good pattern for non-blocking pressure:\n  - warning banner\n  - optional toast\n  - quiet period\n  - escalate further only if it becomes execution-blocking"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-023",
+      "obligation_text": "Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.\n- Recommended rule:",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-09"
+      ],
+      "source_block_ids": [
+        "lblock-000923"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4399,
+          "end_line": 4400
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Concerns and blocked ownership should feed escalation, but not every concern should become a system notification.\n- Recommended rule:"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-024",
+      "obligation_text": "concern severity + blocking effect + owner + persistence decide escalation\n- Example:\n  - minor advisory concern -> local/in-app only\n  - seam-blocking weak integration concern with no progress for hours -> blocked surfaces + possible syste...",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-09"
+      ],
+      "source_block_ids": [
+        "lblock-000924"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4401,
+          "end_line": 4404
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "  - concern severity + blocking effect + owner + persistence decide escalation\n- Example:\n  - minor advisory concern -> local/in-app only\n  - seam-blocking weak integration concern with no progress for hours -> blocked surfaces + possible system notification"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-025",
+      "obligation_text": "There is no one explicit cross-surface escalation contract yet.\n- Existing banners/cards/toasts/badges are good pieces but not yet tied to a shared cadence model.\n- Rate-limit warning suppression exists conceptually,...",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-09"
+      ],
+      "source_block_ids": [
+        "lblock-000927"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4407,
+          "end_line": 4409
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- There is no one explicit cross-surface escalation contract yet.\n- Existing banners/cards/toasts/badges are good pieces but not yet tied to a shared cadence model.\n- Rate-limit warning suppression exists conceptually, but comparable suppression/resurfacing rules are less clear for other condition classes."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-026",
+      "obligation_text": "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.\n- Add resurfacing rules based on change/persistence thresholds rather than repeated identical events.\n- Reserve system notifications for s...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-09"
+      ],
+      "source_block_ids": [
+        "lblock-000930"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4412,
+          "end_line": 4415
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.\n- Add resurfacing rules based on change/persistence thresholds rather than repeated identical events.\n- Reserve system notifications for sparse, high-value events.\n- Keep blocked-state persistence semantically stronger than dismissible warning surfaces."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-027",
+      "obligation_text": "`attention_required` and `blocked` must remain distinct everywhere\n- resurfacing should respond to meaningful change, not spam the user on every scheduler tick\n- the system should not silently demote a persistent blocker into history just b...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-09"
+      ],
+      "source_block_ids": [
+        "lblock-000933"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4418,
+          "end_line": 4420
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "attention_required",
+        "blocked"
+      ],
+      "exact_source_excerpt": "- `attention_required` and `blocked` must remain distinct everywhere\n- resurfacing should respond to meaningful change, not spam the user on every scheduler tick\n- the system should not silently demote a persistent blocker into history just because time passed"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-028",
+      "obligation_text": "The graph tab already has the strongest explicit scale contract in the current docs.\n- `Run_Graph_View.md` defines concrete targets:\n  - render target:...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000941"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4431,
+          "end_line": 4448
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Run_Graph_View.md",
+        "storage-plan.md",
+        "FinalGUISpec.md"
+      ],
+      "exact_source_excerpt": "- The graph tab already has the strongest explicit scale contract in the current docs.\n- `Run_Graph_View.md` defines concrete targets:\n  - render target: 500 nodes, stretch 1000\n  - 60 fps pan/zoom\n  - layout under 500ms at 500 nodes\n  - initial load under 1s at 500 nodes\n- The graph spec also already defines the right implementation direction:\n  - viewport culling with overscan\n  - table virtualization\n  - per-generation layout caching\n  - incremental row/item updates instead of full replacement\n  - burst throttling at frame cadence\n  - optional canvas-style fallback if rectangle-based rendering drops below target performance\n- `storage-plan.md` already supports the broader pattern the rewrite needs:\n  - projections are disposable\n  - UI can fetch slices\n  - backend pages from redb projections or seglog-derived views\n- `FinalGUISpec.md` has scattered virtualization/pagination language for other surfaces, but not an Orchestrator-wide large-run policy."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-029",
+      "obligation_text": "Strong recommendation:\n  - treat scale as a cross-tab contract, not just a graph-tab concern\n- The rewrite is already assuming:\n  - thousands of nodes\n  - multiple graph generations retained visibly\n  - many concerns, reviews, promotions,...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000944"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4451,
+          "end_line": 4464
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - treat scale as a cross-tab contract, not just a graph-tab concern\n- The rewrite is already assuming:\n  - thousands of nodes\n  - multiple graph generations retained visibly\n  - many concerns, reviews, promotions, patches, recovery records, and usage records\n  - many retained/historical lanes and worktrees\n- That means the performance model must explicitly cover:\n  - `Seams`\n  - `Node Graph`\n  - `Evidence`\n  - `History`\n  - `Ledger`\n  - Progress widgets and cross-tab inspectors"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-030",
+      "obligation_text": "`Node Graph`\n  - keep the current culling + caching + throttled-update model\n  - preserve old generations in the data model, but do not render every historical path at full fidelity all the time\n  - use generation visibility controls,...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000947"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4467,
+          "end_line": 4489
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger",
+        "Progress"
+      ],
+      "exact_source_excerpt": "- `Node Graph`\n  - keep the current culling + caching + throttled-update model\n  - preserve old generations in the data model, but do not render every historical path at full fidelity all the time\n  - use generation visibility controls, focus mode, and density-aware overlays so historical branches stay available without overwhelming the live path\n- `Seams`\n  - must use progressive disclosure rather than fully expanded seam/package/node trees\n  - top-level seam rows should load compact rollups first\n  - package lists and node problem lists should expand lazily\n- `Evidence`\n  - evidence records and artifacts need independent virtualization/paging\n  - heavy artifacts should stay metadata-first until opened\n  - artifact previews should be demand-loaded, not pre-rendered for long lists\n- `History`\n  - should be chronological but windowed\n  - initial load should show a recent slice, with explicit load-older / jump controls\n  - dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport\n- `Ledger`\n  - must be exact, but exact does not mean fully materialized at once\n  - filtered query + paging + stable sort are required\n  - export can retrieve more than the viewport, but normal browsing should stay slice-based\n- `Progress`\n  - widgets should consume compact projections, not live-scan huge record sets per widget\n  - a widget should deep-link to the native tab when the user wants dense detail"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-031",
+      "obligation_text": "The graph patch model makes scale harder than the current graph spec assumes.\n- Important rule:\n  - generations should remain historically visible and clickable,...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000950"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4492,
+          "end_line": 4499
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- The graph patch model makes scale harder than the current graph spec assumes.\n- Important rule:\n  - generations should remain historically visible and clickable, but the UI should default to a focused generation plus nearby lineage context, not a fully expanded all-generations wall\n- Good default behavior:\n  - current generation emphasized\n  - superseded branches visually muted\n  - branch/rejoin overlays available on demand\n  - minimap/search/focus-to-object remain generation-aware"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-032",
+      "obligation_text": "Non-graph density may become the larger real-world problem.\n- In large runs, users may accumulate:\n  - many active and historical concerns\n  - many corroboration/review/promotion/recovery records\n  - many retained or cleanup-eligible lanes/...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-11"
+      ],
+      "source_block_ids": [
+        "lblock-000953"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4502,
+          "end_line": 4509
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Non-graph density may become the larger real-world problem.\n- In large runs, users may accumulate:\n  - many active and historical concerns\n  - many corroboration/review/promotion/recovery records\n  - many retained or cleanup-eligible lanes/worktrees\n- So the rewrite should not assume the graph is the only heavy surface.\n- A likely rule to carry forward:\n  - every dense Orchestrator tab needs first-class summarization, filtering, and paging before it needs more visual chrome"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-033",
+      "obligation_text": "Performance and trust are coupled.\n- When projections are stale or degraded:\n  - large surfaces should degrade toward smaller, record-backed slices instead of trying to fake full live fidelity\n- Example:\n  - stale graph projection might sti...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-11"
+      ],
+      "source_block_ids": [
+        "lblock-000956"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4512,
+          "end_line": 4517
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Performance and trust are coupled.\n- When projections are stale or degraded:\n  - large surfaces should degrade toward smaller, record-backed slices instead of trying to fake full live fidelity\n- Example:\n  - stale graph projection might still support focused inspection of selected nodes/generations\n  - stale ledger/history slices remain usable because they are closer to canonical records"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-034",
+      "obligation_text": "Current graph-scale guidance is much stronger than the scale contract for `Seams`, `Evidence`, `History`, and `Ledger`.\n- The current docs do not yet define how thousands-of-node runs with many generations should remain readable by default...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-11"
+      ],
+      "source_block_ids": [
+        "lblock-000959"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4520,
+          "end_line": 4527
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- Current graph-scale guidance is much stronger than the scale contract for `Seams`, `Evidence`, `History`, and `Ledger`.\n- The current docs do not yet define how thousands-of-node runs with many generations should remain readable by default without collapsing history away.\n- There is no explicit Orchestrator-wide rule yet for:\n  - initial slice size\n  - paging/search interplay\n  - lazy expansion behavior\n  - cross-tab inspector loading strategy\n  - projection fallback behavior under large degraded datasets"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-035",
+      "obligation_text": "Add an Orchestrator-wide scale contract that sits above individual tab docs.\n- Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs.\n- Define generation visibility defaults so hi...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-11"
+      ],
+      "source_block_ids": [
+        "lblock-000962"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4530,
+          "end_line": 4534
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Add an Orchestrator-wide scale contract that sits above individual tab docs.\n- Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs.\n- Define generation visibility defaults so historical branches stay available without default graph overload.\n- Require widgets to use compact projections only, with deep links to native dense tabs.\n- Tie scale behavior to projection-trust state so degraded projections fail gracefully instead of pretending to be fully current."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-036",
+      "obligation_text": "exact record inspection in `Ledger` still needs paging; exactness does not require eager full materialization\n- historical graph generations must stay accessible without becoming the default visual density\n- non-graph tabs may become the ac...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-11"
+      ],
+      "source_block_ids": [
+        "lblock-000965"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4537,
+          "end_line": 4539
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- exact record inspection in `Ledger` still needs paging; exactness does not require eager full materialization\n- historical graph generations must stay accessible without becoming the default visual density\n- non-graph tabs may become the actual scaling bottleneck sooner than the graph canvas"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-037",
+      "obligation_text": "The platform already has a strong shared command foundation:\n  - `Ctrl+K` / `Ctrl+P` command palette\n  - command registry\n  - shortcut registry\n  - canonical `cmd.runtime.*` recovery command family\n- `UI_Command_Catalog.md` already requires...",
+      "obligation_category": "context",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000973"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4551,
+          "end_line": 4563
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "UI_Command_Catalog.md",
+        "Orchestrator_Page.md"
+      ],
+      "exact_source_excerpt": "- The platform already has a strong shared command foundation:\n  - `Ctrl+K` / `Ctrl+P` command palette\n  - command registry\n  - shortcut registry\n  - canonical `cmd.runtime.*` recovery command family\n- `UI_Command_Catalog.md` already requires blocked-state actions to map from `allowed_action_ids[]` to canonical runtime commands rather than surface-local variants.\n- `Orchestrator_Page.md` already distinguishes retry posture and recovery classes well enough to avoid a fake one-button retry model.\n- What is still missing is a rewrite-specific action policy for:\n  - palette exposure\n  - keyboard shortcuts\n  - context menus\n  - multi-select / bulk actions\n  - action safety at live runtime scope"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-038",
+      "obligation_text": "Strong recommendation:\n  - treat the command palette as a universal navigation and precise-action surface, not as a blanket permission to expose every dangerous runtime mutation as one keystroke away\n- Good split:\n  - palette-friendly:...",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000976"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4566,
+          "end_line": 4578
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Strong recommendation:\n  - treat the command palette as a universal navigation and precise-action surface, not as a blanket permission to expose every dangerous runtime mutation as one keystroke away\n- Good split:\n  - palette-friendly:\n    - open/focus tab\n    - jump to run/seam/package/node/lane/concern/review/patch/recovery object\n    - open inspector/detail/history/ledger/evidence context\n    - run search routes\n    - execute low-risk view and filter commands\n  - palette-allowed but guarded:\n    - recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules\n  - palette-discouraged or hidden by default:\n    - broad destructive bulk mutations with ambiguous target sets"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-039",
+      "obligation_text": "The current docs imply grouped navigation for affected nodes/attempts, but not a strong bulk mutation policy.\n- Recommended rule:\n  - bulk actions should default to navigation, triage,...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000979"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4581,
+          "end_line": 4594
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "History",
+        "Evidence",
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- The current docs imply grouped navigation for affected nodes/attempts, but not a strong bulk mutation policy.\n- Recommended rule:\n  - bulk actions should default to navigation, triage, and low-risk state updates\n  - live execution mutations should stay narrow unless the runtime has an explicit safe batch semantic for that exact action\n- Good candidate bulk actions:\n  - navigate to selected nodes/concerns\n  - open selected items in `History`, `Evidence`, or `Ledger`\n  - acknowledge multiple advisory concerns\n  - archive/remove historical exports or retained views where policy clearly allows it\n- Bad default bulk actions:\n  - retry many nodes at once\n  - apply graph patch to multiple scopes at once\n  - approve multiple HITL/runtime blocked actions with one generic confirm\n  - cleanup/remove many live lanes/worktrees without exact target preview"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-040",
+      "obligation_text": "Keyboard shortcuts should stay useful but sparse.\n- Strong recommendation:\n  - shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions\n- Good shortcut candidates in Orchestrator:",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000982"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4597,
+          "end_line": 4600
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Keyboard shortcuts should stay useful but sparse.\n- Strong recommendation:\n  - shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions\n- Good shortcut candidates in Orchestrator:"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-041",
+      "obligation_text": "focus global Orchestrator search\n  - next/previous tab\n  - open/close right-side inspector\n  - jump between current attention items\n  - fit graph / focus selected node / toggle generation overlay\n- Higher-risk runtime actions should not def...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000983"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4601,
+          "end_line": 4606
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "  - focus global Orchestrator search\n  - next/previous tab\n  - open/close right-side inspector\n  - jump between current attention items\n  - fit graph / focus selected node / toggle generation overlay\n- Higher-risk runtime actions should not default to global shortcuts unless they already pass the stronger action-policy rules."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-042",
+      "obligation_text": "Context menus are the right home for object-specific operational actions.\n- Recommended rule:\n  - object context menus should show only actions valid for that object's current state,...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000986"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4609,
+          "end_line": 4618
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Context menus are the right home for object-specific operational actions.\n- Recommended rule:\n  - object context menus should show only actions valid for that object's current state, with canonical labels from runtime semantics\n- This fits especially well for:\n  - node\n  - concern\n  - promotion\n  - graph patch\n  - lane/worktree\n  - recovery record"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-043",
+      "obligation_text": "This seam reinforces the earlier search/deep-link work:\n  - command palette results, keyboard shortcuts, context menus, and widgets should route through the same destination payload model\n- Good shared payload fields:\n  - `project_id`\n  - `...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000989"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4621,
+          "end_line": 4630
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "project_id",
+        "focused_run_id"
+      ],
+      "exact_source_excerpt": "- This seam reinforces the earlier search/deep-link work:\n  - command palette results, keyboard shortcuts, context menus, and widgets should route through the same destination payload model\n- Good shared payload fields:\n  - `project_id`\n  - `focused_run_id`\n  - destination tab/surface\n  - selected object id and type\n  - optional inspector target\n  - optional filter payload\n- Without that, palette actions and deep links will drift into multiple incompatible navigation systems."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-044",
+      "obligation_text": "This seam connects directly to the earlier confirmation-policy work.\n- Recommended rule:\n  - command discoverability does not weaken confirmation requirements\n- If an action is:\n  - `strong` confirmation\n  - `hard_gate`\n  - `non_reversible`...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-13"
+      ],
+      "source_block_ids": [
+        "lblock-000992"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4633,
+          "end_line": 4641
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "strong",
+        "hard_gate",
+        "non_reversible",
+        "compensating_action_only"
+      ],
+      "exact_source_excerpt": "- This seam connects directly to the earlier confirmation-policy work.\n- Recommended rule:\n  - command discoverability does not weaken confirmation requirements\n- If an action is:\n  - `strong` confirmation\n  - `hard_gate`\n  - `non_reversible`\n  - or only `compensating_action_only`\n  then command palette and shortcut surfaces must still honor the same gating and preview requirements."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-045",
+      "obligation_text": "Because Source Control is worktree-first and physically narrow, it should lean more on context menus and focused commands than on dense inline action bars.\n- Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit.\n- O...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-13"
+      ],
+      "source_block_ids": [
+        "lblock-000995"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4644,
+          "end_line": 4646
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Because Source Control is worktree-first and physically narrow, it should lean more on context menus and focused commands than on dense inline action bars.\n- Bulk worktree cleanup/archive/remove should remain preview-heavy and explicit.\n- Orchestrator can expose deep links into those actions, but should not become the main place where raw Git/worktree batch cleanup is fired blindly."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-046",
+      "obligation_text": "The command infrastructure is ahead of the Orchestrator-specific safety policy.\n- Current docs do not yet define which Orchestrator actions are:\n  - palette-visible\n  - shortcut-worthy\n  - context-menu only\n  - bulk-safe\n  - bulk-forbidden...",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-13"
+      ],
+      "source_block_ids": [
+        "lblock-000998"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4649,
+          "end_line": 4656
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- The command infrastructure is ahead of the Orchestrator-specific safety policy.\n- Current docs do not yet define which Orchestrator actions are:\n  - palette-visible\n  - shortcut-worthy\n  - context-menu only\n  - bulk-safe\n  - bulk-forbidden\n- Current grouped/bulk navigation wording could be misread as license for broad bulk execution controls unless rewrite docs tighten it."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-047",
+      "obligation_text": "Add an Orchestrator action-surface policy that classifies actions by:\n  - navigation vs mutation\n  - single-target vs multi-target\n  - shortcut eligibility\n  - palette visibility\n  - confirmation/reversibility class\n- Default bulk actions t...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-13"
+      ],
+      "source_block_ids": [
+        "lblock-001001"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4659,
+          "end_line": 4667
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Add an Orchestrator action-surface policy that classifies actions by:\n  - navigation vs mutation\n  - single-target vs multi-target\n  - shortcut eligibility\n  - palette visibility\n  - confirmation/reversibility class\n- Default bulk actions to triage and navigation, not live execution mutation.\n- Reuse one shared routing payload across command palette, shortcuts, widgets, search, and deep links.\n- Keep canonical runtime command ids authoritative for blocked/recovery actions on every surface."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-048",
+      "obligation_text": "palette visibility must not silently downgrade confirmation strength\n- bulk actions should be far narrower than bulk navigation\n- context menus are likely the cleanest home for exact object-valid live actions",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-13"
+      ],
+      "source_block_ids": [
+        "lblock-001004"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4670,
+          "end_line": 4672
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- palette visibility must not silently downgrade confirmation strength\n- bulk actions should be far narrower than bulk navigation\n- context menus are likely the cleanest home for exact object-valid live actions"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-049",
+      "obligation_text": "The storage/runtime side already clearly establishes the architectural baseline:\n  - `seglog` is canonical\n  - `redb`, Tantivy, JSONL mirrors, rollups,...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001012"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4684,
+          "end_line": 4696
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "seglog",
+        "redb",
+        "History",
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- The storage/runtime side already clearly establishes the architectural baseline:\n  - `seglog` is canonical\n  - `redb`, Tantivy, JSONL mirrors, rollups, and UI-facing keys are projections or derived state\n  - projections must be rebuildable from canonical records\n- Some docs already hint at trust/freshness issues:\n  - Usage explicitly worries about stale data and requires `Last updated` + refresh behavior\n  - blocked/recovery surfaces already rely on current runtime projections and valid `allowed_action_ids[]`\n  - `History` and `Ledger` are closer to canonical records than widget rollups or live dashboards\n- What is still missing is a shared Orchestrator-wide execution policy for:\n  - projection freshness\n  - degraded projection behavior\n  - when actions must be gated\n  - when the UI should fall back to record-backed views"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-050",
+      "obligation_text": "Strong recommendation:\n  - keep the earlier projection states and make them operational:\n    - `current`\n    - `refreshing`\n    - `stale`\n    - `degraded`\n    - `unavailable`\n- Working meaning:\n  - `current`\n    - projection is up to date e...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001015"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4699,
+          "end_line": 4716
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "current",
+        "refreshing",
+        "stale",
+        "degraded",
+        "unavailable"
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - keep the earlier projection states and make them operational:\n    - `current`\n    - `refreshing`\n    - `stale`\n    - `degraded`\n    - `unavailable`\n- Working meaning:\n  - `current`\n    - projection is up to date enough for normal read + write interaction\n  - `refreshing`\n    - slightly behind but actively catching up; read is fine, write may still be fine depending on object class\n  - `stale`\n    - data is old enough that mutation-bearing actions should narrow or require refetch\n  - `degraded`\n    - projector or dependency failure means the surface may be incomplete or partially wrong\n  - `unavailable`\n    - projection cannot currently support that surface; UI must fall back or disable"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-051",
+      "obligation_text": "Important rule:\n  - not all surfaces need the same trust threshold\n- Recommended gating split:\n  - low-risk read-only inspection\n    - allowed on `refreshing`, often allowed on `stale`,...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001018"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4719,
+          "end_line": 4728
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "refreshing",
+        "stale",
+        "degraded",
+        "current"
+      ],
+      "exact_source_excerpt": "- Important rule:\n  - not all surfaces need the same trust threshold\n- Recommended gating split:\n  - low-risk read-only inspection\n    - allowed on `refreshing`, often allowed on `stale`, sometimes allowed on `degraded`\n  - precise navigation / deep-linking\n    - usually allowed if the target object identity is still valid\n  - live mutation / approval / recovery / retry / cleanup\n    - require `current` or a direct canonical-runtime validation path\n- If a surface is `stale` or `degraded`, the GUI must not present mutation controls that imply hidden confidence."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-052",
+      "obligation_text": "`Progress`\n  - most vulnerable to stale/degraded projection confusion because it is summary-heavy\n  - should show visible freshness state and route users to native tabs for exact inspection when trust drops\n- `Seams`\n  - rollups can remain...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001021"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4731,
+          "end_line": 4746
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Progress",
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- `Progress`\n  - most vulnerable to stale/degraded projection confusion because it is summary-heavy\n  - should show visible freshness state and route users to native tabs for exact inspection when trust drops\n- `Seams`\n  - rollups can remain browsable when slightly stale, but completion/promote/governance actions should tighten quickly\n- `Node Graph`\n  - focused inspection may survive mild staleness\n  - live status claims, blocked action buttons, and generation overlays should disclose trust state explicitly\n- `Evidence`\n  - evidence/artifact browsing can often survive stale projections because records/artifacts are durable\n  - new-links/live-status indicators may not\n- `History`\n  - should remain broadly usable under degraded projections because chronological record slices can fall back closer to canonical events\n- `Ledger`\n  - strongest fallback surface for exact inspection\n  - exact ledger browsing should remain available via slice-based record queries even when higher-level projections are unhealthy"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-053",
+      "obligation_text": "Recommended rule:\n  - if a write action is attempted from a stale/degraded surface, the runtime should either:\n    - refuse with a clear reason\n    - or perform an authoritative revalidation against canonical/current runtime state before ex...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001024"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4749,
+          "end_line": 4753
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Recommended rule:\n  - if a write action is attempted from a stale/degraded surface, the runtime should either:\n    - refuse with a clear reason\n    - or perform an authoritative revalidation against canonical/current runtime state before executing\n- The GUI should never guess that a previously visible `allowed_action_ids[]` set is still valid if the blocked projection is stale."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-054",
+      "obligation_text": "The trust model needs visible UI grammar, not just backend states.\n- Good shared fields:\n  - `freshness_state`\n  - `last_updated_at`\n  - `data_source_kind`\n  - `degraded_reason?`\n  - `action_gate_reason?`\n- Good copy style:\n  - `View may be...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001027"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4756,
+          "end_line": 4767
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "freshness_state",
+        "last_updated_at",
+        "data_source_kind"
+      ],
+      "exact_source_excerpt": "- The trust model needs visible UI grammar, not just backend states.\n- Good shared fields:\n  - `freshness_state`\n  - `last_updated_at`\n  - `data_source_kind`\n  - `degraded_reason?`\n  - `action_gate_reason?`\n- Good copy style:\n  - `View may be stale`\n  - `Projection degraded`\n  - `Live actions unavailable until refresh`\n  - `Showing canonical history slice`"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-055",
+      "obligation_text": "Strong recommendation:\n  - when trust drops, degrade toward exact record-backed inspection, not toward empty ambiguity\n- Example fallback ladder:\n  - widget summary -> native tab\n  - rollup tab -> filtered record list\n  - projection-derived...",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-15"
+      ],
+      "source_block_ids": [
+        "lblock-001030"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4770,
+          "end_line": 4775
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Ledger",
+        "History",
+        "detail_ref"
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - when trust drops, degrade toward exact record-backed inspection, not toward empty ambiguity\n- Example fallback ladder:\n  - widget summary -> native tab\n  - rollup tab -> filtered record list\n  - projection-derived inspector -> `Ledger` / `History` / exact record view via `detail_ref`"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-056",
+      "obligation_text": "Current docs establish canonical vs derived storage, but not the UI policy that follows from that distinction.\n- There is no shared freshness/trust contract yet for Orchestrator tabs.\n- Some current wording still risks implying that if data...",
+      "obligation_category": "constraint",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-15"
+      ],
+      "source_block_ids": [
+        "lblock-001033"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4778,
+          "end_line": 4780
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Current docs establish canonical vs derived storage, but not the UI policy that follows from that distinction.\n- There is no shared freshness/trust contract yet for Orchestrator tabs.\n- Some current wording still risks implying that if data is visible, it is safe to act on it, which is not defensible once projections can lag or degrade."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-057",
+      "obligation_text": "Define one shared projection-trust contract with operational state meanings and action thresholds.\n- Require all dense Orchestrator tabs to show freshness/last-updated/disclosure state.\n- Gate mutation controls on trusted projections or exp...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T006-15"
+      ],
+      "source_block_ids": [
+        "lblock-001036"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4783,
+          "end_line": 4786
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "History",
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- Define one shared projection-trust contract with operational state meanings and action thresholds.\n- Require all dense Orchestrator tabs to show freshness/last-updated/disclosure state.\n- Gate mutation controls on trusted projections or explicit runtime revalidation.\n- Standardize fallback toward record-backed views (`History`, `Ledger`, exact record inspectors) when projections are degraded."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-058",
+      "obligation_text": "stale visibility is not the same as action authority\n- blocked/recovery controls are especially sensitive because `allowed_action_ids[]` can go invalid if projection trust drops\n- `Ledger` and record inspectors should be the stable fallback...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T006-15"
+      ],
+      "source_block_ids": [
+        "lblock-001039"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4789,
+          "end_line": 4791
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- stale visibility is not the same as action authority\n- blocked/recovery controls are especially sensitive because `allowed_action_ids[]` can go invalid if projection trust drops\n- `Ledger` and record inspectors should be the stable fallback when summary surfaces lose trust"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-059",
+      "obligation_text": "Storage is already closer than the UI docs to a normalized record family model.\n- `storage-plan.md` already defines several canonical records:\n  - `attempt_record`\n  - `tier_runtime_record`\n  - `blocked_projection`\n  - `usage_record`\n  - `e...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001048"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4804,
+          "end_line": 4826
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "storage-plan.md",
+        "attempt_record",
+        "tier_runtime_record",
+        "blocked_projection",
+        "usage_record",
+        "evidence_record",
+        "thread_blocked_notice",
+        "wizard_runtime_state",
+        "Contracts_V0.md"
+      ],
+      "exact_source_excerpt": "- Storage is already closer than the UI docs to a normalized record family model.\n- `storage-plan.md` already defines several canonical records:\n  - `attempt_record`\n  - `tier_runtime_record`\n  - `blocked_projection`\n  - `usage_record`\n  - `evidence_record`\n  - `thread_blocked_notice`\n  - `wizard_runtime_state`\n  - cross-surface runtime receipt record\n- `Contracts_V0.md` consistently uses:\n  - `detail_ref?`\n  - `*_ref`\n  - explicit identity fields\n  - canonical event fields instead of GUI-only aliases\n- The rewrite now wants many additional first-class record families:\n  - concerns\n  - reviews\n  - corroboration requests/results\n  - promotions\n  - graph patch requests/results\n  - recovery records\n- What is still missing is a shared envelope pattern that keeps those families structurally compatible."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-060",
+      "obligation_text": "Strong recommendation:\n  - add one shared governance/runtime record-envelope pattern, then let each family add its own payload block\n- Good base envelope fields:\n  - `record_id`\n  - `record_kind`\n  - `schema_version`\n  - `project_id`\n  - `r...",
+      "obligation_category": "design_choice",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001051"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4829,
+          "end_line": 4850
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "record_id",
+        "record_kind",
+        "schema_version",
+        "project_id",
+        "scope_type",
+        "scope_id",
+        "status",
+        "created_at_utc",
+        "summary"
+      ],
+      "exact_source_excerpt": "- Strong recommendation:\n  - add one shared governance/runtime record-envelope pattern, then let each family add its own payload block\n- Good base envelope fields:\n  - `record_id`\n  - `record_kind`\n  - `schema_version`\n  - `project_id`\n  - `run_id?`\n  - `scope_type`\n  - `scope_id`\n  - `status`\n  - `created_at_utc`\n  - `updated_at_utc?`\n  - `summary`\n  - `summary_kind?`\n  - `detail_ref?`\n  - `source_refs[]`\n  - `artifact_refs[]`\n  - `related_record_refs[]`\n  - `lineage_refs[]`\n  - `actor_ref?`\n  - `requested_effective_snapshot_refs?`"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-061",
+      "obligation_text": "Important rule:\n  - record and artifact must remain different objects\n- Recommended distinction:\n  - record\n    - structured canonical object used by projections, search, history,...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001054"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4853,
+          "end_line": 4863
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Important rule:\n  - record and artifact must remain different objects\n- Recommended distinction:\n  - record\n    - structured canonical object used by projections, search, history, and ledger\n  - artifact\n    - blob/file/renderable output linked from a record\n- This matters because many current docs still talk loosely about “review output” or “patch output” without separating:\n  - exact structured record\n  - human-readable rendered summary\n  - attached artifact(s)"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-062",
+      "obligation_text": "Good pattern:\n  - shared envelope + family payload block\n- Candidate payload examples:\n  - concern payload:\n    - severity, category, owner, lifecycle, resolution_kind\n  - promotion payload:\n    - promotion_class, source_scope,...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001057"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4866,
+          "end_line": 4880
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Good pattern:\n  - shared envelope + family payload block\n- Candidate payload examples:\n  - concern payload:\n    - severity, category, owner, lifecycle, resolution_kind\n  - promotion payload:\n    - promotion_class, source_scope, target_scope, canonical verdict, revoked/reopened lineage\n  - corroboration payload:\n    - claim refs, corroborator refs, 2-of-3 outcome, unresolved minority concerns\n  - graph patch payload:\n    - patch point, target generation, resulting generation, requested reason, applied outcome\n  - recovery payload:\n    - blocked episode ref, action id, preconditions, result, safe-point refs\n  - review payload:\n    - review scope, findings counts, unresolved findings, verdict, canonical findings summary ref"
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-063",
+      "obligation_text": "A normalized envelope would simplify several earlier seams at once:\n  - object-first search\n  - History vs Ledger distinction\n  - deep-link routing\n  - export manifests\n  - cross-tab inspectors\n- Search can index the shared envelope fields...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001060"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4883,
+          "end_line": 4890
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "Ledger"
+      ],
+      "exact_source_excerpt": "- A normalized envelope would simplify several earlier seams at once:\n  - object-first search\n  - History vs Ledger distinction\n  - deep-link routing\n  - export manifests\n  - cross-tab inspectors\n- Search can index the shared envelope fields while preserving family-specific filters.\n- `Ledger` can inspect exact record structure consistently across families without inventing a custom viewer for every new object."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-064",
+      "obligation_text": "Shared envelopes also help apply the earlier semantic vocabulary consistently:\n  - `historical`\n  - `superseded`\n  - `revoked`\n  - `reopened`\n  - `archived`\n  - `removed`\n- The envelope should not collapse these into one generic old-state b...",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001063"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4893,
+          "end_line": 4900
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "historical",
+        "superseded",
+        "revoked",
+        "reopened",
+        "archived",
+        "removed"
+      ],
+      "exact_source_excerpt": "- Shared envelopes also help apply the earlier semantic vocabulary consistently:\n  - `historical`\n  - `superseded`\n  - `revoked`\n  - `reopened`\n  - `archived`\n  - `removed`\n- The envelope should not collapse these into one generic old-state bit."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-065",
+      "obligation_text": "Current records are partially normalized, but newer governance families still risk being invented ad hoc.\n- Some current docs are better at record identity than at record-family consistency.\n- Without a shared envelope, search, export,...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001066"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4903,
+          "end_line": 4905
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Current records are partially normalized, but newer governance families still risk being invented ad hoc.\n- Some current docs are better at record identity than at record-family consistency.\n- Without a shared envelope, search, export, ledger inspection, and cross-tab deep links will likely re-encode the same concepts repeatedly."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-066",
+      "obligation_text": "Define a shared record-envelope contract for governance/runtime record families.\n- Keep artifacts and rendered summaries linked but separate from canonical records.\n- Require new first-class Orchestrator object families to reuse the envelop...",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001069"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4908,
+          "end_line": 4911
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- Define a shared record-envelope contract for governance/runtime record families.\n- Keep artifacts and rendered summaries linked but separate from canonical records.\n- Require new first-class Orchestrator object families to reuse the envelope and shared status/lineage conventions.\n- Let family-specific payloads specialize under the shared envelope instead of inventing one-off top-level shapes."
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-067",
+      "obligation_text": "`detail_ref` and `*_ref` conventions already exist and should be expanded, not replaced\n- canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records\n- the envelope should carry enough...",
+      "obligation_category": "requirement",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T007-02"
+      ],
+      "source_block_ids": [
+        "lblock-001072"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4914,
+          "end_line": 4916
+        }
+      ],
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "detail_ref"
+      ],
+      "exact_source_excerpt": "- `detail_ref` and `*_ref` conventions already exist and should be expanded, not replaced\n- canonical findings summaries and prose summaries are artifacts/views that must still resolve back to exact records\n- the envelope should carry enough shared identity for search, export, and inspector routing without flattening family-specific meaning"
+    }
+  ],
+  "open_questions": [],
+  "doc_hints": [
+    {
+      "hint_id": "dh-d2-slice-007-001",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000855"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4156,
+          "end_line": 4160
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Multi-Account.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-002",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000855"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4156,
+          "end_line": 4160
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Multi-Account.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-003",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000855"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4156,
+          "end_line": 4160
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Multi-Account.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-004",
+      "hint_type": "candidate_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000855"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4156,
+          "end_line": 4160
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Multi-Account.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-005",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Multi-Account.md",
+      "source_group_ids": [
+        "wg-d1-T006-05"
+      ],
+      "source_block_ids": [
+        "lblock-000855"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4156,
+          "end_line": 4160
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Multi-Account.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-006",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000899"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4302,
+          "end_line": 4305
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-007",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000899"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4302,
+          "end_line": 4305
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-008",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000899"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4302,
+          "end_line": 4305
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-009",
+      "hint_type": "candidate_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-d1-T006-08"
+      ],
+      "source_block_ids": [
+        "lblock-000899"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4302,
+          "end_line": 4305
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-010",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000938"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4425,
+          "end_line": 4428
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-011",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000938"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4425,
+          "end_line": 4428
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-012",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000938"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4425,
+          "end_line": 4428
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-013",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T006-10"
+      ],
+      "source_block_ids": [
+        "lblock-000938"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4425,
+          "end_line": 4428
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/storage-plan.md`\n- `Plans/Orchestrator_Page.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-014",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000970"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4544,
+          "end_line": 4548
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Widget_System.md`\n- `Plans/WorktreeGitImprovement.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-015",
+      "hint_type": "candidate_doc",
+      "path": "Plans/UI_Command_Catalog.md",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000970"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4544,
+          "end_line": 4548
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Widget_System.md`\n- `Plans/WorktreeGitImprovement.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-016",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000970"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4544,
+          "end_line": 4548
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Widget_System.md`\n- `Plans/WorktreeGitImprovement.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-017",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Widget_System.md",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000970"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4544,
+          "end_line": 4548
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Widget_System.md`\n- `Plans/WorktreeGitImprovement.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-018",
+      "hint_type": "candidate_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_group_ids": [
+        "wg-d1-T006-12"
+      ],
+      "source_block_ids": [
+        "lblock-000970"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4544,
+          "end_line": 4548
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Widget_System.md`\n- `Plans/WorktreeGitImprovement.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-019",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001009"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4677,
+          "end_line": 4681
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Contracts_V0.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-020",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001009"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4677,
+          "end_line": 4681
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Contracts_V0.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-021",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001009"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4677,
+          "end_line": 4681
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Contracts_V0.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-022",
+      "hint_type": "candidate_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001009"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4677,
+          "end_line": 4681
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Contracts_V0.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-023",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_group_ids": [
+        "wg-d1-T006-14"
+      ],
+      "source_block_ids": [
+        "lblock-001009"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4677,
+          "end_line": 4681
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/usage-feature.md`\n- `Plans/Contracts_V0.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-024",
+      "hint_type": "candidate_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T006-16"
+      ],
+      "source_block_ids": [
+        "lblock-001044"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4796,
+          "end_line": 4800
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-025",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_group_ids": [
+        "wg-d1-T006-16"
+      ],
+      "source_block_ids": [
+        "lblock-001044"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4796,
+          "end_line": 4800
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-026",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T006-16"
+      ],
+      "source_block_ids": [
+        "lblock-001044"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4796,
+          "end_line": 4800
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-027",
+      "hint_type": "candidate_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_group_ids": [
+        "wg-d1-T006-16"
+      ],
+      "source_block_ids": [
+        "lblock-001044"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4796,
+          "end_line": 4800
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-028",
+      "hint_type": "candidate_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T006-16"
+      ],
+      "source_block_ids": [
+        "lblock-001044"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4796,
+          "end_line": 4800
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/FinalGUISpec.md`",
+      "notes": "Research inventory: targeted docs read."
+    },
+    {
+      "hint_id": "dh-d2-slice-007-029",
+      "hint_type": "candidate_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-d1-T007-01"
+      ],
+      "source_block_ids": [
+        "lblock-001045"
+      ],
+      "source_shard_ids": [
+        "shard-0025"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 4801,
+          "end_line": 4801
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/usage-feature.md`",
+      "notes": "Research inventory: targeted docs read."
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-000852",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000853",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000854",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000856",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000857",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000859",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000860",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000862",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000863",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000868",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000869",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000871",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000872",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000874",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000875",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000877",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000878",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000880",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000881",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000883",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000884",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000886",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000887",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000889",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000890",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000892",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000893",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000895",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000896",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000897",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000898",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000900",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000901",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000903",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000904",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000906",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000907",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000909",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000910",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000912",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000913",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000915",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000916",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000918",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000919",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000921",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000922",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000925",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000926",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000928",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000929",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000931",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000932",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000934",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000935",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000936",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000937",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000939",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000940",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000942",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000943",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000945",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000946",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000948",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000949",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000951",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000952",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000954",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000955",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000957",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000958",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000960",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000961",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000963",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000964",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000966",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000967",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000968",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000969",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000971",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000972",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000974",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000975",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000977",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000978",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000980",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000981",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000984",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000985",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000987",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000988",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000990",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000991",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000993",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000994",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000996",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-000997",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-000999",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001000",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001002",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001003",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001005",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001006",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001007",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001008",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001010",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001011",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001013",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001014",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001016",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001017",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001019",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001020",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001022",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001023",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001025",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001026",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001028",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001029",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001031",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001032",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001034",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001035",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001037",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001038",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001040",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001041",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001042",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001043",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001046",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001047",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001049",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001050",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001052",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001053",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001055",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001056",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001058",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001059",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001061",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001062",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001064",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001065",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001067",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001068",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001070",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    },
+    {
+      "block_id": "lblock-001071",
+      "reason": "Structural markdown heading only; no standalone prescriptive material."
+    },
+    {
+      "block_id": "lblock-001073",
+      "reason": "Whitespace/blank block; no prescriptive material."
+    }
+  ],
+  "blocked_blocks": [],
+  "conversion_notes": [
+    "Whitespace-only and pure markdown-heading blocks excluded as non-material structure.",
+    "Blocks consisting solely of `- `Plans/...` bullets were emitted as separate candidate_doc doc_hints (one per Plans path) rather than obligations.",
+    "Open questions identified via seed surface_hints.looks_like_open_question.",
+    "obligation_category and required_action derived from lexical cues (must/should/never/recommend/note).",
+    "exact_source_excerpt holds the verbatim seed exact_text for each obligation, doc_hint, open_question, or excluded block reference.",
+    "Path-list blocks containing only `- `Plans/...` bullets are also listed in excluded_blocks (no standalone prescriptive material) while their Plans/ paths are emitted separately in doc_hints; this ensures every source_block_id appears exactly once in obligations | open_questions | excluded_blocks | blocked_blocks."
+  ],
+  "subagent_execution": {
+    "subagent_task_id": "d2-slice-007",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "every_obligation_has_source_linkage": true,
+    "open_questions_not_answered_silently": true,
+    "doc_hints_preserved_separately": true
+  },
+  "status": "complete"
+}

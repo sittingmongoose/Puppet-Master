@@ -1,0 +1,136 @@
+{
+  "schema_id": "pm.obligation_reducer.wave.v3.2.3",
+  "prompt_id": "D3",
+  "work_id": "w-20260312-203855",
+  "wave_index": 1,
+  "wave_timestamp_utc": "20260512T014500Z",
+  "assignments": [
+    {
+      "subagent_invocation_id": "05ebacda-7b4c-4da2-b02d-f272c9c3810d",
+      "subagent_task_id": "d3v2-d2-slice-001",
+      "slice_id": "d2-slice-001",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-001.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-001.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "f4dad27c-90c6-44ae-80a9-3472d9d08af7",
+      "subagent_task_id": "d3v2-d2-slice-002",
+      "slice_id": "d2-slice-002",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-002.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "schema_shape_divergence_vs_reference_slice"
+      ]
+    },
+    {
+      "subagent_invocation_id": "3d5ffbec-cec2-48a2-80a4-e096ce822158",
+      "subagent_task_id": "d3v2-d2-slice-003",
+      "slice_id": "d2-slice-003",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-003.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": [
+        "advisory_weak_doc_hint_windows"
+      ]
+    },
+    {
+      "subagent_invocation_id": "f7cb96f5-67cc-4875-a997-8e1e9c4d691e",
+      "subagent_task_id": "d3v2-d2-slice-004",
+      "slice_id": "d2-slice-004",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-004.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "37da01f0-8708-4ac2-bdaf-0a685a159eb0",
+      "subagent_task_id": "d3v2-d2-slice-005",
+      "slice_id": "d2-slice-005",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-005.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "cbeed1f7-d647-4a2c-b280-5017fbf76b28",
+      "subagent_task_id": "d3v2-d2-slice-006",
+      "slice_id": "d2-slice-006",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-006.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "verbatim_gate_u2026",
+        "verbatim_gate_not_substring_seed"
+      ]
+    },
+    {
+      "subagent_invocation_id": "59a17db8-ffae-47e8-a1dd-004ba1f134e7",
+      "subagent_task_id": "d3v2-d2-slice-007",
+      "slice_id": "d2-slice-007",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-007.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "3afd10ba-732d-4378-81da-7775ae0de5aa",
+      "subagent_task_id": "d3v2-d2-slice-008",
+      "slice_id": "d2-slice-008",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-008.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    }
+  ]
+}

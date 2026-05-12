@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.stage_report.B0.v3.2.2",
+  "prompt_id": "B0",
+  "prompt_version": "pm.b0.v3.2.2",
+  "timestamp_utc": "20260511T163428Z",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "status": "COMPLETE",
+  "subagents": {
+    "used": false,
+    "reason": "Deterministic glob of section_exit_A paths, JSON parse, and work_id triple-match only."
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "deterministic_verification": {
+    "tool": "python3",
+    "checks": [
+      "section_exit_A.json, route_state.json, meta.json exist and parse as JSON",
+      "work_id identical across all three: w-20260312-203855",
+      "section_exit_A.schema_id == pm.section_exit_A.v3.2.2",
+      "section_exit_A.next_section == B"
+    ],
+    "exit_code": 0
+  },
+  "inputs_read": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
+  ],
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B0.json"
+  ],
+  "next_prompt_request": {
+    "prompt_id": "B4",
+    "name": "Ledger Intake Decision",
+    "version": "pm.b4.v3.2.2"
+  },
+  "gate": {
+    "work_id_from_section_a": true,
+    "single_next_intake_selected": true,
+    "missing_explicit_intake_path_is_blocker": false
+  }
+}

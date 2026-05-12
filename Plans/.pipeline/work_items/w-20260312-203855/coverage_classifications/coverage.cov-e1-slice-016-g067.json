@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-016-g067",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-018"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-s025-001",
+      "coverage_task_id": "cov-e1-slice-016-g067",
+      "source_shard_id": "shard-0091",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "present",
+      "best_evidence_score": 0.9,
+      "uncertainty": 0.1,
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1389,
+          "line_end": 1396,
+          "rationale": "Bounded storage window covers the canonical records wording and missing discoverable anchor evidence named by the obligation."
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 30,
+          "line_end": 85,
+          "rationale": "Bounded glossary window covers the missing Orchestrator rewrite terms / help-entry structure evidence."
+        }
+      ],
+      "row_signals": [],
+      "notes": []
+    }
+  ]
+}

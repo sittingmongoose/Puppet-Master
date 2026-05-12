@@ -1,0 +1,915 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-008-g004",
+  "obligation_record_count": 20,
+  "source_classification_slices": [
+    "e2-class-009"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-s012-036",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0042"
+        ],
+        "source_block_ids": [
+          "lblock-002005"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-05"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8380,
+            "end_line": 8386
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 922,
+          "line_end": 938,
+          "quote": "- `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `[retired-token-30]` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-037",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0042"
+        ],
+        "source_block_ids": [
+          "lblock-002008"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-05"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8389,
+            "end_line": 8400
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1173,
+          "line_end": 1189,
+          "quote": "- older request-local contract: `HITLRequest` with `tier_id`, `tier_type`, and HITL-only `allowed_actions[]` like `approve_continue`",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-038",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002009"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8401,
+            "end_line": 8403
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 741,
+          "line_end": 757,
+          "quote": "- no single authority is declared between Source Control worktree state and Orchestrator receipt lineage",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-039",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002012"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8406,
+            "end_line": 8413
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3586,
+          "line_end": 3600,
+          "quote": "| `Plans/orchestrator-subagent-integration.md` | Orchestrator, orchestrator controls, and node/package/lane/seam display. |",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-040",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002015"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8416,
+            "end_line": 8420
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 76,
+          "line_end": 92,
+          "quote": "- Lane-aware scheduling still does not flow into worktree and active-agent tracking.",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-041",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002018"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8423,
+            "end_line": 8427
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 222,
+          "line_end": 238,
+          "quote": "- Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking.",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-042",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002021"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8430,
+            "end_line": 8432
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 262,
+          "line_end": 278,
+          "quote": "- Worktree lane binding and historical lineage preservation are now correctness requirements, not nice-to-have source-control polish.",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-043",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002026"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8437,
+            "end_line": 8440
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 906,
+          "line_end": 922,
+          "quote": "- `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-044",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002029"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8443,
+            "end_line": 8460
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 568,
+          "line_end": 584,
+          "quote": "- `trust_tier` already exists in preview/browser state",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-045",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002032"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-06"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8463,
+            "end_line": 8472
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2136,
+          "line_end": 2152,
+          "quote": "- Recommended supporting fields:",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-046",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002035"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8475,
+            "end_line": 8482
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 906,
+          "line_end": 922,
+          "quote": "- `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-047",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002038"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8485,
+            "end_line": 8487
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1463,
+          "line_end": 1479,
+          "quote": "- Freshness and degradation are currently discussed together often enough that later docs could collapse them into one field family by accident.",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-048",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002041"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8490,
+            "end_line": 8497
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 448,
+          "line_end": 464,
+          "quote": "Related-concept clusters group help entries by canonical concern/state families such as `auth`, `approval`, `route/open`, `runtime recovery`, and `projection health`. Each cluster keeps durable links between sibling help entries so inline h",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-049",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002044"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8500,
+            "end_line": 8504
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 637,
+          "line_end": 653,
+          "quote": "- Projection trust/freshness needs a separate vocabulary from preview/browser `trust_tier`; these are currently at risk of semantic collision.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-050",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002049"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8509,
+            "end_line": 8517
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 410,
+          "line_end": 426,
+          "quote": "- current `working_ledger.md`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-051",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002052"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8520,
+            "end_line": 8539
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4442,
+          "line_end": 4458,
+          "quote": "- `Contracts_V0.md` should own cross-cutting persisted-envelope field families and stable event names",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-052",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002055"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8542,
+            "end_line": 8581
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4442,
+          "line_end": 4458,
+          "quote": "- `Contracts_V0.md` should own cross-cutting persisted-envelope field families and stable event names",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-053",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Matched a non-primary excerpt bullet or secondary token; confirm the full canonical obligation is represented in Plans."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002058"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-07"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8584,
+            "end_line": 8586
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3169,
+          "line_end": 3185,
+          "quote": "- `UI_Command_Catalog.md` is currently being used as a de facto navigation contract in places where a deeper route payload is still unowned.",
+          "rationale": "Later excerpt bullet, declared path token, or enum token matched inside an E1 bounded live_doc_window; verify full obligation completeness."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.32
+    },
+    {
+      "obligation_id": "obl-d2-s012-054",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002061"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-08"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8589,
+            "end_line": 8591
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 484,
+          "line_end": 500,
+          "quote": "- Before reconciliation, define an explicit owner table for the remaining open contracts so downstream edits do not keep re-litigating field placement.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-s012-055",
+      "coverage_task_id": "cov-e1-slice-008-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0043"
+        ],
+        "source_block_ids": [
+          "lblock-002064"
+        ],
+        "source_group_ids": [
+          "wg-d1-T011-08"
+        ],
+        "source_slice_id": "d2-slice-012",
+        "source_line_ranges": [
+          {
+            "start_line": 8594,
+            "end_line": 8596
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-008-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1004,
+          "line_end": 1020,
+          "quote": "- owner clarity matters as much as field choice now; otherwise the same seam will keep reopening under different names",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    }
+  ]
+}

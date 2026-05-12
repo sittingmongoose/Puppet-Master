@@ -1,19 +1,18 @@
 {
-  "schema_id": "pm.ledger_shards_manifest.v3.2.2",
+  "schema_id": "pm.ledger_shards_manifest.v3.2.3",
   "prompt_id": "C2",
-  "prompt_version": "pm.c2.v3.2.2",
-  "timestamp_utc": "20260511T164041Z",
+  "prompt_version": "pm.c2.v3.2.3",
   "work_id": "w-20260312-203855",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+  "source_bytes": 1044305,
+  "source_line_count": 18244,
   "source_sha256_hex": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
-  "source_byte_length": 1044305,
-  "source_newline_byte_count": 18244,
-  "source_line_count_inclusive": 18244,
   "max_lines_per_shard": 200,
   "shard_count": 92,
   "shards": [
     {
       "shard_id": "shard-0001",
+      "filename": "shard-0001.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001.md",
       "line_start_inclusive": 1,
       "line_end_inclusive": 200,
@@ -23,6 +22,7 @@
     },
     {
       "shard_id": "shard-0002",
+      "filename": "shard-0002.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0002.md",
       "line_start_inclusive": 201,
       "line_end_inclusive": 400,
@@ -32,6 +32,7 @@
     },
     {
       "shard_id": "shard-0003",
+      "filename": "shard-0003.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003.md",
       "line_start_inclusive": 401,
       "line_end_inclusive": 600,
@@ -41,6 +42,7 @@
     },
     {
       "shard_id": "shard-0004",
+      "filename": "shard-0004.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0004.md",
       "line_start_inclusive": 601,
       "line_end_inclusive": 800,
@@ -50,6 +52,7 @@
     },
     {
       "shard_id": "shard-0005",
+      "filename": "shard-0005.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0005.md",
       "line_start_inclusive": 801,
       "line_end_inclusive": 1000,
@@ -59,6 +62,7 @@
     },
     {
       "shard_id": "shard-0006",
+      "filename": "shard-0006.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0006.md",
       "line_start_inclusive": 1001,
       "line_end_inclusive": 1200,
@@ -68,6 +72,7 @@
     },
     {
       "shard_id": "shard-0007",
+      "filename": "shard-0007.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0007.md",
       "line_start_inclusive": 1201,
       "line_end_inclusive": 1400,
@@ -77,6 +82,7 @@
     },
     {
       "shard_id": "shard-0008",
+      "filename": "shard-0008.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0008.md",
       "line_start_inclusive": 1401,
       "line_end_inclusive": 1600,
@@ -86,6 +92,7 @@
     },
     {
       "shard_id": "shard-0009",
+      "filename": "shard-0009.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0009.md",
       "line_start_inclusive": 1601,
       "line_end_inclusive": 1800,
@@ -95,6 +102,7 @@
     },
     {
       "shard_id": "shard-0010",
+      "filename": "shard-0010.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0010.md",
       "line_start_inclusive": 1801,
       "line_end_inclusive": 2000,
@@ -104,6 +112,7 @@
     },
     {
       "shard_id": "shard-0011",
+      "filename": "shard-0011.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0011.md",
       "line_start_inclusive": 2001,
       "line_end_inclusive": 2200,
@@ -113,6 +122,7 @@
     },
     {
       "shard_id": "shard-0012",
+      "filename": "shard-0012.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0012.md",
       "line_start_inclusive": 2201,
       "line_end_inclusive": 2400,
@@ -122,6 +132,7 @@
     },
     {
       "shard_id": "shard-0013",
+      "filename": "shard-0013.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0013.md",
       "line_start_inclusive": 2401,
       "line_end_inclusive": 2600,
@@ -131,6 +142,7 @@
     },
     {
       "shard_id": "shard-0014",
+      "filename": "shard-0014.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0014.md",
       "line_start_inclusive": 2601,
       "line_end_inclusive": 2800,
@@ -140,6 +152,7 @@
     },
     {
       "shard_id": "shard-0015",
+      "filename": "shard-0015.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0015.md",
       "line_start_inclusive": 2801,
       "line_end_inclusive": 3000,
@@ -149,6 +162,7 @@
     },
     {
       "shard_id": "shard-0016",
+      "filename": "shard-0016.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0016.md",
       "line_start_inclusive": 3001,
       "line_end_inclusive": 3200,
@@ -158,6 +172,7 @@
     },
     {
       "shard_id": "shard-0017",
+      "filename": "shard-0017.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0017.md",
       "line_start_inclusive": 3201,
       "line_end_inclusive": 3400,
@@ -167,6 +182,7 @@
     },
     {
       "shard_id": "shard-0018",
+      "filename": "shard-0018.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0018.md",
       "line_start_inclusive": 3401,
       "line_end_inclusive": 3600,
@@ -176,6 +192,7 @@
     },
     {
       "shard_id": "shard-0019",
+      "filename": "shard-0019.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0019.md",
       "line_start_inclusive": 3601,
       "line_end_inclusive": 3800,
@@ -185,6 +202,7 @@
     },
     {
       "shard_id": "shard-0020",
+      "filename": "shard-0020.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0020.md",
       "line_start_inclusive": 3801,
       "line_end_inclusive": 4000,
@@ -194,6 +212,7 @@
     },
     {
       "shard_id": "shard-0021",
+      "filename": "shard-0021.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0021.md",
       "line_start_inclusive": 4001,
       "line_end_inclusive": 4200,
@@ -203,6 +222,7 @@
     },
     {
       "shard_id": "shard-0022",
+      "filename": "shard-0022.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0022.md",
       "line_start_inclusive": 4201,
       "line_end_inclusive": 4400,
@@ -212,6 +232,7 @@
     },
     {
       "shard_id": "shard-0023",
+      "filename": "shard-0023.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0023.md",
       "line_start_inclusive": 4401,
       "line_end_inclusive": 4600,
@@ -221,6 +242,7 @@
     },
     {
       "shard_id": "shard-0024",
+      "filename": "shard-0024.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0024.md",
       "line_start_inclusive": 4601,
       "line_end_inclusive": 4800,
@@ -230,6 +252,7 @@
     },
     {
       "shard_id": "shard-0025",
+      "filename": "shard-0025.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0025.md",
       "line_start_inclusive": 4801,
       "line_end_inclusive": 5000,
@@ -239,6 +262,7 @@
     },
     {
       "shard_id": "shard-0026",
+      "filename": "shard-0026.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0026.md",
       "line_start_inclusive": 5001,
       "line_end_inclusive": 5200,
@@ -248,6 +272,7 @@
     },
     {
       "shard_id": "shard-0027",
+      "filename": "shard-0027.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0027.md",
       "line_start_inclusive": 5201,
       "line_end_inclusive": 5400,
@@ -257,6 +282,7 @@
     },
     {
       "shard_id": "shard-0028",
+      "filename": "shard-0028.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0028.md",
       "line_start_inclusive": 5401,
       "line_end_inclusive": 5600,
@@ -266,6 +292,7 @@
     },
     {
       "shard_id": "shard-0029",
+      "filename": "shard-0029.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0029.md",
       "line_start_inclusive": 5601,
       "line_end_inclusive": 5800,
@@ -275,6 +302,7 @@
     },
     {
       "shard_id": "shard-0030",
+      "filename": "shard-0030.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0030.md",
       "line_start_inclusive": 5801,
       "line_end_inclusive": 6000,
@@ -284,6 +312,7 @@
     },
     {
       "shard_id": "shard-0031",
+      "filename": "shard-0031.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0031.md",
       "line_start_inclusive": 6001,
       "line_end_inclusive": 6200,
@@ -293,6 +322,7 @@
     },
     {
       "shard_id": "shard-0032",
+      "filename": "shard-0032.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0032.md",
       "line_start_inclusive": 6201,
       "line_end_inclusive": 6400,
@@ -302,6 +332,7 @@
     },
     {
       "shard_id": "shard-0033",
+      "filename": "shard-0033.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0033.md",
       "line_start_inclusive": 6401,
       "line_end_inclusive": 6600,
@@ -311,6 +342,7 @@
     },
     {
       "shard_id": "shard-0034",
+      "filename": "shard-0034.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0034.md",
       "line_start_inclusive": 6601,
       "line_end_inclusive": 6800,
@@ -320,6 +352,7 @@
     },
     {
       "shard_id": "shard-0035",
+      "filename": "shard-0035.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0035.md",
       "line_start_inclusive": 6801,
       "line_end_inclusive": 7000,
@@ -329,6 +362,7 @@
     },
     {
       "shard_id": "shard-0036",
+      "filename": "shard-0036.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0036.md",
       "line_start_inclusive": 7001,
       "line_end_inclusive": 7200,
@@ -338,6 +372,7 @@
     },
     {
       "shard_id": "shard-0037",
+      "filename": "shard-0037.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0037.md",
       "line_start_inclusive": 7201,
       "line_end_inclusive": 7400,
@@ -347,6 +382,7 @@
     },
     {
       "shard_id": "shard-0038",
+      "filename": "shard-0038.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0038.md",
       "line_start_inclusive": 7401,
       "line_end_inclusive": 7600,
@@ -356,6 +392,7 @@
     },
     {
       "shard_id": "shard-0039",
+      "filename": "shard-0039.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0039.md",
       "line_start_inclusive": 7601,
       "line_end_inclusive": 7800,
@@ -365,6 +402,7 @@
     },
     {
       "shard_id": "shard-0040",
+      "filename": "shard-0040.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0040.md",
       "line_start_inclusive": 7801,
       "line_end_inclusive": 8000,
@@ -374,6 +412,7 @@
     },
     {
       "shard_id": "shard-0041",
+      "filename": "shard-0041.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0041.md",
       "line_start_inclusive": 8001,
       "line_end_inclusive": 8200,
@@ -383,6 +422,7 @@
     },
     {
       "shard_id": "shard-0042",
+      "filename": "shard-0042.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0042.md",
       "line_start_inclusive": 8201,
       "line_end_inclusive": 8400,
@@ -392,6 +432,7 @@
     },
     {
       "shard_id": "shard-0043",
+      "filename": "shard-0043.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0043.md",
       "line_start_inclusive": 8401,
       "line_end_inclusive": 8600,
@@ -401,6 +442,7 @@
     },
     {
       "shard_id": "shard-0044",
+      "filename": "shard-0044.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0044.md",
       "line_start_inclusive": 8601,
       "line_end_inclusive": 8800,
@@ -410,6 +452,7 @@
     },
     {
       "shard_id": "shard-0045",
+      "filename": "shard-0045.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0045.md",
       "line_start_inclusive": 8801,
       "line_end_inclusive": 9000,
@@ -419,6 +462,7 @@
     },
     {
       "shard_id": "shard-0046",
+      "filename": "shard-0046.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0046.md",
       "line_start_inclusive": 9001,
       "line_end_inclusive": 9200,
@@ -428,6 +472,7 @@
     },
     {
       "shard_id": "shard-0047",
+      "filename": "shard-0047.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0047.md",
       "line_start_inclusive": 9201,
       "line_end_inclusive": 9400,
@@ -437,6 +482,7 @@
     },
     {
       "shard_id": "shard-0048",
+      "filename": "shard-0048.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0048.md",
       "line_start_inclusive": 9401,
       "line_end_inclusive": 9600,
@@ -446,6 +492,7 @@
     },
     {
       "shard_id": "shard-0049",
+      "filename": "shard-0049.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0049.md",
       "line_start_inclusive": 9601,
       "line_end_inclusive": 9800,
@@ -455,6 +502,7 @@
     },
     {
       "shard_id": "shard-0050",
+      "filename": "shard-0050.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0050.md",
       "line_start_inclusive": 9801,
       "line_end_inclusive": 10000,
@@ -464,6 +512,7 @@
     },
     {
       "shard_id": "shard-0051",
+      "filename": "shard-0051.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0051.md",
       "line_start_inclusive": 10001,
       "line_end_inclusive": 10200,
@@ -473,6 +522,7 @@
     },
     {
       "shard_id": "shard-0052",
+      "filename": "shard-0052.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0052.md",
       "line_start_inclusive": 10201,
       "line_end_inclusive": 10400,
@@ -482,6 +532,7 @@
     },
     {
       "shard_id": "shard-0053",
+      "filename": "shard-0053.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0053.md",
       "line_start_inclusive": 10401,
       "line_end_inclusive": 10600,
@@ -491,6 +542,7 @@
     },
     {
       "shard_id": "shard-0054",
+      "filename": "shard-0054.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0054.md",
       "line_start_inclusive": 10601,
       "line_end_inclusive": 10800,
@@ -500,6 +552,7 @@
     },
     {
       "shard_id": "shard-0055",
+      "filename": "shard-0055.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0055.md",
       "line_start_inclusive": 10801,
       "line_end_inclusive": 11000,
@@ -509,6 +562,7 @@
     },
     {
       "shard_id": "shard-0056",
+      "filename": "shard-0056.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0056.md",
       "line_start_inclusive": 11001,
       "line_end_inclusive": 11200,
@@ -518,6 +572,7 @@
     },
     {
       "shard_id": "shard-0057",
+      "filename": "shard-0057.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0057.md",
       "line_start_inclusive": 11201,
       "line_end_inclusive": 11400,
@@ -527,6 +582,7 @@
     },
     {
       "shard_id": "shard-0058",
+      "filename": "shard-0058.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0058.md",
       "line_start_inclusive": 11401,
       "line_end_inclusive": 11600,
@@ -536,6 +592,7 @@
     },
     {
       "shard_id": "shard-0059",
+      "filename": "shard-0059.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0059.md",
       "line_start_inclusive": 11601,
       "line_end_inclusive": 11800,
@@ -545,6 +602,7 @@
     },
     {
       "shard_id": "shard-0060",
+      "filename": "shard-0060.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0060.md",
       "line_start_inclusive": 11801,
       "line_end_inclusive": 12000,
@@ -554,6 +612,7 @@
     },
     {
       "shard_id": "shard-0061",
+      "filename": "shard-0061.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0061.md",
       "line_start_inclusive": 12001,
       "line_end_inclusive": 12200,
@@ -563,6 +622,7 @@
     },
     {
       "shard_id": "shard-0062",
+      "filename": "shard-0062.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0062.md",
       "line_start_inclusive": 12201,
       "line_end_inclusive": 12400,
@@ -572,6 +632,7 @@
     },
     {
       "shard_id": "shard-0063",
+      "filename": "shard-0063.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0063.md",
       "line_start_inclusive": 12401,
       "line_end_inclusive": 12600,
@@ -581,6 +642,7 @@
     },
     {
       "shard_id": "shard-0064",
+      "filename": "shard-0064.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0064.md",
       "line_start_inclusive": 12601,
       "line_end_inclusive": 12800,
@@ -590,6 +652,7 @@
     },
     {
       "shard_id": "shard-0065",
+      "filename": "shard-0065.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0065.md",
       "line_start_inclusive": 12801,
       "line_end_inclusive": 13000,
@@ -599,6 +662,7 @@
     },
     {
       "shard_id": "shard-0066",
+      "filename": "shard-0066.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0066.md",
       "line_start_inclusive": 13001,
       "line_end_inclusive": 13200,
@@ -608,6 +672,7 @@
     },
     {
       "shard_id": "shard-0067",
+      "filename": "shard-0067.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0067.md",
       "line_start_inclusive": 13201,
       "line_end_inclusive": 13400,
@@ -617,6 +682,7 @@
     },
     {
       "shard_id": "shard-0068",
+      "filename": "shard-0068.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0068.md",
       "line_start_inclusive": 13401,
       "line_end_inclusive": 13600,
@@ -626,6 +692,7 @@
     },
     {
       "shard_id": "shard-0069",
+      "filename": "shard-0069.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0069.md",
       "line_start_inclusive": 13601,
       "line_end_inclusive": 13800,
@@ -635,6 +702,7 @@
     },
     {
       "shard_id": "shard-0070",
+      "filename": "shard-0070.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0070.md",
       "line_start_inclusive": 13801,
       "line_end_inclusive": 14000,
@@ -644,6 +712,7 @@
     },
     {
       "shard_id": "shard-0071",
+      "filename": "shard-0071.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0071.md",
       "line_start_inclusive": 14001,
       "line_end_inclusive": 14200,
@@ -653,6 +722,7 @@
     },
     {
       "shard_id": "shard-0072",
+      "filename": "shard-0072.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0072.md",
       "line_start_inclusive": 14201,
       "line_end_inclusive": 14400,
@@ -662,6 +732,7 @@
     },
     {
       "shard_id": "shard-0073",
+      "filename": "shard-0073.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0073.md",
       "line_start_inclusive": 14401,
       "line_end_inclusive": 14600,
@@ -671,6 +742,7 @@
     },
     {
       "shard_id": "shard-0074",
+      "filename": "shard-0074.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0074.md",
       "line_start_inclusive": 14601,
       "line_end_inclusive": 14800,
@@ -680,6 +752,7 @@
     },
     {
       "shard_id": "shard-0075",
+      "filename": "shard-0075.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0075.md",
       "line_start_inclusive": 14801,
       "line_end_inclusive": 15000,
@@ -689,6 +762,7 @@
     },
     {
       "shard_id": "shard-0076",
+      "filename": "shard-0076.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0076.md",
       "line_start_inclusive": 15001,
       "line_end_inclusive": 15200,
@@ -698,6 +772,7 @@
     },
     {
       "shard_id": "shard-0077",
+      "filename": "shard-0077.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0077.md",
       "line_start_inclusive": 15201,
       "line_end_inclusive": 15400,
@@ -707,6 +782,7 @@
     },
     {
       "shard_id": "shard-0078",
+      "filename": "shard-0078.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0078.md",
       "line_start_inclusive": 15401,
       "line_end_inclusive": 15600,
@@ -716,6 +792,7 @@
     },
     {
       "shard_id": "shard-0079",
+      "filename": "shard-0079.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0079.md",
       "line_start_inclusive": 15601,
       "line_end_inclusive": 15800,
@@ -725,6 +802,7 @@
     },
     {
       "shard_id": "shard-0080",
+      "filename": "shard-0080.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0080.md",
       "line_start_inclusive": 15801,
       "line_end_inclusive": 16000,
@@ -734,6 +812,7 @@
     },
     {
       "shard_id": "shard-0081",
+      "filename": "shard-0081.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0081.md",
       "line_start_inclusive": 16001,
       "line_end_inclusive": 16200,
@@ -743,6 +822,7 @@
     },
     {
       "shard_id": "shard-0082",
+      "filename": "shard-0082.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0082.md",
       "line_start_inclusive": 16201,
       "line_end_inclusive": 16400,
@@ -752,6 +832,7 @@
     },
     {
       "shard_id": "shard-0083",
+      "filename": "shard-0083.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0083.md",
       "line_start_inclusive": 16401,
       "line_end_inclusive": 16600,
@@ -761,6 +842,7 @@
     },
     {
       "shard_id": "shard-0084",
+      "filename": "shard-0084.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0084.md",
       "line_start_inclusive": 16601,
       "line_end_inclusive": 16800,
@@ -770,6 +852,7 @@
     },
     {
       "shard_id": "shard-0085",
+      "filename": "shard-0085.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0085.md",
       "line_start_inclusive": 16801,
       "line_end_inclusive": 17000,
@@ -779,6 +862,7 @@
     },
     {
       "shard_id": "shard-0086",
+      "filename": "shard-0086.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0086.md",
       "line_start_inclusive": 17001,
       "line_end_inclusive": 17200,
@@ -788,6 +872,7 @@
     },
     {
       "shard_id": "shard-0087",
+      "filename": "shard-0087.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0087.md",
       "line_start_inclusive": 17201,
       "line_end_inclusive": 17400,
@@ -797,6 +882,7 @@
     },
     {
       "shard_id": "shard-0088",
+      "filename": "shard-0088.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0088.md",
       "line_start_inclusive": 17401,
       "line_end_inclusive": 17600,
@@ -806,6 +892,7 @@
     },
     {
       "shard_id": "shard-0089",
+      "filename": "shard-0089.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0089.md",
       "line_start_inclusive": 17601,
       "line_end_inclusive": 17800,
@@ -815,6 +902,7 @@
     },
     {
       "shard_id": "shard-0090",
+      "filename": "shard-0090.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0090.md",
       "line_start_inclusive": 17801,
       "line_end_inclusive": 18000,
@@ -824,6 +912,7 @@
     },
     {
       "shard_id": "shard-0091",
+      "filename": "shard-0091.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0091.md",
       "line_start_inclusive": 18001,
       "line_end_inclusive": 18200,
@@ -833,6 +922,7 @@
     },
     {
       "shard_id": "shard-0092",
+      "filename": "shard-0092.md",
       "relative_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0092.md",
       "line_start_inclusive": 18201,
       "line_end_inclusive": 18244,
@@ -841,9 +931,11 @@
       "sha256_hex": "0b7c3c56e5eea94eaa9491e3a5178d3b803d133a67e46e6dbeb2dbf27e1e0684"
     }
   ],
-  "coverage_checks": {
-    "rejoin_equals_source_bytes": true,
-    "no_gaps_no_overlaps": true,
+  "coverage_verification": {
+    "no_gaps": true,
+    "no_overlaps": true,
+    "shard_line_sum_equals_source": true,
+    "concatenated_shard_bytes_equals_source": true,
     "every_shard_line_count_lte_max": true
   }
 }

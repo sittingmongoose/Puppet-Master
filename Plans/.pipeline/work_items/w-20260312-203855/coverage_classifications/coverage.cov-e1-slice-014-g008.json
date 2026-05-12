@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-014-g008",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-014"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-020-030",
+      "coverage_task_id": "cov-e1-slice-014-g008",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.87,
+      "uncertainty": 0.42,
+      "evidence_spans": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 35)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    }
+  ]
+}

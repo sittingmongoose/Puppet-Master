@@ -1,38 +1,43 @@
 {
-  "schema_id": "pm.open_gaps_reducer_report.v3.2.2",
+  "schema_id": "pm.open_gaps_reducer_report.v3.2.3",
   "prompt_id": "F3",
-  "prompt_version": "pm.f3.v3.2.2",
-  "timestamp_utc": "20260511T203751Z",
+  "prompt_version": "pm.f3.v3.2.3",
+  "timestamp_utc": "20260511T221500Z",
   "work_id": "w-20260312-203855",
-  "doc_discovery_required_unattempted": 0,
+  "doc_discovery_required_unattempted": 122,
   "doc_discovery_required_stale": 0,
-  "doc_discovery_exhausted_terminal": 3048,
+  "doc_discovery_exhausted_terminal": 345,
   "counts_by_gap_group_kind": {
-    "concrete_fix_backlog": 0,
-    "concrete_missing_file_fix_backlog": 0,
-    "doc_discovery_exhaustion": 3048,
-    "doc_discovery_required": 0,
-    "layout_repair": 1,
-    "no_gap": 0,
-    "process_followup": 799,
-    "source_lineage_check": 1,
-    "stale_token_resolution": 0
+    "concrete_fix_backlog": 376,
+    "doc_discovery_exhaustion": 345,
+    "doc_discovery_required": 122,
+    "layout_repair": 62,
+    "no_gap": 478,
+    "process_followup": 257,
+    "source_lineage_check": 70
+  },
+  "counts_supplemental": {
+    "classifier_process_defect_rows_total": 253,
+    "planning_blocker_true_rows_total": 1232
   },
   "doc_discovery_loop_breaker": {
     "do_not_route_terminal_exhausted_to_f4_f5_without_material_delta": true,
     "f4_selected_only_when_unattempted_or_stale_required_work_exists": false,
+    "material_resolution_delta_from_f5": false,
     "notes": [
-      "Hotfix v3.2.2: route precedence prefers active doc_discovery_required work (F4) over exhausted-only adjudication (B3).",
-      "Process/path/source-lineage blockers (rule_4) take precedence over exhausted-only (rule_3); do not route terminal exhausted rows to F4/F5 without unattempted/stale required work."
+      "v3.2.3: No doc_discovery_resolution.json in work item root; material_resolution_delta false.",
+      "Unattempted doc_discovery_required rows exist but classifier/process/path blockers take precedence; route B3 before repeat F4/F5 loops."
     ]
   },
   "route_decision": {
     "next_prompt_id": "B3",
     "next_prompt_name": "Issue / Process Adjudicator",
-    "precedence_rule": "rule_4_process_path_source_or_missing_file_blockers_not_repeat_doc_discovery",
-    "next_prompt_request": "Paste prompt B3 — Issue / Process Adjudicator v3.2.2.",
-    "exactly_one_next_prompt": true
+    "precedence_rule": "rule_process_classifier_path_source_lineage_layout_blockers_precedence_over_f4_when_classifier_defect_mass_and_mixed_blockers_v3_2_3",
+    "next_prompt_request": "Paste prompt B3 \u2014 Issue / Process Adjudicator v3.2.3.",
+    "exactly_one_next_prompt": true,
+    "rationale": "classifier_process_defect_rows=253; process_followup=257; layout_repair=62; source_lineage_check=70; doc_discovery_required_unattempted=122 still present but process/coverage adjudication takes precedence per hotfix."
   },
+  "slice_aggregation_source": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps_reducer_slices/route.r001.json through route.r007.json plus full-row recomputation for reducer counts",
   "final_gate": {
     "passed": true,
     "route_based_on_reducer_counts": true,

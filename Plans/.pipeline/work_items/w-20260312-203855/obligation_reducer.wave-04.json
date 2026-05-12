@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.obligation_reducer.wave.v3.2.3",
+  "prompt_id": "D3",
+  "work_id": "w-20260312-203855",
+  "wave_index": 4,
+  "wave_timestamp_utc": "20260512T014500Z",
+  "assignments": [
+    {
+      "subagent_invocation_id": "e32d6051-91ed-492e-bffe-b59a2be0b843",
+      "subagent_task_id": "d3v2-d2-slice-025",
+      "slice_id": "d2-slice-025",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-025.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-025.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": [
+        "advisory_one_subagent_cited_excerpt_length_policy_not_in_pm_d3_kernel"
+      ]
+    }
+  ]
+}

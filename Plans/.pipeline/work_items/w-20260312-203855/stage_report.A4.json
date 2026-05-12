@@ -1,13 +1,12 @@
 {
-  "schema_id": "pm.stage_report.v1",
+  "schema_id": "pm.stage_report.A4.v1",
   "prompt_id": "A4",
-  "prompt_version": "pm.a4.v3.2.2",
+  "prompt_version": "pm.a4.v3.2.3",
+  "timestamp_utc": "20260511T210331Z",
   "work_id": "w-20260312-203855",
   "execution_type": "mechanical_tool_operation",
-  "subagents": {
-    "used": false,
-    "required": false
-  },
+  "status": "COMPLETE",
+  "subagents": { "used": false },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
   "fanout_proof_mechanical": {
     "required_subagent_tasks_total": 0,
@@ -24,22 +23,33 @@
     "omnibus_invocation_detected": false,
     "main_agent_bulk_output_detected": false
   },
+  "real_subagent_proof": {
+    "subagent_runtime_kind": "main_agent_batch",
+    "actual_delegated_model_invocation": false,
+    "subagent_proof_artifact_paths": [],
+    "task_to_invocation_map": {},
+    "invocation_to_task_map": {},
+    "local_worker_outputs_used": [],
+    "main_agent_batching_detected": false,
+    "shell_or_python_worker_misclassified_as_subagent_detected": false,
+    "real_subagent_proof_status": "not_required_mechanical"
+  },
   "deterministic_verification": {
     "inputs_read": [
-      "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json (bounded)",
       "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
       "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
-      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json"
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json",
+      "stage_report.A1.json: not present (skipped per A4 READ)"
     ],
-    "stage_report_A1_present": false,
     "outputs_written": [
       "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
       "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A4.json",
       "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
     ],
-    "semantic_artifacts_inspected": false
+    "section_exit_includes_work_id": true,
+    "next_prompt_singleton": "B0 — Section Entry: Research / Audit Intake v3.2.3"
   },
-  "status": "COMPLETE",
   "next_prompt_request": "B0",
   "next_prompt_name": "Section Entry: Research / Audit Intake"
 }

@@ -1,0 +1,141 @@
+{
+  "schema_id": "pm.obligation_reducer.wave.v3.2.3",
+  "prompt_id": "D3",
+  "work_id": "w-20260312-203855",
+  "wave_index": 3,
+  "wave_timestamp_utc": "20260512T014500Z",
+  "assignments": [
+    {
+      "subagent_invocation_id": "004b9d7e-447b-471f-9d85-150e3f6afea8",
+      "subagent_task_id": "d3v2-d2-slice-017",
+      "slice_id": "d2-slice-017",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-017.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-017.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "06b29a8f-ab86-47e5-a4e6-e1f4ac2e0f42",
+      "subagent_task_id": "d3v2-d2-slice-018",
+      "slice_id": "d2-slice-018",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-018.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-018.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "pipeline_path_in_obligation_exact_paths",
+        "doc_hint_pipeline_as_candidate_doc"
+      ]
+    },
+    {
+      "subagent_invocation_id": "92a14ab2-9a99-436c-a2a3-3c28a06f85ee",
+      "subagent_task_id": "d3v2-d2-slice-019",
+      "slice_id": "d2-slice-019",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-019.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-019.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "pipeline_path_in_obligation_exact_paths_mechanical"
+      ]
+    },
+    {
+      "subagent_invocation_id": "39547247-a2d2-4332-84e3-b24053daa442",
+      "subagent_task_id": "d3v2-d2-slice-020",
+      "slice_id": "d2-slice-020",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-020.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-020.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "slice_uses_exact_excerpt_key_not_exact_source_excerpt"
+      ]
+    },
+    {
+      "subagent_invocation_id": "f1eae1d6-fbb2-42d5-84f5-711c2073819e",
+      "subagent_task_id": "d3v2-d2-slice-021",
+      "slice_id": "d2-slice-021",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-021.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-021.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "354a2b77-0796-47c2-932b-f1ba45c63e73",
+      "subagent_task_id": "d3v2-d2-slice-022",
+      "slice_id": "d2-slice-022",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-022.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-022.json",
+      "status": "complete",
+      "slice_validation_verdict": "pass",
+      "issue_codes": []
+    },
+    {
+      "subagent_invocation_id": "2df3f97a-7ef4-4bef-bbb0-4dfc5abe9f06",
+      "subagent_task_id": "d3v2-d2-slice-023",
+      "slice_id": "d2-slice-023",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-023.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-023.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "verbatim_gate_u2026_doc_hints_and_obligations"
+      ]
+    },
+    {
+      "subagent_invocation_id": "e559a35a-56a2-4d26-829c-0f58b62afa8f",
+      "subagent_task_id": "d3v2-d2-slice-024",
+      "slice_id": "d2-slice-024",
+      "input_bounds": {
+        "primary_input": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-024.json",
+        "secondary_inputs": [
+          "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+        ]
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversion_slices/obligations.d2-slice-024.json",
+      "status": "complete",
+      "slice_validation_verdict": "fail",
+      "issue_codes": [
+        "pipeline_path_in_obligation_exact_paths_mechanical",
+        "validator_excerpt_length_policy_disputed"
+      ]
+    }
+  ]
+}

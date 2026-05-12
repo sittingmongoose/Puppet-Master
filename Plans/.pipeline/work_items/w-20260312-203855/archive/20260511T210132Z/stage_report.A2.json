@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.stage_report.v1",
+  "prompt_id": "A2",
+  "prompt_version": "pm.a2.v3.2.2",
+  "work_id": "w-20260312-203855",
+  "execution_type": "mechanical_tool_operation",
+  "subagents": {
+    "used": false,
+    "required": false
+  },
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "fanout_proof_mechanical": {
+    "required_subagent_tasks_total": 0,
+    "wave_artifacts_total": 0,
+    "wave_artifacts_expected_min": 0,
+    "wave_artifact_paths": [],
+    "completed_task_ids_from_wave_artifacts": [],
+    "pending_task_ids_from_wave_artifacts": [],
+    "blocked_task_ids_from_wave_artifacts": [],
+    "subagent_invocation_ids_from_wave_artifacts": [],
+    "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+    "task_to_invocation_map": {},
+    "invocation_to_task_map": {},
+    "omnibus_invocation_detected": false,
+    "main_agent_bulk_output_detected": false
+  },
+  "deterministic_verification": {
+    "inputs_read": [
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+      "directory listing of work item root (via find)"
+    ],
+    "operations": [
+      "mkdir -p archive/20260511T163023Z",
+      "mv of each stale top-level entry into archive (preserving meta.json, current_state.md, working_ledger.md, archive/, legacy_quarantine/, active/)",
+      "find archive/20260511T163023Z -type f | wc -l → 152"
+    ],
+    "semantic_artifacts_inspected": false,
+    "outputs_written": [
+      "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/current_state.md"
+    ]
+  },
+  "status": "COMPLETE",
+  "next_prompt_request": "A3",
+  "next_prompt_name": "Route State Initializer"
+}

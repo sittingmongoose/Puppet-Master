@@ -1,91 +1,54 @@
 {
-  "schema_id": "pm.stage_report.v3.2.2",
+  "schema_id": "pm.stage_report.v1",
   "prompt_id": "D0",
-  "prompt_version": "pm.d0.v3.2.2",
-  "timestamp_utc": "20260511T165801Z",
-  "section_id": "D",
-  "section_name": "Obligation_Conversion",
+  "prompt_version": "pm.d0.v3.2.3",
+  "timestamp_utc": "20260511T211314Z",
   "work_id": "w-20260312-203855",
-  "status": "complete",
   "execution_type": "mechanical_tool_operation",
-  "execution_type_basis": "Section entry/handoff only; deterministic verification of upstream Section C exit and seed completeness inputs. No semantic reading of full source content performed.",
-  "stage_purpose": "Start Obligation Conversion from Section C handoff: derive work_id, confirm seed completeness pass, gate entry to D1.",
-  "inputs_read": [
-    {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
-      "sha256": "acc19172258cec74002a55fc607ee2bf039579fbbee76ee04b35ebe5dc841df2",
-      "line_count": 28,
-      "read_mode": "full_metadata_json"
-    },
-    {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-      "sha256": "03f76451360b5f3c740d60ec2511ddfe67929b09a8a3dca76a7d56775ffd7e9f",
-      "line_count": 79408,
-      "read_mode": "existence_and_header_only_bounded_sample"
-    },
-    {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
-      "sha256": "f0ffd76f569646ba8c972e7fc50255d80e8ddc7379791a278408d3735057515e",
-      "line_count": 26,
-      "read_mode": "full_metadata_json"
-    }
-  ],
-  "inputs_not_read": {
-    "archive": [],
-    "legacy_quarantine": [],
-    "old_obligation_artifacts": [],
-    "ledger_shards_contents": "not_read_here_deferred_to_D_stages"
-  },
-  "deterministic_verification": {
-    "tool": "stat+sha256sum+wc+json-key-inspection",
-    "checks_performed": [
-      "section_exit_C.json present and status=complete",
-      "section_exit_C.work_id matches selected work_id",
-      "section_exit_C.next_preferred_prompt == D0",
-      "section_exit_C.ledger_preparation_complete == true",
-      "section_exit_C.c4_completeness_status == pass",
-      "ledger_obligation_seed.json present and JSON-shaped (schema_id pm.ledger_obligation_seed.v3.2.2)",
-      "ledger_seed_completeness_report.json present and status == pass",
-      "completeness report: coverage_gaps == 0, coverage_overlaps == 0, text_mismatch_blocks == 0, seed_block_reference_errors == 0",
-      "completeness report: raw_seed_blocks_total == inventory_blocks_total == 5065",
-      "source_ledger_sha256 in exit and seed match: 6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1"
-    ],
-    "checks_passed": 10,
-    "checks_failed": 0
-  },
-  "work_id_derivation": {
-    "method": "section_exit_C.json work_id field",
-    "section_exit_C_present": true,
-    "section_exit_C_count_in_pipeline": 1,
-    "section_exit_C_work_id": "w-20260312-203855",
-    "selected_work_id": "w-20260312-203855",
-    "conflict_detected": false
-  },
+  "status": "complete",
   "subagents": {
-    "used": false,
-    "required": false,
-    "required_basis": "execution_type=mechanical_tool_operation; section entry/handoff with deterministic file checks only.",
-    "fanout_proof_status": "not_applicable_mechanical_tool_operation"
+    "used": false
   },
-  "live_doc_writes": [],
-  "artifacts_written": [
-    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_D_report.json",
-    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.D0.json"
-  ],
-  "final_gate": {
-    "name": "active_seed_inputs_present_and_complete",
-    "result": "pass",
-    "checks": [
-      "section_exit_C.json present and complete",
-      "ledger_obligation_seed.json present",
-      "ledger_seed_completeness_report.json status=pass"
-    ]
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "deterministic_verification": {
+    "inputs_read_paths": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+    ],
+    "section_exit_C_status": "complete",
+    "c4_gate_status": "pass",
+    "ledger_seed_completeness_status": "pass",
+    "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.3",
+    "raw_blocks_len_from_json_parse": 4880,
+    "expected_raw_seed_blocks_total_from_report": 4880,
+    "counts_match": true,
+    "outputs_written_paths": [
+      "Plans/.pipeline/work_items/w-20260312-203855/section_entry_D_report.json",
+      "Plans/.pipeline/work_items/w-20260312-203855/stage_report.D0.json"
+    ],
+    "gate_pass": true
   },
-  "blockers": [],
-  "next_prompt_request": "Paste prompt D1 — Obligation Worklist Builder v3.2.2.",
-  "notes": [
-    "execution_type recorded per v3.2.2 stage classification rule.",
-    "Section C exit confirms ledger_preparation_complete=true and semantic_seed_groups_required=false; obligation extraction begins in D1 from ledger_obligation_seed.json.",
-    "No old obligation artifacts read; no archive/stale/quarantine reads performed."
-  ]
+  "subagent_runtime_kind": "not_required_mechanical",
+  "actual_delegated_model_invocation": false,
+  "subagent_proof_artifact_paths": [],
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "local_worker_outputs_used": [],
+  "main_agent_batching_detected": false,
+  "shell_or_python_worker_misclassified_as_subagent_detected": false,
+  "real_subagent_proof_status": "not_required_mechanical",
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "distinct_subagent_invocations_total": 0,
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "summary": "Section D entry: work_id from section_exit_C; C4 seed completeness pass; obligation seed present with 4880 raw_blocks matching report; section_entry_D_report.json and stage_report.D0.json written; next D1."
 }

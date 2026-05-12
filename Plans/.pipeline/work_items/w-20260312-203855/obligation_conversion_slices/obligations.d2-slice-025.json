@@ -1,0 +1,426 @@
+{
+  "schema_id": "pm.obligation_conversion_slice.v3.2.3",
+  "prompt_id": "D2",
+  "work_id": "w-20260312-203855",
+  "slice_id": "d2-slice-025",
+  "source_group_ids_represented": [
+    "wg-d1-T024-01"
+  ],
+  "source_block_ids_represented": [
+    "lblock-004870",
+    "lblock-004871",
+    "lblock-004872",
+    "lblock-004873",
+    "lblock-004874",
+    "lblock-004875",
+    "lblock-004876",
+    "lblock-004877",
+    "lblock-004878",
+    "lblock-004879",
+    "lblock-004880"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0091",
+    "shard-0092"
+  ],
+  "source_line_ranges_represented": [
+    {
+      "source_shard_id": "shard-0091",
+      "start_line": 18069,
+      "end_line": 18200
+    },
+    {
+      "source_shard_id": "shard-0092",
+      "start_line": 18201,
+      "end_line": 18244
+    }
+  ],
+  "blocks_observed": 11,
+  "blocks_converted": 5,
+  "blocks_excluded": 6,
+  "blocks_blocked": 0,
+  "obligations": [
+    {
+      "obligation_id": "obl-d2-s025-001",
+      "obligation_text": "- timestamp_utc: 2026-04-16T04:12:47.793Z\n- stage: Audit Mode\n- finding_type: contract\n- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements.\n- exact_items:\n  - `gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.\n  - `gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.\n  - Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.\n  - Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.\n  - Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.\n- impacted_docs:\n  - `Plans/storage-plan.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Glossary.md`\n  - `Plans/assistant-chat-design.md`\n  - `Plans/usage-feature.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/FinalGUISpec.md`\n- evidence_refs:\n  - `Plans/storage-plan.md:1389-1396`\n  - `Plans/Orchestrator_Page.md:171-171`\n  - `Plans/Orchestrator_Page.md:209-209`\n  - `Plans/Orchestrator_Page.md:230-230`\n  - `Plans/Orchestrator_Page.md:270-270`\n  - `Plans/Orchestrator_Page.md:437-437`\n  - `Plans/Glossary.md:30-85`\n  - `Plans/assistant-chat-design.md:808-818`\n  - `Plans/assistant-chat-design.md:1784`\n  - `Plans/assistant-chat-design.md:2233-2240`\n  - `Plans/usage-feature.md:346-382`\n  - `Plans/usage-feature.md:694-701`\n  - `Plans/UI_Command_Catalog.md:617-623`\n  - `Plans/FinalGUISpec.md:2924-2928`\n- supersedes_prior: yes\n- notes:\n  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence.\n  - The stop condition for this invocation is satisfied because the follow-up sweeps after the wave-one refinements produced consecutive zero-finding results.\n  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004870"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18069,
+          "end_line": 18106
+        }
+      ],
+      "exact_source_excerpt": "- timestamp_utc: 2026-04-16T04:12:47.793Z\n- stage: Audit Mode\n- finding_type: contract\n- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements.\n- exact_items:\n  - `gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.\n  - `gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.\n  - Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.\n  - Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.\n  - Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.\n- impacted_docs:\n  - `Plans/storage-plan.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Glossary.md`\n  - `Plans/assistant-chat-design.md`\n  - `Plans/usage-feature.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/FinalGUISpec.md`\n- evidence_refs:\n  - `Plans/storage-plan.md:1389-1396`\n  - `Plans/Orchestrator_Page.md:171-171`\n  - `Plans/Orchestrator_Page.md:209-209`\n  - `Plans/Orchestrator_Page.md:230-230`\n  - `Plans/Orchestrator_Page.md:270-270`\n  - `Plans/Orchestrator_Page.md:437-437`\n  - `Plans/Glossary.md:30-85`\n  - `Plans/assistant-chat-design.md:808-818`\n  - `Plans/assistant-chat-design.md:1784`\n  - `Plans/assistant-chat-design.md:2233-2240`\n  - `Plans/usage-feature.md:346-382`\n  - `Plans/usage-feature.md:694-701`\n  - `Plans/UI_Command_Catalog.md:617-623`\n  - `Plans/FinalGUISpec.md:2924-2928`\n- supersedes_prior: yes\n- notes:\n  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence.\n  - The stop condition for this invocation is satisfied because the follow-up sweeps after the wave-one refinements produced consecutive zero-finding results.\n  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [
+        "canon_inventory.json"
+      ],
+      "enum_names_mentioned": [
+        "gap-003",
+        "Canonical records",
+        "Canonical records for this feature set...",
+        "canonical_record.v1:{project_id}:{record_id}",
+        "gap-006",
+        "Ledger Condenser"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s025-002",
+      "obligation_text": "- timestamp_utc: 2026-04-16T04:27:38.269Z\n- stage: Audit Mode\n- finding_type: contract\n- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items.\n- exact_items:\n  - `gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading.\n  - `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.\n  - `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.\n  - Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window`, `result_id`, `blocked_notice`, `action_available`, `No remaining gaps`) and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.\n  - Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.\n- impacted_docs:\n  - `Plans/Contracts_V0.md`\n  - `Plans/Runtime_Artifacts_Panel.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/storage-plan.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/FinalGUISpec.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/assistant-chat-design.md`\n- evidence_refs:\n  - `Plans/Contracts_V0.md:55-60`\n  - `Plans/Contracts_V0.md:800-807`\n  - `Plans/Runtime_Artifacts_Panel.md:57-65`\n  - `Plans/Orchestrator_Page.md:171-171`\n  - `Plans/Orchestrator_Page.md:209-209`\n  - `Plans/Orchestrator_Page.md:230-230`\n  - `Plans/Orchestrator_Page.md:270-270`\n  - `Plans/storage-plan.md:1616-1625`\n  - `Plans/WorktreeGitImprovement.md:134-150`\n  - `Plans/FinalGUISpec.md:2092-2092`\n  - `Plans/FinalGUISpec.md:2736-2739`\n  - `Plans/UI_Command_Catalog.md:617-623`\n  - `Plans/assistant-chat-design.md:808-818`\n  - `Plans/assistant-chat-design.md:1784-1784`\n- supersedes_prior: yes\n- notes:\n  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two.\n  - The stop condition for this invocation is satisfied by two consecutive zero-finding follow-up waves after the wave-one refinements.\n  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004873"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18109,
+          "end_line": 18147
+        }
+      ],
+      "exact_source_excerpt": "- timestamp_utc: 2026-04-16T04:27:38.269Z\n- stage: Audit Mode\n- finding_type: contract\n- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items.\n- exact_items:\n  - `gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading.\n  - `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.\n  - `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.\n  - Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window`, `result_id`, `blocked_notice`, `action_available`, `No remaining gaps`) and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.\n  - Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.\n- impacted_docs:\n  - `Plans/Contracts_V0.md`\n  - `Plans/Runtime_Artifacts_Panel.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/storage-plan.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/FinalGUISpec.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/assistant-chat-design.md`\n- evidence_refs:\n  - `Plans/Contracts_V0.md:55-60`\n  - `Plans/Contracts_V0.md:800-807`\n  - `Plans/Runtime_Artifacts_Panel.md:57-65`\n  - `Plans/Orchestrator_Page.md:171-171`\n  - `Plans/Orchestrator_Page.md:209-209`\n  - `Plans/Orchestrator_Page.md:230-230`\n  - `Plans/Orchestrator_Page.md:270-270`\n  - `Plans/storage-plan.md:1616-1625`\n  - `Plans/WorktreeGitImprovement.md:134-150`\n  - `Plans/FinalGUISpec.md:2092-2092`\n  - `Plans/FinalGUISpec.md:2736-2739`\n  - `Plans/UI_Command_Catalog.md:617-623`\n  - `Plans/assistant-chat-design.md:808-818`\n  - `Plans/assistant-chat-design.md:1784-1784`\n- supersedes_prior: yes\n- notes:\n  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two.\n  - The stop condition for this invocation is satisfied by two consecutive zero-finding follow-up waves after the wave-one refinements.\n  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [
+        "canon_inventory.json"
+      ],
+      "enum_names_mentioned": [
+        "gap-003",
+        "Canonical records",
+        "gap-004",
+        "gap-007",
+        "restore points",
+        "detached_window",
+        "result_id",
+        "blocked_notice",
+        "action_available",
+        "No remaining gaps",
+        "Ledger Condenser"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s025-003",
+      "obligation_text": "- timestamp_utc: 2026-04-16T21:43:01.694Z\n- stage: Audit Mode\n- finding_type: contract\n- summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`.\n- exact_items:\n  - Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict.\n  - Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections.\n  - Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.\n  - A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced.\n  - Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family.\n- impacted_docs:\n  - `Plans/Contracts_V0.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/assistant-chat-design.md`\n  - `Plans/usage-feature.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/Tools.md`\n  - `Plans/storage-plan.md`\n  - `Plans/Runtime_Artifacts_Panel.md`\n  - `Plans/Project_Output_Artifacts.md`\n  - `Plans/interview-subagent-integration.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Glossary.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/WorktreeGitImprovement.md`\n- evidence_refs:\n  - `Plans/Contracts_V0.md:50-58`\n  - `Plans/Contracts_V0.md:800-806`\n  - `Plans/storage-plan.md:323-337`\n  - `Plans/storage-plan.md:941-954`\n  - `Plans/storage-plan.md:1389-1396`\n  - `Plans/Runtime_Artifacts_Panel.md:57-65`\n  - `Plans/Glossary.md:30-90`\n  - `Plans/Orchestrator_Page.md:209-230`\n  - `Plans/Orchestrator_Page.md:270-270`\n  - `Plans/assistant-chat-design.md:814-818`\n  - `Plans/assistant-chat-design.md:1784-1784`\n  - `Plans/UI_Command_Catalog.md:617-623`\n  - `Plans/WorktreeGitImprovement.md:142-144`\n  - `Plans/GitHub_Integration.md:258-258`\n  - `Plans/usage-feature.md:346-382`\n- supersedes_prior: yes\n- notes:\n  - This invocation kept `planning_blockers = 0`, `fix_backlog_items = 8`, `total_gaps = 8`, `docs_affected = 20`, and `underlying_gap_evidence_count = 62`.\n  - The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.\n  - Because the inventory is stable and planning blockers remain zero, the next useful stage is `Ledger Condenser`.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004876"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18150,
+          "end_line": 18196
+        }
+      ],
+      "exact_source_excerpt": "- timestamp_utc: 2026-04-16T21:43:01.694Z\n- stage: Audit Mode\n- finding_type: contract\n- summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`.\n- exact_items:\n  - Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict.\n  - Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections.\n  - Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.\n  - A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced.\n  - Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family.\n- impacted_docs:\n  - `Plans/Contracts_V0.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/assistant-chat-design.md`\n  - `Plans/usage-feature.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/Tools.md`\n  - `Plans/storage-plan.md`\n  - `Plans/Runtime_Artifacts_Panel.md`\n  - `Plans/Project_Output_Artifacts.md`\n  - `Plans/interview-subagent-integration.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Glossary.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/WorktreeGitImprovement.md`\n- evidence_refs:\n  - `Plans/Contracts_V0.md:50-58`\n  - `Plans/Contracts_V0.md:800-806`\n  - `Plans/storage-plan.md:323-337`\n  - `Plans/storage-plan.md:941-954`\n  - `Plans/storage-plan.md:1389-1396`\n  - `Plans/Runtime_Artifacts_Panel.md:57-65`\n  - `Plans/Glossary.md:30-90`\n  - `Plans/Orchestrator_Page.md:209-230`\n  - `Plans/Orchestrator_Page.md:270-270`\n  - `Plans/assistant-chat-design.md:814-818`\n  - `Plans/assistant-chat-design.md:1784-1784`\n  - `Plans/UI_Command_Catalog.md:617-623`\n  - `Plans/WorktreeGitImprovement.md:142-144`\n  - `Plans/GitHub_Integration.md:258-258`\n  - `Plans/usage-feature.md:346-382`\n- supersedes_prior: yes\n- notes:\n  - This invocation kept `planning_blockers = 0`, `fix_backlog_items = 8`, `total_gaps = 8`, `docs_affected = 20`, and `underlying_gap_evidence_count = 62`.\n  - The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.\n  - Because the inventory is stable and planning blockers remain zero, the next useful stage is `Ledger Condenser`.",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "pm.open_gaps.v3",
+        "blocker_type=planning",
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "5.1B",
+        "execution_unit_context",
+        "detached_window",
+        "result_id",
+        "blocked_notice",
+        "gap-003",
+        "gap-004",
+        "gap-008",
+        "orchestrator.project_state.{project_id}",
+        "gap-006",
+        "gap-007",
+        "planning_blockers = 0",
+        "fix_backlog_items = 8",
+        "total_gaps = 8",
+        "docs_affected = 20",
+        "underlying_gap_evidence_count = 62",
+        "planning",
+        "Ledger Condenser"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s025-004",
+      "obligation_text": "- timestamp_utc: 2026-04-23T21:50:53Z\n- stage: Audit Mode",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004879"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18199,
+          "end_line": 18200
+        }
+      ],
+      "exact_source_excerpt": "- timestamp_utc: 2026-04-23T21:50:53Z\n- stage: Audit Mode",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s025-005",
+      "obligation_text": "- finding_type: contract\n- summary: Audited the three remaining unresolved transfer-coverage blockers (`cov-034`, `cov-511`, `cov-526`) against the live Plans docs and confirmed that all three remain unresolved owner-definition gaps rather than missing evidence-collection gaps.\n- exact_items:\n  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.\n  - `cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `Plans/Models_System.md:58-80` defines run/persona/surface/default priority only, `Plans/Executor_Protocol.md:134-178` defines `DispatchContext.provider_id` / `model_id` without precedence rules, and `Plans/WorktreeGitImprovement.md:78-161` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `working_ledger.md:L1030`, `working_ledger.md:L1035-L1036`, and `working_ledger.md:L1283-L1290`.\n  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.\n- impacted_docs:\n  - `Plans/storage-plan.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/GUI_Rebuild_Requirements_Checklist.md`\n  - `Plans/Models_System.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/orchestrator-subagent-integration.md`\n  - `Plans/Glossary.md`\n  - `Plans/GitHub_Integration.md`\n- evidence_refs:\n  - `working_ledger.md:L806`\n  - `working_ledger.md:L1030`\n  - `working_ledger.md:L1035-L1036`\n  - `working_ledger.md:L1283-L1290`\n  - `working_ledger.md:L1539`\n  - `working_ledger.md:L3070-L3092`\n  - `working_ledger.md:L3170-L3182`\n  - `working_ledger.md:L5990-L6015`\n  - `working_ledger.md:L6442-L6490`\n  - `Plans/storage-plan.md:294`\n  - `Plans/Contracts_V0.md:649`\n  - `Plans/Orchestrator_Page.md:12-13`\n  - `Plans/GUI_Rebuild_Requirements_Checklist.md:31`\n  - `Plans/Models_System.md:58-80`\n  - `Plans/Executor_Protocol.md:134-178`\n  - `Plans/WorktreeGitImprovement.md:62-66`\n  - `Plans/WorktreeGitImprovement.md:78-80`\n  - `Plans/Crosswalk.md:88-94`\n  - `Plans/orchestrator-subagent-integration.md:28-41`\n- supersedes_prior: yes\n- notes:\n  - This invocation closes the bounded audit on the three deferred coverage blockers left after doc-discovery resolution (`17` resolved, `3` unresolved).\n  - The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change.\n  - Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.\n  - The ledger is ready for condensation.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004880"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18201,
+          "end_line": 18244
+        }
+      ],
+      "exact_source_excerpt": "- finding_type: contract\n- summary: Audited the three remaining unresolved transfer-coverage blockers (`cov-034`, `cov-511`, `cov-526`) against the live Plans docs and confirmed that all three remain unresolved owner-definition gaps rather than missing evidence-collection gaps.\n- exact_items:\n  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.\n  - `cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `Plans/Models_System.md:58-80` defines run/persona/surface/default priority only, `Plans/Executor_Protocol.md:134-178` defines `DispatchContext.provider_id` / `model_id` without precedence rules, and `Plans/WorktreeGitImprovement.md:78-161` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `working_ledger.md:L1030`, `working_ledger.md:L1035-L1036`, and `working_ledger.md:L1283-L1290`.\n  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.\n- impacted_docs:\n  - `Plans/storage-plan.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/GUI_Rebuild_Requirements_Checklist.md`\n  - `Plans/Models_System.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/orchestrator-subagent-integration.md`\n  - `Plans/Glossary.md`\n  - `Plans/GitHub_Integration.md`\n- evidence_refs:\n  - `working_ledger.md:L806`\n  - `working_ledger.md:L1030`\n  - `working_ledger.md:L1035-L1036`\n  - `working_ledger.md:L1283-L1290`\n  - `working_ledger.md:L1539`\n  - `working_ledger.md:L3070-L3092`\n  - `working_ledger.md:L3170-L3182`\n  - `working_ledger.md:L5990-L6015`\n  - `working_ledger.md:L6442-L6490`\n  - `Plans/storage-plan.md:294`\n  - `Plans/Contracts_V0.md:649`\n  - `Plans/Orchestrator_Page.md:12-13`\n  - `Plans/GUI_Rebuild_Requirements_Checklist.md:31`\n  - `Plans/Models_System.md:58-80`\n  - `Plans/Executor_Protocol.md:134-178`\n  - `Plans/WorktreeGitImprovement.md:62-66`\n  - `Plans/WorktreeGitImprovement.md:78-80`\n  - `Plans/Crosswalk.md:88-94`\n  - `Plans/orchestrator-subagent-integration.md:28-41`\n- supersedes_prior: yes\n- notes:\n  - This invocation closes the bounded audit on the three deferred coverage blockers left after doc-discovery resolution (`17` resolved, `3` unresolved).\n  - The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change.\n  - Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.\n  - The ledger is ready for condensation.",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "cov-034",
+        "cov-511",
+        "cov-526",
+        "obl-016",
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed",
+        "resolution_kind",
+        "accepted_risk",
+        "concern_record.v1",
+        "concern",
+        "obl-215",
+        "DispatchContext.provider_id",
+        "model_id",
+        "obl-222",
+        "17",
+        "3"
+      ]
+    }
+  ],
+  "open_questions": [],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-004871",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004871"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18107,
+          "end_line": 18107
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-004872",
+      "reason": "Structural `## Entry` heading scaffold only; substantive audit narrative is carried by the following block.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004872"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18108,
+          "end_line": 18108
+        }
+      ],
+      "exact_source_excerpt": "## Entry"
+    },
+    {
+      "block_id": "lblock-004874",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004874"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18148,
+          "end_line": 18148
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-004875",
+      "reason": "Structural `## Entry` heading scaffold only; substantive audit narrative is carried by the following block.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004875"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18149,
+          "end_line": 18149
+        }
+      ],
+      "exact_source_excerpt": "## Entry"
+    },
+    {
+      "block_id": "lblock-004877",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004877"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18197,
+          "end_line": 18197
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-004878",
+      "reason": "Structural `## Entry` heading scaffold only; substantive audit narrative is carried by the following block.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T024-01"
+      ],
+      "source_block_ids": [
+        "lblock-004878"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 18198,
+          "end_line": 18198
+        }
+      ],
+      "exact_source_excerpt": "## Entry"
+    }
+  ],
+  "blocked_blocks": [],
+  "conversion_notes": [
+    "Slice d2-slice-025 is the terminal D2 partition for wg-d1-T024-01 (builder task d1-T024): bounded Audit Mode contract findings plus a final transfer-coverage closure pass spanning shard-0091..shard-0092.",
+    "Blank separators and `## Entry` scaffolds were classified as non_material excluded_blocks; substantive YAML-like audit entries were preserved verbatim via exact_source_excerpt.",
+    "Paths and inline code tokens were split into exact_paths_mentioned, schema_ids_mentioned, and enum_names_mentioned for downstream doc-hint preservation."
+  ],
+  "subagent_execution": {
+    "subagent_task_id": "d2-slice-025",
+    "status": "complete"
+  },
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "every_obligation_has_source_linkage": true,
+    "open_questions_not_answered_silently": true,
+    "doc_hints_preserved_separately": true
+  },
+  "status": "complete"
+}

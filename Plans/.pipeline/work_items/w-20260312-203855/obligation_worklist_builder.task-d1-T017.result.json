@@ -1,0 +1,431 @@
+{
+  "schema_id": "pm.obligation_worklist_builder.task_result.v3.2.3",
+  "subagent_task_id": "d1-T017",
+  "status": "complete",
+  "work_groups": [
+    {
+      "work_group_id": "wg-d1-T017-01",
+      "source_block_ids": [
+        "lblock-003286",
+        "lblock-003287",
+        "lblock-003288",
+        "lblock-003289",
+        "lblock-003290",
+        "lblock-003291",
+        "lblock-003292",
+        "lblock-003293",
+        "lblock-003294",
+        "lblock-003295",
+        "lblock-003296",
+        "lblock-003297",
+        "lblock-003298",
+        "lblock-003299",
+        "lblock-003300",
+        "lblock-003301",
+        "lblock-003302",
+        "lblock-003303",
+        "lblock-003304",
+        "lblock-003305",
+        "lblock-003306",
+        "lblock-003307",
+        "lblock-003308",
+        "lblock-003309",
+        "lblock-003310"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0064",
+          "start_line": 12713,
+          "end_line": 12790
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "max_source_lines": 78,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-01.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-02",
+      "source_block_ids": [
+        "lblock-003311",
+        "lblock-003312",
+        "lblock-003313",
+        "lblock-003314",
+        "lblock-003315",
+        "lblock-003316",
+        "lblock-003317",
+        "lblock-003318",
+        "lblock-003319",
+        "lblock-003320",
+        "lblock-003321",
+        "lblock-003322",
+        "lblock-003323",
+        "lblock-003324",
+        "lblock-003325",
+        "lblock-003326",
+        "lblock-003327",
+        "lblock-003328",
+        "lblock-003329",
+        "lblock-003330",
+        "lblock-003331",
+        "lblock-003332",
+        "lblock-003333",
+        "lblock-003334",
+        "lblock-003335"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0064",
+          "start_line": 12791,
+          "end_line": 12800
+        },
+        {
+          "source_shard_id": "shard-0065",
+          "start_line": 12801,
+          "end_line": 12869
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0065"
+      ],
+      "max_source_lines": 79,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-02.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-03",
+      "source_block_ids": [
+        "lblock-003336",
+        "lblock-003337",
+        "lblock-003338",
+        "lblock-003339",
+        "lblock-003340",
+        "lblock-003341",
+        "lblock-003342",
+        "lblock-003343",
+        "lblock-003344",
+        "lblock-003345",
+        "lblock-003346",
+        "lblock-003347",
+        "lblock-003348",
+        "lblock-003349",
+        "lblock-003350",
+        "lblock-003351",
+        "lblock-003352",
+        "lblock-003353",
+        "lblock-003354",
+        "lblock-003355",
+        "lblock-003356",
+        "lblock-003357",
+        "lblock-003358",
+        "lblock-003359",
+        "lblock-003360"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0065",
+          "start_line": 12870,
+          "end_line": 12939
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "max_source_lines": 70,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-03.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-04",
+      "source_block_ids": [
+        "lblock-003361",
+        "lblock-003362",
+        "lblock-003363",
+        "lblock-003364",
+        "lblock-003365",
+        "lblock-003366",
+        "lblock-003367",
+        "lblock-003368",
+        "lblock-003369",
+        "lblock-003370",
+        "lblock-003371",
+        "lblock-003372",
+        "lblock-003373",
+        "lblock-003374",
+        "lblock-003375",
+        "lblock-003376",
+        "lblock-003377",
+        "lblock-003378",
+        "lblock-003379",
+        "lblock-003380",
+        "lblock-003381",
+        "lblock-003382",
+        "lblock-003383",
+        "lblock-003384",
+        "lblock-003385"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0065",
+          "start_line": 12940,
+          "end_line": 13000
+        },
+        {
+          "source_shard_id": "shard-0066",
+          "start_line": 13001,
+          "end_line": 13038
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0065",
+        "shard-0066"
+      ],
+      "max_source_lines": 99,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-04.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-05",
+      "source_block_ids": [
+        "lblock-003386",
+        "lblock-003387",
+        "lblock-003388",
+        "lblock-003389",
+        "lblock-003390",
+        "lblock-003391",
+        "lblock-003392",
+        "lblock-003393",
+        "lblock-003394",
+        "lblock-003395",
+        "lblock-003396",
+        "lblock-003397",
+        "lblock-003398",
+        "lblock-003399",
+        "lblock-003400",
+        "lblock-003401",
+        "lblock-003402",
+        "lblock-003403",
+        "lblock-003404",
+        "lblock-003405",
+        "lblock-003406",
+        "lblock-003407",
+        "lblock-003408",
+        "lblock-003409",
+        "lblock-003410"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0066",
+          "start_line": 13039,
+          "end_line": 13098
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "max_source_lines": 60,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-05.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-06",
+      "source_block_ids": [
+        "lblock-003411",
+        "lblock-003412",
+        "lblock-003413",
+        "lblock-003414",
+        "lblock-003415",
+        "lblock-003416",
+        "lblock-003417",
+        "lblock-003418",
+        "lblock-003419",
+        "lblock-003420",
+        "lblock-003421",
+        "lblock-003422",
+        "lblock-003423",
+        "lblock-003424",
+        "lblock-003425",
+        "lblock-003426",
+        "lblock-003427",
+        "lblock-003428",
+        "lblock-003429",
+        "lblock-003430",
+        "lblock-003431",
+        "lblock-003432",
+        "lblock-003433",
+        "lblock-003434",
+        "lblock-003435"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0066",
+          "start_line": 13099,
+          "end_line": 13200
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "max_source_lines": 102,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-06.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-07",
+      "source_block_ids": [
+        "lblock-003436",
+        "lblock-003437",
+        "lblock-003438",
+        "lblock-003439",
+        "lblock-003440",
+        "lblock-003441",
+        "lblock-003442",
+        "lblock-003443",
+        "lblock-003444",
+        "lblock-003445",
+        "lblock-003446",
+        "lblock-003447",
+        "lblock-003448",
+        "lblock-003449",
+        "lblock-003450",
+        "lblock-003451",
+        "lblock-003452",
+        "lblock-003453",
+        "lblock-003454",
+        "lblock-003455",
+        "lblock-003456",
+        "lblock-003457",
+        "lblock-003458",
+        "lblock-003459",
+        "lblock-003460"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0067",
+          "start_line": 13201,
+          "end_line": 13294
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "max_source_lines": 94,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-07.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-08",
+      "source_block_ids": [
+        "lblock-003461",
+        "lblock-003462",
+        "lblock-003463",
+        "lblock-003464",
+        "lblock-003465",
+        "lblock-003466",
+        "lblock-003467",
+        "lblock-003468",
+        "lblock-003469",
+        "lblock-003470",
+        "lblock-003471",
+        "lblock-003472",
+        "lblock-003473",
+        "lblock-003474",
+        "lblock-003475",
+        "lblock-003476",
+        "lblock-003477",
+        "lblock-003478",
+        "lblock-003479",
+        "lblock-003480",
+        "lblock-003481",
+        "lblock-003482",
+        "lblock-003483",
+        "lblock-003484",
+        "lblock-003485"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0067",
+          "start_line": 13295,
+          "end_line": 13400
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "max_source_lines": 106,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-08.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-09",
+      "source_block_ids": [
+        "lblock-003486",
+        "lblock-003487",
+        "lblock-003488",
+        "lblock-003489",
+        "lblock-003490",
+        "lblock-003491",
+        "lblock-003492",
+        "lblock-003493",
+        "lblock-003494",
+        "lblock-003495",
+        "lblock-003496",
+        "lblock-003497",
+        "lblock-003498",
+        "lblock-003499",
+        "lblock-003500",
+        "lblock-003501",
+        "lblock-003502",
+        "lblock-003503",
+        "lblock-003504",
+        "lblock-003505",
+        "lblock-003506",
+        "lblock-003507",
+        "lblock-003508",
+        "lblock-003509",
+        "lblock-003510"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0068",
+          "start_line": 13401,
+          "end_line": 13476
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "max_source_lines": 76,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-09.json"
+    },
+    {
+      "work_group_id": "wg-d1-T017-10",
+      "source_block_ids": [
+        "lblock-003511",
+        "lblock-003512",
+        "lblock-003513",
+        "lblock-003514",
+        "lblock-003515",
+        "lblock-003516",
+        "lblock-003517",
+        "lblock-003518",
+        "lblock-003519",
+        "lblock-003520",
+        "lblock-003521",
+        "lblock-003522",
+        "lblock-003523",
+        "lblock-003524",
+        "lblock-003525",
+        "lblock-003526"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0068",
+          "start_line": 13477,
+          "end_line": 13507
+        }
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "max_source_lines": 31,
+      "expected_output_path": "Plans/.pipeline/work_items/w-20260312-203855/obligation_conversions/wg-d1-T017-10.json"
+    }
+  ],
+  "raw_blocks_excluded_non_material": []
+}

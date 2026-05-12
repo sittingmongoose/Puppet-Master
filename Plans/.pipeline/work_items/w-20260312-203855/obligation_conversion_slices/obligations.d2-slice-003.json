@@ -1,0 +1,4616 @@
+{
+  "schema_id": "pm.obligation_conversion_slice.v3.2.3",
+  "prompt_id": "D2",
+  "prompt_version": "pm.d2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "slice_id": "d2-slice-003",
+  "source_group_ids_represented": [
+    "wg-d1-T003-01",
+    "wg-d1-T003-02",
+    "wg-d1-T003-03",
+    "wg-d1-T003-04",
+    "wg-d1-T003-05",
+    "wg-d1-T003-06",
+    "wg-d1-T003-07",
+    "wg-d1-T003-08",
+    "wg-d1-T003-09",
+    "wg-d1-T003-10",
+    "wg-d1-T003-11",
+    "wg-d1-T003-12",
+    "wg-d1-T003-13",
+    "wg-d1-T003-14",
+    "wg-d1-T003-15"
+  ],
+  "source_block_ids_represented": [
+    "lblock-000199",
+    "lblock-000200",
+    "lblock-000201",
+    "lblock-000202",
+    "lblock-000203",
+    "lblock-000204",
+    "lblock-000205",
+    "lblock-000206",
+    "lblock-000207",
+    "lblock-000208",
+    "lblock-000209",
+    "lblock-000210",
+    "lblock-000211",
+    "lblock-000212",
+    "lblock-000213",
+    "lblock-000214",
+    "lblock-000215",
+    "lblock-000216",
+    "lblock-000217",
+    "lblock-000218",
+    "lblock-000219",
+    "lblock-000220",
+    "lblock-000221",
+    "lblock-000222",
+    "lblock-000223",
+    "lblock-000224",
+    "lblock-000225",
+    "lblock-000226",
+    "lblock-000227",
+    "lblock-000228",
+    "lblock-000229",
+    "lblock-000230",
+    "lblock-000231",
+    "lblock-000232",
+    "lblock-000233",
+    "lblock-000234",
+    "lblock-000235",
+    "lblock-000236",
+    "lblock-000237",
+    "lblock-000238",
+    "lblock-000239",
+    "lblock-000240",
+    "lblock-000241",
+    "lblock-000242",
+    "lblock-000243",
+    "lblock-000244",
+    "lblock-000245",
+    "lblock-000246",
+    "lblock-000247",
+    "lblock-000248",
+    "lblock-000249",
+    "lblock-000250",
+    "lblock-000251",
+    "lblock-000252",
+    "lblock-000253",
+    "lblock-000254"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0009",
+    "shard-0010"
+  ],
+  "source_line_ranges_represented": [
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1601,
+      "end_line": 1608
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1609,
+      "end_line": 1621
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1622,
+      "end_line": 1636
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1637,
+      "end_line": 1662
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1663,
+      "end_line": 1692
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1693,
+      "end_line": 1712
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1713,
+      "end_line": 1714
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1715,
+      "end_line": 1761
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1762,
+      "end_line": 1779
+    },
+    {
+      "source_shard_id": "shard-0009",
+      "start_line": 1780,
+      "end_line": 1800
+    },
+    {
+      "source_shard_id": "shard-0010",
+      "start_line": 1801,
+      "end_line": 1801
+    },
+    {
+      "source_shard_id": "shard-0010",
+      "start_line": 1802,
+      "end_line": 1815
+    },
+    {
+      "source_shard_id": "shard-0010",
+      "start_line": 1816,
+      "end_line": 1829
+    },
+    {
+      "source_shard_id": "shard-0010",
+      "start_line": 1830,
+      "end_line": 1861
+    },
+    {
+      "source_shard_id": "shard-0010",
+      "start_line": 1862,
+      "end_line": 1891
+    },
+    {
+      "source_shard_id": "shard-0010",
+      "start_line": 1892,
+      "end_line": 1911
+    }
+  ],
+  "blocks_observed": 56,
+  "blocks_converted": 14,
+  "blocks_excluded": 42,
+  "blocks_blocked": 0,
+  "obligations": [
+    {
+      "obligation_id": "obl-d2s003-001",
+      "obligation_text": "  - GPT-5.4 repeatedly found newer guidance saying runtime truth belongs in seglog/redb/projections instead.  - **Primary schemas stop at node-level modeling.**   - Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work packa…",
+      "obligation_category": "fact_observation",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-01"
+      ],
+      "source_block_ids": [
+        "lblock-000199"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1601,
+          "end_line": 1607
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000199",
+            "block_id": "lblock-000199",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1601,
+              "end_line": 1607
+            },
+            "verbatim_seed_excerpt": "  - GPT-5.4 repeatedly found newer guidance saying runtime truth belongs in seglog/redb/projections instead.\n\n- **Primary schemas stop at node-level modeling.**\n  - Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - GPT-5.4 repeatedly found newer guidance saying runtime truth belongs in seglog/redb/projections instead.\n\n- **Primary schemas stop at node-level modeling.**\n  - Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-002",
+      "obligation_text": "- **Storage/event keys are still too thin.**   - Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-01"
+      ],
+      "source_block_ids": [
+        "lblock-000199"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1601,
+          "end_line": 1607
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000199",
+            "block_id": "lblock-000199",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1601,
+              "end_line": 1607
+            },
+            "verbatim_seed_excerpt": "- **Storage/event keys are still too thin.**\n  - Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- **Storage/event keys are still too thin.**\n  - Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-003",
+      "obligation_text": "- **Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts.",
+      "obligation_category": "fact_observation",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-02"
+      ],
+      "source_block_ids": [
+        "lblock-000203"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1611,
+          "end_line": 1620
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000203",
+            "block_id": "lblock-000203",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1611,
+              "end_line": 1620
+            },
+            "verbatim_seed_excerpt": "- **Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- **Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-004",
+      "obligation_text": "- **Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.  - **Fallback…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-02"
+      ],
+      "source_block_ids": [
+        "lblock-000203"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1611,
+          "end_line": 1620
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000203",
+            "block_id": "lblock-000203",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1611,
+              "end_line": 1620
+            },
+            "verbatim_seed_excerpt": "- **Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.\n\n- **Fallback behavior is contradictory in core docs.**"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- **Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`.\n\n- **Fallback behavior is contradictory in core docs.**",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-005",
+      "obligation_text": "  - Persona fallback is split between “bare-context run” and canonical fallback Persona.   - GitHub auth retry rules conflict with multi-account failover expectations.   - Docker/media/provider flows usually stop at provider/model, not account-resolution lineage.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-02"
+      ],
+      "source_block_ids": [
+        "lblock-000203"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1611,
+          "end_line": 1620
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000203",
+            "block_id": "lblock-000203",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1611,
+              "end_line": 1620
+            },
+            "verbatim_seed_excerpt": "  - Persona fallback is split between “bare-context run” and canonical fallback Persona.\n  - GitHub auth retry rules conflict with multi-account failover expectations.\n  - Docker/media/provider flows usually stop at provider/model, not account-resolution lineage."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - Persona fallback is split between “bare-context run” and canonical fallback Persona.\n  - GitHub auth retry rules conflict with multi-account failover expectations.\n  - Docker/media/provider flows usually stop at provider/model, not account-resolution lineage.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-006",
+      "obligation_text": "- **Settings scopes are still too coarse.** Global/project toggles are common, but package/seam/lane/run/account-aware settings or policy scopes are mostly absent.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-02"
+      ],
+      "source_block_ids": [
+        "lblock-000203"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1611,
+          "end_line": 1620
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000203",
+            "block_id": "lblock-000203",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1611,
+              "end_line": 1620
+            },
+            "verbatim_seed_excerpt": "- **Settings scopes are still too coarse.** Global/project toggles are common, but package/seam/lane/run/account-aware settings or policy scopes are mostly absent."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- **Settings scopes are still too coarse.** Global/project toggles are common, but package/seam/lane/run/account-aware settings or policy scopes are mostly absent.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-007",
+      "obligation_text": "- **Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model.",
+      "obligation_category": "fact_observation",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-03"
+      ],
+      "source_block_ids": [
+        "lblock-000207"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1624,
+          "end_line": 1635
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000207",
+            "block_id": "lblock-000207",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1624,
+              "end_line": 1635
+            },
+            "verbatim_seed_excerpt": "- **Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- **Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-008",
+      "obligation_text": "- **Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion po…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-03"
+      ],
+      "source_block_ids": [
+        "lblock-000207"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1624,
+          "end_line": 1635
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000207",
+            "block_id": "lblock-000207",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1624,
+              "end_line": 1635
+            },
+            "verbatim_seed_excerpt": "- **Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture.\n\n- **Parallelism is modeled in outdated shapes.**\n  - per-thread queues\n  - per-provider caps"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- **Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture.\n\n- **Parallelism is modeled in outdated shapes.**\n  - per-thread queues\n  - per-provider caps",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-009",
+      "obligation_text": "  - parallel subtasks   - crews per tier   None of these cleanly map to package/seam promotion or lane-pool capacity.  - **Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and la…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-03"
+      ],
+      "source_block_ids": [
+        "lblock-000207"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1624,
+          "end_line": 1635
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000207",
+            "block_id": "lblock-000207",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1624,
+              "end_line": 1635
+            },
+            "verbatim_seed_excerpt": "  - parallel subtasks\n  - crews per tier\n  None of these cleanly map to package/seam promotion or lane-pool capacity.\n\n- **Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - parallel subtasks\n  - crews per tier\n  None of these cleanly map to package/seam promotion or lane-pool capacity.\n\n- **Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-010",
+      "obligation_text": "- **Priority 1 — Canonical contracts that cannot safely coexist with the new model**   - `Plans/Orchestrator_Page.md`   - `Plans/Executor_Protocol.md`   - `Plans/Contracts_V0.md`   - `Plans/storage-plan.md`   - `Plans/human-in-the-loop.md`   - `Plans/plan_graph.schema.json` / `Pl…",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T003-04"
+      ],
+      "source_block_ids": [
+        "lblock-000211"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000211",
+            "block_id": "lblock-000211",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1639,
+              "end_line": 1661
+            },
+            "verbatim_seed_excerpt": "- **Priority 1 — Canonical contracts that cannot safely coexist with the new model**\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`\n\n- **Priority 2 — Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- **Priority 1 — Canonical contracts that cannot safely coexist with the new model**\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`\n\n- **Priority 2 — Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-011",
+      "obligation_text": "  - `Plans/Run_Graph_View.md`   - `Plans/WorktreeGitImprovement.md`   - `Plans/GitHub_Integration.md`   - `Plans/Widget_System.md`   - `Plans/UI_Command_Catalog.md`  - **Priority 3 — Terminology, routing, and anti-drift docs**   - `Plans/00-plans-index.md`   - `Plans/Crosswalk.md…",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T003-04"
+      ],
+      "source_block_ids": [
+        "lblock-000211"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000211",
+            "block_id": "lblock-000211",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1639,
+              "end_line": 1661
+            },
+            "verbatim_seed_excerpt": "  - `Plans/Run_Graph_View.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n\n- **Priority 3 — Terminology, routing, and anti-drift docs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - `Plans/Run_Graph_View.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n\n- **Priority 3 — Terminology, routing, and anti-drift docs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`",
+      "exact_paths_mentioned": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/feature-list.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-012",
+      "obligation_text": "  - `Plans/Project_Output_Artifacts.md`",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-04"
+      ],
+      "source_block_ids": [
+        "lblock-000211"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000211",
+            "block_id": "lblock-000211",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1639,
+              "end_line": 1661
+            },
+            "verbatim_seed_excerpt": "  - `Plans/Project_Output_Artifacts.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - `Plans/Project_Output_Artifacts.md`",
+      "exact_paths_mentioned": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-013",
+      "obligation_text": "Resolve documented contradiction: 1. **Lexicographic node selection vs scored ready-set scheduler",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-05"
+      ],
+      "source_block_ids": [
+        "lblock-000215"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000215",
+            "block_id": "lblock-000215",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1665,
+              "end_line": 1691
+            },
+            "verbatim_seed_excerpt": "1. **Lexicographic node selection vs scored ready-set scheduler**\n   - Docs involved: `plan_graph.schema.json`, `project_plan_graph_index.schema.json`, `Executor_Protocol.md`\n   - Why it matters: this is a direct runtime-selection conflict, not terminology drift."
+          }
+        ]
+      },
+      "exact_source_excerpt": "1. **Lexicographic node selection vs scored ready-set scheduler**\n   - Docs involved: `plan_graph.schema.json`, `project_plan_graph_index.schema.json`, `Executor_Protocol.md`\n   - Why it matters: this is a direct runtime-selection conflict, not terminology drift.",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json"
+      ],
+      "schema_ids_mentioned": [
+        "plan_graph.schema.json",
+        "project_plan_graph_index.schema.json"
+      ],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-014",
+      "obligation_text": "Resolve documented contradiction: 2. **Tier-boundary HITL vs blocked-node/runtime-overlay HITL",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-05"
+      ],
+      "source_block_ids": [
+        "lblock-000215"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000215",
+            "block_id": "lblock-000215",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1665,
+              "end_line": 1691
+            },
+            "verbatim_seed_excerpt": "2. **Tier-boundary HITL vs blocked-node/runtime-overlay HITL**\n   - Docs involved: `human-in-the-loop.md`, `Permissions_System.md`, `Project_Output_Artifacts.md`\n   - Why it matters: approval ownership, wake semantics, and UI routing differ materially between these models."
+          }
+        ]
+      },
+      "exact_source_excerpt": "2. **Tier-boundary HITL vs blocked-node/runtime-overlay HITL**\n   - Docs involved: `human-in-the-loop.md`, `Permissions_System.md`, `Project_Output_Artifacts.md`\n   - Why it matters: approval ownership, wake semantics, and UI routing differ materially between these models.",
+      "exact_paths_mentioned": [
+        "Plans/Permissions_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-015",
+      "obligation_text": "Resolve documented contradiction: 3. **Single Overseer vs package overseer + seam overseer",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-05"
+      ],
+      "source_block_ids": [
+        "lblock-000215"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000215",
+            "block_id": "lblock-000215",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1665,
+              "end_line": 1691
+            },
+            "verbatim_seed_excerpt": "3. **Single Overseer vs package overseer + seam overseer**\n   - Docs involved: `Executor_Protocol.md`, `Orchestrator_Page.md`, `Personas.md`, `Provider_Stream_Mapping_External_Reference_A2A.md`\n   - Why it matters: ownership of scheduling, review, recovery, and promotion becomes ambiguous if both persist."
+          }
+        ]
+      },
+      "exact_source_excerpt": "3. **Single Overseer vs package overseer + seam overseer**\n   - Docs involved: `Executor_Protocol.md`, `Orchestrator_Page.md`, `Personas.md`, `Provider_Stream_Mapping_External_Reference_A2A.md`\n   - Why it matters: ownership of scheduling, review, recovery, and promotion becomes ambiguous if both persist.",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-016",
+      "obligation_text": "Resolve documented contradiction: 4. **`requested_persona_id` vs canonical `requested_persona`",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-05"
+      ],
+      "source_block_ids": [
+        "lblock-000215"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000215",
+            "block_id": "lblock-000215",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1665,
+              "end_line": 1691
+            },
+            "verbatim_seed_excerpt": "4. **`requested_persona_id` vs canonical `requested_persona`**\n   - Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs\n   - Why it matters: persisted/runtime field drift is already visible and will worsen when account identity is added too."
+          }
+        ]
+      },
+      "exact_source_excerpt": "4. **`requested_persona_id` vs canonical `requested_persona`**\n   - Docs involved: `Orchestrator_Page.md`, `Contracts_V0.md`, related UI/runtime docs\n   - Why it matters: persisted/runtime field drift is already visible and will worsen when account identity is added too.",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-017",
+      "obligation_text": "Resolve documented contradiction: 5. **Graph-local recovery commands vs canonical runtime action families",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-05"
+      ],
+      "source_block_ids": [
+        "lblock-000215"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000215",
+            "block_id": "lblock-000215",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1665,
+              "end_line": 1691
+            },
+            "verbatim_seed_excerpt": "5. **Graph-local recovery commands vs canonical runtime action families**\n   - Docs involved: `UI_Command_Catalog.md`, `Wiring_Matrix.md`, `Run_Graph_View.md`, `human-in-the-loop.md`\n   - Why it matters: the user can otherwise see one command family while runtime/event contracts expect another."
+          }
+        ]
+      },
+      "exact_source_excerpt": "5. **Graph-local recovery commands vs canonical runtime action families**\n   - Docs involved: `UI_Command_Catalog.md`, `Wiring_Matrix.md`, `Run_Graph_View.md`, `human-in-the-loop.md`\n   - Why it matters: the user can otherwise see one command family while runtime/event contracts expect another.",
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-018",
+      "obligation_text": "Resolve documented contradiction: 6. **Run/tier/subtask worktrees vs package-based lane pools",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-05"
+      ],
+      "source_block_ids": [
+        "lblock-000215"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000215",
+            "block_id": "lblock-000215",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1665,
+              "end_line": 1691
+            },
+            "verbatim_seed_excerpt": "6. **Run/tier/subtask worktrees vs package-based lane pools**\n   - Docs involved: `WorktreeGitImprovement.md`, `GitHub_Integration.md`, `feature-list.md`, `FinalGUISpec.md`\n   - Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent if both models remain canonical."
+          }
+        ]
+      },
+      "exact_source_excerpt": "6. **Run/tier/subtask worktrees vs package-based lane pools**\n   - Docs involved: `WorktreeGitImprovement.md`, `GitHub_Integration.md`, `feature-list.md`, `FinalGUISpec.md`\n   - Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent if both models remain canonical.",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/feature-list.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-019",
+      "obligation_text": "Resolve documented contradiction: 7. **Manual review/click approval flows vs automation-first optional HITL",
+      "obligation_category": "architecture_note",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-05"
+      ],
+      "source_block_ids": [
+        "lblock-000215"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1665,
+          "end_line": 1691
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000215",
+            "block_id": "lblock-000215",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1665,
+              "end_line": 1691
+            },
+            "verbatim_seed_excerpt": "7. **Manual review/click approval flows vs automation-first optional HITL**\n   - Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`\n   - Why it matters: this changes default behavior, user expectations, and blocked-state routing."
+          }
+        ]
+      },
+      "exact_source_excerpt": "7. **Manual review/click approval flows vs automation-first optional HITL**\n   - Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`\n   - Why it matters: this changes default behavior, user expectations, and blocked-state routing.",
+      "exact_paths_mentioned": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-020",
+      "obligation_text": "Execute research follow-up: 1. **Define the package/seam/lane/promotion object family canonically.",
+      "obligation_category": "directive",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-06"
+      ],
+      "source_block_ids": [
+        "lblock-000219"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000219",
+            "block_id": "lblock-000219",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1695,
+              "end_line": 1711
+            },
+            "verbatim_seed_excerpt": "1. **Define the package/seam/lane/promotion object family canonically.**\n   - Why it matters: GPT-5.4 found almost no owner docs that actually define these objects, even where many other contracts now depend on them."
+          }
+        ]
+      },
+      "exact_source_excerpt": "1. **Define the package/seam/lane/promotion object family canonically.**\n   - Why it matters: GPT-5.4 found almost no owner docs that actually define these objects, even where many other contracts now depend on them.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-021",
+      "obligation_text": "Execute research follow-up: 2. **Extend requested/effective runtime identity to include account and overseer role.",
+      "obligation_category": "directive",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-06"
+      ],
+      "source_block_ids": [
+        "lblock-000219"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000219",
+            "block_id": "lblock-000219",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1695,
+              "end_line": 1711
+            },
+            "verbatim_seed_excerpt": "2. **Extend requested/effective runtime identity to include account and overseer role.**\n   - Why it matters: provider/persona fields exist, but effective account switching and requested/effective execution identity are still mostly unmodeled."
+          }
+        ]
+      },
+      "exact_source_excerpt": "2. **Extend requested/effective runtime identity to include account and overseer role.**\n   - Why it matters: provider/persona fields exist, but effective account switching and requested/effective execution identity are still mostly unmodeled.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-022",
+      "obligation_text": "Execute research follow-up: 3. **Choose one HITL model and one action family.",
+      "obligation_category": "directive",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-06"
+      ],
+      "source_block_ids": [
+        "lblock-000219"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000219",
+            "block_id": "lblock-000219",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1695,
+              "end_line": 1711
+            },
+            "verbatim_seed_excerpt": "3. **Choose one HITL model and one action family.**\n   - Why it matters: tier-boundary approvals, graph-local commands, and blocked-node runtime actions currently coexist as competing canonical mechanisms."
+          }
+        ]
+      },
+      "exact_source_excerpt": "3. **Choose one HITL model and one action family.**\n   - Why it matters: tier-boundary approvals, graph-local commands, and blocked-node runtime actions currently coexist as competing canonical mechanisms.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-023",
+      "obligation_text": "Execute research follow-up: 4. **Separate plan structure from mutable runtime state.",
+      "obligation_category": "directive",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-06"
+      ],
+      "source_block_ids": [
+        "lblock-000219"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000219",
+            "block_id": "lblock-000219",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1695,
+              "end_line": 1711
+            },
+            "verbatim_seed_excerpt": "4. **Separate plan structure from mutable runtime state.**\n   - Why it matters: GPT-5.4 repeatedly found runtime truth split across plan shards, JSON sidecars, and event/projection docs."
+          }
+        ]
+      },
+      "exact_source_excerpt": "4. **Separate plan structure from mutable runtime state.**\n   - Why it matters: GPT-5.4 repeatedly found runtime truth split across plan shards, JSON sidecars, and event/projection docs.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-024",
+      "obligation_text": "Execute research follow-up: 5. **Specify package-based worktree lane pools end-to-end.",
+      "obligation_category": "directive",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-06"
+      ],
+      "source_block_ids": [
+        "lblock-000219"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000219",
+            "block_id": "lblock-000219",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1695,
+              "end_line": 1711
+            },
+            "verbatim_seed_excerpt": "5. **Specify package-based worktree lane pools end-to-end.**\n   - Why it matters: SCM, Source Control UI, Orchestrator UI, and recovery policy all depend on it, but no single canonical lane-pool model exists yet."
+          }
+        ]
+      },
+      "exact_source_excerpt": "5. **Specify package-based worktree lane pools end-to-end.**\n   - Why it matters: SCM, Source Control UI, Orchestrator UI, and recovery policy all depend on it, but no single canonical lane-pool model exists yet.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-025",
+      "obligation_text": "Execute research follow-up: 6. **Normalize recovery vocabulary across safe point, restore point, rollback, contamination, and retry.",
+      "obligation_category": "directive",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-06"
+      ],
+      "source_block_ids": [
+        "lblock-000219"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000219",
+            "block_id": "lblock-000219",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1695,
+              "end_line": 1711
+            },
+            "verbatim_seed_excerpt": "6. **Normalize recovery vocabulary across safe point, restore point, rollback, contamination, and retry.**\n   - Why it matters: GPT-5.4 found these concepts partially modernized but still inconsistently named and scoped across plans."
+          }
+        ]
+      },
+      "exact_source_excerpt": "6. **Normalize recovery vocabulary across safe point, restore point, rollback, contamination, and retry.**\n   - Why it matters: GPT-5.4 found these concepts partially modernized but still inconsistently named and scoped across plans.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-026",
+      "obligation_text": "- `Plans/Orchestrator_Page.md`   - why impacted: still acts like a primary runtime owner for orchestration UX and identity projection.   - what old assumption is present: `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, and `requested_persona_id` / `effective_persona_id`.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "- `Plans/Orchestrator_Page.md`\n  - why impacted: still acts like a primary runtime owner for orchestration UX and identity projection.\n  - what old assumption is present: `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, and `requested_persona_id` / `effective_persona_id`."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`\n  - why impacted: still acts like a primary runtime owner for orchestration UX and identity projection.\n  - what old assumption is present: `Tiers`, `Phase/Task/Subtask`, singular `Overseer`, and `requested_persona_id` / `effective_persona_id`.",
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-027",
+      "obligation_text": "  - what likely new model pressure is: package/seam overseers, package/seam/lane visibility, promotion-class state, requested vs effective execution/account identity.  - `Plans/Executor_Protocol.md`   - why impacted: still encodes singular scheduler/transition authority and older…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - what likely new model pressure is: package/seam overseers, package/seam/lane visibility, promotion-class state, requested vs effective execution/account identity.\n\n- `Plans/Executor_Protocol.md`\n  - why impacted: still encodes singular scheduler/transition authority and older dispatch assumptions."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - what likely new model pressure is: package/seam overseers, package/seam/lane visibility, promotion-class state, requested vs effective execution/account identity.\n\n- `Plans/Executor_Protocol.md`\n  - why impacted: still encodes singular scheduler/transition authority and older dispatch assumptions.",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-028",
+      "obligation_text": "  - what old assumption is present: one `Overseer`, lexicographic-style canonical selection language, tier-era ownership.   - what likely new model pressure is: scored ready-set scheduling, lane pools, package/seam governance split, contamination and safe-point-aware recovery.  -…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - what old assumption is present: one `Overseer`, lexicographic-style canonical selection language, tier-era ownership.\n  - what likely new model pressure is: scored ready-set scheduling, lane pools, package/seam governance split, contamination and safe-point-aware recovery.\n\n- `Plans/Contracts_V0.md`\n  - why impacted: core runtime contract already shows drift against UI/runtime consumers."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - what old assumption is present: one `Overseer`, lexicographic-style canonical selection language, tier-era ownership.\n  - what likely new model pressure is: scored ready-set scheduling, lane pools, package/seam governance split, contamination and safe-point-aware recovery.\n\n- `Plans/Contracts_V0.md`\n  - why impacted: core runtime contract already shows drift against UI/runtime consumers.",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-029",
+      "obligation_text": "  - what old assumption is present: tier-boundary HITL payloads, incomplete execution identity, no account fallback fields.   - what likely new model pressure is: requested/effective account identity, package/seam/lane/promotion objects, blocked/recovery payload normalization.  -…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - what old assumption is present: tier-boundary HITL payloads, incomplete execution identity, no account fallback fields.\n  - what likely new model pressure is: requested/effective account identity, package/seam/lane/promotion objects, blocked/recovery payload normalization.\n\n- `Plans/human-in-the-loop.md` and `Plans/Project_Output_Artifacts.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - what old assumption is present: tier-boundary HITL payloads, incomplete execution identity, no account fallback fields.\n  - what likely new model pressure is: requested/effective account identity, package/seam/lane/promotion objects, blocked/recovery payload normalization.\n\n- `Plans/human-in-the-loop.md` and `Plans/Project_Output_Artifacts.md`",
+      "exact_paths_mentioned": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-030",
+      "obligation_text": "  - why impacted: these still define approval boundaries and workspace/storage identity in legacy terms.   - what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - why impacted: these still define approval boundaries and workspace/storage identity in legacy terms.\n  - what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - why impacted: these still define approval boundaries and workspace/storage identity in legacy terms.\n  - what old assumption is present: HITL at tier boundaries, workspace paths under `<phase>/<task>/<subtask>`, deprecated `allowed_actions[]` usage still lingering.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-031",
+      "obligation_text": "  - what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.  - `Plans/WorktreeGitImprovement.md`   - why impacted: still the main SCM/worktree execution owne…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.\n\n- `Plans/WorktreeGitImprovement.md`\n  - why impacted: still the main SCM/worktree execution owner."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - what likely new model pressure is: optional HITL boundaries at node/package/seam promotions, lane/worktree identity, mid-run blocked-resolution routing, automation-first default.\n\n- `Plans/WorktreeGitImprovement.md`\n  - why impacted: still the main SCM/worktree execution owner.",
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-032",
+      "obligation_text": "  - what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier flow, merge fallback posture, parallel subtasks as primary parallelism model.   - what likely new model pressure is: package-based lane pools, contamination quarantine, restore-before-reus…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier flow, merge fallback posture, parallel subtasks as primary parallelism model.\n  - what likely new model pressure is: package-based lane pools, contamination quarantine, restore-before-reuse policy, Source Control plus Orchestrator shared visibility.\n\n- `Plans/Run_Graph_View.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - what old assumption is present: `tier_id` / subtask worktree ownership, branch-per-tier flow, merge fallback posture, parallel subtasks as primary parallelism model.\n  - what likely new model pressure is: package-based lane pools, contamination quarantine, restore-before-reuse policy, Source Control plus Orchestrator shared visibility.\n\n- `Plans/Run_Graph_View.md`",
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-033",
+      "obligation_text": "  - why impacted: graph UI is still heavily tier-shaped even where runtime addenda have modernized.   - what old assumption is present: `TierTree`, `tier_type`, `View in Tiers`, phase/task/subtask grouping.   - what likely new model pressure is: first-class seam/package/lane node…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - why impacted: graph UI is still heavily tier-shaped even where runtime addenda have modernized.\n  - what old assumption is present: `TierTree`, `tier_type`, `View in Tiers`, phase/task/subtask grouping.\n  - what likely new model pressure is: first-class seam/package/lane nodes, promotion-class badges, requested/effective execution identity, blocked/recovery action unification."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - why impacted: graph UI is still heavily tier-shaped even where runtime addenda have modernized.\n  - what old assumption is present: `TierTree`, `tier_type`, `View in Tiers`, phase/task/subtask grouping.\n  - what likely new model pressure is: first-class seam/package/lane nodes, promotion-class badges, requested/effective execution identity, blocked/recovery action unification.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-034",
+      "obligation_text": "- `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`   - why impacted: these still lock orchestration boundaries and oversight to the old taxonomy.   - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-bou…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "- `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n  - why impacted: these still lock orchestration boundaries and oversight to the old taxonomy.\n  - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n  - why impacted: these still lock orchestration boundaries and oversight to the old taxonomy.\n  - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern.",
+      "exact_paths_mentioned": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-035",
+      "obligation_text": "  - what likely new model pressure is: package overseer plus seam overseer split, requested/effective account fallback, promotion-aware provider/event records.  - `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/project_plan_graph_index.schema.json`  …",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - what likely new model pressure is: package overseer plus seam overseer split, requested/effective account fallback, promotion-aware provider/event records.\n\n- `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/project_plan_graph_index.schema.json`\n  - why impacted: graph schemas are too narrow for the new runtime object family."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - what likely new model pressure is: package overseer plus seam overseer split, requested/effective account fallback, promotion-aware provider/event records.\n\n- `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/project_plan_graph_index.schema.json`\n  - why impacted: graph schemas are too narrow for the new runtime object family.",
+      "exact_paths_mentioned": [
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-036",
+      "obligation_text": "  - what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/contaminated/restore-required states.   - what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution …",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/contaminated/restore-required states.\n  - what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution identity.\n\n- `Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - what old assumption is present: node-only lifecycle, lexicographic selection, no blocked/contaminated/restore-required states.\n  - what likely new model pressure is: package/seam/lane IDs, promotion classes, safe-point and contamination lineage, requested/effective execution identity.\n\n- `Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`",
+      "exact_paths_mentioned": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/Glossary.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-037",
+      "obligation_text": "  - why impacted: anti-drift and ownership docs still operationalize the legacy model.   - what old assumption is present: tier hierarchy, singular Overseer, tier-boundary HITL, old canonical owner map.   - what likely new model pressure is: new vocabulary canon, migration guidan…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-08"
+      ],
+      "source_block_ids": [
+        "lblock-000225"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000225",
+            "block_id": "lblock-000225",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1717,
+              "end_line": 1760
+            },
+            "verbatim_seed_excerpt": "  - why impacted: anti-drift and ownership docs still operationalize the legacy model.\n  - what old assumption is present: tier hierarchy, singular Overseer, tier-boundary HITL, old canonical owner map.\n  - what likely new model pressure is: new vocabulary canon, migration guidance, deprecation boundaries, package/seam/lane/promotion terminology ownership."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - why impacted: anti-drift and ownership docs still operationalize the legacy model.\n  - what old assumption is present: tier hierarchy, singular Overseer, tier-boundary HITL, old canonical owner map.\n  - what likely new model pressure is: new vocabulary canon, migration guidance, deprecation boundaries, package/seam/lane/promotion terminology ownership.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-038",
+      "obligation_text": "- `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`   - impacted surface: Orchestrator page, run graph, widget registry, rebuild checklist.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000229",
+            "block_id": "lblock-000229",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1764,
+              "end_line": 1778
+            },
+            "verbatim_seed_excerpt": "- `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`\n  - impacted surface: Orchestrator page, run graph, widget registry, rebuild checklist."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`\n  - impacted surface: Orchestrator page, run graph, widget registry, rebuild checklist.",
+      "exact_paths_mentioned": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-039",
+      "obligation_text": "  - likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.  - `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000229",
+            "block_id": "lblock-000229",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1764,
+              "end_line": 1778
+            },
+            "verbatim_seed_excerpt": "  - likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.\n\n- `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`\n  - impacted surface: Dashboard / chat / interview and chain wizard flows."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.\n\n- `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`\n  - impacted surface: Dashboard / chat / interview and chain wizard flows.",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-040",
+      "obligation_text": "  - likely issue: attention routing is thread-local or wizard-local, not explicitly Dashboard -> Orchestrator -> chat-thread for blocked and major-decision paths.  - `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`   - impacted surface: runtime actions and UI control wirin…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000229",
+            "block_id": "lblock-000229",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1764,
+              "end_line": 1778
+            },
+            "verbatim_seed_excerpt": "  - likely issue: attention routing is thread-local or wizard-local, not explicitly Dashboard -> Orchestrator -> chat-thread for blocked and major-decision paths.\n\n- `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`\n  - impacted surface: runtime actions and UI control wiring."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: attention routing is thread-local or wizard-local, not explicitly Dashboard -> Orchestrator -> chat-thread for blocked and major-decision paths.\n\n- `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`\n  - impacted surface: runtime actions and UI control wiring.",
+      "exact_paths_mentioned": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-041",
+      "obligation_text": "  - likely issue: old `cmd.graph.*` recovery actions coexist with canonical `cmd.runtime.*`, and current command envelopes cannot express seam/package/lane promotion actions.  - `Plans/GitHub_Integration.md`   - impacted surface: Source Control and GitHub worktree views.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000229",
+            "block_id": "lblock-000229",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1764,
+              "end_line": 1778
+            },
+            "verbatim_seed_excerpt": "  - likely issue: old `cmd.graph.*` recovery actions coexist with canonical `cmd.runtime.*`, and current command envelopes cannot express seam/package/lane promotion actions.\n\n- `Plans/GitHub_Integration.md`\n  - impacted surface: Source Control and GitHub worktree views."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: old `cmd.graph.*` recovery actions coexist with canonical `cmd.runtime.*`, and current command envelopes cannot express seam/package/lane promotion actions.\n\n- `Plans/GitHub_Integration.md`\n  - impacted surface: Source Control and GitHub worktree views.",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-042",
+      "obligation_text": "  - likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000229",
+            "block_id": "lblock-000229",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1764,
+              "end_line": 1778
+            },
+            "verbatim_seed_excerpt": "  - likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-043",
+      "obligation_text": "- `Plans/Contracts_V0.md` vs `Plans/Orchestrator_Page.md`   - impacted contract/runtime/storage area: identity fields.   - likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI still uses `_id` variants; account fallback fields are missing ent…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-10"
+      ],
+      "source_block_ids": [
+        "lblock-000233"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000233",
+            "block_id": "lblock-000233",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1782,
+              "end_line": 1800
+            },
+            "verbatim_seed_excerpt": "- `Plans/Contracts_V0.md` vs `Plans/Orchestrator_Page.md`\n  - impacted contract/runtime/storage area: identity fields.\n  - likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI still uses `_id` variants; account fallback fields are missing entirely.\n\n- `Plans/Contracts_V0.md` vs `Plans/human-in-the-loop.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/Contracts_V0.md` vs `Plans/Orchestrator_Page.md`\n  - impacted contract/runtime/storage area: identity fields.\n  - likely issue: `requested_persona` / `effective_persona` are canonical in contracts, but UI still uses `_id` variants; account fallback fields are missing entirely.\n\n- `Plans/Contracts_V0.md` vs `Plans/human-in-the-loop.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-044",
+      "obligation_text": "  - impacted contract/runtime/storage area: HITL request schema.   - likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-10"
+      ],
+      "source_block_ids": [
+        "lblock-000233"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000233",
+            "block_id": "lblock-000233",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1782,
+              "end_line": 1800
+            },
+            "verbatim_seed_excerpt": "  - impacted contract/runtime/storage area: HITL request schema.\n  - likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - impacted contract/runtime/storage area: HITL request schema.\n  - likely issue: `allowed_actions[]` and `allowed_action_ids[]` both appear as canonical depending on document, which will break blocked-action parity.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-045",
+      "obligation_text": "- `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`   - impacted contract/runtime/storage area: graph and evidence schemas.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-10"
+      ],
+      "source_block_ids": [
+        "lblock-000233"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000233",
+            "block_id": "lblock-000233",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1782,
+              "end_line": 1800
+            },
+            "verbatim_seed_excerpt": "- `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`\n  - impacted contract/runtime/storage area: graph and evidence schemas."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/plan_graph.schema.json`, `Plans/project_plan_node.schema.json`, `Plans/test_strategy.schema.json`, `Plans/evidence.schema.json`, `Plans/gui_automation_manifest.schema.json`\n  - impacted contract/runtime/storage area: graph and evidence schemas.",
+      "exact_paths_mentioned": [
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/test_strategy.schema.json"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-046",
+      "obligation_text": "  - likely issue: schemas remain run/node/tier-scoped, with no seam/package/lane/promotion/account lineage and no contamination or safe-point restore provenance.  - `Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`   - impacted contract/runtime/storage area: persisted …",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-10"
+      ],
+      "source_block_ids": [
+        "lblock-000233"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000233",
+            "block_id": "lblock-000233",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1782,
+              "end_line": 1800
+            },
+            "verbatim_seed_excerpt": "  - likely issue: schemas remain run/node/tier-scoped, with no seam/package/lane/promotion/account lineage and no contamination or safe-point restore provenance.\n\n- `Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`\n  - impacted contract/runtime/storage area: persisted object identity and workspace layout."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: schemas remain run/node/tier-scoped, with no seam/package/lane/promotion/account lineage and no contamination or safe-point restore provenance.\n\n- `Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`\n  - impacted contract/runtime/storage area: persisted object identity and workspace layout.",
+      "exact_paths_mentioned": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-047",
+      "obligation_text": "  - likely issue: state and artifact paths still preserve old tier/workspace assumptions and need per-project, per-run, per-package/lane scoping.  - `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`   - impacted contract/runtime/storage area: s…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-10"
+      ],
+      "source_block_ids": [
+        "lblock-000233"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000233",
+            "block_id": "lblock-000233",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1782,
+              "end_line": 1800
+            },
+            "verbatim_seed_excerpt": "  - likely issue: state and artifact paths still preserve old tier/workspace assumptions and need per-project, per-run, per-package/lane scoping.\n\n- `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`\n  - impacted contract/runtime/storage area: scheduling and blocked/recovery lifecycle."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: state and artifact paths still preserve old tier/workspace assumptions and need per-project, per-run, per-package/lane scoping.\n\n- `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`\n  - impacted contract/runtime/storage area: scheduling and blocked/recovery lifecycle.",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-048",
+      "obligation_text": "  - likely issue: lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families still coexist without one canonical model.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-10"
+      ],
+      "source_block_ids": [
+        "lblock-000233"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000233",
+            "block_id": "lblock-000233",
+            "source_shard_id": "shard-0009",
+            "source_line_range": {
+              "start_line": 1782,
+              "end_line": 1800
+            },
+            "verbatim_seed_excerpt": "  - likely issue: lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families still coexist without one canonical model."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families still coexist without one canonical model.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-049",
+      "obligation_text": "- `Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`   - likely issue: requested/effective platform/model/persona are modeled, but requested/effective account identity and fallback reason are missing.  - `Plans/Provider_Stream_Mapping_External_Reference_A2A…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000237",
+            "block_id": "lblock-000237",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1804,
+              "end_line": 1814
+            },
+            "verbatim_seed_excerpt": "- `Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`\n  - likely issue: requested/effective platform/model/persona are modeled, but requested/effective account identity and fallback reason are missing.\n\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`\n  - likely issue: requested/effective platform/model/persona are modeled, but requested/effective account identity and fallback reason are missing.\n\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`",
+      "exact_paths_mentioned": [
+        "Plans/Models_System.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-050",
+      "obligation_text": "  - likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution.  - `Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`   - likely issue: multi-account behavior exist…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000237",
+            "block_id": "lblock-000237",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1804,
+              "end_line": 1814
+            },
+            "verbatim_seed_excerpt": "  - likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution.\n\n- `Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`\n  - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: tier-boundary and single-Overseer audit rules are too rigid for package/seam overseers and automation-first execution.\n\n- `Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`\n  - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Multi-Account.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-051",
+      "obligation_text": "- `Plans/newtools.md`, `Plans/assistant-chat-design.md`   - likely issue: provider/model controls remain per-thread or per-run and do not expose requested/effective execution identity across package, seam, node, and delegated subagent layers.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000237",
+            "block_id": "lblock-000237",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1804,
+              "end_line": 1814
+            },
+            "verbatim_seed_excerpt": "- `Plans/newtools.md`, `Plans/assistant-chat-design.md`\n  - likely issue: provider/model controls remain per-thread or per-run and do not expose requested/effective execution identity across package, seam, node, and delegated subagent layers."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/newtools.md`, `Plans/assistant-chat-design.md`\n  - likely issue: provider/model controls remain per-thread or per-run and do not expose requested/effective execution identity across package, seam, node, and delegated subagent layers.",
+      "exact_paths_mentioned": [
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-052",
+      "obligation_text": "- `Plans/WorktreeGitImprovement.md`   - likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.  - `Plans/GitHub_Integration.md`   - likely issue: Source Control ownership and GitHub actions remain b…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-12"
+      ],
+      "source_block_ids": [
+        "lblock-000241"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000241",
+            "block_id": "lblock-000241",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1818,
+              "end_line": 1828
+            },
+            "verbatim_seed_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.\n\n- `Plans/GitHub_Integration.md`\n  - likely issue: Source Control ownership and GitHub actions remain branch/worktree-centric, without package/seam/lane-aware visibility."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/WorktreeGitImprovement.md`\n  - likely issue: worktree ownership is still tier/subtask-native and does not support package-based lane pools or contamination quarantine.\n\n- `Plans/GitHub_Integration.md`\n  - likely issue: Source Control ownership and GitHub actions remain branch/worktree-centric, without package/seam/lane-aware visibility.",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-053",
+      "obligation_text": "- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`   - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.  - `Plans/assistant-chat-design.md`",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-12"
+      ],
+      "source_block_ids": [
+        "lblock-000241"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000241",
+            "block_id": "lblock-000241",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1818,
+              "end_line": 1828
+            },
+            "verbatim_seed_excerpt": "- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n\n- `Plans/assistant-chat-design.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n\n- `Plans/assistant-chat-design.md`",
+      "exact_paths_mentioned": [
+        "Plans/MiscPlan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-054",
+      "obligation_text": "  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-12"
+      ],
+      "source_block_ids": [
+        "lblock-000241"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000241",
+            "block_id": "lblock-000241",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1818,
+              "end_line": 1828
+            },
+            "verbatim_seed_excerpt": "  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-055",
+      "obligation_text": "- priority 1   - docs that cannot safely coexist with the new model   - `Plans/Orchestrator_Page.md`   - `Plans/Executor_Protocol.md`   - `Plans/Contracts_V0.md`   - `Plans/human-in-the-loop.md`   - `Plans/WorktreeGitImprovement.md`   - `Plans/plan_graph.schema.json`   - `Plans/p…",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000245",
+            "block_id": "lblock-000245",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1832,
+              "end_line": 1860
+            },
+            "verbatim_seed_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n\n- priority 2\n  - docs that are misleading but not immediately blocking"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- priority 1\n  - docs that cannot safely coexist with the new model\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/plan_graph.schema.json`\n  - `Plans/project_plan_node.schema.json`\n\n- priority 2\n  - docs that are misleading but not immediately blocking",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-056",
+      "obligation_text": "  - `Plans/FinalGUISpec.md`   - `Plans/Run_Graph_View.md`   - `Plans/GitHub_Integration.md`   - `Plans/Widget_System.md`   - `Plans/UI_Command_Catalog.md`   - `Plans/newtools.md`   - `Plans/assistant-chat-design.md`  - priority 3   - docs that mostly need terminology / projection…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000245",
+            "block_id": "lblock-000245",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1832,
+              "end_line": 1860
+            },
+            "verbatim_seed_excerpt": "  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n\n- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/newtools.md`\n  - `Plans/assistant-chat-design.md`\n\n- priority 3\n  - docs that mostly need terminology / projection cleanup\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`",
+      "exact_paths_mentioned": [
+        "Plans/00-plans-index.md",
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/feature-list.md",
+        "Plans/newtools.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-057",
+      "obligation_text": "  - `Plans/OpenCode_Coverage_Matrix.md`   - `Plans/usage-feature.md`   - `Plans/auto_decisions.schema.json`",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000245",
+            "block_id": "lblock-000245",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1832,
+              "end_line": 1860
+            },
+            "verbatim_seed_excerpt": "  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`",
+      "exact_paths_mentioned": [
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/auto_decisions.schema.json",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-058",
+      "obligation_text": "- contradiction   - docs involved: `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`   - why it matters: canonical persona field names already disagree before account identity is added.  - contradiction   - docs involved: `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000249",
+            "block_id": "lblock-000249",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1864,
+              "end_line": 1890
+            },
+            "verbatim_seed_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`\n  - why it matters: canonical persona field names already disagree before account identity is added.\n\n- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`\n  - why it matters: canonical persona field names already disagree before account identity is added.\n\n- contradiction\n  - docs involved: `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-059",
+      "obligation_text": "  - why it matters: blocked action IDs cannot be wired safely while both `allowed_actions[]` and `allowed_action_ids[]` remain canonical.  - contradiction   - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Gra…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000249",
+            "block_id": "lblock-000249",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1864,
+              "end_line": 1890
+            },
+            "verbatim_seed_excerpt": "  - why it matters: blocked action IDs cannot be wired safely while both `allowed_actions[]` and `allowed_action_ids[]` remain canonical.\n\n- contradiction\n  - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`\n  - why it matters: scheduler truth is split between lexicographic, scored, and UI-derived recovery models."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - why it matters: blocked action IDs cannot be wired safely while both `allowed_actions[]` and `allowed_action_ids[]` remain canonical.\n\n- contradiction\n  - docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`\n  - why it matters: scheduler truth is split between lexicographic, scored, and UI-derived recovery models.",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/plan_graph.schema.json"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-060",
+      "obligation_text": "- contradiction   - docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`   - why it matters: one doc says HITL is tier-boundary only while another allows mid-tier approval nodes.  - contradiction   - docs involved: `Plans/WorktreeGitImprovement.md`, `P…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000249",
+            "block_id": "lblock-000249",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1864,
+              "end_line": 1890
+            },
+            "verbatim_seed_excerpt": "- contradiction\n  - docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`\n  - why it matters: one doc says HITL is tier-boundary only while another allows mid-tier approval nodes.\n\n- contradiction\n  - docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`"
+          }
+        ]
+      },
+      "exact_source_excerpt": "- contradiction\n  - docs involved: `Plans/human-in-the-loop.md`, `Plans/Project_Output_Artifacts.md`\n  - why it matters: one doc says HITL is tier-boundary only while another allows mid-tier approval nodes.\n\n- contradiction\n  - docs involved: `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/feature-list.md`",
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-061",
+      "obligation_text": "  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.  - contradiction   - docs involved: `Plans/Containers_Registry_and_Unraid.md`   - why it matters: `needs_review` and blocked/failure payload semantics disagree in…",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000249",
+            "block_id": "lblock-000249",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1864,
+              "end_line": 1890
+            },
+            "verbatim_seed_excerpt": "  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.\n\n- contradiction\n  - docs involved: `Plans/Containers_Registry_and_Unraid.md`\n  - why it matters: `needs_review` and blocked/failure payload semantics disagree inside the same doc, which will leak into automation-first operator flows.\n\n- contradiction"
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - why it matters: current SCM ownership is tier- and branch-based, which collides with package-lane worktree pools.\n\n- contradiction\n  - docs involved: `Plans/Containers_Registry_and_Unraid.md`\n  - why it matters: `needs_review` and blocked/failure payload semantics disagree inside the same doc, which will leak into automation-first operator flows.\n\n- contradiction",
+      "exact_paths_mentioned": [
+        "Plans/Containers_Registry_and_Unraid.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2s003-062",
+      "obligation_text": "  - docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`   - why it matters: fallback chunk-line settings disagree, showing state/decision drift even in supporting planning machinery.",
+      "obligation_category": "architecture_note",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000249",
+            "block_id": "lblock-000249",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1864,
+              "end_line": 1890
+            },
+            "verbatim_seed_excerpt": "  - docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`\n  - why it matters: fallback chunk-line settings disagree, showing state/decision drift even in supporting planning machinery."
+          }
+        ]
+      },
+      "exact_source_excerpt": "  - docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`\n  - why it matters: fallback chunk-line settings disagree, showing state/decision drift even in supporting planning machinery.",
+      "exact_paths_mentioned": [
+        "Plans/auto_decisions.jsonl",
+        "Plans/sharding_config.json"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    }
+  ],
+  "open_questions": [
+    {
+      "question_id": "q-d2s003-001",
+      "question_text": "define one canonical field envelope for `{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}` so schemas stop drifting independently.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-15"
+      ],
+      "source_block_ids": [
+        "lblock-000253"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1910
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000253",
+            "block_id": "lblock-000253",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1894,
+              "end_line": 1910
+            },
+            "verbatim_seed_excerpt": "- follow-up question\n  - why it matters: define one canonical field envelope for `{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}` so schemas stop drifting independently."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: define one canonical field envelope for `{project, run, seam, package, node, attempt, lane, promotion, review, resolution_thread}` so schemas stop drifting independently.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "question_id": "q-d2s003-002",
+      "question_text": "choose whether tier terms become pure derived UI aliases or are fully deprecated in orchestration/runtime contracts.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-15"
+      ],
+      "source_block_ids": [
+        "lblock-000253"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1910
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000253",
+            "block_id": "lblock-000253",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1894,
+              "end_line": 1910
+            },
+            "verbatim_seed_excerpt": "- follow-up question\n  - why it matters: choose whether tier terms become pure derived UI aliases or are fully deprecated in orchestration/runtime contracts."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: choose whether tier terms become pure derived UI aliases or are fully deprecated in orchestration/runtime contracts.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "question_id": "q-d2s003-003",
+      "question_text": "decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-15"
+      ],
+      "source_block_ids": [
+        "lblock-000253"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1910
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000253",
+            "block_id": "lblock-000253",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1894,
+              "end_line": 1910
+            },
+            "verbatim_seed_excerpt": "- follow-up question\n  - why it matters: decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: decide how package overseer and seam overseer divide authority across scheduling, review, promotion, remediation, and graph patch requests.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "question_id": "q-d2s003-004",
+      "question_text": "formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-15"
+      ],
+      "source_block_ids": [
+        "lblock-000253"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1910
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000253",
+            "block_id": "lblock-000253",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1894,
+              "end_line": 1910
+            },
+            "verbatim_seed_excerpt": "- follow-up question\n  - why it matters: formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "question_id": "q-d2s003-005",
+      "question_text": "define package-based lane-pool worktree policy end-to-end, including contamination, safe-point, restore, and visibility rules shared by Orchestrator and Source Control.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-15"
+      ],
+      "source_block_ids": [
+        "lblock-000253"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1910
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000253",
+            "block_id": "lblock-000253",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1894,
+              "end_line": 1910
+            },
+            "verbatim_seed_excerpt": "- follow-up question\n  - why it matters: define package-based lane-pool worktree policy end-to-end, including contamination, safe-point, restore, and visibility rules shared by Orchestrator and Source Control."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: define package-based lane-pool worktree policy end-to-end, including contamination, safe-point, restore, and visibility rules shared by Orchestrator and Source Control.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "question_id": "q-d2s003-006",
+      "question_text": "unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions.",
+      "required_action": "open_decision",
+      "source_group_ids": [
+        "wg-d1-T003-15"
+      ],
+      "source_block_ids": [
+        "lblock-000253"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1894,
+          "end_line": 1910
+        }
+      ],
+      "source_lineage": {
+        "ledger_seed_refs": [
+          {
+            "seed_id": "rawseed-000253",
+            "block_id": "lblock-000253",
+            "source_shard_id": "shard-0010",
+            "source_line_range": {
+              "start_line": 1894,
+              "end_line": 1910
+            },
+            "verbatim_seed_excerpt": "- follow-up question\n  - why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions."
+          }
+        ]
+      },
+      "exact_source_excerpt": "- follow-up question\n  - why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    }
+  ],
+  "doc_hints": [
+    {
+      "hint_id": "dh-d2s003-001",
+      "hint_type": "affected_doc",
+      "path": "Plans/Orchestrator_Page.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-09",
+        "wg-d1-T003-10",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000229",
+        "lblock-000233",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "afely coexist with the new model**\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`\n\n- **Priority 2 — Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-002",
+      "hint_type": "affected_doc",
+      "path": "Plans/Executor_Protocol.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-10",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000233",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "*\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`\n\n- **Priority 2 — Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/Worktre",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-003",
+      "hint_type": "affected_doc",
+      "path": "Plans/Contracts_V0.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-10",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000233",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "`\n  - `Plans/Executor_Protocol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`\n\n- **Priority 2 — Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/Gi",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-004",
+      "hint_type": "affected_doc",
+      "path": "Plans/storage-plan.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-10"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000233"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "ol.md`\n  - `Plans/Contracts_V0.md`\n  - `Plans/storage-plan.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`\n\n- **Priority 2 — Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/GitHub_Integration.md`\n  - `Pl",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-005",
+      "hint_type": "affected_doc",
+      "path": "Plans/human-in-the-loop.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-10",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000233",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "V0.md`\n  - `Plans/storage-plan.md`\n  - `Plans/human-in-the-loop.md`\n  - `Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`\n\n- **Priority 2 — Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `P",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-006",
+      "hint_type": "affected_doc",
+      "path": "Plans/FinalGUISpec.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-09",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000229",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": " Misleading UI/SCM/operator docs**\n  - `Plans/FinalGUISpec.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n\n- **Priority 3 — Terminology, routing, and anti-drift docs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glos",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-007",
+      "hint_type": "affected_doc",
+      "path": "Plans/Run_Graph_View.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-09",
+        "wg-d1-T003-10",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000229",
+        "lblock-000233",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "col.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`\n  - impacted contract/runtime/storage area: scheduling and blocked/recovery lifecycle.\n  - likely issue: lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families still coexist without one canonical model.",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-008",
+      "hint_type": "affected_doc",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-12",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000241",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": ".md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/WorktreeGitImprovement.md`\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n\n- **Priority 3 — Terminology, routing, and anti-drift docs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_C",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-009",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_Integration.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-09",
+        "wg-d1-T003-11",
+        "wg-d1-T003-12",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000229",
+        "lblock-000237",
+        "lblock-000241",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "eam/package/lane promotion actions.\n\n- `Plans/GitHub_Integration.md`\n  - impacted surface: Source Control and GitHub worktree views.\n  - likely issue: row ownership is still `run/tier`, not package-lane ownership, so Orchestrator and Source Control cannot share a coherent worktree model.",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-010",
+      "hint_type": "affected_doc",
+      "path": "Plans/Widget_System.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-09",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000229",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Widget_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "\n  - `Plans/GitHub_Integration.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n\n- **Priority 3 — Terminology, routing, and anti-drift docs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-011",
+      "hint_type": "affected_doc",
+      "path": "Plans/UI_Command_Catalog.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-09",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000229",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "n.md`\n  - `Plans/Widget_System.md`\n  - `Plans/UI_Command_Catalog.md`\n\n- **Priority 3 — Terminology, routing, and anti-drift docs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-012",
+      "hint_type": "affected_doc",
+      "path": "Plans/00-plans-index.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/00-plans-index.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "gy, routing, and anti-drift docs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-013",
+      "hint_type": "affected_doc",
+      "path": "Plans/Crosswalk.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Crosswalk.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "cs**\n  - `Plans/00-plans-index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-014",
+      "hint_type": "affected_doc",
+      "path": "Plans/Glossary.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Glossary.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "index.md`\n  - `Plans/Crosswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-015",
+      "hint_type": "affected_doc",
+      "path": "Plans/feature-list.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-12",
+        "wg-d1-T003-13",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000241",
+        "lblock-000245",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/feature-list.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "sswalk.md`\n  - `Plans/Glossary.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-016",
+      "hint_type": "affected_doc",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/OpenCode_Coverage_Matrix.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "ry.md`\n  - `Plans/feature-list.md`\n  - `Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-017",
+      "hint_type": "affected_doc",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "source_group_ids": [
+        "wg-d1-T003-04",
+        "wg-d1-T003-08",
+        "wg-d1-T003-10",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000211",
+        "lblock-000225",
+        "lblock-000233",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1639,
+          "end_line": 1661
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/Project_Output_Artifacts.md`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-018",
+      "hint_type": "affected_doc",
+      "path": "Plans/Prompt_Pipeline.md",
+      "source_group_ids": [
+        "wg-d1-T003-08",
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000225",
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "locked/recovery action unification.\n\n- `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n  - why impacted: these still lock orchestration boundaries and oversight to the old taxonomy.\n  - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixe",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-019",
+      "hint_type": "affected_doc",
+      "path": "Plans/Personas.md",
+      "source_group_ids": [
+        "wg-d1-T003-08",
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000225",
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Personas.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "cation.\n\n- `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n  - why impacted: these still lock orchestration boundaries and oversight to the old taxonomy.\n  - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern.\n  - what",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-020",
+      "hint_type": "affected_doc",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "source_group_ids": [
+        "wg-d1-T003-08",
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000225",
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "mpt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n  - why impacted: these still lock orchestration boundaries and oversight to the old taxonomy.\n  - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern.\n  - what likely new model pre",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-021",
+      "hint_type": "affected_doc",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "ph_View.md`, `Plans/Widget_System.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`\n  - impacted surface: Orchestrator page, run graph, widget registry, rebuild checklist.\n  - likely issue: UI still presents `Tiers` as a primary mental model and lacks first-class work package, feature seam, lane, promotion, contamination, and resolution-thread surfaces.\n\n- ",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-022",
+      "hint_type": "affected_doc",
+      "path": "Plans/assistant-chat-design.md",
+      "source_group_ids": [
+        "wg-d1-T003-09",
+        "wg-d1-T003-11",
+        "wg-d1-T003-12",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000229",
+        "lblock-000237",
+        "lblock-000241",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "age lanes and promotion boundaries.\n\n- `Plans/assistant-chat-design.md`\n  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane parallelism and multi-project concurrent orchestration.",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-023",
+      "hint_type": "affected_doc",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`\n  - impacted surface: Dashboard / chat / interview and chain wizard flows.\n  - likely issue: attention routing is thread-local or wizard-local, not explicitly Dashboard -> Orchestrator -> chat-thread for blocked and major-decision paths.\n\n- `Plans/UI_Command_Catalog.md`, `Plans/Wiring",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-024",
+      "hint_type": "affected_doc",
+      "path": "Plans/Wiring_Matrix.md",
+      "source_group_ids": [
+        "wg-d1-T003-09"
+      ],
+      "source_block_ids": [
+        "lblock-000229"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "ths.\n\n- `Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`\n  - impacted surface: runtime actions and UI control wiring.\n  - likely issue: old `cmd.graph.*` recovery actions coexist with canonical `cmd.runtime.*`, and current command envelopes cannot express seam/package/lane promotion actions.\n\n- `Plans/GitHub_Integration.md`\n  - impacted surface: Sourc",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-025",
+      "hint_type": "affected_doc",
+      "path": "Plans/Progression_Gates.md",
+      "source_group_ids": [
+        "wg-d1-T003-10",
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000233",
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Progression_Gates.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "ping.\n\n- `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`\n  - impacted contract/runtime/storage area: scheduling and blocked/recovery lifecycle.\n  - likely issue: lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families still coexist without one canonical model.",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-026",
+      "hint_type": "affected_doc",
+      "path": "Plans/Models_System.md",
+      "source_group_ids": [
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Models_System.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "- `Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`\n  - likely issue: requested/effective platform/model/persona are modeled, but requested/effective account identity and fallback reason are missing.\n\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n  - likely issue: tier-boundary and single-Overseer audit rules are too rig",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-027",
+      "hint_type": "affected_doc",
+      "path": "Plans/Multi-Account.md",
+      "source_group_ids": [
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Multi-Account.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "ers and automation-first execution.\n\n- `Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`\n  - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.\n\n- `Plans/newtools.md`, `Plans/assistant-chat-design.md`\n  - li",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-028",
+      "hint_type": "affected_doc",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "source_group_ids": [
+        "wg-d1-T003-11"
+      ],
+      "source_block_ids": [
+        "lblock-000237"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "xecution.\n\n- `Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`\n  - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.\n\n- `Plans/newtools.md`, `Plans/assistant-chat-design.md`\n  - likely issue: provider/model",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-029",
+      "hint_type": "affected_doc",
+      "path": "Plans/newtools.md",
+      "source_group_ids": [
+        "wg-d1-T003-11",
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000237",
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814
+        },
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/newtools.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "oject/worktree execution contracts.\n\n- `Plans/newtools.md`, `Plans/assistant-chat-design.md`\n  - likely issue: provider/model controls remain per-thread or per-run and do not expose requested/effective execution identity across package, seam, node, and delegated subagent layers.",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-030",
+      "hint_type": "affected_doc",
+      "path": "Plans/newfeatures.md",
+      "source_group_ids": [
+        "wg-d1-T003-12"
+      ],
+      "source_block_ids": [
+        "lblock-000241"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/newfeatures.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "isibility.\n\n- `Plans/feature-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n\n- `Plans/assistant-chat-design.md`\n  - likely issue: execution ordering is thread FIFO with small queues, which",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-031",
+      "hint_type": "affected_doc",
+      "path": "Plans/MiscPlan.md",
+      "source_group_ids": [
+        "wg-d1-T003-12"
+      ],
+      "source_block_ids": [
+        "lblock-000241"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/MiscPlan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "ture-list.md`, `Plans/newfeatures.md`, `Plans/MiscPlan.md`\n  - likely issue: completion, cleanup, concurrency, and queueing are still framed around tiers, runs, and threads instead of package lanes and promotion boundaries.\n\n- `Plans/assistant-chat-design.md`\n  - likely issue: execution ordering is thread FIFO with small queues, which misfits package-lane pa",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-032",
+      "hint_type": "affected_doc",
+      "path": "Plans/usage-feature.md",
+      "source_group_ids": [
+        "wg-d1-T003-13"
+      ],
+      "source_block_ids": [
+        "lblock-000245"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "Plans/OpenCode_Coverage_Matrix.md`\n  - `Plans/usage-feature.md`\n  - `Plans/auto_decisions.schema.json`",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    },
+    {
+      "hint_id": "dh-d2s003-033",
+      "hint_type": "affected_doc",
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "source_group_ids": [
+        "wg-d1-T003-14"
+      ],
+      "source_block_ids": [
+        "lblock-000249"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "source_line_ranges": [
+        {
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890
+        }
+      ],
+      "exact_paths_mentioned": [
+        "Plans/Containers_Registry_and_Unraid.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [],
+      "exact_source_excerpt": "s.\n\n- contradiction\n  - docs involved: `Plans/Containers_Registry_and_Unraid.md`\n  - why it matters: `needs_review` and blocked/failure payload semantics disagree inside the same doc, which will leak into automation-first operator flows.\n\n- contradiction\n  - docs involved: `Plans/sharding_config.json`, `Plans/auto_decisions.jsonl`\n  - why it matters: fallbac",
+      "notes": "Surfaced from ledger seed surface_hints.plans_paths_exact for this slice."
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-000200",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000201",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000202",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000204",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000205",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000206",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000208",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000209",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000210",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000212",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000213",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000214",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000216",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000217",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000218",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000220",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000221",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000222",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000223",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000224",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000226",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000227",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000228",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000230",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000231",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000232",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000234",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000235",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000236",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000238",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000239",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000240",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000242",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000243",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000244",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000246",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000247",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000248",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000250",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000251",
+      "reason": "Structural Markdown section heading only; substantive bullets live in adjacent blocks."
+    },
+    {
+      "block_id": "lblock-000252",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    },
+    {
+      "block_id": "lblock-000254",
+      "reason": "Blank shard line (lossless separator between ledger paragraphs; no prescriptive text)."
+    }
+  ],
+  "blocked_blocks": [],
+  "conversion_notes": [
+    "d2-slice-003 spans GPT-5.4 / Codex sweep clusters for Settings/SCM/GUI/runtime impacts, cleanup priorities, contradictions, and follow-ups (ledger shard-0009/shard-0010 lines 1601-1911).",
+    "Structural `## …` headings and single-line blank separators from the lossless seed are excluded with explicit reasons; prescriptive bullets are converted in neighboring blocks.",
+    "lblock-000215 is split into seven contradiction obligations; lblock-000219 into six research-follow-up obligations; lblock-000253 is emitted only as six `open_questions` records to avoid duplicating follow-up questions as obligations.",
+    "Each obligation and open question carries `source_lineage.ledger_seed_refs[]` with `verbatim_seed_excerpt` identical to the contiguous substring recorded in `exact_source_excerpt` (capped at 400 characters per excerpt).",
+    "Doc hints are separated objects keyed by `Plans/*` paths discovered in seed `surface_hints`, with cross-links back to contributing raw blocks."
+  ],
+  "subagent_execution": {
+    "subagent_task_id": "d2-slice-003",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "every_obligation_has_source_linkage": true,
+    "open_questions_not_answered_silently": true,
+    "doc_hints_preserved_separately": true
+  },
+  "status": "complete"
+}

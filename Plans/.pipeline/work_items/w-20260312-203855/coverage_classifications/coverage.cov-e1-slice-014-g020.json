@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-014-g020",
+  "obligation_record_count": 2,
+  "source_classification_slices": [
+    "e2-class-015"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-020-058",
+      "coverage_task_id": "cov-e1-slice-014-g020",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [
+        "Match is substring/window-local; confirm the full canonical obligation (multi-bullet) is represented without silent narrowing."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0075"
+        ],
+        "source_block_ids": [
+          "lblock-003966"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-08"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14809,
+            "end_line": 14811
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g020",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 97,
+          "line_end": 103,
+          "quote": "  - `[retired-token-44]`\\n  - [retired-token-44]\\n  - Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`\\n  - FinalGUISpec.md\\n  - newtools.md\\n  - Containers_Registry_and_Unraid.md\\n  - assistant-chat-design.md",
+          "rationale": "First excerpt/needle match inside an E1 bounded live_doc_window for this coverage_task's Plans/** union (<=400-line windows materialized in coverage_worklist)."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.28
+    },
+    {
+      "obligation_id": "obl-020-060",
+      "coverage_task_id": "cov-e1-slice-014-g020",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "missing_details": [],
+      "partial_details": [
+        "Match is substring/window-local; confirm the full canonical obligation (multi-bullet) is represented without silent narrowing."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0075"
+        ],
+        "source_block_ids": [
+          "lblock-003972"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-08"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14823,
+            "end_line": 14830
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g020",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 97,
+          "line_end": 103,
+          "quote": "  - `[retired-token-44]`\\n  - [retired-token-44]\\n  - Docs involved: `FinalGUISpec.md`, `newtools.md`, `Containers_Registry_and_Unraid.md`, `assistant-chat-design.md`\\n  - FinalGUISpec.md\\n  - newtools.md\\n  - Containers_Registry_and_Unraid.md\\n  - assistant-chat-design.md",
+          "rationale": "First excerpt/needle match inside an E1 bounded live_doc_window for this coverage_task's Plans/** union (<=400-line windows materialized in coverage_worklist)."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.28
+    }
+  ]
+}

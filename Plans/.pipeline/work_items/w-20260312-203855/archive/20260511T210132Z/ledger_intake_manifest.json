@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.ledger_intake_manifest.v3.2.2",
+  "prompt_id": "B4",
+  "prompt_version": "pm.b4.v3.2.2",
+  "timestamp_utc": "20260511T163524Z",
+  "work_id": "w-20260312-203855",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "requires_new_research": false,
+  "requires_condensation": false,
+  "requires_ledger_preparation": true,
+  "next_section": "C_Ledger_Preparation",
+  "next_preferred_prompt": "C0",
+  "selection_rule": "priority_1_existing_non_empty_working_ledger",
+  "optional_inputs_checked": {
+    "session_notes_jsonl_glob": "Plans/.pipeline/work_items/w-20260312-203855/session_notes/*.jsonl",
+    "session_notes_present": false,
+    "research_findings_json_present": false,
+    "feature_spec_audit_report_json_present": false,
+    "issue_process_adjudication_report_json_present": false
+  },
+  "mechanical_evidence": {
+    "working_ledger_path": "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "byte_length": 1044305,
+    "newline_byte_count": 18244,
+    "estimated_line_count_inclusive": 18244,
+    "non_whitespace_nonempty": true
+  },
+  "notes": [
+    "No condensation or B1 routing: existing working_ledger.md is the durable source per B4 priority 1.",
+    "Full ledger content was not semantically read; only size and newline counts were measured."
+  ]
+}

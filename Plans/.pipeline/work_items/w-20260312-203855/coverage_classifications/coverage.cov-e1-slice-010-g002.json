@@ -1,0 +1,563 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-010-g002",
+  "obligation_record_count": 25,
+  "source_classification_slices": [
+    "e2-class-010"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-014-040",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1165,
+          "line_end": 1181,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-041",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 80,
+          "line_end": 96,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-042",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1459,
+          "line_end": 1475,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-043",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3114,
+          "line_end": 3130,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-044",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1188,
+          "line_end": 1200,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-045",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "line_start": 33,
+          "line_end": 49,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-046",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1229,
+          "line_end": 1245,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-047",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 485,
+          "line_end": 501,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-048",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4027,
+          "line_end": 4043,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-049",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.93,
+      "uncertainty": 0.07,
+      "evidence_spans": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-050",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2230,
+          "line_end": 2246,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-051",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4027,
+          "line_end": 4043,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-052",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1190,
+          "line_end": 1200,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-053",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 80,
+          "line_end": 96,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-054",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 275,
+          "line_end": 291,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-055",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4027,
+          "line_end": 4043,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-056",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 444,
+          "line_end": 460,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-057",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1475,
+          "line_end": 1491,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-058",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4027,
+          "line_end": 4043,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-059",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.93,
+      "uncertainty": 0.07,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-060",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1274,
+          "line_end": 1290,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-061",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 444,
+          "line_end": 460,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-062",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 444,
+          "line_end": 460,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-063",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Commands_System.md",
+          "line_start": 104,
+          "line_end": 120,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    },
+    {
+      "obligation_id": "obl-014-064",
+      "coverage_task_id": "cov-e1-slice-010-g002",
+      "source_shard_id": "shard-0051",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "best_evidence_score": 0.52,
+      "uncertainty": 0.31,
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 251,
+          "line_end": 267,
+          "rationale": "Substring alignment between obligation excerpt and a line inside an E1 live_doc_targets_union path."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial textual grounding; confirm requirement completeness under Section E."
+      ]
+    }
+  ]
+}

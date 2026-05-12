@@ -1,0 +1,5530 @@
+{
+  "schema_id": "pm.obligation_conversion_slice.v3.2.3",
+  "prompt_id": "D2",
+  "work_id": "w-20260312-203855",
+  "slice_id": "d2-slice-012",
+  "source_group_ids_represented": [
+    "wg-d1-T011-01",
+    "wg-d1-T011-02",
+    "wg-d1-T011-03",
+    "wg-d1-T011-04",
+    "wg-d1-T011-05",
+    "wg-d1-T011-06",
+    "wg-d1-T011-07",
+    "wg-d1-T011-08",
+    "wg-d1-T011-09",
+    "wg-d1-T011-10"
+  ],
+  "source_block_ids_represented": [
+    "lblock-001896",
+    "lblock-001897",
+    "lblock-001898",
+    "lblock-001899",
+    "lblock-001900",
+    "lblock-001901",
+    "lblock-001902",
+    "lblock-001903",
+    "lblock-001904",
+    "lblock-001905",
+    "lblock-001906",
+    "lblock-001907",
+    "lblock-001908",
+    "lblock-001909",
+    "lblock-001910",
+    "lblock-001911",
+    "lblock-001912",
+    "lblock-001913",
+    "lblock-001914",
+    "lblock-001915",
+    "lblock-001916",
+    "lblock-001917",
+    "lblock-001918",
+    "lblock-001919",
+    "lblock-001920",
+    "lblock-001921",
+    "lblock-001922",
+    "lblock-001923",
+    "lblock-001924",
+    "lblock-001925",
+    "lblock-001926",
+    "lblock-001927",
+    "lblock-001928",
+    "lblock-001929",
+    "lblock-001930",
+    "lblock-001931",
+    "lblock-001932",
+    "lblock-001933",
+    "lblock-001934",
+    "lblock-001935",
+    "lblock-001936",
+    "lblock-001937",
+    "lblock-001938",
+    "lblock-001939",
+    "lblock-001940",
+    "lblock-001941",
+    "lblock-001942",
+    "lblock-001943",
+    "lblock-001944",
+    "lblock-001945",
+    "lblock-001946",
+    "lblock-001947",
+    "lblock-001948",
+    "lblock-001949",
+    "lblock-001950",
+    "lblock-001951",
+    "lblock-001952",
+    "lblock-001953",
+    "lblock-001954",
+    "lblock-001955",
+    "lblock-001956",
+    "lblock-001957",
+    "lblock-001958",
+    "lblock-001959",
+    "lblock-001960",
+    "lblock-001961",
+    "lblock-001962",
+    "lblock-001963",
+    "lblock-001964",
+    "lblock-001965",
+    "lblock-001966",
+    "lblock-001967",
+    "lblock-001968",
+    "lblock-001969",
+    "lblock-001970",
+    "lblock-001971",
+    "lblock-001972",
+    "lblock-001973",
+    "lblock-001974",
+    "lblock-001975",
+    "lblock-001976",
+    "lblock-001977",
+    "lblock-001978",
+    "lblock-001979",
+    "lblock-001980",
+    "lblock-001981",
+    "lblock-001982",
+    "lblock-001983",
+    "lblock-001984",
+    "lblock-001985",
+    "lblock-001986",
+    "lblock-001987",
+    "lblock-001988",
+    "lblock-001989",
+    "lblock-001990",
+    "lblock-001991",
+    "lblock-001992",
+    "lblock-001993",
+    "lblock-001994",
+    "lblock-001995",
+    "lblock-001996",
+    "lblock-001997",
+    "lblock-001998",
+    "lblock-001999",
+    "lblock-002000",
+    "lblock-002001",
+    "lblock-002002",
+    "lblock-002003",
+    "lblock-002004",
+    "lblock-002005",
+    "lblock-002006",
+    "lblock-002007",
+    "lblock-002008",
+    "lblock-002009",
+    "lblock-002010",
+    "lblock-002011",
+    "lblock-002012",
+    "lblock-002013",
+    "lblock-002014",
+    "lblock-002015",
+    "lblock-002016",
+    "lblock-002017",
+    "lblock-002018",
+    "lblock-002019",
+    "lblock-002020",
+    "lblock-002021",
+    "lblock-002022",
+    "lblock-002023",
+    "lblock-002024",
+    "lblock-002025",
+    "lblock-002026",
+    "lblock-002027",
+    "lblock-002028",
+    "lblock-002029",
+    "lblock-002030",
+    "lblock-002031",
+    "lblock-002032",
+    "lblock-002033",
+    "lblock-002034",
+    "lblock-002035",
+    "lblock-002036",
+    "lblock-002037",
+    "lblock-002038",
+    "lblock-002039",
+    "lblock-002040",
+    "lblock-002041",
+    "lblock-002042",
+    "lblock-002043",
+    "lblock-002044",
+    "lblock-002045",
+    "lblock-002046",
+    "lblock-002047",
+    "lblock-002048",
+    "lblock-002049",
+    "lblock-002050",
+    "lblock-002051",
+    "lblock-002052",
+    "lblock-002053",
+    "lblock-002054",
+    "lblock-002055",
+    "lblock-002056",
+    "lblock-002057",
+    "lblock-002058",
+    "lblock-002059",
+    "lblock-002060",
+    "lblock-002061",
+    "lblock-002062",
+    "lblock-002063",
+    "lblock-002064",
+    "lblock-002065",
+    "lblock-002066",
+    "lblock-002067",
+    "lblock-002068",
+    "lblock-002069",
+    "lblock-002070",
+    "lblock-002071",
+    "lblock-002072",
+    "lblock-002073",
+    "lblock-002074",
+    "lblock-002075",
+    "lblock-002076",
+    "lblock-002077",
+    "lblock-002078",
+    "lblock-002079",
+    "lblock-002080",
+    "lblock-002081",
+    "lblock-002082",
+    "lblock-002083",
+    "lblock-002084",
+    "lblock-002085",
+    "lblock-002086",
+    "lblock-002087",
+    "lblock-002088",
+    "lblock-002089",
+    "lblock-002090",
+    "lblock-002091",
+    "lblock-002092",
+    "lblock-002093",
+    "lblock-002094",
+    "lblock-002095",
+    "lblock-002096",
+    "lblock-002097",
+    "lblock-002098",
+    "lblock-002099",
+    "lblock-002100",
+    "lblock-002101",
+    "lblock-002102",
+    "lblock-002103",
+    "lblock-002104",
+    "lblock-002105",
+    "lblock-002106",
+    "lblock-002107",
+    "lblock-002108",
+    "lblock-002109",
+    "lblock-002110",
+    "lblock-002111",
+    "lblock-002112",
+    "lblock-002113",
+    "lblock-002114",
+    "lblock-002115"
+  ],
+  "source_shard_ids_represented": [
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044"
+  ],
+  "source_line_ranges_represented": [
+    {
+      "source_shard_id": "shard-0041",
+      "start_line": 8001,
+      "end_line": 8110
+    },
+    {
+      "source_shard_id": "shard-0041",
+      "start_line": 8111,
+      "end_line": 8200
+    },
+    {
+      "source_shard_id": "shard-0042",
+      "start_line": 8201,
+      "end_line": 8289
+    },
+    {
+      "source_shard_id": "shard-0042",
+      "start_line": 8290,
+      "end_line": 8364
+    },
+    {
+      "source_shard_id": "shard-0042",
+      "start_line": 8365,
+      "end_line": 8400
+    },
+    {
+      "source_shard_id": "shard-0043",
+      "start_line": 8401,
+      "end_line": 8473
+    },
+    {
+      "source_shard_id": "shard-0043",
+      "start_line": 8474,
+      "end_line": 8586
+    },
+    {
+      "source_shard_id": "shard-0043",
+      "start_line": 8587,
+      "end_line": 8600
+    },
+    {
+      "source_shard_id": "shard-0044",
+      "start_line": 8601,
+      "end_line": 8696
+    },
+    {
+      "source_shard_id": "shard-0044",
+      "start_line": 8697,
+      "end_line": 8800
+    }
+  ],
+  "blocks_observed": 220,
+  "blocks_converted": 70,
+  "blocks_excluded": 150,
+  "blocks_blocked": 0,
+  "obligations": [
+    {
+      "obligation_id": "obl-d2-s012-001",
+      "obligation_text": "Codex confirmed the sharpest provider-side contract bug is still the OpenCode `thread_id` collision:",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001896"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8001,
+          "end_line": 8018
+        }
+      ],
+      "exact_source_excerpt": "- Codex confirmed the sharpest provider-side contract bug is still the **OpenCode `thread_id` collision**:\n  - canonical `thread_id` remains PM correlation\n  - OpenCode session ID is still being treated as if it were that canonical field\n  - this must move into provider-native correlation before shared-runtime event joins become trustworthy\n- The provider boundary still lacks a legal place for rew",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "always",
+        "external_publish_side_effect",
+        "thread_id"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-002",
+      "obligation_text": "`Plans/Provider_OpenCode.md`",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001899"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8021,
+          "end_line": 8030
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Provider_OpenCode.md`\n  - needs immediate correction of canonical/session identity ownership\n- `Plans/CLI_Bridged_Providers.md`\n  - needs a versioned correlation/context block and account-health semantics stronger than auth lifecycle alone\n- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`\n  - needs stream version governance before actor/account/trust semantics can be added clean",
+      "exact_paths_mentioned": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-003",
+      "obligation_text": "OpenCode still misuses canonical `thread_id` for provider-native session identity.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001902"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8033,
+          "end_line": 8038
+        }
+      ],
+      "exact_source_excerpt": "- OpenCode still misuses canonical `thread_id` for provider-native session identity.\n- Bridged contracts still cannot legally carry all correlation/account/trust metadata their addenda already imply.\n- A2A still blocks clean category growth despite rewrite-era semantics needing first-class stream representation.\n- Permission mode override semantics still conflict on remote side effects.\n- Permissi",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "thread_id"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-004",
+      "obligation_text": "Move OpenCode session IDs into provider-native correlation fields.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001905"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8041,
+          "end_line": 8046
+        }
+      ],
+      "exact_source_excerpt": "- Move OpenCode session IDs into provider-native correlation fields.\n- Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata.\n- Reconcile `ask/plan` and `external_publish_side_effect` semantics in one canonical algorithm.\n- Define an Approval Scope Key spanning actor/lane/run/account context.\n- Upgrade permission snapshots to carry requested/effective values, d",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "external_publish_side_effect"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-005",
+      "obligation_text": "`origin` must remain audit-only even after actor identity becomes first-class elsewhere.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001908"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8049,
+          "end_line": 8051
+        }
+      ],
+      "exact_source_excerpt": "- `origin` must remain audit-only even after actor identity becomes first-class elsewhere.\n- Provider continuity can stay opaque, but only if opacity is explicit and projected as such.\n- Blocked/approval truth and account/pressure truth are now intertwined; fixing one without the other will still leave misleading surfaces.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "origin"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-006",
+      "obligation_text": "`Plans/Multi-Account.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001913"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8056,
+          "end_line": 8061
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/usage-feature.md`\n- `Plans/Orchestrator_Page.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-007",
+      "obligation_text": "`Multi-Account.md` already contains the key insight in its operational-identity addendum:",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001916"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8064,
+          "end_line": 8078
+        }
+      ],
+      "exact_source_excerpt": "- `Multi-Account.md` already contains the key insight in its operational-identity addendum:\n  - provider account identity is not enough\n  - the system also needs operational identity classes like GitHub API identity, registry/namespace identity, and Kubernetes context/cluster identity\n- But that distinction is still not carried into the shared runtime snapshot.\n  - current canonical fields cover p",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "actor_role",
+        "effective_project_id",
+        "execution_role",
+        "operational_identity"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-008",
+      "obligation_text": "Extend the shared effective-resolution/runtime identity model with:",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001919"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8081,
+          "end_line": 8109
+        }
+      ],
+      "exact_source_excerpt": "- Extend the shared effective-resolution/runtime identity model with:\n  - `execution_role`\n  - `requested_operational_identity?`\n  - `effective_operational_identity?`\n- Recommended `execution_role` examples:\n  - `assistant`\n  - `interviewer`\n  - `requirements_builder`\n  - `prd_builder`\n  - `package_overseer`\n  - `seam_overseer`\n  - `node_worker`\n  - `reviewer`\n  - `corroborator`\n  - `recovery_acto",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "assistant",
+        "corroborator",
+        "execution_role",
+        "github_api_account",
+        "interviewer",
+        "kind",
+        "kubernetes_context",
+        "node_worker",
+        "package_overseer",
+        "prd_builder",
+        "recovery_actor",
+        "registry_namespace",
+        "requirements_builder",
+        "reviewer",
+        "seam_overseer"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-009",
+      "obligation_text": "`Plans/Multi-Account.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001922"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8112,
+          "end_line": 8117
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`\n- consumer docs for graph/detail/history/ledger/runtime inspectors",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-010",
+      "obligation_text": "Current runtime snapshots can explain which provider account was used, but not which operational identity the action was actually aimed at.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001925"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8120,
+          "end_line": 8125
+        }
+      ],
+      "exact_source_excerpt": "- Current runtime snapshots can explain which provider account was used, but not which operational identity the action was actually aimed at.\n- Role-scoped account policy exists, but the eventual runtime records still do not expose the winning role dimension cleanly.\n- Usage and receipt surfaces can correlate to external systems via refs, but that is weaker than first-class requested/effective ope",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-011",
+      "obligation_text": "Add `execution_role` to:",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001928"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8128,
+          "end_line": 8139
+        }
+      ],
+      "exact_source_excerpt": "- Add `execution_role` to:\n  - effective-resolution record\n  - `attempt_record`\n  - `tier_runtime_record` or successor graph-owned runtime record\n  - `usage_record`\n- Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter.\n- Keep cross-surface receipt refs, but treat them as linkage, not as the sole operational-identity disclosure model.\n- Ensur",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "attempt_record",
+        "execution_role",
+        "tier_runtime_record",
+        "usage_record"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-012",
+      "obligation_text": "`execution_role` is not the same as `run_kind`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001931"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8142,
+          "end_line": 8145
+        }
+      ],
+      "exact_source_excerpt": "- `execution_role` is not the same as `run_kind`\n- operational identity is not the same as provider account identity\n- `effective_project_id` remains useful correlation context, but it is not a substitute for operational identity\n- this seam affects Orchestrator, GitHub Actions, Docker Manager, Usage, History, and Ledger at the same time",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "effective_project_id",
+        "execution_role",
+        "run_kind"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-013",
+      "obligation_text": "`Plans/Multi-Account.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001936"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8150,
+          "end_line": 8155
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n- `Plans/storage-plan.md`\n- `Plans/usage-feature.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/FinalGUISpec.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-014",
+      "obligation_text": "Current docs are relatively strong on current-state disclosure:",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001939"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8158,
+          "end_line": 8185
+        }
+      ],
+      "exact_source_excerpt": "- Current docs are relatively strong on current-state disclosure:\n  - `current effective account`\n  - `recent switch reason`\n  - cooldown state\n  - `signal_confidence`\n  - provider/account health snapshots\n- But they are weak on durable history.\n  - switching currently exists mostly as:\n    - `account_switch_reason` on runtime snapshots\n    - `recent_switch_reason` on account health state\n    - no",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "account_switch_reason",
+        "recent_switch_reason",
+        "signal_confidence"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-015",
+      "obligation_text": "Add a canonical append-only event/record family for account-pressure and switching.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001942"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8188,
+          "end_line": 8196
+        }
+      ],
+      "exact_source_excerpt": "- Add a canonical append-only event/record family for account-pressure and switching.\n- Recommended minimum concepts:\n  - `account_pressure_episode`\n  - `account_switch_event`\n- If kept as two families:\n  - `account_pressure_episode` tracks the pressure state and its confidence/source over time\n  - `account_switch_event` records the actual routing change or failed-switch decision\n- If kept as one ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "account_pressure_episode",
+        "account_switch_event"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-016",
+      "obligation_text": "`account_pressure_episode`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001945"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8199,
+          "end_line": 8200
+        }
+      ],
+      "exact_source_excerpt": "- `account_pressure_episode`\n  - `episode_id`",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "account_pressure_episode",
+        "episode_id"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-017",
+      "obligation_text": "`project_id`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001946"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8201,
+          "end_line": 8212
+        }
+      ],
+      "exact_source_excerpt": "  - `project_id`\n  - `provider_id`\n  - `account_id`\n  - `execution_role?`\n  - `source_kind`\n  - `signal_confidence`\n  - `pressure_kind`\n  - `projected_remaining?`\n  - `reset_at?`\n  - `started_at_utc`\n  - `updated_at_utc`\n  - `ended_at_utc?`",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "account_id",
+        "pressure_kind",
+        "project_id",
+        "provider_id",
+        "signal_confidence",
+        "source_kind",
+        "started_at_utc",
+        "updated_at_utc"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-018",
+      "obligation_text": "`status` (`active | cooled_down | resolved | invalidated`)",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001947"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8213,
+          "end_line": 8213
+        }
+      ],
+      "exact_source_excerpt": "  - `status` (`active | cooled_down | resolved | invalidated`)",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "active",
+        "cooled_down",
+        "invalidated",
+        "resolved",
+        "status"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-019",
+      "obligation_text": "`account_switch_event`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001948"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8214,
+          "end_line": 8229
+        }
+      ],
+      "exact_source_excerpt": "- `account_switch_event`\n  - `switch_event_id`\n  - `project_id`\n  - `provider_id`\n  - `execution_role?`\n  - `requested_account_id?`\n  - `requested_account_binding?`\n  - `from_account_id?`\n  - `to_account_id?`\n  - `switch_reason`\n  - `decision_kind` (`switched | stayed | blocked_no_backup | blocked_required_account | failed`)\n  - `source_episode_id?`\n  - `run_id?`\n  - `attempt_id?`\n  - `thread_id?`",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "account_switch_event",
+        "blocked_no_backup",
+        "blocked_required_account",
+        "decision_kind",
+        "failed",
+        "project_id",
+        "provider_id",
+        "stayed",
+        "switch_event_id",
+        "switch_reason",
+        "switched"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-020",
+      "obligation_text": "`Plans/Multi-Account.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001951"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8232,
+          "end_line": 8238
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Multi-Account.md`\n- `Plans/storage-plan.md`\n- `Plans/Contracts_V0.md`\n- `Plans/usage-feature.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/FinalGUISpec.md`\n- consumer docs for History / Ledger / Orchestrator runtime detail",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-021",
+      "obligation_text": "`account_switch_reason` currently does too much work as a single field.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001954"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8241,
+          "end_line": 8245
+        }
+      ],
+      "exact_source_excerpt": "- `account_switch_reason` currently does too much work as a single field.\n  - it tries to explain both pressure cause and switch outcome\n  - it also collapses current-state and historical-state concerns together\n- `provider_accounts.health` is a current-state family, not a durable episode history.\n- Notification copy already assumes switch outcomes like `threshold_preemptive_switch` and `no eligib",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "account_switch_reason",
+        "threshold_preemptive_switch"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-022",
+      "obligation_text": "Keep `account_switch_reason` on effective/runtime snapshots as the current-run disclosure field.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001957"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8248,
+          "end_line": 8251
+        }
+      ],
+      "exact_source_excerpt": "- Keep `account_switch_reason` on effective/runtime snapshots as the current-run disclosure field.\n- Add append-only switch/pressure history families for durable audit and shared UI consumption.\n- Let Usage, History, Ledger, and Orchestrator consume the same event family rather than inventing local switch-history views.\n- Preserve `signal_confidence` and `source_kind` in the history family so pres",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "account_switch_reason",
+        "signal_confidence",
+        "source_kind"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-023",
+      "obligation_text": "a failed or blocked switch decision is still historically important even when the effective account did not change",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001960"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8254,
+          "end_line": 8257
+        }
+      ],
+      "exact_source_excerpt": "- a failed or blocked switch decision is still historically important even when the effective account did not change\n- pressure episodes and switch events should support both provider-wide and account-specific views\n- this history must not become a second quota system; it should plug into the shared Usage/runtime pipeline\n- current-state surfaces can stay simple, but history surfaces need the appe",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-024",
+      "obligation_text": "`Plans/FinalGUISpec.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001965"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8262,
+          "end_line": 8268
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Runtime_Artifacts_Panel.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- `Plans/Widget_System.md`\n- `Plans/usage-feature.md`",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-025",
+      "obligation_text": "Final GUI surface ownership is still materially behind the rewrite:",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001968"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8271,
+          "end_line": 8287
+        }
+      ],
+      "exact_source_excerpt": "- Final GUI surface ownership is still materially behind the rewrite:\n  - Dashboard and Appendix C still center tier/task/subtask widgets and vocabulary\n  - `Tiers` still survives as a first-class tab where the rewrite now wants seam/package/node surfaces\n  - the 12-widget rewrite-era Progress set still has no concrete home in `FinalGUISpec.md`\n- The concern model is still effectively absent from ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "cost_usage"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-026",
+      "obligation_text": "`Plans/FinalGUISpec.md`",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001971"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8290,
+          "end_line": 8297
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/FinalGUISpec.md`\n  - still the broadest consumer doc and still missing concern, trust, switch/pressure, and rewrite-era widget/tab contracts\n- `Plans/UI_Command_Catalog.md`\n  - still needs governance families, route-payload normalization, and projection-freshness gating\n- `Plans/Runtime_Artifacts_Panel.md`\n  - still needs producer identity, trust/provenance, and stronger cross-surface lin",
+      "exact_paths_mentioned": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-027",
+      "obligation_text": "GUI still claims or implies tier/task/subtask surfaces where rewrite-era seam/package/node surfaces are intended.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001974"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8300,
+          "end_line": 8304
+        }
+      ],
+      "exact_source_excerpt": "- GUI still claims or implies tier/task/subtask surfaces where rewrite-era seam/package/node surfaces are intended.\n- No explicit concern model exists in the primary GUI specification.\n- Commands that change execution truth still lack a shared stale/degraded-projection gate.\n- Artifact envelopes still cannot answer who produced the artifact under which identity/trust state.\n- Widget/page drill con",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-028",
+      "obligation_text": "Replace tier-era Dashboard/Orchestrator widget vocabulary with the rewrite-era Progress/Seams set.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001977"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8307,
+          "end_line": 8311
+        }
+      ],
+      "exact_source_excerpt": "- Replace tier-era Dashboard/Orchestrator widget vocabulary with the rewrite-era Progress/Seams set.\n- Add a concern-model GUI contract and projection-health / degraded-trust contract to `FinalGUISpec.md`.\n- Add projection-freshness gating and typed route payloads to `UI_Command_Catalog.md`.\n- Extend runtime-artifact envelopes and `cost_usage` linkage with canonical identity/trust/switch fields or",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "cost_usage"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-029",
+      "obligation_text": "Preview `trust_tier` and runtime projection trust must stay distinct.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001980"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8314,
+          "end_line": 8316
+        }
+      ],
+      "exact_source_excerpt": "- Preview `trust_tier` and runtime projection trust must stay distinct.\n- Artifact provenance/trust needs to work even when the live worktree or provider session is gone.\n- The Orchestrator/Usage/GitHub deep-link story is now blocked more by missing route payload/trust contracts than by missing page chrome.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "trust_tier"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-030",
+      "obligation_text": "`Plans/assistant-chat-design.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001985"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8321,
+          "end_line": 8327
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/assistant-chat-design.md`\n- `Plans/interview-subagent-integration.md`\n- `Plans/human-in-the-loop.md`\n- `Plans/Tools.md`\n- `Plans/Permissions_System.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Prompt_Pipeline.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-031",
+      "obligation_text": "Conversational actor docs still lag the shared runtime identity model in concrete ways:",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001988"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8330,
+          "end_line": 8344
+        }
+      ],
+      "exact_source_excerpt": "- Conversational actor docs still lag the shared runtime identity model in concrete ways:\n  - assistant chat promises requested/effective auth/account visibility but still does not actually specify the disclosure surface\n  - interview runtime contracts still stop at persona/platform/model-level identity and still omit auth/account/switch identity\n  - neither doc cleanly projects `execution_role` /",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "actor_kind",
+        "always",
+        "ask",
+        "execution_role",
+        "mutation_capable"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-032",
+      "obligation_text": "`Plans/assistant-chat-design.md`",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001991"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8347,
+          "end_line": 8356
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/assistant-chat-design.md`\n  - still needs explicit auth/account/role disclosure and thread-level switch/trust handling\n- `Plans/human-in-the-loop.md`\n  - still needs actor/lane/account identity, approval provenance, and concurrency-safe queue/scope rules\n- `Plans/Tools.md`\n  - still needs richer event payloads, reconciled outcome taxonomy, and DAE tool-event reconstruction\n- `Plans/interv",
+      "exact_paths_mentioned": [
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-033",
+      "obligation_text": "Conversational docs promise or imply requested/effective runtime truth but still omit account/auth details in their concrete sections.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001994"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8359,
+          "end_line": 8363
+        }
+      ],
+      "exact_source_excerpt": "- Conversational docs promise or imply requested/effective runtime truth but still omit account/auth details in their concrete sections.\n- HITL and permissions still mix tier-boundary governance with tool-level approval semantics.\n- Tool events remain under-attributed for node/actor/account-aware audit.\n- Approval and blocked records still cannot explain which effective account/identity would have",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-034",
+      "obligation_text": "Add explicit auth/account/role disclosure sections to assistant and interview runtime contracts.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-001997"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8366,
+          "end_line": 8370
+        }
+      ],
+      "exact_source_excerpt": "- Add explicit auth/account/role disclosure sections to assistant and interview runtime contracts.\n- Add actor/lane/account identity and approver provenance to HITL request/resolution events.\n- Define an Approval Scope Key and use it consistently across permissions, HITL, doom-loop, and session approval caching.\n- Extend tool events with node/attempt/actor/account context and reconcile tool outcom",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-035",
+      "obligation_text": "“Approve for session” is now a correctness bug if it is not scoped properly.",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002000"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8373,
+          "end_line": 8375
+        }
+      ],
+      "exact_source_excerpt": "- “Approve for session” is now a correctness bug if it is not scoped properly.\n- Persona display is not a substitute for actor/role identity.\n- DAE runs still need a clear post-hoc tool-event story or their analytics/blocked truth will drift immediately.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-036",
+      "obligation_text": "`Plans/Executor_Protocol.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002005"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8380,
+          "end_line": 8386
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Executor_Protocol.md`\n- `Plans/orchestrator-subagent-integration.md`\n- `Plans/chain-wizard-flexibility.md`\n- `Plans/WorktreeGitImprovement.md`\n- `Plans/Glossary.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/storage-plan.md`",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Glossary.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-037",
+      "obligation_text": "The core orchestration architecture docs are still structurally split between node-native ingest and tier-native execution:",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002008"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8389,
+          "end_line": 8400
+        }
+      ],
+      "exact_source_excerpt": "- The core orchestration architecture docs are still structurally split between node-native ingest and tier-native execution:\n  - `orchestrator-subagent-integration.md` already ingests node-sharded plans but still dispatches, tracks agents, and remediates via `tier_id`-keyed constructs\n  - `WorktreeGitImprovement.md` is still deeply tier-keyed and still has zero lane awareness even though schedule",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "tier_id"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-038",
+      "obligation_text": "no clean lane/worktree binding exists",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002009"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8401,
+          "end_line": 8403
+        }
+      ],
+      "exact_source_excerpt": "  - no clean lane/worktree binding exists\n  - no single authority is declared between Source Control worktree state and Orchestrator receipt lineage\n  - blocked worktree reason emitters and historical lineage preservation remain under-owned",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-039",
+      "obligation_text": "`Plans/orchestrator-subagent-integration.md`",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002012"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8406,
+          "end_line": 8413
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/orchestrator-subagent-integration.md`\n  - still the most contradicted orchestration doc and still structurally split-brain between body and addenda\n- `Plans/Executor_Protocol.md`\n  - still needs consolidation plus rewrite-era actor/corroboration/concern/wake semantics\n- `Plans/WorktreeGitImprovement.md`\n  - still needs node/lane-aware vocabulary and projection authority rules\n- `Plans/cha",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-040",
+      "obligation_text": "Node-native plan ingest still feeds tier-native execution models.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002015"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8416,
+          "end_line": 8420
+        }
+      ],
+      "exact_source_excerpt": "- Node-native plan ingest still feeds tier-native execution models.\n- Lane-aware scheduling still does not flow into worktree and active-agent tracking.\n- Concern/corroboration/promotion objects remain absent from core runtime protocols.\n- Wizard handoff still leaves identity/worktree policy implicit where the rewrite now needs them explicit.\n- Worktree blocked reasons and historical lineage prese",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-041",
+      "obligation_text": "Consolidate `Executor_Protocol.md` addenda and add package/seam/corroboration/concern hooks.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002018"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8423,
+          "end_line": 8427
+        }
+      ],
+      "exact_source_excerpt": "- Consolidate `Executor_Protocol.md` addenda and add package/seam/corroboration/concern hooks.\n- Introduce node/actor/lane-aware execution context into orchestrator runtime structs and active-agent tracking.\n- Replace or wrap `TierContext` with a node-native execution context carrying full canonical runtime identity.\n- Add explicit CUP governance and handoff fields (`execution_role`, requested/eff",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "execution_role"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-042",
+      "obligation_text": "`scheduler_lane` is already mandatory in some addenda but structurally homeless in the older orchestration body.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002021"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8430,
+          "end_line": 8432
+        }
+      ],
+      "exact_source_excerpt": "- `scheduler_lane` is already mandatory in some addenda but structurally homeless in the older orchestration body.\n- Worktree lane binding and historical lineage preservation are now correctness requirements, not nice-to-have source-control polish.\n- If concern/corroboration stays unowned in the execution core, surface-level concern models will remain performative rather than operational.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "scheduler_lane"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-043",
+      "obligation_text": "`Plans/storage-plan.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002026"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8437,
+          "end_line": 8440
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Glossary.md`\n- `Plans/Contracts_V0.md`\n- current ledger projection-trust clusters",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Glossary.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-044",
+      "obligation_text": "The vocabulary collision is real:",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002029"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8443,
+          "end_line": 8460
+        }
+      ],
+      "exact_source_excerpt": "- The vocabulary collision is real:\n  - `trust_tier` already exists in preview/browser state\n  - broader Orchestrator/UI research has been using “projection trust” or “degraded trust” for stale/degraded summary data\n  - keeping one overloaded trust term will make later docs muddy\n- The cleaner fix is to split the concept into two axes:\n  - **projection freshness**: how up to date the projection is",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "current",
+        "degraded",
+        "healthy",
+        "refreshing",
+        "stale",
+        "trust_tier",
+        "unavailable"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-045",
+      "obligation_text": "Use `projection_freshness` as the canonical recency field.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002032"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8463,
+          "end_line": 8472
+        }
+      ],
+      "exact_source_excerpt": "- Use `projection_freshness` as the canonical recency field.\n- Use `projection_health` as the canonical reliability/usability field.\n- Reserve `trust_tier` for preview/browser semantics only unless those docs are later explicitly renamed too.\n- Recommended supporting fields:\n  - `projection_freshness`\n  - `projection_health`\n  - `last_projected_at_utc`\n  - `source_seq?` or equivalent checkpoint/cu",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "last_projected_at_utc",
+        "projection_freshness",
+        "projection_health",
+        "trust_tier"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-046",
+      "obligation_text": "`Plans/storage-plan.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002035"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8475,
+          "end_line": 8482
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/storage-plan.md`\n- `Plans/Glossary.md`\n- `Plans/Contracts_V0.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Widget_System.md`\n- `Plans/Orchestrator_Page.md`\n- `Plans/Run_Graph_View.md`\n- any docs currently using “projection trust” as working language",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-047",
+      "obligation_text": "Current research wording has been useful, but it still risks colliding with preview/browser `trust_tier`.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002038"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8485,
+          "end_line": 8487
+        }
+      ],
+      "exact_source_excerpt": "- Current research wording has been useful, but it still risks colliding with preview/browser `trust_tier`.\n- Freshness and degradation are currently discussed together often enough that later docs could collapse them into one field family by accident.\n- No owner doc yet explicitly defines projection freshness/health fields as a reusable cross-surface contract.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "trust_tier"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-048",
+      "obligation_text": "Make `storage-plan.md` the owner of generic projection freshness/health projection fields.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002041"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8490,
+          "end_line": 8497
+        }
+      ],
+      "exact_source_excerpt": "- Make `storage-plan.md` the owner of generic projection freshness/health projection fields.\n- Make `Glossary.md` own the canonical term meanings:\n  - `projection freshness`\n  - `projection health`\n- Let surface docs consume those terms instead of inventing local stale/degraded wording.\n- Keep action gating rules tied to both axes:\n  - stale but healthy may allow read-only use with warning\n  - deg",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-049",
+      "obligation_text": "preview/browser `trust_tier` should not be casually reused as the generic projection-state term",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002044"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8500,
+          "end_line": 8504
+        }
+      ],
+      "exact_source_excerpt": "- preview/browser `trust_tier` should not be casually reused as the generic projection-state term\n- users need both pieces of information:\n  - is this data old?\n  - is this data trustworthy enough to act on?\n- current posture still favors exact record-backed fallback (`History`, `Ledger`, record inspectors) when projection health is degraded",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "trust_tier"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-050",
+      "obligation_text": "current `working_ledger.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002049"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8509,
+          "end_line": 8517
+        }
+      ],
+      "exact_source_excerpt": "- current `working_ledger.md`\n- `Plans/Contracts_V0.md`\n- `Plans/storage-plan.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/Multi-Account.md`\n- `Plans/Executor_Protocol.md`\n- `Plans/orchestrator-subagent-integration.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Glossary.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Glossary.md",
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-051",
+      "obligation_text": "The remaining unresolved seams now look less like “missing content” and more like “owner mismatch”.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002052"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8520,
+          "end_line": 8539
+        }
+      ],
+      "exact_source_excerpt": "- The remaining unresolved seams now look less like “missing content” and more like “owner mismatch”.\n- A consistent ownership pattern is emerging:\n  - `Contracts_V0.md` should own cross-cutting persisted-envelope field families and stable event names\n  - `storage-plan.md` should own redb key patterns, projector shapes, current-state projections, and canonical record families\n  - `Prompt_Pipeline.",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-052",
+      "obligation_text": "`Contracts_V0.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002055"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8542,
+          "end_line": 8581
+        }
+      ],
+      "exact_source_excerpt": "- `Contracts_V0.md`\n  - add/own canonical snapshot field names such as:\n    - `requested_account_id`\n    - `requested_account_binding`\n    - `execution_role`\n    - operational-identity snapshot block names\n  - own stable event names for:\n    - account pressure / switch history\n    - any new blocked/recovery/governance event families\n  - own route-payload envelope name only if it becomes a generic ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "execution_role",
+        "project_attention_item",
+        "project_summary",
+        "requested_account_binding",
+        "requested_account_id"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-053",
+      "obligation_text": "Several docs still claim “no open questions” while their supposed dependencies remain undecided elsewhere.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002058"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8584,
+          "end_line": 8586
+        }
+      ],
+      "exact_source_excerpt": "- Several docs still claim “no open questions” while their supposed dependencies remain undecided elsewhere.\n- `UI_Command_Catalog.md` is currently being used as a de facto navigation contract in places where a deeper route payload is still unowned.\n- `Executor_Protocol.md` and `orchestrator-subagent-integration.md` still trail the newer graph/package/seam/lane model enough that downstream docs ke",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-054",
+      "obligation_text": "Before reconciliation, define an explicit owner table for the remaining open contracts so downstream edits do not keep re-litigating field placement.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002061"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8589,
+          "end_line": 8591
+        }
+      ],
+      "exact_source_excerpt": "- Before reconciliation, define an explicit owner table for the remaining open contracts so downstream edits do not keep re-litigating field placement.\n- Treat orchestration-core consolidation as a prerequisite for any “final” reconciliation of runtime/UI behavior that depends on execution semantics.\n- Stop letting consumer docs fill owner gaps with “compatibility” fields or local terminology when",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-055",
+      "obligation_text": "owner clarity matters as much as field choice now; otherwise the same seam will keep reopening under different names",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002064"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8594,
+          "end_line": 8596
+        }
+      ],
+      "exact_source_excerpt": "- owner clarity matters as much as field choice now; otherwise the same seam will keep reopening under different names\n- runtime-core docs are still the biggest risk multiplier because stale tier-era execution assumptions leak into many downstream consumers\n- current status remains `active` because owner convergence is clearer, but not fully closed",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "active"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-056",
+      "obligation_text": "`Plans/Executor_Protocol.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002069"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8601,
+          "end_line": 8604
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Executor_Protocol.md`\n- `Plans/orchestrator-subagent-integration.md`\n- `Plans/WorktreeGitImprovement.md`\n- current `working_ledger.md`",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-057",
+      "obligation_text": "The execution-core mismatch is now sharper than a generic “tier drift” note. The docs are split across two incompatible centers of gravity:",
+      "obligation_category": "constraint",
+      "required_action": "preserve",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002072"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8607,
+          "end_line": 8624
+        }
+      ],
+      "exact_source_excerpt": "- The execution-core mismatch is now sharper than a generic “tier drift” note. The docs are split across two incompatible centers of gravity:\n  - `Executor_Protocol.md` presents execution as a canonical `Builder` / `Verifier` / `Overseer` loop over graph nodes.\n  - `orchestrator-subagent-integration.md` still defines substantial runtime machinery around `Phase -> Task -> Subtask -> Iteration`, `Ti",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "attempt_id",
+        "node_id",
+        "replan_generation",
+        "run_id",
+        "scheduler_lane",
+        "thread_id",
+        "tier_id"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-058",
+      "obligation_text": "`Plans/Executor_Protocol.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002075"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8627,
+          "end_line": 8636
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/Executor_Protocol.md`\n- `Plans/orchestrator-subagent-integration.md`\n- `Plans/WorktreeGitImprovement.md`\n- downstream consumers that depend on these execution assumptions:\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Run_Graph_View.md`\n  - `Plans/FinalGUISpec.md`\n  - `Plans/storage-plan.md`\n  - `Plans/UI_Command_Catalog.md`\n  - `Plans/human-in-the-loop.md`",
+      "exact_paths_mentioned": [
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-059",
+      "obligation_text": "`Executor_Protocol.md` still claims canonical execution roles as `Builder`, `Verifier`, and `Overseer`, but the rewrite now needs at least:",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002078"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8639,
+          "end_line": 8652
+        }
+      ],
+      "exact_source_excerpt": "- `Executor_Protocol.md` still claims canonical execution roles as `Builder`, `Verifier`, and `Overseer`, but the rewrite now needs at least:\n  - runtime scheduler ownership\n  - node execution worker identity\n  - package/seam governance identity\n  - reviewer / corroborator / remediation / recovery execution hooks\n- `orchestrator-subagent-integration.md` still treats `Iteration` as a lowest executi",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "tier"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-060",
+      "obligation_text": "Consolidate execution-core docs around a single node-native execution context object that replaces or wraps `TierContext` and is the canonical handoff between scheduler, worker spawn, verification, remediation, recovery, and UI projections.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002081"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8655,
+          "end_line": 8663
+        }
+      ],
+      "exact_source_excerpt": "- Consolidate execution-core docs around a single node-native execution context object that replaces or wraps `TierContext` and is the canonical handoff between scheduler, worker spawn, verification, remediation, recovery, and UI projections.\n- Treat tier language as legacy decomposition/help/view terminology unless a specific derived UI surface still needs it. Stop letting tier IDs remain runtime",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-061",
+      "obligation_text": "the problem is no longer just stale terminology; there is a real split-brain between execution context keys",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002084"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8666,
+          "end_line": 8669
+        }
+      ],
+      "exact_source_excerpt": "- the problem is no longer just stale terminology; there is a real split-brain between execution context keys\n- scheduler addenda are not enough if the top-level docs still teach the old ontology\n- any reconciliation that touches UI/storage/help without first tightening execution-core ownership will keep reopening the same seams\n- `TierContext` replacement/wrapper is now one of the most important ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-062",
+      "obligation_text": "`Plans/orchestrator-subagent-integration.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002089"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8674,
+          "end_line": 8678
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/orchestrator-subagent-integration.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/storage-plan.md`\n- current `working_ledger.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-063",
+      "obligation_text": "The current `TierContext` in `orchestrator-subagent-integration.md` is overloaded. It combines:",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002092"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8681,
+          "end_line": 8695
+        }
+      ],
+      "exact_source_excerpt": "- The current `TierContext` in `orchestrator-subagent-integration.md` is overloaded. It combines:\n  - decomposition/view identity: `tier_type`, `tier_id`, `title`, `description`\n  - workspace binding: `workspace`, `worktree_path`\n  - project heuristics: language/domain/framework\n  - live execution hints: code-review/testing/error flags\n  - requested/effective runtime state: persona/platform/model ",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "attempt_id",
+        "decomposition_context",
+        "description",
+        "execution_unit_context",
+        "node_id",
+        "replan_generation",
+        "run_id",
+        "scheduler_lane",
+        "tier_id",
+        "tier_type",
+        "title",
+        "view_context",
+        "workspace",
+        "worktree_path"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-064",
+      "obligation_text": "Minimum canonical `execution_unit_context` should carry:",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002095"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8698,
+          "end_line": 8742
+        }
+      ],
+      "exact_source_excerpt": "- Minimum canonical `execution_unit_context` should carry:\n  - identity:\n    - `project_id`\n    - `run_id`\n    - `thread_id?`\n    - `feature_seam_id?`\n    - `work_package_id?`\n    - `node_id`\n    - `attempt_id`\n    - `replan_generation`\n  - execution/governance:\n    - `execution_role`\n    - `scheduler_lane`\n    - `manual_priority?`\n    - `remediation_root_id?`\n    - `remediation_parent_attempt_id?",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "attempt_id",
+        "decomposition_context",
+        "execution_role",
+        "execution_unit_context",
+        "node_id",
+        "project_id",
+        "replan_generation",
+        "run_id",
+        "scheduler_lane",
+        "workspace_path"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-065",
+      "obligation_text": "`Plans/orchestrator-subagent-integration.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002098"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8745,
+          "end_line": 8755
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/orchestrator-subagent-integration.md`\n- `Plans/Executor_Protocol.md`\n- `Plans/storage-plan.md`\n- `Plans/Prompt_Pipeline.md`\n- `Plans/Contracts_V0.md`\n- downstream consumers:\n  - `Plans/human-in-the-loop.md`\n  - `Plans/Runtime_Artifacts_Panel.md`\n  - `Plans/Tools.md`\n  - `Plans/Orchestrator_Page.md`\n  - `Plans/Run_Graph_View.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-066",
+      "obligation_text": "`Prompt_Pipeline.md` still allows `persona_override_owner_id` scope values that include `tier_id`, which is increasingly a legacy ownership key for Orchestrator execution. That likely needs a migration path toward run/node/attempt/subagent-owned scopes.",
+      "obligation_category": "directive",
+      "required_action": "implement",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002101"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8758,
+          "end_line": 8760
+        }
+      ],
+      "exact_source_excerpt": "- `Prompt_Pipeline.md` still allows `persona_override_owner_id` scope values that include `tier_id`, which is increasingly a legacy ownership key for Orchestrator execution. That likely needs a migration path toward run/node/attempt/subagent-owned scopes.\n- `storage-plan.md` still has both `attempt_record` and `tier_runtime_record`. That may remain acceptable, but only if `tier_runtime_record` bec",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "attempt_record",
+        "persona_override_owner_id",
+        "tier_id",
+        "tier_runtime_record"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-067",
+      "obligation_text": "Define one canonical `execution_unit_context` owner doc, likely shared between `Executor_Protocol.md` and `Prompt_Pipeline.md`, then have storage/event/docs consume it by reference instead of cloning partial field sets.",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002104"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8763,
+          "end_line": 8775
+        }
+      ],
+      "exact_source_excerpt": "- Define one canonical `execution_unit_context` owner doc, likely shared between `Executor_Protocol.md` and `Prompt_Pipeline.md`, then have storage/event/docs consume it by reference instead of cloning partial field sets.\n- Keep any replacement for `TierContext` as a compatibility wrapper at most:\n  - `legacy_decomposition_context`\n  - plus canonical `execution_unit_context`\n  - never the other wa",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "attempt_id",
+        "execution_unit_context",
+        "legacy_decomposition_context",
+        "node_id",
+        "run_id",
+        "tier_id"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-068",
+      "obligation_text": "the replacement should inherit existing canonical runtime snapshot contracts, not create a parallel runtime-resolution schema",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002107"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8778,
+          "end_line": 8780
+        }
+      ],
+      "exact_source_excerpt": "- the replacement should inherit existing canonical runtime snapshot contracts, not create a parallel runtime-resolution schema\n- `tier_runtime_record` may still survive, but only as a derived grouping/view object if execution ownership moves elsewhere\n- coordination state is one of the places where stale `tier_id` usage will quietly persist unless explicitly migrated",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "tier_id",
+        "tier_runtime_record"
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-s012-069",
+      "obligation_text": "`Plans/human-in-the-loop.md`",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002112"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8785,
+          "end_line": 8789
+        }
+      ],
+      "exact_source_excerpt": "- `Plans/human-in-the-loop.md`\n- `Plans/Contracts_V0.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/storage-plan.md`\n- current `working_ledger.md`",
+      "exact_paths_mentioned": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md"
+      ],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": []
+    },
+    {
+      "obligation_id": "obl-d2-s012-070",
+      "obligation_text": "HITL now visibly contains two contract eras at once:",
+      "obligation_category": "directive",
+      "required_action": "document",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002115"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8792,
+          "end_line": 8800
+        }
+      ],
+      "exact_source_excerpt": "- HITL now visibly contains two contract eras at once:\n  - older request-local contract: `HITLRequest` with `tier_id`, `tier_type`, and HITL-only `allowed_actions[]` like `approve_continue`\n  - newer runtime-facing correction: `waiting_approval` is a blocked overlay, canonical action vocabulary is `allowed_action_ids[]`, and all actions route through `cmd.runtime.*`\n- This is not just wording drif",
+      "exact_paths_mentioned": [],
+      "schema_ids_mentioned": [],
+      "enum_names_mentioned": [
+        "approve_continue",
+        "tier_id",
+        "tier_type",
+        "waiting_approval"
+      ]
+    }
+  ],
+  "excluded_blocks": [
+    {
+      "block_id": "lblock-001897",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001897"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8019,
+          "end_line": 8019
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001898",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001898"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8020,
+          "end_line": 8020
+        }
+      ],
+      "exact_source_excerpt": "### Highest-risk impacted docs"
+    },
+    {
+      "block_id": "lblock-001900",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001900"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8031,
+          "end_line": 8031
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001901",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001901"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8032,
+          "end_line": 8032
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-001903",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001903"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8039,
+          "end_line": 8039
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001904",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001904"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8040,
+          "end_line": 8040
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-001906",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001906"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8047,
+          "end_line": 8047
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001907",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001907"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8048,
+          "end_line": 8048
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-001909",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001909"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8052,
+          "end_line": 8052
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001910",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001910"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8053,
+          "end_line": 8053
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - operational identity and actor-role disclosure cluster"
+    },
+    {
+      "block_id": "lblock-001911",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001911"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8054,
+          "end_line": 8054
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001912",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001912"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8055,
+          "end_line": 8055
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-001914",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001914"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8062,
+          "end_line": 8062
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001915",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001915"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8063,
+          "end_line": 8063
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-001917",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001917"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8079,
+          "end_line": 8079
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001918",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001918"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8080,
+          "end_line": 8080
+        }
+      ],
+      "exact_source_excerpt": "### Recommended contract direction"
+    },
+    {
+      "block_id": "lblock-001920",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-01"
+      ],
+      "source_block_ids": [
+        "lblock-001920"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8110,
+          "end_line": 8110
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001921",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001921"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8111,
+          "end_line": 8111
+        }
+      ],
+      "exact_source_excerpt": "### Impacted docs"
+    },
+    {
+      "block_id": "lblock-001923",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001923"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8118,
+          "end_line": 8118
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001924",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001924"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8119,
+          "end_line": 8119
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-001926",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001926"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8126,
+          "end_line": 8126
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001927",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001927"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8127,
+          "end_line": 8127
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-001929",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001929"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8140,
+          "end_line": 8140
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001930",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001930"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8141,
+          "end_line": 8141
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-001932",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001932"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8146,
+          "end_line": 8146
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001933",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001933"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8147,
+          "end_line": 8147
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - account switch-history and pressure-episode cluster"
+    },
+    {
+      "block_id": "lblock-001934",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001934"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8148,
+          "end_line": 8148
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001935",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001935"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8149,
+          "end_line": 8149
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-001937",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001937"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8156,
+          "end_line": 8156
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001938",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001938"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8157,
+          "end_line": 8157
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-001940",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001940"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8186,
+          "end_line": 8186
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001941",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001941"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8187,
+          "end_line": 8187
+        }
+      ],
+      "exact_source_excerpt": "### Recommended contract direction"
+    },
+    {
+      "block_id": "lblock-001943",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001943"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8197,
+          "end_line": 8197
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001944",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-02"
+      ],
+      "source_block_ids": [
+        "lblock-001944"
+      ],
+      "source_shard_ids": [
+        "shard-0041"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8198,
+          "end_line": 8198
+        }
+      ],
+      "exact_source_excerpt": "### Recommended fields"
+    },
+    {
+      "block_id": "lblock-001949",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001949"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8230,
+          "end_line": 8230
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001950",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001950"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8231,
+          "end_line": 8231
+        }
+      ],
+      "exact_source_excerpt": "### Impacted docs"
+    },
+    {
+      "block_id": "lblock-001952",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001952"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8239,
+          "end_line": 8239
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001953",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001953"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8240,
+          "end_line": 8240
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-001955",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001955"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8246,
+          "end_line": 8246
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001956",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001956"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8247,
+          "end_line": 8247
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-001958",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001958"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8252,
+          "end_line": 8252
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001959",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001959"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8253,
+          "end_line": 8253
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-001961",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001961"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8258,
+          "end_line": 8258
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001962",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001962"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8259,
+          "end_line": 8259
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Opus GUI / Surface Contract Deepening"
+    },
+    {
+      "block_id": "lblock-001963",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001963"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8260,
+          "end_line": 8260
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001964",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001964"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8261,
+          "end_line": 8261
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-001966",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001966"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8269,
+          "end_line": 8269
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001967",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001967"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8270,
+          "end_line": 8270
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-001969",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001969"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8288,
+          "end_line": 8288
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001970",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-03"
+      ],
+      "source_block_ids": [
+        "lblock-001970"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8289,
+          "end_line": 8289
+        }
+      ],
+      "exact_source_excerpt": "### Highest-risk impacted docs"
+    },
+    {
+      "block_id": "lblock-001972",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001972"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8298,
+          "end_line": 8298
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001973",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001973"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8299,
+          "end_line": 8299
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-001975",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001975"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8305,
+          "end_line": 8305
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001976",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001976"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8306,
+          "end_line": 8306
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-001978",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001978"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8312,
+          "end_line": 8312
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001979",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001979"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8313,
+          "end_line": 8313
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-001981",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001981"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8317,
+          "end_line": 8317
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001982",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001982"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8318,
+          "end_line": 8318
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Opus Conversational / HITL / Tooling Deepening"
+    },
+    {
+      "block_id": "lblock-001983",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001983"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8319,
+          "end_line": 8319
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001984",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001984"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8320,
+          "end_line": 8320
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-001986",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001986"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8328,
+          "end_line": 8328
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001987",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001987"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8329,
+          "end_line": 8329
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-001989",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001989"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8345,
+          "end_line": 8345
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001990",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001990"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8346,
+          "end_line": 8346
+        }
+      ],
+      "exact_source_excerpt": "### Highest-risk impacted docs"
+    },
+    {
+      "block_id": "lblock-001992",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001992"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8357,
+          "end_line": 8357
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001993",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001993"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8358,
+          "end_line": 8358
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-001995",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-04"
+      ],
+      "source_block_ids": [
+        "lblock-001995"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8364,
+          "end_line": 8364
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001996",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-001996"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8365,
+          "end_line": 8365
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-001998",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-001998"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8371,
+          "end_line": 8371
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-001999",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-001999"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8372,
+          "end_line": 8372
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-002001",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002001"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8376,
+          "end_line": 8376
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002002",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002002"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8377,
+          "end_line": 8377
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening"
+    },
+    {
+      "block_id": "lblock-002003",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002003"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8378,
+          "end_line": 8378
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002004",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002004"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8379,
+          "end_line": 8379
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-002006",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002006"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8387,
+          "end_line": 8387
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002007",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-05"
+      ],
+      "source_block_ids": [
+        "lblock-002007"
+      ],
+      "source_shard_ids": [
+        "shard-0042"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8388,
+          "end_line": 8388
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-002010",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002010"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8404,
+          "end_line": 8404
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002011",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002011"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8405,
+          "end_line": 8405
+        }
+      ],
+      "exact_source_excerpt": "### Highest-risk impacted docs"
+    },
+    {
+      "block_id": "lblock-002013",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002013"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8414,
+          "end_line": 8414
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002014",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002014"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8415,
+          "end_line": 8415
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-002016",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002016"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8421,
+          "end_line": 8421
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002017",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002017"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8422,
+          "end_line": 8422
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-002019",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002019"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8428,
+          "end_line": 8428
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002020",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002020"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8429,
+          "end_line": 8429
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-002022",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002022"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8433,
+          "end_line": 8433
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002023",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002023"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8434,
+          "end_line": 8434
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster"
+    },
+    {
+      "block_id": "lblock-002024",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002024"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8435,
+          "end_line": 8435
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002025",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002025"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8436,
+          "end_line": 8436
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-002027",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002027"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8441,
+          "end_line": 8441
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002028",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002028"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8442,
+          "end_line": 8442
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-002030",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002030"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8461,
+          "end_line": 8461
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002031",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002031"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8462,
+          "end_line": 8462
+        }
+      ],
+      "exact_source_excerpt": "### Recommended contract direction"
+    },
+    {
+      "block_id": "lblock-002033",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-06"
+      ],
+      "source_block_ids": [
+        "lblock-002033"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8473,
+          "end_line": 8473
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002034",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002034"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8474,
+          "end_line": 8474
+        }
+      ],
+      "exact_source_excerpt": "### Impacted docs"
+    },
+    {
+      "block_id": "lblock-002036",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002036"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8483,
+          "end_line": 8483
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002037",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002037"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8484,
+          "end_line": 8484
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-002039",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002039"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8488,
+          "end_line": 8488
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002040",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002040"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8489,
+          "end_line": 8489
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-002042",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002042"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8498,
+          "end_line": 8498
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002043",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002043"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8499,
+          "end_line": 8499
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-002045",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002045"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8505,
+          "end_line": 8505
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002046",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002046"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8506,
+          "end_line": 8506
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster"
+    },
+    {
+      "block_id": "lblock-002047",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002047"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8507,
+          "end_line": 8507
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002048",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002048"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8508,
+          "end_line": 8508
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-002050",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002050"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8518,
+          "end_line": 8518
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002051",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002051"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8519,
+          "end_line": 8519
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-002053",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002053"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8540,
+          "end_line": 8540
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002054",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002054"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8541,
+          "end_line": 8541
+        }
+      ],
+      "exact_source_excerpt": "### Recommended owner map"
+    },
+    {
+      "block_id": "lblock-002056",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002056"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8582,
+          "end_line": 8582
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002057",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-07"
+      ],
+      "source_block_ids": [
+        "lblock-002057"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8583,
+          "end_line": 8583
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-002059",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002059"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8587,
+          "end_line": 8587
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002060",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002060"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8588,
+          "end_line": 8588
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-002062",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002062"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8592,
+          "end_line": 8592
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002063",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002063"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8593,
+          "end_line": 8593
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-002065",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002065"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8597,
+          "end_line": 8597
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002066",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002066"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8598,
+          "end_line": 8598
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Execution-core consolidation boundary"
+    },
+    {
+      "block_id": "lblock-002067",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002067"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8599,
+          "end_line": 8599
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002068",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-08"
+      ],
+      "source_block_ids": [
+        "lblock-002068"
+      ],
+      "source_shard_ids": [
+        "shard-0043"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8600,
+          "end_line": 8600
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-002070",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002070"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8605,
+          "end_line": 8605
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002071",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002071"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8606,
+          "end_line": 8606
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-002073",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002073"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8625,
+          "end_line": 8625
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002074",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002074"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8626,
+          "end_line": 8626
+        }
+      ],
+      "exact_source_excerpt": "### Impacted docs"
+    },
+    {
+      "block_id": "lblock-002076",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002076"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8637,
+          "end_line": 8637
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002077",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002077"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8638,
+          "end_line": 8638
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-002079",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002079"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8653,
+          "end_line": 8653
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002080",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002080"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8654,
+          "end_line": 8654
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-002082",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002082"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8664,
+          "end_line": 8664
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002083",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002083"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8665,
+          "end_line": 8665
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-002085",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002085"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8670,
+          "end_line": 8670
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002086",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002086"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8671,
+          "end_line": 8671
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Execution-context replacement shape"
+    },
+    {
+      "block_id": "lblock-002087",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002087"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8672,
+          "end_line": 8672
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002088",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002088"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8673,
+          "end_line": 8673
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-002090",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002090"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8679,
+          "end_line": 8679
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002091",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002091"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8680,
+          "end_line": 8680
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    },
+    {
+      "block_id": "lblock-002093",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-09"
+      ],
+      "source_block_ids": [
+        "lblock-002093"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8696,
+          "end_line": 8696
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002094",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002094"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8697,
+          "end_line": 8697
+        }
+      ],
+      "exact_source_excerpt": "### Recommended execution-context shape"
+    },
+    {
+      "block_id": "lblock-002096",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002096"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8743,
+          "end_line": 8743
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002097",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002097"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8744,
+          "end_line": 8744
+        }
+      ],
+      "exact_source_excerpt": "### Impacted docs"
+    },
+    {
+      "block_id": "lblock-002099",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002099"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8756,
+          "end_line": 8756
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002100",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002100"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8757,
+          "end_line": 8757
+        }
+      ],
+      "exact_source_excerpt": "### Contradictions / gaps surfaced"
+    },
+    {
+      "block_id": "lblock-002102",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002102"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8761,
+          "end_line": 8761
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002103",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002103"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8762,
+          "end_line": 8762
+        }
+      ],
+      "exact_source_excerpt": "### Candidate fixes to carry forward"
+    },
+    {
+      "block_id": "lblock-002105",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002105"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8776,
+          "end_line": 8776
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002106",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002106"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8777,
+          "end_line": 8777
+        }
+      ],
+      "exact_source_excerpt": "### Do-not-forget details"
+    },
+    {
+      "block_id": "lblock-002108",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002108"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8781,
+          "end_line": 8781
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002109",
+      "reason": "Research Progress H2 delimiter; substantive bullets and lists follow in subsequent blocks.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002109"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8782,
+          "end_line": 8782
+        }
+      ],
+      "exact_source_excerpt": "## Research Progress - 2026-03-16 - Approval scope / HITL anchoring"
+    },
+    {
+      "block_id": "lblock-002110",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002110"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8783,
+          "end_line": 8783
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002111",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002111"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8784,
+          "end_line": 8784
+        }
+      ],
+      "exact_source_excerpt": "### Targeted docs read"
+    },
+    {
+      "block_id": "lblock-002113",
+      "reason": "Blank spacer line in lossless raw-block ledger capture; no standalone obligation content.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002113"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8790,
+          "end_line": 8790
+        }
+      ],
+      "exact_source_excerpt": ""
+    },
+    {
+      "block_id": "lblock-002114",
+      "reason": "Section heading or title scaffold without substantive requirements in this block; following blocks carry the detailed findings.",
+      "exclusion_category": "non_material",
+      "source_group_ids": [
+        "wg-d1-T011-10"
+      ],
+      "source_block_ids": [
+        "lblock-002114"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "source_line_ranges": [
+        {
+          "start_line": 8791,
+          "end_line": 8791
+        }
+      ],
+      "exact_source_excerpt": "### Key findings"
+    }
+  ],
+  "blocked_blocks": [],
+  "conversion_notes": [
+    "Slice covers wg-d1-T011-01..T011-10: GPT-5.3-Codex provider/permission closure, operational identity, account switch-history/pressure episodes, Opus GUI/surface contract, and related Plans-path remediation clusters.",
+    "Blank separators and H2/H3 Research Progress scaffolds were excluded as non_material; substantive list (and one inline enumerated row) blocks were converted 1:1 to obligations with excerpts taken verbatim from the ledger inventory.",
+    "Paths and inline code tokens were harvested into exact_paths_mentioned / enum_names_mentioned / schema_ids_mentioned where present so downstream doc-hint passes stay lossless."
+  ],
+  "subagent_execution": {
+    "subagent_task_id": "d2-slice-012",
+    "subagent_type": "generalPurpose",
+    "status": "complete"
+  },
+  "validation": {
+    "all_assigned_blocks_accounted_for": true,
+    "every_obligation_has_source_linkage": true,
+    "open_questions_not_answered_silently": true,
+    "doc_hints_preserved_separately": true
+  },
+  "status": "complete"
+}

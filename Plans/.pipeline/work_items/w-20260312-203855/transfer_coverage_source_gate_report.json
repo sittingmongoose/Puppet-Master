@@ -1,31 +1,39 @@
 {
-  "schema_id": "pm.transfer_coverage_source_gate_report.v3.2.2",
+  "schema_id": "pm.transfer_coverage_source_gate_report.v3.2.3",
   "prompt_id": "E3",
-  "prompt_version": "pm.e3.v3.2.2",
-  "timestamp_utc": "20260511T201523Z",
+  "prompt_version": "pm.e3.v3.2.3",
   "work_id": "w-20260312-203855",
-  "source_gate_status": "pass",
-  "f5_material_delta_gate": {
-    "status": "pass",
-    "reason": "Material resolution delta from doc_discovery_resolution.json (new resolved bindings and/or first-time explicit unresolved transitions).",
-    "would_route_f5_back_to_e3_on_timestamp_only": false,
-    "new_resolved_this_run": 0,
-    "newly_explicit_unresolved_this_run": 359
+  "timestamp_utc": "20260512T230000Z",
+  "upstream_e2_validation": {
+    "stage_report_e2_path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.E2.json",
+    "real_subagent_proof_status": "pass",
+    "fanout_proof_status": "pass"
   },
-  "doc_discovery_loop_breaker": {
-    "terminal_unresolved_states_preserved": true,
-    "f5_unresolved_explicit_rows_in_input": 359,
-    "no_reentry_to_f5_for_terminal_same_hash": true,
-    "notes": [
-      "Hotfix v3.2.2: F5 consumer applies material delta gate; timestamp-only / already-explicit same-hash loops do not route forward through Section F.",
-      "exhausted_doc_discovery + terminal flags preserved for F1/F2/F3 doc_discovery_exhaustion bucketing."
-    ]
+  "accounting": {
+    "canonical_obligation_count": 1710,
+    "transfer_coverage_row_count": 1710,
+    "every_canonical_obligation_has_row": true
   },
-  "process_defect_signals": {
-    "rows_with_hint_e4_then_coverage_process_review": 548,
-    "interpretation": "Large counts here suggest classifier/source-intake gaps (no_live_doc_targets_in_classifier_union family), not repeat doc discovery."
+  "overall_source_gate_pass": true,
+  "classification_histogram": {
+    "needs_doc_discovery": 713,
+    "open_decision": 1,
+    "present": 569,
+    "process_only": 3,
+    "partial": 381,
+    "missing": 43
   },
-  "recommended_next_prompt": "Paste prompt E4 — Section Exit: Coverage v3.2.2.",
-  "recommended_next_prompt_request": "Paste prompt E4 — Section Exit: Coverage v3.2.2.",
-  "terminal_unresolved_doc_discovery_total": 3048
+  "f5_loop_breaker": {
+    "active_doc_discovery_resolution_json_in_work_item_root": false,
+    "material_resolution_delta_evaluated": "skipped_no_active_doc_discovery_resolution_json",
+    "material_resolution_delta": false,
+    "timestamp_only_f5_loop_detected": false,
+    "timestamp_only_delta_guard": "pass_no_f5_input",
+    "e3_to_f5_to_e3_loop_risk": "not_applicable_no_active_f5_resolution",
+    "note": "Per E3 hotfix v3.2.3: no doc_discovery_resolution.json in work item root; do not route from archived/quarantine F5 artifacts."
+  },
+  "notes": [
+    "Mechanical merge of 18 delegated reducer slice artifacts into transfer_coverage.json with canonical-order rows.",
+    "Heterogeneous slice row shapes normalized using canonical_obligations.json and coverage_worklist.json task bindings."
+  ]
 }

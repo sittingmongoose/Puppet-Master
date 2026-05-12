@@ -1,0 +1,167 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-013-g011",
+  "obligation_record_count": 7,
+  "source_classification_slices": [
+    "e2-class-014"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-019-068",
+      "coverage_task_id": "cov-e1-slice-013-g011",
+      "source_shard_id": "shard-0072",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.57,
+      "uncertainty": 0.38,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 33)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial anchor: longest normalized match falls below present threshold but exceeds noise floor."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-070",
+      "coverage_task_id": "cov-e1-slice-013-g011",
+      "source_shard_id": "shard-0072",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.57,
+      "uncertainty": 0.38,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 33)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial anchor: longest normalized match falls below present threshold but exceeds noise floor."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-074",
+      "coverage_task_id": "cov-e1-slice-013-g011",
+      "source_shard_id": "shard-0072",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.83,
+      "uncertainty": 0.59,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1316,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 40)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-077",
+      "coverage_task_id": "cov-e1-slice-013-g011",
+      "source_shard_id": "shard-0072",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "best_evidence_score": 0.59,
+      "uncertainty": 0.38,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1316,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 41)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Partial anchor: longest normalized match falls below present threshold but exceeds noise floor."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-001",
+      "coverage_task_id": "cov-e1-slice-013-g011",
+      "source_shard_id": "shard-0072",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.9,
+      "uncertainty": 0.29,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1201,
+          "line_end": 1316,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 73)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-003",
+      "coverage_task_id": "cov-e1-slice-013-g011",
+      "source_shard_id": "shard-0072",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.84,
+      "uncertainty": 0.54,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 401,
+          "line_end": 800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 63)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-007",
+      "coverage_task_id": "cov-e1-slice-013-g011",
+      "source_shard_id": "shard-0072",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.88,
+      "uncertainty": 0.39,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 116)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    }
+  ]
+}

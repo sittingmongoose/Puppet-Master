@@ -1,0 +1,565 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-014-g016",
+  "obligation_record_count": 12,
+  "source_classification_slices": [
+    "e2-class-015"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-020-032",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003882"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-05"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14601,
+            "end_line": 14610
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1171,
+          "line_end": 1177,
+          "quote": "  - requested/effective runtime state: persona/platform/model snapshot fragments\\n  - requested/effective runtime identity:\\n  - older request-local contract: `HITLRequest` with `tier_id`, `tier_type`, and HITL-only `allowed_actions[]` like `approve_continue`\\n  - HITLRequest\\n  - tier_id\\n  - tier_type\\n  - allowed_actions[]",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-034",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003888"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-05"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14624,
+            "end_line": 14628
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1171,
+          "line_end": 1177,
+          "quote": "  - requested/effective runtime state: persona/platform/model snapshot fragments\\n  - requested/effective runtime identity:\\n  - older request-local contract: `HITLRequest` with `tier_id`, `tier_type`, and HITL-only `allowed_actions[]` like `approve_continue`\\n  - HITLRequest\\n  - tier_id\\n  - tier_type\\n  - allowed_actions[]",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-035",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003891"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-05"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14631,
+            "end_line": 14633
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1171,
+          "line_end": 1177,
+          "quote": "  - requested/effective runtime state: persona/platform/model snapshot fragments\\n  - requested/effective runtime identity:\\n  - older request-local contract: `HITLRequest` with `tier_id`, `tier_type`, and HITL-only `allowed_actions[]` like `approve_continue`\\n  - HITLRequest\\n  - tier_id\\n  - tier_type\\n  - allowed_actions[]",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-036",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003894"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-05"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14636,
+            "end_line": 14637
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 86,
+          "line_end": 92,
+          "quote": "  - Plans/FileManager.md\\n  - Plans/Project_Output_Artifacts.md\\n  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/[retired-t",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-040",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003908"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-06"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14669,
+            "end_line": 14671
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 349,
+          "line_end": 355,
+          "quote": "  - Open in Source Control\\n  - Keep `generated://<artifact_id>` as a transport/open realization, not as the canonical subject identity.\\n  - Storage already knows canonical subject identity, but Contracts and Crosswalk still do not declare the navigation primitive that consumes it.\\n- Exact acceptance checks represented:\\n  - All coverage_row_ids ",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-042",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003914"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-06"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14683,
+            "end_line": 14684
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 722,
+          "line_end": 728,
+          "quote": "  - object_id = <id>\\n  - new docs/producers MUST prefer canonical route-target forms\\n  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject\\n  - Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.\\n  - active_subview\\n  - `focus_thread",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-043",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003919"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-06"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14689,
+            "end_line": 14693
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 40,
+          "quote": "(head window) No deterministic needle hit for obligation tokens in the pre-scan corpora; using Contracts head as a bounded placeholder anchor for reviewers.",
+          "rationale": "Placeholder bounded head window for unresolved_no_live_target rows pending Section E path binding."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-046",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003928"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-07"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14720,
+            "end_line": 14722
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 904,
+          "line_end": 910,
+          "quote": "  - `Plans/_shards/**`\\n  - Plans/_shards/**\\n  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`\\n  - [retired-token-30]\\n  - Plans/storage-plan.md\\n  - Plans/FinalGUISpec.md\\n  - Plans/UI_Command_Catalog.md",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-047",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003931"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-07"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14725,
+            "end_line": 14727
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 806,
+          "line_end": 812,
+          "quote": "  - object_id = attempt_id\\n  - Stratum 1: owner docs\\n  - Treat the routing tranche as structurally closed after the owner-doc contracts are added.\\n  - subsection `7.2 WiringEntry`\\n  - 7.2 WiringEntry\\n  - `handler_location`\\n  - handler_location",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-048",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003934"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-07"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14730,
+            "end_line": 14731
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 40,
+          "quote": "(head window) No deterministic needle hit for obligation tokens in the pre-scan corpora; using Contracts head as a bounded placeholder anchor for reviewers.",
+          "rationale": "Placeholder bounded head window for unresolved_no_live_target rows pending Section E path binding."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-052",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003948"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-07"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14767,
+            "end_line": 14771
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 37,
+          "line_end": 43,
+          "quote": "  - Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage\\n  - Redefine gates to package-complete / seam-complete\\n  - Rename or retire Tiers UI/tab and tier_tree/progress bars\\n  - Add node_id\\n  - Add package_id\\n  - Add seam_id\\n  - Add lane_id",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-054",
+      "coverage_task_id": "cov-e1-slice-014-g016",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0074"
+        ],
+        "source_block_ids": [
+          "lblock-003954"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-08"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14784,
+            "end_line": 14785
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g016",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 807,
+          "line_end": 813,
+          "quote": "  - Stratum 1: owner docs\\n  - Treat the routing tranche as structurally closed after the owner-doc contracts are added.\\n  - subsection `7.2 WiringEntry`\\n  - 7.2 WiringEntry\\n  - `handler_location`\\n  - handler_location\\n  - `expected_event_types`",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    }
+  ]
+}

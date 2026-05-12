@@ -1,7 +1,8 @@
 {
   "schema_id": "pm.section_entry_A_report.v1",
   "prompt_id": "A0",
-  "prompt_version": "pm.a0.v3.2.2",
+  "prompt_version": "pm.a0.v3.2.3",
+  "timestamp_utc": "20260511T205939Z",
   "work_id": "w-20260312-203855",
   "run_mode": "fresh_restart",
   "run_mode_source": "default_task_rule_no_explicit_user_mode",
@@ -26,9 +27,20 @@
     "omnibus_invocation_detected": false,
     "main_agent_bulk_output_detected": false
   },
+  "real_subagent_proof": {
+    "subagent_runtime_kind": "main_agent_batch",
+    "actual_delegated_model_invocation": false,
+    "subagent_proof_artifact_paths": [],
+    "task_to_invocation_map": {},
+    "invocation_to_task_map": {},
+    "local_worker_outputs_used": [],
+    "main_agent_batching_detected": false,
+    "shell_or_python_worker_misclassified_as_subagent_detected": false,
+    "real_subagent_proof_status": "not_required_mechanical"
+  },
   "deterministic_verification": {
     "inputs_used": [
-      "user prompt (explicit work_id w-20260312-203855; A0 v3.2.2 instructions; no explicit run_mode)"
+      "user prompt (explicit work_id w-20260312-203855; A0 pm.a0.v3.2.3; no explicit run_mode)"
     ],
     "tooling": [
       "bounded JSON write to Plans/.pipeline/section_entry_A_report.json"
@@ -38,6 +50,18 @@
     "repo_meta_json_listing_reason": "work_id supplied explicitly; A0 READ allows listing only when needed",
     "coverage_proof": "run_mode=fresh_restart from A0 TASK default; next prompt A2 from VALID NEXT PROMPT REQUESTS (explicit work_id + fresh_restart)."
   },
+  "stage_report": {
+    "A0": {
+      "prompt_id": "A0",
+      "prompt_version": "pm.a0.v3.2.3",
+      "execution_type": "mechanical_tool_operation",
+      "work_id": "w-20260312-203855",
+      "run_mode": "fresh_restart",
+      "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+      "subagents": { "used": false },
+      "real_subagent_proof_status": "not_required_mechanical"
+    }
+  },
   "status": "COMPLETE",
   "next_prompt_request": "A2",
   "next_prompt_name": "Fresh Run Initializer / Artifact Sanitizer",
@@ -46,6 +70,6 @@
     "no explicit run_mode supplied; default fresh_restart applied per A0 TASK",
     "next prompt A2 per A0 VALID NEXT PROMPT REQUESTS",
     "execution_type mechanical_tool_operation; subagent wave proof not applicable",
-    "stage_report.A0.json content recorded in this artifact per pipeline convention"
+    "stage_report.A0 embedded under stage_report.A0 per pipeline convention"
   ]
 }

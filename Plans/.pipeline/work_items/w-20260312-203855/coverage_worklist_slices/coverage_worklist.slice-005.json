@@ -1,0 +1,1480 @@
+{
+  "schema_id": "pm.coverage_worklist_slice_proposal.v3.2.3",
+  "prompt_id": "E1",
+  "prompt_version": "pm.e1.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "slice_id": "slice-005",
+  "subagent_task_id": "e1-slice-005",
+  "source": {
+    "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "canonical_obligations_sha256": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
+    "coverage_worklist_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist_slices.json",
+    "input_obligation_record_count": 84,
+    "primary_source_group_ids": [
+      "wg-d1-T006-06",
+      "wg-d1-T006-07",
+      "wg-d1-T006-08",
+      "wg-d1-T006-09",
+      "wg-d1-T006-10",
+      "wg-d1-T006-11",
+      "wg-d1-T006-12",
+      "wg-d1-T006-13",
+      "wg-d1-T006-14",
+      "wg-d1-T006-15",
+      "wg-d1-T007-01",
+      "wg-d1-T007-02",
+      "wg-d1-T007-03",
+      "wg-d1-T007-04",
+      "wg-d1-T007-05"
+    ]
+  },
+  "budgets": {
+    "max_obligations_per_coverage_task": 25,
+    "max_lines_per_live_doc_window": 400
+  },
+  "live_doc_rules": [
+    "Live doc targets must be concrete file paths under Plans/ that exist in the repository workspace.",
+    "Ignore paths under Plans/_shards/ and Plans/.evidence/; those are derived artifacts, not live documentation targets.",
+    "Do not treat glob patterns, placeholders, or non-Plans paths as Section E live doc targets.",
+    "When exact_paths_mentioned contains qualifying Plans/** paths, enumerate live_doc_windows using max_lines_per_live_doc_window on the actual checked-in files."
+  ],
+  "summary": {
+    "coverage_task_total": 8,
+    "excluded_obligation_total": 0,
+    "assigned_obligation_total": 84,
+    "live_doc_windows_total": 54,
+    "distinct_live_doc_paths_referenced": 9
+  },
+  "final_gate": {
+    "passed": true,
+    "every_obligation_assigned_or_excluded": true,
+    "accounting": {
+      "input_obligations": 84,
+      "assigned": 84,
+      "excluded": 0,
+      "sum": 84,
+      "overlap_assigned_and_excluded": 0
+    }
+  },
+  "excluded_obligations": [],
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "cov-e1-slice-005-g001",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0022",
+      "grouping_key": "shard-0022|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-d2-slice-007-007",
+        "obl-d2-slice-007-008",
+        "obl-d2-slice-007-009",
+        "obl-d2-slice-007-010",
+        "obl-d2-slice-007-011",
+        "obl-d2-slice-007-012",
+        "obl-d2-slice-007-013",
+        "obl-d2-slice-007-014",
+        "obl-d2-slice-007-015",
+        "obl-d2-slice-007-016",
+        "obl-d2-slice-007-017",
+        "obl-d2-slice-007-018",
+        "obl-d2-slice-007-019",
+        "obl-d2-slice-007-020",
+        "obl-d2-slice-007-021",
+        "obl-d2-slice-007-022",
+        "obl-d2-slice-007-023"
+      ],
+      "obligation_record_count": 17,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4211,
+          "end_line": 4224,
+          "source_block_ids": [
+            "lblock-000870"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4227,
+          "end_line": 4237,
+          "source_block_ids": [
+            "lblock-000873"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4240,
+          "end_line": 4249,
+          "source_block_ids": [
+            "lblock-000876"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4252,
+          "end_line": 4257,
+          "source_block_ids": [
+            "lblock-000879"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4260,
+          "end_line": 4267,
+          "source_block_ids": [
+            "lblock-000882"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4270,
+          "end_line": 4276,
+          "source_block_ids": [
+            "lblock-000885"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4279,
+          "end_line": 4281,
+          "source_block_ids": [
+            "lblock-000888"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4284,
+          "end_line": 4292,
+          "source_block_ids": [
+            "lblock-000891"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4295,
+          "end_line": 4297,
+          "source_block_ids": [
+            "lblock-000894"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4308,
+          "end_line": 4317,
+          "source_block_ids": [
+            "lblock-000902"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4320,
+          "end_line": 4337,
+          "source_block_ids": [
+            "lblock-000905"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4340,
+          "end_line": 4350,
+          "source_block_ids": [
+            "lblock-000908"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4353,
+          "end_line": 4364,
+          "source_block_ids": [
+            "lblock-000911"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4367,
+          "end_line": 4373,
+          "source_block_ids": [
+            "lblock-000914"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4376,
+          "end_line": 4385,
+          "source_block_ids": [
+            "lblock-000917"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4388,
+          "end_line": 4396,
+          "source_block_ids": [
+            "lblock-000920"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0022",
+          "start_line": 4399,
+          "end_line": 4400,
+          "source_block_ids": [
+            "lblock-000923"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0023",
+      "grouping_key": "shard-0023|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-d2-slice-007-024",
+        "obl-d2-slice-007-025",
+        "obl-d2-slice-007-026",
+        "obl-d2-slice-007-027",
+        "obl-d2-slice-007-028",
+        "obl-d2-slice-007-029",
+        "obl-d2-slice-007-030",
+        "obl-d2-slice-007-031",
+        "obl-d2-slice-007-032",
+        "obl-d2-slice-007-033",
+        "obl-d2-slice-007-034",
+        "obl-d2-slice-007-035",
+        "obl-d2-slice-007-036",
+        "obl-d2-slice-007-037",
+        "obl-d2-slice-007-038",
+        "obl-d2-slice-007-039",
+        "obl-d2-slice-007-040"
+      ],
+      "obligation_record_count": 17,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4451,
+          "end_line": 4464,
+          "source_block_ids": [
+            "lblock-000944"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4467,
+          "end_line": 4489,
+          "source_block_ids": [
+            "lblock-000947"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4492,
+          "end_line": 4499,
+          "source_block_ids": [
+            "lblock-000950"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4502,
+          "end_line": 4509,
+          "source_block_ids": [
+            "lblock-000953"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4512,
+          "end_line": 4517,
+          "source_block_ids": [
+            "lblock-000956"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4520,
+          "end_line": 4527,
+          "source_block_ids": [
+            "lblock-000959"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4530,
+          "end_line": 4534,
+          "source_block_ids": [
+            "lblock-000962"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4537,
+          "end_line": 4539,
+          "source_block_ids": [
+            "lblock-000965"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4551,
+          "end_line": 4563,
+          "source_block_ids": [
+            "lblock-000973"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4566,
+          "end_line": 4578,
+          "source_block_ids": [
+            "lblock-000976"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4581,
+          "end_line": 4594,
+          "source_block_ids": [
+            "lblock-000979"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4597,
+          "end_line": 4600,
+          "source_block_ids": [
+            "lblock-000982"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-005-g003",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0024",
+      "grouping_key": "shard-0024|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-d2-slice-007-041",
+        "obl-d2-slice-007-042",
+        "obl-d2-slice-007-043",
+        "obl-d2-slice-007-044",
+        "obl-d2-slice-007-045",
+        "obl-d2-slice-007-046",
+        "obl-d2-slice-007-047",
+        "obl-d2-slice-007-048",
+        "obl-d2-slice-007-049",
+        "obl-d2-slice-007-050",
+        "obl-d2-slice-007-051",
+        "obl-d2-slice-007-052",
+        "obl-d2-slice-007-053",
+        "obl-d2-slice-007-054",
+        "obl-d2-slice-007-055",
+        "obl-d2-slice-007-056",
+        "obl-d2-slice-007-057",
+        "obl-d2-slice-007-058"
+      ],
+      "obligation_record_count": 18,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4601,
+          "end_line": 4606,
+          "source_block_ids": [
+            "lblock-000983"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4609,
+          "end_line": 4618,
+          "source_block_ids": [
+            "lblock-000986"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4621,
+          "end_line": 4630,
+          "source_block_ids": [
+            "lblock-000989"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4633,
+          "end_line": 4641,
+          "source_block_ids": [
+            "lblock-000992"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4644,
+          "end_line": 4646,
+          "source_block_ids": [
+            "lblock-000995"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4649,
+          "end_line": 4656,
+          "source_block_ids": [
+            "lblock-000998"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4659,
+          "end_line": 4667,
+          "source_block_ids": [
+            "lblock-001001"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4670,
+          "end_line": 4672,
+          "source_block_ids": [
+            "lblock-001004"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4684,
+          "end_line": 4696,
+          "source_block_ids": [
+            "lblock-001012"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4699,
+          "end_line": 4716,
+          "source_block_ids": [
+            "lblock-001015"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4719,
+          "end_line": 4728,
+          "source_block_ids": [
+            "lblock-001018"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4731,
+          "end_line": 4746,
+          "source_block_ids": [
+            "lblock-001021"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4749,
+          "end_line": 4753,
+          "source_block_ids": [
+            "lblock-001024"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4756,
+          "end_line": 4767,
+          "source_block_ids": [
+            "lblock-001027"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4770,
+          "end_line": 4775,
+          "source_block_ids": [
+            "lblock-001030"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4778,
+          "end_line": 4780,
+          "source_block_ids": [
+            "lblock-001033"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4783,
+          "end_line": 4786,
+          "source_block_ids": [
+            "lblock-001036"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0024",
+          "start_line": 4789,
+          "end_line": 4791,
+          "source_block_ids": [
+            "lblock-001039"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-005-g004",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0025",
+      "grouping_key": "shard-0025|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-d2-slice-007-059",
+        "obl-d2-slice-007-060",
+        "obl-d2-slice-007-061",
+        "obl-d2-slice-007-062",
+        "obl-d2-slice-007-063",
+        "obl-d2-slice-007-064",
+        "obl-d2-slice-007-065",
+        "obl-d2-slice-007-066",
+        "obl-d2-slice-007-067"
+      ],
+      "obligation_record_count": 9,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4804,
+          "end_line": 4826,
+          "source_block_ids": [
+            "lblock-001048"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4829,
+          "end_line": 4850,
+          "source_block_ids": [
+            "lblock-001051"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4853,
+          "end_line": 4863,
+          "source_block_ids": [
+            "lblock-001054"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4866,
+          "end_line": 4880,
+          "source_block_ids": [
+            "lblock-001057"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4883,
+          "end_line": 4890,
+          "source_block_ids": [
+            "lblock-001060"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4893,
+          "end_line": 4900,
+          "source_block_ids": [
+            "lblock-001063"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4903,
+          "end_line": 4905,
+          "source_block_ids": [
+            "lblock-001066"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4908,
+          "end_line": 4911,
+          "source_block_ids": [
+            "lblock-001069"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4914,
+          "end_line": 4916,
+          "source_block_ids": [
+            "lblock-001072"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-005-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0025",
+      "grouping_key": "shard-0025|concrete_plans_targets|Plans/FinalGUISpec.md|Plans/GitHub_Integration.md|Plans/Orchestrator_Page.md|Plans/WorktreeGitImprovement.md|Plans/storage-plan.md",
+      "obligation_ids": [
+        "obl-008-001",
+        "obl-008-002"
+      ],
+      "obligation_record_count": 2,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4801,
+          "line_end": 4872,
+          "window_index": 12,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "line_start": 1,
+          "line_end": 268,
+          "window_index": 0,
+          "total_lines_in_doc": 268,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1201,
+          "line_end": 1272,
+          "window_index": 3,
+          "total_lines_in_doc": 1272,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "line_start": 1201,
+          "line_end": 1204,
+          "window_index": 3,
+          "total_lines_in_doc": 1204,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 2801,
+          "line_end": 3092,
+          "window_index": 7,
+          "total_lines_in_doc": 3092,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-005-g006",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0025",
+      "grouping_key": "shard-0025|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-008-003",
+        "obl-008-004",
+        "obl-008-005",
+        "obl-008-006"
+      ],
+      "obligation_record_count": 4,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4944,
+          "end_line": 4951,
+          "source_block_ids": [
+            "lblock-001083"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4954,
+          "end_line": 4982,
+          "source_block_ids": [
+            "lblock-001086"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4985,
+          "end_line": 4996,
+          "source_block_ids": [
+            "lblock-001089"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0025",
+          "start_line": 4999,
+          "end_line": 5000,
+          "source_block_ids": [
+            "lblock-001092"
+          ],
+          "source_slice_id": "d2-slice-008"
+        }
+      ],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-005-g007",
+      "doc_resolution_status": "concrete_plans_targets",
+      "source_shard_id": "shard-0026",
+      "grouping_key": "shard-0026|concrete_plans_targets|Plans/FinalGUISpec.md|Plans/Glossary.md|Plans/Models_System.md|Plans/Multi-Account.md|Plans/Personas.md",
+      "obligation_ids": [
+        "obl-008-016",
+        "obl-008-017",
+        "obl-008-021",
+        "obl-008-022",
+        "obl-008-023"
+      ],
+      "obligation_record_count": 5,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "window_index": 3,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "window_index": 4,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2001,
+          "line_end": 2400,
+          "window_index": 5,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "window_index": 6,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2801,
+          "line_end": 3200,
+          "window_index": 7,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3201,
+          "line_end": 3600,
+          "window_index": 8,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3601,
+          "line_end": 4000,
+          "window_index": 9,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4001,
+          "line_end": 4400,
+          "window_index": 10,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4401,
+          "line_end": 4800,
+          "window_index": 11,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4801,
+          "line_end": 4872,
+          "window_index": 12,
+          "total_lines_in_doc": 4872,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 527,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 401,
+          "line_end": 527,
+          "window_index": 1,
+          "total_lines_in_doc": 527,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 1431,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 1431,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 801,
+          "line_end": 1200,
+          "window_index": 2,
+          "total_lines_in_doc": 1431,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1201,
+          "line_end": 1431,
+          "window_index": 3,
+          "total_lines_in_doc": 1431,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 868,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 401,
+          "line_end": 800,
+          "window_index": 1,
+          "total_lines_in_doc": 868,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 801,
+          "line_end": 868,
+          "window_index": 2,
+          "total_lines_in_doc": 868,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Personas.md",
+          "line_start": 1,
+          "line_end": 400,
+          "window_index": 0,
+          "total_lines_in_doc": 466,
+          "max_lines_per_window": 400
+        },
+        {
+          "path": "Plans/Personas.md",
+          "line_start": 401,
+          "line_end": 466,
+          "window_index": 1,
+          "total_lines_in_doc": 466,
+          "max_lines_per_window": 400
+        }
+      ],
+      "preserved_candidate_hints": [],
+      "cross_target_notes": []
+    },
+    {
+      "coverage_task_id": "cov-e1-slice-005-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "source_shard_id": "shard-0026",
+      "grouping_key": "shard-0026|unresolved_no_live_target|",
+      "obligation_ids": [
+        "obl-008-007",
+        "obl-008-008",
+        "obl-008-009",
+        "obl-008-010",
+        "obl-008-011",
+        "obl-008-012",
+        "obl-008-013",
+        "obl-008-014",
+        "obl-008-015",
+        "obl-008-018",
+        "obl-008-019",
+        "obl-008-020"
+      ],
+      "obligation_record_count": 12,
+      "max_obligations_per_task_budget": 25,
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5001,
+          "end_line": 5010,
+          "source_block_ids": [
+            "lblock-001093"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5013,
+          "end_line": 5020,
+          "source_block_ids": [
+            "lblock-001096"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5023,
+          "end_line": 5032,
+          "source_block_ids": [
+            "lblock-001099"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5035,
+          "end_line": 5042,
+          "source_block_ids": [
+            "lblock-001102"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5045,
+          "end_line": 5049,
+          "source_block_ids": [
+            "lblock-001105"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5052,
+          "end_line": 5057,
+          "source_block_ids": [
+            "lblock-001108"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5060,
+          "end_line": 5064,
+          "source_block_ids": [
+            "lblock-001111"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5067,
+          "end_line": 5070,
+          "source_block_ids": [
+            "lblock-001114"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5073,
+          "end_line": 5075,
+          "source_block_ids": [
+            "lblock-001117"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5101,
+          "end_line": 5126,
+          "source_block_ids": [
+            "lblock-001128"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5129,
+          "end_line": 5140,
+          "source_block_ids": [
+            "lblock-001131"
+          ],
+          "source_slice_id": "d2-slice-008"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0026",
+          "start_line": 5143,
+          "end_line": 5157,
+          "source_block_ids": [
+            "lblock-001134"
+          ],
+          "source_slice_id": "d2-slice-008"
+        }
+      ],
+      "cross_target_notes": []
+    }
+  ]
+}

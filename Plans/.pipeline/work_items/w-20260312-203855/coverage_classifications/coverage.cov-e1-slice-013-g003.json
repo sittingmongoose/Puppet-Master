@@ -1,0 +1,145 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-013-g003",
+  "obligation_record_count": 6,
+  "source_classification_slices": [
+    "e2-class-013"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-slice-018-065",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-069",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-073",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-003",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-007",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-012",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    }
+  ]
+}

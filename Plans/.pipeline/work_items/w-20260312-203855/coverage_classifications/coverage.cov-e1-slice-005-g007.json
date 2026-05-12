@@ -1,0 +1,267 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-005-g007",
+  "obligation_record_count": 5,
+  "source_classification_slices": [
+    "e2-class-006"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-008-016",
+      "coverage_task_id": "cov-e1-slice-005-g007",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/Personas.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "source_shard_ids": [
+          "shard-0026"
+        ],
+        "source_block_ids": [
+          "lblock-001122"
+        ],
+        "source_group_ids": [
+          "wg-d1-T007-05"
+        ],
+        "source_slice_id": "d2-slice-008",
+        "source_line_ranges": [
+          {
+            "start_line": 5080,
+            "end_line": 5084
+          }
+        ]
+      },
+      "uncertainty": 0.07,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-008-017",
+      "coverage_task_id": "cov-e1-slice-005-g007",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Personas.md",
+          "line_start": 432,
+          "line_end": 448,
+          "quote": "Persona runtime contract preserves requested/effective, selection_reason, and honored/skipped/clamped distinctions."
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 765,
+          "line_end": 774,
+          "quote": "FinalGUISpec requires Glossary expansion for rewrite-critical objects, states, and trust terms."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Requested/effective runtime vocabulary is strongly represented, while the same bounded evidence confirms Glossary/help coverage still needs expansion for the newer Orchestrator vocabulary."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "source_shard_ids": [
+          "shard-0026"
+        ],
+        "source_block_ids": [
+          "lblock-001125"
+        ],
+        "source_group_ids": [
+          "wg-d1-T007-05"
+        ],
+        "source_slice_id": "d2-slice-008",
+        "source_line_ranges": [
+          {
+            "start_line": 5087,
+            "end_line": 5098
+          }
+        ]
+      },
+      "uncertainty": 0.25,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-008-021",
+      "coverage_task_id": "cov-e1-slice-005-g007",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Personas.md",
+          "line_start": 432,
+          "line_end": 448,
+          "quote": "Persona remains part of the shared requested/effective runtime identity model with selection_reason and honored/skipped/clamped semantics."
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3883,
+          "line_end": 3938,
+          "quote": "Runtime identity display requires effective platform/model/persona and disclosure of skipped Persona controls."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "source_shard_ids": [
+          "shard-0026"
+        ],
+        "source_block_ids": [
+          "lblock-001137"
+        ],
+        "source_group_ids": [
+          "wg-d1-T007-05"
+        ],
+        "source_slice_id": "d2-slice-008",
+        "source_line_ranges": [
+          {
+            "start_line": 5160,
+            "end_line": 5168
+          }
+        ]
+      },
+      "uncertainty": 0.11,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-008-022",
+      "coverage_task_id": "cov-e1-slice-005-g007",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 125,
+          "line_end": 128,
+          "quote": "FinalGUISpec notes the need for stronger cross-cutting copy discipline."
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 765,
+          "line_end": 774,
+          "quote": "Glossary and help governance recovery requires stable canonical term names."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "The bounded target records distributed copy-discipline and glossary-governance requirements, but the obligation calls out that the cross-cutting discipline is still stronger than the current distributed local rules."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "source_shard_ids": [
+          "shard-0026"
+        ],
+        "source_block_ids": [
+          "lblock-001140"
+        ],
+        "source_group_ids": [
+          "wg-d1-T007-05"
+        ],
+        "source_slice_id": "d2-slice-008",
+        "source_line_ranges": [
+          {
+            "start_line": 5171,
+            "end_line": 5178
+          }
+        ]
+      },
+      "uncertainty": 0.28,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-008-023",
+      "coverage_task_id": "cov-e1-slice-005-g007",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 765,
+          "line_end": 774,
+          "quote": "FinalGUISpec explicitly requires expanding Glossary.md for rewrite-critical objects, states, and trust terms."
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 2380,
+          "line_end": 2384,
+          "quote": "Operational surfaces consume Glossary coverage for rewrite-critical objects, projection trust, escalation, blocked owner, and resolution_kind."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "The gap is acknowledged and routed through FinalGUISpec/help governance, but the obligation says Glossary.md itself is materially behind the rewrite vocabulary."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "source_shard_ids": [
+          "shard-0026"
+        ],
+        "source_block_ids": [
+          "lblock-001143"
+        ],
+        "source_group_ids": [
+          "wg-d1-T007-05"
+        ],
+        "source_slice_id": "d2-slice-008",
+        "source_line_ranges": [
+          {
+            "start_line": 5181,
+            "end_line": 5187
+          }
+        ]
+      },
+      "uncertainty": 0.29,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    }
+  ]
+}

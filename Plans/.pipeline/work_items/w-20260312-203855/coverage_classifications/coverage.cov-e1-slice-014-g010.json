@@ -1,0 +1,341 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-014-g010",
+  "obligation_record_count": 12,
+  "source_classification_slices": [
+    "e2-class-014",
+    "e2-class-015"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-020-009",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-010",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-011",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-015",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-016",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-017",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-021",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-022",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-023",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "source_shard_id": "shard-0073",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.12,
+      "uncertainty": 0.72,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "severity": "high",
+          "rationale": "E1 row has doc_resolution_status unresolved_no_live_target with empty live_doc_windows; no filter-passing Plans/** paths on the obligation record."
+        }
+      ],
+      "notes": [
+        "Awaiting concrete Plans/** live targets before bounded-window excerpt anchoring can run."
+      ]
+    },
+    {
+      "obligation_id": "obl-020-027",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0073"
+        ],
+        "source_block_ids": [
+          "lblock-003867"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-04"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14576,
+            "end_line": 14578
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g010",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 207,
+          "line_end": 213,
+          "quote": "  - `Primitive:DocumentCheckpoint`\\n  - Primitive:DocumentCheckpoint\\n  - `OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner.\\n  - OpenFile\\n  - but it should stop being treated as a stronger separate primitive\\n  - these are good UX-facing wrapper names, even if they are not the canonical n",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-028",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0073"
+        ],
+        "source_block_ids": [
+          "lblock-003870"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-04"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14581,
+            "end_line": 14584
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g010",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 722,
+          "line_end": 728,
+          "quote": "  - object_id = <id>\\n  - new docs/producers MUST prefer canonical route-target forms\\n  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject\\n  - Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.\\n  - active_subview\\n  - `focus_thread",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    },
+    {
+      "obligation_id": "obl-020-029",
+      "coverage_task_id": "cov-e1-slice-014-g010",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (unresolved_no_live_target); E1 did not emit bounded Plans/** targets for this obligation bundle."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0073"
+        ],
+        "source_block_ids": [
+          "lblock-003873"
+        ],
+        "source_group_ids": [
+          "wg-d1-T019-04"
+        ],
+        "source_slice_id": "d2-slice-020",
+        "source_line_ranges": [
+          {
+            "start_line": 14587,
+            "end_line": 14588
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-014-g010",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 914,
+          "line_end": 920,
+          "quote": "  - The rerun confirms that these were not just vague \"help gaps\", but concrete missing contracts:\\n  - pressure-summary field\\n  - `[retired-token-30]`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`\\n ",
+          "rationale": "Keyword-aligned candidate span located in Plans/** for triage; coverage_task has empty live_doc_windows (unresolved_no_live_target), so this is not E1-union bounded evidence."
+        }
+      ],
+      "classification": "needs_doc_discovery",
+      "uncertainty": 0.62
+    }
+  ]
+}

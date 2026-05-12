@@ -1,0 +1,43 @@
+{
+  "schema_id": "pm.section_entry_C_report.v3.2.2",
+  "prompt_id": "C0",
+  "prompt_version": "pm.c0.v3.2.2",
+  "timestamp_utc": "20260511T163642Z",
+  "work_id": "w-20260312-203855",
+  "section_exit_B_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_B.json",
+  "section_exit_B_timestamp_utc": "20260511T163524Z",
+  "work_id_derivation": {
+    "source": "section_exit_B.json",
+    "field": "work_id",
+    "value": "w-20260312-203855",
+    "cross_checks": [
+      {
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+        "field": "work_id",
+        "match": true
+      },
+      {
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+        "field": "work_id",
+        "match": true
+      }
+    ]
+  },
+  "ledger_intake_manifest_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_intake_manifest.json",
+  "source_mode": "existing_working_ledger",
+  "accepted_sources": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "section_C_inputs_gate": {
+    "ledger_intake_manifest_present": true,
+    "manifest_names_accepted_source": true,
+    "working_ledger_exists": true,
+    "working_ledger_nonempty_bytes": true,
+    "final_gate_pass": true
+  },
+  "notes": [
+    "work_id locked from active (non-archive) section_exit_B.json for this work item.",
+    "ledger_intake_manifest.json names existing_working_ledger and lists working_ledger.md; no semantic read of ledger body in C0.",
+    "Gate verification: test -f, wc -c > 0, sha256sum (deterministic)."
+  ]
+}

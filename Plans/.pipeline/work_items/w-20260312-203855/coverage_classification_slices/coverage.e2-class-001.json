@@ -1,0 +1,2278 @@
+{
+  "schema_id": "pm.coverage_classification_slice.v3.2.3",
+  "slice_id": "e2-class-001",
+  "subagent_task_id": "e2-e2-class-001",
+  "work_id": "w-20260312-203855",
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-s001-001",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000004"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-002",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000007"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-003",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000010"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-004",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000010"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-005",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000010"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-006",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000010"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-007",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000010"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-008",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000013"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-009",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000013"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-010",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000013"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-011",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000016"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-012",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000016"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-013",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000016"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-014",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000016"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-015",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-016",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-017",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-018",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-019",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-020",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "open_decision",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Await Section E binding to anchor options in authoritative live docs."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Fork stated in shard-derived obligation; no bound live Plans window in this task to compare.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-021",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-022",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-023",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0001"
+        ],
+        "source_block_ids": [
+          "lblock-000019"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-024",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0002"
+        ],
+        "source_block_ids": [
+          "lblock-000020"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-025",
+      "coverage_task_id": "ct-slice001-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0002"
+        ],
+        "source_block_ids": [
+          "lblock-000021"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-026",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0002"
+        ],
+        "source_block_ids": [
+          "lblock-000021"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-027",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0003"
+        ],
+        "source_block_ids": [
+          "lblock-000022"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-028",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0003"
+        ],
+        "source_block_ids": [
+          "lblock-000023"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-029",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0003"
+        ],
+        "source_block_ids": [
+          "lblock-000023"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-030",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0004"
+        ],
+        "source_block_ids": [
+          "lblock-000024"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-031",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0004"
+        ],
+        "source_block_ids": [
+          "lblock-000024"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-032",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0004"
+        ],
+        "source_block_ids": [
+          "lblock-000024"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-033",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0004"
+        ],
+        "source_block_ids": [
+          "lblock-000027"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-034",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0004"
+        ],
+        "source_block_ids": [
+          "lblock-000027"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-s001-035",
+      "coverage_task_id": "ct-slice001-002",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0004"
+        ],
+        "source_block_ids": [
+          "lblock-000027"
+        ],
+        "source_slice_id": "d2-slice-001"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0001",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Executor_Protocol.md:33:   - Decide whether worktrees are allocated/owned per node, per package, per seam, or per remediation branch."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0005"
+        ],
+        "source_block_ids": [
+          "lblock-000028"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0002",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:35:   - Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0005"
+        ],
+        "source_block_ids": [
+          "lblock-000031"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0003",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Permissions_System.md:627: Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0005"
+        ],
+        "source_block_ids": [
+          "lblock-000034"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0004",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:13:   - projection ownership by surface"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0005"
+        ],
+        "source_block_ids": [
+          "lblock-000037"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0005",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Orchestrator_Page.md:489: - Exact required item: Apply owner-doc corrections before consumer and mirror cleanup"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0006"
+        ],
+        "source_block_ids": [
+          "lblock-000044"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0006",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Permissions_System.md:627: Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0006"
+        ],
+        "source_block_ids": [
+          "lblock-000047"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0007",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Permissions_System.md:627: Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0006"
+        ],
+        "source_block_ids": [
+          "lblock-000052"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0008",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:334:   - `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0006"
+        ],
+        "source_block_ids": [
+          "lblock-000055"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0009",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Permissions_System.md:627: Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0006"
+        ],
+        "source_block_ids": [
+          "lblock-000058"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0010",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Decision_Policy.md:30:   - what likely new model pressure is: package-based lane pools, contamination quarantine, restore-before-reuse policy, Source Control plus Orchestrator shared visibility.",
+        "Plans/Executor_Protocol.md:189: - Exact required item: Tie that section to parallel-node worktree assignment and ownership transitions",
+        "Plans/Executor_Protocol.md:193: - Exact acceptance check: The `cov-168` repair states the exact requirement: Tie that section to parallel-node worktree assignment and ownership transitions",
+        "Plans/Models_System.md:48:   - `[retired-token-13]` / `[retired-token-15]` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node wo"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000059"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0011",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/GitHub_Integration.md:175: - Exact acceptance check: The `cov-098` repair is in the owner section for `Plans/GitHub_Integration.md` and is not only a downstream consumer note."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000062"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0012",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/WorktreeGitImprovement.md:275: - Exact acceptance check: The `cov-059` repair is in the owner section for `Plans/WorktreeGitImprovement.md` and is not only a downstream consumer note."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000065"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0013",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Permissions_System.md:627: Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000068"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0014",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:34:   - Highest-signal docs remain the same core owner set, with `Commands_System.md`, `Wiring_Matrix.md`, `UI_Wiring_Rules.md`, `Project_Output_Artifacts.md`, `FileManager.md`, `[retired-token-12]`, `Decision_Policy.md`, `Run_Modes.md`, `Progression_Gates.md`, `newtools.md`, and `assistant-memory-subsy"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000071"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0015",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/orchestrator-subagent-integration.md:240: This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), subagent selection policy, and wiring/verification requirements. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000078"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0016",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Permissions_System.md:627: Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000082"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0017",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/chain-wizard-flexibility.md:60: - 2026-02-24: Updated user-project **Project Contract Pack + executable artifacts** under `.puppet-master/project/**` to make the plan graph **sharded-only and canonical** (`.puppet-master/project/plan_graph/`); removed any requirement that `.puppet-master/project/plan_graph.json` is required/canoni"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000090"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0018",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:174:   - when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000094"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0019",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Orchestrator_Page.md:229:   - `chain-wizard-flexibility.md` still leaks orchestrator ownership into pre-run CUP/quality blocking, still omits hard lineage keys from the normalized downstream payload (`project_id`, thread/report identity), and still overstates Contribute(PR) as “no worktrees” rather than a stable-branch polic"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000098"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0020",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Models_System.md:28:   - `orchestrator-subagent-integration.md` now contains both old and new models at once:"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000102"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0021",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/MiscPlan.md:126: **Cross-plan:** Section 10 describes how this plan depends on and impacts WorktreeGitImprovement, orchestrator-subagent-integration, and interview-subagent-integration."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000110"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0022",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:121:   - why it matters: formalize requested vs effective execution identity, including account fallback/switching, before more provider/chat/SCM docs extend the wrong model."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000114"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0023",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:18:   - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000118"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0024",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:29:   - Unify requested vs effective execution identity to include account, lane/worktree, and overseer class."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000122"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0025",
+      "coverage_task_id": "ct-slice001-003",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/orchestrator-subagent-integration.md:229:   - `Runtime_Artifacts_Panel.md` still uses `task_id` vocabulary where the rewrite increasingly needs `node_id` / package / seam / lane identity instead."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000126"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0026",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:69:   - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000130"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0027",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:30:   - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility.",
+        "Plans/Multi-Account.md:31:   - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.",
+        "Plans/Multi-Account.md:150:   - Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch.",
+        "Plans/Orchestrator_Page.md:54:   - `work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000134"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0028",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:95:   - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-38]."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000138"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0029",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:62:   - Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Plans/FinalGUISpec.md:95:   - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-38].",
+        "Plans/FinalGUISpec.md:96:   - Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.",
+        "Plans/Multi-Account.md:110:   - Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000142"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0030",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:28:   - Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000146"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0031",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:15:   - Orchestrator ownership boundaries",
+        "Plans/FinalGUISpec.md:35:   - Orchestrator ownership boundaries",
+        "Plans/FinalGUISpec.md:62:   - Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Plans/FinalGUISpec.md:64:   - Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/**"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000150"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0032",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Project_Output_Artifacts.md:91:   - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000154"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0033",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:95:   - Define Dashboard → Orchestrator → chat-thread routing using canonical runtime objects rather than [retired-token-38]."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000158"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0034",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:26:   - Normalize requested/effective account identity shapes"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000162"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0035",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:128:   - `GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/routing contract across project/workspace surfaces"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000166"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0036",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:108:   - Usage/UI requests for auth-mode/effective-account filtering are already present in adjacent GUI docs even though usage contracts do not yet guarantee them.",
+        "Plans/Multi-Account.md:30:   - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility.",
+        "Plans/Multi-Account.md:31:   - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.",
+        "Plans/Multi-Account.md:100:   - Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000170"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0037",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Orchestrator_Page.md:76:   - Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000174"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0038",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:113:   - Why it matters: provider/persona fields exist, but effective account switching and requested/effective execution identity are still mostly unmodeled."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000178"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0039",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:30:   - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000182"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0040",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:74:   - which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
+        "Plans/Multi-Account.md:27:   - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology",
+        "Plans/Multi-Account.md:110:   - Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts.",
+        "Plans/Multi-Account.md:166:   - The missing requested-side concrete account field is now clearly blocking multiple downstream contracts, not just storage purity:"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/**"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000186"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0041",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/WorktreeGitImprovement.md:200:   - Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000190"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0042",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:173:   - there is still no canonical slot for actor kind, effective account, switch reason, lane/worktree identity, or pressure/trust context"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000194"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0043",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/storage-plan.md:75:   - approval identity and field-name drift (`allowed_actions` vs `allowed_action_ids`) still cut across recovery, replay, and storage."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000198"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-001",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:143: - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)",
+        "Plans/00-plans-index.md:199: - `assistant-chat-design.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `storage-plan.md`, `Runtime_Artifacts_Panel.md`, `newtools.md`, and `Wiring_Matrix.md` are reconciliation consumers for chat capture, prompt assembly, permissions, persistence, eviden",
+        "Plans/00-plans-index.md:232: | `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Canonical persistence and restore model for project identity, workspace tabs, windows, browser/preview state, terminal sessions, dev sessions, plan/TODO/question/activity state, usage pr",
+        "Plans/00-plans-index.md:245: | `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog `runtime_artifact.*`, redb `artifacts_index:v1:{project_id}`, cost_usage, Show in Ledger/Usage, browser recordings, and JSON schemas. Distinct from P"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000199"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-002",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:621: - `Multi-Account.md` owns account selection, provider-entry separation, requested/effective account fields, and switch lineage semantics"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000199"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-003",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:621: - `Multi-Account.md` owns account selection, provider-entry separation, requested/effective account fields, and switch lineage semantics"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-004",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/OpenCode_Coverage_Matrix.md:19:   - Phase/Task/Subtask/Iteration"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-005",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:53:   - Persona fallback is split between “bare-context run” and canonical fallback Persona."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-006",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:18:   - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Plans/00-plans-index.md:143: - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)",
+        "Plans/00-plans-index.md:245: | `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog `runtime_artifact.*`, redb `artifacts_index:v1:{project_id}`, cost_usage, Show in Ledger/Usage, browser recordings, and JSON schemas. Distinct from P",
+        "Plans/00-plans-index.md:258: | `Permissions_System.md` | Canonical permission system definitions | SSOT for permission actions (`allow`/`ask`/`deny`), multi-layer precedence (mode > session > Persona > project > global > defaults), PM-native Ask/Plan mode semantics, granular rules (wildca"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-007",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:54:   - 6. **Run/tier/subtask worktrees vs package-based lane pools**"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000207"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-008",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:113: Required reading order for the orchestrator rewrite canon-collapse is:",
+        "Plans/00-plans-index.md:126: - `Plans/Orchestrator_Page.md`",
+        "Plans/00-plans-index.md:215: - `Commands_System.md`, `Glossary.md`, `FileManager.md`, `human-in-the-loop.md`, `Architecture_Invariants.md`, `orchestrator-subagent-integration.md`, `interview-subagent-integration.md`, `Wiring_Matrix.md`, `rewrite-tie-in-memo.md`, and `MiscPlan.md` are requ",
+        "Plans/00-plans-index.md:224: | `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | Registry-driven Persona set (canonical list §4: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including `explorer` and `requirements-qua"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000207"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-009",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:18:   - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Plans/Executor_Protocol.md:179: - Exact acceptance check: The heading `### Fidelity recovery cov-160: Identity and blocked-policy transfer cluster` exists in `Plans/Executor_Protocol.md`.",
+        "Plans/Executor_Protocol.md:291:   - what likely new model pressure is: package overseer plus seam overseer split, requested/effective account fallback, promotion-aware provider/event records.",
+        "Plans/Run_Graph_View.md:30:   - `work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000207"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-010",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Containers_Registry_and_Unraid.md:100: - `Plans/Orchestrator_Page.md` remains canonical for orchestrator control widgets and UICommand IDs, but must reference this plan for container-publish and template-repo actions."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000211"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-011",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:802: Owner: `Plans/GitHub_Integration.md` + `Plans/WorktreeGitImprovement.md`."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000211"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-012",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Project_Output_Artifacts.md:83:   - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000211"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-013",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Executor_Protocol.md:354: If multiple nodes are ready simultaneously, Overseer MUST choose the lexicographically smallest `node_id`.",
+        "Plans/OpenCode_Coverage_Matrix.md:123: | 20 | **Plugins - discovery + load order** | §7G.1 | `Plans/Plugins_System.md` #DISCOVERY, #LOAD-ORDER | - | **Covered** | Four-source priority, lexicographic tiebreak. |",
+        "Plans/UI_Command_Catalog.md:1089: - `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body",
+        "Plans/Widget_System.md:110:   - The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-014",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:738:   - still needs runtime-overlay terminology, identity linkage, and approval cache scoping for multi-actor execution",
+        "Plans/OpenCode_Coverage_Matrix.md:18:   - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern.",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:39:   - A2A’s duplicate attempt-continuity addenda and tier-boundary schema are signals that this seam needs consolidation plus version governance, not more scattered annotations.",
+        "Plans/Widget_System.md:110:   - The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Permissions_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-015",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Executor_Protocol.md:290:   - 3. **Single Overseer vs package overseer + seam overseer**"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-016",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:64:   - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.",
+        "Plans/00-plans-index.md:65:   - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.",
+        "Plans/00-plans-index.md:66:   - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.",
+        "Plans/00-plans-index.md:98:   - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-017",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/UI_Command_Catalog.md:1276: No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-018",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:54:   - 6. **Run/tier/subtask worktrees vs package-based lane pools**"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-019",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Containers_Registry_and_Unraid.md:187:   - push policy (`manual` default; optional `after_build`)",
+        "Plans/Executor_Protocol.md:383: UI/orchestrator labels such as `waiting_approval`, `needs_review`, `cancelled`, or `complete_with_warnings` are **run-local overlays / CTA states**, not canonical node `status` values in this protocol. Such overlays MUST be persisted as separate events or proj",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:23:   - A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete or resolve a concern; but these should remain different record families.",
+        "Plans/Widget_System.md:110:   - The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-020",
+      "coverage_task_id": "ct-slice002-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000219"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-021",
+      "coverage_task_id": "ct-slice002-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000219"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-022",
+      "coverage_task_id": "ct-slice002-001",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task has zero live_doc_windows (shard_only_pending_live_path_binding); live Plans evidence not yet addressable in bounded reads."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000219"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Classification reflects pipeline binding state, not a claim that live docs lack the concept.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    }
+  ],
+  "slice_summary": {
+    "obligation_count": 100,
+    "counts_by_classification": {
+      "needs_doc_discovery": 37,
+      "open_decision": 1,
+      "present": 62
+    }
+  }
+}

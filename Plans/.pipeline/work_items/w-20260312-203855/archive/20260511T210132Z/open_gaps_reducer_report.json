@@ -1,0 +1,41 @@
+{
+  "schema_id": "pm.open_gaps_reducer_report.v3.2.2",
+  "prompt_id": "F3",
+  "prompt_version": "pm.f3.v3.2.2",
+  "timestamp_utc": "20260511T203751Z",
+  "work_id": "w-20260312-203855",
+  "doc_discovery_required_unattempted": 0,
+  "doc_discovery_required_stale": 0,
+  "doc_discovery_exhausted_terminal": 3048,
+  "counts_by_gap_group_kind": {
+    "concrete_fix_backlog": 0,
+    "concrete_missing_file_fix_backlog": 0,
+    "doc_discovery_exhaustion": 3048,
+    "doc_discovery_required": 0,
+    "layout_repair": 1,
+    "no_gap": 0,
+    "process_followup": 799,
+    "source_lineage_check": 1,
+    "stale_token_resolution": 0
+  },
+  "doc_discovery_loop_breaker": {
+    "do_not_route_terminal_exhausted_to_f4_f5_without_material_delta": true,
+    "f4_selected_only_when_unattempted_or_stale_required_work_exists": false,
+    "notes": [
+      "Hotfix v3.2.2: route precedence prefers active doc_discovery_required work (F4) over exhausted-only adjudication (B3).",
+      "Process/path/source-lineage blockers (rule_4) take precedence over exhausted-only (rule_3); do not route terminal exhausted rows to F4/F5 without unattempted/stale required work."
+    ]
+  },
+  "route_decision": {
+    "next_prompt_id": "B3",
+    "next_prompt_name": "Issue / Process Adjudicator",
+    "precedence_rule": "rule_4_process_path_source_or_missing_file_blockers_not_repeat_doc_discovery",
+    "next_prompt_request": "Paste prompt B3 — Issue / Process Adjudicator v3.2.2.",
+    "exactly_one_next_prompt": true
+  },
+  "final_gate": {
+    "passed": true,
+    "route_based_on_reducer_counts": true,
+    "single_next_prompt_requested": true
+  }
+}
