@@ -1,0 +1,153 @@
+{
+  "schema_id": "pm.stage_report.v1",
+  "prompt_id": "B3",
+  "prompt_version": "pm.b3.v3.2.3",
+  "timestamp_utc": "20260512T044700Z",
+  "work_id": "w-20260312-203855",
+  "section_id": "B",
+  "section_name": "Issue_Process_Adjudication",
+  "status": "blocked",
+  "status_basis": "Delegated subagent quota exhausted after first bounded task; fanout_proof_status and real_subagent_proof_status cannot pass until remaining 21 Task invocations succeed. Recoverable by operator action and B3 re-run per continuation gate.",
+  "execution_type": "semantic_chunk_processing",
+  "execution_type_recorded_per_local_classification_override": true,
+  "execution_type_basis": "Evidence-first adjudication over 253 classifier-process-defect gap rows grouped into 22 bounded JSON-record batches; requires delegated model subagents per kernel.",
+  "skip_gate_evaluated": true,
+  "skip_gate_passed": false,
+  "skip_gate_basis": "Multiple issue families and 253 records exceed single-artifact <=25 skip gate; cross-row process themes require bounded fan-out.",
+  "inputs_read": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_entry_B_report.json",
+      "note": "Locked work_id w-20260312-203855; Section B entry complete."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json",
+      "note": "Reported routing issue: classifier_process_defect_rows_total=253; precedence to B3 over F4."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json",
+      "read_mode": "python_indexer_and_slice_writer_only_main_agent_did_not_semantically_read_full_corpus"
+    }
+  ],
+  "subagents": {
+    "used": true,
+    "required": true,
+    "required_basis": "semantic_chunk_processing with 253 gap records across 21 issue-family keys; bounded into 22 tasks at <=25 records each."
+  },
+  "required_subagent_tasks_total": 22,
+  "wave_artifacts_total": 1,
+  "wave_artifacts_expected_min": 3,
+  "wave_artifacts_expected_min_basis": "ceil(22 / 8) minimum waves at concurrency 8; actual minimum waves depend on operator concurrency; proof incomplete until all tasks appear in wave artifacts with distinct invocations.",
+  "wave_artifact_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-001.json"
+  ],
+  "completed_task_ids_from_wave_artifacts": [
+    "b3-t001"
+  ],
+  "pending_task_ids_from_wave_artifacts": [
+    "b3-t002",
+    "b3-t003",
+    "b3-t004",
+    "b3-t005",
+    "b3-t006",
+    "b3-t007",
+    "b3-t008",
+    "b3-t009",
+    "b3-t010",
+    "b3-t011",
+    "b3-t012",
+    "b3-t013",
+    "b3-t014",
+    "b3-t015",
+    "b3-t016",
+    "b3-t017",
+    "b3-t018",
+    "b3-t019",
+    "b3-t020",
+    "b3-t021",
+    "b3-t022"
+  ],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [
+    "e24d3e3d-804c-4f75-8979-f1a4649e4f39"
+  ],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 1,
+  "distinct_subagent_invocations_total": 1,
+  "task_to_invocation_map": {
+    "b3-t001": "e24d3e3d-804c-4f75-8979-f1a4649e4f39"
+  },
+  "invocation_to_task_map": {
+    "e24d3e3d-804c-4f75-8979-f1a4649e4f39": "b3-t001"
+  },
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "fanout_proof_status": "fail",
+  "fanout_proof_failure_reason": "pending_task_ids_from_wave_artifacts non-empty; completed proven count 1 < required_subagent_tasks_total 22; wave_artifacts_total 1 insufficient to cover all bounded tasks with distinct invocations.",
+  "subagent_runtime_kind": "delegated_model_subagent",
+  "actual_delegated_model_invocation": true,
+  "subagent_proof_artifact_paths": [
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3_fanout_worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t001.json"
+  ],
+  "local_worker_outputs_used": [
+    "python3: enumerate 253 classifier-defect gap rows; group by issue_family_key; chunk into 22 bounded tasks; write B3_fanout_worklist.json and b3_issue_slices/input.b3-t*.json"
+  ],
+  "main_agent_batching_detected": false,
+  "shell_or_python_worker_misclassified_as_subagent_detected": false,
+  "real_subagent_proof_status": "fail",
+  "real_subagent_proof_failure_reason": "Only one of 22 required distinct delegated model invocations completed in this execution; remaining invocations blocked by Cursor subagent usage limit for faster responses.",
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/B3_fanout_worklist.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t002.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t003.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t004.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t005.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t006.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t007.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t008.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t009.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t010.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t011.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t012.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t013.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t014.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t015.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t016.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t017.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t018.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t019.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t020.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t021.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t022.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/B3.wave-001.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/session_notes/issue_adjudication_notes.jsonl",
+    "Plans/.pipeline/work_items/w-20260312-203855/issue_process_adjudication_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.B3.json"
+  ],
+  "live_doc_writes": [],
+  "final_gate": {
+    "name": "every_reported_issue_adjudicated_or_blocked",
+    "result": "fail",
+    "checks": [
+      "253 classifier-defect gap rows mapped to 22 bounded subagent tasks",
+      "Only b3-t001 completed with per-record adjudication artifacts",
+      "Pending b3-t002..b3-t022 require additional delegated Task waves in a future B3 execution"
+    ]
+  },
+  "blockers": [
+    {
+      "blocking_reason_code": "delegated_subagent_usage_limit_exhausted",
+      "detail": "Parallel Task invocations for b3-t002..b3-t007 returned Cursor error: Increase limits for faster responses / out of usage.",
+      "recoverable": true,
+      "operator_action": "Increase Cursor subagent limits or switch billing tier; re-run prompt B3 — Issue / Process Adjudicator v3.2.3 to continue waves without discarding B3.wave-001.json or result.b3-t001.json."
+    }
+  ],
+  "summary": "B3 v3.2.3: Built B3_fanout_worklist.json (22 bounded tasks, 253 unique gap_array indices) from open_gaps.json rows with coverage_classifier_process_defect_or_source_intake_gap matching F3 classifier_process_defect_rows_total. Wrote per-task input slices. Delegated subagent completed b3-t001 (invocation e24d3e3d-804c-4f75-8979-f1a4649e4f39) with 25 adjudications (all doc_discovery_exhaustion). Subsequent delegated launches failed due to subagent usage limits; fan-out and real-subagent proof gates fail until remaining 21 tasks complete.",
+  "next_prompt_request": "Re-run this same prompt with subagents enabled.",
+  "notes": [
+    "Do not route to B4 until B3 fanout_proof_status and real_subagent_proof_status pass per v3.2.3 downstream gate.",
+    "Semantic slice continuation: preserve B3.wave-001.json and result.b3-t001.json; next B3 execution should append wave artifacts for b3-t002..b3-t022 without fabricating invocation IDs."
+  ]
+}

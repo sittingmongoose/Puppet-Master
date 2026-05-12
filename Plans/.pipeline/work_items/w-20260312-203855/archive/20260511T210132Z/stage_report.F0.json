@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.stage_report.v3.2.2",
+  "prompt_id": "F0",
+  "prompt_version": "pm.f0.v3.2.2",
+  "timestamp_utc": "20260511T203200Z",
+  "section_id": "F",
+  "section_name": "Gaps_Routing_Doc_Discovery",
+  "work_id": "w-20260312-203855",
+  "status": "complete",
+  "execution_type": "mechanical_tool_operation",
+  "execution_type_basis": "Section entry/handoff only (v3.2.2 local classification); deterministic existence, sha256 verification, and bounded JSON row-count check on transfer_coverage.json. No semantic reading of full coverage_rows corpus.",
+  "stage_purpose": "Start Gaps/Routing from Section E handoff: derive work_id from section_exit_E, confirm transfer_coverage.json exists and matches exit fingerprints, gate entry to F1.",
+  "inputs_read": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
+      "sha256": "9961d2b938a40bc5d353812050ca6bc7780136e00bd5161e053bca96e9cf0267",
+      "line_count": 90,
+      "read_mode": "full_metadata_json_bounded_header"
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "sha256": "da13808745b5b6943ad06349065a9bb43bbd38388752c672dcb4674bca396eed",
+      "line_count": 143443,
+      "read_mode": "existence_schema_header_sha256_stat_and_python_len_coverage_rows_only_no_full_row_semantic_scan"
+    }
+  ],
+  "inputs_not_read": {
+    "archive": [
+      "Plans/.pipeline/work_items/w-20260312-203855/archive/**"
+    ],
+    "legacy_quarantine": [],
+    "transfer_coverage_full_semantic_scan": "not_performed_mechanical_stage"
+  },
+  "deterministic_verification": {
+    "tool": "glob+test+sha256sum+wc+stat+python3_json_len",
+    "checks_performed": [
+      "Glob section_exit_E.json under Plans/.pipeline/work_items/*/; active handoff path excludes archive/",
+      "section_exit_E.json present; status=complete; work_id=w-20260312-203855",
+      "section_exit_E.next_preferred_prompt == F0",
+      "section_exit_E.gaps_routing_active_source_for_section_f equals Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "transfer_coverage.json present (test -f)",
+      "sha256sum(transfer_coverage.json) == section_exit_E.transfer_coverage_sha256",
+      "python3 len(transfer_coverage['coverage_rows']) == section_exit_E.coverage_row_total (3870)",
+      "transfer_coverage.json top-level work_id == w-20260312-203855",
+      "section_exit_E.final_gate.passed == true including transfer_coverage_final_gate_passed"
+    ],
+    "checks_passed": 9,
+    "checks_failed": 0,
+    "transfer_coverage_stat_bytes": 4930968,
+    "transfer_coverage_active_for_section_f": true
+  },
+  "work_id_derivation": {
+    "method": "section_exit_E.json work_id field (active non-archive artifact)",
+    "section_exit_E_present": true,
+    "section_exit_E_candidates_in_pipeline_glob": 2,
+    "section_exit_E_selected_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
+    "section_exit_E_archive_ignored_for_handoff": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260507T150603Z/section_exit_E.json",
+    "conflict_detected": false,
+    "selected_work_id": "w-20260312-203855"
+  },
+  "subagents": {
+    "used": false,
+    "required": false,
+    "required_basis": "execution_type=mechanical_tool_operation; deterministic file and hash checks only.",
+    "fanout_proof_status": "not_applicable_mechanical_tool_operation"
+  },
+  "live_doc_writes": [],
+  "artifacts_written": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_entry_F_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F0.json"
+  ],
+  "final_gate": {
+    "name": "transfer_coverage_active_for_section_f_entry",
+    "result": "pass",
+    "checks": [
+      "section_exit_E.json present and complete for work_id w-20260312-203855",
+      "transfer_coverage.json present at path declared in section_exit_E and gaps_routing_active_source_for_section_f",
+      "transfer_coverage.json sha256 matches section_exit_E.transfer_coverage_sha256",
+      "coverage_rows row count matches section_exit_E.coverage_row_total",
+      "transfer_coverage is the active Section F handoff artifact per section exit (not superseded by conflicting work_id in file)"
+    ]
+  },
+  "blockers": [],
+  "next_prompt_request": "Paste prompt F1 — Open Gaps Worklist Builder v3.2.2.",
+  "notes": [
+    "execution_type recorded per v3.2.2 stage classification rule.",
+    "fanout_proof_status not_applicable_mechanical_tool_operation; wave-artifact fan-out proof fields omitted as subagents not required.",
+    "Second glob match for section_exit_E.json is under archive/; handoff used only the active work_items/w-20260312-203855/section_exit_E.json per READ scope."
+  ]
+}

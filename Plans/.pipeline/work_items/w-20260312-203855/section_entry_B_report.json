@@ -1,44 +1,43 @@
 {
-  "schema_id": "pm.section_entry_B_report.v3.2.2",
+  "schema_id": "pm.section_entry_B_report.v1",
   "prompt_id": "B0",
-  "prompt_version": "pm.b0.v3.2.2",
-  "timestamp_utc": "20260511T163428Z",
+  "prompt_version": "pm.b0.v3.2.3",
+  "timestamp_utc": "20260511T220000Z",
   "work_id": "w-20260312-203855",
+  "section": "B",
+  "section_entry_status": "complete",
   "section_exit_A_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
-  "section_exit_A_timestamp_utc": "20260511T163300Z",
-  "work_id_derivation": {
-    "source": "section_exit_A.json",
-    "field": "work_id",
-    "value": "w-20260312-203855",
-    "cross_checks": [
-      {
-        "path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
-        "field": "work_id",
-        "match": true
-      },
-      {
-        "path": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
-        "field": "work_id",
-        "match": true
-      }
-    ]
-  },
-  "operator_intake_statement_in_prompt": false,
-  "routing_fields_found": {
-    "intake_path": null,
-    "next_intake_prompt": null,
-    "next_prompt_id_section_b": null,
-    "route_state_next_prompt_request": "A4 — Section Exit: Run Control",
-    "note_route_state_next_is_stale_relative_to_section_exit_A": true
-  },
-  "intake_selection": {
+  "section_exit_A_timestamp_utc": "20260511T210331Z",
+  "work_id_sources_considered": [
+    {
+      "source": "section_exit_A.json",
+      "work_id": "w-20260312-203855",
+      "agreement": "primary"
+    },
+    {
+      "source": "route_state.json",
+      "work_id": "w-20260312-203855",
+      "agreement": "matches_section_exit_A",
+      "note": "next_prompt_id still A4; stale relative to completed Section A exit"
+    },
+    {
+      "source": "meta.json",
+      "work_id": "w-20260312-203855",
+      "agreement": "matches_section_exit_A"
+    }
+  ],
+  "routing_decision": {
+    "priority_applied": 3,
+    "priority_description": "No explicit intake path in user message, section_exit_A, route_state, or meta; default to B4 per B0 TASK",
+    "user_intake_path_stated": false,
+    "artifact_intake_fields_found": [],
     "selected_next_prompt_id": "B4",
     "selected_next_prompt_name": "Ledger Intake Decision",
-    "rule_applied": "default_B4_no_explicit_or_discoverable_intake_path",
-    "priority_step": 3
+    "rationale": "Deterministic default when no Research (B1), Feature Audit (B2), Issue Adjudication (B3), or explicit ledger-only routing is stated or discoverable."
   },
-  "notes": [
-    "section_exit_A.json is the sole active section_exit_A under Plans/.pipeline/work_items/*/ (non-archive).",
-    "No B1/B2/B3 intake path in user message, section_exit_A, route_state.json, or meta.json."
+  "inputs_read": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json"
   ]
 }

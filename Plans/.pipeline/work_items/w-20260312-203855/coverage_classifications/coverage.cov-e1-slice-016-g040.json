@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-016-g040",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-017"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-023-063",
+      "coverage_task_id": "cov-e1-slice-016-g040",
+      "source_shard_id": "shard-0087",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.12,
+      "evidence_spans": [
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded window contains excerpt-derived literals (backticks / path tokens / schema filenames) matching obligation semantics."
+        }
+      ],
+      "row_signals": [],
+      "notes": []
+    }
+  ]
+}

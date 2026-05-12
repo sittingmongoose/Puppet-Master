@@ -1,90 +1,117 @@
 {
-  "schema_id": "pm.stage_report.v3.2.2",
+  "schema_id": "pm.stage_report.v1",
   "prompt_id": "F0",
-  "prompt_version": "pm.f0.v3.2.2",
-  "timestamp_utc": "20260511T203200Z",
+  "prompt_version": "pm.f0.v3.2.3",
+  "timestamp_utc": "20260511T180000Z",
+  "work_id": "w-20260312-203855",
   "section_id": "F",
   "section_name": "Gaps_Routing_Doc_Discovery",
-  "work_id": "w-20260312-203855",
   "status": "complete",
   "execution_type": "mechanical_tool_operation",
-  "execution_type_basis": "Section entry/handoff only (v3.2.2 local classification); deterministic existence, sha256 verification, and bounded JSON row-count check on transfer_coverage.json. No semantic reading of full coverage_rows corpus.",
-  "stage_purpose": "Start Gaps/Routing from Section E handoff: derive work_id from section_exit_E, confirm transfer_coverage.json exists and matches exit fingerprints, gate entry to F1.",
-  "inputs_read": [
-    {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
-      "sha256": "9961d2b938a40bc5d353812050ca6bc7780136e00bd5161e053bca96e9cf0267",
-      "line_count": 90,
-      "read_mode": "full_metadata_json_bounded_header"
-    },
-    {
-      "path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-      "sha256": "da13808745b5b6943ad06349065a9bb43bbd38388752c672dcb4674bca396eed",
-      "line_count": 143443,
-      "read_mode": "existence_schema_header_sha256_stat_and_python_len_coverage_rows_only_no_full_row_semantic_scan"
-    }
-  ],
-  "inputs_not_read": {
-    "archive": [
-      "Plans/.pipeline/work_items/w-20260312-203855/archive/**"
-    ],
-    "legacy_quarantine": [],
-    "transfer_coverage_full_semantic_scan": "not_performed_mechanical_stage"
-  },
-  "deterministic_verification": {
-    "tool": "glob+test+sha256sum+wc+stat+python3_json_len",
-    "checks_performed": [
-      "Glob section_exit_E.json under Plans/.pipeline/work_items/*/; active handoff path excludes archive/",
-      "section_exit_E.json present; status=complete; work_id=w-20260312-203855",
-      "section_exit_E.next_preferred_prompt == F0",
-      "section_exit_E.gaps_routing_active_source_for_section_f equals Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
-      "transfer_coverage.json present (test -f)",
-      "sha256sum(transfer_coverage.json) == section_exit_E.transfer_coverage_sha256",
-      "python3 len(transfer_coverage['coverage_rows']) == section_exit_E.coverage_row_total (3870)",
-      "transfer_coverage.json top-level work_id == w-20260312-203855",
-      "section_exit_E.final_gate.passed == true including transfer_coverage_final_gate_passed"
-    ],
-    "checks_passed": 9,
-    "checks_failed": 0,
-    "transfer_coverage_stat_bytes": 4930968,
-    "transfer_coverage_active_for_section_f": true
-  },
-  "work_id_derivation": {
-    "method": "section_exit_E.json work_id field (active non-archive artifact)",
-    "section_exit_E_present": true,
-    "section_exit_E_candidates_in_pipeline_glob": 2,
-    "section_exit_E_selected_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
-    "section_exit_E_archive_ignored_for_handoff": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260507T150603Z/section_exit_E.json",
-    "conflict_detected": false,
-    "selected_work_id": "w-20260312-203855"
-  },
+  "execution_type_recorded_per_local_classification_override": true,
+  "execution_type_basis": "Section entry/handoff only (pm.f0.v3.2.3): derive work_id from section_exit_E; confirm transfer_coverage.json exists and matches exit hashes/counts; no full semantic read of coverage_rows.",
+  "stage_purpose": "Start Gaps/Routing/Doc Discovery from Section E handoff; confirm transfer_coverage is the active Section F input.",
   "subagents": {
     "used": false,
     "required": false,
-    "required_basis": "execution_type=mechanical_tool_operation; deterministic file and hash checks only.",
-    "fanout_proof_status": "not_applicable_mechanical_tool_operation"
+    "required_basis": "execution_type=mechanical_tool_operation; deterministic READ/WRITE and hash/line-count checks only."
   },
-  "live_doc_writes": [],
+  "fanout_proof_status": "not_applicable_mechanical_tool_operation",
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "distinct_subagent_invocations_total": 0,
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "subagent_runtime_kind": "local_tool_worker",
+  "actual_delegated_model_invocation": false,
+  "subagent_proof_artifact_paths": [],
+  "local_worker_outputs_used": [
+    "glob: section_exit_E.json under Plans/.pipeline/work_items",
+    "test -f: transfer_coverage.json",
+    "sha256sum: transfer_coverage.json",
+    "wc -l: transfer_coverage.json",
+    "sha256sum: section_exit_E.json",
+    "wc -l: section_exit_E.json"
+  ],
+  "main_agent_batching_detected": false,
+  "shell_or_python_worker_misclassified_as_subagent_detected": false,
+  "real_subagent_proof_status": "not_required_mechanical",
+  "deterministic_verification": {
+    "tool": "glob + test + sha256sum + wc",
+    "checks_performed": [
+      "Active section_exit_E.json at Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json (archive paths not used)",
+      "section_exit_E.status == complete; work_id == w-20260312-203855",
+      "section_exit_E.next_preferred_prompt == F0",
+      "section_exit_E.gaps_routing_active_source_for_section_f == Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "transfer_coverage.json exists at work root",
+      "sha256sum(transfer_coverage.json) == section_exit_E.transfer_coverage_sha256",
+      "wc -l(transfer_coverage.json) == section_exit_E.transfer_coverage_line_count",
+      "section_exit_E.final_gate.transfer_coverage_final_gate_passed == true"
+    ],
+    "checks_passed": 8,
+    "checks_failed": 0,
+    "section_exit_E_line_count": 97,
+    "transfer_coverage_line_count": 116054,
+    "transfer_coverage_sha256_observed": "4948c285d0d51cb9d506eb5f054fd6f03c48007c20268000e455bda1a1b5ba6c",
+    "transfer_coverage_sha256_expected_from_exit": "4948c285d0d51cb9d506eb5f054fd6f03c48007c20268000e455bda1a1b5ba6c",
+    "section_exit_E_sha256": "035842bd63b9cf57c6554cccd18db6f2eab7474ed327c23f25a930e21f7c2731",
+    "main_agent_did_not_semantically_read_full_transfer_coverage_rows": true,
+    "transfer_coverage_active": true
+  },
+  "inputs_read": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json"
+  ],
+  "inputs_read_metadata": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
+      "read_mode": "full_json_structural",
+      "line_count": 97
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260312-203855/transfer_coverage.json",
+      "read_mode": "existence_sha256_wc_line_count_plus_bounded_head_schema_fields_only",
+      "line_count": 116054
+    }
+  ],
+  "work_id_derivation": {
+    "method": "section_exit_E.json work_id field on active non-archive artifact",
+    "section_exit_E_selected_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_E.json",
+    "section_exit_e_glob_total_matches_under_work_items": 3,
+    "section_exit_e_active_non_archive_count": 1,
+    "conflict_detected": false,
+    "selected_work_id": "w-20260312-203855"
+  },
   "artifacts_written": [
     "Plans/.pipeline/work_items/w-20260312-203855/section_entry_F_report.json",
     "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F0.json"
   ],
+  "live_doc_writes": [],
   "final_gate": {
-    "name": "transfer_coverage_active_for_section_f_entry",
+    "name": "transfer_coverage_active",
     "result": "pass",
     "checks": [
       "section_exit_E.json present and complete for work_id w-20260312-203855",
-      "transfer_coverage.json present at path declared in section_exit_E and gaps_routing_active_source_for_section_f",
-      "transfer_coverage.json sha256 matches section_exit_E.transfer_coverage_sha256",
-      "coverage_rows row count matches section_exit_E.coverage_row_total",
-      "transfer_coverage is the active Section F handoff artifact per section exit (not superseded by conflicting work_id in file)"
+      "transfer_coverage.json present at path declared as gaps_routing_active_source_for_section_f",
+      "sha256 of transfer_coverage.json matches section_exit_E.transfer_coverage_sha256",
+      "line count of transfer_coverage.json matches section_exit_E.transfer_coverage_line_count",
+      "section_exit_E.final_gate.transfer_coverage_final_gate_passed is true (active handoff per E4)"
     ]
   },
   "blockers": [],
-  "next_prompt_request": "Paste prompt F1 — Open Gaps Worklist Builder v3.2.2.",
+  "summary": "F0 mechanical Gaps/Routing entry: work_id w-20260312-203855 from active section_exit_E; transfer_coverage.json verified by hash and line count; designated active Section F source with E4 final gate pass.",
+  "next_prompt_request": "Paste prompt F1 — Open Gaps Worklist Builder v3.2.3.",
   "notes": [
-    "execution_type recorded per v3.2.2 stage classification rule.",
-    "fanout_proof_status not_applicable_mechanical_tool_operation; wave-artifact fan-out proof fields omitted as subagents not required.",
-    "Second glob match for section_exit_E.json is under archive/; handoff used only the active work_items/w-20260312-203855/section_exit_E.json per READ scope."
+    "fanout_proof_status not_applicable_mechanical_tool_operation; wave fan-out proof omitted because subagents not required.",
+    "real_subagent_proof_status not_required_mechanical; subagent_runtime_kind local_tool_worker reflects deterministic tooling only (not delegated model subagents)."
   ]
 }

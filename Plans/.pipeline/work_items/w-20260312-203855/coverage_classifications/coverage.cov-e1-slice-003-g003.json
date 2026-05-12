@@ -1,0 +1,1033 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-003-g003",
+  "obligation_record_count": 25,
+  "source_classification_slices": [
+    "e2-class-003"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-005-026",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 94,
+          "line_end": 94,
+          "quote": "- canonical names/titles"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000479"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2733,
+            "end_line": 2742
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-027",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 4618,
+          "line_end": 4618,
+          "quote": "- Good result row fields:"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000482"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2745,
+            "end_line": 2756
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-028",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 3101,
+          "line_end": 3101,
+          "quote": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000482"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2745,
+            "end_line": 2756
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-029",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 421,
+          "line_end": 421,
+          "quote": "- current canonical fields cover provider/model/auth/account identity"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000485"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2759,
+            "end_line": 2762
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-030",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 421,
+          "line_end": 421,
+          "quote": "- current canonical fields cover provider/model/auth/account identity"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000485"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2759,
+            "end_line": 2762
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-031",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 531,
+          "line_end": 531,
+          "quote": "### Fidelity recovery cov-027: Concern routing and object-first search behavior"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000485"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2759,
+            "end_line": 2762
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-032",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1271,
+          "line_end": 1271,
+          "quote": "| Search | Tantivy | Full-text search index over seglog projections |"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000485"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2759,
+            "end_line": 2762
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-033",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 157,
+          "line_end": 157,
+          "quote": "- Define a canonical Orchestrator search result contract with:"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000488"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2765,
+            "end_line": 2777
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-034",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 710,
+          "line_end": 710,
+          "quote": "- Exact required item: Persist orchestrator:progress layout separately from Dashboard and Usage"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000488"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2765,
+            "end_line": 2777
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-035",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 483,
+          "line_end": 483,
+          "quote": "- Reuse the same routing contract for:"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000488"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2765,
+            "end_line": 2777
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-036",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1343,
+          "line_end": 1343,
+          "quote": "- record = canonical structured object in Ledger/export/search/routing"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000488"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2765,
+            "end_line": 2777
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-037",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 158,
+          "line_end": 158,
+          "quote": "- Search should help the user find the right object, not force them to know which tab owns it first."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000491"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2780,
+            "end_line": 2782
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-038",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "ux_requirement",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 159,
+          "line_end": 159,
+          "quote": "- A narrow Source Control panel reinforces that richer cross-object search belongs more naturally in Orchestrator / command-palette flows than in side-panel SCM UI."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000491"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2780,
+            "end_line": 2782
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-039",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "constraint",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 574,
+          "line_end": 574,
+          "quote": "- Historical results must preserve run context clearly so search does not create silent run-focus jumps."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000491"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2780,
+            "end_line": 2782
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-040",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 1,
+          "quote": "# Storage plan (seglog, redb, Tantivy, projectors)"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000496"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2787,
+            "end_line": 2791
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-041",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 1,
+          "quote": "# Contracts V0 (Canonical)"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000496"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2787,
+            "end_line": 2791
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-042",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 1,
+          "line_end": 1,
+          "quote": "# Run Graph View (Node Graph Display) -- Specification"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000496"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2787,
+            "end_line": 2791
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-043",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 1,
+          "quote": "# Orchestrator Page -- Single-Page 6-Tab Specification"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000496"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2787,
+            "end_line": 2791
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-044",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "ux_requirement",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 1,
+          "quote": "# Puppet Master GUI Specification -- Slint Rewrite"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000496"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2787,
+            "end_line": 2791
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-045",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 10,
+          "line_end": 10,
+          "quote": "- runtime/model precedence"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000499"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2794,
+            "end_line": 2800
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-046",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 484,
+          "line_end": 484,
+          "quote": "- Attempts have a clearer historical contract than other major record families."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0014"
+        ],
+        "source_block_ids": [
+          "lblock-000499"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0014",
+            "start_line": 2794,
+            "end_line": 2800
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-047",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "line_start": 108,
+          "line_end": 108,
+          "quote": "- higher-level objects like promotions, concerns, graph patches, recovery records, and lane/worktree lifecycle states are not yet using one shared semantic vocabulary"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000500"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2801,
+            "end_line": 2810
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-048",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "acceptance_criterion",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1918,
+          "line_end": 1918,
+          "quote": "- The system currently has at least three different concepts that the UI must not blur:"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000500"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2801,
+            "end_line": 2810
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-049",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 195,
+          "line_end": 195,
+          "quote": "- These should not be treated as canonical archival formats."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Match from substring/backtick token with clause substring/token overlap vs live line; verify surrounding normative text."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000500"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2801,
+            "end_line": 2810
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-005-050",
+      "coverage_task_id": "cov-e1-slice-003-g003",
+      "obligation_category": "recommendation",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 4368,
+          "line_end": 4368,
+          "quote": "- separate `time status`, `replacement status`, and `validity status`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000503"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2813,
+            "end_line": 2829
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Low after bounded window match",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    }
+  ]
+}

@@ -1,0 +1,1507 @@
+{
+  "schema_id": "pm.coverage_worklist_slice_proposal.v3.2.3",
+  "slice_id": "slice-002",
+  "subagent_task_id": "e1-slice-002",
+  "work_id": "w-20260312-203855",
+  "coverage_tasks": [
+    {
+      "coverage_task_id": "ct-slice002-001",
+      "doc_resolution_status": "shard_only_pending_live_path_binding",
+      "source_shard_id": "shard-0009",
+      "grouping_key": "d2-slice-003|shard:shard-0009|live_paths:0",
+      "obligation_ids": [
+        "obl-d2s003-020",
+        "obl-d2s003-021",
+        "obl-d2s003-022",
+        "obl-d2s003-023",
+        "obl-d2s003-024",
+        "obl-d2s003-025",
+        "obl-d2s003-030",
+        "obl-d2s003-033",
+        "obl-d2s003-037",
+        "obl-d2s003-042",
+        "obl-d2s003-044",
+        "obl-d2s003-048"
+      ],
+      "counts": {
+        "obligation_count": 12,
+        "obligation_category_counts": {
+          "directive": 6,
+          "architecture_note": 6
+        },
+        "live_doc_targets_path_count": 0,
+        "live_doc_windows_count": 0
+      },
+      "live_doc_targets_union": [],
+      "live_doc_windows": [],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0009",
+          "start_line": 1695,
+          "end_line": 1711,
+          "source_block_ids": [
+            "lblock-000219"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760,
+          "source_block_ids": [
+            "lblock-000225"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778,
+          "source_block_ids": [
+            "lblock-000229"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800,
+          "source_block_ids": [
+            "lblock-000233"
+          ],
+          "source_slice_id": "d2-slice-003"
+        }
+      ],
+      "cross_target_notes": [
+        "No filter-passing Plans/** paths in exact_paths_mentioned; bind shard citations to authoritative live docs during Section E."
+      ]
+    },
+    {
+      "coverage_task_id": "ct-slice002-002",
+      "doc_resolution_status": "mixed_shard_and_live_paths",
+      "source_shard_id": "shard-0009",
+      "grouping_key": "d2-slice-003|shard:shard-0009|live_paths:29",
+      "obligation_ids": [
+        "obl-d2s003-026",
+        "obl-d2s003-027",
+        "obl-d2s003-028",
+        "obl-d2s003-029",
+        "obl-d2s003-031",
+        "obl-d2s003-032",
+        "obl-d2s003-034",
+        "obl-d2s003-035",
+        "obl-d2s003-036",
+        "obl-d2s003-038",
+        "obl-d2s003-039",
+        "obl-d2s003-040",
+        "obl-d2s003-041",
+        "obl-d2s003-043",
+        "obl-d2s003-045",
+        "obl-d2s003-046",
+        "obl-d2s003-047"
+      ],
+      "counts": {
+        "obligation_count": 17,
+        "obligation_category_counts": {
+          "architecture_note": 17
+        },
+        "live_doc_targets_path_count": 29,
+        "live_doc_windows_count": 29
+      },
+      "live_doc_targets_union": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Personas.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Progression_Gates.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/evidence.schema.json",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/gui_automation_manifest.schema.json",
+          "start_line": 1,
+          "end_line": 87,
+          "line_count": 87,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/plan_graph.schema.json",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/project_plan_graph_index.schema.json",
+          "start_line": 1,
+          "end_line": 98,
+          "line_count": 98,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/project_plan_node.schema.json",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/test_strategy.schema.json",
+          "start_line": 1,
+          "end_line": 47,
+          "line_count": 47,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0009",
+          "start_line": 1717,
+          "end_line": 1760,
+          "source_block_ids": [
+            "lblock-000225"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0009",
+          "start_line": 1764,
+          "end_line": 1778,
+          "source_block_ids": [
+            "lblock-000229"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0009",
+          "start_line": 1782,
+          "end_line": 1800,
+          "source_block_ids": [
+            "lblock-000233"
+          ],
+          "source_slice_id": "d2-slice-003"
+        }
+      ],
+      "cross_target_notes": [
+        "Mixed path coverage inside task: some obligations list live paths while others are shard-only."
+      ]
+    },
+    {
+      "coverage_task_id": "ct-slice002-003",
+      "doc_resolution_status": "mixed_shard_and_live_paths",
+      "source_shard_id": "shard-0010",
+      "grouping_key": "d2-slice-003|shard:shard-0010|live_paths:33",
+      "obligation_ids": [
+        "obl-d2s003-054",
+        "obl-d2s003-049",
+        "obl-d2s003-050",
+        "obl-d2s003-051",
+        "obl-d2s003-052",
+        "obl-d2s003-053",
+        "obl-d2s003-055",
+        "obl-d2s003-056",
+        "obl-d2s003-057",
+        "obl-d2s003-058",
+        "obl-d2s003-059",
+        "obl-d2s003-060",
+        "obl-d2s003-061",
+        "obl-d2s003-062"
+      ],
+      "counts": {
+        "obligation_count": 14,
+        "obligation_category_counts": {
+          "architecture_note": 13,
+          "directive": 1
+        },
+        "live_doc_targets_path_count": 33,
+        "live_doc_windows_count": 33
+      },
+      "live_doc_targets_union": [
+        "Plans/00-plans-index.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/MiscPlan.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/auto_decisions.schema.json",
+        "Plans/feature-list.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/newfeatures.md",
+        "Plans/newtools.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/sharding_config.json",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Containers_Registry_and_Unraid.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/OpenCode_Coverage_Matrix.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Personas.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Progression_Gates.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/auto_decisions.schema.json",
+          "start_line": 1,
+          "end_line": 66,
+          "line_count": 66,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/feature-list.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/newfeatures.md",
+          "start_line": 1,
+          "end_line": 118,
+          "line_count": 118,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/newtools.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/plan_graph.schema.json",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/project_plan_node.schema.json",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/sharding_config.json",
+          "start_line": 1,
+          "end_line": 31,
+          "line_count": 31,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1818,
+          "end_line": 1828,
+          "source_block_ids": [
+            "lblock-000241"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1804,
+          "end_line": 1814,
+          "source_block_ids": [
+            "lblock-000237"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1832,
+          "end_line": 1860,
+          "source_block_ids": [
+            "lblock-000245"
+          ],
+          "source_slice_id": "d2-slice-003"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1864,
+          "end_line": 1890,
+          "source_block_ids": [
+            "lblock-000249"
+          ],
+          "source_slice_id": "d2-slice-003"
+        }
+      ],
+      "cross_target_notes": [
+        "Mixed path coverage inside task: some obligations list live paths while others are shard-only."
+      ]
+    },
+    {
+      "coverage_task_id": "ct-slice002-004",
+      "doc_resolution_status": "mixed_shard_and_live_paths",
+      "source_shard_id": "shard-0010",
+      "grouping_key": "d2-slice-004|shard:shard-0010|live_paths:8",
+      "obligation_ids": [
+        "obl-d2-004-001",
+        "obl-d2-004-002",
+        "obl-d2-004-003",
+        "obl-d2-004-004",
+        "obl-d2-004-005",
+        "obl-d2-004-006",
+        "obl-d2-004-007"
+      ],
+      "counts": {
+        "obligation_count": 7,
+        "obligation_category_counts": {
+          "directive": 2,
+          "architecture_note": 5
+        },
+        "live_doc_targets_path_count": 8,
+        "live_doc_windows_count": 8
+      },
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/MiscPlan.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1915,
+          "end_line": 1921,
+          "source_block_ids": [
+            "lblock-000258"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1924,
+          "end_line": 1940,
+          "source_block_ids": [
+            "lblock-000261"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1943,
+          "end_line": 1959,
+          "source_block_ids": [
+            "lblock-000264"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1962,
+          "end_line": 1972,
+          "source_block_ids": [
+            "lblock-000267"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1975,
+          "end_line": 1991,
+          "source_block_ids": [
+            "lblock-000270"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 1994,
+          "end_line": 1995,
+          "source_block_ids": [
+            "lblock-000273"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0010",
+          "start_line": 2000,
+          "end_line": 2000,
+          "source_block_ids": [
+            "lblock-000278"
+          ],
+          "source_slice_id": "d2-slice-004"
+        }
+      ],
+      "cross_target_notes": [
+        "Mixed path coverage inside task: some obligations list live paths while others are shard-only."
+      ]
+    },
+    {
+      "coverage_task_id": "ct-slice002-005",
+      "doc_resolution_status": "mixed_shard_and_live_paths",
+      "source_shard_id": "shard-0011",
+      "grouping_key": "d2-slice-004|shard:shard-0011|live_paths:19",
+      "obligation_ids": [
+        "obl-d2-004-008",
+        "obl-d2-004-009",
+        "obl-d2-004-010",
+        "obl-d2-004-011",
+        "obl-d2-004-012",
+        "obl-d2-004-013",
+        "obl-d2-004-014",
+        "obl-d2-004-015",
+        "obl-d2-004-016",
+        "obl-d2-004-017",
+        "obl-d2-004-018",
+        "obl-d2-004-019",
+        "obl-d2-004-020",
+        "obl-d2-004-021",
+        "obl-d2-004-022",
+        "obl-d2-004-023"
+      ],
+      "counts": {
+        "obligation_count": 16,
+        "obligation_category_counts": {
+          "architecture_note": 9,
+          "directive": 7
+        },
+        "live_doc_targets_path_count": 19,
+        "live_doc_windows_count": 19
+      },
+      "live_doc_targets_union": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/MiscPlan.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/MiscPlan.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Personas.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Provider_OpenCode.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2001,
+          "end_line": 2007,
+          "source_block_ids": [
+            "lblock-000279"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2010,
+          "end_line": 2027,
+          "source_block_ids": [
+            "lblock-000282"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2030,
+          "end_line": 2039,
+          "source_block_ids": [
+            "lblock-000285"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2042,
+          "end_line": 2046,
+          "source_block_ids": [
+            "lblock-000288"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2049,
+          "end_line": 2055,
+          "source_block_ids": [
+            "lblock-000291"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2058,
+          "end_line": 2062,
+          "source_block_ids": [
+            "lblock-000294"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2067,
+          "end_line": 2074,
+          "source_block_ids": [
+            "lblock-000299"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2077,
+          "end_line": 2094,
+          "source_block_ids": [
+            "lblock-000302"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2097,
+          "end_line": 2106,
+          "source_block_ids": [
+            "lblock-000305"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2109,
+          "end_line": 2113,
+          "source_block_ids": [
+            "lblock-000308"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2116,
+          "end_line": 2123,
+          "source_block_ids": [
+            "lblock-000311"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2126,
+          "end_line": 2151,
+          "source_block_ids": [
+            "lblock-000314"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2154,
+          "end_line": 2167,
+          "source_block_ids": [
+            "lblock-000317"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2170,
+          "end_line": 2181,
+          "source_block_ids": [
+            "lblock-000320"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2184,
+          "end_line": 2193,
+          "source_block_ids": [
+            "lblock-000323"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0011",
+          "start_line": 2196,
+          "end_line": 2200,
+          "source_block_ids": [
+            "lblock-000326"
+          ],
+          "source_slice_id": "d2-slice-004"
+        }
+      ],
+      "cross_target_notes": [
+        "Mixed path coverage inside task: some obligations list live paths while others are shard-only."
+      ]
+    },
+    {
+      "coverage_task_id": "ct-slice002-006",
+      "doc_resolution_status": "mixed_shard_and_live_paths",
+      "source_shard_id": "shard-0012",
+      "grouping_key": "d2-slice-004|shard:shard-0012|live_paths:5",
+      "obligation_ids": [
+        "obl-d2-004-024",
+        "obl-d2-004-025",
+        "obl-d2-004-026",
+        "obl-d2-004-027",
+        "obl-d2-004-028",
+        "obl-d2-004-029",
+        "obl-d2-004-030",
+        "obl-d2-004-031",
+        "obl-d2-004-032",
+        "obl-d2-004-033",
+        "obl-d2-004-034",
+        "obl-d2-004-035",
+        "obl-d2-004-036",
+        "obl-d2-004-037",
+        "obl-d2-004-038",
+        "obl-d2-004-039"
+      ],
+      "counts": {
+        "obligation_count": 16,
+        "obligation_category_counts": {
+          "directive": 9,
+          "architecture_note": 7
+        },
+        "live_doc_targets_path_count": 5,
+        "live_doc_windows_count": 5
+      },
+      "live_doc_targets_union": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "live_doc_windows": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "start_line": 1,
+          "end_line": 200,
+          "line_count": 200,
+          "rationale": "No excerpt anchor matched in live doc; bounded head window for manual Section E review."
+        }
+      ],
+      "preserved_candidate_hints": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2201,
+          "end_line": 2203,
+          "source_block_ids": [
+            "lblock-000327"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2208,
+          "end_line": 2208,
+          "source_block_ids": [
+            "lblock-000332"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2211,
+          "end_line": 2215,
+          "source_block_ids": [
+            "lblock-000335"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2218,
+          "end_line": 2228,
+          "source_block_ids": [
+            "lblock-000338"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2231,
+          "end_line": 2232,
+          "source_block_ids": [
+            "lblock-000341"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2235,
+          "end_line": 2243,
+          "source_block_ids": [
+            "lblock-000344"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2248,
+          "end_line": 2248,
+          "source_block_ids": [
+            "lblock-000349"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2251,
+          "end_line": 2260,
+          "source_block_ids": [
+            "lblock-000352"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2265,
+          "end_line": 2268,
+          "source_block_ids": [
+            "lblock-000357"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2271,
+          "end_line": 2284,
+          "source_block_ids": [
+            "lblock-000360"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2287,
+          "end_line": 2300,
+          "source_block_ids": [
+            "lblock-000363"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2303,
+          "end_line": 2318,
+          "source_block_ids": [
+            "lblock-000366"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2321,
+          "end_line": 2334,
+          "source_block_ids": [
+            "lblock-000369"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2337,
+          "end_line": 2344,
+          "source_block_ids": [
+            "lblock-000372"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2347,
+          "end_line": 2363,
+          "source_block_ids": [
+            "lblock-000375"
+          ],
+          "source_slice_id": "d2-slice-004"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0012",
+          "start_line": 2366,
+          "end_line": 2375,
+          "source_block_ids": [
+            "lblock-000378"
+          ],
+          "source_slice_id": "d2-slice-004"
+        }
+      ],
+      "cross_target_notes": [
+        "Mixed path coverage inside task: some obligations list live paths while others are shard-only."
+      ]
+    }
+  ],
+  "excluded_obligations": [],
+  "slice_summary": {
+    "slice_obligation_input_count": 82,
+    "coverage_task_count": 6,
+    "assigned_obligation_count": 82,
+    "excluded_obligation_count": 0,
+    "max_obligations_per_task_budget": 25,
+    "budget_compliance_max": 25,
+    "accounting_union_equals_slice_input": true,
+    "accounting_no_duplicates": true,
+    "accounting_notes": "Union of coverage_tasks[].obligation_ids equals slice obligation_ids; excluded_obligations empty; each obligation appears once."
+  }
+}

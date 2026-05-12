@@ -1,0 +1,519 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-004-g004",
+  "obligation_record_count": 12,
+  "source_classification_slices": [
+    "e2-class-005"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-006-057",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 174,
+          "line_end": 174,
+          "quote": "- contextual help can simplify wording, but must not mutate the underlying semantics"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `semantics` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000835"
+        ],
+        "source_slice_id": "d2-slice-006",
+        "source_line_ranges": [
+          {
+            "start_line": 4110,
+            "end_line": 4119
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-006-058",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 173,
+          "line_end": 173,
+          "quote": "- exact records first, but should still offer concept help links for unfamiliar states/actions",
+          "rationale": "exact_source_excerpt (or leading line) matched within an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000838"
+        ],
+        "source_slice_id": "d2-slice-006",
+        "source_line_ranges": [
+          {
+            "start_line": 4122,
+            "end_line": 4129
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.1,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-006-059",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 42,
+          "line_end": 42,
+          "quote": "- Glossary = canonical short definitions",
+          "rationale": "exact_source_excerpt (or leading line) matched within an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000841"
+        ],
+        "source_slice_id": "d2-slice-006",
+        "source_line_ranges": [
+          {
+            "start_line": 4132,
+            "end_line": 4135
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.1,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-006-060",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "gap_acknowledgment",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 22,
+          "line_end": 22,
+          "quote": "- Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `contract` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000844"
+        ],
+        "source_slice_id": "d2-slice-006",
+        "source_line_ranges": [
+          {
+            "start_line": 4138,
+            "end_line": 4140
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-006-061",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 43,
+          "line_end": 43,
+          "quote": "- Keep canonical term names stable across Expert and ELI5.",
+          "rationale": "exact_source_excerpt (or leading line) matched within an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000847"
+        ],
+        "source_slice_id": "d2-slice-006",
+        "source_line_ranges": [
+          {
+            "start_line": 4143,
+            "end_line": 4146
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.1,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-006-062",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "constraint",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 50,
+          "line_end": 50,
+          "quote": "- canonical concept definition / glossary entry"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `concept` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000850"
+        ],
+        "source_slice_id": "d2-slice-006",
+        "source_line_ranges": [
+          {
+            "start_line": 4149,
+            "end_line": 4151
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-04"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-001",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 22,
+          "line_end": 22,
+          "quote": "- Add node/package/seam/lane/attempt/effective_identity fields to contracts and storage"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `contract` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000858"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4163,
+            "end_line": 4178
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-002",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "design_choice",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 52,
+          "line_end": 52,
+          "quote": "- `attention center` exists in the glossary, but there is no concrete payload/schema for attention-center items."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `attention` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000861"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4181,
+            "end_line": 4192
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-003",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "requirement",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 7,
+          "line_end": 7,
+          "quote": "- Required structural headings for this packet target:"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `required` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0021"
+        ],
+        "source_block_ids": [
+          "lblock-000864"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4195,
+            "end_line": 4200
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-004",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "directive",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 52,
+          "line_end": 52,
+          "quote": "- `attention center` exists in the glossary, but there is no concrete payload/schema for attention-center items."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `attention` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0022"
+        ],
+        "source_block_ids": [
+          "lblock-000865"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4201,
+            "end_line": 4205
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-005",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "requirement",
+      "classification": "partial",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "line_start": 52,
+          "line_end": 52,
+          "quote": "- `attention center` exists in the glossary, but there is no concrete payload/schema for attention-center items."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [
+        "Related token `Attention` found in bounded window; full shard excerpt phrasing not matched verbatim in union of live_doc_windows for this task."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0022"
+        ],
+        "source_block_ids": [
+          "lblock-000866"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4206,
+            "end_line": 4207
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-006",
+      "coverage_task_id": "cov-e1-slice-004-g004",
+      "obligation_category": "directive",
+      "classification": "missing",
+      "evidence_spans": [],
+      "missing_details": [
+        "No excerpt or obligation-text token hit in bounded live_doc_windows for targets: Plans/Glossary.md."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0022"
+        ],
+        "source_block_ids": [
+          "lblock-000867"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4208,
+            "end_line": 4208
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-05"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-004-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "uncertainty": 0.45,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    }
+  ]
+}

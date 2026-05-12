@@ -1,17 +1,20 @@
 {
-  "schema_id": "pm.route_state.v3.2.2",
-  "prompt_version": "pm.a3.v3.2.2",
-  "timestamp_utc": "20260511T163218Z",
+  "schema_id": "pm.route_state.v1",
+  "prompt_id": "A3",
+  "prompt_version": "pm.a3.v3.2.3",
+  "timestamp_utc": "20260511T210241Z",
   "work_id": "w-20260312-203855",
   "run_mode": "fresh_restart",
-  "run_mode_basis": "artifact_sanitizer_report_v3_2_2_post_fresh_restart_sanitization",
+  "run_mode_source": "artifact_sanitizer_report.json present; current_state post-A2 fresh run",
   "current_section": "A",
-  "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855",
-  "active_artifact_root": "Plans/.pipeline/work_items/w-20260312-203855/active",
-  "archive_root": "Plans/.pipeline/work_items/w-20260312-203855/archive",
-  "sanitizer_latest_archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260511T163023Z",
-  "preserved_source_inputs": [
+  "active_artifact_root": "Plans/.pipeline/work_items/w-20260312-203855/",
+  "archive_root": "Plans/.pipeline/work_items/w-20260312-203855/archive/",
+  "latest_sanitizer_archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260511T210132Z",
+  "artifact_sanitizer_report_path": "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json",
+  "preserved_inputs": [
     "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
   ],
-  "next_prompt_request": "A4 — Section Exit: Run Control"
+  "next_prompt_id": "A4",
+  "next_prompt_request": "A4 — Section Exit: Run Control v3.2.3",
+  "next_prompt_name": "Section Exit: Run Control"
 }

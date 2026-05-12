@@ -1,0 +1,1509 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-005-g002",
+  "obligation_record_count": 17,
+  "source_classification_slices": [
+    "e2-class-005"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-slice-007-024",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000924"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4401,
+            "end_line": 4404
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-09"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-025",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000927"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4407,
+            "end_line": 4409
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-09"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-026",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000930"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4412,
+            "end_line": 4415
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-09"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-027",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000933"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4418,
+            "end_line": 4420
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-09"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-028",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000941"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4431,
+            "end_line": 4448
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-10"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-029",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000944"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4451,
+            "end_line": 4464
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-10"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-030",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000947"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4467,
+            "end_line": 4489
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-10"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-031",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000950"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4492,
+            "end_line": 4499
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-10"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-032",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000953"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4502,
+            "end_line": 4509
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-11"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-033",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000956"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4512,
+            "end_line": 4517
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-11"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-034",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000959"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4520,
+            "end_line": 4527
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-11"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-035",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000962"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4530,
+            "end_line": 4534
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-11"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-036",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000965"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4537,
+            "end_line": 4539
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-11"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-037",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "context",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000973"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4551,
+            "end_line": 4563
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-12"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-038",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "design_choice",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000976"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4566,
+            "end_line": 4578
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-12"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-039",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000979"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4581,
+            "end_line": 4594
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-12"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-d2-slice-007-040",
+      "coverage_task_id": "cov-e1-slice-005-g002",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "source_hint_gap: coverage_task has doc_resolution_status unresolved_no_live_target and empty live_doc_windows; obligations carry no E1-resolved Plans/** targets for bounded verification.",
+        "preserved_candidate_hints record shard line citations only; not used as deterministic Plans evidence under E2 bounded window policy."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4401,
+          "end_line": 4404,
+          "source_block_ids": [
+            "lblock-000924"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4407,
+          "end_line": 4409,
+          "source_block_ids": [
+            "lblock-000927"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4412,
+          "end_line": 4415,
+          "source_block_ids": [
+            "lblock-000930"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4418,
+          "end_line": 4420,
+          "source_block_ids": [
+            "lblock-000933"
+          ],
+          "source_slice_id": "d2-slice-007"
+        },
+        {
+          "hint_kind": "shard_line_citation",
+          "source_shard_id": "shard-0023",
+          "start_line": 4431,
+          "end_line": 4448,
+          "source_block_ids": [
+            "lblock-000941"
+          ],
+          "source_slice_id": "d2-slice-007"
+        }
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0023"
+        ],
+        "source_block_ids": [
+          "lblock-000982"
+        ],
+        "source_slice_id": "d2-slice-007",
+        "source_line_ranges": [
+          {
+            "start_line": 4597,
+            "end_line": 4600
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T006-12"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_id": "cov-e1-slice-005-g002",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "uncertainty": 0.62,
+      "deterministic_local_evidence_used_only_as_candidate": true
+    }
+  ]
+}

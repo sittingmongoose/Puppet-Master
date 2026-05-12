@@ -1,0 +1,2094 @@
+{
+  "schema_id": "pm.coverage_classification_slice.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "slice_id": "e2-class-013",
+  "subagent_task_id": "e2-e2-class-013",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "source_lineage": {
+    "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+    "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json"
+  },
+  "summary": "e2-class-013: 100 obligations — present 31, partial 0, missing 0, needs_doc_discovery 69 (69 unresolved_no_live_target rows with source_hint_gap across six E1 tasks; 31 concrete_plans_targets rows with normalized excerpt anchors found inside bounded live_doc_windows).",
+  "slice_process_signals": [
+    {
+      "signal_type": "source_hint_gap_cluster",
+      "severity": "high",
+      "obligations_affected_count": 69,
+      "coverage_task_ids": [
+        "cov-e1-slice-012-g006",
+        "cov-e1-slice-012-g008",
+        "cov-e1-slice-012-g010",
+        "cov-e1-slice-012-g012",
+        "cov-e1-slice-013-g002",
+        "cov-e1-slice-013-g004"
+      ],
+      "rationale": "A large tranche (69/100) remains on E1 tasks with doc_resolution_status unresolved_no_live_target and empty live_doc_windows because obligations carry no filter-passing Plans/** paths; each row records an explicit source_hint_gap signal."
+    }
+  ],
+  "obligation_rows": [
+    {
+      "obligation_id": "obl-017-064",
+      "coverage_task_id": "cov-e1-slice-012-g006",
+      "source_shard_id": "shard-0063",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-065",
+      "coverage_task_id": "cov-e1-slice-012-g006",
+      "source_shard_id": "shard-0063",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-066",
+      "coverage_task_id": "cov-e1-slice-012-g006",
+      "source_shard_id": "shard-0063",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-068",
+      "coverage_task_id": "cov-e1-slice-012-g006",
+      "source_shard_id": "shard-0063",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-069",
+      "coverage_task_id": "cov-e1-slice-012-g006",
+      "source_shard_id": "shard-0063",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-072",
+      "coverage_task_id": "cov-e1-slice-012-g007",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-074",
+      "coverage_task_id": "cov-e1-slice-012-g007",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-078",
+      "coverage_task_id": "cov-e1-slice-012-g007",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-082",
+      "coverage_task_id": "cov-e1-slice-012-g007",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-004",
+      "coverage_task_id": "cov-e1-slice-012-g007",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-006",
+      "coverage_task_id": "cov-e1-slice-012-g007",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/BinaryLocator_Spec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-008",
+      "coverage_task_id": "cov-e1-slice-012-g007",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-070",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-071",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-073",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-075",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-076",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-077",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-079",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-080",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-081",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-001",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-002",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-003",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-005",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-007",
+      "coverage_task_id": "cov-e1-slice-012-g008",
+      "source_shard_id": "shard-0064",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-009",
+      "coverage_task_id": "cov-e1-slice-012-g009",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/DRY_Rules.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-011",
+      "coverage_task_id": "cov-e1-slice-012-g009",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-013",
+      "coverage_task_id": "cov-e1-slice-012-g009",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-017",
+      "coverage_task_id": "cov-e1-slice-012-g009",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-019",
+      "coverage_task_id": "cov-e1-slice-012-g009",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-023",
+      "coverage_task_id": "cov-e1-slice-012-g009",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-025",
+      "coverage_task_id": "cov-e1-slice-012-g009",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-010",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-012",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-014",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-015",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-016",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-018",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-020",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-021",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-022",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-024",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-026",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-027",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-028",
+      "coverage_task_id": "cov-e1-slice-012-g010",
+      "source_shard_id": "shard-0065",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-030",
+      "coverage_task_id": "cov-e1-slice-012-g011",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-032",
+      "coverage_task_id": "cov-e1-slice-012-g011",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-038",
+      "coverage_task_id": "cov-e1-slice-012-g011",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-040",
+      "coverage_task_id": "cov-e1-slice-012-g011",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-044",
+      "coverage_task_id": "cov-e1-slice-012-g011",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-046",
+      "coverage_task_id": "cov-e1-slice-012-g011",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-029",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-031",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-033",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-034",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-035",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-036",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-037",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-039",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-041",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-042",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-043",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-045",
+      "coverage_task_id": "cov-e1-slice-012-g012",
+      "source_shard_id": "shard-0066",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-047",
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-051",
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-053",
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-057",
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-061",
+      "coverage_task_id": "cov-e1-slice-013-g001",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-048",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-049",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-050",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-052",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-054",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-055",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-056",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-058",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-059",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-060",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-062",
+      "coverage_task_id": "cov-e1-slice-013-g002",
+      "source_shard_id": "shard-0067",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-065",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-069",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-073",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-003",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-007",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-012",
+      "coverage_task_id": "cov-e1-slice-013-g003",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths—non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-063",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-064",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-066",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-067",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-068",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-070",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-071",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-072",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-d2-slice-018-074",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-001",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-002",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-004",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-005",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    },
+    {
+      "obligation_id": "obl-019-006",
+      "coverage_task_id": "cov-e1-slice-013-g004",
+      "source_shard_id": "shard-0068",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_windows; obligation lists no filter-passing Plans/** paths, so E1 never materialized bounded windows for automated scoring."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds shard citations to concrete Plans/** targets (per worklist cross_target_notes pattern)."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-006-g015",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-007"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-009-027",
+      "coverage_task_id": "cov-e1-slice-006-g015",
+      "source_shard_id": "shard-0030",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.93,
+      "uncertainty": 0.07,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists; obligation is a single path bullet referencing that live doc."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file."
+      ]
+    }
+  ]
+}

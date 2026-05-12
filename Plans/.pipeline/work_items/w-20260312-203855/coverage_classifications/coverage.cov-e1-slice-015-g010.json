@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-015-g010",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-016"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-021-066",
+      "coverage_task_id": "cov-e1-slice-015-g010",
+      "source_shard_id": "shard-0079",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "present",
+      "best_evidence_score": 0.9,
+      "uncertainty": 0.1,
+      "evidence_spans": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Short structural obligation enumerates concrete Plans/** targets that all exist; bounded union covers those owners for follow-on prose review."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Lightweight path-cluster / owner-list row with no long enum anchors required."
+      ]
+    }
+  ]
+}

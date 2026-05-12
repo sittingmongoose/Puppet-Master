@@ -1,0 +1,428 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "ct-slice001-004",
+  "obligation_record_count": 18,
+  "source_classification_slices": [
+    "e2-class-001"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-002-0026",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:69:   - provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000130"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0027",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:30:   - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility.",
+        "Plans/Multi-Account.md:31:   - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.",
+        "Plans/Multi-Account.md:150:   - Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch.",
+        "Plans/Orchestrator_Page.md:54:   - `work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0007"
+        ],
+        "source_block_ids": [
+          "lblock-000134"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0028",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:95:   - Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than [retired-token-38]."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000138"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0029",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:62:   - Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Plans/FinalGUISpec.md:95:   - Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than [retired-token-38].",
+        "Plans/FinalGUISpec.md:96:   - Acceptance, evidence, coverage, GUI automation, and test schemas can represent nodes and checks, but not work package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity.",
+        "Plans/Multi-Account.md:110:   - Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000142"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0030",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:28:   - Decide which objects are persisted canonically (`package`, `seam`, `lane`, `promotion`, `review`, `resolution_thread`) and which are projections only."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000146"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0031",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:15:   - Orchestrator ownership boundaries",
+        "Plans/FinalGUISpec.md:35:   - Orchestrator ownership boundaries",
+        "Plans/FinalGUISpec.md:62:   - Define what Orchestrator is allowed to own: page layout and controls, view-model/projections, run control intents; exclude canonical runtime enums, event semantics, scheduler truth.",
+        "Plans/FinalGUISpec.md:64:   - Record explicit boundary between canonical runtime facts, orchestrator projections, and widget/page presentation."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/**"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000150"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0032",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Project_Output_Artifacts.md:91:   - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000154"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0033",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:95:   - Define Dashboard \u2192 Orchestrator \u2192 chat-thread routing using canonical runtime objects rather than [retired-token-38]."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000158"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0034",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:26:   - Normalize requested/effective account identity shapes"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000162"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0035",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:128:   - `GitHub_Integration.md` still lacks a strong requested/effective GitHub account display/routing contract across project/workspace surfaces"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000166"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0036",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:108:   - Usage/UI requests for auth-mode/effective-account filtering are already present in adjacent GUI docs even though usage contracts do not yet guarantee them.",
+        "Plans/Multi-Account.md:30:   - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility.",
+        "Plans/Multi-Account.md:31:   - likely issue: multi-account behavior exists in slices, but active/effective account switching is not carried through repo/project/worktree execution contracts.",
+        "Plans/Multi-Account.md:100:   - Many contracts have `run_id`, maybe `node_id`, but still lack `project_id`, `attempt_id`, `package_id`, `seam_id`, `lane_id`, `worktree_id`, `safe_point_id`, `promotion_class`, or requested/effective account fields."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000170"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0037",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Orchestrator_Page.md:76:   - Add package/seam/lane/worktree/account identity fields to canonical runtime/event/envelope contracts."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000174"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0038",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:113:   - Why it matters: provider/persona fields exist, but effective account switching and requested/effective execution identity are still mostly unmodeled."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000178"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0039",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:30:   - Specify package-based worktree lane pools, including lane ownership, pool sizing, contamination detection, safe-point restore behavior, and Source Control visibility."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000182"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0040",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/FinalGUISpec.md:74:   - which Orchestrator seam should lead the discussion: runtime ownership boundary, page/tab IA, blocked/remediation UX, lineage across graph/evidence/history/usage",
+        "Plans/Multi-Account.md:27:   - Normalize blocked_reason_code/allowed_action_ids and safe-point/restore-point/rollback terminology",
+        "Plans/Multi-Account.md:110:   - Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts.",
+        "Plans/Multi-Account.md:166:   - The missing requested-side concrete account field is now clearly blocking multiple downstream contracts, not just storage purity:"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/**"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000186"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0041",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/WorktreeGitImprovement.md:200:   - Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000190"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0042",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Multi-Account.md:173:   - there is still no canonical slot for actor kind, effective account, switch reason, lane/worktree identity, or pressure/trust context"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000194"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2-002-0043",
+      "coverage_task_id": "ct-slice001-004",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/storage-plan.md:75:   - approval identity and field-name drift (`allowed_actions` vs `allowed_action_ids`) still cut across recovery, replay, and storage."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0008"
+        ],
+        "source_block_ids": [
+          "lblock-000198"
+        ],
+        "source_slice_id": "d2-slice-002"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    }
+  ]
+}

@@ -1,0 +1,1027 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "ct-slice002-002",
+  "obligation_record_count": 17,
+  "source_classification_slices": [
+    "e2-class-002"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2s003-026",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-027",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "start_line": 159,
+          "end_line": 159,
+          "phrase_matched": "`plans/executor_protocol.md`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-028",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-029",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-031",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-032",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-034",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "start_line": 16,
+          "end_line": 16,
+          "phrase_matched": "`plans/prompt_pipeline.md`, `plans/personas.md`, `plans/provider_stream_mapping_external_reference_a2a.md`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-035",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-036",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Glossary.md",
+          "start_line": 27,
+          "end_line": 27,
+          "phrase_matched": "`plans/00-plans-index.md`, `plans/crosswalk.md`, `plans/glossary.md`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-038",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "start_line": 16,
+          "end_line": 16,
+          "phrase_matched": "`plans/orchestrator_page.md`, `plans/run_graph_view.md`, `plans/widget_system.md`, `plans/gui_rebuild_requirements_check"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-039",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "start_line": 16,
+          "end_line": 16,
+          "phrase_matched": "`plans/finalguispec.md`, `plans/assistant-chat-design.md`, `plans/chain-wizard-flexibility.md`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-040",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "start_line": 16,
+          "end_line": 16,
+          "phrase_matched": "`plans/ui_command_catalog.md`, `plans/wiring_matrix.md`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-041",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "start_line": 131,
+          "end_line": 131,
+          "phrase_matched": "`plans/github_integration.md`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-043",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "start_line": 56,
+          "end_line": 56,
+          "phrase_matched": "impacted contract/runtime/storage area: identity fields."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-045",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-046",
+      "obligation_category": "architecture_note",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "start_line": 91,
+          "end_line": 91,
+          "phrase_matched": "`plans/storage-plan.md`, `plans/project_output_artifacts.md`"
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.12,
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "coverage_task_id": "ct-slice002-002"
+    },
+    {
+      "obligation_id": "obl-d2s003-047",
+      "obligation_category": "architecture_note",
+      "classification": "partial",
+      "evidence_spans": [],
+      "missing_details": [],
+      "partial_details": [
+        "Live bounded windows exist (often head windows without excerpt anchors); could not confirm verbatim excerpt lines in the windows consulted."
+      ],
+      "candidate_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/evidence.schema.json",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/human-in-the-loop.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/project_plan_node.schema.json",
+        "Plans/storage-plan.md",
+        "Plans/test_strategy.schema.json"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_task_ids": [
+          "ct-slice002-002"
+        ],
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "doc_resolution_statuses": [
+          "mixed_shard_and_live_paths"
+        ]
+      },
+      "uncertainty": 0.34,
+      "deterministic_local_evidence_used_only_as_candidate": true,
+      "coverage_task_id": "ct-slice002-002"
+    }
+  ]
+}

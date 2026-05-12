@@ -1,0 +1,473 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-011-g006",
+  "obligation_record_count": 21,
+  "source_classification_slices": [
+    "e2-class-012"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-016-062",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 2401,
+          "line_end": 2800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 117)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-063",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-064",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 15)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-065",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-066",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 184)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-067",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 15)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-068",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 134)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-069",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-070",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 15)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-071",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 15)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-072",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-073",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 12)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-074",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 21)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-075",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "missing",
+      "best_evidence_score": 0.18,
+      "uncertainty": 0.38,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "bounded_live_doc_anchor_miss",
+          "detail": "Verbatim synthesis bullet appears in GitHub_Integration/shard-derived material but not inside this task's live_doc_targets_union windows under lightweight substring scan."
+        }
+      ],
+      "notes": [
+        "Requires either expanding union to owner packet carrying the reconciliation addendum or porting the sentence into a listed GUI/contract doc."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-076",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.92,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 120,
+          "rationale": "Named Plans artifact exists under live_doc_targets_union; obligation enumerates concrete paths\u2014non-empty file satisfies path-presence style directive."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Path-presence obligation satisfied by existing non-empty markdown file(s) in union."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-077",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 11)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-016-078",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 15)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-001",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 11)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-002",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 401,
+          "line_end": 800,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 37)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-003",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 1,
+          "line_end": 400,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 11)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    },
+    {
+      "obligation_id": "obl-017-004",
+      "coverage_task_id": "cov-e1-slice-011-g006",
+      "source_shard_id": "shard-0060",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "best_evidence_score": 0.86,
+      "uncertainty": 0.14,
+      "evidence_spans": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1601,
+          "line_end": 2000,
+          "rationale": "Bounded live_doc_window contains normalized anchor substring from obligation excerpt (matched segment length 35)."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Automated excerpt-to-window substring match succeeded within E1 materialized windows."
+      ]
+    }
+  ]
+}

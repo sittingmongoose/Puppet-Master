@@ -1,0 +1,471 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "ct-slice001-005",
+  "obligation_record_count": 19,
+  "source_classification_slices": [
+    "e2-class-001"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2s003-001",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:143: - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)",
+        "Plans/00-plans-index.md:199: - `assistant-chat-design.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `storage-plan.md`, `Runtime_Artifacts_Panel.md`, `newtools.md`, and `Wiring_Matrix.md` are reconciliation consumers for chat capture, prompt assembly, permissions, persistence, eviden",
+        "Plans/00-plans-index.md:232: | `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Canonical persistence and restore model for project identity, workspace tabs, windows, browser/preview state, terminal sessions, dev sessions, plan/TODO/question/activity state, usage pr",
+        "Plans/00-plans-index.md:245: | `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog `runtime_artifact.*`, redb `artifacts_index:v1:{project_id}`, cost_usage, Show in Ledger/Usage, browser recordings, and JSON schemas. Distinct from P"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000199"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-002",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:621: - `Multi-Account.md` owns account selection, provider-entry separation, requested/effective account fields, and switch lineage semantics"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000199"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-003",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:621: - `Multi-Account.md` owns account selection, provider-entry separation, requested/effective account fields, and switch lineage semantics"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-004",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/OpenCode_Coverage_Matrix.md:19:   - Phase/Task/Subtask/Iteration"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-005",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:53:   - Persona fallback is split between \u201cbare-context run\u201d and canonical fallback Persona."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-006",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:18:   - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Plans/00-plans-index.md:143: - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)",
+        "Plans/00-plans-index.md:245: | `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog `runtime_artifact.*`, redb `artifacts_index:v1:{project_id}`, cost_usage, Show in Ledger/Usage, browser recordings, and JSON schemas. Distinct from P",
+        "Plans/00-plans-index.md:258: | `Permissions_System.md` | Canonical permission system definitions | SSOT for permission actions (`allow`/`ask`/`deny`), multi-layer precedence (mode > session > Persona > project > global > defaults), PM-native Ask/Plan mode semantics, granular rules (wildca"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000203"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-007",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:54:   - 6. **Run/tier/subtask worktrees vs package-based lane pools**"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000207"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-008",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:113: Required reading order for the orchestrator rewrite canon-collapse is:",
+        "Plans/00-plans-index.md:126: - `Plans/Orchestrator_Page.md`",
+        "Plans/00-plans-index.md:215: - `Commands_System.md`, `Glossary.md`, `FileManager.md`, `human-in-the-loop.md`, `Architecture_Invariants.md`, `orchestrator-subagent-integration.md`, `interview-subagent-integration.md`, `Wiring_Matrix.md`, `rewrite-tie-in-memo.md`, and `MiscPlan.md` are requ",
+        "Plans/00-plans-index.md:224: | `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | Registry-driven Persona set (canonical list \u00a74: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including `explorer` and `requirements-qua"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000207"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-009",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:18:   - Extend Glossary.md, Crosswalk.md, Decision_Policy.md, and 00-plans-index.md with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity.",
+        "Plans/Executor_Protocol.md:179: - Exact acceptance check: The heading `### Fidelity recovery cov-160: Identity and blocked-policy transfer cluster` exists in `Plans/Executor_Protocol.md`.",
+        "Plans/Executor_Protocol.md:291:   - what likely new model pressure is: package overseer plus seam overseer split, requested/effective account fallback, promotion-aware provider/event records.",
+        "Plans/Run_Graph_View.md:30:   - `work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000207"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-010",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Containers_Registry_and_Unraid.md:100: - `Plans/Orchestrator_Page.md` remains canonical for orchestrator control widgets and UICommand IDs, but must reference this plan for container-publish and template-repo actions."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000211"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-011",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:802: Owner: `Plans/GitHub_Integration.md` + `Plans/WorktreeGitImprovement.md`."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000211"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-012",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Project_Output_Artifacts.md:83:   - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000211"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-013",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Executor_Protocol.md:354: If multiple nodes are ready simultaneously, Overseer MUST choose the lexicographically smallest `node_id`.",
+        "Plans/OpenCode_Coverage_Matrix.md:123: | 20 | **Plugins - discovery + load order** | \u00a77G.1 | `Plans/Plugins_System.md` #DISCOVERY, #LOAD-ORDER | - | **Covered** | Four-source priority, lexicographic tiebreak. |",
+        "Plans/UI_Command_Catalog.md:1089: - `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body",
+        "Plans/Widget_System.md:110:   - The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-014",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Crosswalk.md:738:   - still needs runtime-overlay terminology, identity linkage, and approval cache scoping for multi-actor execution",
+        "Plans/OpenCode_Coverage_Matrix.md:18:   - what old assumption is present: `Phase/Task/Subtask/Iteration`, tier-boundary audit flow, single Overseer plus fixed reviewer pattern.",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:39:   - A2A\u2019s duplicate attempt-continuity addenda and tier-boundary schema are signals that this seam needs consolidation plus version governance, not more scattered annotations.",
+        "Plans/Widget_System.md:110:   - The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Permissions_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-015",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Executor_Protocol.md:290:   - 3. **Single Overseer vs package overseer + seam overseer**"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-016",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/00-plans-index.md:64:   - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.",
+        "Plans/00-plans-index.md:65:   - Retired token #2 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.",
+        "Plans/00-plans-index.md:66:   - Retired token #3 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose.",
+        "Plans/00-plans-index.md:98:   - Retired token #1 is preserved exactly in packet metadata and must be omitted, replaced by canonical wording, or documented only as an explicitly deprecated legacy alias in live prose."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-017",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/UI_Command_Catalog.md:1276: No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-018",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Run_Graph_View.md:54:   - 6. **Run/tier/subtask worktrees vs package-based lane pools**"
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Phrase-level match within bounded windows; full obligation nuance not formally proven.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    },
+    {
+      "obligation_id": "obl-d2s003-019",
+      "coverage_task_id": "ct-slice001-005",
+      "classification": "present",
+      "evidence_spans": [
+        "Plans/Containers_Registry_and_Unraid.md:187:   - push policy (`manual` default; optional `after_build`)",
+        "Plans/Executor_Protocol.md:383: UI/orchestrator labels such as `waiting_approval`, `needs_review`, `cancelled`, or `complete_with_warnings` are **run-local overlays / CTA states**, not canonical node `status` values in this protocol. Such overlays MUST be persisted as separate events or proj",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:23:   - A review can create or update concerns; a blocked episode can reference a concern; a patch/recovery can obsolete or resolve a concern; but these should remain different record families.",
+        "Plans/Widget_System.md:110:   - The widget layout migration contract now has an exact persistence-rule contradiction."
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newtools.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0009"
+        ],
+        "source_block_ids": [
+          "lblock-000215"
+        ],
+        "source_slice_id": "d2-slice-003"
+      },
+      "uncertainty": "Strong multi-token overlap with bounded corpus; anchors were not excerpt-matched per worklist.",
+      "deterministic_local_evidence_used_only_as_candidate": false
+    }
+  ]
+}

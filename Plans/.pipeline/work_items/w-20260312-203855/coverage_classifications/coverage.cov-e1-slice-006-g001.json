@@ -1,0 +1,51 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-006-g001",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-006"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-008-024",
+      "coverage_task_id": "cov-e1-slice-006-g001",
+      "doc_resolution_status": "doc_discovery",
+      "obligation_category": "directive",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "Coverage task is doc_discovery and provides candidate names but no bounded live_doc_windows for this E2 slice."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "source_shard_ids": [
+          "shard-0026"
+        ],
+        "source_block_ids": [
+          "lblock-001146"
+        ],
+        "source_group_ids": [
+          "wg-d1-T007-06"
+        ],
+        "source_slice_id": "d2-slice-008",
+        "source_line_ranges": [
+          {
+            "start_line": 5190,
+            "end_line": 5193
+          }
+        ]
+      },
+      "uncertainty": "Candidate docs require a follow-up bounded binding pass before evidence can be scored.",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    }
+  ]
+}

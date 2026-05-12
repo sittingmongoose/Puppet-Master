@@ -1,0 +1,431 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-009-g008",
+  "obligation_record_count": 11,
+  "source_classification_slices": [
+    "e2-class-009"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-slice-013-001",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002116"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-01"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8801,
+            "end_line": 8812
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-003",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002122"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-01"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8825,
+            "end_line": 8832
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-004",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002125"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-01"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8835,
+            "end_line": 8844
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-005",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002128"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-01"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8847,
+            "end_line": 8849
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-007",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002136"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-02"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8869,
+            "end_line": 8885
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-009",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002142"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-02"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8906,
+            "end_line": 8911
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-010",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002145"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-02"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8914,
+            "end_line": 8920
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-011",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002148"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-02"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8923,
+            "end_line": 8927
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-013",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002156"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-03"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8946,
+            "end_line": 8965
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-015",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002162"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-03"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8986,
+            "end_line": 8990
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-016",
+      "coverage_task_id": "cov-e1-slice-009-g008",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "directive",
+      "missing_details": [
+        "Coverage task has zero live_doc_windows; E1 did not bind this obligation to any filter-passing Plans/** target for bounded evidence review."
+      ],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0045"
+        ],
+        "source_block_ids": [
+          "lblock-002165"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-03"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 8993,
+            "end_line": 8998
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g008",
+        "doc_resolution_status": "unresolved_no_live_target"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "uncertainty": "Pipeline binding gap; classification does not assert that the concept is absent from authored Plans docs."
+    }
+  ]
+}

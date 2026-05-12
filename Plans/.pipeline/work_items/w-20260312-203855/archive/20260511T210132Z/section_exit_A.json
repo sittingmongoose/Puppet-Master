@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.section_exit_A.v3.2.2",
+  "prompt_id": "A4",
+  "prompt_version": "pm.a4.v3.2.2",
+  "timestamp_utc": "20260511T163300Z",
+  "work_id": "w-20260312-203855",
+  "run_mode": "fresh_restart",
+  "current_section_completed": "A",
+  "next_section": "B",
+  "next_prompt_request": "B0 — Section Entry: Research / Audit Intake",
+  "next_prompt_version": "pm.b0.v3.2.2",
+  "work_item_root": "Plans/.pipeline/work_items/w-20260312-203855",
+  "active_artifact_root": "Plans/.pipeline/work_items/w-20260312-203855/active",
+  "archive_root": "Plans/.pipeline/work_items/w-20260312-203855/archive",
+  "route_state_path": "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+  "sanitizer_latest_archive_path": "Plans/.pipeline/work_items/w-20260312-203855/archive/20260511T163023Z",
+  "preserved_source_inputs": [
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md"
+  ],
+  "stage_report_A1_present": false,
+  "completed_section_a_prompts": [
+    {
+      "prompt_id": "A0",
+      "prompt_version": "pm.a0.v3.2.2",
+      "artifact_paths": [
+        "Plans/.pipeline/section_entry_A_report.json"
+      ]
+    },
+    {
+      "prompt_id": "A2",
+      "prompt_version": "pm.a2.v3.2.2",
+      "artifact_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json",
+        "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json"
+      ]
+    },
+    {
+      "prompt_id": "A3",
+      "prompt_version": "pm.a3.v3.2.2",
+      "artifact_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+        "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json"
+      ]
+    },
+    {
+      "prompt_id": "A4",
+      "prompt_version": "pm.a4.v3.2.2",
+      "artifact_paths": [
+        "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+        "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A4.json"
+      ]
+    }
+  ],
+  "active_outputs_at_handoff": [
+    "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+    "Plans/.pipeline/work_items/w-20260312-203855/route_state.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/artifact_sanitizer_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A2.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A3.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/stage_report.A4.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_A.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "Plans/.pipeline/section_entry_A_report.json"
+  ],
+  "notes": [
+    "Operator may paste B0 without re-entering work_id: derive from this file work_id field or route_state.json.",
+    "Directory active/ exists and is empty at handoff.",
+    "stage_report.A1.json was not present under the work item; Section A used A0 then A2–A4 for this fresh_restart chain."
+  ]
+}

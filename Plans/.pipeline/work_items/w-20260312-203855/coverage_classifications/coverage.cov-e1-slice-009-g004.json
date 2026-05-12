@@ -1,0 +1,233 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-009-g004",
+  "obligation_record_count": 5,
+  "source_classification_slices": [
+    "e2-class-009"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-slice-013-033",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0047"
+        ],
+        "source_block_ids": [
+          "lblock-002220"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-06"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9205,
+            "end_line": 9213
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 334,
+          "line_end": 350,
+          "quote": "- `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-037",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0047"
+        ],
+        "source_block_ids": [
+          "lblock-002234"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-07"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9251,
+            "end_line": 9262
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 16,
+          "line_end": 32,
+          "quote": "- `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-039",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0047"
+        ],
+        "source_block_ids": [
+          "lblock-002240"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-07"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9284,
+            "end_line": 9299
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "line_start": 37,
+          "line_end": 53,
+          "quote": "- `Plans/UI_Command_Catalog.md` + `Plans/Runtime_Artifacts_Panel.md`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-043",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0047"
+        ],
+        "source_block_ids": [
+          "lblock-002254"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-08"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9326,
+            "end_line": 9330
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 334,
+          "line_end": 350,
+          "quote": "- `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-045",
+      "coverage_task_id": "cov-e1-slice-009-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0047"
+        ],
+        "source_block_ids": [
+          "lblock-002260"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-08"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9370,
+            "end_line": 9378
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g004",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 334,
+          "line_end": 350,
+          "quote": "- `Plans/chain-wizard-flexibility.md`, `[retired-token-44]`",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    }
+  ]
+}

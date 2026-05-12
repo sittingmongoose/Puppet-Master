@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.b3_subagent_wave.v1",
+  "prompt_id": "B3",
+  "prompt_version": "pm.b3.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "wave_number": 1,
+  "timestamp_utc": "20260512T043803Z",
+  "required_subagent_tasks_total": 22,
+  "upstream_reported_issue_reference": "Plans/.pipeline/work_items/w-20260312-203855/stage_report.F3.json classifier_process_defect_rows_total",
+  "wave_tasks": [
+    {
+      "subagent_invocation_id": "e24d3e3d-804c-4f75-8979-f1a4649e4f39",
+      "subagent_task_id": "b3-t001",
+      "input_bounds": {
+        "artifact": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/input.b3-t001.json",
+        "gap_record_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "record_count": 25,
+        "max_records_budget": 25
+      },
+      "result_artifact_path": "Plans/.pipeline/work_items/w-20260312-203855/b3_issue_slices/result.b3-t001.json",
+      "status": "complete"
+    }
+  ],
+  "completed_task_ids": [
+    "b3-t001"
+  ],
+  "pending_task_ids": [
+    "b3-t002",
+    "b3-t003",
+    "b3-t004",
+    "b3-t005",
+    "b3-t006",
+    "b3-t007",
+    "b3-t008",
+    "b3-t009",
+    "b3-t010",
+    "b3-t011",
+    "b3-t012",
+    "b3-t013",
+    "b3-t014",
+    "b3-t015",
+    "b3-t016",
+    "b3-t017",
+    "b3-t018",
+    "b3-t019",
+    "b3-t020",
+    "b3-t021",
+    "b3-t022"
+  ],
+  "blocked_task_ids": [],
+  "wave2_launch_note": "Delegated Task batch b3-t002..b3-t007 failed: Cursor usage limit for faster subagent model responses; no invocation IDs produced for pending tasks."
+}

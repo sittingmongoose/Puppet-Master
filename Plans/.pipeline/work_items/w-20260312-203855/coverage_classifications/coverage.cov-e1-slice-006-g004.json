@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-006-g004",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-006"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-008-037",
+      "coverage_task_id": "cov-e1-slice-006-g004",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "classification": "present",
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 1,
+          "line_end": 120,
+          "quote": "Named Plans artifact exists and is in the bounded live_doc_targets_union."
+        }
+      ],
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "source_shard_ids": [
+          "shard-0027"
+        ],
+        "source_block_ids": [
+          "lblock-001189"
+        ],
+        "source_group_ids": [
+          "wg-d1-T007-09"
+        ],
+        "source_slice_id": "d2-slice-008",
+        "source_line_ranges": [
+          {
+            "start_line": 5327,
+            "end_line": 5332
+          }
+        ]
+      },
+      "uncertainty": 0.07,
+      "deterministic_local_evidence_used_only_as_candidate": false
+    }
+  ]
+}

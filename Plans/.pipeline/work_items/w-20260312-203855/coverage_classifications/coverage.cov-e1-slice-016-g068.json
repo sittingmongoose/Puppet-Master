@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-016-g068",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-018"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-s025-004",
+      "coverage_task_id": "cov-e1-slice-016-g068",
+      "source_shard_id": "shard-0091",
+      "doc_resolution_status": "unresolved_no_live_target",
+      "obligation_category": "constraint",
+      "classification": "needs_doc_discovery",
+      "best_evidence_score": 0.0,
+      "uncertainty": 0.62,
+      "evidence_spans": [],
+      "row_signals": [
+        {
+          "signal_type": "source_hint_gap",
+          "detail": "coverage_worklist task is unresolved_no_live_target with empty live_doc_targets_union and empty live_doc_windows; obligation text only has timestamp/stage metadata and no filter-passing Plans/** path."
+        }
+      ],
+      "notes": [
+        "Defer evidence spans until Section E binds this shard fragment to concrete Plans/** targets."
+      ]
+    }
+  ]
+}

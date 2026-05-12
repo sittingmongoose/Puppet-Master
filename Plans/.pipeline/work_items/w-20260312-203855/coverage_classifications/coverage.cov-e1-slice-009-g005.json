@@ -1,0 +1,189 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-009-g005",
+  "obligation_record_count": 4,
+  "source_classification_slices": [
+    "e2-class-009"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-slice-013-049",
+      "coverage_task_id": "cov-e1-slice-009-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0048"
+        ],
+        "source_block_ids": [
+          "lblock-002274"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-09"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9410,
+            "end_line": 9415
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g005",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3278,
+          "line_end": 3294,
+          "quote": "- Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-051",
+      "coverage_task_id": "cov-e1-slice-009-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0048"
+        ],
+        "source_block_ids": [
+          "lblock-002280"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-09"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9443,
+            "end_line": 9451
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g005",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3278,
+          "line_end": 3294,
+          "quote": "- Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-055",
+      "coverage_task_id": "cov-e1-slice-009-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0048"
+        ],
+        "source_block_ids": [
+          "lblock-002294"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-10"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9488,
+            "end_line": 9491
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g005",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3278,
+          "line_end": 3294,
+          "quote": "- Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    },
+    {
+      "obligation_id": "obl-d2-slice-013-060",
+      "coverage_task_id": "cov-e1-slice-009-g005",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "directive",
+      "missing_details": [],
+      "partial_details": [],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0048"
+        ],
+        "source_block_ids": [
+          "lblock-002309"
+        ],
+        "source_group_ids": [
+          "wg-d1-T012-10"
+        ],
+        "source_slice_id": "d2-slice-013",
+        "source_line_ranges": [
+          {
+            "start_line": 9581,
+            "end_line": 9585
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-009-g005",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 3278,
+          "line_end": 3294,
+          "quote": "- Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.",
+          "rationale": "First excerpt bullet (after strip) or obligation_text matched inside an E1 bounded live_doc_window (<=400 lines)."
+        }
+      ],
+      "classification": "present",
+      "uncertainty": 0.11
+    }
+  ]
+}

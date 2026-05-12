@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-016-g064",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-018"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-s025-003",
+      "coverage_task_id": "cov-e1-slice-016-g064",
+      "source_shard_id": "shard-0091",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "present",
+      "best_evidence_score": 0.9,
+      "uncertainty": 0.1,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 557,
+          "line_end": 624,
+          "rationale": "Bounded Contracts window covers the execution_unit_context and blocker split terms referenced by the row."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 1201,
+          "line_end": 1600,
+          "rationale": "Bounded storage window covers the storage and receipt gap family named by the obligation."
+        }
+      ],
+      "row_signals": [],
+      "notes": []
+    }
+  ]
+}

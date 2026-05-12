@@ -1,12 +1,54 @@
 {
-  "schema_id": "pm.stage_report.v3.2.2",
+  "schema_id": "pm.stage_report.v1",
   "prompt_id": "C4",
-  "prompt_version": "pm.c4.v3.2.2",
+  "prompt_version": "pm.c4.v3.2.3",
+  "timestamp_utc": "20260511T211150Z",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "20260511T164913Z",
-  "status": "COMPLETE",
   "execution_type": "mechanical_tool_operation",
+  "status": "complete",
+  "gate_status": "pass",
+  "subagents": {
+    "used": false
+  },
   "fanout_proof_status": "not_applicable_mechanical_tool_operation",
-  "completeness_status": "pass",
-  "summary": "C4 mechanical gate pass: gaps=0 overlaps=0 text_mismatch=0 seed_errors=0"
+  "deterministic_verification": {
+    "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "validation_mode": "lossless_inventory_mechanical",
+    "gate_pass": true
+  },
+  "subagent_runtime_kind": "not_required_mechanical",
+  "actual_delegated_model_invocation": false,
+  "subagent_proof_artifact_paths": [],
+  "task_to_invocation_map": {},
+  "invocation_to_task_map": {},
+  "local_worker_outputs_used": [
+    "python3_inline_c4_validator_v1"
+  ],
+  "main_agent_batching_detected": false,
+  "shell_or_python_worker_misclassified_as_subagent_detected": false,
+  "real_subagent_proof_status": "not_required_mechanical",
+  "required_subagent_tasks_total": 0,
+  "wave_artifacts_total": 0,
+  "wave_artifacts_expected_min": 0,
+  "wave_artifact_paths": [],
+  "completed_task_ids_from_wave_artifacts": [],
+  "pending_task_ids_from_wave_artifacts": [],
+  "blocked_task_ids_from_wave_artifacts": [],
+  "subagent_invocation_ids_from_wave_artifacts": [],
+  "distinct_subagent_invocations_total_from_wave_artifacts": 0,
+  "distinct_subagent_invocations_total": 0,
+  "omnibus_invocation_detected": false,
+  "main_agent_bulk_output_detected": false,
+  "summary": {
+    "manifest_shards_total": 92,
+    "inventory_blocks_total": 4880,
+    "raw_seed_blocks_total": 4880,
+    "source_lines_total": 18244,
+    "represented_nonblank_lines_total": 16453,
+    "excluded_blank_lines_total": 0,
+    "coverage_gaps": 0,
+    "coverage_overlaps": 0,
+    "text_mismatch_blocks": 0,
+    "seed_block_reference_errors": 0
+  }
 }

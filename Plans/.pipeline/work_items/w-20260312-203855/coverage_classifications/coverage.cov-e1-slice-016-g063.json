@@ -1,0 +1,41 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-016-g063",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-018"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-d2-s024-038",
+      "coverage_task_id": "cov-e1-slice-016-g063",
+      "source_shard_id": "shard-0091",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "classification": "present",
+      "best_evidence_score": 0.93,
+      "uncertainty": 0.08,
+      "evidence_spans": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "line_start": 61,
+          "line_end": 93,
+          "rationale": "Bounded union covers the runtime-artifacts panel evidence range listed directly in the obligation."
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "line_start": 617,
+          "line_end": 623,
+          "rationale": "Bounded union covers the UI command catalog evidence range listed directly in the obligation."
+        }
+      ],
+      "row_signals": [],
+      "notes": [
+        "Direct evidence-ref list row."
+      ]
+    }
+  ]
+}

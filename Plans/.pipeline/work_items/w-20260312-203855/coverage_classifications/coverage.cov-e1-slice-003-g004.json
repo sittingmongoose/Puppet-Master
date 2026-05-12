@@ -1,0 +1,1038 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-003-g004",
+  "obligation_record_count": 25,
+  "source_classification_slices": [
+    "e2-class-003"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-005-051",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "ux_requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000503"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2813,
+            "end_line": 2829
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-052",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "enum_definition",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000506"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2832,
+            "end_line": 2843
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-053",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "enum_definition",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000506"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2832,
+            "end_line": 2843
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-054",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "enum_definition",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000506"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2832,
+            "end_line": 2843
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-055",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "enum_definition",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000506"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2832,
+            "end_line": 2843
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-056",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000509"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2846,
+            "end_line": 2870
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-057",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000509"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2846,
+            "end_line": 2870
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-058",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000509"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2846,
+            "end_line": 2870
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-059",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000509"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2846,
+            "end_line": 2870
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-060",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000509"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2846,
+            "end_line": 2870
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-061",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000509"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2846,
+            "end_line": 2870
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-06"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-062",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "recommendation",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000512"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2873,
+            "end_line": 2887
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-063",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000512"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2873,
+            "end_line": 2887
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-064",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "ux_requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000512"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2873,
+            "end_line": 2887
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-065",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000515"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2890,
+            "end_line": 2893
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-066",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000515"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2890,
+            "end_line": 2893
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-067",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000515"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2890,
+            "end_line": 2893
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-068",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "ux_requirement",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000515"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2890,
+            "end_line": 2893
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-069",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000518"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2896,
+            "end_line": 2905
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-070",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000518"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2896,
+            "end_line": 2905
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-071",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "enum_definition",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000518"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2896,
+            "end_line": 2905
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-072",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000518"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2896,
+            "end_line": 2905
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-073",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000521"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2908,
+            "end_line": 2910
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-074",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000521"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2908,
+            "end_line": 2910
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    },
+    {
+      "obligation_id": "obl-005-075",
+      "coverage_task_id": "cov-e1-slice-003-g004",
+      "obligation_category": "acceptance_criterion",
+      "classification": "needs_doc_discovery",
+      "evidence_spans": [],
+      "missing_details": [
+        "coverage_worklist.json places this obligation under doc_resolution_status=unresolved_no_live_target with empty live_doc_windows; no bounded live window list was available for this E1 grouping."
+      ],
+      "partial_details": [],
+      "candidate_docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "source_lineage": {
+        "source_shard_ids": [
+          "shard-0015"
+        ],
+        "source_block_ids": [
+          "lblock-000521"
+        ],
+        "source_slice_id": "d2-slice-005",
+        "source_line_ranges": [
+          {
+            "source_shard_id": "shard-0015",
+            "start_line": 2908,
+            "end_line": 2910
+          }
+        ],
+        "source_group_ids": [
+          "wg-d1-T004-07"
+        ],
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_schema_id": "pm.coverage_worklist.v3.2.3"
+      },
+      "uncertainty": "Higher until additional anchors are located",
+      "deterministic_local_evidence_used_only_as_candidate": true
+    }
+  ]
+}

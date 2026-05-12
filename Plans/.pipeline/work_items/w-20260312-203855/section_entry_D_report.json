@@ -1,66 +1,56 @@
 {
-  "schema_id": "pm.section_entry.v3.2.2",
+  "schema_id": "pm.section_entry_D_report.v3.2.3",
   "prompt_id": "D0",
-  "prompt_version": "pm.d0.v3.2.2",
-  "timestamp_utc": "20260511T165801Z",
-  "section_id": "D",
-  "section_name": "Obligation_Conversion",
+  "prompt_version": "pm.d0.v3.2.3",
+  "timestamp_utc": "20260511T211314Z",
   "work_id": "w-20260312-203855",
-  "status": "complete",
-  "entry_gate_status": "pass",
-  "upstream_section": "C",
-  "upstream_section_exit": {
-    "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
-    "sha256": "acc19172258cec74002a55fc607ee2bf039579fbbee76ee04b35ebe5dc841df2",
-    "status": "complete",
-    "prompt_id": "C5",
-    "prompt_version": "pm.c5.v3.2.2",
-    "next_section": "D_Obligation_Conversion",
-    "next_preferred_prompt": "D0",
-    "ledger_preparation_complete": true,
-    "c4_completeness_status": "pass",
-    "c4_validation_mode": "lossless_inventory_mechanical",
-    "semantic_seed_groups_required": false
+  "section_exit_C_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+  "section_exit_C_prompt_id": "C5",
+  "section_exit_C_status": "complete",
+  "work_id_derivation": {
+    "source": "section_exit_C.json",
+    "field": "work_id",
+    "value": "w-20260312-203855",
+    "cross_checks": [
+      {
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+        "field": "work_id",
+        "match": true
+      },
+      {
+        "path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+        "field": "work_id",
+        "match": true
+      }
+    ]
   },
-  "active_inputs_present": {
-    "section_exit_C": true,
-    "ledger_obligation_seed": true,
-    "ledger_seed_completeness_report": true
+  "c4_handoff": {
+    "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json",
+    "c4_gate_status_from_section_exit": "pass",
+    "validation_mode": "lossless_inventory_mechanical"
   },
-  "active_inputs": {
-    "section_exit_C_path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+  "active_seed_inputs": {
     "ledger_obligation_seed_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
-    "ledger_seed_completeness_report_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+    "ledger_seed_completeness_status": "pass",
+    "obligation_seed_schema_id": "pm.ledger_obligation_seed.v3.2.3",
+    "raw_blocks_count_mechanical": 4880,
+    "raw_blocks_count_matches_completeness_report": true
   },
-  "active_inputs_sha256": {
-    "section_exit_C.json": "acc19172258cec74002a55fc607ee2bf039579fbbee76ee04b35ebe5dc841df2",
-    "ledger_obligation_seed.json": "03f76451360b5f3c740d60ec2511ddfe67929b09a8a3dca76a7d56775ffd7e9f",
-    "ledger_seed_completeness_report.json": "f0ffd76f569646ba8c972e7fc50255d80e8ddc7379791a278408d3735057515e"
+  "section_D_inputs_gate": {
+    "section_exit_C_present": true,
+    "ledger_obligation_seed_present": true,
+    "ledger_seed_completeness_report_present": true,
+    "seed_completeness_pass": true,
+    "final_gate_pass": true
   },
-  "seed_completeness": {
-    "status": "pass",
-    "validation_mode": "lossless_inventory_mechanical",
-    "raw_seed_blocks_total": 5065,
-    "inventory_blocks_total": 5065,
-    "manifest_shards_total": 92,
-    "source_lines_total": 18244,
-    "represented_nonblank_lines_total": 16453,
-    "excluded_blank_lines_total": 1791,
-    "coverage_gaps": 0,
-    "coverage_overlaps": 0,
-    "text_mismatch_blocks": 0,
-    "seed_block_reference_errors": 0,
-    "blocking_items": []
-  },
-  "source_ledger_sha256": "6f40a9e1491e9ade6af05af1249de45db2950595d6f4cdfee9c37c02acdceac1",
-  "final_gate_status": "pass",
-  "stale_or_archive_reads": "none",
-  "old_obligation_artifacts_read": false,
-  "next_prompt_request": "Paste prompt D1 — Obligation Worklist Builder v3.2.2.",
+  "inputs_read": [
+    "Plans/.pipeline/work_items/w-20260312-203855/section_exit_C.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_seed_completeness_report.json"
+  ],
   "notes": [
-    "Section D entry: work_id resolved from section_exit_C.json (only present exit file).",
-    "Ledger seed completeness report status=pass with zero coverage gaps/overlaps/mismatches/reference errors.",
-    "Section C semantic_seed_groups_required=false; D-section will derive obligation worklist from ledger_obligation_seed.json starting in D1.",
-    "Mechanical entry/handoff stage; no subagents required."
+    "work_id locked from active (non-archive) section_exit_C.json only; no alternate work item selected.",
+    "Prior obligation conversion artifacts were not read per D0 READ/TASK scope.",
+    "Mechanical confirmation: Python json load counted raw_blocks length 4880; equals ledger_seed_completeness_report.summary.raw_seed_blocks_total."
   ]
 }

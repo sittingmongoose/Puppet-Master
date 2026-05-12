@@ -1,8 +1,8 @@
 {
-  "schema_id": "pm.section_entry.v3.2.2",
+  "schema_id": "pm.section_entry.v3.2.3",
   "prompt_id": "E0",
-  "prompt_version": "pm.e0.v3.2.2",
-  "timestamp_utc": "20260511T192200Z",
+  "prompt_version": "pm.e0.v3.2.3",
+  "timestamp_utc": "20260512T120000Z",
   "section_id": "E",
   "section_name": "Coverage",
   "work_id": "w-20260312-203855",
@@ -11,14 +11,14 @@
   "upstream_section": "D",
   "upstream_section_exit": {
     "path": "Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json",
-    "sha256": "db448b6c0257203347ad97f5f897b63492f3d51dcf369509698592c92f15741d",
+    "sha256": "a5f4086d12d41564c9366d8f736033dbbcb4ea69f39922012f5d8b5babdf65fc",
     "status": "complete",
     "prompt_id": "D5",
-    "prompt_version": "pm.d5.v3.2.2",
+    "prompt_version": "pm.d5.v3.2.3",
     "next_section": "E_Coverage",
     "next_preferred_prompt": "E0",
     "active_source_for_coverage": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
-    "canonical_obligations_sha256": "6ab0bb2721a89f0c4887853efd95ef9a5b77acddffd78e5877c20cd707b48906",
+    "canonical_obligations_sha256": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749",
     "source_gate_status": "pass",
     "obligation_conversion_complete": true
   },
@@ -32,15 +32,15 @@
     "active_source_for_coverage_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json"
   },
   "active_inputs_sha256": {
-    "section_exit_D.json": "db448b6c0257203347ad97f5f897b63492f3d51dcf369509698592c92f15741d",
-    "canonical_obligations.json": "6ab0bb2721a89f0c4887853efd95ef9a5b77acddffd78e5877c20cd707b48906"
+    "section_exit_D.json": "a5f4086d12d41564c9366d8f736033dbbcb4ea69f39922012f5d8b5babdf65fc",
+    "canonical_obligations.json": "929e0453d3cf9a903dcb6ce9ffcf49a6bbc2e39014d95da2c1ae027739284749"
   },
   "coverage_entry_summary": {
-    "obligations_total_from_exit": 3870,
+    "obligations_total_from_exit": 1710,
     "canonical_obligations_merge_status_from_exit": "final",
     "source_gate_status_from_exit": "pass",
-    "canonical_obligations_byte_size": 6914820,
-    "canonical_obligations_line_count": 190894
+    "canonical_obligations_byte_size": 6998470,
+    "canonical_obligations_line_count": 162001
   },
   "deterministic_verification": {
     "section_exit_d_status": "complete",
@@ -52,11 +52,11 @@
   },
   "stale_or_archive_reads": "none",
   "final_gate_status": "pass",
-  "next_prompt_request": "Paste prompt E1 — Coverage Worklist Builder v3.2.2.",
+  "next_prompt_request": "Paste prompt E1 — Coverage Worklist Builder v3.2.3.",
   "notes": [
-    "Section E entry: work_id derived from active Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json (non-archive).",
-    "canonical_obligations.json verified present; sha256sum matches section_exit_D.canonical_obligations_sha256.",
-    "Mechanical entry/handoff stage; no subagents required.",
-    "Archive section_exit_D under work_items/*/archive/ was not used as the handoff source."
+    "Section E entry v3.2.3: work_id from active Plans/.pipeline/work_items/w-20260312-203855/section_exit_D.json (archive copies under work_items/*/archive/ ignored for handoff).",
+    "canonical_obligations.json present; sha256sum matches section_exit_D.canonical_obligations_sha256 per deterministic check.",
+    "Mechanical section entry; execution_type mechanical_tool_operation; no delegated model subagents.",
+    "Glob under Plans/.pipeline/work_items found one active section_exit_D.json at work root plus two archive copies under the same work_id."
   ]
 }

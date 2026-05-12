@@ -1,0 +1,59 @@
+{
+  "schema_id": "pm.coverage_classification_task.v3.2.3",
+  "prompt_id": "E2",
+  "prompt_version": "pm.e2.v3.2.3",
+  "work_id": "w-20260312-203855",
+  "coverage_task_id": "cov-e1-slice-015-g003",
+  "obligation_record_count": 1,
+  "source_classification_slices": [
+    "e2-class-015"
+  ],
+  "classifications": [
+    {
+      "obligation_id": "obl-021-047",
+      "coverage_task_id": "cov-e1-slice-015-g003",
+      "doc_resolution_status": "concrete_plans_targets",
+      "obligation_category": "constraint",
+      "missing_details": [],
+      "partial_details": [
+        "Match is substring/window-local; confirm the full canonical obligation (multi-bullet) is represented without silent narrowing."
+      ],
+      "candidate_docs": [],
+      "source_lineage": {
+        "canonical_obligations_path": "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+        "coverage_worklist_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_worklist.json",
+        "coverage_classification_slices_path": "Plans/.pipeline/work_items/w-20260312-203855/coverage_classification_slices.json",
+        "source_shard_ids": [
+          "shard-0078"
+        ],
+        "source_block_ids": [
+          "lblock-004181"
+        ],
+        "source_group_ids": [
+          "wg-d1-T020-07"
+        ],
+        "source_slice_id": "d2-slice-021",
+        "source_line_ranges": [
+          {
+            "start_line": 15420,
+            "end_line": 15426
+          }
+        ],
+        "coverage_task_id": "cov-e1-slice-015-g003",
+        "doc_resolution_status": "concrete_plans_targets"
+      },
+      "deterministic_local_evidence_used_only_as_candidate": false,
+      "evidence_spans": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "line_start": 334,
+          "line_end": 340,
+          "quote": "  - recovery_refs[]?\\n  - concern-linked findings/evidence\\n  - `Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure\\n  - Orchestrator_Page.md\\n  - Tiers\\n  - canonical contracts want stable internal `account_id`\\n  - account_id",
+          "rationale": "First excerpt/needle match inside an E1 bounded live_doc_window for this coverage_task's Plans/** union (<=400-line windows materialized in coverage_worklist)."
+        }
+      ],
+      "classification": "partial",
+      "uncertainty": 0.28
+    }
+  ]
+}

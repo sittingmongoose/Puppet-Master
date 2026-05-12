@@ -1,23 +1,36 @@
 {
-  "schema_id": "pm.ledger_inventory_builder_report.v3.2.2",
+  "schema_id": "pm.ledger_inventory_builder_report.v3.2.3",
   "prompt_id": "C3",
-  "prompt_version": "pm.c3.v3.2.2",
-  "timestamp_utc": "20260511T164314Z",
+  "prompt_version": "pm.c3.v3.2.3",
+  "timestamp_utc": "20260511T211055Z",
   "work_id": "w-20260312-203855",
-  "execution_type": "mechanical_tool_operation",
-  "shard_count": 92,
-  "blocks_total": 5065,
-  "raw_seeds_total": 5065,
-  "source_line_count": 18244,
-  "nonblank_lines": 16453,
-  "blank_lines": 1791,
-  "coverage": {
-    "source_lines_total": 18244,
-    "represented_lines_total": 18244,
-    "excluded_blank_lines_total": 1791,
-    "gaps": [],
-    "overlaps": []
+  "execution": "mechanical_tool_operation",
+  "tool": "python3_inline_deterministic_segmenter_v1",
+  "inputs": {
+    "meta_json": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
+    "current_state_md": "Plans/.pipeline/work_items/w-20260312-203855/current_state.md",
+    "ledger_condenser_report": "Plans/.pipeline/work_items/w-20260312-203855/ledger_condenser_report.json",
+    "ledger_shards_manifest": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+    "ledger_shard_glob": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-*.md"
   },
-  "deterministic_rules_version": "c3.v3.2.2.ruleset_a",
-  "final_gate_pass": true
+  "outputs": {
+    "ledger_inventory_blocks": "Plans/.pipeline/work_items/w-20260312-203855/ledger_inventory_blocks.json",
+    "ledger_obligation_seed": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json"
+  },
+  "counts": {
+    "shards_processed": 92,
+    "blocks_total": 4880,
+    "raw_seeds_total": 4880,
+    "source_lines_total": 18244,
+    "blank_separator_blocks": 1698
+  },
+  "verification": {
+    "gaps": [],
+    "overlaps": [],
+    "every_line_covered_once": true,
+    "exact_text_matches_global_lines": true,
+    "seed_block_alignment": true,
+    "semantic_categories_emitted": false
+  },
+  "next_required_stage": "C4 — Ledger Seed Completeness Gate v3.2.3"
 }
